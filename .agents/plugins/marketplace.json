@@ -1,0 +1,20 @@
+{
+  "name": "mt5-workspace",
+  "interface": {
+    "displayName": "MT5 Workspace"
+  },
+  "plugins": [
+    {
+      "name": "mt5-company",
+      "source": {
+        "source": "local",
+        "path": "./plugins/mt5-company"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

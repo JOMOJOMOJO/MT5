@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "mt5-workspace": {
+      "command": "python",
+      "args": [
+        "./scripts/mt5_mcp_server.py"
+      ]
+    }
+  }
+}

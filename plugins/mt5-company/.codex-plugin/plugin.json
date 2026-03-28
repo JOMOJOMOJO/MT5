@@ -1,0 +1,37 @@
+{
+  "name": "mt5-company",
+  "version": "0.1.0",
+  "description": "Company-style Codex workflow for MT5 EA development with repo-local skills and shared MCP config.",
+  "author": {
+    "name": "[TODO: Your Name]",
+    "email": "",
+    "url": ""
+  },
+  "repository": "https://github.com/JOMOJOMOJO/MT5",
+  "keywords": [
+    "mt5",
+    "mql5",
+    "expert-advisor",
+    "trading",
+    "codex"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "MT5 Company",
+    "shortDescription": "Company-style workflow for MT5 EA development.",
+    "longDescription": "Routes MT5 EA work through repo-local intake, review, backtest, and release skills so the workflow stays reproducible in Git.",
+    "developerName": "[TODO: Your Name]",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Triage this EA idea and turn it into an implementation plan.",
+      "Review this .mq5 file for execution or risk bugs.",
+      "Analyze this MT5 tester result and propose the next change."
+    ],
+    "brandColor": "#0B7285"
+  }
+}
