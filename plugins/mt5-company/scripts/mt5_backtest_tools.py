@@ -123,6 +123,23 @@ COMPARE_METRICS = (
     "sharpe_ratio",
 )
 
+TIMEFRAME_LABELS = {
+    "1": "M1",
+    "5": "M5",
+    "15": "M15",
+    "30": "M30",
+    "60": "H1",
+    "240": "H4",
+    "1440": "D1",
+    "10080": "W1",
+    "43200": "MN1",
+    "16385": "H1",
+    "16388": "H4",
+    "16408": "D1",
+    "32769": "W1",
+    "49153": "MN1",
+}
+
 
 @dataclass
 class ImportedRun:
@@ -230,6 +247,88 @@ def parse_period(value: str) -> tuple[str | None, str | None]:
         return match.group(1), match.group(2)
     token = cleaned.split(" ", 1)[0]
     return token, None
+
+
+def parse_bool_token(value: Any) -> bool | None:
+    if isinstance(value, bool):
+        return value
+    if value is None:
+        return None
+    lowered = str(value).strip().lower()
+    if lowered in {"true", "1", "yes", "on"}:
+        return True
+    if lowered in {"false", "0", "no", "off"}:
+        return False
+    return None
+
+
+def timeframe_label(value: Any) -> str | None:
+    if value is None:
+        return None
+    token = str(value).strip()
+    if not token:
+        return None
+    if token in TIMEFRAME_LABELS:
+        return TIMEFRAME_LABELS[token]
+    upper = token.upper()
+    if upper.startswith("PERIOD_"):
+        return upper.replace("PERIOD_", "")
+    return upper
+
+
+def derive_direction_mode(allow_buy: bool | None, allow_sell: bool | None) -> str | None:
+    if allow_buy is True and allow_sell is True:
+        return "long-short"
+    if allow_buy is True and allow_sell is False:
+        return "long-only"
+    if allow_buy is False and allow_sell is True:
+        return "short-only"
+    if allow_buy is False and allow_sell is False:
+        return "disabled"
+    return None
+
+
+def load_report_context(report_path: Path) -> dict[str, Any]:
+    candidates = (
+        report_path.with_name(report_path.name + ".meta.json"),
+        report_path.with_name(report_path.stem + ".meta.json"),
+    )
+    for candidate in candidates:
+        if not candidate.exists():
+            continue
+        try:
+            return json.loads(candidate.read_text(encoding="utf-8-sig"))
+        except (OSError, json.JSONDecodeError):
+            continue
+    return {}
+
+
+def extract_strategy_context(report_path: Path) -> dict[str, Any]:
+    context = load_report_context(report_path)
+    tester = context.get("tester", {}) if isinstance(context, dict) else {}
+    preset = context.get("preset", {}) if isinstance(context, dict) else {}
+    params = preset.get("parameters", {}) if isinstance(preset, dict) else {}
+    params = params if isinstance(params, dict) else {}
+
+    allow_buy = parse_bool_token(params.get("InpAllowBuy"))
+    allow_sell = parse_bool_token(params.get("InpAllowSell"))
+    use_confirm = parse_bool_token(params.get("InpUseConfirmRegime"))
+
+    strategy = {
+        "tester_symbol": tester.get("symbol"),
+        "tester_period": tester.get("period"),
+        "preset_name": preset.get("name"),
+        "preset_source": preset.get("source"),
+        "signal_timeframe": timeframe_label(params.get("InpSignalTimeframe")),
+        "regime_timeframe": timeframe_label(params.get("InpRegimeTimeframe")),
+        "confirm_timeframe": timeframe_label(params.get("InpConfirmRegimeTimeframe")) if use_confirm is not False else None,
+        "direction_mode": derive_direction_mode(allow_buy, allow_sell),
+        "allow_buy": allow_buy,
+        "allow_sell": allow_sell,
+        "buy_logic_mask": parse_int(str(params.get("InpBuyLogicMask"))) if params.get("InpBuyLogicMask") is not None else None,
+        "sell_logic_mask": parse_int(str(params.get("InpSellLogicMask"))) if params.get("InpSellLogicMask") is not None else None,
+    }
+    return {key: value for key, value in strategy.items() if value not in (None, "", [])}
 
 
 def strip_html(fragment: str) -> str:
@@ -470,10 +569,11 @@ def build_run_payload(
 ) -> dict[str, Any]:
     imported_at = datetime.now().isoformat(timespec="seconds")
     metrics = build_metrics(fields, records)
+    strategy = extract_strategy_context(report_path)
     ea_name = ea_name_override or metrics.get("ea_name") or "unknown-ea"
     symbol = metrics.get("symbol")
-    timeframe = metrics.get("timeframe") or metrics.get("period")
-    summary = build_summary(metrics, report_kind)
+    timeframe = strategy.get("signal_timeframe") or metrics.get("timeframe") or metrics.get("period")
+    summary = build_summary(metrics, report_kind, strategy)
 
     return {
         "imported_at": imported_at,
@@ -490,6 +590,7 @@ def build_run_payload(
             "original_path": str(report_path.resolve()),
             "type": report_path.suffix.lower().lstrip("."),
         },
+        "strategy": strategy,
         "metrics": metrics,
         "summary": summary,
         "tags": tags,
@@ -516,6 +617,7 @@ def copy_report_bundle(source_path: Path, target_dir: Path) -> Path:
 
 def write_backtest_note(run: dict[str, Any], run_path: Path, note_path: Path) -> Path:
     identity = run["identity"]
+    strategy = run.get("strategy", {})
     metrics = run["metrics"]
     summary = run["summary"]
 
@@ -571,16 +673,44 @@ def write_backtest_note(run: dict[str, Any], run_path: Path, note_path: Path) ->
 
 
 def append_catalog(run_path: Path, note_path: Path, payload: dict[str, Any]) -> None:
+    metrics = payload.get("metrics", {})
     entry = {
         "run_path": repo_relative(run_path),
         "knowledge_path": repo_relative(note_path),
         "imported_at": payload.get("imported_at"),
         "identity": payload.get("identity", {}),
+        "strategy": payload.get("strategy", {}),
         "summary": {"headline": payload.get("summary", {}).get("headline")},
+        "metrics": {
+            "total_net_profit": metrics.get("total_net_profit"),
+            "profit_factor": metrics.get("profit_factor"),
+            "relative_drawdown_percent": metrics.get("relative_drawdown_percent"),
+            "total_trades": metrics.get("total_trades"),
+        },
         "storage": payload.get("storage", {}),
     }
     with CATALOG_PATH.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+
+def rebuild_catalog() -> int:
+    ensure_dirs()
+    run_files = sorted(iter_run_files(), key=lambda path: path.stat().st_mtime)
+    CATALOG_PATH.write_text("", encoding="utf-8")
+    rebuilt = 0
+
+    for run_path in run_files:
+        payload = json.loads(run_path.read_text(encoding="utf-8"))
+        note_path_value = payload.get("storage", {}).get("knowledge_path")
+        if not note_path_value:
+            continue
+        note_path = (REPO_ROOT / note_path_value).resolve()
+        if not note_path.exists():
+            continue
+        append_catalog(run_path, note_path, payload)
+        rebuilt += 1
+
+    return rebuilt
 
 
 def import_backtest_report(
@@ -660,6 +790,8 @@ def list_backtest_runs(limit: int = 10, ea_name: str | None = None) -> list[dict
                 "ea_name": identity.get("ea_name"),
                 "symbol": identity.get("symbol"),
                 "timeframe": identity.get("timeframe"),
+                "signal_timeframe": payload.get("strategy", {}).get("signal_timeframe"),
+                "direction_mode": payload.get("strategy", {}).get("direction_mode"),
                 "headline": payload.get("summary", {}).get("headline"),
                 "imported_at": payload.get("imported_at"),
             }
@@ -759,6 +891,9 @@ def summarize_backtest_run(run_path: str) -> dict[str, Any]:
     resolved, payload = load_run(run_path)
     return {
         "path": repo_relative(resolved),
+        "imported_at": payload.get("imported_at"),
+        "identity": payload.get("identity", {}),
+        "strategy": payload.get("strategy", {}),
         "headline": payload.get("summary", {}).get("headline"),
         "strengths": payload.get("summary", {}).get("strengths", []),
         "weak_points": payload.get("summary", {}).get("weak_points", []),
@@ -806,17 +941,20 @@ def format_summary(payload: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def build_summary(metrics: dict[str, Any], report_kind: str) -> dict[str, Any]:
+def build_summary(metrics: dict[str, Any], report_kind: str, strategy: dict[str, Any] | None = None) -> dict[str, Any]:
     strengths: list[str] = []
     weak_points: list[str] = []
     notes: list[str] = []
+    strategy = strategy or {}
 
     trades = metrics.get("total_trades")
     if isinstance(trades, int):
-        if trades < 30:
+        if trades < 10:
             weak_points.append("取引回数が少なすぎて判断が不安定です。")
+        elif trades < 25:
+            notes.append("取引回数は少なめなので、別期間や別レジームで補強が必要です。")
         elif trades < 100:
-            weak_points.append("取引回数がまだ少なく、過信しにくい結果です。")
+            notes.append("取引回数はまだ多くないため、追加検証で安定性を確認してください。")
         else:
             strengths.append("取引回数は初期評価に耐える水準です。")
 
@@ -855,8 +993,17 @@ def build_summary(metrics: dict[str, Any], report_kind: str) -> dict[str, Any]:
 
     long_rate = metrics.get("long_positions_percent")
     short_rate = metrics.get("short_positions_percent")
+    long_count = metrics.get("long_positions_count")
+    short_count = metrics.get("short_positions_count")
+    direction_mode = strategy.get("direction_mode")
     if isinstance(long_rate, (int, float)) and isinstance(short_rate, (int, float)):
-        if abs(long_rate - short_rate) >= 20:
+        both_sides_active = (
+            isinstance(long_count, int)
+            and isinstance(short_count, int)
+            and long_count > 0
+            and short_count > 0
+        )
+        if both_sides_active and direction_mode not in {"long-only", "short-only"} and abs(long_rate - short_rate) >= 20:
             weak_points.append("買いと売りの成績差が大きく、片側依存の可能性があります。")
 
     if report_kind == "optimization_export" and metrics.get("records_count"):
@@ -878,6 +1025,7 @@ def build_summary(metrics: dict[str, Any], report_kind: str) -> dict[str, Any]:
 
 def write_backtest_note(run: dict[str, Any], run_path: Path, note_path: Path) -> Path:
     identity = run["identity"]
+    strategy = run.get("strategy", {})
     metrics = run["metrics"]
     summary = run["summary"]
 
@@ -888,10 +1036,21 @@ def write_backtest_note(run: dict[str, Any], run_path: Path, note_path: Path) ->
         f"- EA: {identity.get('ea_name', '-')}",
         f"- 通貨: {identity.get('symbol', '-') or '-'}",
         f"- 時間足: {identity.get('timeframe', '-') or '-'}",
+        f"- テスター時間足: {strategy.get('tester_period') or metrics.get('timeframe', '-') or '-'}",
         f"- 検証期間: {identity.get('tested_range', '-') or '-'}",
         f"- 証跡: {repo_relative(run_path)}",
         f"- 取込資産: {run['storage'].get('imported_dir', '-')}",
         f"- タグ: {', '.join(run.get('tags', [])) or '-'}",
+        "",
+        "## 戦略メタデータ",
+        "",
+        f"- シグナル時間足: {strategy.get('signal_timeframe') or identity.get('timeframe', '-') or '-'}",
+        f"- レジーム時間足: {strategy.get('regime_timeframe') or '-'}",
+        f"- 確認時間足: {strategy.get('confirm_timeframe') or '-'}",
+        f"- 売買方向: {strategy.get('direction_mode') or '-'}",
+        f"- Buy logic mask: {strategy.get('buy_logic_mask') if strategy.get('buy_logic_mask') is not None else '-'}",
+        f"- Sell logic mask: {strategy.get('sell_logic_mask') if strategy.get('sell_logic_mask') is not None else '-'}",
+        f"- Preset: {strategy.get('preset_name') or '-'}",
         "",
         "## 要約",
         "",
@@ -934,19 +1093,33 @@ def write_backtest_note(run: dict[str, Any], run_path: Path, note_path: Path) ->
 
 def format_run_list(items: list[dict[str, Any]]) -> str:
     if not items:
-        return "No backtest runs were found."
+        return "バックテスト run はまだありません。"
     lines = []
     for item in items:
+        timeframe = item.get("signal_timeframe") or item.get("timeframe") or "-"
+        direction_mode = item.get("direction_mode") or "-"
         lines.append(
             f"{item['path']} :: {item.get('ea_name') or '-'} / {item.get('symbol') or '-'} / "
-            f"{item.get('timeframe') or '-'} / {item.get('headline') or 'レポート要約はまだ生成されていません。'}"
+            f"{timeframe} / {direction_mode} / {item.get('headline') or 'レポート要約はまだ生成されていません。'}"
         )
     return "\n".join(lines)
 
 
 def format_summary(payload: dict[str, Any]) -> str:
+    identity = payload.get("identity", {})
+    strategy = payload.get("strategy", {})
+    metrics = payload.get("metrics", {})
+
     lines = [
         f"Run: {payload['path']}",
+        f"Imported: {payload.get('imported_at') or '-'}",
+        f"EA: {identity.get('ea_name') or '-'}",
+        f"Symbol: {identity.get('symbol') or '-'}",
+        f"Signal TF: {strategy.get('signal_timeframe') or identity.get('timeframe') or '-'}",
+        f"Tester Period: {strategy.get('tester_period') or metrics.get('timeframe') or '-'}",
+        f"Direction: {strategy.get('direction_mode') or '-'}",
+        f"Regime TF: {strategy.get('regime_timeframe') or '-'}",
+        f"Confirm TF: {strategy.get('confirm_timeframe') or '-'}",
         f"Headline: {payload.get('headline') or 'レポート要約はまだ生成されていません。'}",
         "",
         "Weak points:",
@@ -979,6 +1152,8 @@ def build_cli() -> argparse.ArgumentParser:
     compare_parser.add_argument("--candidate", required=True)
     compare_parser.add_argument("--save", action="store_true")
 
+    subparsers.add_parser("rebuild-catalog", help="Rebuild catalog.jsonl from saved run JSON files.")
+
     return parser
 
 
@@ -1010,6 +1185,11 @@ def main() -> int:
 
     if args.command == "compare":
         print(format_comparison(compare_backtest_runs(args.baseline, args.candidate, save_markdown=args.save)))
+        return 0
+
+    if args.command == "rebuild-catalog":
+        rebuilt = rebuild_catalog()
+        print(f"Rebuilt catalog entries: {rebuilt}")
         return 0
 
     parser.error("Unknown command")

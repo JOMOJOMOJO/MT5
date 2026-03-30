@@ -1,0 +1,725 @@
+{
+  "imported_at": "2026-03-30T15:20:09",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "btcusd_20260124",
+    "symbol": "BTCUSD",
+    "timeframe": "H1",
+    "tested_range": "2025.01.01 - 2025.12.31",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "btcusd-20260124",
+    "symbol_key": "btcusd",
+    "timeframe_key": "h1",
+    "run_path": "reports/backtest/runs/btcusd-20260124/btcusd/h1/2026-03-30-152009-086338-btcusd-20260124-validation-1y.json",
+    "knowledge_path": "knowledge/backtests/btcusd-20260124/btcusd/h1/2026-03-30-152009-086338-btcusd-20260124-validation-1y.md",
+    "imported_dir": "reports/backtest/imported/btcusd-20260124/btcusd/h1/2026-03-30-152009-086338-btcusd-20260124-validation-1y",
+    "imported_report": "reports/backtest/imported/btcusd-20260124/btcusd/h1/2026-03-30-152009-086338-btcusd-20260124-validation-1y/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\btcusd_20260124-validation-1y.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "BTCUSD",
+    "tester_period": "M1",
+    "preset_name": "btcusd_20260124-baseline.set",
+    "preset_source": "reports\\presets\\btcusd_20260124-baseline.set",
+    "signal_timeframe": "H1",
+    "regime_timeframe": "H4",
+    "confirm_timeframe": "D1",
+    "direction_mode": "long-only",
+    "allow_buy": true,
+    "allow_sell": false,
+    "buy_logic_mask": 1,
+    "sell_logic_mask": 0
+  },
+  "metrics": {
+    "ea_name": "btcusd_20260124",
+    "symbol": "BTCUSD",
+    "period": "M1 (2025.01.01 - 2025.12.31)",
+    "history_quality_percent": 100.0,
+    "bars": 518730,
+    "ticks": 61808606,
+    "initial_deposit": 10000.0,
+    "total_net_profit": 294.32,
+    "gross_profit": 548.74,
+    "gross_loss": -254.42,
+    "profit_factor": 2.16,
+    "expected_payoff": 14.02,
+    "recovery_factor": 2.74,
+    "sharpe_ratio": 7.49,
+    "absolute_drawdown": 0.0,
+    "maximal_drawdown_amount": 83.16,
+    "maximal_drawdown_percent": 0.82,
+    "relative_drawdown_amount": 83.16,
+    "relative_drawdown_percent": 0.82,
+    "total_trades": 21,
+    "short_positions_count": 0,
+    "short_positions_percent": 0.0,
+    "long_positions_count": 21,
+    "long_positions_percent": 33.33,
+    "profit_trades_count": 7,
+    "profit_trades_percent": 33.33,
+    "loss_trades_count": 14,
+    "loss_trades_percent": 66.67,
+    "largest_profit_trade": 86.2,
+    "largest_loss_trade": -37.6,
+    "average_profit_trade": 78.39,
+    "average_loss_trade": -18.17,
+    "timeframe": "M1",
+    "tested_range": "2025.01.01 - 2025.12.31",
+    "win_rate_percent": 33.33
+  },
+  "summary": {
+    "headline": "Profit Factor は深掘りに値する水準です。 / 総損益はプラスです。",
+    "strengths": [
+      "Profit Factor は深掘りに値する水準です。",
+      "総損益はプラスです。",
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [],
+    "notes": [
+      "取引回数は少なめなので、別期間や別レジームで補強が必要です。"
+    ]
+  },
+  "tags": [
+    "h1-long-only"
+  ],
+  "raw_fields": {
+    "expert": "btcusd_20260124",
+    "symbol": [
+      "BTCUSD",
+      "1"
+    ],
+    "period": "M1 (2025.01.01 - 2025.12.31)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "518730",
+    "ticks": "61808606",
+    "total net profit": "294.32",
+    "absolute drawdown": "0.00",
+    "gross profit": "548.74",
+    "maximal drawdown": "83.16 (0.82%)",
+    "gross loss": "-254.42",
+    "relative drawdown": "0.82% (83.16)",
+    "profit factor": "2.16",
+    "expected payoff": "14.02",
+    "recovery factor": "2.74",
+    "sharpe ratio": "7.49",
+    "z score": "0.59 (44.48%)",
+    "ahpr": "1.0014 (0.14%)",
+    "lr correlation": "0.79",
+    "ontester": "2.42782663350934",
+    "ghpr": "1.0014 (0.14%)",
+    "lr standard error": "43.05",
+    "total trades": "21",
+    "short trades won percent": "0 (0.00%)",
+    "long positions won percent": "21 (33.33%)",
+    "profit trades percent of total": "7 (33.33%)",
+    "loss trades percent of total": "14 (66.67%)",
+    "largest profit trade": "86.20",
+    "largest loss trade": "-37.60",
+    "average profit trade": "78.39",
+    "average loss trade": "-18.17",
+    "correlation profits mfe": "0.89",
+    "correlation profits mae": "0.59",
+    "correlation mfe mae": "0.5776",
+    "t p": "時間",
+    "2": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "buy": [
+      "0.03 / 0.03",
+      "0.03 / 0.03",
+      "0.05 / 0.05",
+      "0.05 / 0.05",
+      "0.05 / 0.05",
+      "0.04 / 0.04",
+      "0.03 / 0.03",
+      "0.04 / 0.04",
+      "0.04 / 0.04",
+      "0.08 / 0.08",
+      "0.06 / 0.06",
+      "0.06 / 0.06",
+      "0.06 / 0.06",
+      "0.03 / 0.03",
+      "0.04 / 0.04",
+      "0.06 / 0.06",
+      "0.08 / 0.08",
+      "0.05 / 0.05",
+      "0.07 / 0.07",
+      "0.08 / 0.08",
+      "0.03 / 0.03",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 00": [
+      "98322.23",
+      "2025.01.17 03:46:39",
+      "104173.63",
+      "2025.01.25 10:38:14",
+      "104087.63",
+      "2025.01.31 18:28:06",
+      "94173.64",
+      "2025.04.30 01:21:10",
+      "96130.27",
+      "2025.05.08 05:25:30",
+      "103059.84",
+      "2025.05.11 17:15:51",
+      "103453.57",
+      "2025.05.12 17:26:49",
+      "104561.79",
+      "2025.05.20 21:56:56",
+      "108673.98",
+      "2025.05.27 17:26:57",
+      "105520.09",
+      "2025.06.09 13:13:29",
+      "106867.22",
+      "2025.06.26 18:30:51",
+      "106744.86",
+      "2025.06.27 20:45:00",
+      "117004.69",
+      "2025.07.13 17:17:33",
+      "117881.79",
+      "2025.07.17 15:06:33",
+      "118235.17",
+      "2025.07.25 01:51:23",
+      "116154.90",
+      "2025.08.09 18:22:43",
+      "116899.93",
+      "2025.08.10 06:26:17",
+      "118764.94",
+      "2025.08.13 04:14:14",
+      "115581.27",
+      "2025.09.15 09:55:23",
+      "121583.77",
+      "2025.10.05 05:30:44",
+      "122302.33",
+      "2025.10.06 20:22:44",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-31.05",
+      "0.00",
+      "-0.06",
+      "0.00",
+      "0.00",
+      "79.72",
+      "0.00",
+      "-0.12",
+      "0.00",
+      "-27.10",
+      "0.00",
+      "-0.02",
+      "0.00",
+      "-0.02",
+      "0.00",
+      "82.69",
+      "0.00",
+      "-35.14",
+      "0.00",
+      "-34.96",
+      "0.00",
+      "74.45",
+      "0.00",
+      "-27.06",
+      "0.00",
+      "0.00",
+      "0.00",
+      "86.20",
+      "0.00",
+      "0.00",
+      "-0.12",
+      "0.00",
+      "81.94",
+      "0.00",
+      "73.44",
+      "-32.95"
+    ],
+    "101729 90": "2025.01.16 18:00:00",
+    "filled": [
+      "Regime EA L1 BUY",
+      "tp 101729.90",
+      "Regime EA L1 BUY",
+      "sl 104173.63",
+      "Regime EA L1 BUY",
+      "sl 104746.48",
+      "Regime EA L1 BUY",
+      "sl 94173.64",
+      "Regime EA L1 BUY",
+      "tp 98371.93",
+      "Regime EA L1 BUY",
+      "sl 103832.83",
+      "Regime EA L1 BUY",
+      "sl 103453.57",
+      "Regime EA L1 BUY",
+      "sl 105352.79",
+      "Regime EA L1 BUY",
+      "sl 109550.15",
+      "Regime EA L1 BUY",
+      "tp 106955.13",
+      "Regime EA L1 BUY",
+      "sl 106867.22",
+      "Regime EA L1 BUY",
+      "sl 106744.86",
+      "Regime EA L1 BUY",
+      "tp 118749.63",
+      "Regime EA L1 BUY",
+      "sl 117881.79",
+      "Regime EA L1 BUY",
+      "sl 118235.17",
+      "Regime EA L1 BUY",
+      "sl 116723.70",
+      "Regime EA L1 BUY",
+      "tp 118377.01",
+      "Regime EA L1 BUY",
+      "sl 119458.51",
+      "Regime EA L1 BUY",
+      "sl 116067.16",
+      "Regime EA L1 BUY",
+      "tp 123013.69",
+      "Regime EA L1 BUY",
+      "tp 125738.70"
+    ],
+    "3": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "sell": [
+      "0.03 / 0.03",
+      "0.03 / 0.03",
+      "0.05 / 0.05",
+      "0.05 / 0.05",
+      "0.05 / 0.05",
+      "0.04 / 0.04",
+      "0.03 / 0.03",
+      "0.04 / 0.04",
+      "0.04 / 0.04",
+      "0.08 / 0.08",
+      "0.06 / 0.06",
+      "0.06 / 0.06",
+      "0.06 / 0.06",
+      "0.03 / 0.03",
+      "0.04 / 0.04",
+      "0.06 / 0.06",
+      "0.08 / 0.08",
+      "0.05 / 0.05",
+      "0.07 / 0.07",
+      "0.08 / 0.08",
+      "0.03 / 0.03",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out"
+    ],
+    "4": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "107723 57": "2025.01.25 06:00:01",
+    "5": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "6": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "106368 27": "2025.01.31 14:00:01",
+    "7": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "8": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "96292 80": "2025.04.29 10:00:00",
+    "9": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "10": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "98371 93": "2025.05.08 00:00:00",
+    "11": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "12": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "105735 57": "2025.05.11 12:00:02",
+    "13": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "14": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "106518 17": "2025.05.12 17:00:00",
+    "15": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "16": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "107299 86": "2025.05.20 19:00:00",
+    "17": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "18": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "111706 88": "2025.05.27 11:00:00",
+    "19": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "20": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "106955 13": "2025.06.09 12:00:00",
+    "21": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "22": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "108888 80": "2025.06.26 18:00:00",
+    "23": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "24": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "108750 24": "2025.06.27 19:00:01",
+    "25": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "26": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "118749 63": "2025.07.13 01:00:00",
+    "27": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "28": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "121002 57": "2025.07.17 13:00:00",
+    "29": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "30": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "121130 23": "2025.07.24 18:00:00",
+    "31": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "32": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "118123 83": "2025.08.08 21:00:00",
+    "33": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "34": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "118377 01": "2025.08.10 06:00:00",
+    "35": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "36": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "121165 76": "2025.08.12 18:00:00",
+    "37": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "38": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "117263 21": "2025.09.15 08:00:01",
+    "39": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "40": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "123013 69": "2025.10.04 23:00:00",
+    "41": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "42": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "125738 70": "2025.10.05 20:00:02",
+    "43": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "1": "balance",
+    "10 000 00": [
+      "10 000.00",
+      "Regime EA L1 BUY"
+    ],
+    "0 03": [
+      "99306.67",
+      "101733.21",
+      "105199.17",
+      "104164.45",
+      "104338.90",
+      "103435.58",
+      "118783.35",
+      "117881.17",
+      "123295.06",
+      "125743.02"
+    ],
+    "2 50": "72.80",
+    "10 070 30": [
+      "tp 101729.90",
+      "Regime EA L1 BUY"
+    ],
+    "10 039 25": [
+      "sl 104173.63",
+      "Regime EA L1 BUY"
+    ],
+    "0 05": [
+      "104746.48",
+      "104745.26",
+      "94785.84",
+      "94172.54",
+      "96777.86",
+      "98372.29",
+      "119458.51",
+      "119397.65"
+    ],
+    "10 039 19": [
+      "sl 104746.48",
+      "Regime EA L1 BUY"
+    ],
+    "3 95": "-30.66",
+    "10 004 58": [
+      "sl 94173.64",
+      "Regime EA L1 BUY"
+    ],
+    "10 084 30": [
+      "tp 98371.93",
+      "Regime EA L1 BUY"
+    ],
+    "0 04": [
+      "103832.83",
+      "103829.66",
+      "105352.79",
+      "105352.19",
+      "109550.15",
+      "109549.82",
+      "119071.52",
+      "118230.47"
+    ],
+    "10 084 18": [
+      "sl 103832.83",
+      "Regime EA L1 BUY"
+    ],
+    "10 057 08": [
+      "sl 103453.57",
+      "Regime EA L1 BUY"
+    ],
+    "10 057 06": [
+      "sl 105352.79",
+      "Regime EA L1 BUY"
+    ],
+    "10 057 04": [
+      "sl 109550.15",
+      "Regime EA L1 BUY"
+    ],
+    "0 08": [
+      "105934.66",
+      "106968.27",
+      "117326.64",
+      "118404.14",
+      "121996.86",
+      "123021.18"
+    ],
+    "10 139 73": [
+      "tp 106955.13",
+      "Regime EA L1 BUY"
+    ],
+    "0 06": [
+      "107451.23",
+      "106865.58",
+      "107324.19",
+      "106741.55",
+      "117508.78",
+      "118749.73",
+      "116723.70",
+      "116707.45"
+    ],
+    "10 104 59": [
+      "sl 106867.22",
+      "Regime EA L1 BUY"
+    ],
+    "10 069 63": [
+      "sl 106744.86",
+      "Regime EA L1 BUY"
+    ],
+    "10 144 08": [
+      "tp 118749.63",
+      "Regime EA L1 BUY"
+    ],
+    "10 117 02": [
+      "sl 117881.79",
+      "Regime EA L1 BUY"
+    ],
+    "3 96": "-33.64",
+    "10 079 42": [
+      "sl 118235.17",
+      "Regime EA L1 BUY"
+    ],
+    "17 53": "-0.97",
+    "10 060 92": [
+      "sl 116723.70",
+      "Regime EA L1 BUY"
+    ],
+    "10 147 12": [
+      "tp 118377.01",
+      "Regime EA L1 BUY"
+    ],
+    "5 01": "-3.05",
+    "10 139 06": [
+      "sl 119458.51",
+      "Regime EA L1 BUY"
+    ],
+    "0 07": [
+      "116067.16",
+      "116065.46"
+    ],
+    "10 138 94": [
+      "sl 116067.16",
+      "Regime EA L1 BUY"
+    ],
+    "10 220 88": [
+      "tp 123013.69",
+      "Regime EA L1 BUY"
+    ],
+    "10 294 32": "tp 125738.70",
+    "327 27": "10 294.32"
+  },
+  "records_preview": [],
+  "run_id": "2026-03-30-152009-086338-btcusd-20260124-validation-1y"
+}

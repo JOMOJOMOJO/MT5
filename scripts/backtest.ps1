@@ -5,6 +5,50 @@ param(
     [switch]$RestartExisting
 )
 
+function Get-ConfigValue {
+    param(
+        [string[]]$Lines,
+        [string]$Key
+    )
+
+    $line = $Lines | Where-Object { $_ -match "^\s*$([regex]::Escape($Key))=" } | Select-Object -First 1
+    if (-not $line) {
+        return $null
+    }
+    return ($line -replace "^\s*$([regex]::Escape($Key))=", "").Trim()
+}
+
+function Convert-PresetToHashtable {
+    param(
+        [string]$PresetPath
+    )
+
+    $values = [ordered]@{}
+    if (-not $PresetPath -or -not (Test-Path $PresetPath)) {
+        return $values
+    }
+
+    foreach ($line in Get-Content -Path $PresetPath) {
+        $trimmed = $line.Trim()
+        if (-not $trimmed -or $trimmed.StartsWith(";") -or $trimmed.StartsWith("#")) {
+            continue
+        }
+        if ($trimmed -notmatch "=") {
+            continue
+        }
+
+        $key, $rawValue = $trimmed -split "=", 2
+        if (-not $key) {
+            continue
+        }
+
+        $firstValue = ($rawValue -split "\|\|", 2)[0].Trim()
+        $values[$key.Trim()] = $firstValue
+    }
+
+    return $values
+}
+
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $terminalDataRoot = (Resolve-Path (Join-Path $repoRoot "..\..\..")).Path
 
@@ -26,11 +70,15 @@ if (-not $ConfigPath) {
 }
 
 $resolvedConfig = (Resolve-Path $ConfigPath).Path
+$sourceConfigPath = $resolvedConfig
 $configLines = Get-Content -Path $resolvedConfig
 
 $presetSourceLine = $configLines | Where-Object { $_ -match '^\s*PresetSource=' } | Select-Object -First 1
 $presetNameLine = $configLines | Where-Object { $_ -match '^\s*PresetName=' } | Select-Object -First 1
 $generatedConfigPath = $null
+$resolvedPresetPath = $null
+$presetName = $null
+$presetValue = $null
 
 if ($presetSourceLine) {
     $presetValue = ($presetSourceLine -replace '^\s*PresetSource=', '').Trim()
@@ -160,5 +208,34 @@ if ($generatedConfigPath) {
     Write-Host "Preset-backed generated config: $generatedConfigPath"
 }
 if ($reportReady) {
+    $reportMetaPath = "$expectedReportPath.meta.json"
+    $reportMeta = [ordered]@{
+        generated_at = (Get-Date).ToString("o")
+        config = [ordered]@{
+            source_path = $sourceConfigPath
+            resolved_path = $resolvedConfig
+            generated_config_path = $generatedConfigPath
+        }
+        tester = [ordered]@{
+            symbol = Get-ConfigValue -Lines $configLines -Key "Symbol"
+            period = Get-ConfigValue -Lines $configLines -Key "Period"
+            from_date = Get-ConfigValue -Lines $configLines -Key "FromDate"
+            to_date = Get-ConfigValue -Lines $configLines -Key "ToDate"
+            report_path = $expectedReportPath
+        }
+        preset = if ($resolvedPresetPath) {
+            [ordered]@{
+                name = $presetName
+                source = $presetValue
+                resolved_path = $resolvedPresetPath
+                parameters = Convert-PresetToHashtable -PresetPath $resolvedPresetPath
+            }
+        } else {
+            $null
+        }
+    }
+    $reportMeta | ConvertTo-Json -Depth 8 | Set-Content -Path $reportMetaPath -Encoding UTF8
+
     Write-Host "Report: $expectedReportPath"
+    Write-Host "Report metadata: $reportMetaPath"
 }

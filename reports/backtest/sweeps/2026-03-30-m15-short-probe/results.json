@@ -1,0 +1,115 @@
+[
+  {
+    "name": "m15_short_look12_rsi30",
+    "params": {
+      "InpSignalTimeframe": "15",
+      "InpAllowBuy": "false",
+      "InpAllowSell": "true",
+      "InpBuyLogicMask": "0",
+      "InpSellLogicMask": "2",
+      "InpBreakoutLookback": "12",
+      "InpSellBreakoutMinRsi": "30.0",
+      "InpSellBreakoutRequireAcceptanceBelowSlow": "false"
+    },
+    "week": {
+      "net": -32.49,
+      "pf": 0.0,
+      "dd": 0.32,
+      "trades": 1,
+      "long": 0,
+      "short": 1
+    },
+    "oos": {
+      "net": -32.49,
+      "pf": 0.0,
+      "dd": 0.32,
+      "trades": 1,
+      "long": 0,
+      "short": 1
+    },
+    "year": {
+      "net": -35.27,
+      "pf": 0.0,
+      "dd": 0.35,
+      "trades": 1,
+      "long": 0,
+      "short": 1
+    }
+  },
+  {
+    "name": "m15_short_look10_rsi30",
+    "params": {
+      "InpSignalTimeframe": "15",
+      "InpAllowBuy": "false",
+      "InpAllowSell": "true",
+      "InpBuyLogicMask": "0",
+      "InpSellLogicMask": "2",
+      "InpBreakoutLookback": "10",
+      "InpSellBreakoutMinRsi": "30.0",
+      "InpSellBreakoutRequireAcceptanceBelowSlow": "false"
+    },
+    "week": {
+      "net": -33.92,
+      "pf": 0.0,
+      "dd": 0.34,
+      "trades": 1,
+      "long": 0,
+      "short": 1
+    },
+    "oos": {
+      "net": -66.21,
+      "pf": 0.0,
+      "dd": 0.66,
+      "trades": 2,
+      "long": 0,
+      "short": 2
+    },
+    "year": {
+      "net": 50.48,
+      "pf": 2.43,
+      "dd": 0.35,
+      "trades": 2,
+      "long": 0,
+      "short": 2
+    }
+  },
+  {
+    "name": "m15_short_look12_rsi30_tight",
+    "params": {
+      "InpSignalTimeframe": "15",
+      "InpAllowBuy": "false",
+      "InpAllowSell": "true",
+      "InpBuyLogicMask": "0",
+      "InpSellLogicMask": "2",
+      "InpBreakoutLookback": "12",
+      "InpSellBreakoutMinRsi": "30.0",
+      "InpBreakoutBufferATR": "0.06",
+      "InpMaxBreakoutExtensionATR": "0.70",
+      "InpSellBreakoutRequireAcceptanceBelowSlow": "false"
+    },
+    "week": {
+      "net": -32.49,
+      "pf": 0.0,
+      "dd": 0.32,
+      "trades": 1,
+      "long": 0,
+      "short": 1
+    },
+    "oos": {
+      "net": -32.49,
+      "pf": 0.0,
+      "dd": 0.32,
+      "trades": 1,
+      "long": 0,
+      "short": 1
+    },
+    "year": {
+      "net": 0.0,
+      "pf": null,
+      "dd": 0.0,
+      "trades": 0,
+      "long": 0,
+      "short": 0
+    }
+  }
+]

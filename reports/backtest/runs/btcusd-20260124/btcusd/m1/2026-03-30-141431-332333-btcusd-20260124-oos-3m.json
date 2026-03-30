@@ -1,0 +1,123 @@
+{
+  "imported_at": "2026-03-30T14:14:31",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "btcusd_20260124",
+    "symbol": "BTCUSD",
+    "timeframe": "M1",
+    "tested_range": "2026.01.01 - 2026.03.31",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "btcusd-20260124",
+    "symbol_key": "btcusd",
+    "timeframe_key": "m1",
+    "run_path": "reports/backtest/runs/btcusd-20260124/btcusd/m1/2026-03-30-141431-332333-btcusd-20260124-oos-3m.json",
+    "knowledge_path": "knowledge/backtests/btcusd-20260124/btcusd/m1/2026-03-30-141431-332333-btcusd-20260124-oos-3m.md",
+    "imported_dir": "reports/backtest/imported/btcusd-20260124/btcusd/m1/2026-03-30-141431-332333-btcusd-20260124-oos-3m",
+    "imported_report": "reports/backtest/imported/btcusd-20260124/btcusd/m1/2026-03-30-141431-332333-btcusd-20260124-oos-3m/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\btcusd_20260124-oos-3m.htm",
+    "type": "htm"
+  },
+  "metrics": {
+    "ea_name": "btcusd_20260124",
+    "symbol": "BTCUSD",
+    "period": "M1 (2026.01.01 - 2026.03.31)",
+    "history_quality_percent": 100.0,
+    "bars": 126388,
+    "ticks": 18517159,
+    "initial_deposit": 10000.0,
+    "total_net_profit": 0.0,
+    "gross_profit": 0.0,
+    "gross_loss": 0.0,
+    "recovery_factor": 0.0,
+    "sharpe_ratio": 0.0,
+    "absolute_drawdown": 0.0,
+    "maximal_drawdown_amount": 0.0,
+    "maximal_drawdown_percent": 0.0,
+    "relative_drawdown_amount": 0.0,
+    "relative_drawdown_percent": 0.0,
+    "total_trades": 0,
+    "short_positions_count": 0,
+    "short_positions_percent": 0.0,
+    "long_positions_count": 0,
+    "long_positions_percent": 0.0,
+    "profit_trades_count": 0,
+    "profit_trades_percent": 0.0,
+    "loss_trades_count": 0,
+    "loss_trades_percent": 0.0,
+    "largest_profit_trade": 0.0,
+    "largest_loss_trade": 0.0,
+    "average_profit_trade": 0.0,
+    "average_loss_trade": 0.0,
+    "timeframe": "M1",
+    "tested_range": "2026.01.01 - 2026.03.31",
+    "win_rate_percent": 0.0
+  },
+  "summary": {
+    "headline": "取引回数が少なすぎて判断が不安定です。 / 総損益がまだプラスではありません。",
+    "strengths": [
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [
+      "取引回数が少なすぎて判断が不安定です。",
+      "総損益がまだプラスではありません。"
+    ],
+    "notes": []
+  },
+  "tags": [
+    "h1-long-only"
+  ],
+  "raw_fields": {
+    "expert": "btcusd_20260124",
+    "symbol": [
+      "BTCUSD",
+      "0"
+    ],
+    "period": "M1 (2026.01.01 - 2026.03.31)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "126388",
+    "ticks": "18517159",
+    "total net profit": "0.00",
+    "absolute drawdown": "0.00",
+    "gross profit": "0.00",
+    "maximal drawdown": "0.00 (0.00%)",
+    "gross loss": "0.00",
+    "relative drawdown": "0.00% (0.00)",
+    "0 00": [
+      "期待利得:",
+      "証拠金維持率:",
+      "0.00",
+      "0.00",
+      "10 000.00"
+    ],
+    "recovery factor": "0.00",
+    "sharpe ratio": "0.00",
+    "z score": "0.00 (0.00%)",
+    "ahpr": "0.0000 (0.00%)",
+    "lr correlation": "0.00",
+    "ontester": "0",
+    "ghpr": "0.0000 (0.00%)",
+    "lr standard error": "0.00",
+    "total trades": "0",
+    "short trades won percent": "0 (0.00%)",
+    "long positions won percent": "0 (0.00%)",
+    "profit trades percent of total": "0 (0.00%)",
+    "loss trades percent of total": "0 (0.00%)",
+    "largest profit trade": "0.00",
+    "largest loss trade": "0.00",
+    "average profit trade": "0.00",
+    "average loss trade": "0.00",
+    "correlation profits mfe": "0.00",
+    "correlation profits mae": "0.00",
+    "correlation mfe mae": "0.0000",
+    "t p": "時間",
+    "1": "balance",
+    "10 000 00": "10 000.00"
+  },
+  "records_preview": [],
+  "run_id": "2026-03-30-141431-332333-btcusd-20260124-oos-3m"
+}

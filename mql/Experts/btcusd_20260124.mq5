@@ -5,9 +5,9 @@
 
 #property copyright   "Trading System"
 #property link        "https://www.mql5.com"
-#property version     "3.00"
+#property version     "3.10"
 #property strict
-#property description "BTCUSD regime-aware M15 pullback and breakout trader"
+#property description "BTCUSD regime-aware H1 long-only pullback trader"
 
 #include <Trade\Trade.mqh>
 #include <Trade\PositionInfo.mqh>
@@ -16,10 +16,10 @@ CTrade trade;
 CPositionInfo posInfo;
 
 input string          InpSymbol                = "BTCUSD";
-input ENUM_TIMEFRAMES InpSignalTimeframe       = PERIOD_M15;
-input ENUM_TIMEFRAMES InpRegimeTimeframe       = PERIOD_H1;
+input ENUM_TIMEFRAMES InpSignalTimeframe       = PERIOD_H1;
+input ENUM_TIMEFRAMES InpRegimeTimeframe       = PERIOD_H4;
 input bool            InpUseConfirmRegime      = true;
-input ENUM_TIMEFRAMES InpConfirmRegimeTimeframe = PERIOD_H4;
+input ENUM_TIMEFRAMES InpConfirmRegimeTimeframe = PERIOD_D1;
 input int             InpSignalFastEMAPeriod   = 20;
 input int             InpSignalSlowEMAPeriod   = 50;
 input int             InpRegimeFastEMAPeriod   = 50;
@@ -35,7 +35,7 @@ input bool            InpUseTimeFilter         = false;
 input int             InpTradeStartHour        = 0;
 input int             InpTradeEndHour          = 24;
 input bool            InpAllowBuy              = true;
-input bool            InpAllowSell             = true;
+input bool            InpAllowSell             = false;
 input bool            InpUseLossStop           = true;
 input int             InpMaxConsecutiveLosses  = 2;
 input bool            InpUseDailyLossCap       = true;
@@ -48,32 +48,33 @@ input bool            InpUseFreezeLevelCheck   = false;
 
 // Logic mask: 1=Pullback, 2=Breakout
 input int             InpBuyLogicMask          = 1;
-input int             InpSellLogicMask         = 2;
+input int             InpSellLogicMask         = 0;
 input int             InpLogicCooldownBars     = 4;
 input int             InpMaxOpenPerLogic       = 1;
 
-input int             InpBreakoutLookback      = 12;
-input double          InpPullbackToleranceATR  = 0.28;
-input double          InpBreakoutBufferATR     = 0.04;
-input double          InpMinSignalBodyATR      = 0.18;
-input double          InpMinRegimeSlopePips    = 600.0;
-input double          InpMinRegimeGapPips      = 1200.0;
-input double          InpConfirmSlopeMultiplier = 0.50;
-input double          InpConfirmGapMultiplier   = 0.50;
-input double          InpMinSignalATRPips      = 6000.0;
-input double          InpMaxSignalATRPips      = 50000.0;
-input double          InpBuyPullbackRsiDip     = 45.0;
-input double          InpBuyPullbackRsiReclaim = 50.0;
+input int             InpBreakoutLookback      = 8;
+input double          InpPullbackToleranceATR  = 0.18;
+input double          InpBreakoutBufferATR     = 0.03;
+input double          InpMinSignalBodyATR      = 0.10;
+input double          InpMinRegimeSlopePips    = 900.0;
+input double          InpMinRegimeGapPips      = 1800.0;
+input double          InpConfirmSlopeMultiplier = 0.70;
+input double          InpConfirmGapMultiplier   = 0.70;
+input double          InpMinSignalATRPips      = 12000.0;
+input double          InpMaxSignalATRPips      = 120000.0;
+input double          InpBuyPullbackRsiDip     = 48.0;
+input double          InpBuyPullbackRsiReclaim = 52.0;
 input double          InpSellPullbackRsiPeak   = 54.0;
 input double          InpSellPullbackRsiReject = 50.0;
 input double          InpBuyBreakoutMaxRsi     = 70.0;
-input double          InpSellBreakoutMinRsi    = 30.0;
-input double          InpMaxBreakoutExtensionATR = 1.20;
+input double          InpSellBreakoutMinRsi    = 35.0;
+input double          InpMaxBreakoutExtensionATR = 0.80;
+input bool            InpSellBreakoutRequireAcceptanceBelowSlow = false;
 
-input double          InpStopATRMultiplier     = 1.60;
-input double          InpTargetATRMultiplier   = 2.60;
-input double          InpBreakEvenRR           = 1.10;
-input double          InpTrailStartRR          = 1.80;
+input double          InpStopATRMultiplier     = 1.30;
+input double          InpTargetATRMultiplier   = 3.20;
+input double          InpBreakEvenRR           = 1.20;
+input double          InpTrailStartRR          = 2.00;
 input double          InpTrailATRMultiplier    = 1.00;
 input double          InpMaxSpreadPips         = 3500.0;
 input long            InpMagicNumber           = 123456;
@@ -131,6 +132,7 @@ long dbgStopsBlocked = 0;
 long dbgManagedBreakEven = 0;
 long dbgManagedTrail = 0;
 long dbgSignalDataShort = 0;
+long dbgBlockedSellSlowAcceptance = 0;
 double dbgAtrPipsSum = 0.0;
 double dbgAtrPipsMax = 0.0;
 long dbgAtrSamples = 0;
@@ -536,12 +538,15 @@ int GetTradingSignal(int &logicId)
                 bool acceptableRsi = (rsiBuffer[1] >= InpSellBreakoutMinRsi);
                 bool acceptableExtension = (extension <= signalAtrPrice * InpMaxBreakoutExtensionATR);
                 bool resetIntoFast = (high1 >= signalFast[1] - pullbackTolerance);
-                if(signalBearTrend && bearishBody && bodySize >= minBody && acceptableRsi && acceptableExtension && resetIntoFast && close1 < priorLow - breakoutBuffer)
+                bool acceptedBelowSlow = (!InpSellBreakoutRequireAcceptanceBelowSlow || close2 < signalSlow[2]);
+                if(signalBearTrend && bearishBody && bodySize >= minBody && acceptableRsi && acceptableExtension && resetIntoFast && acceptedBelowSlow && close1 < priorLow - breakoutBuffer)
                 {
                     logicId = LOGIC_BREAKOUT;
                     dbgBreakoutTriggers++;
                     return -1;
                 }
+                if(signalBearTrend && bearishBody && bodySize >= minBody && acceptableRsi && acceptableExtension && resetIntoFast && !acceptedBelowSlow)
+                    dbgBlockedSellSlowAcceptance++;
             }
         }
     }
@@ -961,7 +966,7 @@ void PrintDebugSummary(const int reason)
     double avgSpread = (dbgSpreadSamples > 0) ? (dbgSpreadSum / dbgSpreadSamples) : 0.0;
 
     PrintFormat(
-        "DebugSummary reason=%d bars=%I64d max_open=%I64d time=%I64d spread_block=%I64d loss_stop=%I64d daily_loss=%I64d loss_cooldown=%I64d signal_zero=%I64d no_regime=%I64d atr_range=%I64d can_enter=%I64d buy_signals=%I64d sell_signals=%I64d order_ok=%I64d order_fail=%I64d lots_zero=%I64d stops_block=%I64d data_short=%I64d",
+        "DebugSummary reason=%d bars=%I64d max_open=%I64d time=%I64d spread_block=%I64d loss_stop=%I64d daily_loss=%I64d loss_cooldown=%I64d signal_zero=%I64d no_regime=%I64d atr_range=%I64d can_enter=%I64d buy_signals=%I64d sell_signals=%I64d order_ok=%I64d order_fail=%I64d lots_zero=%I64d stops_block=%I64d data_short=%I64d sell_slow_accept=%I64d",
         reason,
         dbgBarsSeen,
         dbgBlockedMaxOpen,
@@ -980,7 +985,8 @@ void PrintDebugSummary(const int reason)
         dbgOrderFail,
         dbgLotsZero,
         dbgStopsBlocked,
-        dbgSignalDataShort
+        dbgSignalDataShort,
+        dbgBlockedSellSlowAcceptance
     );
 
     PrintFormat(

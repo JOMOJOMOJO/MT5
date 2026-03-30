@@ -1,0 +1,202 @@
+[
+  {
+    "name": "base",
+    "params": {
+      "InpSellBreakoutMinRsi": "35.0",
+      "InpBreakoutBufferATR": "0.03",
+      "InpBreakoutLookback": "8",
+      "InpMaxBreakoutExtensionATR": "0.80"
+    },
+    "week": {
+      "net": -97.42,
+      "pf": 0.0,
+      "dd": 0.97,
+      "trades": 3,
+      "long": 0,
+      "short": 3
+    },
+    "oos": {
+      "net": 25.85,
+      "pf": 1.2,
+      "dd": 0.97,
+      "trades": 6,
+      "long": 0,
+      "short": 6
+    }
+  },
+  {
+    "name": "rsi42",
+    "params": {
+      "InpSellBreakoutMinRsi": "42.0",
+      "InpBreakoutBufferATR": "0.03",
+      "InpBreakoutLookback": "8",
+      "InpMaxBreakoutExtensionATR": "0.80"
+    },
+    "week": {
+      "net": -97.42,
+      "pf": 0.0,
+      "dd": 0.97,
+      "trades": 3,
+      "long": 0,
+      "short": 3
+    },
+    "oos": {
+      "net": 25.85,
+      "pf": 1.2,
+      "dd": 0.97,
+      "trades": 6,
+      "long": 0,
+      "short": 6
+    }
+  },
+  {
+    "name": "buf06",
+    "params": {
+      "InpSellBreakoutMinRsi": "35.0",
+      "InpBreakoutBufferATR": "0.06",
+      "InpBreakoutLookback": "8",
+      "InpMaxBreakoutExtensionATR": "0.80"
+    },
+    "week": {
+      "net": -97.42,
+      "pf": 0.0,
+      "dd": 0.97,
+      "trades": 3,
+      "long": 0,
+      "short": 3
+    },
+    "oos": {
+      "net": -48.78,
+      "pf": 0.62,
+      "dd": 1.3,
+      "trades": 5,
+      "long": 0,
+      "short": 5
+    }
+  },
+  {
+    "name": "look12",
+    "params": {
+      "InpSellBreakoutMinRsi": "35.0",
+      "InpBreakoutBufferATR": "0.03",
+      "InpBreakoutLookback": "12",
+      "InpMaxBreakoutExtensionATR": "0.80"
+    },
+    "week": {
+      "net": 0.0,
+      "pf": null,
+      "dd": 0.0,
+      "trades": 0,
+      "long": 0,
+      "short": 0
+    },
+    "oos": {
+      "net": 0.0,
+      "pf": null,
+      "dd": 0.0,
+      "trades": 0,
+      "long": 0,
+      "short": 0
+    }
+  },
+  {
+    "name": "rsi42_buf06",
+    "params": {
+      "InpSellBreakoutMinRsi": "42.0",
+      "InpBreakoutBufferATR": "0.06",
+      "InpBreakoutLookback": "8",
+      "InpMaxBreakoutExtensionATR": "0.80"
+    },
+    "week": {
+      "net": -97.42,
+      "pf": 0.0,
+      "dd": 0.97,
+      "trades": 3,
+      "long": 0,
+      "short": 3
+    },
+    "oos": {
+      "net": -48.78,
+      "pf": 0.62,
+      "dd": 1.3,
+      "trades": 5,
+      "long": 0,
+      "short": 5
+    }
+  },
+  {
+    "name": "rsi42_look12",
+    "params": {
+      "InpSellBreakoutMinRsi": "42.0",
+      "InpBreakoutBufferATR": "0.03",
+      "InpBreakoutLookback": "12",
+      "InpMaxBreakoutExtensionATR": "0.80"
+    },
+    "week": {
+      "net": 0.0,
+      "pf": null,
+      "dd": 0.0,
+      "trades": 0,
+      "long": 0,
+      "short": 0
+    },
+    "oos": {
+      "net": 0.0,
+      "pf": null,
+      "dd": 0.0,
+      "trades": 0,
+      "long": 0,
+      "short": 0
+    }
+  },
+  {
+    "name": "rsi42_buf06_look12",
+    "params": {
+      "InpSellBreakoutMinRsi": "42.0",
+      "InpBreakoutBufferATR": "0.06",
+      "InpBreakoutLookback": "12",
+      "InpMaxBreakoutExtensionATR": "0.80"
+    },
+    "week": {
+      "net": 0.0,
+      "pf": null,
+      "dd": 0.0,
+      "trades": 0,
+      "long": 0,
+      "short": 0
+    },
+    "oos": {
+      "net": 0.0,
+      "pf": null,
+      "dd": 0.0,
+      "trades": 0,
+      "long": 0,
+      "short": 0
+    }
+  },
+  {
+    "name": "strict",
+    "params": {
+      "InpSellBreakoutMinRsi": "45.0",
+      "InpBreakoutBufferATR": "0.08",
+      "InpBreakoutLookback": "12",
+      "InpMaxBreakoutExtensionATR": "0.60"
+    },
+    "week": {
+      "net": 0.0,
+      "pf": null,
+      "dd": 0.0,
+      "trades": 0,
+      "long": 0,
+      "short": 0
+    },
+    "oos": {
+      "net": 0.0,
+      "pf": null,
+      "dd": 0.0,
+      "trades": 0,
+      "long": 0,
+      "short": 0
+    }
+  }
+]

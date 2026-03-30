@@ -10,8 +10,10 @@
 - [ ] Stand up repo-local company workflow for MT5 EA development.
 - [ ] Add optimization workflow, governance rules, and org roles for the MT5 company model.
 - [ ] Run company-improvement reviews when shared org, skill, or MCP changes land.
-- [ ] Narrow the BTCUSD redesign from "catastrophic loss" to "1Y positive and live-gated".
-- [ ] Analyze the weak 2025 BTCUSD months and derive a regime filter that preserves the recent 1M/OOS edge.
+- [ ] Narrow the BTCUSD redesign from "mixed-direction prototype" to "cross-year robust long-only live candidate".
+- [ ] Analyze the weak 2024 BTCUSD months and derive a long-side regime filter for the H1/H4/D1 candidate.
+- [ ] Make H1 metadata-backed runs the canonical lineage and phase older M1 imports into legacy status.
+- [ ] Decide whether the short side should become a separate EA instead of staying inside the BTCUSD long baseline.
 
 ## Blocked
 
@@ -32,3 +34,5 @@
 - [x] Add the improvement department and company snapshot history for org, skill, and MCP changes.
 - [x] Convert company snapshots into reusable knowledge under `knowledge/company/`.
 - [x] Redesign `btcusd_20260124` into an asymmetric regime model and recover positive week/1M/OOS runs.
+- [x] Kill the shared short-side baseline and promote an H1/H4/D1 long-only candidate for BTCUSD.
+- [x] Add report-sidecar metadata and rebuildable backtest catalog support.

@@ -1,0 +1,125 @@
+[
+  {
+    "name": "base_long",
+    "params": {},
+    "y2024": {
+      "net": -474.21,
+      "pf": 0.57,
+      "dd": 6.49,
+      "trades": 56
+    },
+    "y2025": {
+      "net": 516.26,
+      "pf": 1.77,
+      "dd": 1.38,
+      "trades": 42
+    }
+  },
+  {
+    "name": "regime_strict",
+    "params": {
+      "InpMinRegimeSlopePips": "1100.0",
+      "InpMinRegimeGapPips": "2200.0"
+    },
+    "y2024": {
+      "net": -474.21,
+      "pf": 0.57,
+      "dd": 6.49,
+      "trades": 56
+    },
+    "y2025": {
+      "net": 516.26,
+      "pf": 1.77,
+      "dd": 1.38,
+      "trades": 42
+    }
+  },
+  {
+    "name": "confirm_strict",
+    "params": {
+      "InpMinRegimeSlopePips": "1100.0",
+      "InpMinRegimeGapPips": "2200.0",
+      "InpConfirmSlopeMultiplier": "0.85",
+      "InpConfirmGapMultiplier": "0.85"
+    },
+    "y2024": {
+      "net": -474.21,
+      "pf": 0.57,
+      "dd": 6.49,
+      "trades": 56
+    },
+    "y2025": {
+      "net": 516.26,
+      "pf": 1.77,
+      "dd": 1.38,
+      "trades": 42
+    }
+  },
+  {
+    "name": "atr_strict",
+    "params": {
+      "InpMinRegimeSlopePips": "1100.0",
+      "InpMinRegimeGapPips": "2200.0",
+      "InpMinSignalATRPips": "11000.0"
+    },
+    "y2024": {
+      "net": -447.74,
+      "pf": 0.59,
+      "dd": 6.55,
+      "trades": 54
+    },
+    "y2025": {
+      "net": 516.26,
+      "pf": 1.77,
+      "dd": 1.38,
+      "trades": 42
+    }
+  },
+  {
+    "name": "reclaim_strict",
+    "params": {
+      "InpMinRegimeSlopePips": "1100.0",
+      "InpMinRegimeGapPips": "2200.0",
+      "InpConfirmSlopeMultiplier": "0.85",
+      "InpConfirmGapMultiplier": "0.85",
+      "InpBuyPullbackRsiDip": "47.0",
+      "InpBuyPullbackRsiReclaim": "54.0"
+    },
+    "y2024": {
+      "net": -209.68,
+      "pf": 0.25,
+      "dd": 2.44,
+      "trades": 17
+    },
+    "y2025": {
+      "net": 16.97,
+      "pf": 1.06,
+      "dd": 1.6,
+      "trades": 16
+    }
+  },
+  {
+    "name": "ultra",
+    "params": {
+      "InpMinRegimeSlopePips": "1300.0",
+      "InpMinRegimeGapPips": "2600.0",
+      "InpConfirmSlopeMultiplier": "0.90",
+      "InpConfirmGapMultiplier": "0.90",
+      "InpMinSignalATRPips": "12000.0",
+      "InpBuyPullbackRsiDip": "47.0",
+      "InpBuyPullbackRsiReclaim": "55.0"
+    },
+    "y2024": {
+      "net": -140.58,
+      "pf": 0.33,
+      "dd": 1.75,
+      "trades": 12
+    },
+    "y2025": {
+      "net": 74.7,
+      "pf": 1.32,
+      "dd": 1.03,
+      "trades": 12
+    }
+  }
+]

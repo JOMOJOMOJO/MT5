@@ -1,0 +1,161 @@
+[
+  {
+    "name": "baseline_h1",
+    "params": {},
+    "y2024": {
+      "net": -54.79,
+      "pf": 0.91,
+      "dd": 2.1,
+      "trades": 30
+    },
+    "y2025": {
+      "net": 294.32,
+      "pf": 2.16,
+      "dd": 0.82,
+      "trades": 21
+    },
+    "oos": {
+      "net": 0.0,
+      "pf": null,
+      "dd": 0.0,
+      "trades": 0
+    }
+  },
+  {
+    "name": "h1_no_confirm",
+    "params": {
+      "InpUseConfirmRegime": "false"
+    },
+    "y2024": {
+      "net": -54.79,
+      "pf": 0.91,
+      "dd": 2.1,
+      "trades": 30
+    },
+    "y2025": {
+      "net": 294.32,
+      "pf": 2.16,
+      "dd": 0.82,
+      "trades": 21
+    },
+    "oos": {
+      "net": -66.53,
+      "pf": 0.0,
+      "dd": 0.67,
+      "trades": 2
+    }
+  },
+  {
+    "name": "h1_no_confirm_rsi53",
+    "params": {
+      "InpUseConfirmRegime": "false",
+      "InpBuyPullbackRsiDip": "47.0",
+      "InpBuyPullbackRsiReclaim": "53.0"
+    },
+    "y2024": {
+      "net": -64.58,
+      "pf": 0.7,
+      "dd": 1.79,
+      "trades": 9
+    },
+    "y2025": {
+      "net": 107.01,
+      "pf": 1.81,
+      "dd": 1.22,
+      "trades": 11
+    },
+    "oos": {
+      "net": -66.53,
+      "pf": 0.0,
+      "dd": 0.67,
+      "trades": 2
+    }
+  },
+  {
+    "name": "m15_h1_h4_reclaim52",
+    "params": {
+      "InpSignalTimeframe": "15",
+      "InpRegimeTimeframe": "16385",
+      "InpConfirmRegimeTimeframe": "16388",
+      "InpMinSignalATRPips": "7000.0",
+      "InpBuyPullbackRsiDip": "46.0",
+      "InpBuyPullbackRsiReclaim": "52.0"
+    },
+    "y2024": {
+      "net": -67.97,
+      "pf": 0.89,
+      "dd": 2.96,
+      "trades": 32
+    },
+    "y2025": {
+      "net": -12.97,
+      "pf": 0.98,
+      "dd": 1.82,
+      "trades": 27
+    },
+    "oos": {
+      "net": 0.0,
+      "pf": null,
+      "dd": 0.0,
+      "trades": 0
+    }
+  },
+  {
+    "name": "m15_h1_h4_reclaim53",
+    "params": {
+      "InpSignalTimeframe": "15",
+      "InpRegimeTimeframe": "16385",
+      "InpConfirmRegimeTimeframe": "16388",
+      "InpMinSignalATRPips": "7000.0",
+      "InpBuyPullbackRsiDip": "47.0",
+      "InpBuyPullbackRsiReclaim": "53.0"
+    },
+    "y2024": {
+      "net": -57.94,
+      "pf": 0.92,
+      "dd": 2.92,
+      "trades": 37
+    },
+    "y2025": {
+      "net": 180.31,
+      "pf": 1.32,
+      "dd": 1.95,
+      "trades": 28
+    },
+    "oos": {
+      "net": -0.01,
+      "pf": 0.0,
+      "dd": 0.0,
+      "trades": 1
+    }
+  },
+  {
+    "name": "m15_h1_no_confirm",
+    "params": {
+      "InpSignalTimeframe": "15",
+      "InpRegimeTimeframe": "16385",
+      "InpUseConfirmRegime": "false",
+      "InpMinSignalATRPips": "7000.0",
+      "InpBuyPullbackRsiDip": "46.0",
+      "InpBuyPullbackRsiReclaim": "52.0"
+    },
+    "y2024": {
+      "net": -108.24,
+      "pf": 0.87,
+      "dd": 3.36,
+      "trades": 40
+    },
+    "y2025": {
+      "net": -93.44,
+      "pf": 0.91,
+      "dd": 2.25,
+      "trades": 45
+    },
+    "oos": {
+      "net": 11.83,
+      "pf": 1.19,
+      "dd": 0.32,
+      "trades": 4
+    }
+  }
+]
