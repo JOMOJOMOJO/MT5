@@ -1,0 +1,61 @@
+{
+  "metadata": {
+    "symbol": "BTCUSD",
+    "timeframe": "M5",
+    "bars": 50000,
+    "history_start": "2025-10-06T07:50:00",
+    "history_end": "2026-03-30T10:00:00",
+    "split_date": "2026-01-01T00:00:00",
+    "parameters": {
+      "symbol": "BTCUSD",
+      "timeframe": "M5",
+      "bars": 50000,
+      "split_date": "2026-01-01",
+      "terminal_path": null,
+      "allow_buy": false,
+      "allow_sell": true,
+      "long_start_hour": 20,
+      "long_end_hour": 24,
+      "long_dist": 0.6,
+      "long_rsi_max": 40.0,
+      "short_start_hour": 0,
+      "short_end_hour": 8,
+      "short_dist": 1.0,
+      "short_rsi_min": 70.0,
+      "hold_bars": 12,
+      "exit_buffer_atr": 0.1,
+      "stop_atr": 2.5,
+      "max_open_trades": 8,
+      "max_open_per_side": 4,
+      "daily_loss_cap_pct": 3.0,
+      "max_spread_pips": 3500.0,
+      "output": ".\\reports\\research\\2026-03-30-session-meanrev-validate\\short_only_10_70_h12.json"
+    }
+  },
+  "stats": {
+    "train": {
+      "trades": 518,
+      "trades_per_day": 6.093370910427644,
+      "net": 16585.259642857094,
+      "profit_factor": 1.2680519634014067,
+      "win_rate": 63.12741312741312,
+      "max_drawdown": 8284.3914285714
+    },
+    "test": {
+      "trades": 576,
+      "trades_per_day": 6.522036563790053,
+      "net": 3818.0200000000477,
+      "profit_factor": 1.063211320230547,
+      "win_rate": 61.979166666666664,
+      "max_drawdown": 7860.503571428459
+    },
+    "all": {
+      "trades": 1094,
+      "trades_per_day": 6.281590175046852,
+      "net": 20403.279642857146,
+      "profit_factor": 1.1668649743928992,
+      "win_rate": 62.52285191956124,
+      "max_drawdown": 11519.70035714281
+    }
+  }
+}

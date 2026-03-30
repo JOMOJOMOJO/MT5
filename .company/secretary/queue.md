@@ -14,6 +14,11 @@
 - [ ] Analyze the weak 2024 BTCUSD months and derive a long-side regime filter for the H1/H4/D1 candidate.
 - [ ] Make H1 metadata-backed runs the canonical lineage and phase older M1 imports into legacy status.
 - [ ] Decide whether the short side should become a separate EA instead of staying inside the BTCUSD long baseline.
+- [ ] Promote the `btcusd_20260330_session_meanrev` no-Friday / skip-03 candidate from Python validation into an MT5 report-backed candidate.
+- [ ] Diagnose why MT5 command-line tester stopped auto-starting after 2026-03-30 14:53.
+- [ ] Re-run the session-mean-reversion candidate on a longer BTCUSD history window with the friction-aware validator.
+- [ ] Verify the new `stop 4.0 / exit 0.3 / spread 2500` baseline on a longer BTCUSD history window.
+- [ ] Combine `short_max_dist` with a volatility regime filter so the BTCUSD M5 candidate survives the 80k summer months without losing the ~5/day profile.
 
 ## Blocked
 
@@ -36,3 +41,9 @@
 - [x] Redesign `btcusd_20260124` into an asymmetric regime model and recover positive week/1M/OOS runs.
 - [x] Kill the shared short-side baseline and promote an H1/H4/D1 long-only candidate for BTCUSD.
 - [x] Add report-sidecar metadata and rebuildable backtest catalog support.
+- [x] Add statistical-edge research plus a session mean-reversion prototype for BTCUSD M5.
+- [x] Add a Python validator fallback for the session mean-reversion EA when MT5 CLI tester is unstable.
+- [x] Add slippage / execution-gap assumptions to the Python validator for the session-mean-reversion candidate.
+- [x] Add weekday / blocked-hour filters and promote a stronger BTCUSD M5 short-only baseline.
+- [x] Implement balance-based daily-loss-cap blocking in the Python validator.
+- [x] Extend the validator candidate to 80k BTCUSD bars and record that the current family still breaks in 2025 summer regimes.

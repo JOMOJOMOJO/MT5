@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "symbol": "BTCUSD",
+    "timeframe": "M5",
+    "bars": 50000,
+    "history_start": "2025-10-06T09:20:00",
+    "history_end": "2026-03-30T11:30:00",
+    "split_date": "2026-01-01T00:00:00",
+    "parameters": {
+      "symbol": "BTCUSD",
+      "timeframe": "M5",
+      "bars": 50000,
+      "split_date": "2026-01-01",
+      "terminal_path": null,
+      "allow_buy": false,
+      "allow_sell": true,
+      "long_start_hour": 20,
+      "long_end_hour": 24,
+      "long_dist": 0.6,
+      "long_rsi_max": 40.0,
+      "buy_trend_filter": "none",
+      "short_start_hour": 0,
+      "short_end_hour": 8,
+      "short_dist": 1.0,
+      "short_rsi_min": 66.0,
+      "sell_trend_filter": "none",
+      "sell_require_above_slow_ema": false,
+      "hold_bars": 12,
+      "exit_buffer_atr": 0.2,
+      "stop_atr": 3.5,
+      "allowed_weekdays": "0,1,2,3,4,6",
+      "blocked_entry_hours": "3",
+      "entry_slip_pips": 250.0,
+      "exit_slip_pips": 250.0,
+      "stop_slip_pips": 400.0,
+      "max_open_trades": 8,
+      "max_open_per_side": 4,
+      "daily_loss_cap_pct": 3.0,
+      "max_spread_pips": 3000.0,
+      "output": ".\\reports\\research\\2026-03-30-session-meanrev-validate\\short_no_fri_skip3_0_8_10_66_h12_stop35_exit20_slip250.json"
+    }
+  },
+  "stats": {
+    "train": {
+      "trades": 467,
+      "trades_per_day": 5.49322006208136,
+      "net": 19042.759999999893,
+      "profit_factor": 1.4190542585608126,
+      "win_rate": 68.3083511777302,
+      "max_drawdown": 5658.19750000002
+    },
+    "test": {
+      "trades": 533,
+      "trades_per_day": 6.0334879333385745,
+      "net": 15629.655000000083,
+      "profit_factor": 1.3427433029539422,
+      "win_rate": 68.66791744840526,
+      "max_drawdown": 5505.264999999979
+    },
+    "all": {
+      "trades": 1000,
+      "trades_per_day": 5.741054520083724,
+      "net": 34672.41499999998,
+      "profit_factor": 1.3808319758832734,
+      "win_rate": 68.5,
+      "max_drawdown": 10748.412499999951
+    }
+  }
+}

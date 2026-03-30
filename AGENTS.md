@@ -16,6 +16,7 @@
 - When the user wants live risk limits or kill-switch design, use `risk-manager`.
 - When the user wants promotion from backtest to demo or live, use `forward-live-ops`.
 - When the user wants new experiments, optimization ranges, or validation order, use `research-director`.
+- When the user wants bar-data mining, session statistics, or edge discovery from historical charts before coding the EA, use `statistical-edge-research`.
 - When the user wants a skeptical review that may conclude the algorithm should be abandoned, use `strategy-critic`.
 - When the user wants to add or remove trader roles, skills, or teams, use `talent-manager`.
 - When the user wants to redesign the company workflow or governance model, use `org-designer`.

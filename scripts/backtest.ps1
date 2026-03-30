@@ -102,10 +102,20 @@ if ($presetSourceLine) {
         throw "Could not determine preset name for '$resolvedPresetPath'."
     }
 
-    $testerPresetDir = Join-Path $terminalDataRoot "MQL5\Profiles\Tester"
-    New-Item -ItemType Directory -Path $testerPresetDir -Force | Out-Null
-    $targetPresetPath = Join-Path $testerPresetDir $presetName
-    Copy-Item -LiteralPath $resolvedPresetPath -Destination $targetPresetPath -Force
+    $presetTargets = @(
+        (Join-Path $terminalDataRoot "MQL5\Profiles\Tester"),
+        (Join-Path (Split-Path -Parent $TerminalPath) "Profiles\Tester")
+    ) | Select-Object -Unique
+
+    foreach ($presetDir in $presetTargets) {
+        try {
+            New-Item -ItemType Directory -Path $presetDir -Force -ErrorAction Stop | Out-Null
+            $targetPresetPath = Join-Path $presetDir $presetName
+            Copy-Item -LiteralPath $resolvedPresetPath -Destination $targetPresetPath -Force -ErrorAction Stop
+        } catch {
+            Write-Warning "Skipping preset copy to '$presetDir': $($_.Exception.Message)"
+        }
+    }
 
     $filteredConfigLines = foreach ($line in $configLines) {
         if ($line -match '^\s*PresetSource=' -or $line -match '^\s*PresetName=') {
@@ -180,10 +190,6 @@ if ($RestartExisting) {
 $process = Start-Process -FilePath $TerminalPath -ArgumentList "/config:$resolvedConfig" -Wait -PassThru
 $exitCode = $process.ExitCode
 
-if ($exitCode -ne 0) {
-    throw "Backtest launch failed with exit code $exitCode."
-}
-
 $reportReady = $false
 if ($expectedReportPath) {
     $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
@@ -201,6 +207,13 @@ if ($expectedReportPath) {
     if (-not $reportReady) {
         throw "Backtest finished but no fresh report was found at '$expectedReportPath'."
     }
+}
+
+if ($exitCode -ne 0 -and -not $reportReady) {
+    throw "Backtest launch failed with exit code $exitCode."
+}
+if ($exitCode -ne 0 -and $reportReady) {
+    Write-Warning "Terminal returned exit code $exitCode, but a fresh report was generated."
 }
 
 Write-Host "Backtest launched with config: $resolvedConfig"

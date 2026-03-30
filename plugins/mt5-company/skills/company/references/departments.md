@@ -26,6 +26,12 @@
 - Propose new optimization windows, parameter ranges, and experiment ladders.
 - Suggest alternatives when the current workflow is too slow or too weak.
 
+## market-intelligence
+
+- Mine raw bar data for repeatable session, volatility, and regime biases.
+- Turn statistical findings into explicit rule candidates before EA coding.
+- Reject ideas that only work after excessive slicing or tiny sample windows.
+
 ## critique
 
 - Attack the current algorithm.

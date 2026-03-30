@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "symbol": "BTCUSD",
+    "timeframe": "M5",
+    "bars": 50000,
+    "history_start": "2025-10-06T09:35:00",
+    "history_end": "2026-03-30T11:45:00",
+    "split_date": "2026-01-01T00:00:00",
+    "parameters": {
+      "symbol": "BTCUSD",
+      "timeframe": "M5",
+      "bars": 50000,
+      "split_date": "2026-01-01",
+      "terminal_path": null,
+      "allow_buy": false,
+      "allow_sell": true,
+      "long_start_hour": 20,
+      "long_end_hour": 24,
+      "long_dist": 0.6,
+      "long_rsi_max": 40.0,
+      "buy_trend_filter": "none",
+      "short_start_hour": 0,
+      "short_end_hour": 8,
+      "short_dist": 1.0,
+      "short_rsi_min": 66.0,
+      "sell_trend_filter": "none",
+      "sell_require_above_slow_ema": false,
+      "hold_bars": 12,
+      "exit_buffer_atr": 0.3,
+      "stop_atr": 4.0,
+      "allowed_weekdays": "0,1,2,3,4,6",
+      "blocked_entry_hours": "3",
+      "entry_slip_pips": 250.0,
+      "exit_slip_pips": 250.0,
+      "stop_slip_pips": 400.0,
+      "max_open_trades": 8,
+      "max_open_per_side": 4,
+      "starting_balance": 100000.0,
+      "daily_loss_cap_pct": 3.0,
+      "max_spread_pips": 2500.0,
+      "output": ".\\reports\\research\\2026-03-30-session-meanrev-validate\\short_no_fri_skip3_0_8_10_66_h12_stop40_exit30_spread2500_slip250.json"
+    }
+  },
+  "stats": {
+    "train": {
+      "trades": 374,
+      "trades_per_day": 5.186190957677308,
+      "net": 19751.54428571431,
+      "profit_factor": 1.5968033438748148,
+      "win_rate": 71.3903743315508,
+      "max_drawdown": 5607.595714285726
+    },
+    "test": {
+      "trades": 512,
+      "trades_per_day": 5.930263422481399,
+      "net": 20095.271428571403,
+      "profit_factor": 1.5461189718465513,
+      "win_rate": 70.8984375,
+      "max_drawdown": 4300.4771428570975
+    },
+    "all": {
+      "trades": 886,
+      "trades_per_day": 5.086675703691891,
+      "net": 39846.81571428571,
+      "profit_factor": 1.5701192319946686,
+      "win_rate": 71.10609480812641,
+      "max_drawdown": 5607.595714285726
+    }
+  }
+}

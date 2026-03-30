@@ -24,6 +24,16 @@ shared skill, shared MCP, 部署構成の変更はここに残して正式採用
   - `README.md`
   - `AGENTS.md`
 
+- Date: 2026-03-30
+- Proposal: Add the `market-intelligence` department and the `statistical-edge-research` skill for MT5 bar-data mining, session analysis, and hypothesis-to-EA workflows.
+- Requested by: CEO
+- Decision: approved
+- Effective files:
+  - `plugins/mt5-company/skills/statistical-edge-research/`
+  - `plugins/mt5-company/scripts/statistical_edge_research.py`
+  - `plugins/mt5-company/skills/company/references/departments.md`
+  - `AGENTS.md`
+
 ## Rejected
 
 - Date:
