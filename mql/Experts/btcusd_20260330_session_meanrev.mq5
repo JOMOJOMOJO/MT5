@@ -16,6 +16,8 @@ CPositionInfo posInfo;
 input string          InpSymbol                  = "BTCUSD";
 input ENUM_TIMEFRAMES InpSignalTimeframe         = PERIOD_M5;
 input int             InpEMAPeriod               = 20;
+input int             InpSlowEMAPeriod           = 50;
+input int             InpTrendStackEMAPeriod     = 100;
 input int             InpRSIPeriod               = 14;
 input int             InpATRPeriod               = 14;
 
@@ -24,16 +26,43 @@ input int             InpLongStartHour           = 20;
 input int             InpLongEndHour             = 24;
 input double          InpLongDistanceATR         = 0.60;
 input double          InpLongMaxDistanceATR      = 0.0;
+input double          InpLongMinATRPercent       = 0.0;
+input double          InpLongMaxATRPercent       = 0.0;
 input double          InpLongRsiMax              = 40.0;
+input int             InpLongTrendFilterMode     = 0;
 
 input bool            InpAllowSell               = true;
 input int             InpShortStartHour          = 0;
 input int             InpShortEndHour            = 8;
-input double          InpShortDistanceATR        = 1.00;
-input double          InpShortMaxDistanceATR     = 0.0;
-input double          InpShortRsiMin             = 66.0;
+input double          InpShortDistanceATR        = 0.87;
+input double          InpShortMaxDistanceATR     = 3.0;
+input double          InpShortMinATRPercent      = 0.0003;
+input double          InpShortMaxATRPercent      = 0.0;
+input double          InpShortRsiMin             = 64.0;
+input double          InpShortRsiMax             = 82.0;
+input bool            InpShortRequireStackedBearTrend = false;
+input bool            InpEnableSecondShortBucket = false;
+input int             InpSecondShortStartHour    = 13;
+input int             InpSecondShortEndHour      = 22;
+input double          InpSecondShortDistanceATR  = 0.80;
+input double          InpSecondShortMaxDistanceATR = 0.0;
+input double          InpSecondShortMinATRPercent = 0.0;
+input double          InpSecondShortMaxATRPercent = 0.0;
+input double          InpSecondShortRsiMin       = 55.0;
+input double          InpSecondShortRsiMax       = 100.0;
+input bool            InpSecondShortRequireBearTrend = true;
+input bool            InpUseAdaptiveShortAtrRegime = false;
+input double          InpShortAtrRegimePivot     = 0.0012;
+input double          InpShortDistanceATRCalm    = 1.0;
+input double          InpShortMaxDistanceATRCalm = 3.0;
+input double          InpShortRsiMinCalm         = 66.0;
+input double          InpShortRsiMaxCalm         = 85.0;
+input double          InpShortDistanceATRActive  = 0.9;
+input double          InpShortMaxDistanceATRActive = 0.0;
+input double          InpShortRsiMinActive       = 64.0;
+input double          InpShortRsiMaxActive       = 95.0;
 
-input int             InpHoldBars                = 12;
+input int             InpHoldBars                = 14;
 input bool            InpExitOnMeanReversion     = true;
 input double          InpExitBufferATR           = 0.30;
 input double          InpEmergencyStopATR        = 4.00;
@@ -43,6 +72,13 @@ input int             InpMaxOpenTrades           = 8;
 input int             InpMaxOpenPerSide          = 4;
 input bool            InpUseDailyLossCap         = true;
 input double          InpDailyLossCapPercent     = 3.0;
+input int             InpMaxTradesPerDay         = 10;
+input int             InpMaxConsecutiveLosses    = 5;
+input int             InpConsecutiveLossCooldownBars = 24;
+input bool            InpUseEquityDrawdownCap    = false;
+input double          InpEquityDrawdownCapPercent = 12.0;
+input bool            InpEnableTelemetry         = true;
+input string          InpTelemetryFileName       = "mt5_company_btcusd_20260330_session_meanrev_live.csv";
 input double          InpMaxSpreadPips           = 2500.0;
 input double          InpMaxDeviationPips        = 250.0;
 input string          InpAllowedWeekdays         = "0,1,2,3,4,6";
@@ -50,22 +86,51 @@ input string          InpBlockedEntryHours       = "3";
 input long            InpMagicNumber             = 20260330;
 
 int emaHandle = INVALID_HANDLE;
+int slowEmaHandle = INVALID_HANDLE;
+int trendStackHandle = INVALID_HANDLE;
 int rsiHandle = INVALID_HANDLE;
 int atrHandle = INVALID_HANDLE;
 
 bool allowedWeekdays[7];
 bool blockedEntryHours[24];
+string runtimeSymbol = "";
+string runtimeAllowedWeekdays = "";
+string runtimeBlockedEntryHours = "";
+string runtimeTelemetryFileName = "";
 
 datetime lastSignalBarTime = 0;
 int lastDayOfYear = -1;
 double dailyStartBalance = 0.0;
+datetime currentDayStart = 0;
+int dailyClosedTrades = 0;
+int consecutiveLosses = 0;
+bool lossLockActive = false;
+datetime lossLockUntil = 0;
+double equityPeak = 0.0;
+int telemetryHandle = INVALID_HANDLE;
+int dailyEntriesBuy = 0;
+int dailyEntriesSell = 0;
+int dailyBlockedSpread = 0;
+int dailyBlockedDailyLoss = 0;
+int dailyBlockedTradeCap = 0;
+int dailyBlockedLossLock = 0;
+int dailyBlockedEquityCap = 0;
+int dailyLossLockActivations = 0;
 
 int OnInit()
 {
+    runtimeSymbol = NormalizePresetString(InpSymbol);
+    runtimeAllowedWeekdays = NormalizePresetString(InpAllowedWeekdays);
+    runtimeBlockedEntryHours = NormalizePresetString(InpBlockedEntryHours);
+    runtimeTelemetryFileName = NormalizePresetString(InpTelemetryFileName);
     trade.SetExpertMagicNumber((ulong)InpMagicNumber);
     dailyStartBalance = AccountInfoDouble(ACCOUNT_BALANCE);
+    equityPeak = AccountInfoDouble(ACCOUNT_EQUITY);
 
-    if(InpMagicNumber <= 0 || InpRiskPercent <= 0.0 || InpEmergencyStopATR <= 0.0 || InpHoldBars <= 0)
+    if(InpMagicNumber <= 0 || InpRiskPercent <= 0.0 || InpEmergencyStopATR <= 0.0 || InpHoldBars <= 0 ||
+       InpMaxTradesPerDay < 0 || InpMaxConsecutiveLosses < 0 || InpConsecutiveLossCooldownBars < 0 ||
+       InpEquityDrawdownCapPercent < 0.0 || InpTrendStackEMAPeriod <= 0 ||
+       InpLongTrendFilterMode < 0 || InpLongTrendFilterMode > 2)
     {
         Print("Invalid prototype parameters.");
         return INIT_PARAMETERS_INCORRECT;
@@ -78,7 +143,7 @@ int OnInit()
 
     if(InpMaxDeviationPips > 0.0)
     {
-        double point = SymbolInfoDouble(InpSymbol, SYMBOL_POINT);
+        double point = SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
         double pip = GetPipSize();
         if(point > 0.0 && pip > 0.0)
         {
@@ -87,22 +152,32 @@ int OnInit()
         }
     }
 
-    emaHandle = iMA(InpSymbol, InpSignalTimeframe, InpEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
-    rsiHandle = iRSI(InpSymbol, InpSignalTimeframe, InpRSIPeriod, PRICE_CLOSE);
-    atrHandle = iATR(InpSymbol, InpSignalTimeframe, InpATRPeriod);
+    emaHandle = iMA(runtimeSymbol, InpSignalTimeframe, InpEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+    slowEmaHandle = iMA(runtimeSymbol, InpSignalTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+    trendStackHandle = iMA(runtimeSymbol, InpSignalTimeframe, InpTrendStackEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+    rsiHandle = iRSI(runtimeSymbol, InpSignalTimeframe, InpRSIPeriod, PRICE_CLOSE);
+    atrHandle = iATR(runtimeSymbol, InpSignalTimeframe, InpATRPeriod);
 
-    if(emaHandle == INVALID_HANDLE || rsiHandle == INVALID_HANDLE || atrHandle == INVALID_HANDLE)
+    if(emaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE || trendStackHandle == INVALID_HANDLE ||
+       rsiHandle == INVALID_HANDLE || atrHandle == INVALID_HANDLE)
     {
         Print("Failed to create indicator handles.");
         return INIT_FAILED;
     }
+
+    if(InpEnableTelemetry && !OpenTelemetryFile())
+        Print("Telemetry file could not be opened. Continuing without telemetry.");
 
     return INIT_SUCCEEDED;
 }
 
 void OnDeinit(const int reason)
 {
+    FlushDailySummary(TimeCurrent(), "deinit");
+    CloseTelemetryFile();
     ReleaseHandle(emaHandle);
+    ReleaseHandle(slowEmaHandle);
+    ReleaseHandle(trendStackHandle);
     ReleaseHandle(rsiHandle);
     ReleaseHandle(atrHandle);
 }
@@ -116,18 +191,48 @@ void ReleaseHandle(int &handle)
     }
 }
 
+string NormalizePresetString(string rawValue)
+{
+    int marker = StringFind(rawValue, "||");
+    if(marker < 0)
+        return rawValue;
+    return StringSubstr(rawValue, 0, marker);
+}
+
 void OnTick()
 {
     if(!IsNewSignalBar())
         return;
 
     UpdateDailyAnchor();
+    UpdateEquityPeak();
     ManageOpenPositions();
 
     if(IsDailyLossCapBlocked())
+    {
+        dailyBlockedDailyLoss++;
         return;
+    }
+    if(IsEquityDrawdownBlocked())
+    {
+        dailyBlockedEquityCap++;
+        return;
+    }
+    if(IsTradeCountBlocked())
+    {
+        dailyBlockedTradeCap++;
+        return;
+    }
+    if(IsLossLockBlocked())
+    {
+        dailyBlockedLossLock++;
+        return;
+    }
     if(!IsSpreadAllowed())
+    {
+        dailyBlockedSpread++;
         return;
+    }
     if(CountOpenPositions() >= InpMaxOpenTrades)
         return;
 
@@ -138,9 +243,46 @@ void OnTick()
         OpenPosition(false);
 }
 
+void OnTradeTransaction(const MqlTradeTransaction &trans, const MqlTradeRequest &request, const MqlTradeResult &result)
+{
+    if(trans.type != TRADE_TRANSACTION_DEAL_ADD || trans.deal == 0)
+        return;
+    if(!HistoryDealSelect(trans.deal))
+        return;
+    if(HistoryDealGetString(trans.deal, DEAL_SYMBOL) != runtimeSymbol)
+        return;
+
+    long dealMagic = (long)HistoryDealGetInteger(trans.deal, DEAL_MAGIC);
+    if(dealMagic != InpMagicNumber)
+        return;
+
+    long dealEntry = (long)HistoryDealGetInteger(trans.deal, DEAL_ENTRY);
+    long dealType = (long)HistoryDealGetInteger(trans.deal, DEAL_TYPE);
+    string entrySide = (dealType == DEAL_TYPE_BUY) ? "buy" : "sell";
+    string exitSide = (dealType == DEAL_TYPE_BUY) ? "sell" : "buy";
+    double dealPrice = HistoryDealGetDouble(trans.deal, DEAL_PRICE);
+    double dealVolume = HistoryDealGetDouble(trans.deal, DEAL_VOLUME);
+
+    if(dealEntry == (long)DEAL_ENTRY_IN)
+    {
+        RegisterEntryDeal((datetime)HistoryDealGetInteger(trans.deal, DEAL_TIME), entrySide, dealPrice, dealVolume);
+        return;
+    }
+
+    if(dealEntry != (long)DEAL_ENTRY_OUT &&
+       dealEntry != (long)DEAL_ENTRY_OUT_BY &&
+       dealEntry != (long)DEAL_ENTRY_INOUT)
+        return;
+
+    double netProfit = HistoryDealGetDouble(trans.deal, DEAL_PROFIT) +
+                       HistoryDealGetDouble(trans.deal, DEAL_SWAP) +
+                       HistoryDealGetDouble(trans.deal, DEAL_COMMISSION);
+    RegisterClosedDeal((datetime)HistoryDealGetInteger(trans.deal, DEAL_TIME), netProfit, exitSide, dealPrice, dealVolume);
+}
+
 bool IsNewSignalBar()
 {
-    datetime currentBarTime = iTime(InpSymbol, InpSignalTimeframe, 0);
+    datetime currentBarTime = iTime(runtimeSymbol, InpSignalTimeframe, 0);
     if(currentBarTime <= 0)
         return false;
     if(currentBarTime != lastSignalBarTime)
@@ -154,11 +296,16 @@ bool IsNewSignalBar()
 void UpdateDailyAnchor()
 {
     MqlDateTime t;
-    TimeToStruct(TimeCurrent(), t);
+    datetime nowTime = TimeCurrent();
+    TimeToStruct(nowTime, t);
     if(t.day_of_year != lastDayOfYear)
     {
+        FlushDailySummary(nowTime, "rollover");
         lastDayOfYear = t.day_of_year;
         dailyStartBalance = AccountInfoDouble(ACCOUNT_BALANCE);
+        currentDayStart = StringToTime(TimeToString(nowTime, TIME_DATE));
+        ResetDailyCounters();
+        LogTelemetryEvent(nowTime, "day_reset", "", "", 0.0, 0.0, 0.0, "");
     }
 }
 
@@ -170,14 +317,203 @@ bool IsDailyLossCapBlocked()
     return (balance <= dailyStartBalance * (1.0 - InpDailyLossCapPercent / 100.0));
 }
 
+void UpdateEquityPeak()
+{
+    double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+    if(equityPeak <= 0.0 || equity > equityPeak)
+        equityPeak = equity;
+}
+
+bool IsEquityDrawdownBlocked()
+{
+    if(!InpUseEquityDrawdownCap || InpEquityDrawdownCapPercent <= 0.0 || equityPeak <= 0.0)
+        return false;
+    double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+    return (equity <= equityPeak * (1.0 - InpEquityDrawdownCapPercent / 100.0));
+}
+
+bool IsTradeCountBlocked()
+{
+    if(InpMaxTradesPerDay <= 0)
+        return false;
+    return (dailyClosedTrades >= InpMaxTradesPerDay);
+}
+
+bool IsLossLockBlocked()
+{
+    if(!lossLockActive || InpMaxConsecutiveLosses <= 0)
+        return false;
+    if(InpConsecutiveLossCooldownBars <= 0)
+        return true;
+    if(TimeCurrent() >= lossLockUntil)
+    {
+        lossLockActive = false;
+        consecutiveLosses = 0;
+        return false;
+    }
+    return true;
+}
+
+void ActivateLossLock()
+{
+    lossLockActive = true;
+    lossLockUntil = 0;
+    dailyLossLockActivations++;
+
+    if(InpConsecutiveLossCooldownBars > 0)
+    {
+        datetime anchorBarTime = iTime(runtimeSymbol, InpSignalTimeframe, 0);
+        if(anchorBarTime <= 0)
+            anchorBarTime = TimeCurrent();
+        int barSeconds = PeriodSeconds(InpSignalTimeframe);
+        if(barSeconds <= 0)
+            barSeconds = 60;
+        lossLockUntil = anchorBarTime + (datetime)(barSeconds * InpConsecutiveLossCooldownBars);
+        LogTelemetryEvent(TimeCurrent(), "loss_lock", "cooldown", "", 0.0, 0.0, 0.0, TimeToString(lossLockUntil, TIME_DATE | TIME_MINUTES));
+        PrintFormat("Loss lock activated: streak=%d cooldown_until=%s", consecutiveLosses, TimeToString(lossLockUntil, TIME_DATE | TIME_MINUTES));
+        return;
+    }
+
+    LogTelemetryEvent(TimeCurrent(), "loss_lock", "day", "", 0.0, 0.0, 0.0, "");
+    PrintFormat("Loss lock activated: streak=%d (rest of day)", consecutiveLosses);
+}
+
+void ResetDailyCounters()
+{
+    dailyClosedTrades = 0;
+    consecutiveLosses = 0;
+    lossLockActive = false;
+    lossLockUntil = 0;
+    dailyEntriesBuy = 0;
+    dailyEntriesSell = 0;
+    dailyBlockedSpread = 0;
+    dailyBlockedDailyLoss = 0;
+    dailyBlockedTradeCap = 0;
+    dailyBlockedLossLock = 0;
+    dailyBlockedEquityCap = 0;
+    dailyLossLockActivations = 0;
+}
+
+void RegisterEntryDeal(datetime dealTime, string side, double price, double volume)
+{
+    UpdateDailyAnchor();
+    if(side == "buy")
+        dailyEntriesBuy++;
+    else if(side == "sell")
+        dailyEntriesSell++;
+    LogTelemetryEvent(dealTime, "entry", "", side, price, volume, 0.0, "");
+}
+
+void RegisterClosedDeal(datetime dealTime, double netProfit, string side, double price, double volume)
+{
+    UpdateDailyAnchor();
+    MqlDateTime nowStruct, dealStruct;
+    TimeToStruct(TimeCurrent(), nowStruct);
+    TimeToStruct(dealTime, dealStruct);
+    if(nowStruct.day_of_year != dealStruct.day_of_year)
+        return;
+
+    dailyClosedTrades++;
+    if(netProfit >= 0.0)
+    {
+        consecutiveLosses = 0;
+        LogTelemetryEvent(dealTime, "exit", "win", side, price, volume, netProfit, "");
+        return;
+    }
+
+    consecutiveLosses++;
+    LogTelemetryEvent(dealTime, "exit", "loss", side, price, volume, netProfit, "");
+    if(InpMaxConsecutiveLosses > 0 && consecutiveLosses >= InpMaxConsecutiveLosses)
+        ActivateLossLock();
+}
+
+bool OpenTelemetryFile()
+{
+    if(!InpEnableTelemetry)
+        return false;
+    if(telemetryHandle != INVALID_HANDLE)
+        return true;
+
+    telemetryHandle = FileOpen(runtimeTelemetryFileName, FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_COMMON | FILE_ANSI, ';');
+    if(telemetryHandle == INVALID_HANDLE)
+    {
+        PrintFormat("Telemetry open failed for '%s' (%d)", runtimeTelemetryFileName, GetLastError());
+        return false;
+    }
+
+    if(FileSize(telemetryHandle) == 0)
+    {
+        FileWrite(telemetryHandle,
+                  "timestamp", "event", "reason", "side", "price", "volume", "net_profit", "balance", "equity",
+                  "daily_closed_trades", "daily_entries_buy", "daily_entries_sell", "consecutive_losses",
+                  "blocked_spread", "blocked_daily_loss", "blocked_trade_cap", "blocked_loss_lock", "blocked_equity_cap",
+                  "loss_lock_activations", "note");
+    }
+
+    FileSeek(telemetryHandle, 0, SEEK_END);
+    return true;
+}
+
+void CloseTelemetryFile()
+{
+    if(telemetryHandle != INVALID_HANDLE)
+    {
+        FileClose(telemetryHandle);
+        telemetryHandle = INVALID_HANDLE;
+    }
+}
+
+void LogTelemetryEvent(datetime stamp, string eventType, string reason, string side, double price, double volume, double netProfit, string note)
+{
+    if(!InpEnableTelemetry)
+        return;
+    if(!OpenTelemetryFile())
+        return;
+
+    FileSeek(telemetryHandle, 0, SEEK_END);
+    FileWrite(telemetryHandle,
+              TimeToString(stamp, TIME_DATE | TIME_SECONDS),
+              eventType,
+              reason,
+              side,
+              price,
+              volume,
+              netProfit,
+              AccountInfoDouble(ACCOUNT_BALANCE),
+              AccountInfoDouble(ACCOUNT_EQUITY),
+              dailyClosedTrades,
+              dailyEntriesBuy,
+              dailyEntriesSell,
+              consecutiveLosses,
+              dailyBlockedSpread,
+              dailyBlockedDailyLoss,
+              dailyBlockedTradeCap,
+              dailyBlockedLossLock,
+              dailyBlockedEquityCap,
+              dailyLossLockActivations,
+              note);
+    FileFlush(telemetryHandle);
+}
+
+void FlushDailySummary(datetime stamp, string trigger)
+{
+    if(currentDayStart <= 0)
+        return;
+    LogTelemetryEvent(stamp, "daily_summary", trigger, "", 0.0, 0.0, AccountInfoDouble(ACCOUNT_BALANCE) - dailyStartBalance, "");
+}
+
 int GetSignal()
 {
-    double ema[], rsi[], atr[];
+    double ema[], slowEma[], trendStackEma[], rsi[], atr[];
     ArraySetAsSeries(ema, true);
+    ArraySetAsSeries(slowEma, true);
+    ArraySetAsSeries(trendStackEma, true);
     ArraySetAsSeries(rsi, true);
     ArraySetAsSeries(atr, true);
 
     if(CopyBuffer(emaHandle, 0, 0, 3, ema) < 3 ||
+       CopyBuffer(slowEmaHandle, 0, 0, 3, slowEma) < 3 ||
+       CopyBuffer(trendStackHandle, 0, 0, 3, trendStackEma) < 3 ||
        CopyBuffer(rsiHandle, 0, 0, 3, rsi) < 3 ||
        CopyBuffer(atrHandle, 0, 0, 3, atr) < 3)
         return 0;
@@ -185,27 +521,72 @@ int GetSignal()
     if(atr[1] <= 0.0)
         return 0;
 
-    datetime signalTime = iTime(InpSymbol, InpSignalTimeframe, 1);
+    datetime signalTime = iTime(runtimeSymbol, InpSignalTimeframe, 1);
     MqlDateTime barTime;
     TimeToStruct(signalTime, barTime);
     if(!IsAllowedWeekday(barTime.day_of_week) || IsBlockedEntryHour(barTime.hour))
         return 0;
 
-    double close1 = iClose(InpSymbol, InpSignalTimeframe, 1);
+    double close1 = iClose(runtimeSymbol, InpSignalTimeframe, 1);
     double distAtr = (close1 - ema[1]) / atr[1];
+    double atrPct = (close1 > 0.0 ? (atr[1] / close1) : 0.0);
+    bool isBullTrend = (ema[1] > slowEma[1]);
+    bool isBearTrend = (ema[1] < slowEma[1]);
+    bool isStackedBearTrend = (ema[1] < slowEma[1] && slowEma[1] < trendStackEma[1]);
+    double shortDist = InpShortDistanceATR;
+    double shortMaxDist = InpShortMaxDistanceATR;
+    double shortRsiMin = InpShortRsiMin;
+    double shortRsiMax = InpShortRsiMax;
+    if(InpUseAdaptiveShortAtrRegime)
+    {
+        bool isActive = (atrPct >= InpShortAtrRegimePivot);
+        if(isActive)
+        {
+            shortDist = InpShortDistanceATRActive;
+            shortMaxDist = InpShortMaxDistanceATRActive;
+            shortRsiMin = InpShortRsiMinActive;
+            shortRsiMax = InpShortRsiMaxActive;
+        }
+        else
+        {
+            shortDist = InpShortDistanceATRCalm;
+            shortMaxDist = InpShortMaxDistanceATRCalm;
+            shortRsiMin = InpShortRsiMinCalm;
+            shortRsiMax = InpShortRsiMaxCalm;
+        }
+    }
 
     if(InpAllowBuy &&
        IsHourInRange(barTime.hour, InpLongStartHour, InpLongEndHour) &&
        distAtr <= -InpLongDistanceATR &&
        (InpLongMaxDistanceATR <= 0.0 || distAtr >= -InpLongMaxDistanceATR) &&
-       rsi[1] <= InpLongRsiMax)
+       (InpLongMinATRPercent <= 0.0 || atrPct >= InpLongMinATRPercent) &&
+       (InpLongMaxATRPercent <= 0.0 || atrPct <= InpLongMaxATRPercent) &&
+       rsi[1] <= InpLongRsiMax &&
+       IsTrendFilterSatisfied(InpLongTrendFilterMode, isBullTrend, isBearTrend))
         return 1;
 
     if(InpAllowSell &&
        IsHourInRange(barTime.hour, InpShortStartHour, InpShortEndHour) &&
-       distAtr >= InpShortDistanceATR &&
-       (InpShortMaxDistanceATR <= 0.0 || distAtr <= InpShortMaxDistanceATR) &&
-       rsi[1] >= InpShortRsiMin)
+       distAtr >= shortDist &&
+       (shortMaxDist <= 0.0 || distAtr <= shortMaxDist) &&
+       (InpShortMinATRPercent <= 0.0 || atrPct >= InpShortMinATRPercent) &&
+       (InpShortMaxATRPercent <= 0.0 || atrPct <= InpShortMaxATRPercent) &&
+       rsi[1] >= shortRsiMin &&
+       rsi[1] <= shortRsiMax &&
+       (!InpShortRequireStackedBearTrend || isStackedBearTrend))
+        return -1;
+
+    if(InpAllowSell &&
+       InpEnableSecondShortBucket &&
+       IsHourInRange(barTime.hour, InpSecondShortStartHour, InpSecondShortEndHour) &&
+       distAtr >= InpSecondShortDistanceATR &&
+       (InpSecondShortMaxDistanceATR <= 0.0 || distAtr <= InpSecondShortMaxDistanceATR) &&
+       (InpSecondShortMinATRPercent <= 0.0 || atrPct >= InpSecondShortMinATRPercent) &&
+       (InpSecondShortMaxATRPercent <= 0.0 || atrPct <= InpSecondShortMaxATRPercent) &&
+       rsi[1] >= InpSecondShortRsiMin &&
+       rsi[1] <= InpSecondShortRsiMax &&
+       (!InpSecondShortRequireBearTrend || isBearTrend))
         return -1;
 
     return 0;
@@ -219,12 +600,12 @@ void ManageOpenPositions()
     if(CopyBuffer(emaHandle, 0, 0, 3, ema) < 3 || CopyBuffer(atrHandle, 0, 0, 3, atr) < 3)
         return;
 
-    double close1 = iClose(InpSymbol, InpSignalTimeframe, 1);
+    double close1 = iClose(runtimeSymbol, InpSignalTimeframe, 1);
     for(int i = PositionsTotal() - 1; i >= 0; i--)
     {
         if(!posInfo.SelectByIndex(i))
             continue;
-        if(posInfo.Symbol() != InpSymbol || posInfo.Magic() != InpMagicNumber)
+        if(posInfo.Symbol() != runtimeSymbol || posInfo.Magic() != InpMagicNumber)
             continue;
 
         bool isBuy = (posInfo.PositionType() == POSITION_TYPE_BUY);
@@ -249,7 +630,7 @@ int HeldBars(datetime openedAt)
 {
     if(openedAt <= 0)
         return 0;
-    int shift = iBarShift(InpSymbol, InpSignalTimeframe, openedAt, false);
+    int shift = iBarShift(runtimeSymbol, InpSignalTimeframe, openedAt, false);
     if(shift < 0)
         return 0;
     return shift;
@@ -267,7 +648,7 @@ bool CanOpenSide(bool isBuy)
 void OpenPosition(bool isBuy)
 {
     MqlTick tick;
-    if(!SymbolInfoTick(InpSymbol, tick))
+    if(!SymbolInfoTick(runtimeSymbol, tick))
         return;
 
     double atr[];
@@ -289,7 +670,7 @@ void OpenPosition(bool isBuy)
         return;
 
     string comment = isBuy ? "SMR-L" : "SMR-S";
-    trade.PositionOpen(InpSymbol, isBuy ? ORDER_TYPE_BUY : ORDER_TYPE_SELL, lots, price, sl, 0.0, comment);
+    trade.PositionOpen(runtimeSymbol, isBuy ? ORDER_TYPE_BUY : ORDER_TYPE_SELL, lots, price, sl, 0.0, comment);
 }
 
 int CountOpenPositions()
@@ -299,7 +680,7 @@ int CountOpenPositions()
     {
         if(!posInfo.SelectByIndex(i))
             continue;
-        if(posInfo.Symbol() == InpSymbol && posInfo.Magic() == InpMagicNumber)
+        if(posInfo.Symbol() == runtimeSymbol && posInfo.Magic() == InpMagicNumber)
             count++;
     }
     return count;
@@ -313,7 +694,7 @@ int CountOpenPositionsBySide(bool isBuy)
     {
         if(!posInfo.SelectByIndex(i))
             continue;
-        if(posInfo.Symbol() != InpSymbol || posInfo.Magic() != InpMagicNumber)
+        if(posInfo.Symbol() != runtimeSymbol || posInfo.Magic() != InpMagicNumber)
             continue;
         if(posInfo.PositionType() == desiredType)
             count++;
@@ -329,8 +710,8 @@ double CalculateLotSizeFromDistance(double stopDistancePrice)
     double equity = AccountInfoDouble(ACCOUNT_EQUITY);
     double riskAmount = equity * InpRiskPercent / 100.0;
 
-    double tickValue = SymbolInfoDouble(InpSymbol, SYMBOL_TRADE_TICK_VALUE);
-    double tickSize = SymbolInfoDouble(InpSymbol, SYMBOL_TRADE_TICK_SIZE);
+    double tickValue = SymbolInfoDouble(runtimeSymbol, SYMBOL_TRADE_TICK_VALUE);
+    double tickSize = SymbolInfoDouble(runtimeSymbol, SYMBOL_TRADE_TICK_SIZE);
     if(tickValue <= 0.0 || tickSize <= 0.0)
         return 0.0;
 
@@ -339,9 +720,9 @@ double CalculateLotSizeFromDistance(double stopDistancePrice)
         return 0.0;
 
     double lots = riskAmount / pricePerLot;
-    double minLot = SymbolInfoDouble(InpSymbol, SYMBOL_VOLUME_MIN);
-    double maxLot = SymbolInfoDouble(InpSymbol, SYMBOL_VOLUME_MAX);
-    double stepLot = SymbolInfoDouble(InpSymbol, SYMBOL_VOLUME_STEP);
+    double minLot = SymbolInfoDouble(runtimeSymbol, SYMBOL_VOLUME_MIN);
+    double maxLot = SymbolInfoDouble(runtimeSymbol, SYMBOL_VOLUME_MAX);
+    double stepLot = SymbolInfoDouble(runtimeSymbol, SYMBOL_VOLUME_STEP);
     if(minLot <= 0.0 || maxLot <= 0.0 || stepLot <= 0.0)
         return 0.0;
 
@@ -352,19 +733,19 @@ double CalculateLotSizeFromDistance(double stopDistancePrice)
 
 double NormalizePrice(double price)
 {
-    int digits = (int)SymbolInfoInteger(InpSymbol, SYMBOL_DIGITS);
+    int digits = (int)SymbolInfoInteger(runtimeSymbol, SYMBOL_DIGITS);
     return NormalizeDouble(price, digits);
 }
 
 double GetPipSize()
 {
-    double point = SymbolInfoDouble(InpSymbol, SYMBOL_POINT);
+    double point = SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
     if(point <= 0.0)
         return 0.0;
-    long calcMode = SymbolInfoInteger(InpSymbol, SYMBOL_TRADE_CALC_MODE);
+    long calcMode = SymbolInfoInteger(runtimeSymbol, SYMBOL_TRADE_CALC_MODE);
     if(calcMode == SYMBOL_CALC_MODE_FOREX || calcMode == SYMBOL_CALC_MODE_FOREX_NO_LEVERAGE)
     {
-        int digits = (int)SymbolInfoInteger(InpSymbol, SYMBOL_DIGITS);
+        int digits = (int)SymbolInfoInteger(runtimeSymbol, SYMBOL_DIGITS);
         if(digits == 3 || digits == 5)
             return point * 10.0;
     }
@@ -374,7 +755,7 @@ double GetPipSize()
 double GetCurrentSpreadPips()
 {
     MqlTick tick;
-    if(!SymbolInfoTick(InpSymbol, tick))
+    if(!SymbolInfoTick(runtimeSymbol, tick))
         return -1.0;
     double pip = GetPipSize();
     if(pip <= 0.0)
@@ -394,10 +775,10 @@ bool IsSpreadAllowed()
 
 double GetMinStopDistance()
 {
-    int stops = (int)SymbolInfoInteger(InpSymbol, SYMBOL_TRADE_STOPS_LEVEL);
+    int stops = (int)SymbolInfoInteger(runtimeSymbol, SYMBOL_TRADE_STOPS_LEVEL);
     if(stops <= 0)
         return 0.0;
-    double point = SymbolInfoDouble(InpSymbol, SYMBOL_POINT);
+    double point = SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
     return stops * point;
 }
 
@@ -426,6 +807,15 @@ bool IsHourInRange(int hour, int startHour, int endHour)
     return (hour >= s || hour < e);
 }
 
+bool IsTrendFilterSatisfied(int mode, bool isBullTrend, bool isBearTrend)
+{
+    if(mode == 1)
+        return isBullTrend;
+    if(mode == 2)
+        return isBearTrend;
+    return true;
+}
+
 bool InitializeEntryFilters()
 {
     for(int i = 0; i < 7; i++)
@@ -433,9 +823,9 @@ bool InitializeEntryFilters()
     for(int j = 0; j < 24; j++)
         blockedEntryHours[j] = false;
 
-    if(!ParseAllowedWeekdays(InpAllowedWeekdays))
+    if(!ParseAllowedWeekdays(runtimeAllowedWeekdays))
         return false;
-    if(!ParseBlockedHours(InpBlockedEntryHours))
+    if(!ParseBlockedHours(runtimeBlockedEntryHours))
         return false;
     return true;
 }

@@ -37,6 +37,7 @@ Shared automation and operating rules live in the repository so the workflow can
 9. Save durable findings into `knowledge/` with the `knowledge-capture` skill or the MT5 MCP tools.
 10. Promote only after long validation and out-of-sample checks; use `forward-live-ops` before demo/live.
 11. Periodically review the company itself with `continuous-improvement-office`, then record org, skill, and MCP diffs under `.company/improvement/`.
+12. Keep `.company/improvement/org-scorecard.md`, `.company/improvement/skill-roster.md`, and `knowledge/patterns/` current so lessons are reused across EA families.
 
 ## Validation Ladder
 

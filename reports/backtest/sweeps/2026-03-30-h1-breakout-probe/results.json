@@ -1,0 +1,81 @@
+[
+  {
+    "name": "baseline_h1",
+    "params": {},
+    "y2024": {
+      "error": "Backtest launch failed with exit code -1.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:184 char:5\n+     throw \"Backtest launch failed with exit code $exitCode.\"\n+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest launch...h exit code -1.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest launch failed with exit code -1.\n \n"
+    },
+    "y2025": {
+      "error": "Backtest launch failed with exit code -1.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:184 char:5\n+     throw \"Backtest launch failed with exit code $exitCode.\"\n+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest launch...h exit code -1.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest launch failed with exit code -1.\n \n"
+    },
+    "oos": {
+      "error": "Backtest launch failed with exit code -1.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:184 char:5\n+     throw \"Backtest launch failed with exit code $exitCode.\"\n+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest launch...h exit code -1.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest launch failed with exit code -1.\n \n"
+    }
+  },
+  {
+    "name": "both_logic",
+    "params": {
+      "InpBuyLogicMask": "3"
+    },
+    "y2024": {
+      "error": "Backtest launch failed with exit code -1.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:184 char:5\n+     throw \"Backtest launch failed with exit code $exitCode.\"\n+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest launch...h exit code -1.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest launch failed with exit code -1.\n \n"
+    },
+    "y2025": {
+      "error": "Backtest launch failed with exit code -1.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:184 char:5\n+     throw \"Backtest launch failed with exit code $exitCode.\"\n+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest launch...h exit code -1.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest launch failed with exit code -1.\n \n"
+    },
+    "oos": {
+      "error": "New-Item : Access to the path 'Tester' is denied.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:111 char:9\n+         New-Item -ItemType Directory -Path $presetDir -Force | Out-Nu ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : PermissionDenied: (C:\\Program File...Profiles\\Tester:String) [New-Item], UnauthorizedAcc \n   essException\n    + FullyQualifiedErrorId : CreateDirectoryUnauthorizedAccessError,Microsoft.PowerShell.Commands.NewItemCommand\n \nCopy-Item : Could not find a part of the path 'C:\\Program Files\\XMTrading MT5\\Profiles\\Tester\\both_logic.set'.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:113 char:9\n+         Copy-Item -LiteralPath $resolvedPresetPath -Destination $targ ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (:) [Copy-Item], DirectoryNotFoundException\n    + FullyQualifiedErrorId : System.IO.DirectoryNotFoundException,Microsoft.PowerShell.Commands.CopyItemCommand\n \nBacktest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7D\nC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\both_logic-oos.htm'.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:204 char:9\n+         throw \"Backtest finished but no fresh report was found at '$e ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest finish...logic-oos.htm'.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\Met \n   aQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\bot  \n  h_logic-oos.htm'.\n \n"
+    }
+  },
+  {
+    "name": "breakout_only",
+    "params": {
+      "InpBuyLogicMask": "2"
+    },
+    "y2024": {
+      "error": "Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7D\nC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\breakout_only-y2024.htm'.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:208 char:9\n+         throw \"Backtest finished but no fresh report was found at '$e ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest finish...nly-y2024.htm'.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\Met \n   aQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\bre  \n  akout_only-y2024.htm'.\n \n"
+    },
+    "y2025": {
+      "error": "Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7D\nC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\breakout_only-y2025.htm'.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:208 char:9\n+         throw \"Backtest finished but no fresh report was found at '$e ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest finish...nly-y2025.htm'.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\Met \n   aQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\bre  \n  akout_only-y2025.htm'.\n \n"
+    },
+    "oos": {
+      "error": "Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7D\nC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\breakout_only-oos.htm'.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:208 char:9\n+         throw \"Backtest finished but no fresh report was found at '$e ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest finish..._only-oos.htm'.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\Met \n   aQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\bre  \n  akout_only-oos.htm'.\n \n"
+    }
+  },
+  {
+    "name": "both_logic_tight",
+    "params": {
+      "InpBuyLogicMask": "3",
+      "InpBreakoutLookback": "10",
+      "InpMaxBreakoutExtensionATR": "0.60",
+      "InpBuyBreakoutMaxRsi": "65.0"
+    },
+    "y2024": {
+      "error": "Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7D\nC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\both_logic_tight-y2024.htm'.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:208 char:9\n+         throw \"Backtest finished but no fresh report was found at '$e ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest finish...ght-y2024.htm'.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\Met \n   aQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\bot  \n  h_logic_tight-y2024.htm'.\n \n"
+    },
+    "y2025": {
+      "error": "Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7D\nC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\both_logic_tight-y2025.htm'.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:208 char:9\n+         throw \"Backtest finished but no fresh report was found at '$e ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest finish...ght-y2025.htm'.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\Met \n   aQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\bot  \n  h_logic_tight-y2025.htm'.\n \n"
+    },
+    "oos": {
+      "error": "Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7D\nC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\both_logic_tight-oos.htm'.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:208 char:9\n+         throw \"Backtest finished but no fresh report was found at '$e ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest finish...tight-oos.htm'.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\Met \n   aQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\bot  \n  h_logic_tight-oos.htm'.\n \n"
+    }
+  },
+  {
+    "name": "both_logic_loose",
+    "params": {
+      "InpBuyLogicMask": "3",
+      "InpBreakoutLookback": "6",
+      "InpBreakoutBufferATR": "0.02",
+      "InpBuyBreakoutMaxRsi": "75.0"
+    },
+    "y2024": {
+      "error": "Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7D\nC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\both_logic_loose-y2024.htm'.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:208 char:9\n+         throw \"Backtest finished but no fresh report was found at '$e ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest finish...ose-y2024.htm'.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\Met \n   aQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\bot  \n  h_logic_loose-y2024.htm'.\n \n"
+    },
+    "y2025": {
+      "error": "Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7D\nC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\both_logic_loose-y2025.htm'.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:208 char:9\n+         throw \"Backtest finished but no fresh report was found at '$e ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest finish...ose-y2025.htm'.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\Met \n   aQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\bot  \n  h_logic_loose-y2025.htm'.\n \n"
+    },
+    "oos": {
+      "error": "Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7D\nC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\both_logic_loose-oos.htm'.\nAt C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\backt\nest.ps1:208 char:9\n+         throw \"Backtest finished but no fresh report was found at '$e ...\n+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (Backtest finish...loose-oos.htm'.:String) [], RuntimeException\n    + FullyQualifiedErrorId : Backtest finished but no fresh report was found at 'C:\\Users\\windows\\AppData\\Roaming\\Met \n   aQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\reports\\backtest\\sweeps\\2026-03-30-h1-breakout-probe\\reports\\bot  \n  h_logic_loose-oos.htm'.\n \n"
+    }
+  }
+]

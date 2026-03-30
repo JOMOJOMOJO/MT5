@@ -22,4 +22,6 @@
 - When the user wants to redesign the company workflow or governance model, use `org-designer`.
 - When the user wants the company itself to review and improve its org, skill, and MCP structure, use `continuous-improvement-office`.
 - Record org, skill, and MCP snapshots under `.company/improvement/` so changes can be compared against the previous state.
+- Before adding a new shared skill, review `.company/improvement/skill-roster.md` and prefer tightening an existing role first.
+- Before promoting a candidate toward live, review `.company/improvement/org-scorecard.md` and cite at least one reusable lesson from `knowledge/patterns/` or `knowledge/company/`.
 - Any root-level change to company structure, approval routes, or shared skill roster requires CEO approval recorded under `.company/executive/ceo-approval-log.md` before the change is treated as accepted.

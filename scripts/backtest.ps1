@@ -49,6 +49,73 @@ function Convert-PresetToHashtable {
     return $values
 }
 
+function Get-MatchingTerminalProcesses {
+    param(
+        [string]$ResolvedTerminalPath
+    )
+
+    return @(Get-Process terminal64 -ErrorAction SilentlyContinue | Where-Object {
+        try {
+            $_.Path -eq $ResolvedTerminalPath
+        } catch {
+            $false
+        }
+    })
+}
+
+function Stop-MatchingTerminalProcesses {
+    param(
+        [string]$ResolvedTerminalPath
+    )
+
+    $running = Get-MatchingTerminalProcesses -ResolvedTerminalPath $ResolvedTerminalPath
+    foreach ($runningProcess in $running) {
+        Stop-Process -Id $runningProcess.Id -Force
+        try {
+            Wait-Process -Id $runningProcess.Id -Timeout 15 -ErrorAction SilentlyContinue
+        } catch {
+        }
+    }
+    return $running.Count
+}
+
+function Wait-ForFreshReport {
+    param(
+        [string]$ReportPath,
+        [object]$PreviousWriteTimeUtc,
+        [int]$TimeoutSeconds
+    )
+
+    $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
+    do {
+        if ($ReportPath -and (Test-Path $ReportPath)) {
+            $reportItem = Get-Item $ReportPath
+            if (-not $PreviousWriteTimeUtc -or $reportItem.LastWriteTimeUtc -gt $PreviousWriteTimeUtc) {
+                return $true
+            }
+        }
+        Start-Sleep -Seconds 2
+    } while ((Get-Date) -lt $deadline)
+
+    return $false
+}
+
+function Test-DirectoryWritable {
+    param(
+        [string]$DirectoryPath
+    )
+
+    try {
+        New-Item -ItemType Directory -Path $DirectoryPath -Force -ErrorAction Stop | Out-Null
+        $probePath = Join-Path $DirectoryPath ([System.IO.Path]::GetRandomFileName())
+        Set-Content -Path $probePath -Value "" -Encoding ASCII -NoNewline -ErrorAction Stop
+        Remove-Item -LiteralPath $probePath -Force -ErrorAction SilentlyContinue
+        return $true
+    } catch {
+        return $false
+    }
+}
+
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $terminalDataRoot = (Resolve-Path (Join-Path $repoRoot "..\..\..")).Path
 
@@ -59,6 +126,8 @@ if (-not $TerminalPath) {
 if (-not (Test-Path $TerminalPath)) {
     throw "MT5 terminal executable was not found at '$TerminalPath'."
 }
+
+$resolvedTerminalPath = (Resolve-Path $TerminalPath).Path
 
 if (-not $ConfigPath) {
     $defaultConfig = Join-Path $repoRoot "reports\backtest\tester.ini"
@@ -102,19 +171,29 @@ if ($presetSourceLine) {
         throw "Could not determine preset name for '$resolvedPresetPath'."
     }
 
-    $presetTargets = @(
+    $candidatePresetTargets = @(
         (Join-Path $terminalDataRoot "MQL5\Profiles\Tester"),
-        (Join-Path (Split-Path -Parent $TerminalPath) "Profiles\Tester")
+        (Join-Path (Split-Path -Parent $resolvedTerminalPath) "Profiles\Tester")
     ) | Select-Object -Unique
 
-    foreach ($presetDir in $presetTargets) {
-        try {
-            New-Item -ItemType Directory -Path $presetDir -Force -ErrorAction Stop | Out-Null
-            $targetPresetPath = Join-Path $presetDir $presetName
-            Copy-Item -LiteralPath $resolvedPresetPath -Destination $targetPresetPath -Force -ErrorAction Stop
-        } catch {
-            Write-Warning "Skipping preset copy to '$presetDir': $($_.Exception.Message)"
+    $presetTargets = @()
+    foreach ($candidateDir in $candidatePresetTargets) {
+        if (Test-DirectoryWritable -DirectoryPath $candidateDir) {
+            $presetTargets += $candidateDir
         }
+    }
+
+    if ($presetTargets.Count -eq 0) {
+        throw "No writable MT5 preset profile directory was available."
+    }
+
+    foreach ($presetDir in $presetTargets) {
+        $targetPresetPath = Join-Path $presetDir $presetName
+        Copy-Item -LiteralPath $resolvedPresetPath -Destination $targetPresetPath -Force -ErrorAction Stop
+    }
+
+    if ($presetTargets.Count -lt $candidatePresetTargets.Count) {
+        Write-Host "Preset copied to writable tester profile directory only."
     }
 
     $filteredConfigLines = foreach ($line in $configLines) {
@@ -176,37 +255,59 @@ $previousReportWriteTime = if ($expectedReportPath -and (Test-Path $expectedRepo
     $null
 }
 
-if ($RestartExisting) {
-    $resolvedTerminalPath = (Resolve-Path $TerminalPath).Path
-    $running = Get-Process terminal64 -ErrorAction SilentlyContinue | Where-Object {
-        $_.Path -eq $resolvedTerminalPath
-    }
-    foreach ($process in $running) {
-        Stop-Process -Id $process.Id -Force
-        $process.WaitForExit()
+$shutdownTerminal = Get-ConfigValue -Lines $configLines -Key "ShutdownTerminal"
+$runningBeforeLaunch = @(Get-MatchingTerminalProcesses -ResolvedTerminalPath $resolvedTerminalPath)
+$effectiveRestartExisting = $RestartExisting
+
+if (-not $effectiveRestartExisting -and $shutdownTerminal -eq "1" -and $runningBeforeLaunch.Count -gt 0) {
+    Write-Host "Matching MT5 terminal is already running. Restarting it to ensure /config is applied to a fresh tester session."
+    $effectiveRestartExisting = $true
+}
+
+if ($effectiveRestartExisting) {
+    $stoppedCount = Stop-MatchingTerminalProcesses -ResolvedTerminalPath $resolvedTerminalPath
+    if ($stoppedCount -gt 0) {
+        Write-Host "Stopped $stoppedCount running MT5 terminal process(es)."
     }
 }
 
-$process = Start-Process -FilePath $TerminalPath -ArgumentList "/config:$resolvedConfig" -Wait -PassThru
-$exitCode = $process.ExitCode
+$process = Start-Process -FilePath $resolvedTerminalPath -ArgumentList "/config:$resolvedConfig" -PassThru
+$exitCode = $null
 
 $reportReady = $false
 if ($expectedReportPath) {
-    $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
-    do {
-        if (Test-Path $expectedReportPath) {
-            $reportItem = Get-Item $expectedReportPath
-            if (-not $previousReportWriteTime -or $reportItem.LastWriteTimeUtc -gt $previousReportWriteTime) {
-                $reportReady = $true
-                break
-            }
-        }
-        Start-Sleep -Seconds 2
-    } while ((Get-Date) -lt $deadline)
+    $reportReady = Wait-ForFreshReport -ReportPath $expectedReportPath -PreviousWriteTimeUtc $previousReportWriteTime -TimeoutSeconds $TimeoutSeconds
+
+    if ($process.HasExited) {
+        $exitCode = $process.ExitCode
+    }
 
     if (-not $reportReady) {
+        if (-not $process.HasExited) {
+            try {
+                Wait-Process -Id $process.Id -Timeout 5 -ErrorAction SilentlyContinue
+            } catch {
+            }
+        }
+        if ($process.HasExited -and $null -eq $exitCode) {
+            $exitCode = $process.ExitCode
+        }
         throw "Backtest finished but no fresh report was found at '$expectedReportPath'."
     }
+} else {
+    try {
+        Wait-Process -Id $process.Id -Timeout $TimeoutSeconds -ErrorAction Stop
+    } catch {
+        throw "Backtest launch did not finish within $TimeoutSeconds seconds."
+    }
+    $exitCode = $process.ExitCode
+}
+
+if ($process.HasExited -and $null -eq $exitCode) {
+    $exitCode = $process.ExitCode
+}
+if ($null -eq $exitCode) {
+    $exitCode = 0
 }
 
 if ($exitCode -ne 0 -and -not $reportReady) {

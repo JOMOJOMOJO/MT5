@@ -10,6 +10,7 @@
 - [ ] Stand up repo-local company workflow for MT5 EA development.
 - [ ] Add optimization workflow, governance rules, and org roles for the MT5 company model.
 - [ ] Run company-improvement reviews when shared org, skill, or MCP changes land.
+- [ ] Keep `.company/improvement/org-scorecard.md` and `.company/improvement/skill-roster.md` current as strategy families and skills evolve.
 - [ ] Narrow the BTCUSD redesign from "mixed-direction prototype" to "cross-year robust long-only live candidate".
 - [ ] Analyze the weak 2024 BTCUSD months and derive a long-side regime filter for the H1/H4/D1 candidate.
 - [ ] Make H1 metadata-backed runs the canonical lineage and phase older M1 imports into legacy status.
@@ -18,7 +19,12 @@
 - [ ] Diagnose why MT5 command-line tester stopped auto-starting after 2026-03-30 14:53.
 - [ ] Re-run the session-mean-reversion candidate on a longer BTCUSD history window with the friction-aware validator.
 - [ ] Verify the new `stop 4.0 / exit 0.3 / spread 2500` baseline on a longer BTCUSD history window.
-- [ ] Combine `short_max_dist` with a volatility regime filter so the BTCUSD M5 candidate survives the 80k summer months without losing the ~5/day profile.
+- [ ] Add a recurring quarterly review record for live candidates and keep the cadence in release notes.
+- [ ] Execute a 1-week demo-forward run with `liveguards-mid` and archive runtime rule-trigger stats.
+- [ ] Review `mt5_company_btcusd_20260330_session_meanrev_live.csv` after the first demo-forward week and summarize blocker frequencies.
+- [ ] Rework session timing or entry construction for `btcusd_20260330_session_meanrev`; do not rely on a wider spread gate to lift trade count.
+- [ ] Run the new `combo15_35_h12` preset through a longer MT5 window and decide whether it can replace the conservative short-only reference.
+- [ ] Forward-demo the combo preset with its dedicated telemetry file and compare blocker frequencies against the short-only baseline.
 
 ## Blocked
 
@@ -47,3 +53,16 @@
 - [x] Add weekday / blocked-hour filters and promote a stronger BTCUSD M5 short-only baseline.
 - [x] Implement balance-based daily-loss-cap blocking in the Python validator.
 - [x] Extend the validator candidate to 80k BTCUSD bars and record that the current family still breaks in 2025 summer regimes.
+- [x] Separate seasonality from chart-pattern effects and add ATR% / distance / RSI-cap regime controls.
+- [x] Promote a new 80k/50k-balanced short candidate (`dist 0.87 / rsi 64-82`) that restores ~5 trades/day on 80k while keeping PF > 1.
+- [x] Implement live-guard controls in EA/validator (daily trade cap, losing-streak cooldown, optional equity DD cap) and validate the `liveguards-mid` profile.
+- [x] Publish a live operations playbook for `btcusd_20260330_session_meanrev`.
+- [x] Re-run MT5 HTML report-backed validation for `short_dist=0.87 / rsi 64-82` profile and archive under canonical lineage.
+- [x] Re-run MT5 HTML report-backed validation for `liveguards-mid` and compare with validator output.
+- [x] Add runtime telemetry export for `entry/exit/loss_lock/daily_summary` so forward-demo can be audited.
+- [x] Add a reusable telemetry summarizer and archive the MT5 baseline plus the rejected `spread3500` probe as knowledge.
+- [x] Probe wider spread gates in MT5 and reject `max_spread_pips=3000` / `3500` as live-candidate promotions.
+- [x] Add a second NY short bucket to EA/validator and reject it as a baseline promotion after MT5 report-backed comparison.
+- [x] Reject the `NY stacked short` bucket after MT5 report-backed probes even though the Python validator looked acceptable.
+- [x] Promote `asia short + late long 1.50 / RSI<=35 / hold 12` as the current higher-turnover candidate preset for `btcusd_20260330_session_meanrev`.
+- [x] Formalize org scorecard, skill-roster discipline, and reusable research rules so the company can improve itself without adding unnecessary roles.

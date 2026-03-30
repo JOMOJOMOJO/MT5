@@ -165,3 +165,123 @@
 - 結論:
   - 現時点では `stop 4.0 / exit 0.3 / spread 2500` の candidate を直近候補として維持する。
   - ただし長い履歴 gate は未通過なので、次は `max distance` と `volatility regime` を組み合わせて再設計する。
+
+## 2026-03-30 追加改善 4
+
+- 切り分け:
+  - `夏だから悪い` というより、`2025-06` から `2025-09` に増えた悪い regime` が問題。
+  - 具体的には、bad summer の trade は other 月と比べて `ATR%` がかなり低く、`gap_atr` は高かった。
+  - bad summer 内でも `gap_atr` 上位 quartile は勝率が `32.65%` まで落ちた。
+- 対応:
+  - validator と EA に `long/short min atr pct`, `long/short max atr pct` を追加した。
+  - `short_max_dist` と `short_min_atr_pct` を組み合わせた robust variant も検証した。
+- robust variant:
+  - file: `reports/research/2026-03-30-session-meanrev-validate/short_no_fri_skip3_0_8_10_66_h14_stop40_exit30_spread2500_maxdist3_atrmin5_slip250_80k.json`
+  - 条件:
+    - `short_max_dist=3.0`
+    - `short_min_atr_pct=0.0005`
+    - `hold_bars=14`
+  - 結果:
+    - train: `3.80 trades/day`, `PF 1.10`
+    - test: `5.39 trades/day`, `PF 1.48`
+    - all: `4.07 trades/day`, `PF 1.23`
+- 判断:
+  - seasonal filter を増やすより、`gap / volatility regime` のフィルタで説明する方が再現性が高い。
+  - ただし現時点では、robustness を上げると trade/day が 5 を割りやすい。
+  - 次は `short_max_dist + atr regime` を保ったまま `5回/日前後` を維持する別ロジックか、別の entry construction を作る。
+
+## 2026-03-30 追加改善 5
+
+- 目的:
+  - `80k` でも `5回/日` に近い回転を維持しつつ、PF 低下を抑える。
+- 探索:
+  - `dist` と `rsi` を中心に小バッチで再探索。
+  - 代表比較:
+    - `dist 0.90 / rsi 64-82`:
+      - train: `4.68 trades/day`, `PF 1.07`
+      - test: `6.30 trades/day`, `PF 1.39`
+      - all: `4.92 trades/day`, `PF 1.18`
+    - `dist 0.88 / rsi 65-82`:
+      - train: `4.41 trades/day`, `PF 1.09`
+      - test: `6.03 trades/day`, `PF 1.42`
+      - all: `4.66 trades/day`, `PF 1.21`
+- 採用候補:
+  - file: `reports/research/2026-03-30-session-meanrev-validate/short_no_fri_skip3_0_8_087_64_82_h14_stop40_exit30_spread2500_maxdist3_atrmin3_slip250_80k.json`
+  - 条件:
+    - `InpShortDistanceATR=0.87`
+    - `InpShortMinATRPercent=0.0003`
+    - `InpShortRsiMin=64.0`
+    - `InpShortRsiMax=82.0`
+    - `InpHoldBars=14`
+    - `InpEmergencyStopATR=4.0`
+    - `InpAllowedWeekdays=0,1,2,3,4,6`
+    - `InpBlockedEntryHours=3`
+  - 結果:
+    - train: `4.77 trades/day`, `PF 1.06`
+    - test: `6.42 trades/day`, `PF 1.39`
+    - all: `5.01 trades/day`, `PF 1.17`
+- 直近 50k 確認:
+  - file: `reports/research/2026-03-30-session-meanrev-validate/short_no_fri_skip3_0_8_087_64_82_h14_stop40_exit30_spread2500_maxdist3_atrmin3_slip250_50k.json`
+  - all: `5.62 trades/day`, `PF 1.43`
+- 判断:
+  - `80k` 側は PF をやや犠牲にして回転数を確保した形。
+  - `実運用前` の次 gate は、MT5 HTML report を伴う同条件の再確認と、連敗・日次DD管理を含む運用ルール固定。
+
+## 2026-03-30 追加改善 6 (Live Guard)
+
+- 目的:
+  - EA を実運用に近づけるため、`戦略本体` を変えずに `運用停止ルール` を組み込む。
+- 追加したガード:
+  - `max trades per day`
+  - `max consecutive losses + cooldown bars`
+  - `equity drawdown cap (optional)`
+- 近似検証:
+  - 過度に厳しい設定 (`max_consecutive_losses=4`, `equity_drawdown_cap_pct=12`) は取引停止が早すぎて不採用。
+  - 採用設定:
+    - `max_trades_per_day=10`
+    - `max_consecutive_losses=5`
+    - `consecutive_loss_cooldown_bars=24`
+    - `equity_drawdown_cap_pct=0` (機能は実装済み、デフォルト無効)
+- 採用設定での結果:
+  - file: `reports/research/2026-03-30-session-meanrev-validate/liveguards-mid-80k-b.json`
+    - train: `4.61 trades/day`, `PF 1.07`
+    - test: `6.06 trades/day`, `PF 1.45`
+    - all: `4.80 trades/day`, `PF 1.20`
+  - file: `reports/research/2026-03-30-session-meanrev-validate/liveguards-mid-50k-b.json`
+    - train: `5.71 trades/day`, `PF 1.54`
+    - test: `6.06 trades/day`, `PF 1.45`
+    - all: `5.37 trades/day`, `PF 1.49`
+- 判断:
+  - long-window 側で `PF` を改善しつつ、取引回数は `実運用寄り` の水準を維持。
+  - 次は MT5 HTML report で同条件の再現を取り、運用チェックリストに昇格する。
+
+## 2026-03-30 追加改善 7 (MT5 HTML 再現)
+
+- 問題:
+  - MT5 CLI report が `bars=0, ticks=0` となるケースが発生。
+  - 原因は preset 内 `InpSignalTimeframe` が不正値 (`16389`) になっていたこと。
+- 修正:
+  - `reports/presets/btcusd_20260330_session_meanrev-baseline.set`
+  - `InpSignalTimeframe=5` に修正。
+- MT5 report-backed result:
+  - report: `reports/backtest/imported/btcusd_20260330_session_meanrev-combined-m5.htm`
+  - imported run:
+    - `reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-03-30-212224-417653-btcusd-20260330-session-meanrev-.json`
+  - metrics:
+    - total trades: `242`
+    - profit factor: `1.75`
+    - net profit: `+156.61` (deposit `10000`)
+- 解釈:
+  - MT5 実測でも `収益性は正` を確認。
+  - ただし validator と取引密度差があるため、次の改善は `netting前提の検証一致` と `forward-demo`。
+
+## 2026-03-30 追加改善 8 (Forward Telemetry)
+
+- 目的:
+  - `demo-forward` と `live` の実行ログを repo に持ち帰れる状態にする。
+- 実装:
+  - EA に `telemetry CSV` を追加。
+  - `entry`, `exit`, `loss_lock`, `daily_summary` を `FILE_COMMON` へ出力。
+- 意味:
+  - backtest だけでは分からない `停止理由`, `連敗ロック発動回数`, `日次の実運用ノイズ` を後で検証できる。
+  - 次の 1 週間 demo-forward は、この telemetry を前提に評価する。

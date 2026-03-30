@@ -2,12 +2,20 @@
 
 This repository uses a small company model to keep EA development organized without adding bureaucracy.
 
+The company should improve itself, but it should stay lean. The default answer is not "add another role". The default answer is:
+
+1. reuse existing roles better,
+2. capture what was learned,
+3. add structure only when the current structure is clearly losing decision quality.
+
 ## Departments
 
 - `secretary/`: intake, queue management, daily notes, and task routing
 - `strategy/`: trading hypothesis, market assumptions, and experiment planning
 - `qa/`: backtest criteria, regression checks, and validation notes
 - `release/`: release readiness, parameter tracking, and handoff checks
+- `improvement/`: org review, skill/MCP governance, and self-improvement records
+- `executive/`: CEO approval routes for root policy changes
 
 Start at `secretary/`. Only add more departments if the workload becomes repetitive enough to justify them.
 
@@ -17,3 +25,6 @@ Start at `secretary/`. Only add more departments if the workload becomes repetit
 - Personal secrets do not belong in `.company/`.
 - Every material strategy change should connect to a QA or backtest note.
 - Keep code decisions in `mql/` and operating decisions in `.company/`.
+- Before adding a new shared skill, review `.company/improvement/skill-roster.md`.
+- Before promoting a candidate toward live, review `.company/improvement/org-scorecard.md`.
+- Every org or workflow improvement should leave reusable knowledge under `knowledge/company/` or `knowledge/patterns/`.

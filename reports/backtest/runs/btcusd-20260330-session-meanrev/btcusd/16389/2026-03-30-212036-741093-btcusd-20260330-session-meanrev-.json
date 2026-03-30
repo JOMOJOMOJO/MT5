@@ -1,0 +1,133 @@
+{
+  "imported_at": "2026-03-30T21:20:36",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "btcusd_20260330_session_meanrev",
+    "symbol": "BTCUSD",
+    "timeframe": "16389",
+    "tested_range": "2025.10.06 - 2026.03.30",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "btcusd-20260330-session-meanrev",
+    "symbol_key": "btcusd",
+    "timeframe_key": "16389",
+    "run_path": "reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/16389/2026-03-30-212036-741093-btcusd-20260330-session-meanrev-.json",
+    "knowledge_path": "knowledge/backtests/btcusd-20260330-session-meanrev/btcusd/16389/2026-03-30-212036-741093-btcusd-20260330-session-meanrev-.md",
+    "imported_dir": null,
+    "imported_report": null
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\btcusd_20260330_session_meanrev-combined-m5.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "BTCUSD",
+    "tester_period": "M5",
+    "preset_name": "btcusd_20260330_session_meanrev-baseline.set",
+    "preset_source": "reports\\presets\\btcusd_20260330_session_meanrev-baseline.set",
+    "signal_timeframe": "16389",
+    "direction_mode": "short-only",
+    "allow_buy": false,
+    "allow_sell": true
+  },
+  "metrics": {
+    "ea_name": "btcusd_20260330_session_meanrev",
+    "symbol": "BTCUSD",
+    "period": "M5 (2025.10.06 - 2026.03.30)",
+    "history_quality_percent": 100.0,
+    "bars": 0,
+    "ticks": 0,
+    "initial_deposit": 0.0,
+    "total_net_profit": 0.0,
+    "gross_profit": 0.0,
+    "gross_loss": 0.0,
+    "profit_factor": 0.0,
+    "expected_payoff": 0.0,
+    "recovery_factor": 0.0,
+    "sharpe_ratio": 0.0,
+    "absolute_drawdown": 0.0,
+    "maximal_drawdown_amount": 0.0,
+    "maximal_drawdown_percent": 0.0,
+    "relative_drawdown_amount": 0.0,
+    "relative_drawdown_percent": 0.0,
+    "total_trades": 0,
+    "short_positions_count": 0,
+    "short_positions_percent": 0.0,
+    "long_positions_count": 0,
+    "long_positions_percent": 0.0,
+    "profit_trades_count": 0,
+    "profit_trades_percent": 0.0,
+    "loss_trades_count": 0,
+    "loss_trades_percent": 0.0,
+    "largest_profit_trade": 0.0,
+    "largest_loss_trade": 0.0,
+    "average_profit_trade": 0.0,
+    "average_loss_trade": 0.0,
+    "timeframe": "M5",
+    "tested_range": "2025.10.06 - 2026.03.30",
+    "win_rate_percent": 0.0
+  },
+  "summary": {
+    "headline": "取引回数が少なすぎて判断が不安定です。 / Profit Factor が 1.0 未満で、収益性はまだ不足しています。",
+    "strengths": [
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [
+      "取引回数が少なすぎて判断が不安定です。",
+      "Profit Factor が 1.0 未満で、収益性はまだ不足しています。",
+      "総損益がまだプラスではありません。"
+    ],
+    "notes": []
+  },
+  "tags": [
+    "lgmid-m5"
+  ],
+  "raw_fields": {
+    "expert": "btcusd_20260330_session_meanrev",
+    "symbol": [
+      "BTCUSD",
+      "0"
+    ],
+    "period": "M5 (2025.10.06 - 2026.03.30)",
+    "initial deposit": "0.00",
+    "history quality": "100% リアルティック",
+    "bars": "0",
+    "ticks": "0",
+    "total net profit": "0.00",
+    "absolute drawdown": "0.00",
+    "gross profit": "0.00",
+    "maximal drawdown": "0.00 (0.00%)",
+    "gross loss": "0.00",
+    "relative drawdown": "0.00% (0.00)",
+    "profit factor": "0.00",
+    "expected payoff": "0.00",
+    "recovery factor": "0.00",
+    "sharpe ratio": "0.00",
+    "z score": "0.00 (0.00%)",
+    "ahpr": "0.0000 (0.00%)",
+    "lr correlation": "0.00",
+    "ontester": "0",
+    "ghpr": "0.0000 (0.00%)",
+    "lr standard error": "0.00",
+    "total trades": "0",
+    "short trades won percent": "0 (0.00%)",
+    "long positions won percent": "0 (0.00%)",
+    "profit trades percent of total": "0 (0.00%)",
+    "loss trades percent of total": "0 (0.00%)",
+    "largest profit trade": "0.00",
+    "largest loss trade": "0.00",
+    "average profit trade": "0.00",
+    "average loss trade": "0.00",
+    "correlation profits mfe": "0.00",
+    "correlation profits mae": "0.00",
+    "correlation mfe mae": "0.0000",
+    "t p": "時間",
+    "0 00": [
+      "0.00",
+      "0.00"
+    ]
+  },
+  "records_preview": [],
+  "run_id": "2026-03-30-212036-741093-btcusd-20260330-session-meanrev-"
+}

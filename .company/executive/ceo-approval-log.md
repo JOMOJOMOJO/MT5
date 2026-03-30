@@ -12,6 +12,21 @@ shared skill, shared MCP, 部署構成の変更はここに残して正式採用
 
 ## Approved
 
+- Date: 2026-03-31
+- Proposal: Formalize the org scorecard, skill-roster discipline, operating review rhythm, and reusable research-rules knowledge so the company can self-improve without adding redundant roles.
+- Requested by: CEO
+- Decision: approved
+- Effective files:
+  - `.company/ORGANIZATION.md`
+  - `.company/improvement/org-scorecard.md`
+  - `.company/improvement/skill-roster.md`
+  - `.company/improvement/operating-rhythm.md`
+  - `.company/qa/checklist.md`
+  - `.company/secretary/queue.md`
+  - `knowledge/patterns/2026-03-31-ea-research-reuse-rules.md`
+  - `AGENTS.md`
+  - `README.md`
+
 - Date: 2026-03-30
 - Proposal: Add the `improvement` department, the `continuous-improvement-office` skill, and company snapshot history for org, skill, and MCP changes.
 - Requested by: CEO
