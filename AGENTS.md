@@ -9,3 +9,4 @@
 - Use `scripts/compile.ps1` for builds and `scripts/backtest.ps1` for tester runs when possible.
 - When changing strategy behavior, connect the code change to a backtest or QA note under `.company/` or `reports/`.
 - Skill identifiers should stay stable, but Japanese skill bodies and references are preferred in this repository.
+- When the user wants a trader's judgement on market fit, execution realism, or live readiness, use the repo-local `professional-trader` skill.

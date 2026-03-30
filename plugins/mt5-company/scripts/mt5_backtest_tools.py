@@ -20,8 +20,18 @@ IMPORTED_ROOT = REPORT_ROOT / "imported"
 RUNS_ROOT = REPORT_ROOT / "runs"
 COMPARISONS_ROOT = REPORT_ROOT / "comparisons"
 KNOWLEDGE_BACKTEST_ROOT = REPO_ROOT / "knowledge" / "backtests"
+CATALOG_PATH = REPORT_ROOT / "catalog.jsonl"
 
-KNOWN_ENCODINGS = ("utf-8-sig", "utf-16", "utf-16-le", "utf-16-be", "cp1252", "latin-1")
+KNOWN_ENCODINGS = (
+    "utf-8-sig",
+    "utf-16",
+    "utf-16-le",
+    "utf-16-be",
+    "cp932",
+    "shift_jis",
+    "cp1252",
+    "latin-1",
+)
 
 HTML_ROW_RE = re.compile(r"<tr\b[^>]*>(.*?)</tr>", re.IGNORECASE | re.DOTALL)
 HTML_CELL_RE = re.compile(r"<t[dh]\b[^>]*>(.*?)</t[dh]>", re.IGNORECASE | re.DOTALL)
@@ -56,6 +66,35 @@ METRIC_ALIASES = {
     "largest_loss_trade": ("largest loss trade",),
     "average_profit_trade": ("average profit trade",),
     "average_loss_trade": ("average loss trade",),
+}
+
+LOCALIZED_LABEL_ALIASES = {
+    "エキスパート": "expert",
+    "銘柄": "symbol",
+    "期間": "period",
+    "ヒストリー品質": "history quality",
+    "バー": "bars",
+    "ティック": "ticks",
+    "初期証拠金": "initial deposit",
+    "総損益": "total net profit",
+    "総利益": "gross profit",
+    "総損失": "gross loss",
+    "プロフィットファクター": "profit factor",
+    "期待利得": "expected payoff",
+    "リカバリファクター": "recovery factor",
+    "シャープレシオ": "sharpe ratio",
+    "残高絶対ドローダウン": "absolute drawdown",
+    "残高最大ドローダウン": "maximal drawdown",
+    "残高相対ドローダウン": "relative drawdown",
+    "取引数": "total trades",
+    "ショート (勝率 %)": "short trades won percent",
+    "ロング (勝率 %)": "long positions won percent",
+    "勝ちトレード (勝率 %)": "profit trades percent of total",
+    "負けトレード (負率 %)": "loss trades percent of total",
+    "最大 勝ちトレード": "largest profit trade",
+    "最大 負けトレード": "largest loss trade",
+    "平均 勝ちトレード": "average profit trade",
+    "平均 負けトレード": "average loss trade",
 }
 
 HIGHER_IS_BETTER = {
@@ -98,24 +137,21 @@ def normalize_ws(text: str) -> str:
 
 
 def normalize_label(text: str) -> str:
-    cleaned = normalize_ws(unescape(text).lower())
-    cleaned = cleaned.replace("%", " percent ")
+    cleaned = normalize_ws(unescape(text))
+    cleaned = re.sub(r"[：:]+$", "", cleaned).strip()
+    localized = LOCALIZED_LABEL_ALIASES.get(cleaned)
+    if localized:
+        cleaned = localized
+    cleaned = cleaned.lower().replace("%", " percent ")
     cleaned = re.sub(r"[()/:]+", " ", cleaned)
     cleaned = re.sub(r"[^a-z0-9]+", " ", cleaned)
     return re.sub(r"\s+", " ", cleaned).strip()
 
 
-NORMALIZED_ALIAS_SET = {
-    normalize_label(alias)
-    for aliases in METRIC_ALIASES.values()
-    for alias in aliases
-}
-
-
 def slugify(text: str) -> str:
     lowered = text.strip().lower()
     slug = re.sub(r"[^a-z0-9]+", "-", lowered).strip("-")
-    return slug or "report"
+    return slug or "unknown"
 
 
 def repo_relative(path: Path) -> str:
@@ -169,16 +205,20 @@ def parse_int(text: str) -> int | None:
 
 
 def parse_value_percent(text: str) -> tuple[float | None, float | None]:
-    match = re.search(r"([-+]?\d[\d\s,\.]*)\s*\(([-+]?\d[\d\s,\.]*)\s*%\)", text)
-    if not match:
-        return parse_number(text), None
-    return parse_number(match.group(1)), parse_number(match.group(2))
+    amount_first = re.search(r"([-+]?\d[\d\s,\.]*)\s*\(([-+]?\d[\d\s,\.]*)\s*%\)", text)
+    if amount_first:
+        return parse_number(amount_first.group(1)), parse_number(amount_first.group(2))
+
+    percent_first = re.search(r"([-+]?\d[\d\s,\.]*)\s*%\s*\(([-+]?\d[\d\s,\.]*)\)", text)
+    if percent_first:
+        return parse_number(percent_first.group(2)), parse_number(percent_first.group(1))
+
+    return parse_number(text), None
 
 
 def parse_count_percent(text: str) -> tuple[int | None, float | None]:
     value, percent = parse_value_percent(text)
-    count = None if value is None else int(round(value))
-    return count, percent
+    return (None if value is None else int(round(value))), percent
 
 
 def parse_period(value: str) -> tuple[str | None, str | None]:
@@ -234,6 +274,7 @@ def parse_xml_fields(path: Path) -> tuple[dict[str, list[str]], list[dict[str, s
     root = tree.getroot()
     fields: dict[str, list[str]] = {}
     records: list[dict[str, str]] = []
+    normalized_aliases = {normalize_label(alias) for aliases in METRIC_ALIASES.values() for alias in aliases}
 
     for element in root.iter():
         children = list(element)
@@ -255,7 +296,7 @@ def parse_xml_fields(path: Path) -> tuple[dict[str, list[str]], list[dict[str, s
                 add_field(fields, record["name"], record["value"])
                 continue
             for key, value in record.items():
-                if key in NORMALIZED_ALIAS_SET:
+                if key in normalized_aliases:
                     fields.setdefault(key, []).append(value)
 
     title = normalize_ws(root.tag) or path.stem
@@ -338,14 +379,6 @@ def build_metrics(fields: dict[str, list[str]], records: list[dict[str, str]]) -
 
     if records:
         metrics["records_count"] = len(records)
-        first_record = records[0]
-        if len(records) > 1:
-            if "profit" in first_record:
-                metrics["best_record_profit"] = parse_number(first_record["profit"])
-            if "result" in first_record:
-                metrics["best_record_result"] = parse_number(first_record["result"])
-            if "pass" in first_record:
-                metrics["best_record_pass"] = parse_int(first_record["pass"])
 
     return {key: value for key, value in metrics.items() if value not in (None, "", [])}
 
@@ -360,18 +393,18 @@ def build_summary(metrics: dict[str, Any], report_kind: str) -> dict[str, Any]:
         if trades < 30:
             weak_points.append("取引回数が少なすぎて判断が不安定です。")
         elif trades < 100:
-            weak_points.append("標本数がやや少なく、結論を強く言いにくいです。")
+            weak_points.append("取引回数がまだ少なく、過信しにくい結果です。")
         else:
-            strengths.append("取引回数は最低限の検討に耐える水準です。")
+            strengths.append("取引回数は最低限の評価に耐える水準です。")
 
     profit_factor = metrics.get("profit_factor")
     if isinstance(profit_factor, (int, float)):
         if profit_factor < 1.0:
-            weak_points.append("Profit Factor が 1.0 未満で、現状の優位性は不足しています。")
+            weak_points.append("Profit Factor が 1.0 未満で、収益性はまだ不足しています。")
         elif profit_factor < 1.2:
-            weak_points.append("Profit Factor が低く、コスト悪化で崩れやすいです。")
+            weak_points.append("Profit Factor が低く、コスト込みで崩れやすいです。")
         elif profit_factor >= 1.5:
-            strengths.append("Profit Factor は比較的良好です。")
+            strengths.append("Profit Factor は十分に高い水準です。")
 
     net_profit = metrics.get("total_net_profit")
     if isinstance(net_profit, (int, float)):
@@ -393,7 +426,7 @@ def build_summary(metrics: dict[str, Any], report_kind: str) -> dict[str, Any]:
         if worst_drawdown >= 30:
             weak_points.append("ドローダウンが大きく、実運用には危険です。")
         elif worst_drawdown >= 20:
-            weak_points.append("ドローダウンがやや大きく、リスク改善余地があります。")
+            weak_points.append("ドローダウンがやや大きく、リスク改善が必要です。")
         else:
             strengths.append("ドローダウンは比較的抑えられています。")
 
@@ -401,10 +434,10 @@ def build_summary(metrics: dict[str, Any], report_kind: str) -> dict[str, Any]:
     short_rate = metrics.get("short_positions_percent")
     if isinstance(long_rate, (int, float)) and isinstance(short_rate, (int, float)):
         if abs(long_rate - short_rate) >= 20:
-            weak_points.append("買いと売りの成績差が大きく、方向依存の可能性があります。")
+            weak_points.append("買いと売りの勝率差が大きく、片側に偏っています。")
 
     if report_kind == "optimization_export" and metrics.get("records_count"):
-        notes.append("最適化 XML は並び順の影響を受けるため、上位結果の評価基準を固定して扱ってください。")
+        notes.append("最適化レポートなので、上位結果だけでなく近傍パラメータの安定性も確認してください。")
 
     if not strengths and not weak_points:
         notes.append("主要指標を十分に読めなかったため、元レポートの確認が必要です。")
@@ -416,6 +449,14 @@ def build_summary(metrics: dict[str, Any], report_kind: str) -> dict[str, Any]:
         "weak_points": weak_points,
         "notes": notes,
     }
+
+
+def build_identity(payload: dict[str, Any]) -> tuple[str, str, str]:
+    identity = payload["identity"]
+    ea_slug = slugify(str(identity.get("ea_name") or "unknown-ea"))
+    symbol_slug = slugify(str(identity.get("symbol") or "unknown-symbol"))
+    timeframe_slug = slugify(str(identity.get("timeframe") or "unknown-timeframe"))
+    return ea_slug, symbol_slug, timeframe_slug
 
 
 def build_run_payload(
@@ -433,10 +474,6 @@ def build_run_payload(
     symbol = metrics.get("symbol")
     timeframe = metrics.get("timeframe") or metrics.get("period")
     summary = build_summary(metrics, report_kind)
-    raw_fields = {
-        key: values if len(values) > 1 else values[0]
-        for key, values in fields.items()
-    }
 
     return {
         "imported_at": imported_at,
@@ -445,8 +482,10 @@ def build_run_payload(
             "ea_name": ea_name,
             "symbol": symbol,
             "timeframe": timeframe,
+            "tested_range": metrics.get("tested_range"),
             "report_kind": report_kind,
         },
+        "storage": {},
         "source": {
             "original_path": str(report_path.resolve()),
             "type": report_path.suffix.lower().lstrip("."),
@@ -454,26 +493,31 @@ def build_run_payload(
         "metrics": metrics,
         "summary": summary,
         "tags": tags,
-        "raw_fields": raw_fields,
+        "raw_fields": {
+            key: values if len(values) > 1 else values[0]
+            for key, values in fields.items()
+        },
         "records_preview": records[:20],
     }
 
 
-def write_backtest_note(run: dict[str, Any], run_path: Path) -> Path:
+def copy_report_bundle(source_path: Path, target_dir: Path) -> Path:
+    target_dir.mkdir(parents=True, exist_ok=True)
+    report_copy = target_dir / f"report{source_path.suffix.lower()}"
+    shutil.copy2(source_path, report_copy)
+
+    for sibling in source_path.parent.glob(f"{source_path.stem}*"):
+        if sibling.resolve() == source_path.resolve() or not sibling.is_file():
+            continue
+        shutil.copy2(sibling, target_dir / sibling.name)
+
+    return report_copy
+
+
+def write_backtest_note(run: dict[str, Any], run_path: Path, note_path: Path) -> Path:
     identity = run["identity"]
     metrics = run["metrics"]
     summary = run["summary"]
-    slug_source = "-".join(
-        part
-        for part in [
-            slugify(str(identity.get("ea_name") or "")),
-            slugify(str(identity.get("symbol") or "")),
-            slugify(str(identity.get("timeframe") or "")),
-            slugify(str(run.get("run_id") or "")),
-        ]
-        if part
-    )
-    note_path = KNOWLEDGE_BACKTEST_ROOT / f"{slug_source or 'backtest'}.md"
 
     lines = [
         f"# {identity.get('ea_name', 'EA')} {identity.get('symbol') or ''} {identity.get('timeframe') or ''}".strip(),
@@ -482,8 +526,9 @@ def write_backtest_note(run: dict[str, Any], run_path: Path) -> Path:
         f"- EA: {identity.get('ea_name', '-')}",
         f"- Symbol: {identity.get('symbol', '-') or '-'}",
         f"- Timeframe: {identity.get('timeframe', '-') or '-'}",
-        f"- Tester config: -",
+        f"- Tested range: {identity.get('tested_range', '-') or '-'}",
         f"- Evidence: {repo_relative(run_path)}",
+        f"- Imported assets: {run['storage'].get('imported_dir', '-')}",
         f"- Tags: {', '.join(run.get('tags', [])) or '-'}",
         "",
         "## Summary",
@@ -509,18 +554,33 @@ def write_backtest_note(run: dict[str, Any], run_path: Path) -> Path:
     weak_points = summary.get("weak_points") or ["-"]
     lines.extend(f"- {item}" for item in weak_points)
     lines.extend(["", "## Next Action", ""])
-    next_actions = []
+
+    next_actions: list[str] = []
     if weak_points:
-        next_actions.append("弱点が改善できる仮説を `knowledge/experiments/` に切り出す。")
+        next_actions.append("弱点を補う仮説を `knowledge/experiments/` に切り出す。")
     if metrics.get("total_trades") is not None and metrics.get("total_trades", 0) < 100:
-        next_actions.append("サンプルを増やせる期間や銘柄条件を再検討する。")
+        next_actions.append("サンプルを増やせる期間や条件で追加検証する。")
     if not next_actions:
-        next_actions.append("差分比較のため、次の run を取り込んで比較する。")
+        next_actions.append("次の run を追加して比較可能な状態にする。")
     lines.extend(f"- {item}" for item in next_actions)
     lines.append("")
 
+    note_path.parent.mkdir(parents=True, exist_ok=True)
     note_path.write_text("\n".join(lines), encoding="utf-8")
     return note_path
+
+
+def append_catalog(run_path: Path, note_path: Path, payload: dict[str, Any]) -> None:
+    entry = {
+        "run_path": repo_relative(run_path),
+        "knowledge_path": repo_relative(note_path),
+        "imported_at": payload.get("imported_at"),
+        "identity": payload.get("identity", {}),
+        "summary": {"headline": payload.get("summary", {}).get("headline")},
+        "storage": payload.get("storage", {}),
+    }
+    with CATALOG_PATH.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
 
 def import_backtest_report(
@@ -539,37 +599,57 @@ def import_backtest_report(
     payload = build_run_payload(source_path, fields, records, title, report_kind, ea_name, tag_list)
 
     timestamp = datetime.now().strftime("%Y-%m-%d-%H%M%S-%f")
-    identity = payload["identity"]
-    run_slug = "-".join(
-        part
-        for part in [
-            slugify(str(identity.get("ea_name") or "")),
-            slugify(str(identity.get("symbol") or "")),
-            slugify(str(identity.get("timeframe") or "")),
-            slugify(source_path.stem),
-        ]
-        if part
-    )
-    run_id = f"{timestamp}-{run_slug or 'backtest-run'}"
+    ea_slug, symbol_slug, timeframe_slug = build_identity(payload)
+    report_slug = slugify(source_path.stem)[:32] or "report"
+    run_id = f"{timestamp}-{report_slug}"
 
     imported_copy_path: Path | None = None
+    imported_dir = IMPORTED_ROOT / ea_slug / symbol_slug / timeframe_slug / run_id
+    run_path = RUNS_ROOT / ea_slug / symbol_slug / timeframe_slug / f"{run_id}.json"
+    note_path = KNOWLEDGE_BACKTEST_ROOT / ea_slug / symbol_slug / timeframe_slug / f"{run_id}.md"
+
     if copy_source:
-        imported_copy_path = IMPORTED_ROOT / f"{run_id}{source_path.suffix.lower()}"
-        shutil.copy2(source_path, imported_copy_path)
-        payload["source"]["imported_copy_path"] = repo_relative(imported_copy_path)
+        imported_copy_path = copy_report_bundle(source_path, imported_dir)
 
     payload["run_id"] = run_id
-    run_path = RUNS_ROOT / f"{run_id}.json"
+    payload["storage"] = {
+        "ea_key": ea_slug,
+        "symbol_key": symbol_slug,
+        "timeframe_key": timeframe_slug,
+        "run_path": repo_relative(run_path),
+        "knowledge_path": repo_relative(note_path),
+        "imported_dir": repo_relative(imported_dir) if copy_source else None,
+        "imported_report": repo_relative(imported_copy_path) if imported_copy_path else None,
+    }
+    run_path.parent.mkdir(parents=True, exist_ok=True)
     run_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    knowledge_path = write_backtest_note(payload, run_path)
-    return ImportedRun(payload=payload, run_path=run_path, knowledge_path=knowledge_path, imported_copy_path=imported_copy_path)
+    knowledge_path = write_backtest_note(payload, run_path, note_path)
+    append_catalog(run_path, knowledge_path, payload)
+
+    return ImportedRun(
+        payload=payload,
+        run_path=run_path,
+        knowledge_path=knowledge_path,
+        imported_copy_path=imported_copy_path,
+    )
+
+
+def iter_run_files() -> list[Path]:
+    ensure_dirs()
+    return sorted(
+        (
+            path
+            for path in RUNS_ROOT.glob("**/*.json")
+            if "_legacy_flat" not in path.parts
+        ),
+        key=lambda path: path.stat().st_mtime,
+        reverse=True,
+    )
 
 
 def list_backtest_runs(limit: int = 10, ea_name: str | None = None) -> list[dict[str, Any]]:
-    ensure_dirs()
-    runs = sorted(RUNS_ROOT.glob("*.json"), key=lambda path: path.stat().st_mtime, reverse=True)
     items: list[dict[str, Any]] = []
-    for path in runs:
+    for path in iter_run_files():
         payload = json.loads(path.read_text(encoding="utf-8"))
         identity = payload.get("identity", {})
         if ea_name and str(identity.get("ea_name", "")).lower() != ea_name.lower():
@@ -590,12 +670,24 @@ def list_backtest_runs(limit: int = 10, ea_name: str | None = None) -> list[dict
 
 
 def load_run(run_path: str) -> tuple[Path, dict[str, Any]]:
-    path = Path(run_path)
-    resolved = path if path.is_absolute() else (REPO_ROOT / path)
-    resolved = resolved.resolve()
-    if not resolved.exists():
-        raise FileNotFoundError(f"Run file was not found: {resolved}")
-    return resolved, json.loads(resolved.read_text(encoding="utf-8"))
+    candidate = Path(run_path)
+    if candidate.is_absolute():
+        resolved = candidate.resolve()
+        if not resolved.exists():
+            raise FileNotFoundError(f"Run file was not found: {resolved}")
+        return resolved, json.loads(resolved.read_text(encoding="utf-8"))
+
+    direct = (REPO_ROOT / candidate).resolve()
+    if direct.exists():
+        return direct, json.loads(direct.read_text(encoding="utf-8"))
+
+    matches = list(RUNS_ROOT.glob(f"**/{run_path}"))
+    if len(matches) == 1:
+        resolved = matches[0].resolve()
+        return resolved, json.loads(resolved.read_text(encoding="utf-8"))
+    if len(matches) > 1:
+        raise FileExistsError(f"Multiple run files matched '{run_path}'. Use a repo-relative path.")
+    raise FileNotFoundError(f"Run file was not found: {run_path}")
 
 
 def compare_backtest_runs(baseline_path: str, candidate_path: str, save_markdown: bool = False) -> dict[str, Any]:
@@ -614,6 +706,7 @@ def compare_backtest_runs(baseline_path: str, candidate_path: str, save_markdown
         candidate_value = candidate_metrics.get(metric)
         if not isinstance(baseline_value, (int, float)) or not isinstance(candidate_value, (int, float)):
             continue
+
         delta = candidate_value - baseline_value
         deltas[metric] = {
             "baseline": baseline_value,
@@ -721,7 +814,7 @@ def build_cli() -> argparse.ArgumentParser:
     import_parser.add_argument("--report", required=True, help="Path to an MT5 HTML, XML, or CSV report.")
     import_parser.add_argument("--ea-name", help="Override EA name.")
     import_parser.add_argument("--tag", action="append", default=[], help="Tag to attach to the imported run.")
-    import_parser.add_argument("--no-copy", action="store_true", help="Do not copy the source report into reports/backtest/imported.")
+    import_parser.add_argument("--no-copy", action="store_true", help="Do not copy the source report bundle.")
 
     list_parser = subparsers.add_parser("list", help="List imported backtest runs.")
     list_parser.add_argument("--limit", type=int, default=10)
@@ -768,8 +861,8 @@ def main() -> int:
         print(format_comparison(compare_backtest_runs(args.baseline, args.candidate, save_markdown=args.save)))
         return 0
 
-    parser.error("Unknown command.")
-    return 2
+    parser.error("Unknown command")
+    return 1
 
 
 if __name__ == "__main__":
