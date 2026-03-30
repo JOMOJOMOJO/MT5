@@ -1,28 +1,31 @@
 # Knowledge Base
 
-このディレクトリは、MT5 EA 開発で得た知見を蓄積するための場所です。
+このリポジトリでは、MT5 の結果を 2 層で管理します。
 
-構造化された事実データは `reports/backtest/runs/` に保存し、ここは人が読む判断メモを保存する場所として使います。
+- 生データに近い事実: `reports/backtest/runs/`
+- 再利用する知見: `knowledge/`
+
+`knowledge/` のカテゴリは次の 6 つです。
+
+- `company/`: 組織、skill、MCP、承認フローの改善知識
+- `backtests/`: 単発の固定パラメータ検証メモ
+- `optimizations/`: パラメータ探索、候補レンジ、採用した設定、捨てた設定
+- `experiments/`: 次に試す仮説と変更案
+- `lessons/`: 再発防止や重要な学び
+- `patterns/`: 複数 EA に流用できる型
+
+## 保存ルール
+
+- 1 回の MT5 単体検証は `reports/backtest/runs/` を真実源にする
+- その run から人が読む要約を `knowledge/backtests/` に残す
+- 最適化で見つかった候補レンジ、良かった pass、悪かった pass は `knowledge/optimizations/` に残す
+- 組織、skill、MCP の snapshot 差分は `.company/improvement/` を真実源にし、再利用できる判断を `knowledge/company/` に残す
+- 使い回せる失敗や改善原則は `knowledge/lessons/` または `knowledge/patterns/` に昇格させる
 
 ## 使い分け
 
-- `backtests/`: バックテスト結果の記録
-- `experiments/`: 次に試す仮説や比較案
-- `lessons/`: 失敗や発見から得た教訓
-- `patterns/`: 再利用できる設計や改善パターン
-
-## 昇格の考え方
-
-- 1 回の結果は `backtests/`
-- 次に試す案は `experiments/`
-- 再発防止や重要な学びは `lessons/`
-- 複数回通用したものは `patterns/`
-
-## 機械可読データとの役割分担
-
-- `reports/backtest/runs/*.json`
-  MT5 レポートから取り込んだ機械可読データ。比較や集計の基準にする。
-- `knowledge/backtests/*.md`
-  その run から何を学んだか、どこが弱かったか、次に何を試すかを書く。
-
-チャットで終わらせず、残す価値があるならここへ保存します。
+- 組織変更の判断、skill/MCP の改善履歴を残したい: `company/`
+- どの EA、どの通貨、どの期間で起きたかを残したい: `backtests/`
+- どのパラメータ探索をしたか、何を候補にしたかを残したい: `optimizations/`
+- 次の試行計画を書きたい: `experiments/`
+- 今後も守るべきルールを書きたい: `lessons/` または `patterns/`

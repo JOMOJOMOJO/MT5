@@ -17,6 +17,13 @@ from mt5_backtest_tools import (
     list_backtest_runs,
     summarize_backtest_run,
 )
+from company_snapshot import (
+    format_snapshot_list,
+    format_snapshot_summary,
+    list_company_snapshots,
+    snapshot_company_state,
+    summarize_company_snapshot,
+)
 
 
 SERVER_NAME = "mt5-workspace"
@@ -26,7 +33,7 @@ PLUGIN_ROOT = SCRIPT_PATH.parents[1]
 REPO_ROOT = SCRIPT_PATH.parents[3]
 ROOT_SCRIPTS = REPO_ROOT / "scripts"
 KNOWLEDGE_ROOT = REPO_ROOT / "knowledge"
-KNOWLEDGE_CATEGORIES = ("backtests", "experiments", "lessons", "patterns")
+KNOWLEDGE_CATEGORIES = ("company", "backtests", "optimizations", "experiments", "lessons", "patterns")
 
 
 def json_dumps(payload: dict[str, Any]) -> bytes:
@@ -153,6 +160,24 @@ def tool_launch_backtest(arguments: dict[str, Any]) -> str:
     return "\n\n".join(message)
 
 
+def tool_launch_optimization(arguments: dict[str, Any]) -> str:
+    script = ROOT_SCRIPTS / "optimize.ps1"
+    args: list[str] = []
+    config_path = arguments.get("config_path")
+    if config_path:
+        resolved = resolve_repo_path(str(config_path))
+        args.extend(["-ConfigPath", str(resolved)])
+    result = run_powershell(script, args)
+    message = [
+        f"exit_code: {result['exit_code']}",
+        f"stdout:\n{result['stdout'] or '(empty)'}",
+        f"stderr:\n{result['stderr'] or '(empty)'}",
+    ]
+    if result["exit_code"] != 0:
+        raise RuntimeError("\n\n".join(message))
+    return "\n\n".join(message)
+
+
 def tool_record_knowledge(arguments: dict[str, Any]) -> str:
     ensure_knowledge_dirs()
     category = str(arguments.get("category", "backtests"))
@@ -221,7 +246,7 @@ def tool_search_knowledge(arguments: dict[str, Any]) -> str:
     roots = [KNOWLEDGE_ROOT / category] if category else [KNOWLEDGE_ROOT / item for item in KNOWLEDGE_CATEGORIES]
     files: list[Path] = []
     for root in roots:
-        files.extend(root.glob("*.md"))
+        files.extend(root.rglob("*.md"))
 
     files = sorted(files, key=lambda path: path.stat().st_mtime, reverse=True)
     matches: list[str] = []
@@ -292,6 +317,33 @@ def tool_compare_backtest_runs(arguments: dict[str, Any]) -> str:
     )
 
 
+def tool_snapshot_company_state(arguments: dict[str, Any]) -> str:
+    reason = str(arguments.get("reason", "")).strip()
+    note = str(arguments.get("note", "")).strip()
+    payload = snapshot_company_state(reason=reason, note=note)
+    lines = [
+        f"Snapshot: {payload['snapshot_path']}",
+        f"Review: {payload['review_path']}",
+    ]
+    diff = payload.get("diff", {})
+    lines.append(f"Skills added: {', '.join(diff.get('skills', {}).get('added', [])) or '(none)'}")
+    lines.append(f"MCP added: {', '.join(diff.get('mcp_servers', {}).get('added', [])) or '(none)'}")
+    lines.append(f"Departments added: {', '.join(diff.get('departments', {}).get('added', [])) or '(none)'}")
+    return "\n".join(lines)
+
+
+def tool_list_company_snapshots(arguments: dict[str, Any]) -> str:
+    limit = int(arguments.get("limit", 10))
+    return format_snapshot_list(list_company_snapshots(limit=limit))
+
+
+def tool_summarize_company_snapshot(arguments: dict[str, Any]) -> str:
+    snapshot_path = str(arguments.get("snapshot_path", "")).strip()
+    if not snapshot_path:
+        raise ValueError("snapshot_path is required.")
+    return format_snapshot_summary(summarize_company_snapshot(snapshot_path))
+
+
 TOOLS: dict[str, dict[str, Any]] = {
     "list_eas": {
         "description": "List EA source files under mql/Experts.",
@@ -329,6 +381,20 @@ TOOLS: dict[str, dict[str, Any]] = {
             "additionalProperties": False,
         },
         "handler": tool_launch_backtest,
+    },
+    "launch_optimization": {
+        "description": "Run scripts/optimize.ps1 with an optional MT5 optimization config path.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "config_path": {
+                    "type": "string",
+                    "description": "Optional path to an optimization .ini file, relative to the repo root.",
+                }
+            },
+            "additionalProperties": False,
+        },
+        "handler": tool_launch_optimization,
     },
     "record_knowledge": {
         "description": "Create a Markdown note under knowledge/ for backtests, experiments, lessons, or patterns.",
@@ -447,6 +513,44 @@ TOOLS: dict[str, dict[str, Any]] = {
             "additionalProperties": False,
         },
         "handler": tool_compare_backtest_runs,
+    },
+    "snapshot_company_state": {
+        "description": "Capture a snapshot of the current company structure, skills, and MCP servers, then compare it to the previous snapshot.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "reason": {"type": "string"},
+                "note": {"type": "string"},
+            },
+            "additionalProperties": False,
+        },
+        "handler": tool_snapshot_company_state,
+    },
+    "list_company_snapshots": {
+        "description": "List recent company snapshots under .company/improvement/snapshots.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "limit": {"type": "integer", "minimum": 1, "maximum": 50},
+            },
+            "additionalProperties": False,
+        },
+        "handler": tool_list_company_snapshots,
+    },
+    "summarize_company_snapshot": {
+        "description": "Summarize one company snapshot JSON file.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "snapshot_path": {
+                    "type": "string",
+                    "description": "Repo-relative or absolute path to a company snapshot JSON file.",
+                }
+            },
+            "required": ["snapshot_path"],
+            "additionalProperties": False,
+        },
+        "handler": tool_summarize_company_snapshot,
     },
 }
 

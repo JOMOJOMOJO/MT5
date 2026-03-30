@@ -1,29 +1,45 @@
 ---
 name: company
-description: このリポジトリを小さな MT5 EA 開発会社のように運用する skill。相談の整理、優先順位づけ、戦略・実装・QA・リリースへの振り分け、共有状態の更新が必要なときに使う。
+description: MT5 EA 開発リポジトリを会社のように運用する skill。受付、部署振り分け、承認フロー、知識蓄積、役割追加や組織見直しを扱うときに使う。
 ---
 
 # MT5 Company
 
-このリポジトリでは `.company/secretary/queue.md` を共有の受付キューとして扱います。
+このリポジトリでは `.company/secretary/queue.md` を受付キューとして扱う。
 
-## 振り分け先
+## 役割
 
-- `secretary`: 相談の整理、バックログ管理、次アクションの決定
-- `strategy`: 売買仮説、フィルター、改善案、実験設計
-- `qa`: バックテスト評価、回帰確認、失敗分析
-- `release`: リリース判定、パラメータ変更、配布前チェック
-- `implementation`: `mql/` 配下の実装作業そのもの
+- `secretary`: 受付、優先度整理、バックログ更新
+- `strategy`: 仮説、検証計画、評価基準
+- `qa`: backtest、optimization、out-of-sample の検証管理
+- `release`: demo/live へ上げる前の確認
+- `research`: 新しい改善案、最適化案、検証フロー案
+- `critique`: 戦略の弱点を探し、撤退判断も出す
+- `people`: trader skill、review skill、部署の増減を管理
+- `improvement`: 会社自身の構造、skill 構成、MCP 構成を定期レビューして差分を残す
+- `executive`: CEO 承認が必要な変更の記録
 
-## 運用ルール
+## 基本ルール
 
-1. 単なるコード修正でない限り、まず `secretary` で整理します。
-2. 共有バックログが変わる依頼は `.company/secretary/queue.md` を更新します。
-3. 長く残すべき判断は `.company/` の適切な部署ファイルへ移します。
-4. 再利用したい知見は `knowledge/` に昇格させます。
-5. 共有 skill と MCP は `plugins/mt5-company/` の中で管理します。
-6. 部署は必要性が繰り返し発生したときだけ増やします。
+1. 新しい作業はまず `secretary` で受ける。
+2. 変更した戦略や判断は `.company/`、`reports/`、`knowledge/` に痕跡を残す。
+3. shared な skill と MCP は `plugins/mt5-company/` の中で管理する。
+4. EA ごとの事実は `reports/backtest/runs/` に残し、横断知識は `knowledge/` に昇格させる。
+5. 最適化は短期探索、長期固定検証、明示的な out-of-sample の順で扱う。
+6. 組織、skill、MCP の見直しは `.company/improvement/` に snapshot と review を残す。
+
+## CEO 承認が必要な変更
+
+次は社長の承認が出るまで「提案」の扱いに留める。
+
+- shared skill の追加、削除、責務変更
+- shared MCP の追加、削除、責務変更
+- 部署構成や routing ルールの変更
+- `README.md`, `AGENTS.md`, `.company/` の根本方針変更
+- live 運用 gate や損失制御の基準変更
+
+承認待ちや承認済みの記録は `.company/executive/ceo-approval-log.md` に残す。
 
 ## 参照
 
-- 部署の役割とリポジトリ方針: `references/departments.md`
+- 部署と routing の詳細: `references/departments.md`

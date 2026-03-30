@@ -1,7 +1,7 @@
 {
   "name": "mt5-company",
-  "version": "0.1.0",
-  "description": "Company-style Codex workflow for MT5 EA development with repo-local skills and shared MCP config.",
+  "version": "0.2.0",
+  "description": "Company-style Codex workflow for MT5 EA development with repo-local skills, shared MCP config, and company self-improvement history.",
   "author": {
     "name": "[TODO: Your Name]",
     "email": "",
@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "MT5 Company",
     "shortDescription": "Company-style workflow for MT5 EA development.",
-    "longDescription": "Routes MT5 EA work through repo-local intake, review, backtest, and release skills so the workflow stays reproducible in Git.",
+    "longDescription": "Routes MT5 EA work through repo-local intake, review, backtest, release, and company-improvement skills so both the EA and the workflow stay reproducible in Git.",
     "developerName": "[TODO: Your Name]",
     "category": "Productivity",
     "capabilities": [

@@ -1,0 +1,334 @@
+{
+  "imported_at": "2026-03-30T12:47:43",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "btcusd_20260124",
+    "symbol": "BTCUSD",
+    "timeframe": "M1",
+    "tested_range": "2026.01.01 - 2026.03.31",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "btcusd-20260124",
+    "symbol_key": "btcusd",
+    "timeframe_key": "m1",
+    "run_path": "reports/backtest/runs/btcusd-20260124/btcusd/m1/2026-03-30-124743-917051-btcusd-20260124-oos-3m.json",
+    "knowledge_path": "knowledge/backtests/btcusd-20260124/btcusd/m1/2026-03-30-124743-917051-btcusd-20260124-oos-3m.md",
+    "imported_dir": "reports/backtest/imported/btcusd-20260124/btcusd/m1/2026-03-30-124743-917051-btcusd-20260124-oos-3m",
+    "imported_report": "reports/backtest/imported/btcusd-20260124/btcusd/m1/2026-03-30-124743-917051-btcusd-20260124-oos-3m/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\btcusd_20260124-oos-3m.htm",
+    "type": "htm"
+  },
+  "metrics": {
+    "ea_name": "btcusd_20260124",
+    "symbol": "BTCUSD",
+    "period": "M1 (2026.01.01 - 2026.03.31)",
+    "history_quality_percent": 100.0,
+    "bars": 126388,
+    "ticks": 18517159,
+    "initial_deposit": 10000.0,
+    "total_net_profit": 60.01,
+    "gross_profit": 162.56,
+    "gross_loss": -102.55,
+    "profit_factor": 1.59,
+    "expected_payoff": 8.57,
+    "recovery_factor": 0.78,
+    "sharpe_ratio": 1.07,
+    "absolute_drawdown": 0.32,
+    "maximal_drawdown_amount": 68.72,
+    "maximal_drawdown_percent": 0.68,
+    "relative_drawdown_amount": 68.72,
+    "relative_drawdown_percent": 0.68,
+    "total_trades": 7,
+    "short_positions_count": 7,
+    "short_positions_percent": 42.86,
+    "long_positions_count": 0,
+    "long_positions_percent": 0.0,
+    "profit_trades_count": 3,
+    "profit_trades_percent": 42.86,
+    "loss_trades_count": 4,
+    "loss_trades_percent": 57.14,
+    "largest_profit_trade": 58.35,
+    "largest_loss_trade": -34.87,
+    "average_profit_trade": 54.19,
+    "average_loss_trade": -25.64,
+    "timeframe": "M1",
+    "tested_range": "2026.01.01 - 2026.03.31",
+    "win_rate_percent": 42.86
+  },
+  "summary": {
+    "headline": "取引回数が少なすぎて判断が不安定です。 / 買いと売りの成績差が大きく、片側依存の可能性があります。",
+    "strengths": [
+      "Profit Factor は深掘りに値する水準です。",
+      "総損益はプラスです。",
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [
+      "取引回数が少なすぎて判断が不安定です。",
+      "買いと売りの成績差が大きく、片側依存の可能性があります。"
+    ],
+    "notes": []
+  },
+  "tags": [],
+  "raw_fields": {
+    "expert": "btcusd_20260124",
+    "symbol": [
+      "BTCUSD",
+      "1"
+    ],
+    "period": "M1 (2026.01.01 - 2026.03.31)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "126388",
+    "ticks": "18517159",
+    "total net profit": "60.01",
+    "absolute drawdown": "0.32",
+    "gross profit": "162.56",
+    "maximal drawdown": "68.72 (0.68%)",
+    "gross loss": "-102.55",
+    "relative drawdown": "0.68% (68.72)",
+    "profit factor": "1.59",
+    "expected payoff": "8.57",
+    "recovery factor": "0.78",
+    "sharpe ratio": "1.07",
+    "z score": "0.91 (63.72%)",
+    "ahpr": "1.0009 (0.09%)",
+    "lr correlation": "0.73",
+    "ontester": "0.5133247473947892",
+    "ghpr": "1.0009 (0.09%)",
+    "lr standard error": "32.61",
+    "total trades": "7",
+    "short trades won percent": "7 (42.86%)",
+    "long positions won percent": "0 (0.00%)",
+    "profit trades percent of total": "3 (42.86%)",
+    "loss trades percent of total": "4 (57.14%)",
+    "largest profit trade": "58.35",
+    "largest loss trade": "-34.87",
+    "average profit trade": "54.19",
+    "average loss trade": "-25.64",
+    "correlation profits mfe": "0.92",
+    "correlation profits mae": "0.95",
+    "correlation mfe mae": "0.8788",
+    "t p": "時間",
+    "2": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "sell": [
+      "0.08 / 0.08",
+      "0.09 / 0.09",
+      "0.1 / 0.1",
+      "0.05 / 0.05",
+      "0.18 / 0.18",
+      "0.14 / 0.14",
+      "0.12 / 0.12",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 00": [
+      "78960.14",
+      "2026.02.01 09:40:45",
+      "69039.71",
+      "2026.02.11 05:21:06",
+      "66569.68",
+      "2026.02.13 09:12:08",
+      "67471.52",
+      "2026.02.18 21:39:12",
+      "65849.72",
+      "2026.02.28 08:16:22",
+      "66282.60",
+      "2026.03.28 07:18:29",
+      "66688.37",
+      "2026.03.29 23:20:50",
+      "0.00",
+      "0.00",
+      "-0.32",
+      "0.00",
+      "54.73",
+      "0.00",
+      "-33.51",
+      "0.00",
+      "49.48",
+      "0.00",
+      "58.35",
+      "0.00",
+      "-34.87",
+      "0.00",
+      "-33.85",
+      "0.00"
+    ],
+    "77932 95": "2026.02.01 07:45:00",
+    "filled": [
+      "Regime EA L2 SELL",
+      "sl 78568.83",
+      "Regime EA L2 SELL",
+      "tp 68063.98",
+      "Regime EA L2 SELL",
+      "sl 66569.68",
+      "Regime EA L2 SELL",
+      "tp 65882.43",
+      "Regime EA L2 SELL",
+      "tp 65339.95",
+      "Regime EA L2 SELL",
+      "sl 66282.60",
+      "Regime EA L2 SELL",
+      "sl 66688.37"
+    ],
+    "3": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "buy": [
+      "0.08 / 0.08",
+      "0.09 / 0.09",
+      "0.1 / 0.1",
+      "0.05 / 0.05",
+      "0.18 / 0.18",
+      "0.14 / 0.14",
+      "0.12 / 0.12",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out"
+    ],
+    "4": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "68063 98": "2026.02.11 05:00:00",
+    "5": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "6": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "65696 50": "2026.02.13 07:15:00",
+    "7": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "8": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "65882 43": "2026.02.18 20:30:00",
+    "9": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "10": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "65339 95": "2026.02.28 06:30:00",
+    "11": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "12": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "65643 76": "2026.03.28 05:30:04",
+    "13": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "14": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "65957 52": "2026.03.29 18:30:00",
+    "15": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "1": "balance",
+    "10 000 00": [
+      "10 000.00",
+      "Regime EA L2 SELL"
+    ],
+    "0 08": [
+      "78568.83",
+      "78572.84"
+    ],
+    "9 999 68": [
+      "sl 78568.83",
+      "Regime EA L2 SELL"
+    ],
+    "0 09": [
+      "68668.00",
+      "68059.93"
+    ],
+    "10 054 41": [
+      "tp 68063.98",
+      "Regime EA L2 SELL"
+    ],
+    "0 1": [
+      "66237.04",
+      "66572.09"
+    ],
+    "10 020 90": [
+      "sl 66569.68",
+      "Regime EA L2 SELL"
+    ],
+    "0 05": [
+      "66866.15",
+      "65876.60"
+    ],
+    "10 070 38": [
+      "tp 65882.43",
+      "Regime EA L2 SELL"
+    ],
+    "0 18": [
+      "65655.52",
+      "65331.33"
+    ],
+    "10 128 73": [
+      "tp 65339.95",
+      "Regime EA L2 SELL"
+    ],
+    "0 14": [
+      "66039.23",
+      "66288.32"
+    ],
+    "10 093 86": [
+      "sl 66282.60",
+      "Regime EA L2 SELL"
+    ],
+    "0 12": [
+      "66409.95",
+      "66691.97"
+    ],
+    "10 060 01": "sl 66688.37",
+    "60 01": "10 060.01"
+  },
+  "records_preview": [],
+  "run_id": "2026-03-30-124743-917051-btcusd-20260124-oos-3m"
+}

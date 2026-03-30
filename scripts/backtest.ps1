@@ -27,6 +27,73 @@ if (-not $ConfigPath) {
 
 $resolvedConfig = (Resolve-Path $ConfigPath).Path
 $configLines = Get-Content -Path $resolvedConfig
+
+$presetSourceLine = $configLines | Where-Object { $_ -match '^\s*PresetSource=' } | Select-Object -First 1
+$presetNameLine = $configLines | Where-Object { $_ -match '^\s*PresetName=' } | Select-Object -First 1
+$generatedConfigPath = $null
+
+if ($presetSourceLine) {
+    $presetValue = ($presetSourceLine -replace '^\s*PresetSource=', '').Trim()
+    if (-not $presetValue) {
+        throw "PresetSource was declared but empty in '$resolvedConfig'."
+    }
+
+    $presetPath = if ([System.IO.Path]::IsPathRooted($presetValue)) {
+        $presetValue
+    } else {
+        Join-Path $repoRoot $presetValue
+    }
+    $resolvedPresetPath = (Resolve-Path $presetPath).Path
+
+    $presetName = if ($presetNameLine) {
+        ($presetNameLine -replace '^\s*PresetName=', '').Trim()
+    } else {
+        [System.IO.Path]::GetFileName($resolvedPresetPath)
+    }
+    if (-not $presetName) {
+        throw "Could not determine preset name for '$resolvedPresetPath'."
+    }
+
+    $testerPresetDir = Join-Path $terminalDataRoot "MQL5\Profiles\Tester"
+    New-Item -ItemType Directory -Path $testerPresetDir -Force | Out-Null
+    $targetPresetPath = Join-Path $testerPresetDir $presetName
+    Copy-Item -LiteralPath $resolvedPresetPath -Destination $targetPresetPath -Force
+
+    $filteredConfigLines = foreach ($line in $configLines) {
+        if ($line -match '^\s*PresetSource=' -or $line -match '^\s*PresetName=') {
+            continue
+        }
+        if ($line -match '^\s*ExpertParameters=') {
+            "ExpertParameters=$presetName"
+            continue
+        }
+        $line
+    }
+
+    if (-not ($filteredConfigLines | Where-Object { $_ -match '^\s*ExpertParameters=' })) {
+        $testerSectionIndex = [Array]::IndexOf($filteredConfigLines, "[Tester]")
+        if ($testerSectionIndex -ge 0) {
+            $head = @($filteredConfigLines[0..$testerSectionIndex])
+            $tailStart = $testerSectionIndex + 1
+            $tail = if ($tailStart -lt $filteredConfigLines.Count) {
+                @($filteredConfigLines[$tailStart..($filteredConfigLines.Count - 1)])
+            } else {
+                @()
+            }
+            $filteredConfigLines = @($head + "ExpertParameters=$presetName" + $tail)
+        } else {
+            $filteredConfigLines += "ExpertParameters=$presetName"
+        }
+    }
+
+    $generatedConfigPath = [System.IO.Path]::ChangeExtension([System.IO.Path]::GetTempFileName(), ".ini")
+    Set-Content -Path $generatedConfigPath -Value $filteredConfigLines -Encoding UTF8
+    $resolvedConfig = $generatedConfigPath
+    $configLines = $filteredConfigLines
+} elseif (-not ($configLines | Where-Object { $_ -match '^\s*ExpertParameters=' })) {
+    Write-Warning "No ExpertParameters or PresetSource was set in '$resolvedConfig'. MT5 may reuse the last tester inputs."
+}
+
 $reportLine = $configLines | Where-Object { $_ -match '^\s*Report=' } | Select-Object -First 1
 $expectedReportPath = $null
 
@@ -89,6 +156,9 @@ if ($expectedReportPath) {
 }
 
 Write-Host "Backtest launched with config: $resolvedConfig"
+if ($generatedConfigPath) {
+    Write-Host "Preset-backed generated config: $generatedConfigPath"
+}
 if ($reportReady) {
     Write-Host "Report: $expectedReportPath"
 }

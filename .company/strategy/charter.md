@@ -19,3 +19,10 @@
 ## Open Questions
 
 - [TODO]
+
+## Validation Ladder
+
+- Search window: [TODO: 1 week or 1 month]
+- Locked validation window: [TODO: 6 to 12 months]
+- Out-of-sample window: [TODO]
+- Promotion gate: [TODO: PF, drawdown, trade count, forward rule]

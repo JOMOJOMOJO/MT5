@@ -806,6 +806,157 @@ def format_summary(payload: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def build_summary(metrics: dict[str, Any], report_kind: str) -> dict[str, Any]:
+    strengths: list[str] = []
+    weak_points: list[str] = []
+    notes: list[str] = []
+
+    trades = metrics.get("total_trades")
+    if isinstance(trades, int):
+        if trades < 30:
+            weak_points.append("取引回数が少なすぎて判断が不安定です。")
+        elif trades < 100:
+            weak_points.append("取引回数がまだ少なく、過信しにくい結果です。")
+        else:
+            strengths.append("取引回数は初期評価に耐える水準です。")
+
+    profit_factor = metrics.get("profit_factor")
+    if isinstance(profit_factor, (int, float)):
+        if profit_factor < 1.0:
+            weak_points.append("Profit Factor が 1.0 未満で、収益性はまだ不足しています。")
+        elif profit_factor < 1.2:
+            weak_points.append("Profit Factor が弱く、コスト増で崩れやすい状態です。")
+        elif profit_factor >= 1.5:
+            strengths.append("Profit Factor は深掘りに値する水準です。")
+
+    net_profit = metrics.get("total_net_profit")
+    if isinstance(net_profit, (int, float)):
+        if net_profit <= 0:
+            weak_points.append("総損益がまだプラスではありません。")
+        else:
+            strengths.append("総損益はプラスです。")
+
+    drawdowns = [
+        value
+        for value in (
+            metrics.get("maximal_drawdown_percent"),
+            metrics.get("relative_drawdown_percent"),
+        )
+        if isinstance(value, (int, float))
+    ]
+    if drawdowns:
+        worst_drawdown = max(drawdowns)
+        if worst_drawdown >= 30:
+            weak_points.append("ドローダウンが大きすぎて実運用には危険です。")
+        elif worst_drawdown >= 20:
+            weak_points.append("ドローダウンがやや大きく、リスク制御の見直しが必要です。")
+        else:
+            strengths.append("ドローダウンは比較的抑えられています。")
+
+    long_rate = metrics.get("long_positions_percent")
+    short_rate = metrics.get("short_positions_percent")
+    if isinstance(long_rate, (int, float)) and isinstance(short_rate, (int, float)):
+        if abs(long_rate - short_rate) >= 20:
+            weak_points.append("買いと売りの成績差が大きく、片側依存の可能性があります。")
+
+    if report_kind == "optimization_export" and metrics.get("records_count"):
+        notes.append("最適化レポートです。上位1件だけでなく近傍の安定性も見てください。")
+
+    if not strengths and not weak_points:
+        notes.append("レポートは取り込み済みですが、人の判断での解釈がまだ必要です。")
+
+    headline = " / ".join(
+        weak_points[:2] or strengths[:2] or ["レポート要約はまだ生成されていません。"]
+    )
+    return {
+        "headline": headline,
+        "strengths": strengths,
+        "weak_points": weak_points,
+        "notes": notes,
+    }
+
+
+def write_backtest_note(run: dict[str, Any], run_path: Path, note_path: Path) -> Path:
+    identity = run["identity"]
+    metrics = run["metrics"]
+    summary = run["summary"]
+
+    lines = [
+        f"# {identity.get('ea_name', 'EA')} {identity.get('symbol') or ''} {identity.get('timeframe') or ''}".strip(),
+        "",
+        f"- 日付: {run['imported_at']}",
+        f"- EA: {identity.get('ea_name', '-')}",
+        f"- 通貨: {identity.get('symbol', '-') or '-'}",
+        f"- 時間足: {identity.get('timeframe', '-') or '-'}",
+        f"- 検証期間: {identity.get('tested_range', '-') or '-'}",
+        f"- 証跡: {repo_relative(run_path)}",
+        f"- 取込資産: {run['storage'].get('imported_dir', '-')}",
+        f"- タグ: {', '.join(run.get('tags', [])) or '-'}",
+        "",
+        "## 要約",
+        "",
+        f"- {summary.get('headline') or 'レポート要約はまだ生成されていません。'}",
+        "",
+        "## 主要指標",
+        "",
+        f"- 総損益: {metrics.get('total_net_profit', '-')}",
+        f"- Profit Factor: {metrics.get('profit_factor', '-')}",
+        f"- 期待値: {metrics.get('expected_payoff', '-')}",
+        f"- 最大DD %: {metrics.get('maximal_drawdown_percent', '-')}",
+        f"- 相対DD %: {metrics.get('relative_drawdown_percent', '-')}",
+        f"- 総取引数: {metrics.get('total_trades', '-')}",
+        "",
+        "## 良かった点",
+        "",
+    ]
+
+    strengths = summary.get("strengths") or ["-"]
+    lines.extend(f"- {item}" for item in strengths)
+    lines.extend(["", "## 悪かった点", ""])
+    weak_points = summary.get("weak_points") or ["-"]
+    lines.extend(f"- {item}" for item in weak_points)
+    lines.extend(["", "## 次のアクション", ""])
+
+    next_actions: list[str] = []
+    if weak_points:
+        next_actions.append("主な弱点を 1 つ選び、knowledge/experiments/ に次の仮説として切り出す。")
+    if metrics.get("total_trades") is not None and metrics.get("total_trades", 0) < 100:
+        next_actions.append("サンプルが薄いので、期間または別レジームでも再検証する。")
+    if not next_actions:
+        next_actions.append("次の run と比較して、再現性のある改善だけ残す。")
+    lines.extend(f"- {item}" for item in next_actions)
+    lines.append("")
+
+    note_path.parent.mkdir(parents=True, exist_ok=True)
+    note_path.write_text("\n".join(lines), encoding="utf-8")
+    return note_path
+
+
+def format_run_list(items: list[dict[str, Any]]) -> str:
+    if not items:
+        return "No backtest runs were found."
+    lines = []
+    for item in items:
+        lines.append(
+            f"{item['path']} :: {item.get('ea_name') or '-'} / {item.get('symbol') or '-'} / "
+            f"{item.get('timeframe') or '-'} / {item.get('headline') or 'レポート要約はまだ生成されていません。'}"
+        )
+    return "\n".join(lines)
+
+
+def format_summary(payload: dict[str, Any]) -> str:
+    lines = [
+        f"Run: {payload['path']}",
+        f"Headline: {payload.get('headline') or 'レポート要約はまだ生成されていません。'}",
+        "",
+        "Weak points:",
+    ]
+    lines.extend(f"- {item}" for item in payload.get("weak_points", []) or ["-"])
+    lines.extend(["", "Strengths:"])
+    lines.extend(f"- {item}" for item in payload.get("strengths", []) or ["-"])
+    return "\n".join(lines)
+
+
 def build_cli() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Import and compare MT5 backtest reports.")
     subparsers = parser.add_subparsers(dest="command", required=True)

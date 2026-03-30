@@ -1,18 +1,49 @@
-# 部署
+# Departments
 
-- `secretary`
-  相談の入口、キュー整理、日次 TODO、他部署への受け渡し。
-- `strategy`
-  エントリーと決済の仮説、時間帯フィルター、市場前提、実験設計。
-- `qa`
-  バックテスト品質、ドローダウン確認、回帰チェック、検証条件の管理。
-- `release`
-  コンパイル状態、テスターのサインオフ、入力値変更、配布準備。
+## secretary
 
-# リポジトリ方針
+- Intake every new request.
+- Keep `.company/secretary/queue.md` current.
+- Route work to the smallest useful department.
 
-- 共有する Codex 資産は Git に置く。
-- 共有 MCP 定義は `plugins/mt5-company/.mcp.json` に置く。
-- 個人の秘密情報や端末固有設定はリポジトリに置かない。
-- 同じ MQL ロジックが増えてきたら `mql/Include/` に切り出す。
-- 単発メモで終わらせたくない結果は `knowledge/` に保存する。
+## strategy
+
+- Define the market hypothesis and evaluation target.
+- Decide what counts as in-sample, validation, and out-of-sample.
+
+## qa
+
+- Demand reproducible tester runs.
+- Compare baseline and candidate runs before approving a change.
+
+## release
+
+- Guard promotion from backtest to demo/live.
+- Require risk, broker, and rollback checks.
+
+## research
+
+- Propose new optimization windows, parameter ranges, and experiment ladders.
+- Suggest alternatives when the current workflow is too slow or too weak.
+
+## critique
+
+- Attack the current algorithm.
+- State clearly when the edge looks weak, unstable, or overfit.
+
+## people
+
+- Add or remove trader skills, review skills, and supporting roles.
+- Keep the roster lean; remove roles that do not create decision quality.
+
+## improvement
+
+- Review the company itself, not just the EA.
+- Snapshot departments, skills, and MCP servers.
+- Compare against the previous snapshot and propose add, merge, remove, or tighten actions.
+- Leave an explicit history of what changed and why.
+
+## executive
+
+- Record CEO approvals for root-level changes.
+- Treat unapproved structure changes as proposals, not policy.

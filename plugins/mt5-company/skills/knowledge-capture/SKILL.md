@@ -1,32 +1,28 @@
 ---
 name: knowledge-capture
-description: バックテスト結果、失敗事例、改善仮説、再利用できる運用知識を knowledge/ に蓄積する skill。結果をその場限りで終わらせたくないときに使う。
+description: バックテスト結果、最適化結果、失敗知見、再利用できる判断を knowledge/ に残す skill。結果を会話だけで終わらせたくないときに使う。
 ---
 
 # Knowledge Capture
 
-この skill は、バックテストや実装の知見を「後で効く形」に変換するためのものです。
+会話で終わらせず、次の EA 改善で再利用できる形に落とす。
 
-## 保存先の使い分け
+## 保存先
 
-- `knowledge/backtests/`
-  単発または特定条件のバックテスト結果。
-- `knowledge/experiments/`
-  次に検証したい仮説、A/B 比較、途中経過。
-- `knowledge/lessons/`
-  失敗から得た教訓、再発防止、実装上の注意点。
-- `knowledge/patterns/`
-  複数ケースで再利用できる勝ち筋や設計パターン。
+- `knowledge/backtests/`: 固定パラメータ検証の要約
+- `knowledge/optimizations/`: 探索レンジ、候補 pass、採用設定、棄却理由
+- `knowledge/experiments/`: 次に試す仮説
+- `knowledge/lessons/`: 再発防止や重要な学び
+- `knowledge/patterns/`: 複数 EA に効く型
 
 ## ルール
 
-1. 1 ファイル 1 学びを原則にします。
-2. 結論だけでなく、前提条件も残します。
-3. 単発で再現未確認なら「仮説」と明記します。
-4. 効いた条件と効かなかった条件の両方を書きます。
-5. 関連 EA、シンボル、時間足、レポートの位置を残します。
-6. MT5 レポートは先に `import_backtest_report` で構造化し、その後に `record_knowledge` で補足して構いません。
+1. 1 ファイル 1 学びに寄せる。
+2. どの EA、どの通貨、どの期間かを必ず書く。
+3. 単なる感想ではなく、証拠と判断を分ける。
+4. 最適化は「良かった候補」だけでなく「捨てた候補」も残す。
+5. 次に何を試すかを書けるなら `experiments/` に落とす。
 
 ## 参照
 
-- 知識ベースの方針: `references/knowledge-policy.md`
+- `references/knowledge-policy.md`

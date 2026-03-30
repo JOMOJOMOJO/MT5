@@ -5,8 +5,20 @@
 - Use `.company/secretary/queue.md` for intake and routing when the user is planning, triaging, or juggling multiple threads of work.
 - Save durable findings under `knowledge/` rather than leaving them only in chat or ad hoc notes.
 - Prefer structured imports into `reports/backtest/runs/` before writing narrative notes into `knowledge/backtests/`.
+- Save parameter-search outcomes, rejected ranges, and selected candidate sets under `knowledge/optimizations/`.
 - Keep EA code under `mql/Experts/` and shared logic under `mql/Include/`.
 - Use `scripts/compile.ps1` for builds and `scripts/backtest.ps1` for tester runs when possible.
+- Use `scripts/optimize.ps1` for MT5 optimization jobs when an optimization `.ini` has been saved into the repo.
 - When changing strategy behavior, connect the code change to a backtest or QA note under `.company/` or `reports/`.
 - Skill identifiers should stay stable, but Japanese skill bodies and references are preferred in this repository.
 - When the user wants a trader's judgement on market fit, execution realism, or live readiness, use the repo-local `professional-trader` skill.
+- When the user wants an EA operator's view on rule quality and parameter discipline, use `systematic-ea-trader`.
+- When the user wants live risk limits or kill-switch design, use `risk-manager`.
+- When the user wants promotion from backtest to demo or live, use `forward-live-ops`.
+- When the user wants new experiments, optimization ranges, or validation order, use `research-director`.
+- When the user wants a skeptical review that may conclude the algorithm should be abandoned, use `strategy-critic`.
+- When the user wants to add or remove trader roles, skills, or teams, use `talent-manager`.
+- When the user wants to redesign the company workflow or governance model, use `org-designer`.
+- When the user wants the company itself to review and improve its org, skill, and MCP structure, use `continuous-improvement-office`.
+- Record org, skill, and MCP snapshots under `.company/improvement/` so changes can be compared against the previous state.
+- Any root-level change to company structure, approval routes, or shared skill roster requires CEO approval recorded under `.company/executive/ceo-approval-log.md` before the change is treated as accepted.
