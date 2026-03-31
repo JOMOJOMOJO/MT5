@@ -21,17 +21,26 @@ input int             InpTrendStackEMAPeriod     = 100;
 input int             InpRSIPeriod               = 14;
 input int             InpATRPeriod               = 14;
 
-input bool            InpAllowBuy                = false;
+input bool            InpAllowBuy                = true;
 input int             InpLongStartHour           = 20;
 input int             InpLongEndHour             = 24;
-input double          InpLongDistanceATR         = 0.60;
+input double          InpLongDistanceATR         = 1.50;
 input double          InpLongMaxDistanceATR      = 0.0;
 input double          InpLongMinATRPercent       = 0.0;
 input double          InpLongMaxATRPercent       = 0.0;
 input double          InpLongRsiMax              = 40.0;
-input int             InpLongTrendFilterMode     = 0;
+input int             InpLongTrendFilterMode     = 1;
+input bool            InpEnableSecondLongBucket  = false;
+input int             InpSecondLongStartHour     = 13;
+input int             InpSecondLongEndHour       = 22;
+input double          InpSecondLongDistanceATR   = 1.50;
+input double          InpSecondLongMaxDistanceATR = 0.0;
+input double          InpSecondLongMinATRPercent = 0.0;
+input double          InpSecondLongMaxATRPercent = 0.0;
+input double          InpSecondLongRsiMax        = 30.0;
+input int             InpSecondLongTrendFilterMode = 1;
 
-input bool            InpAllowSell               = true;
+input bool            InpAllowSell               = false;
 input int             InpShortStartHour          = 0;
 input int             InpShortEndHour            = 8;
 input double          InpShortDistanceATR        = 0.87;
@@ -40,6 +49,7 @@ input double          InpShortMinATRPercent      = 0.0003;
 input double          InpShortMaxATRPercent      = 0.0;
 input double          InpShortRsiMin             = 64.0;
 input double          InpShortRsiMax             = 82.0;
+input int             InpShortTrendFilterMode    = 0;
 input bool            InpShortRequireStackedBearTrend = false;
 input bool            InpEnableSecondShortBucket = false;
 input int             InpSecondShortStartHour    = 13;
@@ -62,9 +72,13 @@ input double          InpShortMaxDistanceATRActive = 0.0;
 input double          InpShortRsiMinActive       = 64.0;
 input double          InpShortRsiMaxActive       = 95.0;
 
-input int             InpHoldBars                = 14;
+input int             InpHoldBars                = 8;
+input int             InpLongHoldBars            = 8;
+input int             InpShortHoldBars           = 0;
 input bool            InpExitOnMeanReversion     = true;
 input double          InpExitBufferATR           = 0.30;
+input double          InpLongExitBufferATR       = 0.30;
+input double          InpShortExitBufferATR      = 0.0;
 input double          InpEmergencyStopATR        = 4.00;
 input double          InpRiskPercent             = 0.05;
 
@@ -72,18 +86,18 @@ input int             InpMaxOpenTrades           = 8;
 input int             InpMaxOpenPerSide          = 4;
 input bool            InpUseDailyLossCap         = true;
 input double          InpDailyLossCapPercent     = 3.0;
-input int             InpMaxTradesPerDay         = 10;
+input int             InpMaxTradesPerDay         = 20;
 input int             InpMaxConsecutiveLosses    = 5;
 input int             InpConsecutiveLossCooldownBars = 24;
 input bool            InpUseEquityDrawdownCap    = false;
 input double          InpEquityDrawdownCapPercent = 12.0;
 input bool            InpEnableTelemetry         = true;
-input string          InpTelemetryFileName       = "mt5_company_btcusd_20260330_session_meanrev_live.csv";
+input string          InpTelemetryFileName       = "mt5_company_btcusd_20260330_session_meanrev_bull15_40_long_h8_no_sun.csv";
 input double          InpMaxSpreadPips           = 2500.0;
 input double          InpMaxDeviationPips        = 250.0;
-input string          InpAllowedWeekdays         = "0,1,2,3,4,6";
+input string          InpAllowedWeekdays         = "1,2,3,4,6";
 input string          InpBlockedEntryHours       = "3";
-input long            InpMagicNumber             = 20260330;
+input long            InpMagicNumber             = 20260372;
 
 int emaHandle = INVALID_HANDLE;
 int slowEmaHandle = INVALID_HANDLE;
@@ -130,7 +144,11 @@ int OnInit()
     if(InpMagicNumber <= 0 || InpRiskPercent <= 0.0 || InpEmergencyStopATR <= 0.0 || InpHoldBars <= 0 ||
        InpMaxTradesPerDay < 0 || InpMaxConsecutiveLosses < 0 || InpConsecutiveLossCooldownBars < 0 ||
        InpEquityDrawdownCapPercent < 0.0 || InpTrendStackEMAPeriod <= 0 ||
-       InpLongTrendFilterMode < 0 || InpLongTrendFilterMode > 2)
+       InpLongTrendFilterMode < 0 || InpLongTrendFilterMode > 2 ||
+       InpSecondLongTrendFilterMode < 0 || InpSecondLongTrendFilterMode > 2 ||
+       InpShortTrendFilterMode < 0 || InpShortTrendFilterMode > 2 ||
+       InpLongHoldBars < 0 || InpShortHoldBars < 0 ||
+       InpLongExitBufferATR < 0.0 || InpShortExitBufferATR < 0.0)
     {
         Print("Invalid prototype parameters.");
         return INIT_PARAMETERS_INCORRECT;
@@ -556,14 +574,28 @@ int GetSignal()
         }
     }
 
-    if(InpAllowBuy &&
-       IsHourInRange(barTime.hour, InpLongStartHour, InpLongEndHour) &&
-       distAtr <= -InpLongDistanceATR &&
-       (InpLongMaxDistanceATR <= 0.0 || distAtr >= -InpLongMaxDistanceATR) &&
-       (InpLongMinATRPercent <= 0.0 || atrPct >= InpLongMinATRPercent) &&
-       (InpLongMaxATRPercent <= 0.0 || atrPct <= InpLongMaxATRPercent) &&
-       rsi[1] <= InpLongRsiMax &&
-       IsTrendFilterSatisfied(InpLongTrendFilterMode, isBullTrend, isBearTrend))
+    bool primaryLongSignal =
+       (InpAllowBuy &&
+        IsHourInRange(barTime.hour, InpLongStartHour, InpLongEndHour) &&
+        distAtr <= -InpLongDistanceATR &&
+        (InpLongMaxDistanceATR <= 0.0 || distAtr >= -InpLongMaxDistanceATR) &&
+        (InpLongMinATRPercent <= 0.0 || atrPct >= InpLongMinATRPercent) &&
+        (InpLongMaxATRPercent <= 0.0 || atrPct <= InpLongMaxATRPercent) &&
+        rsi[1] <= InpLongRsiMax &&
+        IsTrendFilterSatisfied(InpLongTrendFilterMode, isBullTrend, isBearTrend));
+
+    bool secondLongSignal =
+       (InpAllowBuy &&
+        InpEnableSecondLongBucket &&
+        IsHourInRange(barTime.hour, InpSecondLongStartHour, InpSecondLongEndHour) &&
+        distAtr <= -InpSecondLongDistanceATR &&
+        (InpSecondLongMaxDistanceATR <= 0.0 || distAtr >= -InpSecondLongMaxDistanceATR) &&
+        (InpSecondLongMinATRPercent <= 0.0 || atrPct >= InpSecondLongMinATRPercent) &&
+        (InpSecondLongMaxATRPercent <= 0.0 || atrPct <= InpSecondLongMaxATRPercent) &&
+        rsi[1] <= InpSecondLongRsiMax &&
+        IsTrendFilterSatisfied(InpSecondLongTrendFilterMode, isBullTrend, isBearTrend));
+
+    if(primaryLongSignal || secondLongSignal)
         return 1;
 
     if(InpAllowSell &&
@@ -574,6 +606,7 @@ int GetSignal()
        (InpShortMaxATRPercent <= 0.0 || atrPct <= InpShortMaxATRPercent) &&
        rsi[1] >= shortRsiMin &&
        rsi[1] <= shortRsiMax &&
+       IsTrendFilterSatisfied(InpShortTrendFilterMode, isBullTrend, isBearTrend) &&
        (!InpShortRequireStackedBearTrend || isStackedBearTrend))
         return -1;
 
@@ -610,11 +643,13 @@ void ManageOpenPositions()
 
         bool isBuy = (posInfo.PositionType() == POSITION_TYPE_BUY);
         int heldBars = HeldBars(posInfo.Time());
-        bool timeExit = (heldBars >= InpHoldBars);
+        int holdLimit = GetHoldBarsForSide(isBuy);
+        bool timeExit = (heldBars >= holdLimit);
         bool meanExit = false;
-        if(InpExitOnMeanReversion && atr[1] > 0.0)
+        double exitBufferAtr = GetExitBufferForSide(isBuy);
+        if(InpExitOnMeanReversion && exitBufferAtr > 0.0 && atr[1] > 0.0)
         {
-            double exitBuffer = atr[1] * InpExitBufferATR;
+            double exitBuffer = atr[1] * exitBufferAtr;
             if(isBuy)
                 meanExit = (close1 >= ema[1] - exitBuffer);
             else
@@ -643,6 +678,24 @@ bool CanOpenSide(bool isBuy)
     if(CountOpenPositionsBySide(isBuy) >= InpMaxOpenPerSide)
         return false;
     return true;
+}
+
+int GetHoldBarsForSide(bool isBuy)
+{
+    if(isBuy && InpLongHoldBars > 0)
+        return InpLongHoldBars;
+    if(!isBuy && InpShortHoldBars > 0)
+        return InpShortHoldBars;
+    return InpHoldBars;
+}
+
+double GetExitBufferForSide(bool isBuy)
+{
+    if(isBuy && InpLongExitBufferATR > 0.0)
+        return InpLongExitBufferATR;
+    if(!isBuy && InpShortExitBufferATR > 0.0)
+        return InpShortExitBufferATR;
+    return InpExitBufferATR;
 }
 
 void OpenPosition(bool isBuy)

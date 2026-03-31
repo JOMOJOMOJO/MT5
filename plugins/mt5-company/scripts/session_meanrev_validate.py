@@ -53,6 +53,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--long-max-atr-pct", type=float, default=0.0)
     parser.add_argument("--long-rsi-max", type=float, default=40.0)
     parser.add_argument("--buy-trend-filter", default="none", choices=["none", "bull", "bear"])
+    parser.add_argument("--enable-second-long", action="store_true", default=False)
+    parser.add_argument("--second-long-start-hour", type=int, default=13)
+    parser.add_argument("--second-long-end-hour", type=int, default=22)
+    parser.add_argument("--second-long-dist", type=float, default=1.5)
+    parser.add_argument("--second-long-max-dist", type=float, default=0.0)
+    parser.add_argument("--second-long-min-atr-pct", type=float, default=0.0)
+    parser.add_argument("--second-long-max-atr-pct", type=float, default=0.0)
+    parser.add_argument("--second-long-rsi-max", type=float, default=30.0)
+    parser.add_argument("--second-long-trend-filter", default="bull", choices=["none", "bull", "bear"])
     parser.add_argument("--short-start-hour", type=int, default=0)
     parser.add_argument("--short-end-hour", type=int, default=8)
     parser.add_argument("--short-dist", type=float, default=0.8)
@@ -85,7 +94,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--sell-trend-filter", default="none", choices=["none", "bull", "bear"])
     parser.add_argument("--sell-require-above-slow-ema", action="store_true", default=False)
     parser.add_argument("--hold-bars", type=int, default=12)
+    parser.add_argument("--long-hold-bars", type=int, default=0)
+    parser.add_argument("--short-hold-bars", type=int, default=0)
     parser.add_argument("--exit-buffer-atr", type=float, default=0.10)
+    parser.add_argument("--long-exit-buffer-atr", type=float, default=0.0)
+    parser.add_argument("--short-exit-buffer-atr", type=float, default=0.0)
     parser.add_argument("--stop-atr", type=float, default=2.50)
     parser.add_argument("--allowed-weekdays", default="0,1,2,3,4,5,6")
     parser.add_argument("--blocked-entry-hours", default="")
@@ -221,6 +234,22 @@ def calculate_trade_stats(pnl: pd.Series, times: pd.Series) -> dict[str, Any]:
     }
 
 
+def effective_hold_bars(args: argparse.Namespace, side: int) -> int:
+    if side > 0 and args.long_hold_bars > 0:
+        return args.long_hold_bars
+    if side < 0 and args.short_hold_bars > 0:
+        return args.short_hold_bars
+    return args.hold_bars
+
+
+def effective_exit_buffer_atr(args: argparse.Namespace, side: int) -> float:
+    if side > 0 and args.long_exit_buffer_atr > 0.0:
+        return args.long_exit_buffer_atr
+    if side < 0 and args.short_exit_buffer_atr > 0.0:
+        return args.short_exit_buffer_atr
+    return args.exit_buffer_atr
+
+
 def adverse_fill_price(side: int, base_price: float, slip_price: float) -> float:
     if side > 0:
         return base_price + slip_price
@@ -312,15 +341,17 @@ def simulate(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
                 continue
 
             held_bars = i - pos.entry_index
+            hold_limit = effective_hold_bars(args, pos.side)
+            exit_buffer_atr = effective_exit_buffer_atr(args, pos.side)
             mean_exit = False
-            if args.exit_buffer_atr > 0 and prev["atr14"] > 0:
-                buffer = prev["atr14"] * args.exit_buffer_atr
+            if exit_buffer_atr > 0 and prev["atr14"] > 0:
+                buffer = prev["atr14"] * exit_buffer_atr
                 if pos.side > 0:
                     mean_exit = prev["close"] >= prev["ema20"] - buffer
                 else:
                     mean_exit = prev["close"] <= prev["ema20"] + buffer
 
-            if held_bars >= args.hold_bars or mean_exit:
+            if held_bars >= hold_limit or mean_exit:
                 exit_price = adverse_fill_price(-pos.side, float(row["open"]), exit_slip)
                 pnl = pos.side * (exit_price - pos.entry_price) - pos.spread_cost
                 current_balance += pnl
@@ -414,6 +445,17 @@ def simulate(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
             and prev["rsi14"] <= args.long_rsi_max
             and trend_pass(args.buy_trend_filter, float(prev["ema20"]), float(prev["ema50"]))
         )
+        second_long_signal = (
+            args.allow_buy
+            and args.enable_second_long
+            and hour_in_range(int(prev["hour"]), args.second_long_start_hour, args.second_long_end_hour)
+            and dist_atr <= -args.second_long_dist
+            and (args.second_long_max_dist <= 0.0 or dist_atr >= -args.second_long_max_dist)
+            and (args.second_long_min_atr_pct <= 0.0 or atr_pct >= args.second_long_min_atr_pct)
+            and (args.second_long_max_atr_pct <= 0.0 or atr_pct <= args.second_long_max_atr_pct)
+            and prev["rsi14"] <= args.second_long_rsi_max
+            and trend_pass(args.second_long_trend_filter, float(prev["ema20"]), float(prev["ema50"]))
+        )
         short_signal = (
             args.allow_sell
             and hour_in_range(int(prev["hour"]), args.short_start_hour, args.short_end_hour)
@@ -440,7 +482,7 @@ def simulate(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
             and trend_pass(args.second_short_trend_filter, float(prev["ema20"]), float(prev["ema50"]))
         )
 
-        if not long_signal and not short_signal and not second_short_signal:
+        if not long_signal and not second_long_signal and not short_signal and not second_short_signal:
             continue
 
         long_open = sum(1 for p in open_positions if p.side > 0)
@@ -449,7 +491,7 @@ def simulate(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
         stop_distance = float(prev["atr14"] * args.stop_atr)
         quote_price = float(row["open"])
 
-        if long_signal and long_open < args.max_open_per_side:
+        if (long_signal or second_long_signal) and long_open < args.max_open_per_side:
             entry_price = adverse_fill_price(1, quote_price, entry_slip)
             open_positions.append(
                 Position(

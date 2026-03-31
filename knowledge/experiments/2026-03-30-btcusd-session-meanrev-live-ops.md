@@ -2,7 +2,43 @@
 
 - Date: 2026-03-30
 - EA: `btcusd_20260330_session_meanrev`
-- Scope: `BTCUSD / M5 / short-focused`
+- Scope: `BTCUSD / M5 / long-only current front`
+
+## Current Candidate
+
+- Preset:
+  - `reports/presets/btcusd_20260330_session_meanrev-bull15_40_long_h8_no_sun.set`
+- Strategy shape:
+  - `bull-filtered late-session long only`
+  - `long_dist=1.50`
+  - `long_rsi_max=40`
+  - `hold_bars=8`
+  - `weekdays=1,2,3,4,6`
+- Current MT5 result:
+  - `reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-03-31-100524-135885-btcusd-20260330-session-meanrev-.json`
+  - `net +53.75`
+  - `PF 1.49`
+  - `116` trades
+  - `max DD 0.37%`
+- Status:
+  - treat this as the current `operations live-candidate`,
+  - keep `bull15_40 h12` as the turnover reference,
+  - keep `bull37 long-only` as the conservative quality reference,
+  - do not promote any mixed-direction or short-side branch from this family right now.
+
+## Conservative Reference
+
+- Preset:
+  - `reports/presets/btcusd_20260330_session_meanrev-bull37_long_h12.set`
+- Current MT5 result:
+  - `reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-03-31-024622-395041-btcusd-20260330-session-meanrev-.json`
+  - `net +68.89`
+  - `PF 1.76`
+  - `88` trades
+  - `max DD 0.38%`
+- Interpretation:
+  - lower turnover than the current candidate,
+  - but still the highest-quality actual result inside the current family.
 
 ## Baseline (Liveguards-Mid)
 
@@ -84,24 +120,37 @@
   - the current guarded baseline is profitable, but real MT5 trade frequency is much lower than the optimistic Python validator estimate,
   - spread gating is the largest blocker in the current live-like setup.
 
-## Higher-Turnover Branch
+## Direction Split Result
 
-- New combo candidate:
-  - preset: `reports/presets/btcusd_20260330_session_meanrev-combo15_35_h12.set`
-  - note: `knowledge/experiments/2026-03-31-btcusd-session-meanrev-combo-bucket.md`
-- Strategy shape:
-  - keep the proven `asia short` core,
-  - add `late-session long` with `long_dist=1.50`, `long_rsi_max=35`, `hold_bars=12`.
-- MT5 combined-window result:
-  - `reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-03-31-000240-833419-probe-combo-asia-short-late-long.json`
-  - `net +212.61`
-  - `PF 1.46`
-  - `392` trades
-  - `max DD 0.69%`
-- Interpretation:
-  - this branch gives up some PF versus the conservative short-only baseline,
-  - but it materially improves actual MT5 turnover and total net profit on the shared test window,
-  - treat it as the current `higher-turnover candidate`, not as the already-approved live baseline.
+- direction-split note:
+  - `knowledge/experiments/2026-03-31-btcusd-session-meanrev-direction-split.md`
+- actual decision:
+  - mixed-direction variants failed on the 1-year actual MT5 window,
+  - short-only `asia100` also failed,
+  - only the long side survived.
+- operating consequence:
+  - do not deploy this family as a mixed-direction EA,
+  - if the short side is revisited later, treat it as a separate research branch and require its own actual-first promotion path.
+
+## Long-Only Expansion
+
+- long-only refinement note:
+  - `knowledge/experiments/2026-03-31-btcusd-session-meanrev-direction-split.md`
+- Sunday filter probe:
+  - `knowledge/experiments/2026-03-31-btcusd-session-meanrev-sunday-filter-probe.md`
+- second long bucket probe:
+  - `knowledge/experiments/2026-03-31-btcusd-session-meanrev-second-long-bucket-probe.md`
+- tested long-only variants:
+  - `bull37`: best quality
+  - `bull15_40 h12`: best turnover among the surviving actual candidates
+  - `bull15_40 h8 no_sun`: better live-risk profile than `bull15_40 h12`
+  - `bull12_45`: turnover gain was too expensive in PF
+- current choice:
+  - `bull15_40 h8 no_sun` for the operations live candidate,
+  - `bull15_40 h12` as the turnover reference,
+  - `bull37 long-only` as the fallback quality reference.
+  - `bull15_40 h8 no_sun_no_tue` was tested and rejected after actual MT5.
+  - `NY second long bucket` was rejected at validator stage before actual MT5.
 
 ## Rejected Variant
 
@@ -122,8 +171,9 @@
 - Decision:
   - do not promote the dual-short expansion,
   - do not promote the wider spread gate at `3000` or `3500`,
+  - do not promote mixed-direction long/short combinations from this family on the current same-symbol deployment path,
   - the added activity came with materially weaker trade quality and far more trade-cap / loss-lock events,
-  - the next live-readiness work should focus on session timing or entry construction rather than paying wider spread.
+  - the next live-readiness work should focus on long-only forward behavior and actual-first expansion of the surviving long bucket.
 
 ## Review Cadence
 

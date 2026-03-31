@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import re
 import shutil
 import xml.etree.ElementTree as ET
@@ -605,14 +606,25 @@ def build_run_payload(
 def copy_report_bundle(source_path: Path, target_dir: Path) -> Path:
     target_dir.mkdir(parents=True, exist_ok=True)
     report_copy = target_dir / f"report{source_path.suffix.lower()}"
-    shutil.copy2(source_path, report_copy)
+    shutil.copy2(windows_copy_path(source_path), windows_copy_path(report_copy))
 
     for sibling in source_path.parent.glob(f"{source_path.stem}*"):
         if sibling.resolve() == source_path.resolve() or not sibling.is_file():
             continue
-        shutil.copy2(sibling, target_dir / sibling.name)
+        shutil.copy2(windows_copy_path(sibling), windows_copy_path(target_dir / sibling.name))
 
     return report_copy
+
+
+def windows_copy_path(path: Path) -> str:
+    resolved = str(path.resolve())
+    if os.name != "nt":
+        return resolved
+    if resolved.startswith("\\\\?\\"):
+        return resolved
+    if resolved.startswith("\\\\"):
+        return f"\\\\?\\UNC\\{resolved[2:]}"
+    return f"\\\\?\\{resolved}"
 
 
 def write_backtest_note(run: dict[str, Any], run_path: Path, note_path: Path) -> Path:
@@ -734,7 +746,8 @@ def import_backtest_report(
     run_id = f"{timestamp}-{report_slug}"
 
     imported_copy_path: Path | None = None
-    imported_dir = IMPORTED_ROOT / ea_slug / symbol_slug / timeframe_slug / run_id
+    imported_bundle_id = timestamp
+    imported_dir = IMPORTED_ROOT / ea_slug / symbol_slug / timeframe_slug / imported_bundle_id
     run_path = RUNS_ROOT / ea_slug / symbol_slug / timeframe_slug / f"{run_id}.json"
     note_path = KNOWLEDGE_BACKTEST_ROOT / ea_slug / symbol_slug / timeframe_slug / f"{run_id}.md"
 

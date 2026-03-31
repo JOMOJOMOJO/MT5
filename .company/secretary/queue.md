@@ -14,17 +14,17 @@
 - [ ] Narrow the BTCUSD redesign from "mixed-direction prototype" to "cross-year robust long-only live candidate".
 - [ ] Analyze the weak 2024 BTCUSD months and derive a long-side regime filter for the H1/H4/D1 candidate.
 - [ ] Make H1 metadata-backed runs the canonical lineage and phase older M1 imports into legacy status.
-- [ ] Decide whether the short side should become a separate EA instead of staying inside the BTCUSD long baseline.
+- [ ] Decide whether the parked short side should be retired or relaunched as a completely separate actual-first EA project.
 - [ ] Promote the `btcusd_20260330_session_meanrev` no-Friday / skip-03 candidate from Python validation into an MT5 report-backed candidate.
 - [ ] Diagnose why MT5 command-line tester stopped auto-starting after 2026-03-30 14:53.
-- [ ] Re-run the session-mean-reversion candidate on a longer BTCUSD history window with the friction-aware validator.
-- [ ] Verify the new `stop 4.0 / exit 0.3 / spread 2500` baseline on a longer BTCUSD history window.
+- [ ] Run demo-forward telemetry for `btcusd_20260330_session_meanrev-bull15_40_long_h8_no_sun` and compare realized trade frequency against the 1-year actual result.
+- [ ] Compare `bull15_40 h8 no_sun` versus `bull37 long-only` after the first demo-forward week and keep only one current live candidate.
 - [ ] Add a recurring quarterly review record for live candidates and keep the cadence in release notes.
 - [ ] Execute a 1-week demo-forward run with `liveguards-mid` and archive runtime rule-trigger stats.
-- [ ] Review `mt5_company_btcusd_20260330_session_meanrev_live.csv` after the first demo-forward week and summarize blocker frequencies.
-- [ ] Rework session timing or entry construction for `btcusd_20260330_session_meanrev`; do not rely on a wider spread gate to lift trade count.
-- [ ] Run the new `combo15_35_h12` preset through a longer MT5 window and decide whether it can replace the conservative short-only reference.
-- [ ] Forward-demo the combo preset with its dedicated telemetry file and compare blocker frequencies against the short-only baseline.
+- [ ] Review `mt5_company_btcusd_20260330_session_meanrev_bull15_40_long_h8_no_sun.csv` after the first demo-forward week and summarize blocker frequencies.
+- [ ] Rework the surviving long-only branch for higher turnover without breaking actual PF, instead of reviving mixed-direction combos.
+- [ ] Search for a second long-only bucket or regime control instead of adding more weekday exclusions to the same late-session bucket.
+- [ ] Derive a regime control for the surviving late-session long edge instead of adding new NY time-of-day buckets.
 
 ## Blocked
 
@@ -66,3 +66,11 @@
 - [x] Reject the `NY stacked short` bucket after MT5 report-backed probes even though the Python validator looked acceptable.
 - [x] Promote `asia short + late long 1.50 / RSI<=35 / hold 12` as the current higher-turnover candidate preset for `btcusd_20260330_session_meanrev`.
 - [x] Formalize org scorecard, skill-roster discipline, and reusable research rules so the company can improve itself without adding unnecessary roles.
+- [x] Refine the bull-filtered long branch and promote `1.50 / RSI<=37 / hold 12` as the current best-balance MT5 candidate.
+- [x] Add side-specific hold/exit controls plus short trend filter to the session-mean-reversion EA and validator.
+- [x] Run a direction split on the 1-year actual MT5 window and confirm that only the long side survives for `btcusd_20260330_session_meanrev`.
+- [x] Promote `bull15_40 long-only` as the current balance candidate and keep `bull37 long-only` as the conservative reference.
+- [x] Probe the Sunday filter plus shorter hold on the surviving long-only branch and promote `bull15_40 h8 no_sun` as the operations live-candidate.
+- [x] Reject the `bull15_40 h8 no_sun_no_tue` weekday-tightening probe after actual MT5 comparison.
+- [x] Fix the long-path import failure in `mt5_backtest_tools.py` so report bundles copy cleanly without `--no-copy`.
+- [x] Reject the NY second-long-bucket expansion before actual MT5 because the long-window train slice broke.

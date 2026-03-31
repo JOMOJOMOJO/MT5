@@ -1,0 +1,61 @@
+# Session Mean-Reversion Candidate Sweep
+
+- Symbol: BTCUSD
+- Timeframe: M5
+- Bars: 80000
+- Split dates: 2025-10-01, 2026-01-01
+- Candidate count: 24
+- Filtered count: 11
+
+## Top Results
+
+- `bull_late_15_37_h12 + asia_100_66_85_h12`
+  - score: `1.259`
+  - all: `PF 1.27`, `4.76 trades/day`, `net 31272.25`
+  - min split test PF: `1.35`
+  - min split test trades/day: `5.33`
+- `bull_late_15_35_h12 + asia_100_66_85_h12`
+  - score: `1.251`
+  - all: `PF 1.27`, `4.71 trades/day`, `net 30506.13`
+  - min split test PF: `1.34`
+  - min split test trades/day: `5.29`
+- `bull_late_15_37_h12 + ny_bear_08_60_h12`
+  - score: `1.153`
+  - all: `PF 1.41`, `3.02 trades/day`, `net 30489.49`
+  - min split test PF: `1.14`
+  - min split test trades/day: `3.40`
+- `bull_late_15_35_h12 + ny_bear_08_60_h12`
+  - score: `1.133`
+  - all: `PF 1.40`, `2.97 trades/day`, `net 29723.37`
+  - min split test PF: `1.13`
+  - min split test trades/day: `3.36`
+- `off + asia_100_66_85_h12`
+  - score: `1.129`
+  - all: `PF 1.26`, `4.20 trades/day`, `net 25914.77`
+  - min split test PF: `1.38`
+  - min split test trades/day: `4.75`
+- `off + ny_bear_08_60_h12`
+  - score: `1.084`
+  - all: `PF 1.40`, `2.47 trades/day`, `net 24720.02`
+  - min split test PF: `1.04`
+  - min split test trades/day: `2.86`
+- `bull_late_15_37_h12 + ny_bear_08_55_h12`
+  - score: `1.060`
+  - all: `PF 1.32`, `3.65 trades/day`, `net 30083.64`
+  - min split test PF: `1.08`
+  - min split test trades/day: `4.06`
+- `bull_late_15_37_h12 + asia_087_64_82_h14`
+  - score: `1.056`
+  - all: `PF 1.18`, `5.50 trades/day`, `net 24376.49`
+  - min split test PF: `1.28`
+  - min split test trades/day: `6.20`
+- `late_none_12_35_h12 + asia_087_64_82_h14`
+  - score: `1.056`
+  - all: `PF 1.02`, `7.29 trades/day`, `net 5455.08`
+  - min split test PF: `1.05`
+  - min split test trades/day: `8.38`
+- `bull_late_15_35_h12 + asia_087_64_82_h14`
+  - score: `1.048`
+  - all: `PF 1.18`, `5.45 trades/day`, `net 23610.38`
+  - min split test PF: `1.27`
+  - min split test trades/day: `6.16`

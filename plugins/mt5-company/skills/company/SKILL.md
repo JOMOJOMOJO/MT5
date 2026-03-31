@@ -27,6 +27,7 @@ description: MT5 EA 開発リポジトリを会社のように運用する skill
 4. EA ごとの事実は `reports/backtest/runs/` に残し、横断知識は `knowledge/` に昇格させる。
 5. 最適化は短期探索、長期固定検証、明示的な out-of-sample の順で扱う。
 6. 組織、skill、MCP の見直しは `.company/improvement/` に snapshot と review を残す。
+7. 1 skill = 1 primary role を原則とし、責務が重なったら新設より先に統合を検討する。
 
 ## CEO 承認が必要な変更
 
@@ -43,3 +44,4 @@ description: MT5 EA 開発リポジトリを会社のように運用する skill
 ## 参照
 
 - 部署と routing の詳細: `references/departments.md`
+- skill の運用図: `references/skill-operating-model.md`
