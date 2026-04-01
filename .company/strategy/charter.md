@@ -1,28 +1,51 @@
 # Strategy Charter
 
-## Target Market
+## Permanent North Star
 
-- [TODO: Symbol and timeframe]
+- Build MT5 strategies that can survive, compound, and stay expectancy-positive after realistic friction.
+- Win rate is not the main objective. Positive expectancy, controllable drawdown, and repeatability are.
+- Prefer setups that can trade multiple times per day, but never sacrifice robustness just to force turnover.
 
-## Core Hypothesis
+## Capital Doctrine
 
-- [TODO: Why this setup should have edge]
+- Capital survival comes before raw return.
+- The default hard-loss budget is `3%` of equity at the daily or portfolio layer unless the CEO explicitly approves a different interpretation.
+- Multi-trade strategies should normally risk a fraction of that budget per trade. `3%` per trade is not the default.
+- Position sizing should scale from current equity so that valid strategies can compound without bypassing risk caps.
+- Every serious candidate should define its stop model, expected reward model, and sizing model in `R` terms or with an equivalent expectancy explanation.
 
-## Risk Model
+## Promotion Philosophy
 
-- [TODO: Position sizing, max daily loss, stop model]
+- Promote on actual MT5 evidence, not on a single optimization peak or Python-only results.
+- A strategy is not `good` because it wins often. A strategy is good if:
+  - expectancy stays positive after spread and slippage,
+  - drawdown stays survivable,
+  - trade count is large enough for the claimed edge to be meaningful,
+  - the edge survives across regimes and forward review.
+- If a family misses the active business objective, park it explicitly and open a cleaner research branch.
 
-## Filters
+## Default Risk Standards
 
-- [TODO: Session, spread, volatility, news, regime filters]
+- Daily hard-loss cap: `3%` equity.
+- Portfolio or peak-to-valley kill-switch: required for demo or live candidates.
+- Per-trade risk: small enough that an ordinary losing streak does not threaten continuation.
+- Reward model: target roughly `1.2R` to `1.5R` average payoff or an equally clear expectancy edge after costs.
 
-## Open Questions
+## Research Order
 
-- [TODO]
+- Mine bar data and session behavior before writing large parameter grids.
+- Keep high-turnover and low-turnover families separate.
+- Prefer a small number of clear hypotheses over a large number of overlapping tweaks.
+- Record rejected ideas as durable knowledge so future families do not repeat the same mistakes.
 
 ## Validation Ladder
 
-- Search window: [TODO: 1 week or 1 month]
-- Locked validation window: [TODO: 6 to 12 months]
-- Out-of-sample window: [TODO]
-- Promotion gate: [TODO: PF, drawdown, trade count, forward rule]
+- Search window: short enough to iterate, long enough to contain varied conditions.
+- Locked validation window: long-window actual MT5 evidence is mandatory.
+- Out-of-sample window: explicit and separate from the tuning window.
+- Promotion gate:
+  - compile cleanly,
+  - pass QA and risk checklists,
+  - show positive expectancy after realistic friction,
+  - show enough trades for the target operating style,
+  - complete demo-forward review before live promotion.

@@ -25,6 +25,9 @@ Start at `secretary/`. Only add more departments if the workload becomes repetit
 - Personal secrets do not belong in `.company/`.
 - Every material strategy change should connect to a QA or backtest note.
 - Keep code decisions in `mql/` and operating decisions in `.company/`.
+- Permanent capital doctrine belongs in `.company/strategy/charter.md` and must not be overridden casually inside one EA family.
+- The default company stance is `expectancy first`, `non-ruin first`, `compounding intentional`.
 - Before adding a new shared skill, review `.company/improvement/skill-roster.md`.
 - Before promoting a candidate toward live, review `.company/improvement/org-scorecard.md`.
+- When a family no longer matches the active objective, mark it `parked` instead of pretending it is still the mainline.
 - Every org or workflow improvement should leave reusable knowledge under `knowledge/company/` or `knowledge/patterns/`.

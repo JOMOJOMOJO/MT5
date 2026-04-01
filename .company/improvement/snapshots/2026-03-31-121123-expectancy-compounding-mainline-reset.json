@@ -1,0 +1,141 @@
+{
+  "captured_at": "2026-03-31T12:11:23",
+  "reason": "expectancy-compounding-mainline-reset",
+  "note": "Codified expectancy-first capital doctrine, parked session_meanrev, and opened the session_pair_rr mainline family.",
+  "plugin": {
+    "name": "mt5-company",
+    "version": "0.2.0",
+    "mcp_servers_path": "./.mcp.json",
+    "skills_path": "./skills/"
+  },
+  "departments": [
+    "secretary",
+    "strategy",
+    "qa",
+    "release",
+    "research",
+    "market-intelligence",
+    "critique",
+    "people",
+    "improvement",
+    "executive"
+  ],
+  "skills": [
+    {
+      "name": "backtest-analysis",
+      "path": "plugins/mt5-company/skills/backtest-analysis/SKILL.md"
+    },
+    {
+      "name": "company",
+      "path": "plugins/mt5-company/skills/company/SKILL.md"
+    },
+    {
+      "name": "continuous-improvement-office",
+      "path": "plugins/mt5-company/skills/continuous-improvement-office/SKILL.md"
+    },
+    {
+      "name": "forward-live-ops",
+      "path": "plugins/mt5-company/skills/forward-live-ops/SKILL.md"
+    },
+    {
+      "name": "knowledge-capture",
+      "path": "plugins/mt5-company/skills/knowledge-capture/SKILL.md"
+    },
+    {
+      "name": "mq5-review",
+      "path": "plugins/mt5-company/skills/mq5-review/SKILL.md"
+    },
+    {
+      "name": "org-designer",
+      "path": "plugins/mt5-company/skills/org-designer/SKILL.md"
+    },
+    {
+      "name": "professional-trader",
+      "path": "plugins/mt5-company/skills/professional-trader/SKILL.md"
+    },
+    {
+      "name": "release-manager",
+      "path": "plugins/mt5-company/skills/release-manager/SKILL.md"
+    },
+    {
+      "name": "research-director",
+      "path": "plugins/mt5-company/skills/research-director/SKILL.md"
+    },
+    {
+      "name": "risk-manager",
+      "path": "plugins/mt5-company/skills/risk-manager/SKILL.md"
+    },
+    {
+      "name": "statistical-edge-research",
+      "path": "plugins/mt5-company/skills/statistical-edge-research/SKILL.md"
+    },
+    {
+      "name": "strategy-critic",
+      "path": "plugins/mt5-company/skills/strategy-critic/SKILL.md"
+    },
+    {
+      "name": "systematic-ea-trader",
+      "path": "plugins/mt5-company/skills/systematic-ea-trader/SKILL.md"
+    },
+    {
+      "name": "talent-manager",
+      "path": "plugins/mt5-company/skills/talent-manager/SKILL.md"
+    }
+  ],
+  "mcp_servers": [
+    {
+      "name": "mt5-workspace",
+      "command": "python",
+      "args": [
+        "./scripts/mt5_mcp_server.py"
+      ]
+    }
+  ],
+  "diff_from_previous": {
+    "departments": {
+      "added": [],
+      "removed": [],
+      "unchanged": [
+        "critique",
+        "executive",
+        "improvement",
+        "market-intelligence",
+        "people",
+        "qa",
+        "release",
+        "research",
+        "secretary",
+        "strategy"
+      ]
+    },
+    "skills": {
+      "added": [],
+      "removed": [],
+      "unchanged": [
+        "backtest-analysis",
+        "company",
+        "continuous-improvement-office",
+        "forward-live-ops",
+        "knowledge-capture",
+        "mq5-review",
+        "org-designer",
+        "professional-trader",
+        "release-manager",
+        "research-director",
+        "risk-manager",
+        "statistical-edge-research",
+        "strategy-critic",
+        "systematic-ea-trader",
+        "talent-manager"
+      ]
+    },
+    "mcp_servers": {
+      "added": [],
+      "removed": [],
+      "unchanged": [
+        "mt5-workspace"
+      ]
+    }
+  },
+  "previous_snapshot": ".company/improvement/snapshots/2026-03-31-011904-org-governance-hardening.json"
+}

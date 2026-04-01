@@ -1,0 +1,531 @@
+{
+  "imported_at": "2026-04-01T13:23:24",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "btcusd_20260330_session_meanrev",
+    "symbol": "BTCUSD",
+    "timeframe": "M5",
+    "tested_range": "2026.01.01 - 2026.03.30",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "btcusd-20260330-session-meanrev",
+    "symbol_key": "btcusd",
+    "timeframe_key": "m5",
+    "run_path": "reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-04-01-132324-705153-btcusd-20260330-session-meanrev-.json",
+    "knowledge_path": "knowledge/backtests/btcusd-20260330-session-meanrev/btcusd/m5/2026-04-01-132324-705153-btcusd-20260330-session-meanrev-.md",
+    "imported_dir": "reports/backtest/imported/btcusd-20260330-session-meanrev/btcusd/m5/2026-04-01-132324-705153",
+    "imported_report": "reports/backtest/imported/btcusd-20260330-session-meanrev/btcusd/m5/2026-04-01-132324-705153/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\btcusd_20260330_session_meanrev-bull37_long_h12-oos-2026q1-m5.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "BTCUSD",
+    "tester_period": "M5",
+    "preset_name": "btcusd_20260330_session_meanrev-bull37_long_h12.set",
+    "preset_source": "reports\\presets\\btcusd_20260330_session_meanrev-bull37_long_h12.set",
+    "signal_timeframe": "M5",
+    "direction_mode": "long-only",
+    "allow_buy": true,
+    "allow_sell": false
+  },
+  "metrics": {
+    "ea_name": "btcusd_20260330_session_meanrev",
+    "symbol": "BTCUSD",
+    "period": "M5 (2026.01.01 - 2026.03.30)",
+    "history_quality_percent": 100.0,
+    "bars": 25283,
+    "ticks": 18517159,
+    "initial_deposit": 10000.0,
+    "total_net_profit": 18.6,
+    "gross_profit": 25.45,
+    "gross_loss": -6.85,
+    "profit_factor": 3.72,
+    "expected_payoff": 1.24,
+    "recovery_factor": 1.85,
+    "sharpe_ratio": 18.03,
+    "absolute_drawdown": 0.0,
+    "maximal_drawdown_amount": 6.56,
+    "maximal_drawdown_percent": 0.07,
+    "relative_drawdown_amount": 6.56,
+    "relative_drawdown_percent": 0.07,
+    "total_trades": 15,
+    "short_positions_count": 0,
+    "short_positions_percent": 0.0,
+    "long_positions_count": 15,
+    "long_positions_percent": 86.67,
+    "profit_trades_count": 13,
+    "profit_trades_percent": 86.67,
+    "loss_trades_count": 2,
+    "loss_trades_percent": 13.33,
+    "largest_profit_trade": 4.54,
+    "largest_loss_trade": -6.56,
+    "average_profit_trade": 1.96,
+    "average_loss_trade": -3.43,
+    "timeframe": "M5",
+    "tested_range": "2026.01.01 - 2026.03.30",
+    "win_rate_percent": 86.67
+  },
+  "summary": {
+    "headline": "Profit Factor は深掘りに値する水準です。 / 総損益はプラスです。",
+    "strengths": [
+      "Profit Factor は深掘りに値する水準です。",
+      "総損益はプラスです。",
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [],
+    "notes": [
+      "取引回数は少なめなので、別期間や別レジームで補強が必要です。"
+    ]
+  },
+  "tags": [
+    "oos-2026q1-bull37"
+  ],
+  "raw_fields": {
+    "expert": "btcusd_20260330_session_meanrev",
+    "symbol": [
+      "BTCUSD",
+      "1"
+    ],
+    "period": "M5 (2026.01.01 - 2026.03.30)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "25283",
+    "ticks": "18517159",
+    "total net profit": "18.60",
+    "absolute drawdown": "0.00",
+    "gross profit": "25.45",
+    "maximal drawdown": "6.56 (0.07%)",
+    "gross loss": "-6.85",
+    "relative drawdown": "0.07% (6.56)",
+    "profit factor": "3.72",
+    "expected payoff": "1.24",
+    "recovery factor": "1.85",
+    "sharpe ratio": "18.03",
+    "z score": "1.32 (81.32%)",
+    "ahpr": "1.0001 (0.01%)",
+    "lr correlation": "0.83",
+    "ontester": "0",
+    "ghpr": "1.0001 (0.01%)",
+    "lr standard error": "3.50",
+    "total trades": "15",
+    "short trades won percent": "0 (0.00%)",
+    "long positions won percent": "15 (86.67%)",
+    "profit trades percent of total": "13 (86.67%)",
+    "loss trades percent of total": "2 (13.33%)",
+    "largest profit trade": "4.54",
+    "largest loss trade": "-6.56",
+    "average profit trade": "1.96",
+    "average loss trade": "-3.43",
+    "correlation profits mfe": "0.44",
+    "correlation profits mae": "0.88",
+    "correlation mfe mae": "0.0958",
+    "t p": "時間",
+    "2026 01 08 22 20 00": "2",
+    "btcusd": [
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell"
+    ],
+    "0 01 0 01": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "90129 00": "2026.01.08 22:20:00",
+    "filled": [
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L",
+      "SMR-L"
+    ],
+    "2026 01 08 22 50 00": [
+      "3",
+      "filled",
+      "3"
+    ],
+    "2026 01 14 20 45 00": "4",
+    "95269 11": "2026.01.14 20:45:00",
+    "2026 01 14 20 55 00": [
+      "5",
+      "filled",
+      "5"
+    ],
+    "2026 01 19 20 35 02": "6",
+    "92654 22": "2026.01.19 20:35:02",
+    "2026 01 19 20 45 00": [
+      "7",
+      "filled",
+      "7"
+    ],
+    "2026 02 08 22 55 00": "8",
+    "70052 90": "2026.02.08 22:55:00",
+    "2026 02 08 23 15 00": [
+      "9",
+      "filled",
+      "9"
+    ],
+    "2026 02 09 23 50 00": "10",
+    "69297 81": "2026.02.09 23:50:00",
+    "2026 02 09 23 55 00": [
+      "11",
+      "filled",
+      "11"
+    ],
+    "2026 02 10 20 30 00": "12",
+    "68027 31": "2026.02.10 20:30:00",
+    "2026 02 10 20 35 00": "13",
+    "67888 73": "2026.02.10 20:35:00",
+    "2026 02 10 21 30 00": [
+      "14",
+      "filled",
+      "14"
+    ],
+    "2026 02 10 21 35 00": [
+      "15",
+      "filled",
+      "15"
+    ],
+    "2026 02 21 22 55 00": "16",
+    "68089 13": "2026.02.21 22:55:00",
+    "2026 02 21 23 55 00": [
+      "17",
+      "filled",
+      "17"
+    ],
+    "2026 02 24 23 35 00": "18",
+    "63362 04": "2026.02.24 23:35:00",
+    "2026 02 25 00 05 01": [
+      "19",
+      "filled",
+      "19"
+    ],
+    "2026 03 09 20 40 01": "20",
+    "67614 39": "2026.03.09 20:40:01",
+    "2026 03 09 20 50 01": "21",
+    "67716 84": "2026.03.09 20:50:01",
+    "2026 03 09 21 20 00": [
+      "22",
+      "filled",
+      "23",
+      "filled",
+      "22",
+      "23"
+    ],
+    "2026 03 10 20 45 00": "24",
+    "69825 14": "2026.03.10 20:45:00",
+    "2026 03 10 21 45 00": [
+      "25",
+      "filled",
+      "25"
+    ],
+    "2026 03 15 21 55 00": "26",
+    "70901 16": "2026.03.15 21:55:00",
+    "2026 03 15 22 00 01": "27",
+    "70888 82": "2026.03.15 22:00:01",
+    "2026 03 15 22 30 01": [
+      "28",
+      "filled",
+      "29",
+      "filled",
+      "28",
+      "29"
+    ],
+    "2026 03 23 23 05 00": "30",
+    "70078 91": "2026.03.23 23:05:00",
+    "2026 03 23 23 35 00": [
+      "31",
+      "filled",
+      "31"
+    ],
+    "1": "balance",
+    "0 00": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-0.53",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-0.53"
+    ],
+    "10 000 00": [
+      "10 000.00",
+      "SMR-L"
+    ],
+    "2": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "buy": [
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 01": [
+      "90711.26",
+      "96389.55",
+      "92974.55",
+      "70732.04",
+      "70059.15",
+      "68912.86",
+      "68817.92",
+      "68360.78",
+      "63912.08",
+      "68434.85",
+      "68445.76",
+      "70701.60",
+      "71410.13",
+      "71398.81",
+      "70654.46"
+    ],
+    "out": [
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01",
+      "0.01"
+    ],
+    "90870 38": "3",
+    "1 59": "10 001.59",
+    "4": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 001 59": "SMR-L",
+    "96844 21": "5",
+    "4 54": "10 006.13",
+    "6": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 006 13": "SMR-L",
+    "93102 10": "7",
+    "1 27": "10 007.40",
+    "8": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 007 40": "SMR-L",
+    "71002 47": "9",
+    "2 70": "10 010.10",
+    "10": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 010 10": "SMR-L",
+    "70480 48": "11",
+    "4 21": "10 014.31",
+    "12": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 014 31": [
+      "SMR-L",
+      "SMR-L"
+    ],
+    "13": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "68922 12": "14",
+    "0 09": "10 014.40",
+    "68973 86": "15",
+    "1 56": "10 015.96",
+    "16": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 015 96": "SMR-L",
+    "68332 00": "17",
+    "0 29": "10 015.67",
+    "18": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 015 67": "SMR-L",
+    "64186 53": "19",
+    "2 75": "10 017.89",
+    "20": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 017 89": [
+      "SMR-L",
+      "SMR-L"
+    ],
+    "21": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "68594 71": [
+      "22",
+      "23"
+    ],
+    "1 49": "10 019.38",
+    "1 60": "10 020.98",
+    "24": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 020 98": "SMR-L",
+    "70045 99": "25",
+    "6 56": "10 014.42",
+    "26": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 014 42": [
+      "SMR-L",
+      "SMR-L"
+    ],
+    "27": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "71508 44": [
+      "28",
+      "29"
+    ],
+    "1 09": "10 015.51",
+    "0 98": "10 016.49",
+    "30": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 016 49": "SMR-L",
+    "70864 51": "31",
+    "2 11": "10 018.60",
+    "19 13": "10 018.60"
+  },
+  "records_preview": [],
+  "run_id": "2026-04-01-132324-705153-btcusd-20260330-session-meanrev-"
+}

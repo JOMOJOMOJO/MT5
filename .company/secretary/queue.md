@@ -7,28 +7,34 @@
 
 ## Active
 
-- [ ] Stand up repo-local company workflow for MT5 EA development.
-- [ ] Add optimization workflow, governance rules, and org roles for the MT5 company model.
 - [ ] Run company-improvement reviews when shared org, skill, or MCP changes land.
 - [ ] Keep `.company/improvement/org-scorecard.md` and `.company/improvement/skill-roster.md` current as strategy families and skills evolve.
-- [ ] Narrow the BTCUSD redesign from "mixed-direction prototype" to "cross-year robust long-only live candidate".
-- [ ] Analyze the weak 2024 BTCUSD months and derive a long-side regime filter for the H1/H4/D1 candidate.
-- [ ] Make H1 metadata-backed runs the canonical lineage and phase older M1 imports into legacy status.
-- [ ] Decide whether the parked short side should be retired or relaunched as a completely separate actual-first EA project.
-- [ ] Promote the `btcusd_20260330_session_meanrev` no-Friday / skip-03 candidate from Python validation into an MT5 report-backed candidate.
-- [ ] Diagnose why MT5 command-line tester stopped auto-starting after 2026-03-30 14:53.
-- [ ] Run demo-forward telemetry for `btcusd_20260330_session_meanrev-bull15_40_long_h8_no_sun` and compare realized trade frequency against the 1-year actual result.
-- [ ] Compare `bull15_40 h8 no_sun` versus `bull37 long-only` after the first demo-forward week and keep only one current live candidate.
-- [ ] Add a recurring quarterly review record for live candidates and keep the cadence in release notes.
-- [ ] Execute a 1-week demo-forward run with `liveguards-mid` and archive runtime rule-trigger stats.
-- [ ] Review `mt5_company_btcusd_20260330_session_meanrev_bull15_40_long_h8_no_sun.csv` after the first demo-forward week and summarize blocker frequencies.
-- [ ] Rework the surviving long-only branch for higher turnover without breaking actual PF, instead of reviving mixed-direction combos.
-- [ ] Search for a second long-only bucket or regime control instead of adding more weekday exclusions to the same late-session bucket.
-- [ ] Derive a regime control for the surviving late-session long edge instead of adding new NY time-of-day buckets.
+- [ ] Keep `btcusd_20260330_session_meanrev` parked as a turnover-research family, but run `bull37_long_h12_live035_guarded2` as the current live-track candidate.
+- [ ] Run demo-forward telemetry for `btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2` and compare realized behavior against the 1-year actual run.
+- [ ] Use `.company/release/btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.md` as the single source of truth for promotion, rollback, and quarterly review.
+- [ ] Write at least one forward gate report with `scripts/evaluate-forward-gate.ps1` before any small-live discussion.
+- [ ] After the guarded2 demo-forward gate passes, start first-capital deployment with `btcusd_20260330_session_meanrev-bull37_long_h12_smalllive015`, not the proving preset.
+- [ ] Use the operator command file and status heartbeat during demo-forward so the candidate can be paused or flattened without editing the EA.
+- [ ] Run `scripts/live-preflight.ps1` before any demo-forward handoff or small-live discussion.
+- [ ] Run `scripts/review-live-state.ps1` during demo or small-live so operator decisions come from telemetry + gate + heartbeat, not ad hoc judgement.
+- [ ] After loading the refreshed EA build in demo/live, confirm the status heartbeat refreshes every 60 seconds and clears the stale-heartbeat review state.
+- [ ] Treat the recent OOS check (`2026-01-01` to `2026-03-30`) as passed on quality but still below the turnover objective for `btcusd_20260330_session_meanrev`.
+- [ ] Run `scripts/small-live-preflight.ps1` before any first-capital launch.
+- [ ] Use `scripts/start-small-live.ps1` so first-capital launch is blocked unless the staged preflight clears or an explicit override is accepted.
+- [ ] Use `scripts/act-on-live-review.ps1` so operator actions leave a durable audit artifact.
+- [ ] Use the launch manifest written by `scripts/start-demo-forward.ps1` or `scripts/start-small-live.ps1` when closing any demo/small-live run.
+- [ ] Advance `live-preflight` from `review` to `pass` by replacing the baseline self-check with a real demo-forward review + gate.
+- [ ] Use `scripts/start-demo-forward.ps1` so every forward cycle gets its own telemetry file instead of appending onto the baseline artifact.
+- [ ] Launch `btcusd_20260331_session_pair_rr` as the new mainline family for expectancy-first, fixed-`R`, compounding-aware BTCUSD research.
+- [ ] Use bar-data mining to find repeatable multi-trade-per-day entry zones before large optimization sweeps.
+- [ ] Rebuild the `session_pair_rr` entry construction from fresh bar-data mining, because the first `pair / long-only / short-only` actual MT5 runs all failed.
+- [ ] Validate that the next `session_pair_rr` hypothesis clears actual MT5 before more RR tuning.
+- [ ] Keep one explicit mainline family and mark all others as `secondary`, `parked`, or `legacy`.
+- [ ] Add a recurring quarterly review record for any family that reaches demo or live candidate status.
 
 ## Blocked
 
-- [ ] Waiting for local `MT5_METAEDITOR` and `MT5_TERMINAL` paths.
+- [ ] (none)
 
 ## Done
 
@@ -74,3 +80,19 @@
 - [x] Reject the `bull15_40 h8 no_sun_no_tue` weekday-tightening probe after actual MT5 comparison.
 - [x] Fix the long-path import failure in `mt5_backtest_tools.py` so report bundles copy cleanly without `--no-copy`.
 - [x] Reject the NY second-long-bucket expansion before actual MT5 because the long-window train slice broke.
+- [x] Adopt expectancy-first, compounding-first, non-ruin capital doctrine as a permanent company rule.
+- [x] Park `btcusd_20260330_session_meanrev` as a secondary low-turnover candidate instead of keeping it as the mainline.
+- [x] Run the first actual MT5 baseline for `btcusd_20260331_session_pair_rr` and reject the initial `pair`, `long-only`, and `short-only` variants.
+- [x] Promote `btcusd_20260330_session_meanrev-bull37_long_h12_live035` as the current live-track candidate under the new capital doctrine.
+- [x] Compare `live035`, `guarded`, and `guarded2`, and promote `guarded2` as the more deployable live-track preset.
+- [x] Add demo-forward preparation, telemetry review, and a release packet for the current `guarded2` candidate.
+- [x] Add a forward gate evaluator so demo-forward promotion is judged mechanically against the baseline.
+- [x] Add operator pause / flatten control and a live status heartbeat for the current `guarded2` candidate.
+- [x] Restore fast, reproducible tester runs by disabling operator-control heartbeat paths inside MT5 tester mode.
+- [x] Add a single-command live preflight and a readable heartbeat viewer for the current `guarded2` candidate.
+- [x] Add start / close scripts so demo-forward cycles use unique telemetry artifacts and do not contaminate the baseline.
+- [x] Add a staged first-capital preset, packet, and preflight so guarded2 does not go straight from demo to real capital.
+- [x] Add a live-state reviewer so `continue / pause / flatten / review` is decided mechanically from telemetry, gate status, and heartbeat freshness.
+- [x] Move the status heartbeat to a timer-driven live runtime path so stale-heartbeat checks are meaningful outside signal bars.
+- [x] Add guarded wrappers for first-capital launch and operator-action logging.
+- [x] Add launch manifests so every forward or small-live cycle has durable preset and telemetry lineage.

@@ -1,36 +1,61 @@
 ---
 name: risk-manager
-description: EAの実運用リスクを管理する skill。日次損失上限、連敗停止、ロット、取引停止条件、キルスイッチ、想定外時の保護を設計・査定したいときに使う。
+description: Define sizing, hard-loss budgets, kill-switches, and continuation rules so an EA can survive long enough to compound.
 ---
 
 # Risk Manager
 
-この skill の仕事は「利益を増やすこと」ではなく「死なないこと」。
+This skill owns capital protection.
 
-## 主な観点
+## Primary Role
 
-- 1 トレード損失は妥当か
-- 1 日の損失上限はあるか
-- 連敗した日に再突入しすぎていないか
-- lot size が equity と volatility に対して過大ではないか
-- broker 制約や spread 拡大時に暴発しないか
+- Convert strategy ideas into an explicit risk budget.
+- Keep the team aligned with the charter doctrine:
+  - expectancy first,
+  - non-ruin first,
+  - compounding intentional,
+  - win rate is secondary.
 
-## ワークフロー
+## Who / When / Where / What / How
 
-1. まず損失経路を列挙する
-2. その損失を止めるガードが既にあるか確認する
-3. なければ `daily loss cap`, `cooldown`, `loss stop`, `max open`, `kill switch` を優先する
-4. guard の追加後は backtest で trade count の減り方も確認する
-5. 運用前に「止める条件」を明文化する
+- `who`: capital-protection decision owner
+- `when`: whenever sizing, stops, loss caps, kill-switches, or live-guard rules are touched
+- `where`: `.company/strategy/charter.md`, `.company/qa/checklist.md`, `mql/Experts/`, `knowledge/experiments/`
+- `what`: decide whether the candidate can survive a normal losing streak and still continue operating
+- `how`: inspect per-trade risk, daily hard stop, equity kill-switch, trade cap, and broker friction
 
-## 出力
+## Default Doctrine
+
+- Do not use win rate as the main reason to promote a strategy.
+- Require positive expectancy after realistic costs.
+- Treat `3% risk` as the default daily or portfolio hard-loss budget unless the CEO explicitly says otherwise.
+- For multi-trade-per-day systems, keep default per-trade risk materially below that daily budget.
+- Require explicit stop distance and explicit reward logic in `R` terms or with an equivalent expectancy explanation.
+- Prefer equity-based sizing for compounding, but only behind hard loss caps and broker-safe volume logic.
+
+## Workflow
+
+1. Read the current charter and candidate note.
+2. Write down the candidate's intended per-trade risk, stop model, reward model, and daily hard stop.
+3. Check whether a normal losing streak would threaten continuation.
+4. Add or tighten guards:
+   - `daily loss cap`
+   - `equity drawdown cap`
+   - `trade cap`
+   - `max open`
+   - `cooldown`
+   - emergency `kill switch`
+5. Confirm that compounding behavior is intentional and bounded.
+6. Leave a durable note with the accepted limits and stop conditions.
+
+## Output
 
 - Risk map
-- Existing guards
+- Accepted default limits
 - Missing guards
-- Recommended limits
+- Kill criteria
 - Live stop conditions
 
-## 参照
+## Reference
 
 - `references/guard-rail.md`

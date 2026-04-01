@@ -10,6 +10,13 @@
 - Use `scripts/compile.ps1` for builds and `scripts/backtest.ps1` for tester runs when possible.
 - Use `scripts/optimize.ps1` for MT5 optimization jobs when an optimization `.ini` has been saved into the repo.
 - When changing strategy behavior, connect the code change to a backtest or QA note under `.company/` or `reports/`.
+- Treat positive expectancy, capital survival, and compounding as top-level design goals.
+- Treat win rate as secondary evidence, not as the main promotion target.
+- When the user says `3% risk` and does not explicitly say `per trade`, interpret it as the default daily or portfolio hard-loss budget, not as a default single-trade risk.
+- For multi-trade-per-day systems, keep the default per-trade risk small enough that an ordinary losing streak cannot threaten continuation.
+- Make stop distance, reward multiple, and position sizing explicit. Prefer documenting the strategy in `R` terms or with an equivalent expectancy rationale.
+- Higher trade count is desirable only if the edge survives actual MT5 friction, long-window validation, and forward-demo review.
+- If a family no longer fits the active business objective, park it explicitly and start a new family instead of endlessly retuning it.
 - Skill identifiers should stay stable, but Japanese skill bodies and references are preferred in this repository.
 - When the user wants a trader's judgement on market fit, execution realism, or live readiness, use the repo-local `professional-trader` skill.
 - When the user wants an EA operator's view on rule quality and parameter discipline, use `systematic-ea-trader`.

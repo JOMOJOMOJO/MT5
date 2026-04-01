@@ -4,7 +4,48 @@
 - EA: `btcusd_20260330_session_meanrev`
 - Scope: `BTCUSD / M5 / long-only current front`
 
-## Current Candidate
+## Live-Track Candidate
+
+- Preset:
+  - `reports/presets/btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.set`
+- Current MT5 result:
+  - `reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-03-31-131610-294712-btcusd-20260330-session-meanrev-.json`
+  - `net +177.86`
+  - `PF 1.49`
+  - `70` trades
+  - `max DD 1.58%`
+- Status:
+  - treat this as the current `demo-forward candidate`,
+  - keep the family parked for turnover-expansion research,
+  - but allow this preset to move toward demo-forward because it adds flatten-cap guards without destroying the edge,
+  - current `live-preflight` result is `review`, because the forward gate is still based on the baseline self-check rather than a real demo-forward week.
+- Latest recent OOS check:
+  - `2026-01-01` to `2026-03-30`
+  - `reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-04-01-132317-215883-btcusd-20260330-session-meanrev-.json`
+  - `net +92.29`
+  - `PF 4.11`
+  - `15` trades
+  - `max DD 0.26%`
+  - interpretation: quality held up in the latest quarter, but turnover remains too low to call this the long-term higher-frequency mainline.
+
+## Small-Live Staged Preset
+
+- Preset:
+  - `reports/presets/btcusd_20260330_session_meanrev-bull37_long_h12_smalllive015.set`
+- Release packet:
+  - `.company/release/btcusd_20260330_session_meanrev-bull37_long_h12_smalllive015.md`
+- Current MT5 result:
+  - `reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-03-31-132810-116558-btcusd-20260330-session-meanrev-.json`
+  - `net +57.75`
+  - `PF 1.41`
+  - `70` trades
+  - `max DD 0.69%`
+- Status:
+  - do not use this before the guarded2 demo-forward gate passes,
+  - use this as the first real-capital stage after a passing demo-forward week,
+  - keep `guarded2` as the proving preset and `smalllive015` as the first-capital preset.
+
+## Parked Candidate
 
 - Preset:
   - `reports/presets/btcusd_20260330_session_meanrev-bull15_40_long_h8_no_sun.set`
@@ -21,10 +62,18 @@
   - `116` trades
   - `max DD 0.37%`
 - Status:
-  - treat this as the current `operations live-candidate`,
-  - keep `bull15_40 h12` as the turnover reference,
+  - treat this as a `parked secondary candidate`,
+  - keep `bull15_40 h12` as the turnover reference inside this family,
   - keep `bull37 long-only` as the conservative quality reference,
+  - do not spend mainline research cycles here while the repo is pursuing a higher-turnover expectancy-first family,
   - do not promote any mixed-direction or short-side branch from this family right now.
+
+## Park Reason
+
+- This family proved that the late-session long branch can survive on actual MT5.
+- It did not prove that it can meet the active business objective of a higher-turnover compounding system.
+- The company is therefore preserving it as a reference-quality secondary family instead of forcing more tweaks into the same structure.
+- The live-track exception is `bull37_long_h12_live035`, which is allowed to progress because it is the strongest actual branch under the current capital doctrine.
 
 ## Conservative Reference
 
@@ -74,9 +123,57 @@
 
 - Compile with `0 errors, 0 warnings`.
 - MT5 HTML backtest report reproduces the same preset behavior.
+- The latest available 3-month MT5 OOS window is archived with exact dates.
 - One forward-demo period completed with no rule violations.
 - Broker-side spread/latency distribution is within assumed friction.
 - Emergency stop procedure is tested (`EA disable + manual flatten`).
+- The family is re-promoted from `parked` to `mainline` only if it beats the current mainline objective on both turnover and expectancy quality.
+
+## Demo-Forward Commands
+
+- Prepare the current packet:
+  - `powershell -ExecutionPolicy Bypass -File scripts/prepare-demo-forward.ps1`
+- Start a unique forward cycle:
+  - `powershell -ExecutionPolicy Bypass -File scripts/start-demo-forward.ps1`
+- Launch artifact:
+  - `reports/live/<date>-<preset>-demo-forward-<timestamp>-launch.json`
+- Review the latest telemetry run:
+  - `powershell -ExecutionPolicy Bypass -File scripts/review-forward-telemetry.ps1`
+- Evaluate the promotion gate:
+  - `powershell -ExecutionPolicy Bypass -File scripts/evaluate-forward-gate.ps1`
+- Close the forward cycle:
+  - `powershell -ExecutionPolicy Bypass -File scripts/close-demo-forward.ps1 -ManifestPath <launch-manifest.json>`
+- Run the preflight before demo or small-live:
+  - `powershell -ExecutionPolicy Bypass -File scripts/live-preflight.ps1`
+- Review the current operator state from telemetry + gate + heartbeat:
+  - `powershell -ExecutionPolicy Bypass -File scripts/review-live-state.ps1`
+- Apply the latest live review and leave an action artifact:
+  - `powershell -ExecutionPolicy Bypass -File scripts/act-on-live-review.ps1`
+- Pause new entries:
+  - `powershell -ExecutionPolicy Bypass -File scripts/set-ea-operator-mode.ps1 -Mode pause`
+- Flatten and pause:
+  - `powershell -ExecutionPolicy Bypass -File scripts/set-ea-operator-mode.ps1 -Mode flatten`
+- Resume:
+  - `powershell -ExecutionPolicy Bypass -File scripts/set-ea-operator-mode.ps1 -Mode normal`
+- Read the current heartbeat:
+  - `powershell -ExecutionPolicy Bypass -File scripts/read-ea-status.ps1`
+- Release packet:
+  - `.company/release/btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.md`
+
+## Small-Live Commands
+
+- Prepare the first-capital packet:
+  - `powershell -ExecutionPolicy Bypass -File scripts/prepare-small-live.ps1`
+- Run the first-capital preflight:
+  - `powershell -ExecutionPolicy Bypass -File scripts/small-live-preflight.ps1`
+- Start first-capital only after the staged preflight clears:
+  - `powershell -ExecutionPolicy Bypass -File scripts/start-small-live.ps1`
+- Start a unique first-capital telemetry cycle:
+  - `powershell -ExecutionPolicy Bypass -File scripts/start-demo-forward.ps1 -BasePresetPath reports/presets/btcusd_20260330_session_meanrev-bull37_long_h12_smalllive015.set -RunLabel small-live`
+- Close the first-capital telemetry cycle:
+  - `powershell -ExecutionPolicy Bypass -File scripts/close-demo-forward.ps1 -ManifestPath <launch-manifest.json>`
+- Apply the latest live review and leave an action artifact:
+  - `powershell -ExecutionPolicy Bypass -File scripts/act-on-live-review.ps1`
 
 ## Runtime Rules
 
@@ -91,7 +188,16 @@
 
 - Runtime telemetry is enabled by default in the preset.
 - Output file:
-  - `FILE_COMMON/mt5_company_btcusd_20260330_session_meanrev_live.csv`
+  - `FILE_COMMON/mt5_company_btcusd_20260330_session_meanrev_bull37_long_h12_live035_guarded2.csv`
+- Runtime status heartbeat:
+  - `FILE_COMMON/mt5_company_btcusd_20260330_session_meanrev_status.txt`
+- Heartbeat cadence:
+  - `60 seconds` in demo/live runtime so stale-heartbeat checks are meaningful outside signal bars.
+- Operator command file:
+  - `FILE_COMMON/mt5_company_btcusd_20260330_session_meanrev_operator.txt`
+- Live review output:
+  - `reports/live/<date>-btcusd-session-meanrev-live-review.json`
+  - `knowledge/experiments/<date>-btcusd-session-meanrev-live-review.md`
 - Summary tool:
   - `python plugins/mt5-company/scripts/mt5_telemetry_summary.py --input <telemetry.csv> --output reports/telemetry/<name>.json --markdown-output knowledge/experiments/<name>.md`
 - Logged events:
@@ -104,6 +210,7 @@
   - losing-streak lock frequency,
   - blocked-entry reasons,
   - realized day-by-day net versus assumptions.
+ - use `review-live-state.ps1` to convert the latest telemetry summary, gate status, and heartbeat freshness into `continue`, `review`, `pause`, or `flatten`.
 
 ## Baseline Telemetry Snapshot
 
@@ -180,6 +287,8 @@
 - Weekly:
   - check realized spread/slippage vs assumptions,
   - check trade/day drift and rule-trigger counts.
+- First-capital weekly:
+  - keep the staged preset at `0.15%` equity risk per trade until at least one clean weekly review is archived.
 - Quarterly:
   - rerun long-window validation and compare with prior quarter snapshot,
   - retune only if robustness improves on both train/test windows.

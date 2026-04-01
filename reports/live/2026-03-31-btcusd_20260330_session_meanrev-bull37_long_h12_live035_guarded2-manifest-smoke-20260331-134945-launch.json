@@ -1,0 +1,17 @@
+﻿{
+    "stage":  "demo-forward",
+    "run_label":  "manifest-smoke",
+    "started_at":  "2026-03-31T13:49:45",
+    "base_preset_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.set",
+    "runtime_preset_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\runtime\\btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2-manifest-smoke-20260331-134945.set",
+    "telemetry_file_name":  "mt5_company_btcusd_20260330_session_meanrev_manifest-smoke-20260331-134945.csv",
+    "telemetry_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\mt5_company_btcusd_20260330_session_meanrev_manifest-smoke-20260331-134945.csv",
+    "release_note_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\.company\\release\\btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.md",
+    "operator_command_file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\mt5_company_btcusd_20260330_session_meanrev_operator.txt",
+    "status_file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\mt5_company_btcusd_20260330_session_meanrev_status.txt",
+    "closed_at":  "2026-03-31T13:50:01",
+    "telemetry_summary_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\telemetry\\2026-03-31-btcusd_20260330_session_meanrev_bull37_long_h12_live035_guarded2-manifest-smoke.json",
+    "telemetry_summary_note_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\knowledge\\experiments\\2026-03-31-btcusd_20260330_session_meanrev_bull37_long_h12_live035_guarded2-manifest-smoke.md",
+    "forward_gate_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\forward\\2026-03-31-btcusd_20260330_session_meanrev_bull37_long_h12_live035_guarded2-manifest-smoke-gate.json",
+    "forward_gate_note_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\knowledge\\experiments\\2026-03-31-btcusd_20260330_session_meanrev_bull37_long_h12_live035_guarded2-manifest-smoke-gate.md"
+}

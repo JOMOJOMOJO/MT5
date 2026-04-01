@@ -1,0 +1,65 @@
+{
+  "label": "btcusd_20260330_session_meanrev-btcusd_20260330_session_meanrev_bull37_long_h12_live035_guarded2-manifest-smoke-gate",
+  "generated_at": "2026-03-31T13:50:01",
+  "status": "review",
+  "baseline_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\telemetry\\2026-03-31-btcusd-session-meanrev-live035-guarded2-demo-forward.json",
+  "candidate_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\telemetry\\2026-03-31-btcusd_20260330_session_meanrev_bull37_long_h12_live035_guarded2-manifest-smoke.json",
+  "thresholds": {
+    "min_exits": 5,
+    "min_active_days": 5,
+    "min_profit_factor": 1.0,
+    "min_relative_profit_factor": 0.75,
+    "max_spread_block_ratio": 1.25
+  },
+  "baseline_snapshot": {
+    "net_profit": 177.86,
+    "profit_factor": 1.488,
+    "exit_count": 70,
+    "active_days": 47,
+    "spread_blocks_per_day": 145.7521
+  },
+  "candidate_snapshot": {
+    "net_profit": 177.86,
+    "profit_factor": 1.488,
+    "exit_count": 70,
+    "active_days": 47,
+    "spread_blocks_per_day": 145.7521
+  },
+  "checks": [
+    {
+      "name": "evidence_source",
+      "status": "review",
+      "detail": "candidate summary appears to be built from the same telemetry source as the baseline"
+    },
+    {
+      "name": "sample_exits",
+      "status": "pass",
+      "detail": "candidate exits 70"
+    },
+    {
+      "name": "sample_active_days",
+      "status": "pass",
+      "detail": "candidate active days 47"
+    },
+    {
+      "name": "net_profit",
+      "status": "pass",
+      "detail": "candidate net 177.8600, baseline net 177.8600, ratio 1.0000"
+    },
+    {
+      "name": "profit_factor",
+      "status": "pass",
+      "detail": "candidate PF 1.4880, baseline PF 1.4880"
+    },
+    {
+      "name": "kill_switches",
+      "status": "pass",
+      "detail": "no daily/equity cap triggers and no loss-lock activations"
+    },
+    {
+      "name": "spread_pressure",
+      "status": "pass",
+      "detail": "candidate spread/day 145.7521, baseline 145.7521, ratio 1.0000"
+    }
+  ]
+}

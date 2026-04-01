@@ -5,11 +5,19 @@
 - [ ] Volume respects broker min lot, max lot, and step size.
 - [ ] Stops and pending prices respect stops level and freeze level.
 - [ ] Spread, session, and symbol filters are explicit.
+- [ ] Per-trade risk, daily hard-loss cap, and any equity kill-switch are explicit.
+- [ ] The risk model follows the charter doctrine: capital survival first, compounding intentional, no hidden `3% per trade` assumption.
+- [ ] The first real-capital preset uses lower per-trade risk than the demo-forward preset unless an explicit override is recorded.
+- [ ] The stop model and reward model are documented in `R` terms or with an equivalent expectancy rationale.
 - [ ] Duplicate entries are prevented across repeated ticks or retries.
 - [ ] Backtest sample size is large enough to be informative.
+- [ ] If the candidate claims multi-trade-per-day behavior, the actual MT5 evidence supports that claim with enough sample size.
 - [ ] Forward assumptions are not based on one optimization peak.
 - [ ] Regime robustness is checked on both short and long windows (for example 50k and 80k bars) before promotion.
+- [ ] A recent out-of-sample MT5 window is checked explicitly before promotion. Current default is the latest available 3-month window, recorded with exact dates.
 - [ ] The result is explained by chart regimes, not only by calendar season labels.
+- [ ] Expectancy stays positive after realistic spread and slippage assumptions. Win rate alone is not used as a gate.
+- [ ] The candidate is labeled clearly as `mainline`, `secondary`, `parked`, or `legacy`.
 - [ ] A quarterly review date is set for every candidate that reaches live or paper-live status.
 - [ ] MT5 report artifacts are imported into `reports/backtest/runs/` and reflected in `knowledge/backtests/` when the result matters.
 - [ ] Every serious promotion candidate cites at least one reusable lesson from `knowledge/patterns/` or `knowledge/company/`.

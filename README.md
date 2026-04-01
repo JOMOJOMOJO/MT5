@@ -53,3 +53,59 @@ Use MT5 built-in forward optimization when you want fast screening inside the te
 ## Next Step
 
 Add your first EA under `mql/Experts/<ea-name>/<ea-name>.mq5`, then point `MT5_METAEDITOR` and `MT5_TERMINAL` to your local MT5 binaries.
+
+## Current Demo-Forward Candidate
+
+- EA:
+  - `mql/Experts/btcusd_20260330_session_meanrev.mq5`
+- Preset:
+  - `reports/presets/btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.set`
+- Release packet:
+  - `.company/release/btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.md`
+
+## Current Small-Live Staged Preset
+
+- Preset:
+  - `reports/presets/btcusd_20260330_session_meanrev-bull37_long_h12_smalllive015.set`
+- Release packet:
+  - `.company/release/btcusd_20260330_session_meanrev-bull37_long_h12_smalllive015.md`
+- Role:
+  - use this only after the guarded2 demo-forward gate passes,
+  - use it for the first real-capital stage instead of taking the demo preset straight to full size.
+
+## Demo-Forward Review
+
+- Prepare the operator packet:
+  - `powershell -ExecutionPolicy Bypass -File scripts/prepare-demo-forward.ps1`
+- Start a unique demo-forward run:
+  - `powershell -ExecutionPolicy Bypass -File scripts/start-demo-forward.ps1`
+- Each start writes a launch manifest in `reports/live/` so close-out can use the exact runtime preset and telemetry lineage.
+- Summarize the latest telemetry run:
+  - `powershell -ExecutionPolicy Bypass -File scripts/review-forward-telemetry.ps1`
+- Evaluate the promotion gate:
+  - `powershell -ExecutionPolicy Bypass -File scripts/evaluate-forward-gate.ps1`
+- Close the demo-forward run:
+  - `powershell -ExecutionPolicy Bypass -File scripts/close-demo-forward.ps1 -ManifestPath <launch-manifest.json>`
+- Run the live preflight:
+  - `powershell -ExecutionPolicy Bypass -File scripts/live-preflight.ps1`
+- Review live/demo operator state:
+  - `powershell -ExecutionPolicy Bypass -File scripts/review-live-state.ps1`
+- Apply the latest live review and leave an action artifact:
+  - `powershell -ExecutionPolicy Bypass -File scripts/act-on-live-review.ps1`
+- Pause, flatten, or resume the EA:
+  - `powershell -ExecutionPolicy Bypass -File scripts/set-ea-operator-mode.ps1 -Mode pause`
+- guarded2 and smalllive presets now emit a timed status heartbeat every `60` seconds in demo/live.
+
+## Small-Live Handoff
+
+- Prepare the first-capital packet:
+  - `powershell -ExecutionPolicy Bypass -File scripts/prepare-small-live.ps1`
+- Run the staged small-live preflight:
+  - `powershell -ExecutionPolicy Bypass -File scripts/small-live-preflight.ps1`
+- Start first-capital only after the staged preflight clears:
+  - `powershell -ExecutionPolicy Bypass -File scripts/start-small-live.ps1`
+- Start a unique small-live telemetry cycle:
+  - `powershell -ExecutionPolicy Bypass -File scripts/start-demo-forward.ps1 -BasePresetPath reports/presets/btcusd_20260330_session_meanrev-bull37_long_h12_smalllive015.set -RunLabel small-live`
+- The preferred path is `start-small-live.ps1`, because it blocks launch on a failing staged preflight and also writes a launch manifest.
+- Apply the latest live review and leave an action artifact:
+  - `powershell -ExecutionPolicy Bypass -File scripts/act-on-live-review.ps1`

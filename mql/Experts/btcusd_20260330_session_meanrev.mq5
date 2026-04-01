@@ -28,7 +28,7 @@ input double          InpLongDistanceATR         = 1.50;
 input double          InpLongMaxDistanceATR      = 0.0;
 input double          InpLongMinATRPercent       = 0.0;
 input double          InpLongMaxATRPercent       = 0.0;
-input double          InpLongRsiMax              = 40.0;
+input double          InpLongRsiMax              = 37.0;
 input int             InpLongTrendFilterMode     = 1;
 input bool            InpEnableSecondLongBucket  = false;
 input int             InpSecondLongStartHour     = 13;
@@ -72,27 +72,35 @@ input double          InpShortMaxDistanceATRActive = 0.0;
 input double          InpShortRsiMinActive       = 64.0;
 input double          InpShortRsiMaxActive       = 95.0;
 
-input int             InpHoldBars                = 8;
-input int             InpLongHoldBars            = 8;
+input int             InpHoldBars                = 12;
+input int             InpLongHoldBars            = 12;
 input int             InpShortHoldBars           = 0;
 input bool            InpExitOnMeanReversion     = true;
 input double          InpExitBufferATR           = 0.30;
 input double          InpLongExitBufferATR       = 0.30;
 input double          InpShortExitBufferATR      = 0.0;
 input double          InpEmergencyStopATR        = 4.00;
-input double          InpRiskPercent             = 0.05;
+input double          InpRiskPercent             = 0.35;
 
-input int             InpMaxOpenTrades           = 8;
-input int             InpMaxOpenPerSide          = 4;
+input int             InpMaxOpenTrades           = 2;
+input int             InpMaxOpenPerSide          = 2;
 input bool            InpUseDailyLossCap         = true;
 input double          InpDailyLossCapPercent     = 3.0;
+input bool            InpUseDailyEquityLossCap   = true;
+input bool            InpFlattenOnDailyLossCap   = true;
 input int             InpMaxTradesPerDay         = 20;
 input int             InpMaxConsecutiveLosses    = 5;
 input int             InpConsecutiveLossCooldownBars = 24;
-input bool            InpUseEquityDrawdownCap    = false;
+input bool            InpUseEquityDrawdownCap    = true;
 input double          InpEquityDrawdownCapPercent = 12.0;
+input bool            InpFlattenOnEquityDrawdownCap = true;
 input bool            InpEnableTelemetry         = true;
-input string          InpTelemetryFileName       = "mt5_company_btcusd_20260330_session_meanrev_bull15_40_long_h8_no_sun.csv";
+input string          InpTelemetryFileName       = "mt5_company_btcusd_20260330_session_meanrev_bull37_long_h12_live035_guarded2.csv";
+input bool            InpEnableOperatorControl   = true;
+input string          InpOperatorCommandFile     = "mt5_company_btcusd_20260330_session_meanrev_operator.txt";
+input bool            InpEnableStatusSnapshot    = true;
+input string          InpStatusFileName          = "mt5_company_btcusd_20260330_session_meanrev_status.txt";
+input int             InpStatusHeartbeatSeconds  = 60;
 input double          InpMaxSpreadPips           = 2500.0;
 input double          InpMaxDeviationPips        = 250.0;
 input string          InpAllowedWeekdays         = "1,2,3,4,6";
@@ -111,10 +119,15 @@ string runtimeSymbol = "";
 string runtimeAllowedWeekdays = "";
 string runtimeBlockedEntryHours = "";
 string runtimeTelemetryFileName = "";
+string runtimeOperatorCommandFile = "";
+string runtimeStatusFileName = "";
+bool runtimeOperatorControlEnabled = false;
+bool runtimeStatusSnapshotEnabled = false;
 
 datetime lastSignalBarTime = 0;
 int lastDayOfYear = -1;
 double dailyStartBalance = 0.0;
+double dailyStartEquity = 0.0;
 datetime currentDayStart = 0;
 int dailyClosedTrades = 0;
 int consecutiveLosses = 0;
@@ -130,6 +143,9 @@ int dailyBlockedTradeCap = 0;
 int dailyBlockedLossLock = 0;
 int dailyBlockedEquityCap = 0;
 int dailyLossLockActivations = 0;
+string operatorMode = "normal";
+bool statusSnapshotErrorLogged = false;
+bool timerStarted = false;
 
 int OnInit()
 {
@@ -137,8 +153,14 @@ int OnInit()
     runtimeAllowedWeekdays = NormalizePresetString(InpAllowedWeekdays);
     runtimeBlockedEntryHours = NormalizePresetString(InpBlockedEntryHours);
     runtimeTelemetryFileName = NormalizePresetString(InpTelemetryFileName);
+    runtimeOperatorCommandFile = NormalizePresetString(InpOperatorCommandFile);
+    runtimeStatusFileName = NormalizePresetString(InpStatusFileName);
+    bool isTesterRuntime = ((bool)MQLInfoInteger(MQL_TESTER) || (bool)MQLInfoInteger(MQL_OPTIMIZATION));
+    runtimeOperatorControlEnabled = (InpEnableOperatorControl && !isTesterRuntime);
+    runtimeStatusSnapshotEnabled = (InpEnableStatusSnapshot && !isTesterRuntime);
     trade.SetExpertMagicNumber((ulong)InpMagicNumber);
     dailyStartBalance = AccountInfoDouble(ACCOUNT_BALANCE);
+    dailyStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
     equityPeak = AccountInfoDouble(ACCOUNT_EQUITY);
 
     if(InpMagicNumber <= 0 || InpRiskPercent <= 0.0 || InpEmergencyStopATR <= 0.0 || InpHoldBars <= 0 ||
@@ -148,7 +170,8 @@ int OnInit()
        InpSecondLongTrendFilterMode < 0 || InpSecondLongTrendFilterMode > 2 ||
        InpShortTrendFilterMode < 0 || InpShortTrendFilterMode > 2 ||
        InpLongHoldBars < 0 || InpShortHoldBars < 0 ||
-       InpLongExitBufferATR < 0.0 || InpShortExitBufferATR < 0.0)
+       InpLongExitBufferATR < 0.0 || InpShortExitBufferATR < 0.0 ||
+       InpStatusHeartbeatSeconds < 0)
     {
         Print("Invalid prototype parameters.");
         return INIT_PARAMETERS_INCORRECT;
@@ -186,12 +209,26 @@ int OnInit()
     if(InpEnableTelemetry && !OpenTelemetryFile())
         Print("Telemetry file could not be opened. Continuing without telemetry.");
 
+    if((runtimeOperatorControlEnabled || runtimeStatusSnapshotEnabled) && InpStatusHeartbeatSeconds > 0)
+    {
+        EventSetTimer(InpStatusHeartbeatSeconds);
+        timerStarted = true;
+    }
+
+    RefreshOperatorMode();
+    WriteStatusSnapshot();
     return INIT_SUCCEEDED;
 }
 
 void OnDeinit(const int reason)
 {
     FlushDailySummary(TimeCurrent(), "deinit");
+    WriteStatusSnapshot();
+    if(timerStarted)
+    {
+        EventKillTimer();
+        timerStarted = false;
+    }
     CloseTelemetryFile();
     ReleaseHandle(emaHandle);
     ReleaseHandle(slowEmaHandle);
@@ -219,21 +256,30 @@ string NormalizePresetString(string rawValue)
 
 void OnTick()
 {
+    UpdateDailyAnchor();
+    UpdateEquityPeak();
+    RefreshOperatorMode();
+    if(operatorMode == "flatten")
+        FlattenManagedPositions("operator_flatten");
+
     if(!IsNewSignalBar())
         return;
 
-    UpdateDailyAnchor();
-    UpdateEquityPeak();
     ManageOpenPositions();
+    WriteStatusSnapshot();
 
     if(IsDailyLossCapBlocked())
     {
         dailyBlockedDailyLoss++;
+        if(InpFlattenOnDailyLossCap)
+            FlattenManagedPositions("daily_loss_cap");
         return;
     }
     if(IsEquityDrawdownBlocked())
     {
         dailyBlockedEquityCap++;
+        if(InpFlattenOnEquityDrawdownCap)
+            FlattenManagedPositions("equity_drawdown_cap");
         return;
     }
     if(IsTradeCountBlocked())
@@ -251,6 +297,8 @@ void OnTick()
         dailyBlockedSpread++;
         return;
     }
+    if(AreOperatorEntriesBlocked())
+        return;
     if(CountOpenPositions() >= InpMaxOpenTrades)
         return;
 
@@ -259,6 +307,16 @@ void OnTick()
         OpenPosition(true);
     else if(signal < 0 && CanOpenSide(false))
         OpenPosition(false);
+}
+
+void OnTimer()
+{
+    UpdateDailyAnchor();
+    UpdateEquityPeak();
+    RefreshOperatorMode();
+    if(operatorMode == "flatten")
+        FlattenManagedPositions("operator_flatten_timer");
+    WriteStatusSnapshot();
 }
 
 void OnTradeTransaction(const MqlTradeTransaction &trans, const MqlTradeRequest &request, const MqlTradeResult &result)
@@ -321,6 +379,7 @@ void UpdateDailyAnchor()
         FlushDailySummary(nowTime, "rollover");
         lastDayOfYear = t.day_of_year;
         dailyStartBalance = AccountInfoDouble(ACCOUNT_BALANCE);
+        dailyStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
         currentDayStart = StringToTime(TimeToString(nowTime, TIME_DATE));
         ResetDailyCounters();
         LogTelemetryEvent(nowTime, "day_reset", "", "", 0.0, 0.0, 0.0, "");
@@ -331,6 +390,13 @@ bool IsDailyLossCapBlocked()
 {
     if(!InpUseDailyLossCap || InpDailyLossCapPercent <= 0.0 || dailyStartBalance <= 0.0)
         return false;
+    if(InpUseDailyEquityLossCap)
+    {
+        if(dailyStartEquity <= 0.0)
+            return false;
+        double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+        return (equity <= dailyStartEquity * (1.0 - InpDailyLossCapPercent / 100.0));
+    }
     double balance = AccountInfoDouble(ACCOUNT_BALANCE);
     return (balance <= dailyStartBalance * (1.0 - InpDailyLossCapPercent / 100.0));
 }
@@ -445,6 +511,47 @@ void RegisterClosedDeal(datetime dealTime, double netProfit, string side, double
         ActivateLossLock();
 }
 
+void RefreshOperatorMode()
+{
+    string nextMode = ReadOperatorModeFromFile();
+    if(nextMode == operatorMode)
+        return;
+
+    operatorMode = nextMode;
+    PrintFormat("Operator mode changed to '%s'", operatorMode);
+    LogTelemetryEvent(TimeCurrent(), "operator_mode", operatorMode, "", 0.0, 0.0, 0.0, runtimeOperatorCommandFile);
+}
+
+string ReadOperatorModeFromFile()
+{
+    if(!runtimeOperatorControlEnabled || runtimeOperatorCommandFile == "")
+        return "normal";
+
+    int handle = FileOpen(runtimeOperatorCommandFile, FILE_TXT | FILE_READ | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_COMMON | FILE_ANSI);
+    if(handle == INVALID_HANDLE)
+        return "normal";
+
+    string command = "";
+    if(!FileIsEnding(handle))
+        command = FileReadString(handle);
+    FileClose(handle);
+
+    if(command == "")
+        return "normal";
+    if(StringCompare(command, "pause", false) == 0 || StringCompare(command, "pause_entries", false) == 0)
+        return "pause";
+    if(StringCompare(command, "flatten", false) == 0 ||
+       StringCompare(command, "flatten_and_pause", false) == 0 ||
+       StringCompare(command, "kill", false) == 0)
+        return "flatten";
+    return "normal";
+}
+
+bool AreOperatorEntriesBlocked()
+{
+    return (operatorMode != "normal");
+}
+
 bool OpenTelemetryFile()
 {
     if(!InpEnableTelemetry)
@@ -511,6 +618,77 @@ void LogTelemetryEvent(datetime stamp, string eventType, string reason, string s
               dailyLossLockActivations,
               note);
     FileFlush(telemetryHandle);
+}
+
+string BoolText(bool value)
+{
+    if(value)
+        return "true";
+    return "false";
+}
+
+string DetermineEntryState()
+{
+    if(operatorMode == "flatten")
+        return "operator_flatten";
+    if(operatorMode == "pause")
+        return "operator_pause";
+    if(IsDailyLossCapBlocked())
+        return "daily_loss_cap";
+    if(IsEquityDrawdownBlocked())
+        return "equity_drawdown_cap";
+    if(IsTradeCountBlocked())
+        return "trade_cap";
+    if(IsLossLockBlocked())
+        return "loss_lock";
+    if(!IsSpreadAllowed())
+        return "spread";
+    if(CountOpenPositions() >= InpMaxOpenTrades)
+        return "max_open";
+    return "ready";
+}
+
+void WriteStatusSnapshot()
+{
+    if(!runtimeStatusSnapshotEnabled || runtimeStatusFileName == "")
+        return;
+
+    int handle = FileOpen(runtimeStatusFileName, FILE_TXT | FILE_WRITE | FILE_COMMON | FILE_ANSI);
+    if(handle == INVALID_HANDLE)
+    {
+        if(!statusSnapshotErrorLogged)
+        {
+            PrintFormat("Status snapshot open failed for '%s' (%d)", runtimeStatusFileName, GetLastError());
+            statusSnapshotErrorLogged = true;
+        }
+        return;
+    }
+
+    statusSnapshotErrorLogged = false;
+    string snapshot =
+       "timestamp=" + TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS) + "\r\n" +
+       "symbol=" + runtimeSymbol + "\r\n" +
+       "timeframe=" + EnumToString(InpSignalTimeframe) + "\r\n" +
+       "operator_mode=" + operatorMode + "\r\n" +
+       "entry_state=" + DetermineEntryState() + "\r\n" +
+       "balance=" + DoubleToString(AccountInfoDouble(ACCOUNT_BALANCE), 2) + "\r\n" +
+       "equity=" + DoubleToString(AccountInfoDouble(ACCOUNT_EQUITY), 2) + "\r\n" +
+       "equity_peak=" + DoubleToString(equityPeak, 2) + "\r\n" +
+       "open_positions=" + IntegerToString(CountOpenPositions()) + "\r\n" +
+       "daily_closed_trades=" + IntegerToString(dailyClosedTrades) + "\r\n" +
+       "daily_entries_buy=" + IntegerToString(dailyEntriesBuy) + "\r\n" +
+       "daily_entries_sell=" + IntegerToString(dailyEntriesSell) + "\r\n" +
+       "consecutive_losses=" + IntegerToString(consecutiveLosses) + "\r\n" +
+       "loss_lock_active=" + BoolText(lossLockActive) + "\r\n" +
+       "loss_lock_until=" + TimeToString(lossLockUntil, TIME_DATE | TIME_MINUTES) + "\r\n" +
+       "spread_pips=" + DoubleToString(GetCurrentSpreadPips(), 2) + "\r\n" +
+       "daily_loss_cap_blocked=" + BoolText(IsDailyLossCapBlocked()) + "\r\n" +
+       "equity_drawdown_blocked=" + BoolText(IsEquityDrawdownBlocked()) + "\r\n" +
+       "trade_cap_blocked=" + BoolText(IsTradeCountBlocked()) + "\r\n" +
+       "telemetry_file=" + runtimeTelemetryFileName + "\r\n";
+
+    FileWriteString(handle, snapshot);
+    FileClose(handle);
 }
 
 void FlushDailySummary(datetime stamp, string trigger)
@@ -659,6 +837,29 @@ void ManageOpenPositions()
         if(timeExit || meanExit)
             trade.PositionClose(posInfo.Ticket());
     }
+}
+
+void FlattenManagedPositions(string reason)
+{
+    int openCount = CountOpenPositions();
+    if(openCount <= 0)
+        return;
+
+    int closedCount = 0;
+    for(int i = PositionsTotal() - 1; i >= 0; i--)
+    {
+        if(!posInfo.SelectByIndex(i))
+            continue;
+        if(posInfo.Symbol() != runtimeSymbol || posInfo.Magic() != InpMagicNumber)
+            continue;
+
+        ulong ticket = posInfo.Ticket();
+        if(trade.PositionClose(ticket))
+            closedCount++;
+    }
+
+    LogTelemetryEvent(TimeCurrent(), "protective_flatten", reason, "", 0.0, 0.0, 0.0,
+                      StringFormat("closed=%d requested=%d", closedCount, openCount));
 }
 
 int HeldBars(datetime openedAt)

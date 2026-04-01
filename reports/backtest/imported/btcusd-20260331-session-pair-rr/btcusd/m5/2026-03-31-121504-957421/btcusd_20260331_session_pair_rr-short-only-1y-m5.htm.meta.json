@@ -1,0 +1,57 @@
+﻿{
+    "generated_at":  "2026-03-31T12:14:52.4859908+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\btcusd_20260331_session_pair_rr-short-only-1y.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp3564.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp3564.ini"
+               },
+    "tester":  {
+                   "symbol":  "BTCUSD",
+                   "period":  "M5",
+                   "from_date":  "2025.03.31",
+                   "to_date":  "2026.03.30",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\btcusd_20260331_session_pair_rr-short-only-1y-m5.htm"
+               },
+    "preset":  {
+                   "name":  "btcusd_20260331_session_pair_rr-short-only.set",
+                   "source":  "reports\\presets\\btcusd_20260331_session_pair_rr-short-only.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\btcusd_20260331_session_pair_rr-short-only.set",
+                   "parameters":  {
+                                      "InpSymbol":  "BTCUSD",
+                                      "InpSignalTimeframe":  "5",
+                                      "InpFastEMAPeriod":  "20",
+                                      "InpSlowEMAPeriod":  "50",
+                                      "InpRSIPeriod":  "14",
+                                      "InpATRPeriod":  "14",
+                                      "InpEnableLong":  "false",
+                                      "InpLongStartHour":  "20",
+                                      "InpLongEndHour":  "24",
+                                      "InpLongDistanceATR":  "1.20",
+                                      "InpLongRsiMax":  "35.0",
+                                      "InpLongTrendFilter":  "0",
+                                      "InpLongHoldBars":  "12",
+                                      "InpEnableShort":  "true",
+                                      "InpShortStartHour":  "13",
+                                      "InpShortEndHour":  "22",
+                                      "InpShortDistanceATR":  "0.60",
+                                      "InpShortRsiMin":  "60.0",
+                                      "InpShortTrendFilter":  "2",
+                                      "InpShortHoldBars":  "12",
+                                      "InpStopATR":  "1.00",
+                                      "InpTargetRMultiple":  "1.35",
+                                      "InpRiskPercent":  "0.35",
+                                      "InpUseDailyLossCap":  "true",
+                                      "InpDailyLossCapPercent":  "3.0",
+                                      "InpUseEquityKillSwitch":  "true",
+                                      "InpEquityKillSwitchPercent":  "12.0",
+                                      "InpMaxTradesPerDay":  "12",
+                                      "InpMaxOpenTrades":  "2",
+                                      "InpMaxOpenPerSide":  "1",
+                                      "InpMaxSpreadPips":  "2500.0",
+                                      "InpMaxDeviationPips":  "250.0",
+                                      "InpAllowedWeekdays":  "0,1,2,3,4,6",
+                                      "InpBlockedEntryHours":  "3",
+                                      "InpMagicNumber":  "20260383"
+                                  }
+               }
+}

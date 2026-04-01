@@ -5,7 +5,16 @@
 - [ ] Record what changed in entry, exit, risk, or filters.
 - [ ] Save or link the supporting report artifact.
 - [ ] Confirm default inputs are intentional.
+- [ ] Confirm the default risk budget matches the charter doctrine and does not rely on an implicit high-risk-per-trade assumption.
+- [ ] Confirm stop placement, reward multiple, and sizing logic are documented for the release candidate.
+- [ ] Confirm compounding behavior is intentional and bounded by hard loss caps.
 - [ ] Confirm symbol, timeframe, and broker assumptions are documented.
 - [ ] Confirm the candidate clears the current reproducibility gate on the long-window validator.
+- [ ] Confirm the candidate has a recent out-of-sample MT5 check on the latest available 3-month window, with exact dates recorded in the release note.
+- [ ] Confirm the candidate status is explicit: `mainline`, `secondary`, `parked`, or `legacy`.
+- [ ] Confirm demo-forward evidence or a concrete demo-forward plan exists before any live discussion.
+- [ ] Confirm the first real-capital stage uses an explicit reduced-risk preset and a separate release packet unless an override is recorded.
+- [ ] Confirm operator pause / flatten controls are configured and documented for any demo or live candidate.
+- [ ] Run a stage-appropriate live preflight report that checks compile, actual MT5 baseline, forward gate, and operator state before any small-live discussion.
 - [ ] Record the next quarterly review date and owner in release notes.
 - [ ] Tag the release or write a release note before deployment.

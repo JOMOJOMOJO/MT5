@@ -13,6 +13,26 @@ shared skill, shared MCP, 部署構成の変更はここに残して正式採用
 ## Approved
 
 - Date: 2026-03-31
+- Proposal: Adopt expectancy-first, compounding-first, non-ruin capital doctrine as permanent repo policy; treat `3% risk` as the default daily or portfolio hard-loss budget instead of default single-trade risk; park `btcusd_20260330_session_meanrev` as a secondary candidate; and start a new mainline EA family `btcusd_20260331_session_pair_rr`.
+- Requested by: CEO
+- Decision: approved
+- Effective files:
+  - `AGENTS.md`
+  - `.company/strategy/charter.md`
+  - `.company/qa/checklist.md`
+  - `.company/release/checklist.md`
+  - `.company/ORGANIZATION.md`
+  - `.company/secretary/queue.md`
+  - `plugins/mt5-company/skills/company/references/skill-operating-model.md`
+  - `plugins/mt5-company/skills/risk-manager/SKILL.md`
+  - `knowledge/patterns/2026-03-31-expectancy-compounding-doctrine.md`
+  - `knowledge/experiments/2026-03-30-btcusd-session-meanrev-live-ops.md`
+  - `knowledge/experiments/2026-03-31-btcusd-session-pair-rr-kickoff.md`
+  - `mql/Experts/btcusd_20260331_session_pair_rr.mq5`
+  - `reports/presets/btcusd_20260331_session_pair_rr-baseline.set`
+  - `reports/backtest/btcusd_20260331_session_pair_rr-baseline-1y.ini`
+
+- Date: 2026-03-31
 - Proposal: Formalize the org scorecard, skill-roster discipline, operating review rhythm, and reusable research-rules knowledge so the company can self-improve without adding redundant roles.
 - Requested by: CEO
 - Decision: approved
