@@ -7,6 +7,12 @@
 
 ## Active
 
+- [ ] Treat `knowledge/company/2026-04-02-usdjpy-mainline-reset.md` as the formal verdict that `USDJPY` is now the active mainline and `BTCUSD` stays as secondary research inventory.
+- [ ] Use `knowledge/patterns/2026-04-02-usdjpy-golden-method-spec.md` as the single source of truth for the CEO-provided Golden Method doctrine.
+- [ ] Use `knowledge/patterns/2026-04-02-usdjpy-golden-method-validation.md` as the always-on scorecard for the USDJPY Golden Method family.
+- [ ] Compile `usdjpy_20260402_golden_method` and then run the default `9 months train / 3 months OOS` ladder before any optimization discussion.
+- [ ] Confirm the target broker symbol, minimum lot, contract size, and pip value for `USDJPY` before any first-capital discussion.
+- [ ] Keep `BTCUSD` high-turnover families as secondary until the USDJPY Golden Method family either clears the live gate or fails plateau review.
 - [ ] Run company-improvement reviews when shared org, skill, or MCP changes land.
 - [ ] Keep `.company/improvement/org-scorecard.md` and `.company/improvement/skill-roster.md` current as strategy families and skills evolve.
 - [ ] Keep `btcusd_20260330_session_meanrev` parked as a turnover-research family, but run `bull37_long_h12_live035_guarded2` as the current live-track candidate.

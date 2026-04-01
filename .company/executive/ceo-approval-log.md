@@ -12,6 +12,23 @@ shared skill, shared MCP, 部署構成の変更はここに残して正式採用
 
 ## Approved
 
+- Date: 2026-04-02
+- Proposal: Pivot the active mainline from BTCUSD to a new USDJPY Golden Method family, save the CEO-provided doctrine and validation scorecard as durable repo knowledge, and create the first prototype EA plus repo-managed preset and tester configs for that family.
+- Requested by: CEO
+- Decision: approved
+- Effective files:
+  - `.company/secretary/queue.md`
+  - `.company/qa/checklist.md`
+  - `.company/release/checklist.md`
+  - `knowledge/patterns/2026-04-02-usdjpy-golden-method-spec.md`
+  - `knowledge/patterns/2026-04-02-usdjpy-golden-method-validation.md`
+  - `knowledge/company/2026-04-02-usdjpy-mainline-reset.md`
+  - `knowledge/experiments/2026-04-02-usdjpy-golden-method-kickoff.md`
+  - `mql/Experts/usdjpy_20260402_golden_method.mq5`
+  - `reports/presets/usdjpy_20260402_golden_method-baseline.set`
+  - `reports/backtest/usdjpy_20260402_golden_method-train-9m.ini`
+  - `reports/backtest/usdjpy_20260402_golden_method-oos-3m.ini`
+
 - Date: 2026-04-01
 - Proposal: Formalize repo-wide git branch strategy and publish workflow, document the reusable EA improvement cycle and live-ready definition, add micro-cap lot-floor viability as a permanent gate, and let Codex manage branch / commit / push flow under the documented rules.
 - Requested by: CEO
