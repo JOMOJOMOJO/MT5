@@ -45,6 +45,7 @@
 - [ ] Open the next high-turnover cycle from a non-late complementary long idea or a fresh short-side construction, not from more late-session variants of `ema2050` / `ema50100`.
 - [ ] Keep the short side of `btcusd_20260401_regime_single` in research only until a new NY-side rule beats PF 1.0 on the full 1-year actual window.
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-intrabar-reversal-baseline-reject.md` as the current verdict that the first `btcusd_20260401_intrabar_reversal` family should be killed at baseline.
+- [ ] Treat the wide-stop retry on `btcusd_20260401_intrabar_reversal` as failed too, so no more reversal-neighborhood tuning should be spent on that family.
 - [ ] Open the next high-turnover family from range-compression / breakout behavior or another fresh execution-aware thesis, not from more reversal variants around `ret24`, `followthrough_down`, or `close_location`.
 - [ ] Treat `test_expectancy >= 0.25 ATR` as the minimum spread-aware screening floor for the next BTCUSD M5 mainline candidate on this broker.
 - [ ] Keep the `range compression breakout long` idea as a secondary branch, not as the first mainline prototype.
