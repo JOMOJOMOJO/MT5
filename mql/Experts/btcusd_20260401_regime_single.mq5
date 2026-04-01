@@ -16,7 +16,9 @@ enum LongRuleMode
    LongRuleEmaGap2050 = 0,
    LongRuleRet24 = 1,
    LongRuleMacdAtr = 2,
-   LongRuleEmaGap50100 = 3
+   LongRuleEmaGap50100 = 3,
+   LongRuleCloseVsEma50 = 4,
+   LongRuleLowBreak24 = 5
   };
 
 enum ShortRuleMode
@@ -38,6 +40,8 @@ input double          InpLongEmaGap2050Max          = -1.3698;
 input double          InpLongRet24Max               = -0.0057;
 input double          InpLongMacdLineAtrMax         = -0.8699;
 input double          InpLongEmaGap50100Max         = -1.6928;
+input double          InpLongCloseVsEma50Max        = -1.7790;
+input double          InpLongLowBreak24Max          = 1.0065;
 input bool            InpUseLongStochDFilter        = true;
 input double          InpLongStochDMax              = 18.9;
 input bool            InpUseLongBbZFilter           = false;
@@ -111,10 +115,12 @@ struct SignalContext
    double   ret24;
    double   emaGap2050;
    double   emaGap50100;
+   double   closeVsEma50;
    double   macdLineAtr;
    double   bbZ;
    double   stochD;
    double   highBreak24;
+   double   lowBreak24;
    double   tickVolumeZ;
    double   tickFlowSigned3;
   };
@@ -131,7 +137,7 @@ int OnInit()
       InpLongHoldBars < 0 || InpShortHoldBars < 0 || InpLongStopATR <= 0.0 || InpShortStopATR <= 0.0 ||
       InpLongTargetRMultiple < 0.0 || InpShortTargetRMultiple < 0.0 || InpMaxTradesPerDay < 0 ||
       InpMaxOpenTrades < 0 || InpMaxOpenPerSide < 0 || InpMaxEffectiveRiskPercentAtMinLot < 0.0 ||
-      InpLongRuleMode < LongRuleEmaGap2050 || InpLongRuleMode > LongRuleEmaGap50100 ||
+      InpLongRuleMode < LongRuleEmaGap2050 || InpLongRuleMode > LongRuleLowBreak24 ||
       InpShortRuleMode < ShortRuleMacdAtr || InpShortRuleMode > ShortRuleTickVolumeZ)
      {
       Print("Invalid regime-single parameters.");
@@ -336,8 +342,9 @@ bool LoadSignalContext(SignalContext &ctx)
 
    double tickFlowSigned3 = ComputeTickFlowSigned3();
    double highBreak24 = ComputeHighBreak24();
+   double lowBreak24 = ComputeLowBreak24();
    double tickVolumeZ = ComputeTickVolumeZ(50);
-   if(tickFlowSigned3 == DBL_MAX || highBreak24 == DBL_MAX || tickVolumeZ == DBL_MAX)
+   if(tickFlowSigned3 == DBL_MAX || highBreak24 == DBL_MAX || lowBreak24 == DBL_MAX || tickVolumeZ == DBL_MAX)
       return false;
 
    double bandHalfWidth = (bandUpper[0] - bandLower[0]) / 2.0;
@@ -357,10 +364,12 @@ bool LoadSignalContext(SignalContext &ctx)
    ctx.ret24 = (close1 - close25) / close25;
    ctx.emaGap2050 = (ema20[0] - ema50[0]) / atr[0];
    ctx.emaGap50100 = (ema50[0] - ema100[0]) / atr[0];
+   ctx.closeVsEma50 = (close1 - ema50[0]) / atr[0];
    ctx.macdLineAtr = macdMain[0] / atr[0];
    ctx.bbZ = bbZ;
    ctx.stochD = stochD[0];
    ctx.highBreak24 = highBreak24;
+   ctx.lowBreak24 = lowBreak24;
    ctx.tickVolumeZ = tickVolumeZ;
    ctx.tickFlowSigned3 = tickFlowSigned3;
    return true;
@@ -380,6 +389,20 @@ double ComputePreviousHigh(int startShift, int lookback)
    return highest;
   }
 
+double ComputePreviousLow(int startShift, int lookback)
+  {
+   double lowest = DBL_MAX;
+   for(int shift = startShift; shift < startShift + lookback; ++shift)
+     {
+      double barLow = iLow(runtimeSymbol, InpSignalTimeframe, shift);
+      if(barLow <= 0.0)
+         return DBL_MAX;
+      if(barLow < lowest)
+         lowest = barLow;
+     }
+   return lowest;
+  }
+
 double ComputeHighBreak24()
   {
    double close1 = iClose(runtimeSymbol, InpSignalTimeframe, 1);
@@ -396,6 +419,23 @@ double ComputeHighBreak24()
       return DBL_MAX;
 
    return (close1 - prevHigh24) / atr1;
+  }
+
+double ComputeLowBreak24()
+  {
+   double close1 = iClose(runtimeSymbol, InpSignalTimeframe, 1);
+   double atr[1];
+   if(CopyBuffer(atrHandle, 0, 1, 1, atr) != 1)
+      return DBL_MAX;
+   double atr1 = atr[0];
+   if(close1 <= 0.0 || atr1 <= 0.0)
+      return DBL_MAX;
+
+   double prevLow24 = ComputePreviousLow(2, 24);
+   if(prevLow24 == DBL_MAX)
+      return DBL_MAX;
+
+   return (close1 - prevLow24) / atr1;
   }
 
 double ComputeTickVolumeZ(int lookback)
@@ -543,6 +583,16 @@ bool IsLongSignal(const SignalContext &ctx)
    else if(InpLongRuleMode == LongRuleEmaGap50100)
      {
       if(ctx.emaGap50100 > InpLongEmaGap50100Max)
+         return false;
+     }
+   else if(InpLongRuleMode == LongRuleCloseVsEma50)
+     {
+      if(ctx.closeVsEma50 > InpLongCloseVsEma50Max)
+         return false;
+     }
+   else if(InpLongRuleMode == LongRuleLowBreak24)
+     {
+      if(ctx.lowBreak24 > InpLongLowBreak24Max)
          return false;
      }
 
