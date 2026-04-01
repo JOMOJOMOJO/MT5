@@ -58,20 +58,35 @@ input int             InpPivotSpan                   = 2;
 input int             InpTrendScanBars               = 180;
 input bool            InpEnableStrategy1             = true;
 input bool            InpEnableStrategy2             = true;
+input bool            InpAllowLongs                  = true;
+input bool            InpAllowShorts                 = true;
+input bool            InpUseStrategy1StochFilter     = false;
+input double          InpS1BuyMaxStochD             = 25.0;
+input double          InpS1SellMinStochD            = 75.0;
 input double          InpTouchTolerancePips          = 0.6;
 input double          InpStopLossPips                = 10.0;
-input double          InpTakeProfitPips              = 10.0;
-input double          InpTargetRMultiple             = 0.0;
+input double          InpTakeProfitPips              = 0.0;
+input double          InpTargetRMultiple             = 1.2;
 input double          InpRiskPercent                 = 2.0;
-input bool            InpUseMicroCapRiskOverride     = false;
+input bool            InpUseMicroCapRiskOverride     = true;
 input double          InpMicroCapBalanceThreshold    = 150.0;
 input double          InpMicroCapRiskPercent         = 3.0;
 input bool            InpUseDailyLossCap             = true;
 input double          InpDailyLossCapPercent         = 6.0;
-input int             InpMaxTradesPerDay             = 1;
+input int             InpMaxTradesPerDay             = 3;
 input double          InpMaxSpreadPips               = 2.0;
 input int             InpRoundStepPips               = 50;
 input int             InpVolatilityLookbackBars      = 24;
+input double          InpMinWindowRangePips          = 18.0;
+input int             InpActiveSessionStartHour      = 7;
+input int             InpActiveSessionEndHour        = 22;
+input double          InpMinSlowSlopePips            = 2.0;
+input int             InpPullbackLookbackBars        = 4;
+input double          InpMinImpulsePips              = 8.0;
+input double          InpMinPullbackPips             = 2.0;
+input double          InpMaxPullbackPips             = 12.0;
+input double          InpMinRejectionBodyPips        = 2.0;
+input double          InpMinRejectionCloseLocation   = 0.65;
 input int             InpRoundTouchLookbackBars      = 144;
 input int             InpMaxRoundTouchesBeforeBreak  = 2;
 input double          InpBreakoutMinBodyPips         = 4.0;
@@ -79,11 +94,14 @@ input double          InpBreakoutBodyToRangeMin      = 0.70;
 input double          InpBreakoutVsAverageBodyMin    = 1.60;
 input int             InpBreakoutExpiryBars          = 144;
 input double          InpRoundMidpointBufferPips     = 1.0;
+input double          InpBreakoutCloseLocationMin    = 0.75;
+input double          InpRetestRoundBufferPips       = 1.5;
 input string          InpAllowedWeekdays             = "1,2,3,4,5";
 input long            InpMagicNumber                 = 20260492;
 
 int fastEmaHandle = INVALID_HANDLE;
 int slowEmaHandle = INVALID_HANDLE;
+int stochHandle = INVALID_HANDLE;
 
 string runtimeSymbol = "";
 bool allowedWeekdays[7];
@@ -103,7 +121,15 @@ int OnInit()
       InpStopLossPips <= 0.0 || InpRiskPercent <= 0.0 || InpTargetRMultiple < 0.0 ||
       InpMicroCapBalanceThreshold < 0.0 || InpMicroCapRiskPercent <= 0.0 ||
       InpMaxTradesPerDay < 0 || InpRoundStepPips <= 0 || InpVolatilityLookbackBars <= 0 ||
-      InpRoundTouchLookbackBars <= 0 || InpBreakoutMinBodyPips <= 0.0 || InpMagicNumber <= 0)
+      InpMinWindowRangePips <= 0.0 || InpActiveSessionStartHour < 0 || InpActiveSessionStartHour > 23 ||
+      InpActiveSessionEndHour < 0 || InpActiveSessionEndHour > 23 || InpActiveSessionStartHour == InpActiveSessionEndHour ||
+      InpMinSlowSlopePips < 0.0 || InpPullbackLookbackBars < 2 || InpMinImpulsePips <= 0.0 ||
+      InpMinPullbackPips <= 0.0 || InpMaxPullbackPips <= InpMinPullbackPips ||
+      InpMinRejectionBodyPips <= 0.0 || InpMinRejectionCloseLocation <= 0.5 || InpMinRejectionCloseLocation >= 1.0 ||
+      InpRoundTouchLookbackBars <= 0 || InpBreakoutMinBodyPips <= 0.0 || InpBreakoutCloseLocationMin <= 0.5 ||
+      InpBreakoutCloseLocationMin >= 1.0 || InpRetestRoundBufferPips < 0.0 || InpMagicNumber <= 0 ||
+      (!InpAllowLongs && !InpAllowShorts) || InpS1BuyMaxStochD <= 0.0 || InpS1BuyMaxStochD >= 50.0 ||
+      InpS1SellMinStochD <= 50.0 || InpS1SellMinStochD >= 100.0)
      {
       Print("Invalid USDJPY Golden Method parameters.");
       return INIT_PARAMETERS_INCORRECT;
@@ -126,9 +152,10 @@ int OnInit()
 
    fastEmaHandle = iMA(runtimeSymbol, InpSignalTimeframe, InpFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
    slowEmaHandle = iMA(runtimeSymbol, InpSignalTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
-   if(fastEmaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE)
+   stochHandle = iStochastic(runtimeSymbol, InpSignalTimeframe, 14, 3, 3, MODE_SMA, STO_LOWHIGH);
+   if(fastEmaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE || stochHandle == INVALID_HANDLE)
      {
-      Print("Failed to create EMA handles.");
+      Print("Failed to create indicator handles.");
       return INIT_FAILED;
      }
 
@@ -146,6 +173,8 @@ void OnDeinit(const int reason)
       IndicatorRelease(fastEmaHandle);
    if(slowEmaHandle != INVALID_HANDLE)
       IndicatorRelease(slowEmaHandle);
+   if(stochHandle != INVALID_HANDLE)
+      IndicatorRelease(stochHandle);
   }
 
 void OnTick()
@@ -159,7 +188,8 @@ void OnTick()
    MqlRates rates[];
    double fastEma[];
    double slowEma[];
-   if(!LoadSignalWindow(rates, fastEma, slowEma, 260))
+   double stochSignal[];
+   if(!LoadSignalWindow(rates, fastEma, slowEma, stochSignal, 260))
       return;
 
    if(CountManagedPositions() > 0)
@@ -182,7 +212,7 @@ void OnTick()
       return;
      }
 
-   if(InpEnableStrategy1 && EvaluateStrategy1(rates, fastEma, slowEma, trend, signalDirection, signalTag))
+   if(InpEnableStrategy1 && EvaluateStrategy1(rates, fastEma, slowEma, stochSignal, trend, signalDirection, signalTag))
      {
       OpenPosition(signalDirection, signalTag);
       return;
@@ -265,11 +295,12 @@ void ResetDayState(datetime now)
      }
   }
 
-bool LoadSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[], int count)
+bool LoadSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[], double &stochSignal[], int count)
   {
    ArraySetAsSeries(rates, true);
    ArraySetAsSeries(fastEma, true);
    ArraySetAsSeries(slowEma, true);
+   ArraySetAsSeries(stochSignal, true);
 
    int copiedRates = CopyRates(runtimeSymbol, InpSignalTimeframe, 0, count, rates);
    if(copiedRates < 120)
@@ -277,7 +308,8 @@ bool LoadSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[], i
 
    int copiedFast = CopyBuffer(fastEmaHandle, 0, 0, count, fastEma);
    int copiedSlow = CopyBuffer(slowEmaHandle, 0, 0, count, slowEma);
-   if(copiedFast != copiedRates || copiedSlow != copiedRates)
+   int copiedStochSignal = CopyBuffer(stochHandle, 1, 0, count, stochSignal);
+   if(copiedFast != copiedRates || copiedSlow != copiedRates || copiedStochSignal != copiedRates)
       return false;
 
    return true;
@@ -294,6 +326,8 @@ bool CanOpenAnotherTrade()
    MqlDateTime ts;
    TimeToStruct(TimeCurrent(), ts);
    if(ts.day_of_week < 0 || ts.day_of_week > 6 || !allowedWeekdays[ts.day_of_week])
+      return false;
+   if(!IsWithinActiveSession(lastBarTime > 0 ? lastBarTime : TimeCurrent()))
       return false;
 
    if(InpUseDailyLossCap && dailyStartEquity > 0.0)
@@ -368,6 +402,48 @@ bool BarTouchesPrice(const MqlRates &bar, double level, double tolerance)
    return bar.low <= level + tolerance && bar.high >= level - tolerance;
   }
 
+bool DirectionAllowed(int direction)
+  {
+   if(direction == TrendUp)
+      return InpAllowLongs;
+   if(direction == TrendDown)
+      return InpAllowShorts;
+   return false;
+  }
+
+double BarBodyPips(const MqlRates &bar)
+  {
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return 0.0;
+   return MathAbs(bar.close - bar.open) / pip;
+  }
+
+double BarRangePips(const MqlRates &bar)
+  {
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return 0.0;
+   return (bar.high - bar.low) / pip;
+  }
+
+double CloseLocationValue(const MqlRates &bar)
+  {
+   double range = bar.high - bar.low;
+   if(range <= 0.0)
+      return 0.5;
+   return (bar.close - bar.low) / range;
+  }
+
+bool IsWithinActiveSession(datetime barTime)
+  {
+   MqlDateTime ts;
+   TimeToStruct(barTime, ts);
+   if(InpActiveSessionStartHour < InpActiveSessionEndHour)
+      return ts.hour >= InpActiveSessionStartHour && ts.hour < InpActiveSessionEndHour;
+   return ts.hour >= InpActiveSessionStartHour || ts.hour < InpActiveSessionEndHour;
+  }
+
 double AverageBodyPips(const MqlRates &rates[], int startShift, int lookback)
   {
    double pip = GetPipSize();
@@ -423,6 +499,38 @@ bool IsLowVolatilitySameZone(const MqlRates &rates[])
    long highZone = (long)MathFloor(highest / zoneStep);
    long lowZone = (long)MathFloor(lowest / zoneStep);
    return highZone == lowZone;
+  }
+
+double WindowRangePips(const MqlRates &rates[], int startShift, int lookback)
+  {
+   int size = ArraySize(rates);
+   if(size <= startShift)
+      return 0.0;
+
+   int maxShift = MathMin(size - 1, startShift + lookback - 1);
+   double highest = rates[startShift].high;
+   double lowest = rates[startShift].low;
+   for(int shift = startShift; shift <= maxShift; ++shift)
+     {
+      highest = MathMax(highest, rates[shift].high);
+      lowest = MathMin(lowest, rates[shift].low);
+     }
+
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return 0.0;
+   return (highest - lowest) / pip;
+  }
+
+bool PassesVolatilityState(const MqlRates &rates[])
+  {
+   if(IsLowVolatilitySameZone(rates))
+      return false;
+
+   if(WindowRangePips(rates, 1, InpVolatilityLookbackBars) < InpMinWindowRangePips)
+      return false;
+
+   return true;
   }
 
 bool IsPivotHigh(const MqlRates &rates[], int shift, int span)
@@ -511,11 +619,181 @@ void BuildTrendContext(const MqlRates &rates[], const double &fastEma[], const d
    else if(downTrend)
      {
       trend.direction = TrendDown;
-      trend.transitionLine = trend.latestHigh.price;
+     trend.transitionLine = trend.latestHigh.price;
      }
   }
 
-bool EvaluateStrategy1(const MqlRates &rates[], const double &fastEma[], const double &slowEma[], const TrendContext &trend, int &direction, string &tag)
+double TrendSlopePips(const TrendContext &trend)
+  {
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return 0.0;
+   return MathAbs(trend.slowSlope) / pip;
+  }
+
+double PullbackDepthPips(const MqlRates &rates[], int direction)
+  {
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return 0.0;
+
+   int endShift = 1 + InpPullbackLookbackBars;
+   if(ArraySize(rates) <= endShift)
+      return 0.0;
+
+   if(direction == TrendUp)
+     {
+      double localHigh = rates[2].high;
+      for(int shift = 2; shift <= endShift; ++shift)
+         localHigh = MathMax(localHigh, rates[shift].high);
+      return (localHigh - rates[1].low) / pip;
+     }
+
+   double localLow = rates[2].low;
+   for(int shift = 2; shift <= endShift; ++shift)
+      localLow = MathMin(localLow, rates[shift].low);
+   return (rates[1].high - localLow) / pip;
+  }
+
+double TrendImpulsePips(const MqlRates &rates[], int direction)
+  {
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return 0.0;
+
+   int startShift = 2;
+   int endShift = startShift + InpPullbackLookbackBars + 4;
+   if(ArraySize(rates) <= endShift)
+      return 0.0;
+
+   if(direction == TrendUp)
+     {
+      double impulseHigh = rates[startShift].high;
+      double impulseLow = rates[endShift].low;
+      for(int shift = startShift; shift <= endShift; ++shift)
+        {
+         impulseHigh = MathMax(impulseHigh, rates[shift].high);
+         impulseLow = MathMin(impulseLow, rates[shift].low);
+        }
+      return (impulseHigh - impulseLow) / pip;
+     }
+
+   double impulseHigh = rates[endShift].high;
+   double impulseLow = rates[startShift].low;
+   for(int shift = startShift; shift <= endShift; ++shift)
+     {
+      impulseHigh = MathMax(impulseHigh, rates[shift].high);
+      impulseLow = MathMin(impulseLow, rates[shift].low);
+     }
+   return (impulseHigh - impulseLow) / pip;
+  }
+
+int CountCounterTrendBodies(const MqlRates &rates[], int direction)
+  {
+   int count = 0;
+   int endShift = 1 + InpPullbackLookbackBars;
+   if(ArraySize(rates) <= endShift)
+      return 0;
+
+   for(int shift = 2; shift <= endShift; ++shift)
+     {
+      if(direction == TrendUp && rates[shift].close < rates[shift].open)
+         count++;
+      if(direction == TrendDown && rates[shift].close > rates[shift].open)
+         count++;
+     }
+   return count;
+  }
+
+bool RejectionBarIsStrong(const MqlRates &bar, int direction, double averageBodyPips)
+  {
+   double body = BarBodyPips(bar);
+   if(body < InpMinRejectionBodyPips)
+      return false;
+
+   if(averageBodyPips > 0.0 && body < averageBodyPips * 0.9)
+      return false;
+
+   double closeLocation = CloseLocationValue(bar);
+   if(direction == TrendUp)
+     {
+      if(bar.close <= bar.open)
+         return false;
+      if(closeLocation < InpMinRejectionCloseLocation)
+         return false;
+     }
+   else if(direction == TrendDown)
+     {
+      if(bar.close >= bar.open)
+         return false;
+      if(closeLocation > (1.0 - InpMinRejectionCloseLocation))
+         return false;
+     }
+   else
+      return false;
+
+   return true;
+  }
+
+bool Strategy1ShapeIsValid(const MqlRates &rates[], const TrendContext &trend, int direction)
+  {
+   if(TrendSlopePips(trend) < InpMinSlowSlopePips)
+      return false;
+
+   double impulsePips = TrendImpulsePips(rates, direction);
+   double pullbackPips = PullbackDepthPips(rates, direction);
+   if(impulsePips < InpMinImpulsePips)
+      return false;
+   if(pullbackPips < InpMinPullbackPips || pullbackPips > InpMaxPullbackPips)
+      return false;
+
+   if(CountCounterTrendBodies(rates, direction) < 1)
+      return false;
+
+   double averageBodyPips = AverageBodyPips(rates, 2, 5);
+   if(!RejectionBarIsStrong(rates[1], direction, averageBodyPips))
+      return false;
+
+   return true;
+  }
+
+bool BreakoutRetestIsValid(const MqlRates &rates[], const BreakoutState &state)
+  {
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return false;
+
+   double buffer = InpRetestRoundBufferPips * pip;
+   double closeLocation = CloseLocationValue(rates[1]);
+   double averageBodyPips = AverageBodyPips(rates, 2, 5);
+   if(!RejectionBarIsStrong(rates[1], state.direction, averageBodyPips))
+      return false;
+
+   if(state.direction == TrendUp)
+     {
+      if(closeLocation < InpBreakoutCloseLocationMin)
+         return false;
+      if(rates[1].low < state.roundLevel - buffer)
+         return false;
+      if(rates[1].close < state.roundLevel)
+         return false;
+     }
+   else if(state.direction == TrendDown)
+     {
+      if(closeLocation > (1.0 - InpBreakoutCloseLocationMin))
+         return false;
+      if(rates[1].high > state.roundLevel + buffer)
+         return false;
+      if(rates[1].close > state.roundLevel)
+         return false;
+     }
+   else
+      return false;
+
+   return true;
+  }
+
+bool EvaluateStrategy1(const MqlRates &rates[], const double &fastEma[], const double &slowEma[], const double &stochSignal[], const TrendContext &trend, int &direction, string &tag)
   {
    direction = TrendNone;
    tag = "";
@@ -524,11 +802,15 @@ bool EvaluateStrategy1(const MqlRates &rates[], const double &fastEma[], const d
    if(tolerance < 0.0)
       return false;
 
-   if(IsLowVolatilitySameZone(rates))
+   if(!PassesVolatilityState(rates))
       return false;
 
    if(trend.direction == TrendUp)
      {
+      if(!InpAllowLongs)
+         return false;
+      if(InpUseStrategy1StochFilter && stochSignal[1] > InpS1BuyMaxStochD)
+         return false;
       if(!BarTouchesPrice(rates[1], fastEma[1], tolerance))
          return false;
       if(rates[1].low <= trend.transitionLine)
@@ -536,6 +818,8 @@ bool EvaluateStrategy1(const MqlRates &rates[], const double &fastEma[], const d
       if(rates[2].close <= fastEma[2] || rates[3].close <= fastEma[3])
          return false;
       if(rates[1].close < fastEma[1])
+         return false;
+      if(!Strategy1ShapeIsValid(rates, trend, TrendUp))
          return false;
 
       direction = TrendUp;
@@ -545,6 +829,10 @@ bool EvaluateStrategy1(const MqlRates &rates[], const double &fastEma[], const d
 
    if(trend.direction == TrendDown)
      {
+      if(!InpAllowShorts)
+         return false;
+      if(InpUseStrategy1StochFilter && stochSignal[1] < InpS1SellMinStochD)
+         return false;
       if(!BarTouchesPrice(rates[1], fastEma[1], tolerance))
          return false;
       if(rates[1].high >= trend.transitionLine)
@@ -552,6 +840,8 @@ bool EvaluateStrategy1(const MqlRates &rates[], const double &fastEma[], const d
       if(rates[2].close >= fastEma[2] || rates[3].close >= fastEma[3])
          return false;
       if(rates[1].close > fastEma[1])
+         return false;
+      if(!Strategy1ShapeIsValid(rates, trend, TrendDown))
          return false;
 
       direction = TrendDown;
@@ -620,6 +910,11 @@ bool DetectNewBreakout(const MqlRates &rates[], const double &slowEma[], const T
    double level = 0.0;
    double tolerance = InpTouchTolerancePips * GetPipSize();
 
+   if(!PassesVolatilityState(rates))
+      return false;
+   if(TrendSlopePips(trend) < InpMinSlowSlopePips)
+      return false;
+
    int direction = TrendNone;
    if(FindBreakoutLevel(rates[1], TrendUp, level))
       direction = TrendUp;
@@ -629,6 +924,8 @@ bool DetectNewBreakout(const MqlRates &rates[], const double &slowEma[], const T
       return false;
 
    if(!BreakoutCandleIsLarge(rates[1], rates))
+      return false;
+   if(!RejectionBarIsStrong(rates[1], direction, AverageBodyPips(rates, 2, 5)))
       return false;
 
    if(direction == TrendUp && (trend.slowSlope <= 0.0 || rates[1].close <= slowEma[1]))
@@ -689,9 +986,13 @@ bool EvaluateStrategy2(const MqlRates &rates[], const double &fastEma[], const d
    double tolerance = InpTouchTolerancePips * GetPipSize();
    if(!BarTouchesPrice(rates[1], fastEma[1], tolerance))
       return false;
+   if(!BreakoutRetestIsValid(rates, breakoutState))
+      return false;
 
    if(breakoutState.direction == TrendUp)
      {
+      if(!InpAllowLongs)
+         return false;
       if(trend.slowSlope <= 0.0 || rates[1].close < fastEma[1] || rates[1].close < slowEma[1])
          return false;
       direction = TrendUp;
@@ -702,6 +1003,8 @@ bool EvaluateStrategy2(const MqlRates &rates[], const double &fastEma[], const d
 
    if(breakoutState.direction == TrendDown)
      {
+      if(!InpAllowShorts)
+         return false;
       if(trend.slowSlope >= 0.0 || rates[1].close > fastEma[1] || rates[1].close > slowEma[1])
          return false;
       direction = TrendDown;
@@ -715,6 +1018,9 @@ bool EvaluateStrategy2(const MqlRates &rates[], const double &fastEma[], const d
 
 void OpenPosition(int direction, string tag)
   {
+   if(!DirectionAllowed(direction))
+      return;
+
    double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
    double bid = SymbolInfoDouble(runtimeSymbol, SYMBOL_BID);
    double pip = GetPipSize();

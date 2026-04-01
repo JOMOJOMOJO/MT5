@@ -1,0 +1,683 @@
+{
+  "imported_at": "2026-04-02T01:35:23",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "usdjpy_20260402_golden_method",
+    "symbol": "USDJPY",
+    "timeframe": "M5",
+    "tested_range": "2025.04.01 - 2025.12.31",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "usdjpy-20260402-golden-method",
+    "symbol_key": "usdjpy",
+    "timeframe_key": "m5",
+    "run_path": "reports/backtest/runs/usdjpy-20260402-golden-method/usdjpy/m5/2026-04-02-013523-383490-usdjpy-20260402-golden-method-s1.json",
+    "knowledge_path": "knowledge/backtests/usdjpy-20260402-golden-method/usdjpy/m5/2026-04-02-013523-383490-usdjpy-20260402-golden-method-s1.md",
+    "imported_dir": "reports/backtest/imported/usdjpy-20260402-golden-method/usdjpy/m5/2026-04-02-013523-383490",
+    "imported_report": "reports/backtest/imported/usdjpy-20260402-golden-method/usdjpy/m5/2026-04-02-013523-383490/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260402_golden_method-s1-sell-only-train-9m-m5.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "USDJPY",
+    "tester_period": "M5",
+    "preset_name": "usdjpy_20260402_golden_method-s1-sell-only.set",
+    "preset_source": "reports\\\\presets\\\\usdjpy_20260402_golden_method-s1-sell-only.set",
+    "signal_timeframe": "M5"
+  },
+  "metrics": {
+    "ea_name": "usdjpy_20260402_golden_method",
+    "symbol": "USDJPY",
+    "period": "M5 (2025.04.01 - 2025.12.31)",
+    "history_quality_percent": 100.0,
+    "bars": 56153,
+    "ticks": 23147312,
+    "initial_deposit": 10000.0,
+    "total_net_profit": -1153.11,
+    "gross_profit": 1361.2,
+    "gross_loss": -2514.31,
+    "profit_factor": 0.54,
+    "expected_payoff": -60.69,
+    "recovery_factor": -0.64,
+    "sharpe_ratio": -5.0,
+    "absolute_drawdown": 1361.15,
+    "maximal_drawdown_amount": 1630.48,
+    "maximal_drawdown_percent": 15.88,
+    "relative_drawdown_amount": 1630.48,
+    "relative_drawdown_percent": 15.88,
+    "total_trades": 19,
+    "short_positions_count": 19,
+    "short_positions_percent": 31.58,
+    "long_positions_count": 0,
+    "long_positions_percent": 0.0,
+    "profit_trades_count": 6,
+    "profit_trades_percent": 31.58,
+    "loss_trades_count": 13,
+    "loss_trades_percent": 68.42,
+    "largest_profit_trade": 241.94,
+    "largest_loss_trade": -214.2,
+    "average_profit_trade": 226.87,
+    "average_loss_trade": -193.41,
+    "timeframe": "M5",
+    "tested_range": "2025.04.01 - 2025.12.31",
+    "win_rate_percent": 31.58
+  },
+  "summary": {
+    "headline": "Profit Factor が 1.0 未満で、収益性はまだ不足しています。 / 総損益がまだプラスではありません。",
+    "strengths": [
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [
+      "Profit Factor が 1.0 未満で、収益性はまだ不足しています。",
+      "総損益がまだプラスではありません。"
+    ],
+    "notes": [
+      "取引回数は少なめなので、別期間や別レジームで補強が必要です。"
+    ]
+  },
+  "tags": [],
+  "raw_fields": {
+    "expert": "usdjpy_20260402_golden_method",
+    "symbol": [
+      "USDJPY",
+      "1"
+    ],
+    "period": "M5 (2025.04.01 - 2025.12.31)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "56153",
+    "ticks": "23147312",
+    "total net profit": "-1 153.11",
+    "absolute drawdown": "1 361.15",
+    "gross profit": "1 361.20",
+    "maximal drawdown": "1 630.48 (15.88%)",
+    "gross loss": "-2 514.31",
+    "relative drawdown": "15.88% (1 630.48)",
+    "profit factor": "0.54",
+    "expected payoff": "-60.69",
+    "recovery factor": "-0.64",
+    "sharpe ratio": "-5.00",
+    "z score": "0.16 (12.71%)",
+    "ahpr": "0.9938 (-0.62%)",
+    "lr correlation": "-0.94",
+    "ontester": "0",
+    "ghpr": "0.9936 (-0.64%)",
+    "lr standard error": "175.26",
+    "total trades": "19",
+    "short trades won percent": "19 (31.58%)",
+    "long positions won percent": "0 (0.00%)",
+    "profit trades percent of total": "6 (31.58%)",
+    "loss trades percent of total": "13 (68.42%)",
+    "largest profit trade": "241.94",
+    "largest loss trade": "-214.20",
+    "average profit trade": "226.87",
+    "average loss trade": "-193.41",
+    "correlation profits mfe": "0.71",
+    "correlation profits mae": "0.77",
+    "correlation mfe mae": "0.5185",
+    "t p": "時間",
+    "2": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "sell": [
+      "2.9 / 2.9",
+      "2.97 / 2.97",
+      "2.86 / 2.86",
+      "2.96 / 2.96",
+      "2.89 / 2.89",
+      "2.82 / 2.82",
+      "2.78 / 2.78",
+      "2.72 / 2.72",
+      "2.77 / 2.77",
+      "2.72 / 2.72",
+      "2.72 / 2.72",
+      "2.66 / 2.66",
+      "2.72 / 2.72",
+      "2.81 / 2.81",
+      "2.76 / 2.76",
+      "2.7 / 2.7",
+      "2.66 / 2.66",
+      "2.58 / 2.58",
+      "2.65 / 2.65",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 000": [
+      "145.258",
+      "2025.04.10 16:37:53",
+      "142.746",
+      "2025.04.11 14:36:21",
+      "144.709",
+      "2025.05.02 14:30:21",
+      "143.711",
+      "2025.05.21 14:29:22",
+      "143.514",
+      "2025.05.23 08:17:08",
+      "144.339",
+      "2025.05.29 17:13:10",
+      "144.083",
+      "2025.05.29 22:11:20",
+      "143.280",
+      "2025.06.02 10:25:24",
+      "143.407",
+      "2025.06.12 16:13:53",
+      "146.456",
+      "2025.06.23 20:07:24",
+      "146.429",
+      "2025.07.22 19:17:09",
+      "146.367",
+      "2025.07.23 14:44:24",
+      "147.479",
+      "2025.08.04 15:21:45",
+      "147.311",
+      "2025.08.13 13:25:11",
+      "147.064",
+      "2025.09.16 08:45:20",
+      "147.953",
+      "2025.09.30 12:32:24",
+      "146.832",
+      "2025.10.01 17:00:07",
+      "153.558",
+      "2025.11.06 16:14:39",
+      "153.074",
+      "2025.11.06 19:20:39"
+    ],
+    "145 038": "2025.04.10 16:20:00",
+    "filled": [
+      "golden_s1_sell",
+      "tp 145.038",
+      "golden_s1_sell",
+      "sl 142.746",
+      "golden_s1_sell",
+      "tp 144.489",
+      "golden_s1_sell",
+      "sl 143.711",
+      "golden_s1_sell",
+      "sl 143.514",
+      "golden_s1_sell",
+      "sl 144.339",
+      "golden_s1_sell",
+      "sl 144.083",
+      "golden_s1_sell",
+      "tp 143.060",
+      "golden_s1_sell",
+      "sl 143.407",
+      "golden_s1_sell",
+      "sl 146.456",
+      "golden_s1_sell",
+      "sl 146.429",
+      "golden_s1_sell",
+      "tp 146.147",
+      "golden_s1_sell",
+      "tp 147.259",
+      "golden_s1_sell",
+      "sl 147.311",
+      "golden_s1_sell",
+      "sl 147.064",
+      "golden_s1_sell",
+      "sl 147.953",
+      "golden_s1_sell",
+      "sl 146.832",
+      "golden_s1_sell",
+      "sl 153.558",
+      "golden_s1_sell",
+      "tp 152.854"
+    ],
+    "3": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "buy": [
+      "2.9 / 2.9",
+      "2.97 / 2.97",
+      "2.86 / 2.86",
+      "2.96 / 2.96",
+      "2.89 / 2.89",
+      "2.82 / 2.82",
+      "2.78 / 2.78",
+      "2.72 / 2.72",
+      "2.77 / 2.77",
+      "2.72 / 2.72",
+      "2.72 / 2.72",
+      "2.66 / 2.66",
+      "2.72 / 2.72",
+      "2.81 / 2.81",
+      "2.76 / 2.76",
+      "2.7 / 2.7",
+      "2.66 / 2.66",
+      "2.58 / 2.58",
+      "2.65 / 2.65",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out"
+    ],
+    "4": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "142 526": "2025.04.11 14:25:00",
+    "5": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "6": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "144 489": "2025.05.02 14:20:00",
+    "7": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "8": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "143 491": "2025.05.21 14:20:00",
+    "9": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "10": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "143 294": "2025.05.23 07:20:00",
+    "11": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "12": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "144 119": "2025.05.29 17:10:00",
+    "13": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "14": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "143 863": "2025.05.29 21:45:00",
+    "15": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "16": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "143 060": "2025.06.02 10:10:00",
+    "17": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "18": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "143 187": "2025.06.12 15:35:00",
+    "19": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "20": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "146 236": "2025.06.23 19:45:00",
+    "21": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "22": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "146 209": "2025.07.22 19:10:00",
+    "23": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "24": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "146 147": "2025.07.23 14:40:00",
+    "25": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "26": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "147 259": "2025.08.04 14:55:00",
+    "27": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "28": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "147 091": "2025.08.13 12:45:00",
+    "29": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "30": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "146 844": "2025.09.16 08:10:00",
+    "31": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "32": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "147 733": "2025.09.30 12:20:00",
+    "33": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "34": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "146 612": "2025.10.01 16:25:00",
+    "35": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "36": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "153 338": "2025.11.06 16:10:00",
+    "37": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "38": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "152 854": "2025.11.06 19:00:00",
+    "39": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "1": "balance",
+    "0 00": [
+      "0.00",
+      "0.00",
+      "241.94",
+      "0.00",
+      "-210.14",
+      "0.00",
+      "237.53",
+      "0.00",
+      "-214.20",
+      "0.00",
+      "-201.37",
+      "0.00",
+      "-199.28",
+      "0.00",
+      "-194.87",
+      "0.00",
+      "228.16",
+      "0.00",
+      "-202.81",
+      "0.00",
+      "-185.72",
+      "0.00",
+      "-185.76",
+      "0.00",
+      "223.88",
+      "0.00",
+      "221.65",
+      "0.00",
+      "-190.75",
+      "0.00",
+      "-187.67",
+      "0.00",
+      "-182.49",
+      "0.00",
+      "-181.16",
+      "0.00",
+      "-178.09",
+      "0.00",
+      "208.04",
+      "0.00"
+    ],
+    "10 000 00": [
+      "10 000.00",
+      "golden_s1_sell"
+    ],
+    "2 9": [
+      "145.158",
+      "145.037"
+    ],
+    "10 241 94": [
+      "tp 145.038",
+      "golden_s1_sell"
+    ],
+    "2 97": [
+      "142.646",
+      "142.747"
+    ],
+    "10 031 80": [
+      "sl 142.746",
+      "golden_s1_sell"
+    ],
+    "2 86": [
+      "144.609",
+      "144.489"
+    ],
+    "10 269 33": [
+      "tp 144.489",
+      "golden_s1_sell"
+    ],
+    "2 96": [
+      "143.611",
+      "143.715"
+    ],
+    "10 055 13": [
+      "sl 143.711",
+      "golden_s1_sell"
+    ],
+    "2 89": [
+      "143.414",
+      "143.514"
+    ],
+    "9 853 76": [
+      "sl 143.514",
+      "golden_s1_sell"
+    ],
+    "2 82": [
+      "144.239",
+      "144.341"
+    ],
+    "9 654 48": [
+      "sl 144.339",
+      "golden_s1_sell"
+    ],
+    "2 78": [
+      "143.983",
+      "144.084"
+    ],
+    "9 459 61": [
+      "sl 144.083",
+      "golden_s1_sell"
+    ],
+    "2 72": [
+      "143.180",
+      "143.060",
+      "146.356",
+      "146.456",
+      "146.329",
+      "146.429",
+      "147.379",
+      "147.259"
+    ],
+    "9 687 77": [
+      "tp 143.060",
+      "golden_s1_sell"
+    ],
+    "2 77": [
+      "143.307",
+      "143.412"
+    ],
+    "9 484 96": [
+      "sl 143.407",
+      "golden_s1_sell"
+    ],
+    "9 299 24": [
+      "sl 146.456",
+      "golden_s1_sell"
+    ],
+    "9 113 48": [
+      "sl 146.429",
+      "golden_s1_sell"
+    ],
+    "2 66": [
+      "146.267",
+      "146.144",
+      "146.732",
+      "146.832"
+    ],
+    "9 337 36": [
+      "tp 146.147",
+      "golden_s1_sell"
+    ],
+    "9 559 01": [
+      "tp 147.259",
+      "golden_s1_sell"
+    ],
+    "2 81": [
+      "147.211",
+      "147.311"
+    ],
+    "9 368 26": [
+      "sl 147.311",
+      "golden_s1_sell"
+    ],
+    "2 76": [
+      "146.964",
+      "147.064"
+    ],
+    "9 180 59": [
+      "sl 147.064",
+      "golden_s1_sell"
+    ],
+    "2 7": [
+      "147.853",
+      "147.953"
+    ],
+    "8 998 10": [
+      "sl 147.953",
+      "golden_s1_sell"
+    ],
+    "8 816 94": [
+      "sl 146.832",
+      "golden_s1_sell"
+    ],
+    "2 58": [
+      "153.458",
+      "153.564"
+    ],
+    "8 638 85": [
+      "sl 153.558",
+      "golden_s1_sell"
+    ],
+    "2 65": [
+      "152.974",
+      "152.854"
+    ],
+    "8 846 89": "tp 152.854",
+    "1 153 11": "8 846.89"
+  },
+  "records_preview": [],
+  "run_id": "2026-04-02-013523-383490-usdjpy-20260402-golden-method-s1"
+}

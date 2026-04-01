@@ -12,6 +12,7 @@
 - [ ] Use `knowledge/patterns/2026-04-02-usdjpy-golden-method-validation.md` as the always-on scorecard for the USDJPY Golden Method family.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-baseline-reject.md` as the current verdict that the first direct Golden Method translation failed both `9 months train` and `3 months OOS`.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-flexible-risk-rerun.md` as the current verdict that flexible `1.2R` exits plus micro-cap risk override increased turnover but made the baseline worse.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-followthrough-cycle1-reject.md` as the current verdict that `Strategy 2` is dead in its current form, `Strategy 1 buy-only` is harmful, and `Strategy 1 sell-only` is the only surviving research branch.
 - [ ] Keep `usdjpy_20260402_golden_method` as the active mainline family, but do not discuss promotion until the next cycle fixes follow-through quality and breakout selectivity.
 - [ ] Use `scripts/run-symbol-feature-lab.ps1 -Symbol USDJPY` before large tuning so the next cycle is informed by bar-data evidence as well as the doctrine.
 - [ ] Do not keep fixed `10 pip / 10 pip` exits by default; treat them as a reference anchor and promote a different stop / target structure if it improves expectancy without breaking doctrine fit.
@@ -21,6 +22,11 @@
 - [ ] Tighten Strategy 1 with a clearer follow-through / V-shape pullback filter before adding more exit tuning.
 - [ ] Rebuild Strategy 2 with stricter round-number breakout quality and anti-chop rules before any promotion discussion.
 - [ ] Treat entry-quality repair as higher priority than any further stop / target or micro-cap-risk tuning for `usdjpy_20260402_golden_method`.
+- [ ] Do not spend another immediate tuning cycle on family-level `S1 + S2` aggregates; diagnose `S1 sell-only` directly.
+- [ ] Treat `S1 sell-only` as the least-bad USDJPY Golden Method branch, but keep it in research only until `9 months train` turns positive and the `3 months OOS` sample is materially larger.
+- [ ] Treat the first `Strategy 1` stochastic pullback qualifier (`stoch75` / `stoch82`) as rejected for being too restrictive at current thresholds.
+- [ ] Run the next USDJPY cycle as an `S1 sell-only` event study by session and shape quality before any more stop / target experimentation.
+- [ ] Do not rebuild `Strategy 2` again until a fresh round-number breakout study shows real signal on `USDJPY`.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.
 - [ ] Keep `BTCUSD` high-turnover families as secondary until the USDJPY Golden Method family either clears the live gate or fails plateau review.
