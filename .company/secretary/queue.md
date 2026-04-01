@@ -29,6 +29,9 @@
 - [ ] Use `scripts/start-demo-forward.ps1` so every forward cycle gets its own telemetry file instead of appending onto the baseline artifact.
 - [ ] Launch `btcusd_20260331_session_pair_rr` as the new mainline family for expectancy-first, fixed-`R`, compounding-aware BTCUSD research.
 - [ ] Use bar-data mining to find repeatable multi-trade-per-day entry zones before large optimization sweeps.
+- [ ] Use `reports/research/2026-04-01-142232-btcusd-m5-feature-lab/summary.md` as the current chart-mining source of truth for the next mainline BTCUSD hypothesis.
+- [ ] Prototype a new `overextension fade` family from the feature-lab pair rules before returning to large parameter sweeps.
+- [ ] Keep the `range compression breakout long` idea as a secondary branch, not as the first mainline prototype.
 - [ ] Open the next mainline family only from a fresh market-behavior thesis or bar-data edge, not by stacking more filters onto `btcusd_20260330_session_meanrev`.
 - [ ] Rebuild the `session_pair_rr` entry construction from fresh bar-data mining, because the first `pair / long-only / short-only` actual MT5 runs all failed.
 - [ ] Validate that the next `session_pair_rr` hypothesis clears actual MT5 before more RR tuning.
