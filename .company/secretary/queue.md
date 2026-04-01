@@ -11,13 +11,16 @@
 - [ ] Use `knowledge/patterns/2026-04-02-usdjpy-golden-method-spec.md` as the single source of truth for the CEO-provided Golden Method doctrine.
 - [ ] Use `knowledge/patterns/2026-04-02-usdjpy-golden-method-validation.md` as the always-on scorecard for the USDJPY Golden Method family.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-baseline-reject.md` as the current verdict that the first direct Golden Method translation failed both `9 months train` and `3 months OOS`.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-flexible-risk-rerun.md` as the current verdict that flexible `1.2R` exits plus micro-cap risk override increased turnover but made the baseline worse.
 - [ ] Keep `usdjpy_20260402_golden_method` as the active mainline family, but do not discuss promotion until the next cycle fixes follow-through quality and breakout selectivity.
 - [ ] Use `scripts/run-symbol-feature-lab.ps1 -Symbol USDJPY` before large tuning so the next cycle is informed by bar-data evidence as well as the doctrine.
 - [ ] Do not keep fixed `10 pip / 10 pip` exits by default; treat them as a reference anchor and promote a different stop / target structure if it improves expectancy without breaking doctrine fit.
 - [ ] Treat `1 trade/day` as the minimum operating target and `2+ trades/day` as the preferred target for the USDJPY Golden Method family.
 - [ ] Keep the monthly `12%` idea as a reference objective, not as a forced optimizer target.
+- [ ] Do not use the trade-count target to justify looser entries; trade-count promotion is valid only if `follow-through quality`, `PF`, and drawdown improve together.
 - [ ] Tighten Strategy 1 with a clearer follow-through / V-shape pullback filter before adding more exit tuning.
 - [ ] Rebuild Strategy 2 with stricter round-number breakout quality and anti-chop rules before any promotion discussion.
+- [ ] Treat entry-quality repair as higher priority than any further stop / target or micro-cap-risk tuning for `usdjpy_20260402_golden_method`.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.
 - [ ] Keep `BTCUSD` high-turnover families as secondary until the USDJPY Golden Method family either clears the live gate or fails plateau review.
