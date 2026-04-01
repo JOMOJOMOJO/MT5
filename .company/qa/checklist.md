@@ -10,6 +10,7 @@
 - [ ] The first real-capital preset uses lower per-trade risk than the demo-forward preset unless an explicit override is recorded.
 - [ ] The intended starting capital can express the strategy safely on the target broker without the minimum lot forcing oversized risk.
 - [ ] The stop model and reward model are documented in `R` terms or with an equivalent expectancy rationale.
+- [ ] If the active family follows a named doctrine or manual method, the doctrine is archived in repo knowledge and the candidate is evaluated against that source of truth.
 - [ ] Duplicate entries are prevented across repeated ticks or retries.
 - [ ] Backtest sample size is large enough to be informative.
 - [ ] For the latest improved candidate, a rolling `12 months = 9 months train + 3 months OOS` split has been archived unless a different split was explicitly justified.
@@ -19,6 +20,7 @@
 - [ ] A recent out-of-sample MT5 window is checked explicitly before promotion. Current default is the latest available 3-month window, recorded with exact dates.
 - [ ] A plateau review exists when a family has gone through three serious cycles or is visibly missing the active objective.
 - [ ] The result is explained by chart regimes, not only by calendar season labels.
+- [ ] For Golden Method families, EMA environment, Dow swing trend judgement, follow-through vs profit-taking logic, transition-line logic, volatility filtering, and round-number rules are all explicit.
 - [ ] Expectancy stays positive after realistic spread and slippage assumptions. Win rate alone is not used as a gate.
 - [ ] The candidate is labeled clearly as `mainline`, `secondary`, `parked`, or `legacy`.
 - [ ] A quarterly review date is set for every candidate that reaches live or paper-live status.
