@@ -36,6 +36,7 @@
 - [ ] Keep `btcusd_20260401_regime_single` as the current high-turnover mainline research branch, but do not discuss live promotion until 1-year actual improves above PF 1.0 with acceptable drawdown.
 - [ ] Use `btcusd_20260401_regime_single-long-ret24-stochd19-h8` as the current best sub-branch inside the new high-turnover family.
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-ret24-late-filter-probe.md` as the current verdict that late-session `ret24` becomes materially better once `stoch_d` is used as a quality filter.
+- [ ] Treat `knowledge/experiments/2026-04-01-btcusd-second-late-long-regime-probe.md` as the current verdict that the first second-regime candidates (`ema50100`, `close_vs_ema50`, `low_break_24`) failed actual MT5 and should not be promoted.
 - [ ] Improve `btcusd_20260401_regime_single-long-ret24-stochd19-h8` through regime expansion or execution realism before opening a new family, because it is positive on 1-year actual and 3-month OOS but still too weak for promotion.
 - [ ] Keep the short side of `btcusd_20260401_regime_single` in research only until a new NY-side rule beats PF 1.0 on the full 1-year actual window.
 - [ ] Treat `test_expectancy >= 0.25 ATR` as the minimum spread-aware screening floor for the next BTCUSD M5 mainline candidate on this broker.
