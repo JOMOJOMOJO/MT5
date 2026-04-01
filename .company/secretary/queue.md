@@ -41,8 +41,11 @@
 - [ ] Improve `btcusd_20260401_regime_single-long-ret24-stoch24-h8-s15` through a clearly positive complementary sidecar before any live discussion, because execution realism improved but turnover is still far below the target.
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-regime-single-stop-and-volume-probe.md` as the current verdict that `stop1.50ATR` improves the `ret24-stoch24` branch, while tick-volume filters overfit and should stay in research only.
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-regime-single-second-long-regime-probe.md` as the current verdict that the first second-long-regime batch inside `btcusd_20260401_regime_single` failed actual MT5 and should not be promoted.
+- [ ] Treat `knowledge/experiments/2026-04-01-btcusd-regime-single-nonlate-short-actual-reject.md` as the current verdict that the first non-late complementary long and fresh short-side batch inside `btcusd_20260401_regime_single` failed actual MT5.
 - [ ] Open the next high-turnover cycle from a non-late complementary long idea or a fresh short-side construction, not from more late-session variants of `ema2050` / `ema50100`.
 - [ ] Keep the short side of `btcusd_20260401_regime_single` in research only until a new NY-side rule beats PF 1.0 on the full 1-year actual window.
+- [ ] Treat `knowledge/experiments/2026-04-01-btcusd-intrabar-reversal-baseline-reject.md` as the current verdict that the first `btcusd_20260401_intrabar_reversal` family should be killed at baseline.
+- [ ] Open the next high-turnover family from range-compression / breakout behavior or another fresh execution-aware thesis, not from more reversal variants around `ret24`, `followthrough_down`, or `close_location`.
 - [ ] Treat `test_expectancy >= 0.25 ATR` as the minimum spread-aware screening floor for the next BTCUSD M5 mainline candidate on this broker.
 - [ ] Keep the `range compression breakout long` idea as a secondary branch, not as the first mainline prototype.
 - [ ] Open the next mainline family only from a fresh market-behavior thesis or bar-data edge, not by stacking more filters onto `btcusd_20260330_session_meanrev`.
