@@ -1,9 +1,9 @@
 ﻿{
-    "generated_at":  "2026-04-02T02:13:53.4248615+09:00",
+    "generated_at":  "2026-04-02T02:47:30.5211132+09:00",
     "config":  {
                    "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260402_golden_method-s2-sell-breakout-active-train-9m.ini",
-                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpCDF8.ini",
-                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpCDF8.ini"
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp9500.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp9500.ini"
                },
     "tester":  {
                    "symbol":  "USDJPY",
