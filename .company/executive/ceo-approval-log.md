@@ -12,6 +12,24 @@ shared skill, shared MCP, 部署構成の変更はここに残して正式採用
 
 ## Approved
 
+- Date: 2026-04-01
+- Proposal: Formalize repo-wide git branch strategy and publish workflow, document the reusable EA improvement cycle and live-ready definition, add micro-cap lot-floor viability as a permanent gate, and let Codex manage branch / commit / push flow under the documented rules.
+- Requested by: CEO
+- Decision: approved
+- Effective files:
+  - `.company/git/branch-strategy.md`
+  - `scripts/git-start-task.ps1`
+  - `scripts/git-publish-task.ps1`
+  - `AGENTS.md`
+  - `.company/ORGANIZATION.md`
+  - `.company/strategy/charter.md`
+  - `.company/qa/checklist.md`
+  - `.company/release/checklist.md`
+  - `knowledge/patterns/2026-04-01-ea-improvement-cycle.md`
+  - `knowledge/patterns/2026-04-01-live-ready-definition.md`
+  - `knowledge/company/2026-04-01-git-governance-and-live-ready-definition.md`
+  - `.company/improvement/reviews/2026-04-01-140500-git-governance-and-live-ready-definition-review.md`
+
 - Date: 2026-03-31
 - Proposal: Adopt expectancy-first, compounding-first, non-ruin capital doctrine as permanent repo policy; treat `3% risk` as the default daily or portfolio hard-loss budget instead of default single-trade risk; park `btcusd_20260330_session_meanrev` as a secondary candidate; and start a new mainline EA family `btcusd_20260331_session_pair_rr`.
 - Requested by: CEO

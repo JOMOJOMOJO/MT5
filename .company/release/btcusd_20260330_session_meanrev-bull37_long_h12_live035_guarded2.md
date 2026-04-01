@@ -82,6 +82,8 @@
 
 - Sizing:
   - `0.35%` of current equity per trade via the EA sizing function.
+- Min-lot guard:
+  - skip the trade if broker minimum lot would force more than `1.0%` effective risk on the account.
 - Emergency stop:
   - `4.0 ATR`
 - Daily hard stop:
@@ -156,6 +158,7 @@
 - Required before any first-capital deployment:
   - the guarded2 demo-forward gate is `pass`,
   - the staged small-live preset is selected as the first-capital profile,
+  - the intended first-capital account passes lot-floor viability on the target broker,
   - `scripts/small-live-preflight.ps1` returns `pass` or an explicitly accepted `review`.
 
 ## Rollback Triggers
@@ -192,3 +195,4 @@
 - Operator control and status heartbeat are active in demo/live, but automatically disabled in tester mode so reproducibility and tester speed stay intact.
 - Status heartbeat is timer-driven, so stale-file checks reflect terminal/runtime health rather than only the latest signal bar.
 - The latest recent OOS review is recorded at `knowledge/experiments/2026-04-01-btcusd-session-meanrev-oos-2026q1-review.md`.
+- If the first capital is around `100 USD`, this packet is valid only if the broker's contract size and minimum lot still keep effective risk inside the intended small-live range. Otherwise use a cent or smaller-contract environment, or treat the candidate as not micro-cap deployable on that broker.

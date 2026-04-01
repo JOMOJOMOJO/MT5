@@ -13,6 +13,7 @@
 - Multi-trade strategies should normally risk a fraction of that budget per trade. `3%` per trade is not the default.
 - Position sizing should scale from current equity so that valid strategies can compound without bypassing risk caps.
 - Every serious candidate should define its stop model, expected reward model, and sizing model in `R` terms or with an equivalent expectancy explanation.
+- Small-capital deployment is only valid when broker lot granularity and contract size still allow sane risk expression. A strategy that cannot size safely on `100 USD` is not micro-cap deployable on that broker.
 
 ## Promotion Philosophy
 
@@ -43,9 +44,11 @@
 - Search window: short enough to iterate, long enough to contain varied conditions.
 - Locked validation window: long-window actual MT5 evidence is mandatory.
 - Out-of-sample window: explicit and separate from the tuning window.
+- Default rolling split for iterative development: latest `12 months`, with `9 months` for train / tuning and latest `3 months` as the forward-style OOS check.
 - Promotion gate:
   - compile cleanly,
   - pass QA and risk checklists,
   - show positive expectancy after realistic friction,
   - show enough trades for the target operating style,
+  - show broker lot-floor viability for the intended starting capital,
   - complete demo-forward review before live promotion.

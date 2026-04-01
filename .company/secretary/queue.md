@@ -20,6 +20,7 @@
 - [ ] After loading the refreshed EA build in demo/live, confirm the status heartbeat refreshes every 60 seconds and clears the stale-heartbeat review state.
 - [ ] Treat the recent OOS check (`2026-01-01` to `2026-03-30`) as passed on quality but still below the turnover objective for `btcusd_20260330_session_meanrev`.
 - [ ] Run `scripts/small-live-preflight.ps1` before any first-capital launch.
+- [ ] Before any `100 USD` live discussion, verify that BTCUSD on the target broker can express the intended risk without minimum-lot oversizing.
 - [ ] Use `scripts/start-small-live.ps1` so first-capital launch is blocked unless the staged preflight clears or an explicit override is accepted.
 - [ ] Use `scripts/act-on-live-review.ps1` so operator actions leave a durable audit artifact.
 - [ ] Use the launch manifest written by `scripts/start-demo-forward.ps1` or `scripts/start-small-live.ps1` when closing any demo/small-live run.

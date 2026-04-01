@@ -47,6 +47,12 @@ Use both MT5 optimization and long fixed-parameter validation. They solve differ
 - Locked validation: re-run the selected parameters on a longer fixed window, usually 6 to 12 months.
 - Explicit out-of-sample: run a separate untouched period after the validation window.
 - Forward or demo: move only candidates that survive the earlier gates.
+- Default rolling review for each improved candidate:
+  - latest `12 months`
+  - oldest `9 months` for train / tuning
+  - latest `3 months` for forward-style OOS
+- Generate the split configs automatically:
+  - `powershell -ExecutionPolicy Bypass -File scripts/new-rolling-12m-split.ps1 -BaseConfigPath <1y-config.ini>`
 
 Use MT5 built-in forward optimization when you want fast screening inside the tester. Use explicit repo-managed out-of-sample single tests when you want reproducible artifacts in Git.
 
