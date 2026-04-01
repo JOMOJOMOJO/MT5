@@ -38,9 +38,10 @@
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-m15-short-gap-promotion.md` as the current verdict that the first positive complementary sidecar is `btcusd_20260401_regime_single-m15-ny-eg50100-eg2050-short-h12-s15`, but it is still below the turnover objective as a standalone branch.
 - [ ] Use the new `M15 NY short gap` branch as the first complementary sidecar inside `btcusd_20260401_regime_single`, not as a standalone live-track candidate.
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-regime-dual-combo-promotion.md` as the current verdict that the first integrated `M5 long + M15 short` combo is the best high-turnover research family so far.
-- [ ] Use `btcusd_20260401_regime_dual-m5long-m15short-combo` as the current best high-turnover research candidate, not `btcusd_20260401_regime_single-long-ret24-stoch24-h8-s15`.
-- [ ] Do not discuss live promotion for `btcusd_20260401_regime_dual` yet; 1-year PF is still only `1.18` even though OOS improved to `1.51`.
-- [ ] Next high-turnover cycle should add one more positive complementary bucket to `btcusd_20260401_regime_dual`, or improve the combo's exit / execution design without collapsing annual turnover.
+- [ ] Treat `knowledge/experiments/2026-04-02-btcusd-regime-dual-asia-short-promotion.md` as the current verdict that the `M15 Asia short` bucket is the first successful third bucket inside `btcusd_20260401_regime_dual`.
+- [ ] Use `btcusd_20260401_regime_dual-m5long-m15short-asia-combo` as the current best high-turnover research candidate.
+- [ ] Do not discuss live promotion for `btcusd_20260401_regime_dual` yet; the 1-year PF improved to `1.22`, but it is still below the live gate.
+- [ ] Next high-turnover cycle should either add a fourth positive bucket or improve exit / execution so the new `518 trades/year` combo lifts annual PF without losing the turnover gain.
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-ret24-late-filter-probe.md` as the current verdict that late-session `ret24` becomes materially better once `stoch_d` is used as a quality filter.
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-second-late-long-regime-probe.md` as the current verdict that the first second-regime candidates (`ema50100`, `close_vs_ema50`, `low_break_24`) failed actual MT5 and should not be promoted.
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-breakout-pair-and-turnover-extension.md` as the current verdict that the first breakout / roc pair-rule candidates failed actual MT5, while `stoch24-h8` is the best turnover extension of the surviving `ret24` family.

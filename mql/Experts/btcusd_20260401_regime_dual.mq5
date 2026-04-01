@@ -31,7 +31,8 @@ enum ShortRuleMode
    ShortRuleTickVolumeZ = 2,
    ShortRuleBreakoutPersistUp6 = 3,
    ShortRuleRsi7 = 4,
-   ShortRuleEmaGap50100 = 5
+   ShortRuleEmaGap50100 = 5,
+   ShortRuleCloseVsEma50 = 6
   };
 
 input string          InpSymbol                      = "BTCUSD";
@@ -87,16 +88,25 @@ input double          InpShortHighBreak24Min        = -0.3645;
 input double          InpShortTickVolumeZMin        = 1.5444;
 input double          InpShortBreakoutPersistUp6Min = 1.0;
 input double          InpShortEmaGap50100Max        = -1.0353;
+input double          InpShortCloseVsEma50Min       = 1.9306;
 input bool            InpUseShortFlowFilter         = false;
 input double          InpShortTickFlowMin           = 0.4176;
 input bool            InpUseShortRsi7Filter         = false;
 input double          InpShortRsi7Min               = 70.3669;
 input bool            InpUseShortEmaGap2050Filter   = false;
 input double          InpShortEmaGap2050Max         = -0.8779;
+input bool            InpUseShortEmaGap2050MinFilter = false;
+input double          InpShortEmaGap2050Min         = 1.0387;
 input bool            InpUseShortRet6Filter         = false;
 input double          InpShortRet6Min               = 0.0017;
 input bool            InpUseShortHighBreak12Filter  = false;
 input double          InpShortHighBreak12Min        = -0.5778;
+input bool            InpEnableShortBucket2         = false;
+input int             InpShort2StartHour            = 0;
+input int             InpShort2EndHour              = 8;
+input double          InpShort2CloseVsEma50Min      = 1.9306;
+input bool            InpUseShort2EmaGap2050MinFilter = true;
+input double          InpShort2EmaGap2050Min        = 1.0387;
 input int             InpShortHoldBars              = 12;
 input double          InpShortStopATR               = 1.25;
 input double          InpShortTargetRMultiple       = 0.00;
@@ -188,7 +198,7 @@ int OnInit()
       InpLongTargetRMultiple < 0.0 || InpShortTargetRMultiple < 0.0 || InpMaxTradesPerDay < 0 ||
       InpMaxOpenTrades < 0 || InpMaxOpenPerSide < 0 || InpMaxEffectiveRiskPercentAtMinLot < 0.0 ||
       InpLongRuleMode < LongRuleEmaGap2050 || InpLongRuleMode > LongRuleHighBreak12 ||
-      InpShortRuleMode < ShortRuleMacdAtr || InpShortRuleMode > ShortRuleEmaGap50100 ||
+      InpShortRuleMode < ShortRuleMacdAtr || InpShortRuleMode > ShortRuleCloseVsEma50 ||
       InpLongSignalTimeframe <= PERIOD_CURRENT || InpShortSignalTimeframe <= PERIOD_CURRENT)
      {
       Print("Invalid regime-dual parameters.");
@@ -286,7 +296,7 @@ void OnTick()
          OpenPosition(POSITION_TYPE_BUY, ctx);
      }
 
-   if(InpEnableShort && IsNewBar(InpShortSignalTimeframe, lastShortBarTime))
+   if((InpEnableShort || InpEnableShortBucket2) && IsNewBar(InpShortSignalTimeframe, lastShortBarTime))
      {
       if(LoadSignalContext(InpShortSignalTimeframe,
                            shortAtrHandle,
@@ -299,7 +309,7 @@ void OnTick()
                            shortRsi7Handle,
                            ctx) &&
          CanOpenNewEntries(ctx) &&
-         IsShortSignal(ctx) &&
+         (IsShortSignal(ctx) || IsShortBucket2Signal(ctx)) &&
          CountManagedPositions(POSITION_TYPE_SELL) < InpMaxOpenPerSide)
          OpenPosition(POSITION_TYPE_SELL, ctx);
      }
@@ -898,6 +908,11 @@ bool IsShortSignal(const SignalContext &ctx)
       if(ctx.emaGap50100 > InpShortEmaGap50100Max)
          return false;
      }
+   else if(InpShortRuleMode == ShortRuleCloseVsEma50)
+     {
+      if(ctx.closeVsEma50 < InpShortCloseVsEma50Min)
+         return false;
+     }
 
    if(InpUseShortFlowFilter && ctx.tickFlowSigned3 < InpShortTickFlowMin)
       return false;
@@ -908,10 +923,27 @@ bool IsShortSignal(const SignalContext &ctx)
    if(InpUseShortEmaGap2050Filter && ctx.emaGap2050 > InpShortEmaGap2050Max)
       return false;
 
+   if(InpUseShortEmaGap2050MinFilter && ctx.emaGap2050 < InpShortEmaGap2050Min)
+      return false;
+
    if(InpUseShortRet6Filter && ctx.ret6 < InpShortRet6Min)
       return false;
 
    if(InpUseShortHighBreak12Filter && ctx.highBreak12 < InpShortHighBreak12Min)
+      return false;
+
+   return true;
+  }
+
+bool IsShortBucket2Signal(const SignalContext &ctx)
+  {
+   if(!InpEnableShortBucket2 || !HourInWindow(ctx.hour, InpShort2StartHour, InpShort2EndHour))
+      return false;
+
+   if(ctx.closeVsEma50 < InpShort2CloseVsEma50Min)
+      return false;
+
+   if(InpUseShort2EmaGap2050MinFilter && ctx.emaGap2050 < InpShort2EmaGap2050Min)
       return false;
 
    return true;
