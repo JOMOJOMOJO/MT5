@@ -1,9 +1,9 @@
 ﻿{
-    "generated_at":  "2026-04-02T01:35:16.7600550+09:00",
+    "generated_at":  "2026-04-02T01:56:17.8854949+09:00",
     "config":  {
                    "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260402_golden_method-s1-sell-only-train-9m.ini",
-                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp74A7.ini",
-                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp74A7.ini"
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpB221.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpB221.ini"
                },
     "tester":  {
                    "symbol":  "USDJPY",
@@ -50,6 +50,9 @@
                                       "InpMinImpulsePips":  "8.0",
                                       "InpMinPullbackPips":  "2.0",
                                       "InpMaxPullbackPips":  "12.0",
+                                      "InpMaxCounterTrendBodies":  "8",
+                                      "InpMinTransitionDistancePips":  "0.0",
+                                      "InpMaxPullbackToImpulseRatio":  "1.00",
                                       "InpMinRejectionBodyPips":  "2.0",
                                       "InpMinRejectionCloseLocation":  "0.65",
                                       "InpRoundTouchLookbackBars":  "144",

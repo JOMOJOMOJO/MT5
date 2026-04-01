@@ -85,6 +85,9 @@ input int             InpPullbackLookbackBars        = 4;
 input double          InpMinImpulsePips              = 8.0;
 input double          InpMinPullbackPips             = 2.0;
 input double          InpMaxPullbackPips             = 12.0;
+input int             InpMaxCounterTrendBodies       = 8;
+input double          InpMinTransitionDistancePips   = 0.0;
+input double          InpMaxPullbackToImpulseRatio   = 1.00;
 input double          InpMinRejectionBodyPips        = 2.0;
 input double          InpMinRejectionCloseLocation   = 0.65;
 input int             InpRoundTouchLookbackBars      = 144;
@@ -125,6 +128,8 @@ int OnInit()
       InpActiveSessionEndHour < 0 || InpActiveSessionEndHour > 23 || InpActiveSessionStartHour == InpActiveSessionEndHour ||
       InpMinSlowSlopePips < 0.0 || InpPullbackLookbackBars < 2 || InpMinImpulsePips <= 0.0 ||
       InpMinPullbackPips <= 0.0 || InpMaxPullbackPips <= InpMinPullbackPips ||
+      InpMaxCounterTrendBodies < 1 || InpMinTransitionDistancePips < 0.0 ||
+      InpMaxPullbackToImpulseRatio <= 0.0 || InpMaxPullbackToImpulseRatio > 1.5 ||
       InpMinRejectionBodyPips <= 0.0 || InpMinRejectionCloseLocation <= 0.5 || InpMinRejectionCloseLocation >= 1.0 ||
       InpRoundTouchLookbackBars <= 0 || InpBreakoutMinBodyPips <= 0.0 || InpBreakoutCloseLocationMin <= 0.5 ||
       InpBreakoutCloseLocationMin >= 1.0 || InpRetestRoundBufferPips < 0.0 || InpMagicNumber <= 0 ||
@@ -705,6 +710,21 @@ int CountCounterTrendBodies(const MqlRates &rates[], int direction)
    return count;
   }
 
+double TransitionDistancePips(const MqlRates &rates[], const TrendContext &trend, int direction)
+  {
+   double pip = GetPipSize();
+   if(pip <= 0.0 || trend.transitionLine == 0.0)
+      return 0.0;
+
+   if(direction == TrendUp)
+      return (rates[1].low - trend.transitionLine) / pip;
+
+   if(direction == TrendDown)
+      return (trend.transitionLine - rates[1].high) / pip;
+
+   return 0.0;
+  }
+
 bool RejectionBarIsStrong(const MqlRates &bar, int direction, double averageBodyPips)
   {
    double body = BarBodyPips(bar);
@@ -747,7 +767,15 @@ bool Strategy1ShapeIsValid(const MqlRates &rates[], const TrendContext &trend, i
    if(pullbackPips < InpMinPullbackPips || pullbackPips > InpMaxPullbackPips)
       return false;
 
-   if(CountCounterTrendBodies(rates, direction) < 1)
+   int counterTrendBodies = CountCounterTrendBodies(rates, direction);
+   if(counterTrendBodies < 1 || counterTrendBodies > InpMaxCounterTrendBodies)
+      return false;
+
+   double pullbackRatio = pullbackPips / impulsePips;
+   if(pullbackRatio > InpMaxPullbackToImpulseRatio)
+      return false;
+
+   if(TransitionDistancePips(rates, trend, direction) < InpMinTransitionDistancePips)
       return false;
 
    double averageBodyPips = AverageBodyPips(rates, 2, 5);

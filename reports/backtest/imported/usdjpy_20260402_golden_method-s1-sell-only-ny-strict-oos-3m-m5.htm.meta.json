@@ -1,21 +1,21 @@
 ﻿{
-    "generated_at":  "2026-04-02T01:56:34.0334512+09:00",
+    "generated_at":  "2026-04-02T01:57:11.2440915+09:00",
     "config":  {
-                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260402_golden_method-s1-sell-only-oos-3m.ini",
-                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp199.ini",
-                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp199.ini"
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260402_golden_method-s1-sell-only-ny-strict-oos-3m.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp92FC.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp92FC.ini"
                },
     "tester":  {
                    "symbol":  "USDJPY",
                    "period":  "M5",
                    "from_date":  "2026.01.01",
                    "to_date":  "2026.04.01",
-                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\\\Experts\\\\dev\\\\reports\\\\backtest\\\\imported\\\\usdjpy_20260402_golden_method-s1-sell-only-oos-3m-m5.htm"
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\\\Experts\\\\dev\\\\reports\\\\backtest\\\\imported\\\\usdjpy_20260402_golden_method-s1-sell-only-ny-strict-oos-3m-m5.htm"
                },
     "preset":  {
-                   "name":  "usdjpy_20260402_golden_method-s1-sell-only.set",
-                   "source":  "reports\\\\presets\\\\usdjpy_20260402_golden_method-s1-sell-only.set",
-                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\usdjpy_20260402_golden_method-s1-sell-only.set",
+                   "name":  "usdjpy_20260402_golden_method-s1-sell-only-ny-strict.set",
+                   "source":  "reports\\\\presets\\\\usdjpy_20260402_golden_method-s1-sell-only-ny-strict.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\usdjpy_20260402_golden_method-s1-sell-only-ny-strict.set",
                    "parameters":  {
                                       "InpSymbol":  "USDJPY",
                                       "InpSignalTimeframe":  "5",
@@ -28,6 +28,9 @@
                                       "InpEnableStrategy2":  "false",
                                       "InpAllowLongs":  "false",
                                       "InpAllowShorts":  "true",
+                                      "InpUseStrategy1StochFilter":  "false",
+                                      "InpS1BuyMaxStochD":  "25.0",
+                                      "InpS1SellMinStochD":  "75.0",
                                       "InpTouchTolerancePips":  "0.6",
                                       "InpStopLossPips":  "10.0",
                                       "InpTakeProfitPips":  "0.0",
@@ -43,18 +46,18 @@
                                       "InpRoundStepPips":  "50",
                                       "InpVolatilityLookbackBars":  "24",
                                       "InpMinWindowRangePips":  "18.0",
-                                      "InpActiveSessionStartHour":  "7",
+                                      "InpActiveSessionStartHour":  "13",
                                       "InpActiveSessionEndHour":  "22",
                                       "InpMinSlowSlopePips":  "2.0",
                                       "InpPullbackLookbackBars":  "4",
                                       "InpMinImpulsePips":  "8.0",
                                       "InpMinPullbackPips":  "2.0",
                                       "InpMaxPullbackPips":  "12.0",
-                                      "InpMaxCounterTrendBodies":  "8",
-                                      "InpMinTransitionDistancePips":  "0.0",
-                                      "InpMaxPullbackToImpulseRatio":  "1.00",
+                                      "InpMaxCounterTrendBodies":  "2",
+                                      "InpMinTransitionDistancePips":  "3.0",
+                                      "InpMaxPullbackToImpulseRatio":  "0.35",
                                       "InpMinRejectionBodyPips":  "2.0",
-                                      "InpMinRejectionCloseLocation":  "0.65",
+                                      "InpMinRejectionCloseLocation":  "0.75",
                                       "InpRoundTouchLookbackBars":  "144",
                                       "InpMaxRoundTouchesBeforeBreak":  "2",
                                       "InpBreakoutMinBodyPips":  "4.0",
@@ -65,7 +68,7 @@
                                       "InpBreakoutCloseLocationMin":  "0.75",
                                       "InpRetestRoundBufferPips":  "1.5",
                                       "InpAllowedWeekdays":  "1,2,3,4,5",
-                                      "InpMagicNumber":  "20260492"
+                                      "InpMagicNumber":  "20260493"
                                   }
                }
 }
