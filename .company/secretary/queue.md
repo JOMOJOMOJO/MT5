@@ -40,6 +40,8 @@
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-breakout-pair-and-turnover-extension.md` as the current verdict that the first breakout / roc pair-rule candidates failed actual MT5, while `stoch24-h8` is the best turnover extension of the surviving `ret24` family.
 - [ ] Improve `btcusd_20260401_regime_single-long-ret24-stoch24-h8-s15` through a clearly positive complementary sidecar before any live discussion, because execution realism improved but turnover is still far below the target.
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-regime-single-stop-and-volume-probe.md` as the current verdict that `stop1.50ATR` improves the `ret24-stoch24` branch, while tick-volume filters overfit and should stay in research only.
+- [ ] Treat `knowledge/experiments/2026-04-01-btcusd-regime-single-second-long-regime-probe.md` as the current verdict that the first second-long-regime batch inside `btcusd_20260401_regime_single` failed actual MT5 and should not be promoted.
+- [ ] Open the next high-turnover cycle from a non-late complementary long idea or a fresh short-side construction, not from more late-session variants of `ema2050` / `ema50100`.
 - [ ] Keep the short side of `btcusd_20260401_regime_single` in research only until a new NY-side rule beats PF 1.0 on the full 1-year actual window.
 - [ ] Treat `test_expectancy >= 0.25 ATR` as the minimum spread-aware screening floor for the next BTCUSD M5 mainline candidate on this broker.
 - [ ] Keep the `range compression breakout long` idea as a secondary branch, not as the first mainline prototype.
