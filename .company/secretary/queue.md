@@ -48,7 +48,9 @@
 - [ ] Treat the wide-stop retry on `btcusd_20260401_intrabar_reversal` as failed too, so no more reversal-neighborhood tuning should be spent on that family.
 - [ ] Open the next high-turnover family from range-compression / breakout behavior or another fresh execution-aware thesis, not from more reversal variants around `ret24`, `followthrough_down`, or `close_location`.
 - [ ] Treat `test_expectancy >= 0.25 ATR` as the minimum spread-aware screening floor for the next BTCUSD M5 mainline candidate on this broker.
-- [ ] Keep the `range compression breakout long` idea as a secondary branch, not as the first mainline prototype.
+- [ ] Treat `knowledge/experiments/2026-04-01-btcusd-compression-breakout-and-short-pair-reject.md` as the current verdict that the `compression_breakout` family, the fresh short RSI pair extensions, and the late `breakout_persist_down_6` sidecar all failed actual MT5 and should not consume another immediate cycle.
+- [ ] Keep `btcusd_20260401_regime_single-long-ret24-stoch24-h8-s15` as the current high-turnover best branch until a fresh family actually beats it on the 1-year MT5 window.
+- [ ] Open the next high-turnover family from a fresh market-behavior thesis outside `compression breakout`, `late breakout_persist_down_6`, and `short rsi7` pair neighborhoods.
 - [ ] Open the next mainline family only from a fresh market-behavior thesis or bar-data edge, not by stacking more filters onto `btcusd_20260330_session_meanrev`.
 - [ ] Rebuild the `session_pair_rr` entry construction from fresh bar-data mining, because the first `pair / long-only / short-only` actual MT5 runs all failed.
 - [ ] Validate that the next `session_pair_rr` hypothesis clears actual MT5 before more RR tuning.

@@ -1,11 +1,11 @@
 //+------------------------------------------------------------------+
-//| BTCUSD Regime Single Prototype                                  |
+//| BTCUSD Compression Breakout Prototype                           |
 //+------------------------------------------------------------------+
 #property copyright   "Trading System"
 #property link        "https://www.mql5.com"
 #property version     "1.00"
 #property strict
-#property description "BTCUSD M5 spread-aware single-rule regime prototype with optional flow confirmation"
+#property description "BTCUSD M5 compression breakout family with London continuation longs and optional NY compression shorts"
 
 #include <Trade\Trade.mqh>
 
@@ -21,7 +21,9 @@ enum LongRuleMode
    LongRuleLowBreak24 = 5,
    LongRuleBreakoutPersistDown6 = 6,
    LongRuleRocAtr6 = 7,
-   LongRuleHighBreak12 = 8
+   LongRuleHighBreak12 = 8,
+   LongRuleBreakoutFollowthroughDown = 9,
+   LongRuleBreakoutFollowthroughUp = 10
   };
 
 enum ShortRuleMode
@@ -29,8 +31,8 @@ enum ShortRuleMode
    ShortRuleMacdAtr = 0,
    ShortRuleHighBreak24 = 1,
    ShortRuleTickVolumeZ = 2,
-   ShortRuleBreakoutPersistUp6 = 3,
-   ShortRuleRsi7 = 4
+   ShortRuleCloseLocation = 3,
+   ShortRuleRangeCompression12 = 4
   };
 
 input string          InpSymbol                      = "BTCUSD";
@@ -38,9 +40,9 @@ input ENUM_TIMEFRAMES InpSignalTimeframe             = PERIOD_M5;
 input int             InpATRPeriod                   = 14;
 
 input bool            InpEnableLong                  = true;
-input int             InpLongStartHour               = 20;
-input int             InpLongEndHour                 = 24;
-input int             InpLongRuleMode               = LongRuleRet24;
+input int             InpLongStartHour               = 8;
+input int             InpLongEndHour                 = 16;
+input int             InpLongRuleMode               = LongRuleBreakoutFollowthroughUp;
 input double          InpLongEmaGap2050Max          = -1.3698;
 input double          InpLongRet24Max               = -0.0057;
 input double          InpLongMacdLineAtrMax         = -0.8699;
@@ -50,8 +52,10 @@ input double          InpLongLowBreak24Max          = 1.0065;
 input double          InpLongBreakoutPersistDown6Min = 1.0;
 input double          InpLongRocAtr6Max             = -1.3740;
 input double          InpLongHighBreak12Max         = -3.0688;
+input double          InpLongBreakoutFollowthroughDownMin = 0.1433;
+input double          InpLongBreakoutFollowthroughUpMin = 0.30;
 input bool            InpUseLongStochDFilter        = true;
-input double          InpLongStochDMax              = 24.0;
+input double          InpLongStochDMax              = 100.0;
 input bool            InpUseLongBbZFilter           = false;
 input double          InpLongBbZMax                 = -1.55;
 input bool            InpUseLongEma20SlopeFilter    = false;
@@ -64,32 +68,29 @@ input bool            InpUseLongHighBreak12Filter   = false;
 input double          InpLongHighBreak12FilterMax   = -3.0688;
 input bool            InpUseLongHighBreakFilter     = false;
 input double          InpLongHighBreak24Max         = -5.23;
+input bool            InpUseLongRangeCompression24Filter = true;
+input double          InpLongRangeCompression24Max  = 0.0120;
 input bool            InpUseLongTickFlowFilter      = false;
 input double          InpLongTickFlowMax            = -0.33;
 input bool            InpUseLongTickVolumeFilter    = false;
 input double          InpLongTickVolumeMin          = 0.33;
-input int             InpLongHoldBars               = 8;
-input double          InpLongStopATR                = 1.50;
+input int             InpLongHoldBars               = 12;
+input double          InpLongStopATR                = 2.00;
 input double          InpLongTargetRMultiple        = 0.00;
 
 input bool            InpEnableShort                 = false;
 input int             InpShortStartHour              = 13;
 input int             InpShortEndHour                = 22;
-input int             InpShortRuleMode              = ShortRuleMacdAtr;
+input int             InpShortRuleMode              = ShortRuleCloseLocation;
 input double          InpShortMacdLineAtrMin        = 0.9665;
 input double          InpShortHighBreak24Min        = -0.3645;
 input double          InpShortTickVolumeZMin        = 1.5444;
-input double          InpShortBreakoutPersistUp6Min = 1.0;
+input double          InpShortCloseLocationMin      = 0.7589;
+input double          InpShortRangeCompression12Max = 0.0075;
 input bool            InpUseShortFlowFilter         = false;
-input double          InpShortTickFlowMin           = 0.4176;
-input bool            InpUseShortRsi7Filter         = false;
-input double          InpShortRsi7Min               = 70.3669;
-input bool            InpUseShortRet6Filter         = false;
-input double          InpShortRet6Min               = 0.0017;
-input bool            InpUseShortHighBreak12Filter  = false;
-input double          InpShortHighBreak12Min        = -0.5778;
+input double          InpShortTickFlowMin           = 0.20;
 input int             InpShortHoldBars              = 12;
-input double          InpShortStopATR               = 1.25;
+input double          InpShortStopATR               = 1.50;
 input double          InpShortTargetRMultiple       = 0.00;
 
 input double          InpRiskPercent                = 0.35;
@@ -107,7 +108,7 @@ input double          InpMaxSpreadPips             = 2500.0;
 input double          InpMaxDeviationPips          = 250.0;
 input string          InpAllowedWeekdays           = "0,1,2,3,4,5,6";
 input string          InpBlockedEntryHours         = "";
-input long            InpMagicNumber               = 20260411;
+input long            InpMagicNumber               = 20260451;
 
 int atrHandle = INVALID_HANDLE;
 int ema20Handle = INVALID_HANDLE;
@@ -147,11 +148,15 @@ struct SignalContext
    double   macdLineAtr;
    double   bbZ;
    double   stochD;
+   double   closeLocation;
+   double   rangeCompression12;
+   double   rangeCompression24;
    double   highBreak12;
    double   highBreak24;
    double   lowBreak24;
    double   breakoutPersistDown6;
-   double   breakoutPersistUp6;
+   double   breakoutFollowthroughUp;
+   double   breakoutFollowthroughDown;
    double   tickVolumeZ;
    double   tickFlowSigned3;
   };
@@ -168,8 +173,8 @@ int OnInit()
       InpLongHoldBars < 0 || InpShortHoldBars < 0 || InpLongStopATR <= 0.0 || InpShortStopATR <= 0.0 ||
       InpLongTargetRMultiple < 0.0 || InpShortTargetRMultiple < 0.0 || InpMaxTradesPerDay < 0 ||
       InpMaxOpenTrades < 0 || InpMaxOpenPerSide < 0 || InpMaxEffectiveRiskPercentAtMinLot < 0.0 ||
-      InpLongRuleMode < LongRuleEmaGap2050 || InpLongRuleMode > LongRuleHighBreak12 ||
-      InpShortRuleMode < ShortRuleMacdAtr || InpShortRuleMode > ShortRuleRsi7)
+      InpLongRuleMode < LongRuleEmaGap2050 || InpLongRuleMode > LongRuleBreakoutFollowthroughUp ||
+      InpShortRuleMode < ShortRuleMacdAtr || InpShortRuleMode > ShortRuleRangeCompression12)
      {
       Print("Invalid regime-single parameters.");
       return INIT_PARAMETERS_INCORRECT;
@@ -377,15 +382,21 @@ bool LoadSignalContext(SignalContext &ctx)
       return false;
 
    double tickFlowSigned3 = ComputeTickFlowSigned3();
+   double closeLocation = ComputeCloseLocation();
+   double rangeCompression12 = ComputeRangeCompression12();
+   double rangeCompression24 = ComputeRangeCompression24();
    double highBreak12 = ComputeHighBreak12();
    double highBreak24 = ComputeHighBreak24();
    double lowBreak24 = ComputeLowBreak24();
    double breakoutPersistDown6 = ComputeBreakoutPersistDown6();
-   double breakoutPersistUp6 = ComputeBreakoutPersistUp6();
+   double breakoutFollowthroughUp = ComputeBreakoutFollowthroughUp();
+   double breakoutFollowthroughDown = ComputeBreakoutFollowthroughDown();
    double tickVolumeZ = ComputeTickVolumeZ(50);
-   if(tickFlowSigned3 == DBL_MAX || highBreak12 == DBL_MAX || highBreak24 == DBL_MAX ||
-      lowBreak24 == DBL_MAX || breakoutPersistDown6 == DBL_MAX || breakoutPersistUp6 == DBL_MAX ||
-      tickVolumeZ == DBL_MAX)
+   if(tickFlowSigned3 == DBL_MAX || closeLocation == DBL_MAX || rangeCompression12 == DBL_MAX ||
+      rangeCompression24 == DBL_MAX ||
+      highBreak12 == DBL_MAX || highBreak24 == DBL_MAX || lowBreak24 == DBL_MAX ||
+      breakoutPersistDown6 == DBL_MAX || breakoutFollowthroughUp == DBL_MAX ||
+      breakoutFollowthroughDown == DBL_MAX || tickVolumeZ == DBL_MAX)
       return false;
 
    double bandHalfWidth = (bandUpper[0] - bandLower[0]) / 2.0;
@@ -413,14 +424,57 @@ bool LoadSignalContext(SignalContext &ctx)
    ctx.macdLineAtr = macdMain[0] / atr[0];
    ctx.bbZ = bbZ;
    ctx.stochD = stochD[0];
+   ctx.closeLocation = closeLocation;
+   ctx.rangeCompression12 = rangeCompression12;
+   ctx.rangeCompression24 = rangeCompression24;
    ctx.highBreak12 = highBreak12;
    ctx.highBreak24 = highBreak24;
    ctx.lowBreak24 = lowBreak24;
    ctx.breakoutPersistDown6 = breakoutPersistDown6;
-   ctx.breakoutPersistUp6 = breakoutPersistUp6;
+   ctx.breakoutFollowthroughUp = breakoutFollowthroughUp;
+   ctx.breakoutFollowthroughDown = breakoutFollowthroughDown;
    ctx.tickVolumeZ = tickVolumeZ;
    ctx.tickFlowSigned3 = tickFlowSigned3;
    return true;
+  }
+
+double ComputeCloseLocation()
+  {
+   double close1 = iClose(runtimeSymbol, InpSignalTimeframe, 1);
+   double high1 = iHigh(runtimeSymbol, InpSignalTimeframe, 1);
+   double low1 = iLow(runtimeSymbol, InpSignalTimeframe, 1);
+   double barRange = high1 - low1;
+   if(close1 <= 0.0 || high1 <= 0.0 || low1 <= 0.0 || barRange <= 0.0)
+      return DBL_MAX;
+   return (close1 - low1) / barRange;
+  }
+
+double ComputeRangeCompression12()
+  {
+   double close1 = iClose(runtimeSymbol, InpSignalTimeframe, 1);
+   if(close1 <= 0.0)
+      return DBL_MAX;
+
+   double highest = ComputePreviousHigh(1, 12);
+   double lowest = ComputePreviousLow(1, 12);
+   if(highest == DBL_MAX || lowest == DBL_MAX || highest <= lowest)
+      return DBL_MAX;
+
+   return (highest - lowest) / close1;
+  }
+
+double ComputeRangeCompression24()
+  {
+   double close1 = iClose(runtimeSymbol, InpSignalTimeframe, 1);
+   if(close1 <= 0.0)
+      return DBL_MAX;
+
+   double highest = ComputePreviousHigh(1, 24);
+   double lowest = ComputePreviousLow(1, 24);
+   if(highest == DBL_MAX || lowest == DBL_MAX || highest <= lowest)
+      return DBL_MAX;
+
+   return (highest - lowest) / close1;
   }
 
 double ComputeHighBreak12()
@@ -503,6 +557,26 @@ double ComputeLowBreak24()
   return (close1 - prevLow24) / atr1;
   }
 
+double ComputeLowBreak12AtShift(int shift)
+  {
+   double closeValue = iClose(runtimeSymbol, InpSignalTimeframe, shift);
+   if(closeValue <= 0.0)
+      return DBL_MAX;
+
+   double atr[1];
+   if(CopyBuffer(atrHandle, 0, shift, 1, atr) != 1)
+      return DBL_MAX;
+   double atrValue = atr[0];
+   if(atrValue <= 0.0)
+      return DBL_MAX;
+
+   double prevLow12 = ComputePreviousLow(shift + 1, 12);
+   if(prevLow12 == DBL_MAX)
+      return DBL_MAX;
+
+   return (closeValue - prevLow12) / atrValue;
+  }
+
 double ComputeBreakoutPersistDown6()
   {
    int count = 0;
@@ -522,23 +596,52 @@ double ComputeBreakoutPersistDown6()
    return (double)count;
   }
 
-double ComputeBreakoutPersistUp6()
+double ComputeBreakoutFollowthroughDown()
   {
-   int count = 0;
-   for(int shift = 1; shift <= 6; ++shift)
+   double sum = 0.0;
+   for(int shift = 1; shift <= 3; ++shift)
      {
-      double closeValue = iClose(runtimeSymbol, InpSignalTimeframe, shift);
-      if(closeValue <= 0.0)
+      double lowBreak12 = ComputeLowBreak12AtShift(shift);
+      if(lowBreak12 == DBL_MAX)
          return DBL_MAX;
-
-      double prevHigh12 = ComputePreviousHigh(shift + 1, 12);
-      if(prevHigh12 == DBL_MAX)
-         return DBL_MAX;
-
-      if(closeValue > prevHigh12)
-         count++;
+      double contribution = MathMax(-lowBreak12, 0.0);
+      sum += contribution;
      }
-   return (double)count;
+   return sum / 3.0;
+  }
+
+double ComputeHighBreak12AtShift(int shift)
+  {
+   double closeValue = iClose(runtimeSymbol, InpSignalTimeframe, shift);
+   if(closeValue <= 0.0)
+      return DBL_MAX;
+
+   double atr[1];
+   if(CopyBuffer(atrHandle, 0, shift, 1, atr) != 1)
+      return DBL_MAX;
+   double atrValue = atr[0];
+   if(atrValue <= 0.0)
+      return DBL_MAX;
+
+   double prevHigh12 = ComputePreviousHigh(shift + 1, 12);
+   if(prevHigh12 == DBL_MAX)
+      return DBL_MAX;
+
+   return (closeValue - prevHigh12) / atrValue;
+  }
+
+double ComputeBreakoutFollowthroughUp()
+  {
+   double sum = 0.0;
+   for(int shift = 1; shift <= 3; ++shift)
+     {
+      double highBreak12 = ComputeHighBreak12AtShift(shift);
+      if(highBreak12 == DBL_MAX)
+         return DBL_MAX;
+      double contribution = MathMax(highBreak12, 0.0);
+      sum += contribution;
+     }
+   return sum / 3.0;
   }
 
 double ComputeTickVolumeZ(int lookback)
@@ -713,6 +816,16 @@ bool IsLongSignal(const SignalContext &ctx)
       if(ctx.highBreak12 > InpLongHighBreak12Max)
          return false;
      }
+   else if(InpLongRuleMode == LongRuleBreakoutFollowthroughDown)
+     {
+      if(ctx.breakoutFollowthroughDown < InpLongBreakoutFollowthroughDownMin)
+         return false;
+     }
+   else if(InpLongRuleMode == LongRuleBreakoutFollowthroughUp)
+     {
+      if(ctx.breakoutFollowthroughUp < InpLongBreakoutFollowthroughUpMin)
+         return false;
+     }
 
    if(InpUseLongStochDFilter && ctx.stochD > InpLongStochDMax)
       return false;
@@ -733,6 +846,9 @@ bool IsLongSignal(const SignalContext &ctx)
       return false;
 
    if(InpUseLongHighBreakFilter && ctx.highBreak24 > InpLongHighBreak24Max)
+      return false;
+
+   if(InpUseLongRangeCompression24Filter && ctx.rangeCompression24 > InpLongRangeCompression24Max)
       return false;
 
    if(InpUseLongTickFlowFilter && ctx.tickFlowSigned3 > InpLongTickFlowMax)
@@ -764,27 +880,18 @@ bool IsShortSignal(const SignalContext &ctx)
       if(ctx.tickVolumeZ < InpShortTickVolumeZMin)
          return false;
      }
-   else if(InpShortRuleMode == ShortRuleBreakoutPersistUp6)
+   else if(InpShortRuleMode == ShortRuleCloseLocation)
      {
-      if(ctx.breakoutPersistUp6 < InpShortBreakoutPersistUp6Min)
+      if(ctx.closeLocation < InpShortCloseLocationMin)
          return false;
      }
-   else if(InpShortRuleMode == ShortRuleRsi7)
+   else if(InpShortRuleMode == ShortRuleRangeCompression12)
      {
-      if(ctx.rsi7 < InpShortRsi7Min)
+      if(ctx.rangeCompression12 > InpShortRangeCompression12Max)
          return false;
      }
 
    if(InpUseShortFlowFilter && ctx.tickFlowSigned3 < InpShortTickFlowMin)
-      return false;
-
-   if(InpUseShortRsi7Filter && ctx.rsi7 < InpShortRsi7Min)
-      return false;
-
-   if(InpUseShortRet6Filter && ctx.ret6 < InpShortRet6Min)
-      return false;
-
-   if(InpUseShortHighBreak12Filter && ctx.highBreak12 < InpShortHighBreak12Min)
       return false;
 
    return true;
