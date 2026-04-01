@@ -61,7 +61,7 @@ Each skill should be described with the same frame:
 - `where`: `reports/backtest/runs/`, `knowledge/backtests/`, `knowledge/experiments/`
 - `what`: decide whether the family should be kept, parked, split, or killed
 - `how`: inspect weak windows, sample quality, friction, and OOS behavior
-- `output`: a clear `keep`, `park`, `split`, or `kill` note
+- `output`: a clear `continue`, `tighten`, `park and open new family`, or `kill` note
 - `handoff`: `research-director`, `company`
 
 ### `backtest-analysis`

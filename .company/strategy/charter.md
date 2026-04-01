@@ -24,6 +24,7 @@
   - trade count is large enough for the claimed edge to be meaningful,
   - the edge survives across regimes and forward review.
 - If a family misses the active business objective, park it explicitly and open a cleaner research branch.
+- If a family misses the active business objective across three serious cycles, do not keep retuning by default. Run a plateau review and either park, kill, or replace it.
 
 ## Default Risk Standards
 
@@ -52,3 +53,9 @@
   - show enough trades for the target operating style,
   - show broker lot-floor viability for the intended starting capital,
   - complete demo-forward review before live promotion.
+
+## Plateau Discipline
+
+- Every serious family should be reviewed for plateau after each serious cycle.
+- Quality-positive but objective-negative families should become `secondary` or `parked`.
+- The repo should open a new family quickly once plateau is confirmed, instead of stretching one family forever.

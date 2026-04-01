@@ -18,6 +18,7 @@
 - Make stop distance, reward multiple, and position sizing explicit. Prefer documenting the strategy in `R` terms or with an equivalent expectancy rationale.
 - Higher trade count is desirable only if the edge survives actual MT5 friction, long-window validation, and forward-demo review.
 - If a family no longer fits the active business objective, park it explicitly and start a new family instead of endlessly retuning it.
+- After each serious cycle, run a plateau review for the active family; if the family is structurally missing the objective, open a new family instead of stretching the old one.
 - Skill identifiers should stay stable, but Japanese skill bodies and references are preferred in this repository.
 - When the user wants a trader's judgement on market fit, execution realism, or live readiness, use the repo-local `professional-trader` skill.
 - When the user wants an EA operator's view on rule quality and parameter discipline, use `systematic-ea-trader`.

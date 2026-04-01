@@ -10,6 +10,7 @@
 - [ ] Run company-improvement reviews when shared org, skill, or MCP changes land.
 - [ ] Keep `.company/improvement/org-scorecard.md` and `.company/improvement/skill-roster.md` current as strategy families and skills evolve.
 - [ ] Keep `btcusd_20260330_session_meanrev` parked as a turnover-research family, but run `bull37_long_h12_live035_guarded2` as the current live-track candidate.
+- [ ] Treat `knowledge/experiments/2026-04-01-btcusd-session-meanrev-plateau-review.md` as the formal verdict that `btcusd_20260330_session_meanrev` remains `secondary` and should not consume new mainline tuning cycles.
 - [ ] Run demo-forward telemetry for `btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2` and compare realized behavior against the 1-year actual run.
 - [ ] Use `.company/release/btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.md` as the single source of truth for promotion, rollback, and quarterly review.
 - [ ] Write at least one forward gate report with `scripts/evaluate-forward-gate.ps1` before any small-live discussion.
@@ -28,8 +29,10 @@
 - [ ] Use `scripts/start-demo-forward.ps1` so every forward cycle gets its own telemetry file instead of appending onto the baseline artifact.
 - [ ] Launch `btcusd_20260331_session_pair_rr` as the new mainline family for expectancy-first, fixed-`R`, compounding-aware BTCUSD research.
 - [ ] Use bar-data mining to find repeatable multi-trade-per-day entry zones before large optimization sweeps.
+- [ ] Open the next mainline family only from a fresh market-behavior thesis or bar-data edge, not by stacking more filters onto `btcusd_20260330_session_meanrev`.
 - [ ] Rebuild the `session_pair_rr` entry construction from fresh bar-data mining, because the first `pair / long-only / short-only` actual MT5 runs all failed.
 - [ ] Validate that the next `session_pair_rr` hypothesis clears actual MT5 before more RR tuning.
+- [ ] Run a plateau review after each serious cycle for the current mainline family, and open a new family immediately when the verdict is `park_secondary_and_open_new_family`.
 - [ ] Keep one explicit mainline family and mark all others as `secondary`, `parked`, or `legacy`.
 - [ ] Add a recurring quarterly review record for any family that reaches demo or live candidate status.
 

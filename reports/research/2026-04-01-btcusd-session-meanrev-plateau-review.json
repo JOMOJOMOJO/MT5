@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-04-01T14:05:15",
+  "family_label": "btcusd_20260330_session_meanrev",
+  "objective": "high_turnover_compounding",
+  "decision": "park_secondary_and_open_new_family",
+  "reasons": [
+    "Recent serious runs remain below the turnover objective (0.17 trades/day vs target 3.00).",
+    "Best recent turnover reaches only 8.0% of the target, which suggests a structural mismatch."
+  ],
+  "runs": [
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-03-31-024622-395041-btcusd-20260330-session-meanrev-.json",
+      "imported_at": "2026-03-31T02:46:22",
+      "profit_factor": 1.76,
+      "net_profit": 68.89,
+      "drawdown_percent": 0.38,
+      "trades": 88.0,
+      "days": 365,
+      "trades_per_day": 0.2410958904109589,
+      "tested_range": "2025.03.31 - 2026.03.30",
+      "tags": [
+        "bull37",
+        "long-only",
+        "h12",
+        "1y"
+      ]
+    },
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-03-31-131610-294712-btcusd-20260330-session-meanrev-.json",
+      "imported_at": "2026-03-31T13:16:10",
+      "profit_factor": 1.49,
+      "net_profit": 177.86,
+      "drawdown_percent": 1.58,
+      "trades": 70.0,
+      "days": 365,
+      "trades_per_day": 0.1917808219178082,
+      "tested_range": "2025.03.31 - 2026.03.30",
+      "tags": [
+        "live035-guarded2-hardening-refresh"
+      ]
+    },
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-04-01-134720-267974-btcusd-20260330-session-meanrev-.json",
+      "imported_at": "2026-04-01T13:47:20",
+      "profit_factor": 4.11,
+      "net_profit": 92.29,
+      "drawdown_percent": 0.26,
+      "trades": 15.0,
+      "days": 89,
+      "trades_per_day": 0.16853932584269662,
+      "tested_range": "2026.01.01 - 2026.03.30",
+      "tags": [
+        "oos-2026q1-guarded2-post-microguard"
+      ]
+    }
+  ]
+}

@@ -50,7 +50,8 @@
    - heartbeat
 8. Run demo-forward.
 9. Move to reduced-risk first capital.
-10. Review quarterly and either:
+10. Run a plateau review after each serious cycle.
+11. Review quarterly and either:
    - promote,
    - park,
    - or kill.
@@ -85,6 +86,7 @@
   - tester runs
   - report import
   - OOS checks
+  - plateau reviews
   - forward gate evaluation
   - preflight
   - live review
@@ -97,3 +99,4 @@
 ## Persistent Rule
 
 - If the real problem is structural, stop tuning and open a new family.
+- If three serious cycles still miss the active objective, run a plateau review and accept `park` or `kill` when it is the correct answer.

@@ -17,6 +17,7 @@
 - [ ] Forward assumptions are not based on one optimization peak.
 - [ ] Regime robustness is checked on both short and long windows (for example 50k and 80k bars) before promotion.
 - [ ] A recent out-of-sample MT5 window is checked explicitly before promotion. Current default is the latest available 3-month window, recorded with exact dates.
+- [ ] A plateau review exists when a family has gone through three serious cycles or is visibly missing the active objective.
 - [ ] The result is explained by chart regimes, not only by calendar season labels.
 - [ ] Expectancy stays positive after realistic spread and slippage assumptions. Win rate alone is not used as a gate.
 - [ ] The candidate is labeled clearly as `mainline`, `secondary`, `parked`, or `legacy`.
