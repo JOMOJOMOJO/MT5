@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-04-01T19:34:42",
+  "family_label": "btcusd_20260401_regime_single",
+  "objective": "high_turnover_compounding",
+  "decision": "tighten",
+  "reasons": [
+    "Latest PF 0.82 is below the quality floor 1.30."
+  ],
+  "runs": [
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/btcusd-20260401-regime-single/btcusd/m5/2026-04-01-174900-228165-btcusd-20260401-regime-single-lo.json",
+      "imported_at": "2026-04-01T17:49:00",
+      "profit_factor": 1.17,
+      "net_profit": 609.87,
+      "drawdown_percent": 4.71,
+      "trades": 240.0,
+      "days": 351,
+      "trades_per_day": 0.6837606837606838,
+      "tested_range": "2025.04.16 - 2026.04.01",
+      "tags": [
+        "1y"
+      ]
+    },
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/btcusd-20260401-regime-single/btcusd/m5/2026-04-01-190527-851440-btcusd-20260401-regime-single-lo.json",
+      "imported_at": "2026-04-01T19:05:27",
+      "profit_factor": 1.0,
+      "net_profit": -5.81,
+      "drawdown_percent": 3.29,
+      "trades": 63.0,
+      "days": 351,
+      "trades_per_day": 0.1794871794871795,
+      "tested_range": "2025.04.16 - 2026.04.01",
+      "tags": [
+        "1y"
+      ]
+    },
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/btcusd-20260401-regime-single/btcusd/m5/2026-04-01-192334-018589-btcusd-20260401-regime-single-sh.json",
+      "imported_at": "2026-04-01T19:23:34",
+      "profit_factor": 0.82,
+      "net_profit": -926.42,
+      "drawdown_percent": 11.7,
+      "trades": 257.0,
+      "days": 351,
+      "trades_per_day": 0.7321937321937322,
+      "tested_range": "2025.04.16 - 2026.04.01",
+      "tags": []
+    }
+  ]
+}
