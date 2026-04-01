@@ -67,7 +67,7 @@ input double          InpLongTickFlowMax            = -0.33;
 input bool            InpUseLongTickVolumeFilter    = false;
 input double          InpLongTickVolumeMin          = 0.33;
 input int             InpLongHoldBars               = 8;
-input double          InpLongStopATR                = 1.25;
+input double          InpLongStopATR                = 1.50;
 input double          InpLongTargetRMultiple        = 0.00;
 
 input bool            InpEnableShort                 = false;
