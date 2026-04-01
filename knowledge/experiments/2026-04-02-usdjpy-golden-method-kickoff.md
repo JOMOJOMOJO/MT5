@@ -48,6 +48,10 @@
   - minimum lot `0.01`,
   - contract size `100000`.
 - On the current feed, `0.01 lot` with a `10 pip` stop risks about `0.63 USD`, so the baseline method is micro-cap viable on `100 USD` from a lot-floor perspective.
+- First baseline backtests are complete and both are negative:
+  - `9 months train`: `net -3402.23 / PF 0.80 / 192 trades / DD 37.87%`
+  - `3 months OOS`: `net -3110.48 / PF 0.50 / 52 trades / DD 32.52%`
+- The first implementation is therefore a baseline reject, not a candidate.
 
 ## Next Cycle
 
