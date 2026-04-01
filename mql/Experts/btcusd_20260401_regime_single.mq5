@@ -30,7 +30,8 @@ enum ShortRuleMode
    ShortRuleHighBreak24 = 1,
    ShortRuleTickVolumeZ = 2,
    ShortRuleBreakoutPersistUp6 = 3,
-   ShortRuleRsi7 = 4
+   ShortRuleRsi7 = 4,
+   ShortRuleEmaGap50100 = 5
   };
 
 input string          InpSymbol                      = "BTCUSD";
@@ -52,6 +53,10 @@ input double          InpLongRocAtr6Max             = -1.3740;
 input double          InpLongHighBreak12Max         = -3.0688;
 input bool            InpUseLongStochDFilter        = true;
 input double          InpLongStochDMax              = 24.0;
+input bool            InpUseLongCloseVsEma50Filter  = false;
+input double          InpLongCloseVsEma50FilterMax  = -1.6893;
+input bool            InpUseLongMacdAtrFilter       = false;
+input double          InpLongMacdAtrFilterMax       = -0.5521;
 input bool            InpUseLongBbZFilter           = false;
 input double          InpLongBbZMax                 = -1.55;
 input bool            InpUseLongEma20SlopeFilter    = false;
@@ -80,10 +85,13 @@ input double          InpShortMacdLineAtrMin        = 0.9665;
 input double          InpShortHighBreak24Min        = -0.3645;
 input double          InpShortTickVolumeZMin        = 1.5444;
 input double          InpShortBreakoutPersistUp6Min = 1.0;
+input double          InpShortEmaGap50100Max        = -1.0353;
 input bool            InpUseShortFlowFilter         = false;
 input double          InpShortTickFlowMin           = 0.4176;
 input bool            InpUseShortRsi7Filter         = false;
 input double          InpShortRsi7Min               = 70.3669;
+input bool            InpUseShortEmaGap2050Filter   = false;
+input double          InpShortEmaGap2050Max         = -0.8779;
 input bool            InpUseShortRet6Filter         = false;
 input double          InpShortRet6Min               = 0.0017;
 input bool            InpUseShortHighBreak12Filter  = false;
@@ -169,7 +177,7 @@ int OnInit()
       InpLongTargetRMultiple < 0.0 || InpShortTargetRMultiple < 0.0 || InpMaxTradesPerDay < 0 ||
       InpMaxOpenTrades < 0 || InpMaxOpenPerSide < 0 || InpMaxEffectiveRiskPercentAtMinLot < 0.0 ||
       InpLongRuleMode < LongRuleEmaGap2050 || InpLongRuleMode > LongRuleHighBreak12 ||
-      InpShortRuleMode < ShortRuleMacdAtr || InpShortRuleMode > ShortRuleRsi7)
+      InpShortRuleMode < ShortRuleMacdAtr || InpShortRuleMode > ShortRuleEmaGap50100)
      {
       Print("Invalid regime-single parameters.");
       return INIT_PARAMETERS_INCORRECT;
@@ -717,6 +725,12 @@ bool IsLongSignal(const SignalContext &ctx)
    if(InpUseLongStochDFilter && ctx.stochD > InpLongStochDMax)
       return false;
 
+   if(InpUseLongCloseVsEma50Filter && ctx.closeVsEma50 > InpLongCloseVsEma50FilterMax)
+      return false;
+
+   if(InpUseLongMacdAtrFilter && ctx.macdLineAtr > InpLongMacdAtrFilterMax)
+      return false;
+
    if(InpUseLongBbZFilter && ctx.bbZ > InpLongBbZMax)
       return false;
 
@@ -774,11 +788,19 @@ bool IsShortSignal(const SignalContext &ctx)
       if(ctx.rsi7 < InpShortRsi7Min)
          return false;
      }
+   else if(InpShortRuleMode == ShortRuleEmaGap50100)
+     {
+      if(ctx.emaGap50100 > InpShortEmaGap50100Max)
+         return false;
+     }
 
    if(InpUseShortFlowFilter && ctx.tickFlowSigned3 < InpShortTickFlowMin)
       return false;
 
    if(InpUseShortRsi7Filter && ctx.rsi7 < InpShortRsi7Min)
+      return false;
+
+   if(InpUseShortEmaGap2050Filter && ctx.emaGap2050 > InpShortEmaGap2050Max)
       return false;
 
    if(InpUseShortRet6Filter && ctx.ret6 < InpShortRet6Min)
