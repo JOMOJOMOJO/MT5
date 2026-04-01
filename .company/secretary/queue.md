@@ -34,8 +34,9 @@
 - [ ] Use `reports/research/2026-04-01-171300-btcusd-m5-spread-aware-rerank/summary.md` as the corrected spread-aware source of truth after fixing the `spread_atr` bug in the feature lab.
 - [ ] Treat `knowledge/experiments/2026-04-01-btcusd-regime-single-spreadfix-review.md` as the current verdict for the new `btcusd_20260401_regime_single` family.
 - [ ] Keep `btcusd_20260401_regime_single` as the current high-turnover mainline research branch, but do not discuss live promotion until 1-year actual improves above PF 1.0 with acceptable drawdown.
-- [ ] Use `btcusd_20260401_regime_single-long-ret24` as the current best sub-branch inside the new high-turnover family.
-- [ ] Improve `btcusd_20260401_regime_single-long-ret24` through risk/exit redesign before opening a new family, because it is positive on 1-year actual and 3-month OOS but still too weak for promotion.
+- [ ] Use `btcusd_20260401_regime_single-long-ret24-stochd19-h8` as the current best sub-branch inside the new high-turnover family.
+- [ ] Treat `knowledge/experiments/2026-04-01-btcusd-ret24-late-filter-probe.md` as the current verdict that late-session `ret24` becomes materially better once `stoch_d` is used as a quality filter.
+- [ ] Improve `btcusd_20260401_regime_single-long-ret24-stochd19-h8` through regime expansion or execution realism before opening a new family, because it is positive on 1-year actual and 3-month OOS but still too weak for promotion.
 - [ ] Keep the short side of `btcusd_20260401_regime_single` in research only until a new NY-side rule beats PF 1.0 on the full 1-year actual window.
 - [ ] Treat `test_expectancy >= 0.25 ATR` as the minimum spread-aware screening floor for the next BTCUSD M5 mainline candidate on this broker.
 - [ ] Keep the `range compression breakout long` idea as a secondary branch, not as the first mainline prototype.
