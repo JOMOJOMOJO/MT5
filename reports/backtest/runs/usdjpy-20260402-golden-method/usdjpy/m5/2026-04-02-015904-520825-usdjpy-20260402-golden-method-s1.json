@@ -1,0 +1,197 @@
+{
+  "imported_at": "2026-04-02T01:59:04",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "usdjpy_20260402_golden_method",
+    "symbol": "USDJPY",
+    "timeframe": "M5",
+    "tested_range": "2026.01.01 - 2026.04.01",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "usdjpy-20260402-golden-method",
+    "symbol_key": "usdjpy",
+    "timeframe_key": "m5",
+    "run_path": "reports/backtest/runs/usdjpy-20260402-golden-method/usdjpy/m5/2026-04-02-015904-520825-usdjpy-20260402-golden-method-s1.json",
+    "knowledge_path": "knowledge/backtests/usdjpy-20260402-golden-method/usdjpy/m5/2026-04-02-015904-520825-usdjpy-20260402-golden-method-s1.md",
+    "imported_dir": null,
+    "imported_report": null
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260402_golden_method-s1-sell-only-oos-3m-m5.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "USDJPY",
+    "tester_period": "M5",
+    "preset_name": "usdjpy_20260402_golden_method-s1-sell-only.set",
+    "preset_source": "reports\\\\presets\\\\usdjpy_20260402_golden_method-s1-sell-only.set",
+    "signal_timeframe": "M5"
+  },
+  "metrics": {
+    "ea_name": "usdjpy_20260402_golden_method",
+    "symbol": "USDJPY",
+    "period": "M5 (2026.01.01 - 2026.04.01)",
+    "history_quality_percent": 100.0,
+    "bars": 18144,
+    "ticks": 12878095,
+    "initial_deposit": 10000.0,
+    "total_net_profit": 32.32,
+    "gross_profit": 243.71,
+    "gross_loss": -211.39,
+    "profit_factor": 1.15,
+    "expected_payoff": 16.16,
+    "recovery_factor": 0.15,
+    "sharpe_ratio": 0.12,
+    "absolute_drawdown": 0.0,
+    "maximal_drawdown_amount": 211.39,
+    "maximal_drawdown_percent": 2.06,
+    "relative_drawdown_amount": 211.39,
+    "relative_drawdown_percent": 2.06,
+    "total_trades": 2,
+    "short_positions_count": 2,
+    "short_positions_percent": 50.0,
+    "long_positions_count": 0,
+    "long_positions_percent": 0.0,
+    "profit_trades_count": 1,
+    "profit_trades_percent": 50.0,
+    "loss_trades_count": 1,
+    "loss_trades_percent": 50.0,
+    "largest_profit_trade": 243.71,
+    "largest_loss_trade": -211.39,
+    "average_profit_trade": 243.71,
+    "average_loss_trade": -211.39,
+    "timeframe": "M5",
+    "tested_range": "2026.01.01 - 2026.04.01",
+    "win_rate_percent": 50.0
+  },
+  "summary": {
+    "headline": "取引回数が少なすぎて判断が不安定です。 / Profit Factor が弱く、コスト増で崩れやすい状態です。",
+    "strengths": [
+      "総損益はプラスです。",
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [
+      "取引回数が少なすぎて判断が不安定です。",
+      "Profit Factor が弱く、コスト増で崩れやすい状態です。"
+    ],
+    "notes": []
+  },
+  "tags": [],
+  "raw_fields": {
+    "expert": "usdjpy_20260402_golden_method",
+    "symbol": [
+      "USDJPY",
+      "1"
+    ],
+    "period": "M5 (2026.01.01 - 2026.04.01)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "18144",
+    "ticks": "12878095",
+    "total net profit": "32.32",
+    "absolute drawdown": "0.00",
+    "gross profit": "243.71",
+    "maximal drawdown": "211.39 (2.06%)",
+    "gross loss": "-211.39",
+    "relative drawdown": "2.06% (211.39)",
+    "profit factor": "1.15",
+    "expected payoff": "16.16",
+    "recovery factor": "0.15",
+    "sharpe ratio": "0.12",
+    "z score": "0.00 (0.00%)",
+    "ahpr": "1.0019 (0.19%)",
+    "lr correlation": "-0.39",
+    "ontester": "0",
+    "ghpr": "1.0016 (0.16%)",
+    "lr standard error": "185.79",
+    "total trades": "2",
+    "short trades won percent": "2 (50.00%)",
+    "long positions won percent": "0 (0.00%)",
+    "profit trades percent of total": "1 (50.00%)",
+    "loss trades percent of total": "1 (50.00%)",
+    "largest profit trade": "243.71",
+    "largest loss trade": "-211.39",
+    "average profit trade": "243.71",
+    "average loss trade": "-211.39",
+    "correlation profits mfe": "1.00",
+    "correlation profits mae": "1.00",
+    "correlation mfe mae": "1.0000",
+    "t p": "時間",
+    "2": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "sell": [
+      "3.17 / 3.17",
+      "3.25 / 3.25",
+      "in",
+      "in"
+    ],
+    "0 000": [
+      "158.911",
+      "2026.01.14 12:30:05",
+      "158.350",
+      "2026.01.22 21:05:06"
+    ],
+    "158 691": "2026.01.14 11:50:00",
+    "filled": [
+      "golden_s1_sell",
+      "tp 158.691",
+      "golden_s1_sell",
+      "sl 158.350"
+    ],
+    "3": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "buy": [
+      "3.17 / 3.17",
+      "3.25 / 3.25",
+      "out",
+      "out"
+    ],
+    "4": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "158 130": "2026.01.22 19:45:00",
+    "5": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "1": "balance",
+    "0 00": [
+      "0.00",
+      "0.00",
+      "243.71",
+      "0.00",
+      "-211.39",
+      "0.00"
+    ],
+    "10 000 00": [
+      "10 000.00",
+      "golden_s1_sell"
+    ],
+    "3 17": [
+      "158.811",
+      "158.689"
+    ],
+    "10 243 71": [
+      "tp 158.691",
+      "golden_s1_sell"
+    ],
+    "3 25": [
+      "158.250",
+      "158.353"
+    ],
+    "10 032 32": "sl 158.350",
+    "32 32": "10 032.32"
+  },
+  "records_preview": [],
+  "run_id": "2026-04-02-015904-520825-usdjpy-20260402-golden-method-s1"
+}

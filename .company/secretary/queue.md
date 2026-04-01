@@ -25,7 +25,8 @@
 - [ ] Do not spend another immediate tuning cycle on family-level `S1 + S2` aggregates; diagnose `S1 sell-only` directly.
 - [ ] Treat `S1 sell-only` as the least-bad USDJPY Golden Method branch, but keep it in research only until `9 months train` turns positive and the `3 months OOS` sample is materially larger.
 - [ ] Treat the first `Strategy 1` stochastic pullback qualifier (`stoch75` / `stoch82`) as rejected for being too restrictive at current thresholds.
-- [ ] Run the next USDJPY cycle as an `S1 sell-only` event study by session and shape quality before any more stop / target experimentation.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-s1-sell-event-study-cycle2.md` as the current verdict that `NY strict` improved `9 months train` quality but failed `3 months OOS`, while `NY-open loose` stayed too sparse to matter.
+- [ ] Do not spend another immediate cycle on tighter `S1 sell-only` threshold combinations; the next USDJPY cycle should start from a fresh `Strategy 2` round-number breakout study or a new USDJPY family if breakout evidence is absent.
 - [ ] Do not rebuild `Strategy 2` again until a fresh round-number breakout study shows real signal on `USDJPY`.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.
