@@ -8,13 +8,16 @@
 - [ ] Per-trade risk, daily hard-loss cap, and any equity kill-switch are explicit.
 - [ ] The risk model follows the charter doctrine: capital survival first, compounding intentional, no hidden `3% per trade` assumption.
 - [ ] The first real-capital preset uses lower per-trade risk than the demo-forward preset unless an explicit override is recorded.
+- [ ] The intended starting capital can express the strategy safely on the target broker without the minimum lot forcing oversized risk.
 - [ ] The stop model and reward model are documented in `R` terms or with an equivalent expectancy rationale.
 - [ ] Duplicate entries are prevented across repeated ticks or retries.
 - [ ] Backtest sample size is large enough to be informative.
+- [ ] For the latest improved candidate, a rolling `12 months = 9 months train + 3 months OOS` split has been archived unless a different split was explicitly justified.
 - [ ] If the candidate claims multi-trade-per-day behavior, the actual MT5 evidence supports that claim with enough sample size.
 - [ ] Forward assumptions are not based on one optimization peak.
 - [ ] Regime robustness is checked on both short and long windows (for example 50k and 80k bars) before promotion.
 - [ ] A recent out-of-sample MT5 window is checked explicitly before promotion. Current default is the latest available 3-month window, recorded with exact dates.
+- [ ] A plateau review exists when a family has gone through three serious cycles or is visibly missing the active objective.
 - [ ] The result is explained by chart regimes, not only by calendar season labels.
 - [ ] Expectancy stays positive after realistic spread and slippage assumptions. Win rate alone is not used as a gate.
 - [ ] The candidate is labeled clearly as `mainline`, `secondary`, `parked`, or `legacy`.

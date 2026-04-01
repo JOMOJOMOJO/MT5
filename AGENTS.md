@@ -9,6 +9,7 @@
 - Keep EA code under `mql/Experts/` and shared logic under `mql/Include/`.
 - Use `scripts/compile.ps1` for builds and `scripts/backtest.ps1` for tester runs when possible.
 - Use `scripts/optimize.ps1` for MT5 optimization jobs when an optimization `.ini` has been saved into the repo.
+- Use `.company/git/branch-strategy.md` plus `scripts/git-start-task.ps1` and `scripts/git-publish-task.ps1` when Codex is managing branch, commit, and push flow for this repo.
 - When changing strategy behavior, connect the code change to a backtest or QA note under `.company/` or `reports/`.
 - Treat positive expectancy, capital survival, and compounding as top-level design goals.
 - Treat win rate as secondary evidence, not as the main promotion target.
@@ -17,6 +18,7 @@
 - Make stop distance, reward multiple, and position sizing explicit. Prefer documenting the strategy in `R` terms or with an equivalent expectancy rationale.
 - Higher trade count is desirable only if the edge survives actual MT5 friction, long-window validation, and forward-demo review.
 - If a family no longer fits the active business objective, park it explicitly and start a new family instead of endlessly retuning it.
+- After each serious cycle, run a plateau review for the active family; if the family is structurally missing the objective, open a new family instead of stretching the old one.
 - Skill identifiers should stay stable, but Japanese skill bodies and references are preferred in this repository.
 - When the user wants a trader's judgement on market fit, execution realism, or live readiness, use the repo-local `professional-trader` skill.
 - When the user wants an EA operator's view on rule quality and parameter discipline, use `systematic-ea-trader`.
@@ -31,4 +33,5 @@
 - Record org, skill, and MCP snapshots under `.company/improvement/` so changes can be compared against the previous state.
 - Before adding a new shared skill, review `.company/improvement/skill-roster.md` and prefer tightening an existing role first.
 - Before promoting a candidate toward live, review `.company/improvement/org-scorecard.md` and cite at least one reusable lesson from `knowledge/patterns/` or `knowledge/company/`.
+- Before discussing `100 USD` or similarly small first-capital deployment, confirm the broker's minimum lot and symbol contract size do not force oversized per-trade risk.
 - Any root-level change to company structure, approval routes, or shared skill roster requires CEO approval recorded under `.company/executive/ceo-approval-log.md` before the change is treated as accepted.

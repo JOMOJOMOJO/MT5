@@ -81,6 +81,8 @@ input double          InpLongExitBufferATR       = 0.30;
 input double          InpShortExitBufferATR      = 0.0;
 input double          InpEmergencyStopATR        = 4.00;
 input double          InpRiskPercent             = 0.35;
+input bool            InpSkipTradeWhenMinLotRiskTooHigh = true;
+input double          InpMaxEffectiveRiskPercentAtMinLot = 1.00;
 
 input int             InpMaxOpenTrades           = 2;
 input int             InpMaxOpenPerSide          = 2;
@@ -171,7 +173,7 @@ int OnInit()
        InpShortTrendFilterMode < 0 || InpShortTrendFilterMode > 2 ||
        InpLongHoldBars < 0 || InpShortHoldBars < 0 ||
        InpLongExitBufferATR < 0.0 || InpShortExitBufferATR < 0.0 ||
-       InpStatusHeartbeatSeconds < 0)
+       InpStatusHeartbeatSeconds < 0 || InpMaxEffectiveRiskPercentAtMinLot < 0.0)
     {
         Print("Invalid prototype parameters.");
         return INIT_PARAMETERS_INCORRECT;
@@ -979,6 +981,14 @@ double CalculateLotSizeFromDistance(double stopDistancePrice)
     double stepLot = SymbolInfoDouble(runtimeSymbol, SYMBOL_VOLUME_STEP);
     if(minLot <= 0.0 || maxLot <= 0.0 || stepLot <= 0.0)
         return 0.0;
+
+    if(lots < minLot && InpSkipTradeWhenMinLotRiskTooHigh && InpMaxEffectiveRiskPercentAtMinLot > 0.0)
+    {
+        double minLotRiskAmount = pricePerLot * minLot;
+        double minLotRiskPercent = (equity > 0.0 ? (minLotRiskAmount / equity) * 100.0 : 0.0);
+        if(minLotRiskPercent > InpMaxEffectiveRiskPercentAtMinLot)
+            return 0.0;
+    }
 
     lots = MathMax(minLot, MathMin(maxLot, lots));
     lots = MathFloor(lots / stepLot) * stepLot;

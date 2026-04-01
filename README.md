@@ -47,8 +47,46 @@ Use both MT5 optimization and long fixed-parameter validation. They solve differ
 - Locked validation: re-run the selected parameters on a longer fixed window, usually 6 to 12 months.
 - Explicit out-of-sample: run a separate untouched period after the validation window.
 - Forward or demo: move only candidates that survive the earlier gates.
+- Default rolling review for each improved candidate:
+  - latest `12 months`
+  - oldest `9 months` for train / tuning
+  - latest `3 months` for forward-style OOS
+- Generate the split configs automatically:
+  - `powershell -ExecutionPolicy Bypass -File scripts/new-rolling-12m-split.ps1 -BaseConfigPath <1y-config.ini>`
 
 Use MT5 built-in forward optimization when you want fast screening inside the tester. Use explicit repo-managed out-of-sample single tests when you want reproducible artifacts in Git.
+
+## Git Flow
+
+- Work on task branches:
+  - `research/*`
+  - `ops/*`
+  - `org/*`
+  - `hotfix/*`
+- Publish a branch:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-publish-task.ps1 -CommitMessage "research: ..." -Paths <path1>,<path2>`
+- If `main` is unprotected, land directly:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-land-task.ps1 -SourceBranch <task-branch> -TargetBranch main`
+- If `main` rejects direct push, treat that as a protected-branch repo and switch to PR automation instead of manual one-off merging.
+- Protected-branch / PR flow:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-open-pr.ps1 -HeadBranch <task-branch> -BaseBranch main -Title "research: ..."`
+- `git-open-pr.ps1` expects GitHub CLI `gh`.
+- If `gh` is not installed, keep the task branch pushed and stop there instead of partially landing work.
+
+## Research Utilities
+
+- Run the BTCUSD feature lab:
+  - `powershell -ExecutionPolicy Bypass -File scripts/run-btc-feature-lab.ps1`
+- Run the BTCUSD flow filter probe on top of the latest feature dump:
+  - `powershell -ExecutionPolicy Bypass -File scripts/run-btc-flow-filter-probe.ps1`
+- Re-rank BTCUSD feature-lab rules with broker spread costs applied:
+  - `powershell -ExecutionPolicy Bypass -File scripts/run-btc-spread-aware-rerank.ps1`
+- Probe whether MT5 market depth is actually populated on the current broker feed:
+  - `powershell -ExecutionPolicy Bypass -File scripts/probe-market-book.ps1 -Symbol BTCUSD`
+- Current BTCUSD broker verdict:
+  - the latest market-book probe returned no populated DOM levels,
+  - so order-book filters are currently deferred in favor of tick / volume / flow filters.
+- Feature-lab CSV artifacts now also emit `.csv.gz` copies for lighter git storage and faster reuse.
 
 ## Next Step
 

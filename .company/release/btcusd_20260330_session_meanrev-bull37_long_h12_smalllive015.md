@@ -58,6 +58,8 @@
 
 - Sizing:
   - `0.15%` of current equity per trade via the EA sizing function.
+- Min-lot guard:
+  - skip the trade if broker minimum lot would force more than `1.0%` effective risk on the account.
 - Emergency stop:
   - `4.0 ATR`
 - Daily hard stop:
@@ -77,6 +79,7 @@
   - at least one guarded2 forward gate report exists,
   - `scripts/small-live-preflight.ps1` returns `pass` or an explicitly accepted `review`,
   - the broker-side spread and slippage regime still match the MT5 assumptions closely enough,
+  - the target account passes lot-floor viability for the preset,
   - the small-live capital amount is intentionally limited.
 
 ## Reproducibility
@@ -127,3 +130,4 @@
 
 - This packet exists to keep the first real-capital stage intentionally smaller than the proving preset.
 - The strategy logic is unchanged from guarded2. The main difference is the smaller equity risk per trade.
+- If the first capital is around `100 USD`, do not assume this preset is automatically deployable. It must still pass the broker minimum-lot check, or it belongs on a cent or smaller-contract environment instead.

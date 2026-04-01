@@ -8,9 +8,12 @@
 - [ ] Confirm the default risk budget matches the charter doctrine and does not rely on an implicit high-risk-per-trade assumption.
 - [ ] Confirm stop placement, reward multiple, and sizing logic are documented for the release candidate.
 - [ ] Confirm compounding behavior is intentional and bounded by hard loss caps.
+- [ ] Confirm the intended first-capital account size can express the preset safely on the target broker without minimum-lot oversizing.
 - [ ] Confirm symbol, timeframe, and broker assumptions are documented.
 - [ ] Confirm the candidate clears the current reproducibility gate on the long-window validator.
 - [ ] Confirm the candidate has a recent out-of-sample MT5 check on the latest available 3-month window, with exact dates recorded in the release note.
+- [ ] Confirm the latest improved candidate also has a rolling `9 months train / 3 months OOS` record or a documented reason not to use that ladder.
+- [ ] Confirm plateau review has not already concluded that the family should be parked, killed, or replaced.
 - [ ] Confirm the candidate status is explicit: `mainline`, `secondary`, `parked`, or `legacy`.
 - [ ] Confirm demo-forward evidence or a concrete demo-forward plan exists before any live discussion.
 - [ ] Confirm the first real-capital stage uses an explicit reduced-risk preset and a separate release packet unless an override is recorded.

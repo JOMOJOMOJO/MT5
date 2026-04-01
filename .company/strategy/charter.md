@@ -13,6 +13,7 @@
 - Multi-trade strategies should normally risk a fraction of that budget per trade. `3%` per trade is not the default.
 - Position sizing should scale from current equity so that valid strategies can compound without bypassing risk caps.
 - Every serious candidate should define its stop model, expected reward model, and sizing model in `R` terms or with an equivalent expectancy explanation.
+- Small-capital deployment is only valid when broker lot granularity and contract size still allow sane risk expression. A strategy that cannot size safely on `100 USD` is not micro-cap deployable on that broker.
 
 ## Promotion Philosophy
 
@@ -23,6 +24,7 @@
   - trade count is large enough for the claimed edge to be meaningful,
   - the edge survives across regimes and forward review.
 - If a family misses the active business objective, park it explicitly and open a cleaner research branch.
+- If a family misses the active business objective across three serious cycles, do not keep retuning by default. Run a plateau review and either park, kill, or replace it.
 
 ## Default Risk Standards
 
@@ -43,9 +45,17 @@
 - Search window: short enough to iterate, long enough to contain varied conditions.
 - Locked validation window: long-window actual MT5 evidence is mandatory.
 - Out-of-sample window: explicit and separate from the tuning window.
+- Default rolling split for iterative development: latest `12 months`, with `9 months` for train / tuning and latest `3 months` as the forward-style OOS check.
 - Promotion gate:
   - compile cleanly,
   - pass QA and risk checklists,
   - show positive expectancy after realistic friction,
   - show enough trades for the target operating style,
+  - show broker lot-floor viability for the intended starting capital,
   - complete demo-forward review before live promotion.
+
+## Plateau Discipline
+
+- Every serious family should be reviewed for plateau after each serious cycle.
+- Quality-positive but objective-negative families should become `secondary` or `parked`.
+- The repo should open a new family quickly once plateau is confirmed, instead of stretching one family forever.
