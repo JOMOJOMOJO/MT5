@@ -56,6 +56,33 @@ Use both MT5 optimization and long fixed-parameter validation. They solve differ
 
 Use MT5 built-in forward optimization when you want fast screening inside the tester. Use explicit repo-managed out-of-sample single tests when you want reproducible artifacts in Git.
 
+## Git Flow
+
+- Work on task branches:
+  - `research/*`
+  - `ops/*`
+  - `org/*`
+  - `hotfix/*`
+- Publish a branch:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-publish-task.ps1 -CommitMessage "research: ..." -Paths <path1>,<path2>`
+- If `main` is unprotected, land directly:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-land-task.ps1 -SourceBranch <task-branch> -TargetBranch main`
+- If `main` rejects direct push, treat that as a protected-branch repo and switch to PR automation instead of manual one-off merging.
+- Protected-branch / PR flow:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-open-pr.ps1 -HeadBranch <task-branch> -BaseBranch main -Title "research: ..."`
+- `git-open-pr.ps1` expects GitHub CLI `gh`.
+- If `gh` is not installed, keep the task branch pushed and stop there instead of partially landing work.
+
+## Research Utilities
+
+- Run the BTCUSD feature lab:
+  - `powershell -ExecutionPolicy Bypass -File scripts/run-btc-feature-lab.ps1`
+- Probe whether MT5 market depth is actually populated on the current broker feed:
+  - `powershell -ExecutionPolicy Bypass -File scripts/probe-market-book.ps1 -Symbol BTCUSD`
+- Current BTCUSD broker verdict:
+  - the latest market-book probe returned no populated DOM levels,
+  - so order-book filters are currently deferred in favor of tick / volume / flow filters.
+
 ## Next Step
 
 Add your first EA under `mql/Experts/<ea-name>/<ea-name>.mq5`, then point `MT5_METAEDITOR` and `MT5_TERMINAL` to your local MT5 binaries.

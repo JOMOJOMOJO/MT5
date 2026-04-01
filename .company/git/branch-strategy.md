@@ -56,6 +56,22 @@
 - Push the current task branch to `origin`.
 - Merge to `main` only after the branch state is coherent enough to explain in one review note or release note.
 
+## Land Rule
+
+- Default landing path:
+  - work on `research/*`, `ops/*`, `org/*`, or `hotfix/*`
+  - commit and push the task branch
+  - if `main` is unprotected, land directly from the repo
+  - if `main` rejects direct push, switch to PR automation
+- Direct land helper:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-land-task.ps1 -SourceBranch <task-branch> -TargetBranch main`
+- If branch cleanup is desired after a successful land:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-land-task.ps1 -SourceBranch <task-branch> -TargetBranch main -DeleteLocalSource -DeleteRemoteSource`
+- If the direct push to `main` fails, treat that as a signal that the branch is protected and use PR-based automation instead of retrying manual ad hoc commands.
+- PR automation helper when `main` is protected:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-open-pr.ps1 -HeadBranch <task-branch> -BaseBranch main -Title "<type>: <summary>"`
+- If `gh` is unavailable on the machine, keep the branch pushed and stop at a clean task branch instead of forcing a manual half-landed state.
+
 ## Codex Operating Rule
 
 - Codex is allowed to create task branches, commit task-scoped changes, and push them to `origin` when the user asks.
@@ -68,3 +84,7 @@
   - `powershell -ExecutionPolicy Bypass -File scripts/git-start-task.ps1 -Category research -Family btcusd-20260330-session-meanrev -Slug oos-review`
 - Publish a task branch:
   - `powershell -ExecutionPolicy Bypass -File scripts/git-publish-task.ps1 -CommitMessage "research: add recent OOS gate" -Paths reports/backtest/...,.company/qa/checklist.md`
+- Land a task branch into `main`:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-land-task.ps1 -SourceBranch research/btcusd-mainline/2026-04-01-feature-lab -TargetBranch main`
+- Open a PR when `main` is protected:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-open-pr.ps1 -HeadBranch research/btcusd-mainline/2026-04-01-feature-lab -BaseBranch main -Title "research: add flow feature lab"`

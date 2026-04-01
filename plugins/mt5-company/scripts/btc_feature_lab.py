@@ -79,6 +79,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--oos-days", type=int, default=89)
     parser.add_argument("--min-samples", type=int, default=120)
     parser.add_argument("--min-trades-per-day", type=float, default=3.0)
+    parser.add_argument("--min-coverage", type=float, default=0.03)
+    parser.add_argument("--max-coverage", type=float, default=0.65)
     parser.add_argument("--output-dir")
     parser.add_argument("--terminal-path")
     return parser.parse_args()
@@ -261,8 +263,40 @@ def enrich_features(frame: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
         (df["tick_volume"] - df["tick_volume"].rolling(50).mean())
         / df["tick_volume"].rolling(50).std().replace(0.0, np.nan)
     )
+    df["tick_volume_rel10"] = df["tick_volume"] / df["tick_volume"].rolling(10).mean().replace(0.0, np.nan)
+    df["tick_volume_change_1"] = df["tick_volume"].pct_change(1)
+    df["tick_volume_change_3"] = df["tick_volume"].pct_change(3)
+    df["tick_acceleration_3"] = (
+        df["tick_volume"].diff().diff().rolling(3).mean()
+        / df["tick_volume"].rolling(50).std().replace(0.0, np.nan)
+    )
+    df["tick_flow_signed_3"] = (
+        np.sign(df["ret_1"].fillna(0.0)) * df["tick_volume_rel10"].fillna(0.0)
+    ).rolling(3).mean()
     df["spread_points"] = df["spread"].astype(float)
     df["spread_atr"] = df["spread_points"] / (df["atr14"] / df["close"].replace(0.0, np.nan))
+    df["spread_z"] = (
+        (df["spread_points"] - df["spread_points"].rolling(50).mean())
+        / df["spread_points"].rolling(50).std().replace(0.0, np.nan)
+    )
+    df["spread_change_1"] = df["spread_points"].diff()
+    df["spread_change_3"] = df["spread_points"].diff(3)
+    df["spread_acceleration_3"] = df["spread_points"].diff().diff().rolling(3).mean()
+
+    prev_high_12 = df["high"].shift(1).rolling(12).max()
+    prev_low_12 = df["low"].shift(1).rolling(12).min()
+    prev_high_24 = df["high"].shift(1).rolling(24).max()
+    prev_low_24 = df["low"].shift(1).rolling(24).min()
+    df["breakout_up_12"] = (df["close"] > prev_high_12).astype(float)
+    df["breakout_down_12"] = (df["close"] < prev_low_12).astype(float)
+    df["breakout_up_24"] = (df["close"] > prev_high_24).astype(float)
+    df["breakout_down_24"] = (df["close"] < prev_low_24).astype(float)
+    df["breakout_persist_up_3"] = df["breakout_up_12"].rolling(3).sum()
+    df["breakout_persist_down_3"] = df["breakout_down_12"].rolling(3).sum()
+    df["breakout_persist_up_6"] = df["breakout_up_12"].rolling(6).sum()
+    df["breakout_persist_down_6"] = df["breakout_down_12"].rolling(6).sum()
+    df["breakout_followthrough_up"] = df["high_break_12"].clip(lower=0.0).rolling(3).mean()
+    df["breakout_followthrough_down"] = (-df["low_break_12"]).clip(lower=0.0).rolling(3).mean()
 
     for horizon in HORIZONS:
         df[f"future_return_atr_{horizon}"] = (df["close"].shift(-horizon) - df["close"]) / df["atr14"]
@@ -307,7 +341,27 @@ def enrich_features(frame: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
         "range_compression_12",
         "range_compression_24",
         "tick_volume_z",
+        "tick_volume_rel10",
+        "tick_volume_change_1",
+        "tick_volume_change_3",
+        "tick_acceleration_3",
+        "tick_flow_signed_3",
         "spread_points",
+        "spread_atr",
+        "spread_z",
+        "spread_change_1",
+        "spread_change_3",
+        "spread_acceleration_3",
+        "breakout_up_12",
+        "breakout_down_12",
+        "breakout_up_24",
+        "breakout_down_24",
+        "breakout_persist_up_3",
+        "breakout_persist_down_3",
+        "breakout_persist_up_6",
+        "breakout_persist_down_6",
+        "breakout_followthrough_up",
+        "breakout_followthrough_down",
     ]
     return df, feature_columns
 
@@ -409,6 +463,21 @@ def score_rule(train_stats: dict[str, float], test_stats: dict[str, float], min_
     return float(expectancy_score + hit_score + turnover_score * 10.0)
 
 
+def signal_coverage(mask: pd.Series) -> float:
+    valid = mask.dropna()
+    if valid.empty:
+        return 0.0
+    return float(valid.mean())
+
+
+def signal_coverage_within_context(signal: pd.Series, context_mask: pd.Series, subset_mask: pd.Series) -> float:
+    active = context_mask.loc[subset_mask].fillna(False)
+    if active.empty or active.sum() == 0:
+        return 0.0
+    selected = signal.loc[subset_mask].fillna(False)
+    return float(selected[active].mean())
+
+
 def mine_single_feature_rules(
     df: pd.DataFrame,
     feature_columns: list[str],
@@ -416,6 +485,8 @@ def mine_single_feature_rules(
     test_mask: pd.Series,
     min_samples: int,
     min_trades_per_day: float,
+    min_coverage: float,
+    max_coverage: float,
 ) -> pd.DataFrame:
     results: list[RuleResult] = []
     contexts: dict[str, pd.Series] = {
@@ -436,6 +507,15 @@ def mine_single_feature_rules(
 
             for context_name, context_mask in contexts.items():
                 signal = base_signal & context_mask
+                train_coverage = signal_coverage_within_context(signal, context_mask, train_mask)
+                test_coverage = signal_coverage_within_context(signal, context_mask, test_mask)
+                if (
+                    train_coverage < min_coverage
+                    or train_coverage > max_coverage
+                    or test_coverage < min_coverage
+                    or test_coverage > max_coverage
+                ):
+                    continue
                 for horizon in HORIZONS:
                     future_return = df[f"future_return_atr_{horizon}"]
                     long_train = evaluate_rule(df.loc[train_mask], signal.loc[train_mask], future_return.loc[train_mask], "long", min_samples)
@@ -531,6 +611,8 @@ def mine_pair_rules(
     test_mask: pd.Series,
     min_samples: int,
     min_trades_per_day: float,
+    min_coverage: float,
+    max_coverage: float,
     top_n_per_side: int = 12,
 ) -> pd.DataFrame:
     results: list[PairRuleResult] = []
@@ -551,6 +633,19 @@ def mine_pair_rules(
                     continue
                 signal_b = build_rule_signal(df, row_b)
                 signal = signal_a & signal_b
+                if str(row_a["context"]) == "all":
+                    context_mask = pd.Series(True, index=df.index)
+                else:
+                    context_mask = df[f"session_{row_a['context']}"] >= 1.0
+                train_coverage = signal_coverage_within_context(signal, context_mask, train_mask)
+                test_coverage = signal_coverage_within_context(signal, context_mask, test_mask)
+                if (
+                    train_coverage < min_coverage
+                    or train_coverage > max_coverage
+                    or test_coverage < min_coverage
+                    or test_coverage > max_coverage
+                ):
+                    continue
                 horizon = int(row_a["horizon"])
                 future_return = df[f"future_return_atr_{horizon}"]
                 train_stats = evaluate_rule(df.loc[train_mask], signal.loc[train_mask], future_return.loc[train_mask], side, min_samples)
@@ -743,6 +838,8 @@ def main() -> int:
         test_mask,
         min_samples=args.min_samples,
         min_trades_per_day=args.min_trades_per_day,
+        min_coverage=args.min_coverage,
+        max_coverage=args.max_coverage,
     )
     pair_rules_df = mine_pair_rules(
         analysis_df,
@@ -751,6 +848,8 @@ def main() -> int:
         test_mask,
         min_samples=args.min_samples,
         min_trades_per_day=args.min_trades_per_day,
+        min_coverage=args.min_coverage,
+        max_coverage=args.max_coverage,
     )
 
     metadata = {
@@ -759,6 +858,8 @@ def main() -> int:
         "bars_requested": args.bars,
         "analysis_days": args.analysis_days,
         "oos_days": args.oos_days,
+        "min_coverage": args.min_coverage,
+        "max_coverage": args.max_coverage,
         "history_start": analysis_df["time"].iloc[0].isoformat(),
         "history_end": analysis_df["time"].iloc[-1].isoformat(),
         "train_start": analysis_df.loc[train_mask, "time"].iloc[0].isoformat(),

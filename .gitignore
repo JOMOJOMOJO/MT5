@@ -1,4 +1,6 @@
 *.ex5
 *.log
+*.pyc
 Thumbs.db
 .DS_Store
+__pycache__/

@@ -1,0 +1,191 @@
+{
+  "generated_at": "2026-04-01T14:36:10",
+  "symbol": "BTCUSD",
+  "samples": [
+    {
+      "index": 0,
+      "timestamp": "2026-04-01T14:36:05",
+      "book_len": 0,
+      "imbalance": null,
+      "levels": [],
+      "tick": {
+        "bid": 68599.13,
+        "ask": 68624.18,
+        "last": 0.0,
+        "volume": 0,
+        "time": 1775032565
+      },
+      "last_error": [
+        1,
+        "Success"
+      ]
+    },
+    {
+      "index": 1,
+      "timestamp": "2026-04-01T14:36:06",
+      "book_len": 0,
+      "imbalance": null,
+      "levels": [],
+      "tick": {
+        "bid": 68593.59,
+        "ask": 68618.71,
+        "last": 0.0,
+        "volume": 0,
+        "time": 1775032565
+      },
+      "last_error": [
+        1,
+        "Success"
+      ]
+    },
+    {
+      "index": 2,
+      "timestamp": "2026-04-01T14:36:06",
+      "book_len": 0,
+      "imbalance": null,
+      "levels": [],
+      "tick": {
+        "bid": 68594.77,
+        "ask": 68619.76,
+        "last": 0.0,
+        "volume": 0,
+        "time": 1775032566
+      },
+      "last_error": [
+        1,
+        "Success"
+      ]
+    },
+    {
+      "index": 3,
+      "timestamp": "2026-04-01T14:36:07",
+      "book_len": 0,
+      "imbalance": null,
+      "levels": [],
+      "tick": {
+        "bid": 68594.75,
+        "ask": 68619.79,
+        "last": 0.0,
+        "volume": 0,
+        "time": 1775032566
+      },
+      "last_error": [
+        1,
+        "Success"
+      ]
+    },
+    {
+      "index": 4,
+      "timestamp": "2026-04-01T14:36:07",
+      "book_len": 0,
+      "imbalance": null,
+      "levels": [],
+      "tick": {
+        "bid": 68594.77,
+        "ask": 68619.77,
+        "last": 0.0,
+        "volume": 0,
+        "time": 1775032567
+      },
+      "last_error": [
+        1,
+        "Success"
+      ]
+    },
+    {
+      "index": 5,
+      "timestamp": "2026-04-01T14:36:08",
+      "book_len": 0,
+      "imbalance": null,
+      "levels": [],
+      "tick": {
+        "bid": 68594.79,
+        "ask": 68619.74,
+        "last": 0.0,
+        "volume": 0,
+        "time": 1775032568
+      },
+      "last_error": [
+        1,
+        "Success"
+      ]
+    },
+    {
+      "index": 6,
+      "timestamp": "2026-04-01T14:36:08",
+      "book_len": 0,
+      "imbalance": null,
+      "levels": [],
+      "tick": {
+        "bid": 68592.26,
+        "ask": 68617.3,
+        "last": 0.0,
+        "volume": 0,
+        "time": 1775032568
+      },
+      "last_error": [
+        1,
+        "Success"
+      ]
+    },
+    {
+      "index": 7,
+      "timestamp": "2026-04-01T14:36:09",
+      "book_len": 0,
+      "imbalance": null,
+      "levels": [],
+      "tick": {
+        "bid": 68590.2,
+        "ask": 68615.3,
+        "last": 0.0,
+        "volume": 0,
+        "time": 1775032568
+      },
+      "last_error": [
+        1,
+        "Success"
+      ]
+    },
+    {
+      "index": 8,
+      "timestamp": "2026-04-01T14:36:09",
+      "book_len": 0,
+      "imbalance": null,
+      "levels": [],
+      "tick": {
+        "bid": 68590.2,
+        "ask": 68615.3,
+        "last": 0.0,
+        "volume": 0,
+        "time": 1775032568
+      },
+      "last_error": [
+        1,
+        "Success"
+      ]
+    },
+    {
+      "index": 9,
+      "timestamp": "2026-04-01T14:36:10",
+      "book_len": 0,
+      "imbalance": null,
+      "levels": [],
+      "tick": {
+        "bid": 68590.2,
+        "ask": 68615.3,
+        "last": 0.0,
+        "volume": 0,
+        "time": 1775032568
+      },
+      "last_error": [
+        1,
+        "Success"
+      ]
+    }
+  ],
+  "subscription_ok": true,
+  "status": "empty",
+  "populated_samples": 0,
+  "average_imbalance": null,
+  "conclusion": "MarketBookGet returned no levels. Treat DOM-based entry filters as unavailable on this broker feed."
+}
