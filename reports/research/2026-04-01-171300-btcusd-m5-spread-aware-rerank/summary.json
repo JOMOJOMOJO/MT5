@@ -1,0 +1,17 @@
+{
+  "features_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\2026-04-01-171300-btcusd-m5-feature-lab-spreadfix\\analysis_window_features.csv.gz",
+  "single_rules_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\2026-04-01-171300-btcusd-m5-feature-lab-spreadfix\\single_feature_rules.csv",
+  "pair_rules_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\2026-04-01-171300-btcusd-m5-feature-lab-spreadfix\\pair_feature_rules.csv",
+  "split_date": "2026-01-02T10:10:00",
+  "cost_quantile": 0.75,
+  "min_test_expectancy": 0.25,
+  "min_net_edge": 0.0,
+  "global_spread_atr": {
+    "mean": 0.2326770361408822,
+    "median": 0.1917802962827495,
+    "p75": 0.275104052536672,
+    "p90": 0.4012364836245729
+  },
+  "ranked_rule_count": 1215,
+  "promotable_rule_count": 82
+}

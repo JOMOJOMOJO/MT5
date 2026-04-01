@@ -77,11 +77,16 @@ Use MT5 built-in forward optimization when you want fast screening inside the te
 
 - Run the BTCUSD feature lab:
   - `powershell -ExecutionPolicy Bypass -File scripts/run-btc-feature-lab.ps1`
+- Run the BTCUSD flow filter probe on top of the latest feature dump:
+  - `powershell -ExecutionPolicy Bypass -File scripts/run-btc-flow-filter-probe.ps1`
+- Re-rank BTCUSD feature-lab rules with broker spread costs applied:
+  - `powershell -ExecutionPolicy Bypass -File scripts/run-btc-spread-aware-rerank.ps1`
 - Probe whether MT5 market depth is actually populated on the current broker feed:
   - `powershell -ExecutionPolicy Bypass -File scripts/probe-market-book.ps1 -Symbol BTCUSD`
 - Current BTCUSD broker verdict:
   - the latest market-book probe returned no populated DOM levels,
   - so order-book filters are currently deferred in favor of tick / volume / flow filters.
+- Feature-lab CSV artifacts now also emit `.csv.gz` copies for lighter git storage and faster reuse.
 
 ## Next Step
 

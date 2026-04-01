@@ -102,10 +102,18 @@ def initialize_mt5(terminal_path: str) -> None:
         raise RuntimeError(f"MT5 initialize failed: {mt5.last_error()}")
 
 
+def symbol_point(symbol: str) -> float:
+    info = mt5.symbol_info(symbol)
+    if info is None or not info.point:
+        return 1.0
+    return float(info.point)
+
+
 def load_rates(symbol: str, timeframe_label: str, bars: int) -> pd.DataFrame:
     timeframe = TIMEFRAME_MAP[timeframe_label]
     if not mt5.symbol_select(symbol, True):
         raise RuntimeError(f"Failed to select symbol {symbol}: {mt5.last_error()}")
+    point = symbol_point(symbol)
     chunk_size = 5000
     frames: list[pd.DataFrame] = []
     position = 0
@@ -127,6 +135,7 @@ def load_rates(symbol: str, timeframe_label: str, bars: int) -> pd.DataFrame:
         raise RuntimeError("No rates were returned from MT5.")
     frame = pd.concat(frames, ignore_index=True)
     frame["time"] = pd.to_datetime(frame["time"], unit="s")
+    frame["symbol_point"] = point
     return frame.drop_duplicates(subset=["time"]).sort_values("time").reset_index(drop=True)
 
 
@@ -134,6 +143,7 @@ def load_rates_by_range(symbol: str, timeframe_label: str, lookback_days: int, b
     timeframe = TIMEFRAME_MAP[timeframe_label]
     if not mt5.symbol_select(symbol, True):
         raise RuntimeError(f"Failed to select symbol {symbol}: {mt5.last_error()}")
+    point = symbol_point(symbol)
     tick = mt5.symbol_info_tick(symbol)
     if tick is None:
         return load_rates(symbol, timeframe_label, bars_fallback)
@@ -146,6 +156,7 @@ def load_rates_by_range(symbol: str, timeframe_label: str, lookback_days: int, b
     if frame.empty:
         return load_rates(symbol, timeframe_label, bars_fallback)
     frame["time"] = pd.to_datetime(frame["time"], unit="s")
+    frame["symbol_point"] = point
     return frame.drop_duplicates(subset=["time"]).sort_values("time").reset_index(drop=True)
 
 
@@ -273,15 +284,17 @@ def enrich_features(frame: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
     df["tick_flow_signed_3"] = (
         np.sign(df["ret_1"].fillna(0.0)) * df["tick_volume_rel10"].fillna(0.0)
     ).rolling(3).mean()
+    point = df["symbol_point"].fillna(1.0).replace(0.0, np.nan)
     df["spread_points"] = df["spread"].astype(float)
-    df["spread_atr"] = df["spread_points"] / (df["atr14"] / df["close"].replace(0.0, np.nan))
+    df["spread_price"] = df["spread_points"] * point
+    df["spread_atr"] = df["spread_price"] / df["atr14"].replace(0.0, np.nan)
     df["spread_z"] = (
-        (df["spread_points"] - df["spread_points"].rolling(50).mean())
-        / df["spread_points"].rolling(50).std().replace(0.0, np.nan)
+        (df["spread_price"] - df["spread_price"].rolling(50).mean())
+        / df["spread_price"].rolling(50).std().replace(0.0, np.nan)
     )
-    df["spread_change_1"] = df["spread_points"].diff()
-    df["spread_change_3"] = df["spread_points"].diff(3)
-    df["spread_acceleration_3"] = df["spread_points"].diff().diff().rolling(3).mean()
+    df["spread_change_1"] = df["spread_price"].diff()
+    df["spread_change_3"] = df["spread_price"].diff(3)
+    df["spread_acceleration_3"] = df["spread_price"].diff().diff().rolling(3).mean()
 
     prev_high_12 = df["high"].shift(1).rolling(12).max()
     prev_low_12 = df["low"].shift(1).rolling(12).min()
@@ -347,6 +360,7 @@ def enrich_features(frame: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
         "tick_acceleration_3",
         "tick_flow_signed_3",
         "spread_points",
+        "spread_price",
         "spread_atr",
         "spread_z",
         "spread_change_1",
@@ -810,8 +824,11 @@ def write_outputs(
     output_dir.mkdir(parents=True, exist_ok=True)
     analysis_df.to_csv(output_dir / "analysis_window_features.csv.gz", index=False, compression="gzip")
     correlations_df.to_csv(output_dir / "feature_correlations.csv", index=False)
+    correlations_df.to_csv(output_dir / "feature_correlations.csv.gz", index=False, compression="gzip")
     rules_df.to_csv(output_dir / "single_feature_rules.csv", index=False)
+    rules_df.to_csv(output_dir / "single_feature_rules.csv.gz", index=False, compression="gzip")
     pair_rules_df.to_csv(output_dir / "pair_feature_rules.csv", index=False)
+    pair_rules_df.to_csv(output_dir / "pair_feature_rules.csv.gz", index=False, compression="gzip")
     (output_dir / "summary.json").write_text(json.dumps(summary_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (output_dir / "summary.md").write_text(summary_md, encoding="utf-8")
 

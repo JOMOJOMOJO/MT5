@@ -30,7 +30,14 @@
 - [ ] Launch `btcusd_20260331_session_pair_rr` as the new mainline family for expectancy-first, fixed-`R`, compounding-aware BTCUSD research.
 - [ ] Use bar-data mining to find repeatable multi-trade-per-day entry zones before large optimization sweeps.
 - [ ] Use `reports/research/2026-04-01-145500-btcusd-m5-feature-lab-flowfinal/summary.md` as the current chart-mining source of truth for the next mainline BTCUSD hypothesis.
-- [ ] Prototype a new `overextension fade` family from the feature-lab pair rules before returning to large parameter sweeps.
+- [ ] Use `knowledge/experiments/2026-04-01-btcusd-overextension-flow-cost-floor-review.md` as the current verdict that the first M5 overextension-flow family fails the broker cost floor in actual MT5.
+- [ ] Use `reports/research/2026-04-01-171300-btcusd-m5-spread-aware-rerank/summary.md` as the corrected spread-aware source of truth after fixing the `spread_atr` bug in the feature lab.
+- [ ] Treat `knowledge/experiments/2026-04-01-btcusd-regime-single-spreadfix-review.md` as the current verdict for the new `btcusd_20260401_regime_single` family.
+- [ ] Keep `btcusd_20260401_regime_single` as the current high-turnover mainline research branch, but do not discuss live promotion until 1-year actual improves above PF 1.0 with acceptable drawdown.
+- [ ] Use `btcusd_20260401_regime_single-long-ret24` as the current best sub-branch inside the new high-turnover family.
+- [ ] Improve `btcusd_20260401_regime_single-long-ret24` through risk/exit redesign before opening a new family, because it is positive on 1-year actual and 3-month OOS but still too weak for promotion.
+- [ ] Keep the short side of `btcusd_20260401_regime_single` in research only until a new NY-side rule beats PF 1.0 on the full 1-year actual window.
+- [ ] Treat `test_expectancy >= 0.25 ATR` as the minimum spread-aware screening floor for the next BTCUSD M5 mainline candidate on this broker.
 - [ ] Keep the `range compression breakout long` idea as a secondary branch, not as the first mainline prototype.
 - [ ] Open the next mainline family only from a fresh market-behavior thesis or bar-data edge, not by stacking more filters onto `btcusd_20260330_session_meanrev`.
 - [ ] Rebuild the `session_pair_rr` entry construction from fresh bar-data mining, because the first `pair / long-only / short-only` actual MT5 runs all failed.
@@ -41,6 +48,7 @@
 - [ ] Treat `reports/research/2026-04-01-143605-btcusd-market-book-probe/summary.md` as the current verdict that DOM filters are unavailable on this broker feed for BTCUSD.
 - [ ] Do not prototype order-book imbalance entries for BTCUSD in MT5 until a future market-book probe returns populated levels.
 - [ ] Use the new flow features as the next filter family for the high-turnover BTCUSD mainline, not as another late filter on `btcusd_20260330_session_meanrev`.
+- [ ] Treat `btcusd_20260401_overextension_flow-short-flowonly` as a rejected sidecar probe, not a promotion candidate.
 
 ## Blocked
 

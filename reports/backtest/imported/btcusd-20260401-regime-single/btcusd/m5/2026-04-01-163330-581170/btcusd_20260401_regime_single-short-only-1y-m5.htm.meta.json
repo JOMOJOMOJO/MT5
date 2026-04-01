@@ -1,0 +1,63 @@
+﻿{
+    "generated_at":  "2026-04-01T16:33:19.6220734+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\btcusd_20260401_regime_single-short-only-1y.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp32C9.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp32C9.ini"
+               },
+    "tester":  {
+                   "symbol":  "BTCUSD",
+                   "period":  "M5",
+                   "from_date":  "2025.04.16",
+                   "to_date":  "2026.04.01",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\btcusd_20260401_regime_single-short-only-1y-m5.htm"
+               },
+    "preset":  {
+                   "name":  "btcusd_20260401_regime_single-short-only.set",
+                   "source":  "reports\\presets\\btcusd_20260401_regime_single-short-only.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\btcusd_20260401_regime_single-short-only.set",
+                   "parameters":  {
+                                      "InpSymbol":  "BTCUSD",
+                                      "InpSignalTimeframe":  "5",
+                                      "InpATRPeriod":  "14",
+                                      "InpEnableLong":  "false",
+                                      "InpLongStartHour":  "20",
+                                      "InpLongEndHour":  "24",
+                                      "InpLongRuleMode":  "0",
+                                      "InpLongEmaGap2050Max":  "-1.3698",
+                                      "InpLongRet24Max":  "-0.0057",
+                                      "InpLongMacdLineAtrMax":  "-0.8699",
+                                      "InpLongEmaGap50100Max":  "-1.6928",
+                                      "InpLongHoldBars":  "12",
+                                      "InpLongStopATR":  "1.25",
+                                      "InpLongTargetRMultiple":  "0.00",
+                                      "InpEnableShort":  "true",
+                                      "InpShortStartHour":  "13",
+                                      "InpShortEndHour":  "22",
+                                      "InpShortRuleMode":  "0",
+                                      "InpShortMacdLineAtrMin":  "0.9665",
+                                      "InpShortHighBreak24Min":  "-0.3645",
+                                      "InpShortTickVolumeZMin":  "1.5444",
+                                      "InpUseShortFlowFilter":  "false",
+                                      "InpShortTickFlowMin":  "0.4176",
+                                      "InpShortHoldBars":  "12",
+                                      "InpShortStopATR":  "1.25",
+                                      "InpShortTargetRMultiple":  "0.00",
+                                      "InpRiskPercent":  "0.35",
+                                      "InpSkipTradeWhenMinLotRiskTooHigh":  "true",
+                                      "InpMaxEffectiveRiskPercentAtMinLot":  "1.00",
+                                      "InpUseDailyLossCap":  "true",
+                                      "InpDailyLossCapPercent":  "3.0",
+                                      "InpUseEquityKillSwitch":  "true",
+                                      "InpEquityKillSwitchPercent":  "12.0",
+                                      "InpMaxTradesPerDay":  "60",
+                                      "InpMaxOpenTrades":  "1",
+                                      "InpMaxOpenPerSide":  "1",
+                                      "InpMaxSpreadPips":  "2500.0",
+                                      "InpMaxDeviationPips":  "250.0",
+                                      "InpAllowedWeekdays":  "0,1,2,3,4,5,6",
+                                      "InpBlockedEntryHours":  "",
+                                      "InpMagicNumber":  "20260413"
+                                  }
+               }
+}

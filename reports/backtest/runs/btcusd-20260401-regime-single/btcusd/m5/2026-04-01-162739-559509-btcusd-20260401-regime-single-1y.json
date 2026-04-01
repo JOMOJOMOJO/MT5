@@ -1,0 +1,5412 @@
+{
+  "imported_at": "2026-04-01T16:27:39",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "btcusd-20260401-regime-single",
+    "symbol": "BTCUSD",
+    "timeframe": "M5",
+    "tested_range": "2026.01.02 - 2026.04.01",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "btcusd-20260401-regime-single",
+    "symbol_key": "btcusd",
+    "timeframe_key": "m5",
+    "run_path": "reports/backtest/runs/btcusd-20260401-regime-single/btcusd/m5/2026-04-01-162739-559509-btcusd-20260401-regime-single-1y.json",
+    "knowledge_path": "knowledge/backtests/btcusd-20260401-regime-single/btcusd/m5/2026-04-01-162739-559509-btcusd-20260401-regime-single-1y.md",
+    "imported_dir": "reports/backtest/imported/btcusd-20260401-regime-single/btcusd/m5/2026-04-01-162739-559509",
+    "imported_report": "reports/backtest/imported/btcusd-20260401-regime-single/btcusd/m5/2026-04-01-162739-559509/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\btcusd_20260401_regime_single-1y-m5-oos-3m.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "BTCUSD",
+    "tester_period": "M5",
+    "preset_name": "btcusd_20260401_regime_single-baseline.set",
+    "preset_source": "reports\\presets\\btcusd_20260401_regime_single-baseline.set",
+    "signal_timeframe": "M5"
+  },
+  "metrics": {
+    "ea_name": "btcusd_20260401_regime_single",
+    "symbol": "BTCUSD",
+    "period": "M5 (2026.01.02 - 2026.04.01)",
+    "history_quality_percent": 100.0,
+    "bars": 25571,
+    "ticks": 18904909,
+    "initial_deposit": 10000.0,
+    "total_net_profit": 1012.1,
+    "gross_profit": 4703.7,
+    "gross_loss": -3691.6,
+    "profit_factor": 1.27,
+    "expected_payoff": 5.14,
+    "recovery_factor": 2.0,
+    "sharpe_ratio": 8.89,
+    "absolute_drawdown": 183.52,
+    "maximal_drawdown_amount": 457.47,
+    "maximal_drawdown_percent": 4.23,
+    "relative_drawdown_amount": 457.47,
+    "relative_drawdown_percent": 4.23,
+    "total_trades": 197,
+    "short_positions_count": 110,
+    "short_positions_percent": 46.36,
+    "long_positions_count": 87,
+    "long_positions_percent": 43.68,
+    "profit_trades_count": 89,
+    "profit_trades_percent": 45.18,
+    "loss_trades_count": 108,
+    "loss_trades_percent": 54.82,
+    "largest_profit_trade": 239.92,
+    "largest_loss_trade": -84.55,
+    "average_profit_trade": 52.85,
+    "average_loss_trade": -34.18,
+    "timeframe": "M5",
+    "tested_range": "2026.01.02 - 2026.04.01",
+    "win_rate_percent": 45.18
+  },
+  "summary": {
+    "headline": "取引回数は初期評価に耐える水準です。 / 総損益はプラスです。",
+    "strengths": [
+      "取引回数は初期評価に耐える水準です。",
+      "総損益はプラスです。",
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [],
+    "notes": []
+  },
+  "tags": [
+    "baseline-oos-3m"
+  ],
+  "raw_fields": {
+    "expert": "btcusd_20260401_regime_single",
+    "symbol": [
+      "BTCUSD",
+      "1"
+    ],
+    "period": "M5 (2026.01.02 - 2026.04.01)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "25571",
+    "ticks": "18904909",
+    "total net profit": "1 012.10",
+    "absolute drawdown": "183.52",
+    "gross profit": "4 703.70",
+    "maximal drawdown": "457.47 (4.23%)",
+    "gross loss": "-3 691.60",
+    "relative drawdown": "4.23% (457.47)",
+    "profit factor": "1.27",
+    "expected payoff": "5.14",
+    "recovery factor": "2.00",
+    "sharpe ratio": "8.89",
+    "z score": "-0.30 (23.58%)",
+    "ahpr": "1.0005 (0.05%)",
+    "lr correlation": "0.91",
+    "ontester": "0",
+    "ghpr": "1.0005 (0.05%)",
+    "lr standard error": "141.67",
+    "total trades": "197",
+    "short trades won percent": "110 (46.36%)",
+    "long positions won percent": "87 (43.68%)",
+    "profit trades percent of total": "89 (45.18%)",
+    "loss trades percent of total": "108 (54.82%)",
+    "largest profit trade": "239.92",
+    "largest loss trade": "-84.55",
+    "average profit trade": "52.85",
+    "average loss trade": "-34.18",
+    "correlation profits mfe": "0.86",
+    "correlation profits mae": "0.74",
+    "correlation mfe mae": "0.5823",
+    "t p": "時間",
+    "2026 01 03 16 15 01": "2",
+    "btcusd": [
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy"
+    ],
+    "0 49 0 49": "0.00",
+    "90102 34": "2026.01.03 16:15:01",
+    "filled": [
+      "regime_single_short",
+      "sl 90102.34",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 93163.65",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 94516.22",
+      "regime_single_short",
+      "sl 93846.86",
+      "regime_single_short",
+      "sl 93913.82",
+      "regime_single_short",
+      "sl 93902.93",
+      "regime_single_short",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_short",
+      "sl 91466.84",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_long",
+      "sl 90113.92",
+      "regime_single_short",
+      "sl 90787.83",
+      "regime_single_long",
+      "sl 90578.70",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 91163.86",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 91805.69",
+      "regime_single_short",
+      "sl 92037.00",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 93633.02",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 94426.60",
+      "regime_single_short",
+      "sl 96918.16",
+      "regime_single_short",
+      "sl 97178.00",
+      "regime_single_short",
+      "sl 97573.61",
+      "regime_single_short",
+      "regime_single_long",
+      "sl 95280.23",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 95283.32",
+      "regime_single_short",
+      "sl 95502.94",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_long",
+      "sl 89667.07",
+      "regime_single_long",
+      "sl 89466.51",
+      "regime_single_long",
+      "sl 89282.19",
+      "regime_single_long",
+      "regime_single_short",
+      "regime_single_long",
+      "regime_single_short",
+      "sl 90293.31",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 90398.08",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_long",
+      "regime_single_short",
+      "regime_single_long",
+      "sl 87743.84",
+      "regime_single_long",
+      "sl 86824.66",
+      "regime_single_long",
+      "sl 86391.80",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 86443.08",
+      "regime_single_long",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 90457.42",
+      "regime_single_short",
+      "regime_single_long",
+      "sl 84135.50",
+      "regime_single_long",
+      "sl 83551.20",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_short",
+      "regime_single_long",
+      "sl 77732.52",
+      "regime_single_long",
+      "sl 77297.35",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_short",
+      "regime_single_long",
+      "sl 74332.19",
+      "regime_single_long",
+      "sl 73836.94",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 65546.52",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 65395.26",
+      "regime_single_long",
+      "sl 65120.83",
+      "regime_single_long",
+      "sl 63687.64",
+      "regime_single_long",
+      "sl 62504.59",
+      "regime_single_long",
+      "sl 63428.26",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 67883.26",
+      "regime_single_short",
+      "sl 70184.41",
+      "regime_single_short",
+      "sl 70668.40",
+      "regime_single_short",
+      "sl 71085.73",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 68118.71",
+      "regime_single_short",
+      "regime_single_long",
+      "sl 65258.46",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 65704.36",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 70142.39",
+      "regime_single_short",
+      "sl 70321.71",
+      "regime_single_short",
+      "sl 70471.13",
+      "regime_single_short",
+      "regime_single_long",
+      "regime_single_short",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 66226.46",
+      "regime_single_long",
+      "regime_single_short",
+      "sl 68292.47",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_long",
+      "regime_single_short",
+      "sl 66491.26",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 64386.64",
+      "regime_single_long",
+      "sl 64147.66",
+      "regime_single_long",
+      "sl 63968.60",
+      "regime_single_long",
+      "regime_single_short",
+      "sl 66158.80",
+      "regime_single_short",
+      "sl 66235.89",
+      "regime_single_short",
+      "sl 66297.84",
+      "regime_single_short",
+      "sl 66488.89",
+      "regime_single_short",
+      "sl 66839.05",
+      "regime_single_short",
+      "sl 67864.25",
+      "regime_single_short",
+      "sl 68105.16",
+      "regime_single_short",
+      "sl 68556.90",
+      "regime_single_short",
+      "sl 68804.46",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_short",
+      "sl 65988.39",
+      "regime_single_short",
+      "sl 66849.88",
+      "regime_single_long",
+      "sl 65759.13",
+      "regime_single_long",
+      "sl 65263.46",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 65499.08",
+      "regime_single_short",
+      "sl 69152.01",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 68795.57",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 73729.98",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 67155.63",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 67352.72",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 69013.18",
+      "regime_single_short",
+      "sl 69242.35",
+      "regime_single_short",
+      "sl 69406.45",
+      "regime_single_short",
+      "regime_single_long",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 70713.37",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 73679.01",
+      "regime_single_short",
+      "regime_single_long",
+      "sl 70837.89",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 71182.80",
+      "regime_single_short",
+      "sl 74743.25",
+      "regime_single_short",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_short",
+      "regime_single_long",
+      "sl 70310.11",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 68216.22",
+      "regime_single_short",
+      "sl 71219.01",
+      "regime_single_short",
+      "regime_single_short",
+      "sl 71064.82",
+      "regime_single_short",
+      "sl 71453.84",
+      "regime_single_short",
+      "sl 71614.97",
+      "regime_single_short",
+      "regime_single_long",
+      "sl 69109.28",
+      "regime_single_long",
+      "sl 69030.69",
+      "regime_single_long",
+      "regime_single_short",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 68541.37",
+      "regime_single_long",
+      "regime_single_short",
+      "sl 66965.98",
+      "regime_single_long",
+      "sl 66594.37",
+      "regime_single_long",
+      "sl 66453.03",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_short"
+    ],
+    "3": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "buy": [
+      "0.49 / 0.49",
+      "0.24 / 0.24",
+      "0.17 / 0.17",
+      "0.38 / 0.38",
+      "0.38 / 0.38",
+      "0.38 / 0.38",
+      "0.15 / 0.15",
+      "0.84 / 0.84",
+      "0.6 / 0.6",
+      "0.12 / 0.12",
+      "0.13 / 0.13",
+      "0.09 / 0.09",
+      "0.16 / 0.16",
+      "0.1 / 0.1",
+      "0.07 / 0.07",
+      "0.09 / 0.09",
+      "0.37 / 0.37",
+      "0.09 / 0.09",
+      "0.11 / 0.11",
+      "0.19 / 0.19",
+      "0.09 / 0.09",
+      "0.06 / 0.06",
+      "0.07 / 0.07",
+      "0.07 / 0.07",
+      "0.19 / 0.19",
+      "0.35 / 0.35",
+      "0.21 / 0.21",
+      "0.19 / 0.19",
+      "0.62 / 0.62",
+      "0.28 / 0.28",
+      "0.24 / 0.24",
+      "0.2 / 0.2",
+      "0.19 / 0.19",
+      "0.19 / 0.19",
+      "0.17 / 0.17",
+      "0.1 / 0.1",
+      "0.12 / 0.12",
+      "0.12 / 0.12",
+      "0.11 / 0.11",
+      "0.15 / 0.15",
+      "0.11 / 0.11",
+      "0.06 / 0.06",
+      "0.08 / 0.08",
+      "0.11 / 0.11",
+      "0.13 / 0.13",
+      "0.11 / 0.11",
+      "0.1 / 0.1",
+      "0.21 / 0.21",
+      "0.11 / 0.11",
+      "0.22 / 0.22",
+      "0.07 / 0.07",
+      "0.1 / 0.1",
+      "0.12 / 0.12",
+      "0.12 / 0.12",
+      "0.29 / 0.29",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "out",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 00": [
+      "2026.01.03 16:21:28",
+      "2026.01.05 13:24:21",
+      "2026.01.05 22:05:31",
+      "2026.01.06 13:28:44",
+      "2026.01.06 13:50:14",
+      "2026.01.06 14:06:36",
+      "2026.01.08 20:04:25",
+      "2026.01.09 23:07:00",
+      "2026.01.10 13:10:25",
+      "2026.01.10 21:05:04",
+      "2026.01.11 16:58:10",
+      "2026.01.12 18:00:29",
+      "2026.01.12 18:28:36",
+      "2026.01.13 18:38:21",
+      "2026.01.13 22:12:01",
+      "2026.01.14 17:12:15",
+      "2026.01.14 18:09:21",
+      "2026.01.14 18:47:32",
+      "2026.01.15 22:28:12",
+      "2026.01.17 23:39:51",
+      "2026.01.18 21:33:20",
+      "2026.01.20 20:20:42",
+      "2026.01.20 20:40:16",
+      "2026.01.20 21:35:55",
+      "2026.01.21 21:47:54",
+      "2026.01.23 19:20:07",
+      "2026.01.25 20:12:59",
+      "2026.01.25 21:20:37",
+      "2026.01.25 21:53:24",
+      "2026.01.25 23:39:50",
+      "2026.01.28 15:44:03",
+      "2026.01.29 20:18:38",
+      "2026.01.29 20:52:15",
+      "2026.01.31 20:37:59",
+      "2026.01.31 21:37:51",
+      "2026.02.03 20:21:55",
+      "2026.02.03 20:44:33",
+      "2026.02.05 20:22:31",
+      "2026.02.05 21:51:22",
+      "2026.02.05 22:13:48",
+      "2026.02.05 22:22:38",
+      "2026.02.05 22:55:01",
+      "2026.02.05 23:14:19",
+      "2026.02.06 16:33:57",
+      "2026.02.06 18:53:38",
+      "2026.02.06 19:19:19",
+      "2026.02.06 19:30:48",
+      "2026.02.12 13:27:24",
+      "2026.02.12 20:19:56",
+      "2026.02.12 22:10:41",
+      "2026.02.14 13:20:46",
+      "2026.02.14 13:44:43",
+      "2026.02.14 13:56:08",
+      "2026.02.18 22:52:34",
+      "2026.02.21 13:20:49",
+      "2026.02.23 13:20:58",
+      "2026.02.23 21:22:50",
+      "2026.02.23 22:09:29",
+      "2026.02.23 22:13:37",
+      "2026.02.25 14:50:26",
+      "2026.02.25 15:03:01",
+      "2026.02.25 15:37:08",
+      "2026.02.25 15:47:58",
+      "2026.02.25 16:47:45",
+      "2026.02.25 18:18:14",
+      "2026.02.25 18:46:48",
+      "2026.02.25 19:11:08",
+      "2026.02.25 19:45:06",
+      "2026.02.28 21:31:50",
+      "2026.02.28 22:20:47",
+      "2026.03.01 22:07:57",
+      "2026.03.01 22:30:35",
+      "2026.03.02 00:34:33",
+      "2026.03.02 17:37:09",
+      "2026.03.03 18:24:27",
+      "2026.03.04 19:16:34",
+      "2026.03.07 21:50:07",
+      "2026.03.07 23:35:17",
+      "2026.03.09 16:43:39",
+      "2026.03.09 17:03:14",
+      "2026.03.09 17:36:37",
+      "2026.03.12 14:41:15",
+      "2026.03.13 17:20:09",
+      "2026.03.13 21:19:12",
+      "2026.03.14 00:28:57",
+      "2026.03.17 21:53:21",
+      "2026.03.21 20:51:31",
+      "2026.03.22 23:36:13",
+      "2026.03.23 14:33:39",
+      "2026.03.23 16:37:25",
+      "2026.03.23 16:51:23",
+      "2026.03.23 17:01:54",
+      "2026.03.24 20:07:00",
+      "2026.03.24 20:44:11",
+      "2026.03.26 22:59:42",
+      "2026.03.28 17:45:12",
+      "2026.03.30 21:50:08",
+      "2026.03.30 22:06:40",
+      "0.00",
+      "0.00",
+      "-37.43",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.63",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.46",
+      "0.00",
+      "-34.87",
+      "0.00",
+      "-34.27",
+      "0.00",
+      "-35.23",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.27",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.15",
+      "0.00",
+      "-35.06",
+      "0.00",
+      "-36.27",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.86",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-33.74",
+      "0.00",
+      "-33.30",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-32.89",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.38",
+      "0.00",
+      "-32.88",
+      "0.00",
+      "-32.12",
+      "0.00",
+      "-34.22",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.31",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-15.93",
+      "0.00",
+      "-36.16",
+      "0.00",
+      "-35.12",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.51",
+      "0.00",
+      "-33.53",
+      "0.00",
+      "-33.75",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.69",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-33.70",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-49.14",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.43",
+      "0.00",
+      "-34.21",
+      "0.00",
+      "-34.30",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.83",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-38.29",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.07",
+      "0.00",
+      "-38.06",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-32.10",
+      "0.00",
+      "-36.27",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-33.75",
+      "0.00",
+      "-35.08",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.71",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.68",
+      "0.00",
+      "-36.60",
+      "0.00",
+      "-35.61",
+      "0.00",
+      "-31.75",
+      "0.00",
+      "-29.58",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.90",
+      "0.00",
+      "-34.63",
+      "0.00",
+      "-34.44",
+      "0.00",
+      "-33.38",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.09",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.54",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.87",
+      "0.00",
+      "-35.60",
+      "0.00",
+      "-37.36",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-38.51",
+      "0.00",
+      "-10.50",
+      "0.00",
+      "-39.46",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.41",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-44.12",
+      "0.00",
+      "-37.29",
+      "0.00",
+      "-35.64",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.38",
+      "0.00",
+      "-38.86",
+      "0.00",
+      "-39.53",
+      "0.00",
+      "-37.14",
+      "0.00",
+      "-35.86",
+      "0.00",
+      "-36.99",
+      "0.00",
+      "-34.67",
+      "0.00",
+      "-34.36",
+      "0.00",
+      "-34.45",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-40.98",
+      "0.00",
+      "-36.70",
+      "0.00",
+      "-35.70",
+      "0.00",
+      "-36.77",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.71",
+      "0.00",
+      "-32.33",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.65",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.24",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-38.41",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.78",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.91",
+      "0.00",
+      "-34.61",
+      "0.00",
+      "-35.20",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-8.19",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.50",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.95",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-38.01",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.96",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-10.09",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-38.52",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-38.51",
+      "0.00",
+      "-36.80",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.53",
+      "0.00",
+      "-36.66",
+      "0.00",
+      "-37.15",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.96",
+      "0.00",
+      "-36.59",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-38.22",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-41.60",
+      "0.00",
+      "-38.19",
+      "0.00",
+      "-38.03",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-17.77",
+      "0.00",
+      "0.00",
+      "-157.99"
+    ],
+    "2026 01 03 16 45 00": "4",
+    "0 42 0 42": [
+      "0.00",
+      "0.00"
+    ],
+    "90223 85": "2026.01.03 16:45:00",
+    "2026 01 03 17 45 02": [
+      "5",
+      "filled",
+      "5"
+    ],
+    "2026 01 05 13 10 01": "6",
+    "0 24 0 24": [
+      "0.00",
+      "0.00"
+    ],
+    "93163 65": "2026.01.05 13:10:01",
+    "7": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 05 18 20 00": "8",
+    "0 1 0 1": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "94277 69": "2026.01.05 18:20:00",
+    "2026 01 05 19 20 00": [
+      "9",
+      "filled",
+      "9"
+    ],
+    "2026 01 05 21 15 00": "10",
+    "0 17 0 17": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "94516 22": "2026.01.05 21:15:00",
+    "11": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 06 13 25 01": "12",
+    "0 38 0 38": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "93846 86": "2026.01.06 13:25:01",
+    "13": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 06 13 30 01": "14",
+    "93913 82": "2026.01.06 13:30:01",
+    "15": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 06 13 55 02": "16",
+    "93902 93": "2026.01.06 13:55:02",
+    "17": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 06 14 15 00": "18",
+    "93977 26": "2026.01.06 14:15:00",
+    "2026 01 06 15 15 00": [
+      "19",
+      "filled",
+      "19"
+    ],
+    "2026 01 06 20 10 00": "20",
+    "91531 37": "2026.01.06 20:10:00",
+    "2026 01 06 21 10 00": [
+      "21",
+      "filled",
+      "21"
+    ],
+    "2026 01 06 21 15 00": "22",
+    "0 15 0 15": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "92003 95": "2026.01.06 21:15:00",
+    "2026 01 06 22 15 00": [
+      "23",
+      "filled",
+      "24",
+      "23"
+    ],
+    "0 2 0 2": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "92277 24": "2026.01.06 22:15:00",
+    "2026 01 06 23 15 00": [
+      "25",
+      "filled",
+      "25"
+    ],
+    "2026 01 08 19 50 00": "26",
+    "91466 84": "2026.01.08 19:50:00",
+    "27": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 08 20 10 01": "28",
+    "91542 93": "2026.01.08 20:10:01",
+    "2026 01 08 21 10 00": [
+      "29",
+      "filled",
+      "29"
+    ],
+    "2026 01 09 19 05 00": "30",
+    "0 13 0 13": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "91867 66": "2026.01.09 19:05:00",
+    "2026 01 09 20 05 00": [
+      "31",
+      "filled",
+      "31"
+    ],
+    "2026 01 09 23 05 00": "32",
+    "0 21 0 21": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "90113 92": "2026.01.09 23:05:00",
+    "33": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "sell": [
+      "0.21 / 0.21",
+      "1.38 / 1.38",
+      "0.14 / 0.14",
+      "1.22 / 1.22",
+      "0.14 / 0.14",
+      "0.14 / 0.14",
+      "0.15 / 0.15",
+      "0.21 / 0.21",
+      "0.13 / 0.13",
+      "0.1 / 0.1",
+      "0.15 / 0.15",
+      "0.1 / 0.1",
+      "0.1 / 0.1",
+      "0.05 / 0.05",
+      "0.05 / 0.05",
+      "0.08 / 0.08",
+      "0.08 / 0.08",
+      "0.05 / 0.05",
+      "0.06 / 0.06",
+      "0.07 / 0.07",
+      "0.06 / 0.06",
+      "0.04 / 0.04",
+      "0.03 / 0.03",
+      "0.09 / 0.09",
+      "0.12 / 0.12",
+      "0.18 / 0.18",
+      "0.15 / 0.15",
+      "0.16 / 0.16",
+      "0.15 / 0.15",
+      "0.22 / 0.22",
+      "0.17 / 0.17",
+      "0.2 / 0.2",
+      "0.25 / 0.25",
+      "0.35 / 0.35",
+      "0.14 / 0.14",
+      "0.26 / 0.26",
+      "0.4 / 0.4",
+      "0.29 / 0.29",
+      "0.17 / 0.17",
+      "0.17 / 0.17",
+      "0.29 / 0.29",
+      "0.21 / 0.21",
+      "0.22 / 0.22",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "out",
+      "in",
+      "out",
+      "out",
+      "in"
+    ],
+    "2026 01 10 13 10 06": "34",
+    "0 84 0 84": "0.00",
+    "90787 83": "2026.01.10 13:10:06",
+    "35": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 10 21 05 01": "36",
+    "1 38 1 38": "0.00",
+    "90578 70": "2026.01.10 21:05:01",
+    "37": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 11 15 05 00": "38",
+    "0 54 0 54": [
+      "0.00",
+      "0.00"
+    ],
+    "90984 98": "2026.01.11 15:05:00",
+    "2026 01 11 16 05 00": [
+      "39",
+      "filled",
+      "39"
+    ],
+    "2026 01 11 16 55 04": "40",
+    "0 6 0 6": "0.00",
+    "91163 86": "2026.01.11 16:55:04",
+    "41": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 11 17 10 00": "42",
+    "0 46 0 46": [
+      "0.00",
+      "0.00"
+    ],
+    "91132 22": "2026.01.11 17:10:00",
+    "2026 01 11 18 10 00": [
+      "43",
+      "filled",
+      "43"
+    ],
+    "2026 01 12 17 55 00": "44",
+    "0 12 0 12": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "91805 69": "2026.01.12 17:55:00",
+    "45": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 12 18 05 00": "46",
+    "92037 00": "2026.01.12 18:05:00",
+    "47": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 12 18 40 00": "48",
+    "92325 46": "2026.01.12 18:40:00",
+    "2026 01 12 19 40 00": [
+      "49",
+      "filled",
+      "49"
+    ],
+    "2026 01 13 18 20 00": "50",
+    "0 09 0 09": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "93633 02": "2026.01.13 18:20:00",
+    "51": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 13 18 50 00": "52",
+    "0 11 0 11": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "93949 56": "2026.01.13 18:50:00",
+    "2026 01 13 19 50 00": [
+      "53",
+      "filled",
+      "53"
+    ],
+    "2026 01 13 22 00 00": "54",
+    "0 16 0 16": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "94426 60": "2026.01.13 22:00:00",
+    "55": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 14 16 50 00": "56",
+    "96918 16": "2026.01.14 16:50:00",
+    "57": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 14 17 30 00": "58",
+    "0 07 0 07": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "97178 00": "2026.01.14 17:30:00",
+    "59": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 14 18 20 00": "60",
+    "97573 61": "2026.01.14 18:20:00",
+    "61": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 14 18 55 00": "62",
+    "97798 81": "2026.01.14 18:55:00",
+    "2026 01 14 19 55 00": [
+      "63",
+      "filled",
+      "63"
+    ],
+    "2026 01 15 22 00 00": "64",
+    "0 14 0 14": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "95280 23": "2026.01.15 22:00:00",
+    "65": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 15 22 30 00": "66",
+    "94974 87": "2026.01.15 22:30:00",
+    "2026 01 15 23 30 02": [
+      "67",
+      "filled",
+      "67"
+    ],
+    "2026 01 15 23 35 03": "68",
+    "95312 30": "2026.01.15 23:35:03",
+    "2026 01 16 00 35 01": [
+      "69",
+      "filled",
+      "69"
+    ],
+    "2026 01 17 22 40 02": "70",
+    "1 22 1 22": "0.00",
+    "95283 32": "2026.01.17 22:40:02",
+    "71": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 18 21 15 01": "72",
+    "0 37 0 37": "0.00",
+    "95502 94": "2026.01.18 21:15:01",
+    "73": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 18 21 40 03": "74",
+    "0 39 0 39": [
+      "0.00",
+      "0.00"
+    ],
+    "95534 33": "2026.01.18 21:40:03",
+    "2026 01 18 22 40 03": [
+      "75",
+      "filled",
+      "75"
+    ],
+    "2026 01 20 13 20 00": "76",
+    "0 36 0 36": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "91452 50": "2026.01.20 13:20:00",
+    "2026 01 20 14 20 01": [
+      "77",
+      "filled",
+      "77"
+    ],
+    "2026 01 20 20 05 00": "78",
+    "89667 07": "2026.01.20 20:05:00",
+    "79": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 20 20 35 00": "80",
+    "89466 51": "2026.01.20 20:35:00",
+    "81": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 20 21 00 00": "82",
+    "89282 19": "2026.01.20 21:00:00",
+    "83": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 20 22 05 00": "84",
+    "89358 73": "2026.01.20 22:05:00",
+    "2026 01 20 23 05 00": [
+      "85",
+      "filled",
+      "85"
+    ],
+    "2026 01 21 18 00 02": "86",
+    "90625 35": "2026.01.21 18:00:02",
+    "2026 01 21 19 00 00": [
+      "87",
+      "filled",
+      "87"
+    ],
+    "2026 01 21 20 25 00": "88",
+    "87492 11": "2026.01.21 20:25:00",
+    "2026 01 21 21 25 00": [
+      "89",
+      "filled",
+      "89"
+    ],
+    "2026 01 21 21 40 00": "90",
+    "90293 31": "2026.01.21 21:40:00",
+    "91": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 21 21 55 00": "92",
+    "90649 84": "2026.01.21 21:55:00",
+    "2026 01 21 22 55 00": [
+      "93",
+      "filled",
+      "93"
+    ],
+    "2026 01 23 19 05 01": "94",
+    "90398 08": "2026.01.23 19:05:01",
+    "95": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 23 19 30 00": "96",
+    "91281 94": "2026.01.23 19:30:00",
+    "2026 01 23 20 30 00": [
+      "97",
+      "filled",
+      "98",
+      "97"
+    ],
+    "91196 86": "2026.01.23 20:30:00",
+    "2026 01 23 21 30 00": [
+      "99",
+      "filled",
+      "99"
+    ],
+    "2026 01 23 23 45 00": "100",
+    "0 22 0 22": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "89289 83": "2026.01.23 23:45:00",
+    "2026 01 24 00 45 01": [
+      "101",
+      "filled",
+      "101"
+    ],
+    "2026 01 25 16 00 00": "102",
+    "0 41 0 41": [
+      "0.00",
+      "0.00"
+    ],
+    "88997 07": "2026.01.25 16:00:00",
+    "2026 01 25 17 00 00": [
+      "103",
+      "filled",
+      "103"
+    ],
+    "2026 01 25 20 05 00": "104",
+    "87743 84": "2026.01.25 20:05:00",
+    "105": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 25 20 45 00": "106",
+    "86824 66": "2026.01.25 20:45:00",
+    "107": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 25 21 45 00": "108",
+    "86391 80": "2026.01.25 21:45:00",
+    "109": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 25 22 00 01": "110",
+    "86207 72": "2026.01.25 22:00:01",
+    "2026 01 25 23 00 00": [
+      "111",
+      "filled",
+      "112",
+      "111"
+    ],
+    "86443 08": "2026.01.25 23:00:00",
+    "113": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 25 23 40 00": "114",
+    "86180 70": "2026.01.25 23:40:00",
+    "2026 01 26 00 40 00": [
+      "115",
+      "filled",
+      "115"
+    ],
+    "2026 01 26 21 15 00": "116",
+    "88594 91": "2026.01.26 21:15:00",
+    "2026 01 26 22 15 00": [
+      "117",
+      "filled",
+      "117"
+    ],
+    "2026 01 27 19 00 00": "118",
+    "88882 31": "2026.01.27 19:00:00",
+    "2026 01 27 20 00 01": [
+      "119",
+      "filled",
+      "119"
+    ],
+    "2026 01 28 13 55 00": "120",
+    "0 23 0 23": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "90191 97": "2026.01.28 13:55:00",
+    "2026 01 28 14 55 02": [
+      "121",
+      "filled",
+      "121"
+    ],
+    "2026 01 28 15 40 00": "122",
+    "0 19 0 19": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "90457 42": "2026.01.28 15:40:00",
+    "123": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 28 15 45 00": "124",
+    "0 18 0 18": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "90591 95": "2026.01.28 15:45:00",
+    "2026 01 28 16 45 00": [
+      "125",
+      "filled",
+      "125"
+    ],
+    "2026 01 29 20 05 00": "126",
+    "84135 50": "2026.01.29 20:05:00",
+    "127": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 29 20 40 00": "128",
+    "83551 20": "2026.01.29 20:40:00",
+    "129": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 29 21 05 01": "130",
+    "83208 19": "2026.01.29 21:05:01",
+    "2026 01 29 22 05 00": [
+      "131",
+      "filled",
+      "131"
+    ],
+    "2026 01 29 22 55 00": "132",
+    "83989 51": "2026.01.29 22:55:00",
+    "2026 01 29 23 55 00": [
+      "133",
+      "filled",
+      "133"
+    ],
+    "2026 01 30 21 40 00": "134",
+    "84847 16": "2026.01.30 21:40:00",
+    "2026 01 30 22 40 00": [
+      "135",
+      "filled",
+      "135"
+    ],
+    "2026 01 31 20 20 00": "136",
+    "0 05 0 05": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "77732 52": "2026.01.31 20:20:00",
+    "137": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 31 20 50 00": "138",
+    "77297 35": "2026.01.31 20:50:00",
+    "139": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 01 31 21 45 00": "140",
+    "0 04 0 04": [
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "76741 08": "2026.01.31 21:45:00",
+    "2026 01 31 22 45 00": [
+      "141",
+      "filled",
+      "142",
+      "141"
+    ],
+    "0 08 0 08": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "77115 61": "2026.01.31 22:45:00",
+    "2026 01 31 23 45 00": [
+      "143",
+      "filled",
+      "143"
+    ],
+    "2026 01 31 23 50 00": "144",
+    "77797 38": "2026.01.31 23:50:00",
+    "2026 02 01 00 50 00": [
+      "145",
+      "filled",
+      "145"
+    ],
+    "2026 02 02 14 30 00": "146",
+    "78359 48": "2026.02.02 14:30:00",
+    "2026 02 02 15 30 00": [
+      "147",
+      "filled",
+      "147"
+    ],
+    "2026 02 03 20 20 00": "148",
+    "74332 19": "2026.02.03 20:20:00",
+    "149": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 03 20 35 00": "150",
+    "73836 94": "2026.02.03 20:35:00",
+    "151": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 03 21 00 00": "152",
+    "72684 26": "2026.02.03 21:00:00",
+    "2026 02 03 22 00 00": [
+      "153",
+      "filled",
+      "154",
+      "153"
+    ],
+    "74316 76": "2026.02.03 22:00:00",
+    "2026 02 03 23 00 00": [
+      "155",
+      "filled",
+      "155"
+    ],
+    "2026 02 04 20 10 00": "156",
+    "71951 41": "2026.02.04 20:10:00",
+    "2026 02 04 21 10 00": [
+      "157",
+      "filled",
+      "157"
+    ],
+    "2026 02 05 20 05 00": "158",
+    "65546 52": "2026.02.05 20:05:00",
+    "159": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 05 20 30 00": "160",
+    "65145 82": "2026.02.05 20:30:00",
+    "2026 02 05 21 30 00": [
+      "161",
+      "filled",
+      "161"
+    ],
+    "2026 02 05 21 35 00": "162",
+    "0 06 0 06": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "65395 26": "2026.02.05 21:35:00",
+    "163": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 05 22 10 00": "164",
+    "65120 83": "2026.02.05 22:10:00",
+    "165": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 05 22 20 00": "166",
+    "63687 64": "2026.02.05 22:20:00",
+    "167": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 05 22 50 00": "168",
+    "62504 59": "2026.02.05 22:50:00",
+    "169": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 05 23 05 00": "170",
+    "0 03 0 03": "0.00",
+    "63428 26": "2026.02.05 23:05:00",
+    "171": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 06 14 00 00": "172",
+    "66883 54": "2026.02.06 14:00:00",
+    "2026 02 06 15 00 00": [
+      "173",
+      "filled",
+      "173"
+    ],
+    "2026 02 06 15 55 00": "174",
+    "67883 26": "2026.02.06 15:55:00",
+    "175": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 06 18 20 00": "176",
+    "70184 41": "2026.02.06 18:20:00",
+    "177": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 06 18 55 00": "178",
+    "70668 40": "2026.02.06 18:55:00",
+    "179": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 06 19 20 00": "180",
+    "71085 73": "2026.02.06 19:20:00",
+    "181": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 06 19 50 00": "182",
+    "71499 20": "2026.02.06 19:50:00",
+    "2026 02 06 20 50 00": [
+      "183",
+      "filled",
+      "183"
+    ],
+    "2026 02 08 13 55 00": "184",
+    "71272 28": "2026.02.08 13:55:00",
+    "2026 02 08 14 55 00": [
+      "185",
+      "filled",
+      "185"
+    ],
+    "2026 02 08 16 05 00": "186",
+    "71665 23": "2026.02.08 16:05:00",
+    "2026 02 08 17 05 00": [
+      "187",
+      "filled",
+      "187"
+    ],
+    "2026 02 09 19 50 00": "188",
+    "71183 47": "2026.02.09 19:50:00",
+    "2026 02 09 20 50 00": [
+      "189",
+      "filled",
+      "189"
+    ],
+    "2026 02 09 21 50 00": "190",
+    "71170 48": "2026.02.09 21:50:00",
+    "2026 02 09 22 50 00": [
+      "191",
+      "filled",
+      "191"
+    ],
+    "2026 02 11 21 40 00": "192",
+    "67945 05": "2026.02.11 21:40:00",
+    "2026 02 11 22 40 00": [
+      "193",
+      "filled",
+      "193"
+    ],
+    "2026 02 12 13 10 00": "194",
+    "68118 71": "2026.02.12 13:10:00",
+    "195": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 12 13 35 00": "196",
+    "68392 92": "2026.02.12 13:35:00",
+    "2026 02 12 14 35 00": [
+      "197",
+      "filled",
+      "197"
+    ],
+    "2026 02 12 20 05 00": "198",
+    "65258 46": "2026.02.12 20:05:00",
+    "199": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 12 20 30 00": "200",
+    "64944 83": "2026.02.12 20:30:00",
+    "2026 02 12 21 30 00": [
+      "201",
+      "filled",
+      "201"
+    ],
+    "2026 02 12 21 45 00": "202",
+    "65704 36": "2026.02.12 21:45:00",
+    "203": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 13 17 35 00": "204",
+    "69551 59": "2026.02.13 17:35:00",
+    "2026 02 13 18 35 00": [
+      "205",
+      "filled",
+      "205"
+    ],
+    "2026 02 13 18 45 00": "206",
+    "69594 71": "2026.02.13 18:45:00",
+    "2026 02 13 19 45 00": [
+      "207",
+      "filled",
+      "207"
+    ],
+    "2026 02 14 13 20 00": "208",
+    "0 35 0 35": [
+      "0.00",
+      "0.00"
+    ],
+    "70142 39": "2026.02.14 13:20:00",
+    "209": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 14 13 35 01": "210",
+    "70321 71": "2026.02.14 13:35:01",
+    "211": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 14 13 50 00": "212",
+    "70471 13": "2026.02.14 13:50:00",
+    "213": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 14 14 35 00": "214",
+    "70415 80": "2026.02.14 14:35:00",
+    "2026 02 14 15 35 00": [
+      "215",
+      "filled",
+      "215"
+    ],
+    "2026 02 15 21 15 00": "216",
+    "67960 87": "2026.02.15 21:15:00",
+    "2026 02 15 22 15 00": [
+      "217",
+      "filled",
+      "217"
+    ],
+    "2026 02 16 15 10 00": "218",
+    "70042 07": "2026.02.16 15:10:00",
+    "2026 02 16 16 10 00": [
+      "219",
+      "filled",
+      "219"
+    ],
+    "2026 02 18 21 45 00": "220",
+    "65865 30": "2026.02.18 21:45:00",
+    "2026 02 18 22 45 00": [
+      "221",
+      "filled",
+      "222",
+      "221"
+    ],
+    "66226 46": "2026.02.18 22:45:00",
+    "223": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 18 23 20 00": "224",
+    "66183 06": "2026.02.18 23:20:00",
+    "2026 02 19 00 20 00": [
+      "225",
+      "filled",
+      "225"
+    ],
+    "2026 02 21 13 20 02": "226",
+    "0 62 0 62": "0.00",
+    "68292 47": "2026.02.21 13:20:02",
+    "227": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 21 17 55 03": "228",
+    "0 33 0 33": [
+      "0.00",
+      "0.00"
+    ],
+    "68719 38": "2026.02.21 17:55:03",
+    "2026 02 21 18 55 01": [
+      "229",
+      "filled",
+      "229"
+    ],
+    "2026 02 22 13 30 01": "230",
+    "0 71 0 71": [
+      "0.00",
+      "0.00"
+    ],
+    "68268 43": "2026.02.22 13:30:01",
+    "2026 02 22 14 30 00": [
+      "231",
+      "filled",
+      "231"
+    ],
+    "2026 02 22 20 05 00": "232",
+    "67288 86": "2026.02.22 20:05:00",
+    "2026 02 22 21 05 01": [
+      "233",
+      "filled",
+      "233"
+    ],
+    "2026 02 23 13 15 00": "234",
+    "0 28 0 28": "0.00",
+    "66491 26": "2026.02.23 13:15:00",
+    "235": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 23 20 05 00": "236",
+    "64500 38": "2026.02.23 20:05:00",
+    "2026 02 23 21 05 00": [
+      "237",
+      "filled",
+      "238",
+      "237"
+    ],
+    "64386 64": "2026.02.23 21:05:00",
+    "239": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 23 22 05 00": "240",
+    "64147 66": "2026.02.23 22:05:00",
+    "241": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 23 22 10 01": "242",
+    "63968 60": "2026.02.23 22:10:01",
+    "243": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 23 22 45 00": "244",
+    "64016 76": "2026.02.23 22:45:00",
+    "2026 02 23 23 45 00": [
+      "245",
+      "filled",
+      "245"
+    ],
+    "2026 02 25 14 50 00": "246",
+    "66158 80": "2026.02.25 14:50:00",
+    "247": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 25 15 00 00": "248",
+    "66235 89": "2026.02.25 15:00:00",
+    "249": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 25 15 05 00": "250",
+    "66297 84": "2026.02.25 15:05:00",
+    "251": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 25 15 45 00": "252",
+    "66488 89": "2026.02.25 15:45:00",
+    "253": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 25 15 50 00": "254",
+    "66839 05": "2026.02.25 15:50:00",
+    "255": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 25 17 45 00": "256",
+    "67864 25": "2026.02.25 17:45:00",
+    "257": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 25 18 20 00": "258",
+    "68105 16": "2026.02.25 18:20:00",
+    "259": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 25 19 10 00": "260",
+    "68556 90": "2026.02.25 19:10:00",
+    "261": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 25 19 15 00": "262",
+    "68804 46": "2026.02.25 19:15:00",
+    "263": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 26 20 10 00": "264",
+    "66459 78": "2026.02.26 20:10:00",
+    "2026 02 26 21 10 00": [
+      "265",
+      "filled",
+      "265"
+    ],
+    "2026 02 27 21 20 00": "266",
+    "65040 26": "2026.02.27 21:20:00",
+    "2026 02 27 22 20 00": [
+      "267",
+      "filled",
+      "267"
+    ],
+    "2026 02 28 21 15 00": "268",
+    "65988 39": "2026.02.28 21:15:00",
+    "269": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 28 21 50 00": "270",
+    "66849 88": "2026.02.28 21:50:00",
+    "271": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 01 21 50 01": "272",
+    "65759 13": "2026.03.01 21:50:01",
+    "273": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 01 22 15 00": "274",
+    "65263 46": "2026.03.01 22:15:00",
+    "275": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 01 22 40 00": "276",
+    "64977 72": "2026.03.01 22:40:00",
+    "2026 03 01 23 40 01": [
+      "277",
+      "filled",
+      "278",
+      "277"
+    ],
+    "65499 08": "2026.03.01 23:40:01",
+    "279": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 02 17 25 00": "280",
+    "69152 01": "2026.03.02 17:25:00",
+    "281": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 02 17 40 00": "282",
+    "70038 96": "2026.03.02 17:40:00",
+    "2026 03 02 18 40 00": [
+      "283",
+      "filled",
+      "283"
+    ],
+    "2026 03 02 18 50 00": "284",
+    "70295 60": "2026.03.02 18:50:00",
+    "2026 03 02 19 50 00": [
+      "285",
+      "filled",
+      "285"
+    ],
+    "2026 03 03 18 20 00": "286",
+    "68795 57": "2026.03.03 18:20:00",
+    "287": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 03 18 25 00": "288",
+    "69340 79": "2026.03.03 18:25:00",
+    "2026 03 03 19 25 00": [
+      "289",
+      "filled",
+      "289"
+    ],
+    "2026 03 04 13 20 00": "290",
+    "71651 44": "2026.03.04 13:20:00",
+    "2026 03 04 14 20 00": [
+      "291",
+      "filled",
+      "291"
+    ],
+    "2026 03 04 17 55 00": "292",
+    "73540 64": "2026.03.04 17:55:00",
+    "2026 03 04 18 55 00": [
+      "293",
+      "filled",
+      "293"
+    ],
+    "2026 03 04 19 10 00": "294",
+    "73729 98": "2026.03.04 19:10:00",
+    "295": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 05 20 10 00": "296",
+    "70673 11": "2026.03.05 20:10:00",
+    "2026 03 05 21 10 00": [
+      "297",
+      "filled",
+      "297"
+    ],
+    "2026 03 06 20 05 00": "298",
+    "67863 96": "2026.03.06 20:05:00",
+    "2026 03 06 21 05 00": [
+      "299",
+      "filled",
+      "299"
+    ],
+    "2026 03 06 22 40 00": "300",
+    "67730 87": "2026.03.06 22:40:00",
+    "2026 03 06 23 40 01": [
+      "301",
+      "filled",
+      "301"
+    ],
+    "2026 03 07 21 40 00": "302",
+    "0 25 0 25": "0.00",
+    "67155 63": "2026.03.07 21:40:00",
+    "303": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 07 22 00 00": "304",
+    "66923 07": "2026.03.07 22:00:00",
+    "2026 03 07 23 00 00": [
+      "305",
+      "filled",
+      "305"
+    ],
+    "2026 03 07 23 10 00": "306",
+    "67352 72": "2026.03.07 23:10:00",
+    "307": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 08 14 25 00": "308",
+    "67883 79": "2026.03.08 14:25:00",
+    "2026 03 08 15 25 00": [
+      "309",
+      "filled",
+      "309"
+    ],
+    "2026 03 09 16 40 00": "310",
+    "69013 18": "2026.03.09 16:40:00",
+    "311": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 09 16 50 00": "312",
+    "69242 35": "2026.03.09 16:50:00",
+    "313": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 09 17 05 00": "314",
+    "69406 45": "2026.03.09 17:05:00",
+    "315": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 09 18 00 00": "316",
+    "69468 53": "2026.03.09 18:00:00",
+    "2026 03 09 19 00 00": [
+      "317",
+      "filled",
+      "317"
+    ],
+    "2026 03 10 23 00 00": "318",
+    "69793 93": "2026.03.10 23:00:00",
+    "2026 03 11 00 00 00": [
+      "319",
+      "filled",
+      "319"
+    ],
+    "2026 03 11 20 30 00": "320",
+    "71493 26": "2026.03.11 20:30:00",
+    "2026 03 11 21 30 00": [
+      "321",
+      "filled",
+      "321"
+    ],
+    "2026 03 12 14 30 00": "322",
+    "70713 37": "2026.03.12 14:30:00",
+    "323": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 12 14 45 03": "324",
+    "70850 61": "2026.03.12 14:45:03",
+    "2026 03 12 15 45 00": [
+      "325",
+      "filled",
+      "325"
+    ],
+    "2026 03 13 13 20 00": "326",
+    "72645 25": "2026.03.13 13:20:00",
+    "2026 03 13 14 20 01": [
+      "327",
+      "filled",
+      "328",
+      "327"
+    ],
+    "72577 37": "2026.03.13 14:20:01",
+    "2026 03 13 15 20 02": [
+      "329",
+      "filled",
+      "329"
+    ],
+    "2026 03 13 17 00 00": "330",
+    "73679 01": "2026.03.13 17:00:00",
+    "331": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 13 17 35 00": "332",
+    "74079 74": "2026.03.13 17:35:00",
+    "2026 03 13 18 35 00": [
+      "333",
+      "filled",
+      "333"
+    ],
+    "2026 03 13 20 50 00": "334",
+    "70837 89": "2026.03.13 20:50:00",
+    "335": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 13 21 20 00": "336",
+    "70752 11": "2026.03.13 21:20:00",
+    "2026 03 13 22 20 00": [
+      "337",
+      "filled",
+      "338",
+      "337"
+    ],
+    "70995 44": "2026.03.13 22:20:00",
+    "2026 03 13 23 20 01": [
+      "339",
+      "filled",
+      "339"
+    ],
+    "2026 03 13 23 35 00": "340",
+    "0 26 0 26": [
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "71182 80": "2026.03.13 23:35:00",
+    "341": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 17 21 15 00": "342",
+    "74743 25": "2026.03.17 21:15:00",
+    "343": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 17 21 55 00": "344",
+    "74905 75": "2026.03.17 21:55:00",
+    "2026 03 17 22 55 00": [
+      "345",
+      "filled",
+      "345"
+    ],
+    "2026 03 18 20 05 00": "346",
+    "71130 17": "2026.03.18 20:05:00",
+    "2026 03 18 21 05 00": [
+      "347",
+      "filled",
+      "347"
+    ],
+    "2026 03 18 23 20 00": "348",
+    "70580 95": "2026.03.18 23:20:00",
+    "2026 03 19 00 20 00": [
+      "349",
+      "filled",
+      "349"
+    ],
+    "2026 03 21 17 35 00": "350",
+    "0 43 0 43": [
+      "0.00",
+      "0.00"
+    ],
+    "71060 45": "2026.03.21 17:35:00",
+    "2026 03 21 18 35 02": [
+      "351",
+      "filled",
+      "351"
+    ],
+    "2026 03 21 20 45 01": "352",
+    "0 4 0 4": "0.00",
+    "70310 11": "2026.03.21 20:45:01",
+    "353": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 21 21 25 01": "354",
+    "0 52 0 52": [
+      "0.00",
+      "0.00"
+    ],
+    "70336 61": "2026.03.21 21:25:01",
+    "2026 03 21 22 25 00": [
+      "355",
+      "filled",
+      "355"
+    ],
+    "2026 03 22 23 15 01": "356",
+    "0 29 0 29": [
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "68216 22": "2026.03.22 23:15:01",
+    "357": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 23 14 30 00": "358",
+    "71219 01": "2026.03.23 14:30:00",
+    "359": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 23 14 35 00": "360",
+    "71550 31": "2026.03.23 14:35:00",
+    "2026 03 23 15 35 00": [
+      "361",
+      "filled",
+      "361"
+    ],
+    "2026 03 23 16 05 00": "362",
+    "71064 82": "2026.03.23 16:05:00",
+    "363": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 23 16 50 00": "364",
+    "71453 84": "2026.03.23 16:50:00",
+    "365": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 23 16 55 00": "366",
+    "71614 97": "2026.03.23 16:55:00",
+    "367": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 23 17 05 00": "368",
+    "71846 64": "2026.03.23 17:05:00",
+    "2026 03 23 18 05 00": [
+      "369",
+      "filled",
+      "369"
+    ],
+    "2026 03 24 20 05 00": "370",
+    "69109 28": "2026.03.24 20:05:00",
+    "371": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 24 20 15 00": "372",
+    "69030 69": "2026.03.24 20:15:00",
+    "373": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 24 20 50 00": "374",
+    "68847 38": "2026.03.24 20:50:00",
+    "2026 03 24 21 50 00": [
+      "375",
+      "filled",
+      "375"
+    ],
+    "2026 03 25 14 35 00": "376",
+    "72062 62": "2026.03.25 14:35:00",
+    "2026 03 25 15 35 00": [
+      "377",
+      "filled",
+      "377"
+    ],
+    "2026 03 26 21 30 00": "378",
+    "67999 17": "2026.03.26 21:30:00",
+    "2026 03 26 22 30 00": [
+      "379",
+      "filled",
+      "379"
+    ],
+    "2026 03 26 22 50 00": "380",
+    "68541 37": "2026.03.26 22:50:00",
+    "381": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 27 21 05 00": "382",
+    "65501 87": "2026.03.27 21:05:00",
+    "2026 03 27 22 05 00": [
+      "383",
+      "filled",
+      "383"
+    ],
+    "2026 03 28 16 50 00": "384",
+    "66965 98": "2026.03.28 16:50:00",
+    "385": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 30 21 35 00": "386",
+    "66594 37": "2026.03.30 21:35:00",
+    "387": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 30 21 55 00": "388",
+    "66453 03": "2026.03.30 21:55:00",
+    "389": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 03 30 22 35 00": "390",
+    "66183 45": "2026.03.30 22:35:00",
+    "2026 03 30 23 35 00": [
+      "391",
+      "filled",
+      "391"
+    ],
+    "2026 03 30 23 50 00": "392",
+    "0 32 0 32": [
+      "0.00",
+      "0.00"
+    ],
+    "66524 19": "2026.03.30 23:50:00",
+    "2026 03 31 00 50 00": [
+      "393",
+      "filled",
+      "393"
+    ],
+    "2026 03 31 17 25 00": "394",
+    "67916 19": "2026.03.31 17:25:00",
+    "2026 03 31 18 25 00": [
+      "395",
+      "filled",
+      "395"
+    ],
+    "1": "balance",
+    "10 000 00": [
+      "10 000.00",
+      "regime_single_short"
+    ],
+    "2": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 49": [
+      "90031.61",
+      "90108.00"
+    ],
+    "9 962 57": [
+      "sl 90102.34",
+      "regime_single_short"
+    ],
+    "4": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 42": "90142.69",
+    "out": [
+      "0.42",
+      "0.1",
+      "0.38",
+      "0.1",
+      "0.15",
+      "0.2",
+      "0.17",
+      "0.13",
+      "0.54",
+      "0.46",
+      "0.12",
+      "0.11",
+      "0.1",
+      "0.14",
+      "0.2",
+      "0.39",
+      "0.36",
+      "0.14",
+      "0.09",
+      "0.09",
+      "0.07",
+      "0.11",
+      "0.1",
+      "0.22",
+      "0.41",
+      "0.11",
+      "0.15",
+      "0.15",
+      "0.13",
+      "0.23",
+      "0.18",
+      "0.09",
+      "0.16",
+      "0.07",
+      "0.04",
+      "0.08",
+      "0.09",
+      "0.18",
+      "0.07",
+      "0.05",
+      "0.05",
+      "0.05",
+      "0.13",
+      "0.06",
+      "0.14",
+      "0.15",
+      "0.08",
+      "0.16",
+      "0.11",
+      "0.16",
+      "0.09",
+      "0.07",
+      "0.1",
+      "0.2",
+      "0.15",
+      "0.11",
+      "0.12",
+      "0.19",
+      "0.33",
+      "0.71",
+      "0.36",
+      "0.12",
+      "0.14",
+      "0.15",
+      "0.19",
+      "0.15",
+      "0.06",
+      "0.07",
+      "0.07",
+      "0.17",
+      "0.08",
+      "0.12",
+      "0.14",
+      "0.2",
+      "0.21",
+      "0.21",
+      "0.11",
+      "0.14",
+      "0.14",
+      "0.21",
+      "0.2",
+      "0.19",
+      "0.11",
+      "0.12",
+      "0.16",
+      "0.23",
+      "0.18",
+      "0.17",
+      "0.43",
+      "0.52",
+      "0.06",
+      "0.12",
+      "0.17",
+      "0.26",
+      "0.17",
+      "0.19",
+      "0.21",
+      "0.32",
+      "0.13"
+    ],
+    "90011 27": "5",
+    "55 20": "10 017.77",
+    "6": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 24": [
+      "93021.26",
+      "93169.69",
+      "66003.09",
+      "66158.84"
+    ],
+    "10 017 77": "regime_single_short",
+    "9 982 14": [
+      "sl 93163.65",
+      "regime_single_short"
+    ],
+    "8": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 1": [
+      "93953.74",
+      "91870.55",
+      "96592.29",
+      "96921.09",
+      "97464.25",
+      "90859.19",
+      "86722.37",
+      "86379.41",
+      "84501.47",
+      "84130.75",
+      "83910.48",
+      "83529.89",
+      "69228.72",
+      "67498.46",
+      "67868.38",
+      "69055.14",
+      "69407.08",
+      "70689.88",
+      "71065.21"
+    ],
+    "93611 90": "9",
+    "34 18": "10 016.32",
+    "10": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 17": [
+      "94313.76",
+      "94516.47",
+      "91344.83",
+      "66628.88",
+      "66839.84",
+      "65471.49",
+      "65255.18",
+      "71442.71",
+      "70796.59",
+      "69323.21",
+      "69105.85",
+      "69245.39",
+      "69030.19",
+      "69068.98",
+      "68214.62"
+    ],
+    "10 016 32": "regime_single_short",
+    "9 981 86": [
+      "sl 94516.22",
+      "regime_single_short"
+    ],
+    "12": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 38": [
+      "93755.87",
+      "93847.63",
+      "93824.36",
+      "93914.55",
+      "93813.21",
+      "93905.92",
+      "93886.94"
+    ],
+    "9 946 99": [
+      "sl 93846.86",
+      "regime_single_short"
+    ],
+    "14": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "9 912 72": [
+      "sl 93913.82",
+      "regime_single_short"
+    ],
+    "16": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "9 877 49": [
+      "sl 93902.93",
+      "regime_single_short"
+    ],
+    "18": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "93840 99": "19",
+    "17 46": "9 894.95",
+    "20": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "9 894 95": "regime_single_long",
+    "92136 07": "21",
+    "26 55": "9 921.50",
+    "22": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 15": [
+      "92233.72",
+      "91236.71",
+      "91478.54",
+      "89506.42",
+      "89281.37",
+      "86679.94",
+      "86441.06",
+      "86416.25",
+      "88362.50",
+      "71437.72",
+      "68197.47",
+      "64636.06",
+      "64341.96",
+      "64204.48",
+      "63966.84",
+      "66687.15",
+      "65744.48",
+      "66017.69",
+      "65208.04"
+    ],
+    "9 921 50": "regime_single_long",
+    "92419 01": "23",
+    "27 79": "9 949.29",
+    "24": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 2": [
+      "92443.97",
+      "95480.69",
+      "70236.80",
+      "66057.42",
+      "66251.71",
+      "65676.54",
+      "65497.99",
+      "67907.36",
+      "72464.16"
+    ],
+    "9 949 29": "regime_single_long",
+    "92884 07": "25",
+    "88 02": "10 037.31",
+    "26": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 037 31": "regime_single_short",
+    "10 001 04": [
+      "sl 91466.84",
+      "regime_single_short"
+    ],
+    "28": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "91243 92": "29",
+    "17 15": "10 018.19",
+    "30": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 13": [
+      "91604.00",
+      "91781.57",
+      "92037.70",
+      "87085.72",
+      "86822.52",
+      "88625.69",
+      "66612.59",
+      "68736.09",
+      "69019.99",
+      "67635.13"
+    ],
+    "10 018 19": "regime_single_short",
+    "91450 94": "31",
+    "19 90": "10 038.09",
+    "32": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 21": [
+      "90277.50",
+      "90110.16",
+      "87914.08",
+      "87740.64",
+      "10 665.89",
+      "70153.37",
+      "70322.92",
+      "67091.83",
+      "67709.05",
+      "70539.71",
+      "70713.52",
+      "70673.04",
+      "66775.95",
+      "66594.11",
+      "66361.63"
+    ],
+    "10 038 09": "regime_single_long",
+    "10 002 94": [
+      "sl 90113.92",
+      "regime_single_short"
+    ],
+    "34": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 84": [
+      "90746.45",
+      "90788.19"
+    ],
+    "9 967 88": [
+      "sl 90787.83",
+      "regime_single_long"
+    ],
+    "36": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "1 38": [
+      "90603.84",
+      "90577.56"
+    ],
+    "9 931 61": [
+      "sl 90578.70",
+      "regime_single_short"
+    ],
+    "38": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 54": "90920.71",
+    "90909 72": "39",
+    "5 93": "9 937.54",
+    "40": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 6": [
+      "91106.02",
+      "91164.12"
+    ],
+    "9 937 54": "regime_single_short",
+    "9 902 68": [
+      "sl 91163.86",
+      "regime_single_short"
+    ],
+    "42": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 46": "91058.44",
+    "90972 55": "43",
+    "39 51": "9 942.19",
+    "44": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 12": [
+      "91526.61",
+      "91807.76",
+      "92055.80",
+      "65992.92",
+      "65696.79",
+      "66169.21",
+      "64802.15",
+      "67816.94",
+      "68105.82",
+      "68272.57",
+      "68558.94",
+      "70977.78",
+      "71049.96",
+      "71149.13",
+      "71454.69",
+      "71314.06",
+      "71623.67",
+      "71542.74"
+    ],
+    "9 942 19": "regime_single_short",
+    "9 908 45": [
+      "sl 91805.69",
+      "regime_single_short"
+    ],
+    "46": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "9 875 15": [
+      "sl 92037.00",
+      "regime_single_short"
+    ],
+    "48": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "91312 70": "49",
+    "89 18": "9 964.33",
+    "50": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 09": [
+      "93268.04",
+      "93633.45",
+      "97196.94",
+      "97577.07",
+      "90272.43",
+      "87874.09",
+      "89897.52",
+      "90294.12",
+      "83575.65",
+      "78177.93",
+      "67475.19",
+      "67885.19",
+      "65644.10",
+      "65255.18",
+      "65317.71"
+    ],
+    "9 964 33": "regime_single_short",
+    "9 931 44": [
+      "sl 93633.02",
+      "regime_single_short"
+    ],
+    "52": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 11": [
+      "93634.52",
+      "90101.39",
+      "90407.76",
+      "90967.28",
+      "86508.28",
+      "67637.89",
+      "69729.72",
+      "68498.45",
+      "68811.65",
+      "66529.07",
+      "66862.75",
+      "73401.11",
+      "73730.51",
+      "68931.23",
+      "69245.92",
+      "69138.56",
+      "73363.74",
+      "73681.42",
+      "73757.95"
+    ],
+    "93455 97": "53",
+    "19 64": "9 951.08",
+    "54": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 16": [
+      "94217.09",
+      "94438.16",
+      "84217.12",
+      "70945.55",
+      "68166.36",
+      "64379.14",
+      "64146.08",
+      "71222.28"
+    ],
+    "9 951 08": "regime_single_short",
+    "9 915 70": [
+      "sl 94426.60",
+      "regime_single_short"
+    ],
+    "56": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "9 882 82": [
+      "sl 96918.16",
+      "regime_single_short"
+    ],
+    "58": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 07": [
+      "96732.38",
+      "97191.30",
+      "90189.48",
+      "84351.35",
+      "73159.75",
+      "65639.38",
+      "65116.61",
+      "70183.10",
+      "70675.11",
+      "70611.46",
+      "71088.28",
+      "69049.83",
+      "69813.68",
+      "68872.92",
+      "70697.07",
+      "71222.69"
+    ],
+    "9 850 70": [
+      "sl 97178.00",
+      "regime_single_short"
+    ],
+    "60": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "9 816 48": [
+      "sl 97573.61",
+      "regime_single_short"
+    ],
+    "62": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "96963 85": "63",
+    "50 04": [
+      "9 866.52",
+      "10 412.62"
+    ],
+    "64": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 14": [
+      "95524.86",
+      "95279.80",
+      "95212.87",
+      "89908.84",
+      "89662.34",
+      "89705.90",
+      "89466.46",
+      "89591.80",
+      "71019.68",
+      "64270.87",
+      "68113.59",
+      "70051.01",
+      "71237.99",
+      "71102.56",
+      "70831.07"
+    ],
+    "9 866 52": "regime_single_long",
+    "9 832 21": [
+      "sl 95280.23",
+      "regime_single_long"
+    ],
+    "66": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "95421 11": "67",
+    "29 16": "9 861.37",
+    "68": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "9 861 37": "regime_single_long",
+    "95800 66": "69",
+    "63 99": "9 909.43",
+    "70": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "1 22": [
+      "95311.64",
+      "95282.00"
+    ],
+    "9 909 43": "regime_single_long",
+    "9 873 27": [
+      "sl 95283.32",
+      "regime_single_short"
+    ],
+    "72": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 37": [
+      "95410.44",
+      "95505.34"
+    ],
+    "9 838 15": [
+      "sl 95502.94",
+      "regime_single_short"
+    ],
+    "74": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 39": "95448.15",
+    "95328 29": "75",
+    "46 75": "9 884.90",
+    "76": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 36": [
+      "91358.96",
+      "67393.08"
+    ],
+    "9 884 90": "regime_single_short",
+    "91121 35": "77",
+    "85 54": "9 970.44",
+    "78": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "9 970 44": "regime_single_long",
+    "9 935 93": [
+      "sl 89667.07",
+      "regime_single_long"
+    ],
+    "80": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "9 902 40": [
+      "sl 89466.51",
+      "regime_single_long"
+    ],
+    "82": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "9 868 65": [
+      "sl 89282.19",
+      "regime_single_long"
+    ],
+    "84": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "89617 17": "85",
+    "3 55": "9 872.20",
+    "86": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "9 872 20": "regime_single_short",
+    "87606 70": "87",
+    "239 92": "10 112.12",
+    "88": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 112 12": "regime_single_long",
+    "88605 44": "89",
+    "65 82": "10 177.94",
+    "90": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 177 94": "regime_single_short",
+    "10 142 25": [
+      "sl 90293.31",
+      "regime_single_short"
+    ],
+    "92": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "90144 45": "93",
+    "3 15": "10 145.40",
+    "94": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 145 40": "regime_single_short",
+    "10 111 70": [
+      "sl 90398.08",
+      "regime_single_short"
+    ],
+    "96": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "90884 18": "97",
+    "9 14": "10 120.84",
+    "98": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 120 84": "regime_single_short",
+    "89860 13": "99",
+    "99 91": "10 220.75",
+    "100": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 22": [
+      "89451.28",
+      "65920.59",
+      "65758.30",
+      "74575.52",
+      "74748.04",
+      "66623.97",
+      "66451.08"
+    ],
+    "10 220 75": "regime_single_long",
+    "89576 75": "101",
+    "27 61": "10 199.22",
+    "102": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 41": "88910.33",
+    "10 199 22": "regime_single_short",
+    "88721 05": "103",
+    "77 61": "10 276.83",
+    "104": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 276 83": "regime_single_long",
+    "10 240 40": [
+      "sl 87743.84",
+      "regime_single_long"
+    ],
+    "106": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 206 19": [
+      "sl 86824.66",
+      "regime_single_long"
+    ],
+    "108": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 171 89": [
+      "sl 86391.80",
+      "regime_single_long"
+    ],
+    "110": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "86654 97": "111",
+    "16 14": "10 188.03",
+    "112": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 188 03": "regime_single_long",
+    "10 152 20": [
+      "sl 86443.08",
+      "regime_single_long"
+    ],
+    "114": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "86514 52": "115",
+    "14 74": "10 166.94",
+    "116": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 166 94": "regime_single_short",
+    "87934 50": "117",
+    "64 20": "10 231.14",
+    "118": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 231 14": "regime_single_short",
+    "87557 82": "119",
+    "138 82": "10 369.96",
+    "120": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 23": [
+      "90037.90",
+      "74745.23"
+    ],
+    "10 369 96": "regime_single_short",
+    "90008 30": "121",
+    "6 81": "10 376.77",
+    "122": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 19": [
+      "90269.78",
+      "90471.29",
+      "67929.23",
+      "68119.16",
+      "70281.87",
+      "70478.54",
+      "66370.47",
+      "66103.18",
+      "66311.19",
+      "66299.61",
+      "66495.08",
+      "65225.23",
+      "72389.38",
+      "65694.92"
+    ],
+    "10 376 77": "regime_single_short",
+    "10 338 48": [
+      "sl 90457.42",
+      "regime_single_short"
+    ],
+    "124": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 18": [
+      "90396.15",
+      "78162.47",
+      "66434.25",
+      "66220.36",
+      "71329.53"
+    ],
+    "89715 78": "125",
+    "122 47": "10 460.95",
+    "126": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 460 95": "regime_single_long",
+    "10 423 88": [
+      "sl 84135.50",
+      "regime_single_long"
+    ],
+    "128": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 385 82": [
+      "sl 83551.20",
+      "regime_single_long"
+    ],
+    "130": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "83921 21": "131",
+    "31 10": "10 416.92",
+    "132": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 416 92": "regime_single_long",
+    "84559 02": "133",
+    "54 70": "10 471.62",
+    "134": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 471 62": "regime_single_short",
+    "83775 66": "135",
+    "40 29": "10 511.91",
+    "136": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 05": [
+      "78370.72",
+      "77728.88",
+      "78019.75",
+      "77294.46",
+      "74942.38",
+      "72597.04",
+      "66260.51",
+      "65546.44",
+      "65852.05"
+    ],
+    "10 511 91": "regime_single_long",
+    "10 479 81": [
+      "sl 77732.52",
+      "regime_single_long"
+    ],
+    "138": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 443 54": [
+      "sl 77297.35",
+      "regime_single_long"
+    ],
+    "140": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 04": [
+      "77531.33",
+      "63292.42",
+      "62498.79"
+    ],
+    "77499 76": "141",
+    "1 26": "10 442.28",
+    "142": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 08": [
+      "77524.71",
+      "74752.69",
+      "74330.91",
+      "74270.21",
+      "73831.74",
+      "70768.77",
+      "68351.84",
+      "68797.55",
+      "73086.38"
+    ],
+    "10 442 28": "regime_single_long",
+    "78157 69": "143",
+    "50 64": "10 492.92",
+    "144": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 492 92": "regime_single_long",
+    "78005 71": "145",
+    "15 50": "10 477.42",
+    "146": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 477 42": "regime_single_short",
+    "77930 00": "147",
+    "41 84": "10 519.26",
+    "148": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 519 26": "regime_single_long",
+    "10 485 51": [
+      "sl 74332.19",
+      "regime_single_long"
+    ],
+    "150": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 450 43": [
+      "sl 73836.94",
+      "regime_single_long"
+    ],
+    "152": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "74917 44": "153",
+    "123 04": "10 573.47",
+    "154": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 573 47": "regime_single_long",
+    "76455 23": "155",
+    "75 64": "10 649.11",
+    "156": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 649 11": "regime_single_long",
+    "73650 97": "157",
+    "52 70": "10 701.81",
+    "158": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 701 81": "regime_single_long",
+    "10 666 10": [
+      "sl 65546.52",
+      "regime_single_long"
+    ],
+    "160": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "65847 89": "161",
+    "162": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 06": [
+      "65984.79",
+      "65390.13",
+      "64270.75",
+      "63677.40",
+      "69611.26",
+      "70188.54",
+      "70963.92",
+      "68622.23",
+      "69161.08",
+      "69433.25",
+      "70995.01"
+    ],
+    "10 665 89": "regime_single_long",
+    "10 630 21": [
+      "sl 65395.26",
+      "regime_single_long"
+    ],
+    "164": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 593 61": [
+      "sl 65120.83",
+      "regime_single_long"
+    ],
+    "166": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 558 00": [
+      "sl 63687.64",
+      "regime_single_long"
+    ],
+    "168": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 526 25": [
+      "sl 62504.59",
+      "regime_single_long"
+    ],
+    "170": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 03": [
+      "64410.43",
+      "63424.32"
+    ],
+    "10 496 67": [
+      "sl 63428.26",
+      "regime_single_short"
+    ],
+    "172": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "66572 18": "173",
+    "5 26": "10 501.93",
+    "174": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 501 93": "regime_single_short",
+    "10 465 03": [
+      "sl 67883.26",
+      "regime_single_short"
+    ],
+    "176": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 430 40": [
+      "sl 70184.41",
+      "regime_single_short"
+    ],
+    "178": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 395 96": [
+      "sl 70668.40",
+      "regime_single_short"
+    ],
+    "180": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 362 58": [
+      "sl 71085.73",
+      "regime_single_short"
+    ],
+    "182": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "70129 99": "183",
+    "184": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 412 62": "regime_single_short",
+    "71117 88": "185",
+    "13 74": "10 398.88",
+    "186": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 398 88": "regime_single_short",
+    "71299 27": "187",
+    "20 77": "10 419.65",
+    "188": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 419 65": "regime_single_short",
+    "70396 63": "189",
+    "29 77": "10 449.42",
+    "190": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 449 42": "regime_single_short",
+    "70815 46": "191",
+    "20 82": "10 470.24",
+    "192": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 470 24": "regime_single_short",
+    "67399 44": "193",
+    "26 23": "10 496.47",
+    "194": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 496 47": "regime_single_short",
+    "10 460 38": [
+      "sl 68118.71",
+      "regime_single_short"
+    ],
+    "196": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "67894 22": "197",
+    "43 54": "10 503.92",
+    "198": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 503 92": "regime_single_long",
+    "10 468 92": [
+      "sl 65258.46",
+      "regime_single_long"
+    ],
+    "200": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "65759 19": "201",
+    "39 74": "10 508.66",
+    "202": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 508 66": "regime_single_long",
+    "10 473 12": [
+      "sl 65704.36",
+      "regime_single_short"
+    ],
+    "204": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "69196 43": "205",
+    "10 26": "10 462.86",
+    "206": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 462 86": "regime_single_short",
+    "69136 43": "207",
+    "9 23": "10 472.09",
+    "208": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 35": [
+      "70038.48",
+      "70143.82",
+      "67458.03",
+      "67350.09"
+    ],
+    "10 472 09": "regime_single_short",
+    "10 435 22": [
+      "sl 70142.39",
+      "regime_single_short"
+    ],
+    "210": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 399 62": [
+      "sl 70321.71",
+      "regime_single_short"
+    ],
+    "212": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 362 26": [
+      "sl 70471.13",
+      "regime_single_short"
+    ],
+    "214": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "69477 27": "215",
+    "151 91": "10 514.17",
+    "216": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 514 17": "regime_single_long",
+    "68407 44": "217",
+    "31 50": "10 545.67",
+    "218": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 545 67": "regime_single_short",
+    "68476 97": "219",
+    "137 80": "10 683.47",
+    "220": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 683 47": "regime_single_long",
+    "66409 31": "221",
+    "28 81": "10 712.28",
+    "222": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 712 28": "regime_single_long",
+    "10 673 77": [
+      "sl 66226.46",
+      "regime_single_long"
+    ],
+    "224": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "66353 24": "225",
+    "3 27": "10 660.00",
+    "226": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 62": [
+      "68232.41",
+      "68296.05"
+    ],
+    "10 660 00": "regime_single_short",
+    "10 620 54": [
+      "sl 68292.47",
+      "regime_single_short"
+    ],
+    "228": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 33": "68608.60",
+    "68362 82": "229",
+    "81 11": "10 701.65",
+    "230": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 71": "68216.10",
+    "10 701 65": "regime_single_short",
+    "68090 15": "231",
+    "89 42": "10 791.07",
+    "232": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 791 07": "regime_single_long",
+    "67455 88": "233",
+    "22 61": "10 813.68",
+    "234": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 28": [
+      "66358.17",
+      "66491.80"
+    ],
+    "10 813 68": "regime_single_short",
+    "10 776 27": [
+      "sl 66491.26",
+      "regime_single_long"
+    ],
+    "236": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "64611 08": "237",
+    "22 93": "10 753.34",
+    "238": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 753 34": "regime_single_long",
+    "10 709 22": [
+      "sl 64386.64",
+      "regime_single_long"
+    ],
+    "240": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 671 93": [
+      "sl 64147.66",
+      "regime_single_long"
+    ],
+    "242": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 636 29": [
+      "sl 63968.60",
+      "regime_single_long"
+    ],
+    "244": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "64622 02": "245",
+    "49 16": "10 685.45",
+    "246": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 685 45": "regime_single_short",
+    "10 648 07": [
+      "sl 66158.80",
+      "regime_single_short"
+    ],
+    "248": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 609 21": [
+      "sl 66235.89",
+      "regime_single_short"
+    ],
+    "250": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 569 68": [
+      "sl 66297.84",
+      "regime_single_short"
+    ],
+    "252": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 532 54": [
+      "sl 66488.89",
+      "regime_single_short"
+    ],
+    "254": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 496 68": [
+      "sl 66839.05",
+      "regime_single_short"
+    ],
+    "256": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 459 69": [
+      "sl 67864.25",
+      "regime_single_short"
+    ],
+    "258": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 425 02": [
+      "sl 68105.16",
+      "regime_single_short"
+    ],
+    "260": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 390 66": [
+      "sl 68556.90",
+      "regime_single_short"
+    ],
+    "262": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 356 21": [
+      "sl 68804.46",
+      "regime_single_long"
+    ],
+    "264": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "67513 24": "265",
+    "123 92": "10 480.13",
+    "266": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 480 13": "regime_single_long",
+    "65572 31": "267",
+    "65 95": "10 546.08",
+    "268": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 546 08": "regime_single_short",
+    "10 505 10": [
+      "sl 65988.39",
+      "regime_single_short"
+    ],
+    "270": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 468 40": [
+      "sl 66849.88",
+      "regime_single_long"
+    ],
+    "272": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 432 70": [
+      "sl 65759.13",
+      "regime_single_long"
+    ],
+    "274": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 395 93": [
+      "sl 65263.46",
+      "regime_single_long"
+    ],
+    "276": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "65651 55": "277",
+    "66 52": "10 462.45",
+    "278": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 462 45": "regime_single_long",
+    "10 426 74": [
+      "sl 65499.08",
+      "regime_single_short"
+    ],
+    "280": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 394 41": [
+      "sl 69152.01",
+      "regime_single_short"
+    ],
+    "282": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "69182 96": "283",
+    "15 02": "10 409.43",
+    "284": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 409 43": "regime_single_short",
+    "68969 00": "285",
+    "59 13": "10 468.56",
+    "286": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 468 56": "regime_single_short",
+    "10 432 91": [
+      "sl 68795.57",
+      "regime_single_short"
+    ],
+    "288": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "68235 26": "289",
+    "44 63": "10 477.54",
+    "290": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 477 54": "regime_single_short",
+    "70802 22": "291",
+    "108 88": "10 586.42",
+    "292": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 586 42": "regime_single_short",
+    "73275 37": "293",
+    "15 12": "10 571.30",
+    "294": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 571 30": "regime_single_short",
+    "10 535 06": [
+      "sl 73729.98",
+      "regime_single_long"
+    ],
+    "296": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "71264 83": "297",
+    "34 45": "10 569.51",
+    "298": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 569 51": "regime_single_long",
+    "68247 23": "299",
+    "18 71": "10 588.22",
+    "300": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 588 22": "regime_single_long",
+    "68131 29": "301",
+    "44 79": "10 633.01",
+    "302": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 25": [
+      "67304.20",
+      "67150.54"
+    ],
+    "10 633 01": "regime_single_long",
+    "10 594 60": [
+      "sl 67155.63",
+      "regime_single_long"
+    ],
+    "304": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "67385 24": "305",
+    "61 62": "10 656.22",
+    "306": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 656 22": "regime_single_long",
+    "10 618 44": [
+      "sl 67352.72",
+      "regime_single_short"
+    ],
+    "308": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "67313 72": "309",
+    "83 02": "10 701.46",
+    "310": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 701 46": "regime_single_short",
+    "10 664 55": [
+      "sl 69013.18",
+      "regime_single_short"
+    ],
+    "312": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 629 94": [
+      "sl 69242.35",
+      "regime_single_short"
+    ],
+    "314": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 594 74": [
+      "sl 69406.45",
+      "regime_single_short"
+    ],
+    "316": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "68880 21": "317",
+    "28 42": "10 623.16",
+    "318": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 623 16": "regime_single_long",
+    "70216 14": "319",
+    "23 12": "10 638.09",
+    "320": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 638 09": "regime_single_short",
+    "70717 97": "321",
+    "72 80": "10 710.89",
+    "322": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 710 89": "regime_single_short",
+    "10 674 39": [
+      "sl 70713.37",
+      "regime_single_short"
+    ],
+    "324": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "70472 18": "325",
+    "42 18": "10 716.57",
+    "326": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 716 57": "regime_single_short",
+    "72414 37": "327",
+    "9 96": "10 726.53",
+    "328": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 726 53": "regime_single_short",
+    "72377 52": "329",
+    "2 25": "10 728.78",
+    "330": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 728 78": "regime_single_short",
+    "10 693 83": [
+      "sl 73679.01",
+      "regime_single_short"
+    ],
+    "332": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "72560 16": "333",
+    "131 75": "10 825.58",
+    "334": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 825 58": "regime_single_long",
+    "10 787 57": [
+      "sl 70837.89",
+      "regime_single_long"
+    ],
+    "336": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "71197 34": "337",
+    "17 68": "10 805.25",
+    "338": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 805 25": "regime_single_long",
+    "71437 83": "339",
+    "34 49": "10 839.74",
+    "340": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 26": [
+      "71328.15",
+      "71181.30",
+      "71920.07"
+    ],
+    "10 839 74": "regime_single_long",
+    "46 37": "-38.18",
+    "10 755 19": [
+      "sl 71182.80",
+      "regime_single_short"
+    ],
+    "342": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 717 23": [
+      "sl 74743.25",
+      "regime_single_short"
+    ],
+    "344": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "74546 95": "345",
+    "45 60": "10 762.83",
+    "346": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 762 83": "regime_single_long",
+    "71906 27": "347",
+    "103 81": "10 866.64",
+    "348": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 866 64": "regime_single_long",
+    "71304 79": "349",
+    "86 39": "10 942.94",
+    "350": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 43": "70972.99",
+    "10 942 94": "regime_single_short",
+    "70772 80": "351",
+    "86 09": "11 029.03",
+    "352": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 4": [
+      "70405.96",
+      "70309.65"
+    ],
+    "11 029 03": "regime_single_long",
+    "10 990 51": [
+      "sl 70310.11",
+      "regime_single_long"
+    ],
+    "354": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 52": "70409.80",
+    "70410 46": "355",
+    "0 34": "10 990.85",
+    "356": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 29": [
+      "68347.75",
+      "68214.97",
+      "68672.95",
+      "68541.16",
+      "66835.52",
+      "66978.97"
+    ],
+    "10 990 85": "regime_single_long",
+    "10 952 34": [
+      "sl 68216.22",
+      "regime_single_short"
+    ],
+    "358": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 915 54": [
+      "sl 71219.01",
+      "regime_single_short"
+    ],
+    "360": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "70318 83": "361",
+    "40 57": "10 956.11",
+    "362": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 956 11": "regime_single_short",
+    "10 918 58": [
+      "sl 71064.82",
+      "regime_single_short"
+    ],
+    "364": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 881 92": [
+      "sl 71453.84",
+      "regime_single_short"
+    ],
+    "366": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 844 77": [
+      "sl 71614.97",
+      "regime_single_short"
+    ],
+    "368": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "71567 42": "369",
+    "2 96": "10 841.81",
+    "370": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 841 81": "regime_single_long",
+    "10 804 85": [
+      "sl 69109.28",
+      "regime_single_long"
+    ],
+    "372": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 768 26": [
+      "sl 69030.69",
+      "regime_single_long"
+    ],
+    "374": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "69445 89": "375",
+    "64 07": "10 832.33",
+    "376": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 832 33": "regime_single_short",
+    "71386 03": "377",
+    "138 85": "10 971.18",
+    "378": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 971 18": "regime_single_long",
+    "68421 78": "379",
+    "35 21": "11 006.39",
+    "380": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "11 006 39": "regime_single_long",
+    "10 968 17": [
+      "sl 68541.37",
+      "regime_single_long"
+    ],
+    "382": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "65757 67": "383",
+    "11 93": "10 980.10",
+    "384": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 980 10": "regime_single_short",
+    "10 938 50": [
+      "sl 66965.98",
+      "regime_single_long"
+    ],
+    "386": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 900 31": [
+      "sl 66594.37",
+      "regime_single_long"
+    ],
+    "388": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 862 28": [
+      "sl 66453.03",
+      "regime_single_long"
+    ],
+    "390": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "66572 40": "391",
+    "44 26": "10 906.54",
+    "392": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 32": "66641.43",
+    "10 906 54": "regime_single_long",
+    "66884 75": "393",
+    "77 86": "10 966.63",
+    "394": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 966 63": "regime_single_short",
+    "67285 41": "395",
+    "45 47": "11 012.10",
+    "1 170 09": "11 012.10"
+  },
+  "records_preview": [],
+  "run_id": "2026-04-01-162739-559509-btcusd-20260401-regime-single-1y"
+}
