@@ -15,14 +15,16 @@ Use this as the always-on scorecard for the `USDJPY Golden Method` family.
 
 ## Operating Targets
 
-- [ ] The candidate aims for about `1 trade/day`.
+- [ ] The candidate supports at least about `1 trade/day` on actual MT5 evidence.
+- [ ] `2+ trades/day` is treated as the preferred zone when the edge survives realistic friction.
 - [ ] The candidate aims for `20+ trades/month` on actual MT5 evidence, not only on Python approximations.
 - [ ] Win rate is tracked, but expectancy after friction is the main gate.
 - [ ] The monthly `12%` idea is treated as a reference, not as an optimization target that distorts the strategy.
 
 ## Risk And Deployment
 
-- [ ] The baseline strategy risk model references the `2% per trade` doctrine.
+- [ ] The baseline strategy risk model references the mature `2% per trade` doctrine.
+- [ ] If the candidate uses a micro-cap exception because the starting capital is very small, the exception is explicit and the effective risk is recorded.
 - [ ] The repo deployment plan still respects capital-survival controls and hard loss caps.
 - [ ] If the first real-capital preset uses lower than `2%`, the reduction is documented as a deployment safety choice rather than silent drift.
 - [ ] The intended starting capital can express the strategy safely on the target broker.
