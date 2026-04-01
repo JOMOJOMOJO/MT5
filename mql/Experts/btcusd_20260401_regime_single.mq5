@@ -33,16 +33,26 @@ input int             InpATRPeriod                   = 14;
 input bool            InpEnableLong                  = true;
 input int             InpLongStartHour               = 20;
 input int             InpLongEndHour                 = 24;
-input int             InpLongRuleMode               = LongRuleEmaGap2050;
+input int             InpLongRuleMode               = LongRuleRet24;
 input double          InpLongEmaGap2050Max          = -1.3698;
 input double          InpLongRet24Max               = -0.0057;
 input double          InpLongMacdLineAtrMax         = -0.8699;
 input double          InpLongEmaGap50100Max         = -1.6928;
-input int             InpLongHoldBars               = 12;
+input bool            InpUseLongStochDFilter        = true;
+input double          InpLongStochDMax              = 18.9;
+input bool            InpUseLongBbZFilter           = false;
+input double          InpLongBbZMax                 = -1.55;
+input bool            InpUseLongHighBreakFilter     = false;
+input double          InpLongHighBreak24Max         = -5.23;
+input bool            InpUseLongTickFlowFilter      = false;
+input double          InpLongTickFlowMax            = -0.33;
+input bool            InpUseLongTickVolumeFilter    = false;
+input double          InpLongTickVolumeMin          = 0.33;
+input int             InpLongHoldBars               = 8;
 input double          InpLongStopATR                = 1.25;
 input double          InpLongTargetRMultiple        = 0.00;
 
-input bool            InpEnableShort                 = true;
+input bool            InpEnableShort                 = false;
 input int             InpShortStartHour              = 13;
 input int             InpShortEndHour                = 22;
 input int             InpShortRuleMode              = ShortRuleMacdAtr;
@@ -77,6 +87,8 @@ int ema20Handle = INVALID_HANDLE;
 int ema50Handle = INVALID_HANDLE;
 int ema100Handle = INVALID_HANDLE;
 int macdHandle = INVALID_HANDLE;
+int stochHandle = INVALID_HANDLE;
+int bandsHandle = INVALID_HANDLE;
 
 bool allowedWeekdays[7];
 bool blockedHours[24];
@@ -100,6 +112,8 @@ struct SignalContext
    double   emaGap2050;
    double   emaGap50100;
    double   macdLineAtr;
+   double   bbZ;
+   double   stochD;
    double   highBreak24;
    double   tickVolumeZ;
    double   tickFlowSigned3;
@@ -138,9 +152,12 @@ int OnInit()
    ema50Handle = iMA(runtimeSymbol, InpSignalTimeframe, 50, 0, MODE_EMA, PRICE_CLOSE);
    ema100Handle = iMA(runtimeSymbol, InpSignalTimeframe, 100, 0, MODE_EMA, PRICE_CLOSE);
    macdHandle = iMACD(runtimeSymbol, InpSignalTimeframe, 12, 26, 9, PRICE_CLOSE);
+   stochHandle = iStochastic(runtimeSymbol, InpSignalTimeframe, 14, 3, 3, MODE_SMA, STO_LOWHIGH);
+   bandsHandle = iBands(runtimeSymbol, InpSignalTimeframe, 20, 0, 2.0, PRICE_CLOSE);
 
    if(atrHandle == INVALID_HANDLE || ema20Handle == INVALID_HANDLE || ema50Handle == INVALID_HANDLE ||
-      ema100Handle == INVALID_HANDLE || macdHandle == INVALID_HANDLE)
+      ema100Handle == INVALID_HANDLE || macdHandle == INVALID_HANDLE || stochHandle == INVALID_HANDLE ||
+      bandsHandle == INVALID_HANDLE)
      {
       Print("Failed to create indicator handles.");
       return INIT_FAILED;
@@ -166,6 +183,8 @@ void OnDeinit(const int reason)
    ReleaseHandle(ema50Handle);
    ReleaseHandle(ema100Handle);
    ReleaseHandle(macdHandle);
+   ReleaseHandle(stochHandle);
+   ReleaseHandle(bandsHandle);
   }
 
 void OnTick()
@@ -290,12 +309,20 @@ bool LoadSignalContext(SignalContext &ctx)
    double ema50[1];
    double ema100[1];
    double macdMain[1];
+   double stochD[1];
+   double bandMid[1];
+   double bandUpper[1];
+   double bandLower[1];
 
    if(CopyBuffer(atrHandle, 0, 1, 1, atr) != 1 ||
       CopyBuffer(ema20Handle, 0, 1, 1, ema20) != 1 ||
       CopyBuffer(ema50Handle, 0, 1, 1, ema50) != 1 ||
       CopyBuffer(ema100Handle, 0, 1, 1, ema100) != 1 ||
-      CopyBuffer(macdHandle, 0, 1, 1, macdMain) != 1)
+      CopyBuffer(macdHandle, 0, 1, 1, macdMain) != 1 ||
+      CopyBuffer(stochHandle, 1, 1, 1, stochD) != 1 ||
+      CopyBuffer(bandsHandle, 0, 1, 1, bandMid) != 1 ||
+      CopyBuffer(bandsHandle, 1, 1, 1, bandUpper) != 1 ||
+      CopyBuffer(bandsHandle, 2, 1, 1, bandLower) != 1)
       return false;
 
    if(atr[0] <= 0.0 || ema20[0] <= 0.0 || ema50[0] <= 0.0 || ema100[0] <= 0.0)
@@ -313,6 +340,12 @@ bool LoadSignalContext(SignalContext &ctx)
    if(tickFlowSigned3 == DBL_MAX || highBreak24 == DBL_MAX || tickVolumeZ == DBL_MAX)
       return false;
 
+   double bandHalfWidth = (bandUpper[0] - bandLower[0]) / 2.0;
+   if(bandHalfWidth <= 0.0)
+      return false;
+
+   double bbZ = (close1 - bandMid[0]) / bandHalfWidth;
+
    MqlDateTime tm;
    TimeToStruct(barTime, tm);
 
@@ -325,6 +358,8 @@ bool LoadSignalContext(SignalContext &ctx)
    ctx.emaGap2050 = (ema20[0] - ema50[0]) / atr[0];
    ctx.emaGap50100 = (ema50[0] - ema100[0]) / atr[0];
    ctx.macdLineAtr = macdMain[0] / atr[0];
+   ctx.bbZ = bbZ;
+   ctx.stochD = stochD[0];
    ctx.highBreak24 = highBreak24;
    ctx.tickVolumeZ = tickVolumeZ;
    ctx.tickFlowSigned3 = tickFlowSigned3;
@@ -510,6 +545,21 @@ bool IsLongSignal(const SignalContext &ctx)
       if(ctx.emaGap50100 > InpLongEmaGap50100Max)
          return false;
      }
+
+   if(InpUseLongStochDFilter && ctx.stochD > InpLongStochDMax)
+      return false;
+
+   if(InpUseLongBbZFilter && ctx.bbZ > InpLongBbZMax)
+      return false;
+
+   if(InpUseLongHighBreakFilter && ctx.highBreak24 > InpLongHighBreak24Max)
+      return false;
+
+   if(InpUseLongTickFlowFilter && ctx.tickFlowSigned3 > InpLongTickFlowMax)
+      return false;
+
+   if(InpUseLongTickVolumeFilter && ctx.tickVolumeZ < InpLongTickVolumeMin)
+      return false;
 
    return true;
   }

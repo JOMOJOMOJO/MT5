@@ -1,0 +1,453 @@
+{
+  "imported_at": "2026-04-01T17:03:36",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "btcusd_20260401_regime_single",
+    "symbol": "BTCUSD",
+    "timeframe": "M5",
+    "tested_range": "2025.04.16 - 2026.04.01",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "btcusd-20260401-regime-single",
+    "symbol_key": "btcusd",
+    "timeframe_key": "m5",
+    "run_path": "reports/backtest/runs/btcusd-20260401-regime-single/btcusd/m5/2026-04-01-170336-044554-btcusd-20260401-regime-single-lo.json",
+    "knowledge_path": "knowledge/backtests/btcusd-20260401-regime-single/btcusd/m5/2026-04-01-170336-044554-btcusd-20260401-regime-single-lo.md",
+    "imported_dir": "reports/backtest/imported/btcusd-20260401-regime-single/btcusd/m5/2026-04-01-170336-044554",
+    "imported_report": "reports/backtest/imported/btcusd-20260401-regime-single/btcusd/m5/2026-04-01-170336-044554/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\btcusd_20260401_regime_single-long-ret24-bbz155-1y-m5.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "BTCUSD",
+    "tester_period": "M5",
+    "preset_name": "btcusd_20260401_regime_single-long-ret24-bbz155.set",
+    "preset_source": "reports\\presets\\btcusd_20260401_regime_single-long-ret24-bbz155.set",
+    "signal_timeframe": "M5"
+  },
+  "metrics": {
+    "ea_name": "btcusd_20260401_regime_single",
+    "symbol": "BTCUSD",
+    "period": "M5 (2025.04.16 - 2026.04.01)",
+    "history_quality_percent": 100.0,
+    "bars": 100047,
+    "ticks": 64246040,
+    "initial_deposit": 10000.0,
+    "total_net_profit": 75.79,
+    "gross_profit": 322.29,
+    "gross_loss": -246.5,
+    "profit_factor": 1.31,
+    "expected_payoff": 6.89,
+    "recovery_factor": 0.35,
+    "sharpe_ratio": 2.83,
+    "absolute_drawdown": 102.82,
+    "maximal_drawdown_amount": 165.39,
+    "maximal_drawdown_percent": 1.64,
+    "relative_drawdown_amount": 165.39,
+    "relative_drawdown_percent": 1.64,
+    "total_trades": 11,
+    "short_positions_count": 0,
+    "short_positions_percent": 0.0,
+    "long_positions_count": 11,
+    "long_positions_percent": 36.36,
+    "profit_trades_count": 4,
+    "profit_trades_percent": 36.36,
+    "loss_trades_count": 7,
+    "loss_trades_percent": 63.64,
+    "largest_profit_trade": 141.88,
+    "largest_loss_trade": -41.81,
+    "average_profit_trade": 80.57,
+    "average_loss_trade": -35.21,
+    "timeframe": "M5",
+    "tested_range": "2025.04.16 - 2026.04.01",
+    "win_rate_percent": 36.36
+  },
+  "summary": {
+    "headline": "総損益はプラスです。 / ドローダウンは比較的抑えられています。",
+    "strengths": [
+      "総損益はプラスです。",
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [],
+    "notes": [
+      "取引回数は少なめなので、別期間や別レジームで補強が必要です。"
+    ]
+  },
+  "tags": [
+    "long-ret24-bbz155"
+  ],
+  "raw_fields": {
+    "expert": "btcusd_20260401_regime_single",
+    "symbol": [
+      "BTCUSD",
+      "1"
+    ],
+    "period": "M5 (2025.04.16 - 2026.04.01)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "100047",
+    "ticks": "64246040",
+    "total net profit": "75.79",
+    "absolute drawdown": "102.82",
+    "gross profit": "322.29",
+    "maximal drawdown": "165.39 (1.64%)",
+    "gross loss": "-246.50",
+    "relative drawdown": "1.64% (165.39)",
+    "profit factor": "1.31",
+    "expected payoff": "6.89",
+    "recovery factor": "0.35",
+    "sharpe ratio": "2.83",
+    "z score": "0.28 (22.05%)",
+    "ahpr": "1.0007 (0.07%)",
+    "lr correlation": "0.35",
+    "ontester": "0",
+    "ghpr": "1.0007 (0.07%)",
+    "lr standard error": "74.36",
+    "total trades": "11",
+    "short trades won percent": "0 (0.00%)",
+    "long positions won percent": "11 (36.36%)",
+    "profit trades percent of total": "4 (36.36%)",
+    "loss trades percent of total": "7 (63.64%)",
+    "largest profit trade": "141.88",
+    "largest loss trade": "-41.81",
+    "average profit trade": "80.57",
+    "average loss trade": "-35.21",
+    "correlation profits mfe": "0.94",
+    "correlation profits mae": "0.82",
+    "correlation mfe mae": "0.8064",
+    "t p": "時間",
+    "2025 05 07 21 10 00": "2",
+    "btcusd": [
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell"
+    ],
+    "0 13 0 13": [
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "95731 64": "2025.05.07 21:10:00",
+    "filled": [
+      "regime_single_long",
+      "regime_single_long",
+      "sl 101629.32",
+      "regime_single_long",
+      "sl 104017.20",
+      "regime_single_long",
+      "sl 106448.75",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 101417.17",
+      "regime_single_long",
+      "sl 102487.21",
+      "regime_single_long",
+      "regime_single_long",
+      "regime_single_long",
+      "sl 90992.76",
+      "regime_single_long",
+      "sl 71934.88"
+    ],
+    "2025 05 07 22 10 00": [
+      "3",
+      "filled",
+      "3"
+    ],
+    "2025 05 12 21 10 00": "4",
+    "101629 32": "2025.05.12 21:10:00",
+    "5": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "sell": [
+      "0.13 / 0.13",
+      "0.1 / 0.1",
+      "0.06 / 0.06",
+      "0.08 / 0.08",
+      "0.19 / 0.19",
+      "0.14 / 0.14",
+      "0.11 / 0.11",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out"
+    ],
+    "0 00": [
+      "2025.05.12 21:29:46",
+      "2025.05.18 21:10:08",
+      "2025.05.21 20:46:14",
+      "2025.06.05 23:13:48",
+      "2025.06.21 22:11:20",
+      "2025.12.02 22:29:01",
+      "2026.02.05 00:06:51",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.34",
+      "0.00",
+      "-34.73",
+      "0.00",
+      "-32.77",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-33.25",
+      "0.00",
+      "-34.17",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-5.02",
+      "0.00",
+      "-35.43",
+      "0.00",
+      "-11.69"
+    ],
+    "2025 05 18 21 05 00": "6",
+    "0 1 0 1": "0.00",
+    "104017 20": "2025.05.18 21:05:00",
+    "7": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2025 05 21 20 30 00": "8",
+    "0 06 0 06": [
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "106448 75": "2025.05.21 20:30:00",
+    "9": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2025 05 29 20 45 00": "10",
+    "0 11 0 11": [
+      "0.00",
+      "0.00",
+      "0.00"
+    ],
+    "105872 89": "2025.05.29 20:45:00",
+    "2025 05 29 21 45 00": [
+      "11",
+      "filled",
+      "11"
+    ],
+    "2025 06 05 22 20 00": "12",
+    "0 08 0 08": "0.00",
+    "101417 17": "2025.06.05 22:20:00",
+    "13": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2025 06 21 22 00 00": "14",
+    "0 19 0 19": "0.00",
+    "102487 21": "2025.06.21 22:00:00",
+    "15": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2025 07 07 21 30 00": "16",
+    "0 18 0 18": [
+      "0.00",
+      "0.00"
+    ],
+    "107376 18": "2025.07.07 21:30:00",
+    "2025 07 07 22 30 00": [
+      "17",
+      "filled",
+      "17"
+    ],
+    "2025 11 04 23 35 00": "18",
+    "98565 82": "2025.11.04 23:35:00",
+    "2025 11 05 00 35 00": [
+      "19",
+      "filled",
+      "19"
+    ],
+    "2025 12 02 22 20 00": "20",
+    "0 14 0 14": "0.00",
+    "90992 76": "2025.12.02 22:20:00",
+    "21": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "2026 02 04 23 50 00": "22",
+    "71934 88": "2026.02.04 23:50:00",
+    "23": [
+      "BTCUSD",
+      "BTCUSD",
+      "0.00"
+    ],
+    "1": "balance",
+    "10 000 00": [
+      "10 000.00",
+      "regime_single_long"
+    ],
+    "2": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "buy": [
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 13": [
+      "95991.74",
+      "101884.48",
+      "101620.29"
+    ],
+    "out": [
+      "0.13",
+      "0.11",
+      "0.18",
+      "0.06"
+    ],
+    "96473 06": "3",
+    "62 57": "10 062.57",
+    "4": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 062 57": "regime_single_long",
+    "10 028 23": [
+      "sl 101629.32",
+      "regime_single_long"
+    ],
+    "6": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 1": [
+      "104361.57",
+      "104014.29"
+    ],
+    "9 993 50": [
+      "sl 104017.20",
+      "regime_single_long"
+    ],
+    "8": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 06": [
+      "106994.70",
+      "106448.57",
+      "99134.71"
+    ],
+    "9 960 73": [
+      "sl 106448.75",
+      "regime_single_long"
+    ],
+    "10": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 11": [
+      "106163.73",
+      "72251.95",
+      "71932.46"
+    ],
+    "106198 92": "11",
+    "3 87": "9 964.60",
+    "12": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 08": [
+      "101830.31",
+      "101414.64"
+    ],
+    "9 964 60": "regime_single_long",
+    "9 931 35": [
+      "sl 101417.17",
+      "regime_single_long"
+    ],
+    "14": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 19": [
+      "102666.08",
+      "102486.27"
+    ],
+    "9 897 18": [
+      "sl 102487.21",
+      "regime_single_long"
+    ],
+    "16": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 18": "107559.38",
+    "108192 58": "17",
+    "113 97": "10 011.15",
+    "18": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "10 011 15": "regime_single_long",
+    "101582 99": "19",
+    "146 90": "10 153.03",
+    "20": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "0 14": [
+      "91242.72",
+      "90989.65"
+    ],
+    "10 153 03": "regime_single_long",
+    "10 117 60": [
+      "sl 90992.76",
+      "regime_single_long"
+    ],
+    "22": [
+      "BTCUSD",
+      "0.00"
+    ],
+    "6 67": "-35.14",
+    "10 075 79": "sl 71934.88",
+    "87 48": "10 075.79"
+  },
+  "records_preview": [],
+  "run_id": "2026-04-01-170336-044554-btcusd-20260401-regime-single-lo"
+}
