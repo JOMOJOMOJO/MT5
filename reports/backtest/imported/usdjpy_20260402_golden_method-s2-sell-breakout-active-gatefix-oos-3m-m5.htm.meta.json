@@ -1,16 +1,16 @@
 ﻿{
-    "generated_at":  "2026-04-02T02:47:30.5211132+09:00",
+    "generated_at":  "2026-04-02T02:53:54.4327548+09:00",
     "config":  {
-                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260402_golden_method-s2-sell-breakout-active-train-9m.ini",
-                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp9500.ini",
-                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp9500.ini"
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260402_golden_method-s2-sell-breakout-active-gatefix-oos-3m.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp8080.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp8080.ini"
                },
     "tester":  {
                    "symbol":  "USDJPY",
                    "period":  "M5",
-                   "from_date":  "2025.04.01",
-                   "to_date":  "2025.12.31",
-                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\\\Experts\\\\dev\\\\reports\\\\backtest\\\\imported\\\\usdjpy_20260402_golden_method-s2-sell-breakout-active-train-9m-m5.htm"
+                   "from_date":  "2026.01.01",
+                   "to_date":  "2026.04.01",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\\\Experts\\\\dev\\\\reports\\\\backtest\\\\imported\\\\usdjpy_20260402_golden_method-s2-sell-breakout-active-gatefix-oos-3m-m5.htm"
                },
     "preset":  {
                    "name":  "usdjpy_20260402_golden_method-s2-sell-breakout-active.set",

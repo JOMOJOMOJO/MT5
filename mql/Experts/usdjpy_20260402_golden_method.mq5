@@ -101,6 +101,9 @@ input double          InpBreakoutCloseLocationMin    = 0.75;
 input double          InpRetestRoundBufferPips       = 1.5;
 input string          InpAllowedWeekdays             = "1,2,3,4,5";
 input long            InpMagicNumber                 = 20260492;
+input bool            InpDebugStrategy2              = false;
+input string          InpDebugWindowStart            = "";
+input string          InpDebugWindowEnd              = "";
 
 int fastEmaHandle = INVALID_HANDLE;
 int slowEmaHandle = INVALID_HANDLE;
@@ -113,6 +116,8 @@ datetime currentDayStart = 0;
 double dailyStartEquity = 0.0;
 int dailyTradeCount = 0;
 BreakoutState breakoutState;
+datetime debugWindowStart = 0;
+datetime debugWindowEnd = 0;
 
 int OnInit()
   {
@@ -167,6 +172,9 @@ int OnInit()
    trade.SetExpertMagicNumber((ulong)InpMagicNumber);
    trade.SetDeviationInPoints((int)MathMax(10.0, PipToPoints(1.0)));
 
+   debugWindowStart = (InpDebugWindowStart == "" ? 0 : StringToTime(InpDebugWindowStart));
+   debugWindowEnd = (InpDebugWindowEnd == "" ? 0 : StringToTime(InpDebugWindowEnd));
+
    ResetDayState(TimeCurrent());
    breakoutState.active = false;
    return INIT_SUCCEEDED;
@@ -200,9 +208,6 @@ void OnTick()
    if(CountManagedPositions() > 0)
       return;
 
-   if(!CanOpenAnotherTrade())
-      return;
-
    TrendContext trend;
    BuildTrendContext(rates, fastEma, slowEma, trend);
 
@@ -213,12 +218,22 @@ void OnTick()
 
    if(!justArmedBreakout && InpEnableStrategy2 && EvaluateStrategy2(rates, fastEma, slowEma, trend, signalDirection, signalTag))
      {
+      string gateReason = "";
+      if(!CanOpenAnotherTrade(gateReason))
+        {
+         if(ShouldDebugStrategy2(rates[1].time))
+            DebugStrategy2(rates[1].time, "signal_gate_block", gateReason);
+         return;
+        }
       OpenPosition(signalDirection, signalTag);
       return;
      }
 
    if(InpEnableStrategy1 && EvaluateStrategy1(rates, fastEma, slowEma, stochSignal, trend, signalDirection, signalTag))
      {
+      string gateReason = "";
+      if(!CanOpenAnotherTrade(gateReason))
+         return;
       OpenPosition(signalDirection, signalTag);
       return;
      }
@@ -250,7 +265,34 @@ bool ParseWeekdays(string rawValue)
       allowedWeekdays[day] = true;
      }
 
+  return true;
+  }
+
+void AppendReason(string &reasons, string item)
+  {
+   if(item == "")
+      return;
+   if(reasons != "")
+      reasons += "|";
+   reasons += item;
+  }
+
+bool ShouldDebugStrategy2(datetime barTime)
+  {
+   if(!InpDebugStrategy2)
+      return false;
+   if(debugWindowStart > 0 && barTime < debugWindowStart)
+      return false;
+   if(debugWindowEnd > 0 && barTime > debugWindowEnd)
+      return false;
    return true;
+  }
+
+void DebugStrategy2(datetime barTime, string phase, string detail)
+  {
+   if(!ShouldDebugStrategy2(barTime))
+      return;
+   PrintFormat("S2DEBUG %s %s %s", TimeToString(barTime, TIME_DATE | TIME_MINUTES), phase, detail);
   }
 
 string TrimSpaces(string value)
@@ -320,30 +362,50 @@ bool LoadSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[], d
    return true;
   }
 
-bool CanOpenAnotherTrade()
+bool CanOpenAnotherTrade(string &reason)
   {
+   reason = "";
    if(CountManagedPositions() > 0)
+     {
+      reason = "managed_position_open";
       return false;
+     }
 
    if(dailyTradeCount >= InpMaxTradesPerDay)
+     {
+      reason = "daily_trade_cap";
       return false;
+     }
 
    MqlDateTime ts;
    TimeToStruct(TimeCurrent(), ts);
    if(ts.day_of_week < 0 || ts.day_of_week > 6 || !allowedWeekdays[ts.day_of_week])
+     {
+      reason = "weekday_blocked";
       return false;
+     }
    if(!IsWithinActiveSession(lastBarTime > 0 ? lastBarTime : TimeCurrent()))
+     {
+      reason = "session_blocked";
       return false;
+     }
 
    if(InpUseDailyLossCap && dailyStartEquity > 0.0)
      {
       double equity = AccountInfoDouble(ACCOUNT_EQUITY);
       if(equity <= dailyStartEquity * (1.0 - InpDailyLossCapPercent / 100.0))
+        {
+         reason = "daily_loss_cap";
          return false;
+        }
      }
 
-   if(GetSpreadPips() > InpMaxSpreadPips)
+   double spreadPips = GetSpreadPips();
+   if(spreadPips > InpMaxSpreadPips)
+     {
+      reason = StringFormat("spread_blocked_%.2f_limit_%.2f", spreadPips, InpMaxSpreadPips);
       return false;
+     }
 
    return true;
   }
@@ -937,11 +999,12 @@ bool DetectNewBreakout(const MqlRates &rates[], const double &slowEma[], const T
   {
    double level = 0.0;
    double tolerance = InpTouchTolerancePips * GetPipSize();
+   string rejectReasons = "";
 
    if(!PassesVolatilityState(rates))
-      return false;
+      AppendReason(rejectReasons, "volatility_state");
    if(TrendSlopePips(trend) < InpMinSlowSlopePips)
-      return false;
+      AppendReason(rejectReasons, "slow_slope");
 
    int direction = TrendNone;
    if(FindBreakoutLevel(rates[1], TrendUp, level))
@@ -949,21 +1012,32 @@ bool DetectNewBreakout(const MqlRates &rates[], const double &slowEma[], const T
    else if(FindBreakoutLevel(rates[1], TrendDown, level))
       direction = TrendDown;
    else
+     {
+      if(ShouldDebugStrategy2(rates[1].time))
+         DebugStrategy2(rates[1].time, "breakout_skip", "no_round_break");
       return false;
+     }
 
    if(!BreakoutCandleIsLarge(rates[1], rates))
-      return false;
+      AppendReason(rejectReasons, "breakout_candle");
    if(!RejectionBarIsStrong(rates[1], direction, AverageBodyPips(rates, 2, 5)))
-      return false;
+      AppendReason(rejectReasons, "rejection_bar");
 
    if(direction == TrendUp && (trend.slowSlope <= 0.0 || rates[1].close <= slowEma[1]))
-      return false;
+      AppendReason(rejectReasons, "trend_align_up");
    if(direction == TrendDown && (trend.slowSlope >= 0.0 || rates[1].close >= slowEma[1]))
-      return false;
+      AppendReason(rejectReasons, "trend_align_down");
 
    int touches = CountRoundTouches(rates, level, tolerance, 2, InpRoundTouchLookbackBars);
    if(touches > InpMaxRoundTouchesBeforeBreak)
+      AppendReason(rejectReasons, "touch_count");
+
+   if(rejectReasons != "")
+     {
+      if(ShouldDebugStrategy2(rates[1].time))
+         DebugStrategy2(rates[1].time, "breakout_reject", rejectReasons);
       return false;
+     }
 
    state.active = true;
    state.direction = direction;
@@ -971,6 +1045,8 @@ bool DetectNewBreakout(const MqlRates &rates[], const double &slowEma[], const T
    state.midpoint = level + direction * (GetRoundStepPrice() * 0.5);
    state.barsRemaining = InpBreakoutExpiryBars;
    state.breakoutBarTime = rates[1].time;
+   if(ShouldDebugStrategy2(rates[1].time))
+      DebugStrategy2(rates[1].time, "breakout_arm", StringFormat("dir=%d level=%.3f bars=%d", direction, level, InpBreakoutExpiryBars));
    return true;
   }
 
@@ -982,12 +1058,24 @@ bool UpdateBreakoutState(const MqlRates &rates[], const double &fastEma[], const
       double midpointBuffer = InpRoundMidpointBufferPips * GetPipSize();
 
       if(breakoutState.direction == TrendUp && rates[1].high >= breakoutState.midpoint - midpointBuffer)
+        {
+         if(ShouldDebugStrategy2(rates[1].time))
+            DebugStrategy2(rates[1].time, "breakout_drop", "midpoint_hit_up");
          breakoutState.active = false;
+        }
       else if(breakoutState.direction == TrendDown && rates[1].low <= breakoutState.midpoint + midpointBuffer)
+        {
+         if(ShouldDebugStrategy2(rates[1].time))
+            DebugStrategy2(rates[1].time, "breakout_drop", "midpoint_hit_down");
          breakoutState.active = false;
+        }
 
       if(breakoutState.barsRemaining <= 0)
+        {
+         if(ShouldDebugStrategy2(rates[1].time))
+            DebugStrategy2(rates[1].time, "breakout_drop", "expiry");
          breakoutState.active = false;
+        }
      }
 
    if(breakoutState.active)
@@ -1012,20 +1100,29 @@ bool EvaluateStrategy2(const MqlRates &rates[], const double &fastEma[], const d
       return false;
 
    double tolerance = InpTouchTolerancePips * GetPipSize();
+   string rejectReasons = "";
    if(!BarTouchesPrice(rates[1], fastEma[1], tolerance))
-      return false;
+      AppendReason(rejectReasons, "ema_touch");
    if(!BreakoutRetestIsValid(rates, breakoutState))
-      return false;
+      AppendReason(rejectReasons, "retest_invalid");
 
    if(breakoutState.direction == TrendUp)
      {
       if(!InpAllowLongs)
          return false;
       if(trend.slowSlope <= 0.0 || rates[1].close < fastEma[1] || rates[1].close < slowEma[1])
+         AppendReason(rejectReasons, "trend_confirm_up");
+      if(rejectReasons != "")
+        {
+         if(ShouldDebugStrategy2(rates[1].time))
+            DebugStrategy2(rates[1].time, "signal_reject", rejectReasons);
          return false;
+        }
       direction = TrendUp;
       tag = "golden_s2_buy";
       breakoutState.active = false;
+      if(ShouldDebugStrategy2(rates[1].time))
+         DebugStrategy2(rates[1].time, "signal_fire", tag);
       return true;
      }
 
@@ -1034,10 +1131,18 @@ bool EvaluateStrategy2(const MqlRates &rates[], const double &fastEma[], const d
       if(!InpAllowShorts)
          return false;
       if(trend.slowSlope >= 0.0 || rates[1].close > fastEma[1] || rates[1].close > slowEma[1])
+         AppendReason(rejectReasons, "trend_confirm_down");
+      if(rejectReasons != "")
+        {
+         if(ShouldDebugStrategy2(rates[1].time))
+            DebugStrategy2(rates[1].time, "signal_reject", rejectReasons);
          return false;
+        }
       direction = TrendDown;
       tag = "golden_s2_sell";
       breakoutState.active = false;
+      if(ShouldDebugStrategy2(rates[1].time))
+         DebugStrategy2(rates[1].time, "signal_fire", tag);
       return true;
      }
 

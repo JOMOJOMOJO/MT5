@@ -27,8 +27,8 @@
 - [ ] Treat the first `Strategy 1` stochastic pullback qualifier (`stoch75` / `stoch82`) as rejected for being too restrictive at current thresholds.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-s1-sell-event-study-cycle2.md` as the current verdict that `NY strict` improved `9 months train` quality but failed `3 months OOS`, while `NY-open loose` stayed too sparse to matter.
 - [ ] Do not spend another immediate cycle on tighter `S1 sell-only` threshold combinations; the next USDJPY cycle should start from a fresh `Strategy 2` round-number breakout study or a new USDJPY family if breakout evidence is absent.
-- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-s2-round-breakout-cycle1.md` as the current verdict that fresh `Strategy 2` study found a sparse `sell-only` breakout cluster, but current EA expression still produced `0 trade` on `3 months OOS`.
-- [ ] Do not spend another immediate cycle on raw `Strategy 2` threshold retuning; the next USDJPY cycle should reconcile event-study breakout timestamps with EA-side breakout detection, or run plateau review if OOS remains empty.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-s2-gatefix-cycle2.md` as the current verdict that `Strategy 2` had a real gate-order bug, but after repair the executable `Model=4` OOS edge is still not promotable.
+- [ ] Do not spend another immediate cycle on `Strategy 2` spread loosening or raw threshold retuning; the next USDJPY cycle should either run plateau review on the Golden Method family or open a fresh USDJPY family from bar-data evidence.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.
 - [ ] Keep `BTCUSD` high-turnover families as secondary until the USDJPY Golden Method family either clears the live gate or fails plateau review.

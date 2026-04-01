@@ -1,0 +1,54 @@
+{
+  "preset": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\usdjpy_20260402_golden_method-s2-sell-breakout-active.set",
+  "oos_event_count": 4,
+  "actual_oos_signal_count": 4,
+  "breakout_refresh_candidates": 0,
+  "event_rows": [
+    {
+      "breakout_time": "2026-01-22T17:05:00",
+      "signal_time": "2026-01-22T17:55:00",
+      "status": "breakout_rejected",
+      "detail": "{\"refresh_attempts\": [], \"breakout_reasons\": [\"slow_slope_too_small\"]}"
+    },
+    {
+      "breakout_time": "2026-01-26T04:10:00",
+      "signal_time": "2026-01-26T07:25:00",
+      "status": "signal_rejected",
+      "detail": "{\"gate_reasons\": [], \"eval_reasons\": [\"rejection_body_below_avg\"], \"history\": {\"refresh_attempts\": []}}"
+    },
+    {
+      "breakout_time": "2026-02-11T03:10:00",
+      "signal_time": "2026-02-11T04:15:00",
+      "status": "signal_passes_current_logic",
+      "detail": "{\"refresh_attempts\": []}"
+    },
+    {
+      "breakout_time": "2026-02-23T01:35:00",
+      "signal_time": "2026-02-23T02:20:00",
+      "status": "signal_passes_current_logic",
+      "detail": "{\"refresh_attempts\": []}"
+    }
+  ],
+  "actual_signals": [
+    {
+      "signal_time": "2026-02-09T09:20:00",
+      "breakout_time": "2026-02-09T08:00:00",
+      "direction": -1
+    },
+    {
+      "signal_time": "2026-02-11T04:15:00",
+      "breakout_time": "2026-02-11T03:10:00",
+      "direction": -1
+    },
+    {
+      "signal_time": "2026-02-23T02:20:00",
+      "breakout_time": "2026-02-23T01:35:00",
+      "direction": -1
+    },
+    {
+      "signal_time": "2026-03-04T19:15:00",
+      "breakout_time": "2026-03-04T18:10:00",
+      "direction": -1
+    }
+  ]
+}
