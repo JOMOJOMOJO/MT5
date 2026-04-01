@@ -38,6 +38,8 @@
 - Verdict: `baseline reject`
 - Keep `USDJPY Golden Method` as the active mainline family.
 - Do not revert to BTC as mainline just because the first USDJPY translation failed.
+- A later rerun with flexible `1.2R` targets and micro-cap override also failed:
+  - see `knowledge/experiments/2026-04-02-usdjpy-golden-method-flexible-risk-rerun.md`.
 
 ## Next Experiments
 
