@@ -9,7 +9,8 @@
 ## Why USDJPY, Not BTCUSD
 
 - The requested method is explicitly `pip`-based and assumes round-number structure that is natural for a major FX pair.
-- The requested baseline uses `10 pips` stop / `10 pips` take-profit logic, `EMA13 / EMA100`, and monthly trade-count expectations that map more naturally to `USDJPY` than to `BTCUSD`.
+- The requested method uses `EMA13 / EMA100`, round numbers, and monthly trade-count expectations that map more naturally to `USDJPY` than to `BTCUSD`.
+- The `10 pip / 10 pip` examples are treated as reference illustrations, not permanent constraints.
 - `BTCUSD` stays as `secondary` knowledge and research inventory, but the active mainline for this doctrine is `USDJPY`.
 
 ## Permanent Doctrine For This Family
@@ -42,7 +43,8 @@
 
 ## Operating Targets
 
-- Aim for roughly `1 trade per day`.
+- Minimum operating target: at least `1 trade per day` on average.
+- Preferred operating target: `2+ trades per day` if the edge survives realistic FX friction.
 - Aim for `20+ trades per month` when the market offers valid conditions.
 - Use `65%` win rate as a reference target, not as the sole promotion gate.
 - Use `13 wins / 7 losses` pace as a narrative benchmark, not as a hard optimization target.
@@ -51,7 +53,12 @@
 
 ## Capital Doctrine For This Family
 
-- Strategy doctrine: `2% max loss per trade` is the reference rule for the method.
+- Intended launch assumption: the first capital stage is around `100 USD`.
+- Strategy doctrine: `2% max loss per trade` is the mature reference rule for the method.
+- Micro-cap exception:
+  - when capital is very small, strict `2%` adherence may be relaxed if broker lot granularity or practical execution would otherwise cripple the method,
+  - but the actual effective risk must be explicit,
+  - and daily hard-loss control must still stay active.
 - Repo doctrine still applies:
   - capital survival comes first,
   - daily or portfolio hard-loss caps remain mandatory,
@@ -65,18 +72,16 @@
 - `EMA100` is rising.
 - Price had been rising, then pulls back and touches `EMA13`.
 - Enter long at the EMA13 touch event.
-- Immediately place:
-  - take-profit `10 pips`,
-  - stop-loss `10 pips`.
+- The `10 pip / 10 pip` example is a reference anchor only.
+- Actual stop and target may be tuned, widened, tightened, or converted to an explicit `R` model if the candidate performs better that way.
 
 ### Short
 
 - `EMA100` is falling.
 - Price had been falling, then rallies back and touches `EMA13`.
 - Enter short at the EMA13 touch event.
-- Immediately place:
-  - take-profit `10 pips`,
-  - stop-loss `10 pips`.
+- The `10 pip / 10 pip` example is a reference anchor only.
+- Actual stop and target may be tuned, widened, tightened, or converted to an explicit `R` model if the candidate performs better that way.
 
 ### Shape Note
 
@@ -112,6 +117,7 @@
   - transition-line logic,
   - volatility state filter,
   - round-number logic,
+  - flexible stop / target logic,
   - fixed-pip or explicit `R` exits,
   - risk sizing.
 - Every serious candidate must be checked against this document before promotion or rejection.

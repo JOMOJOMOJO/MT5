@@ -61,7 +61,11 @@ input bool            InpEnableStrategy2             = true;
 input double          InpTouchTolerancePips          = 0.6;
 input double          InpStopLossPips                = 10.0;
 input double          InpTakeProfitPips              = 10.0;
+input double          InpTargetRMultiple             = 0.0;
 input double          InpRiskPercent                 = 2.0;
+input bool            InpUseMicroCapRiskOverride     = false;
+input double          InpMicroCapBalanceThreshold    = 150.0;
+input double          InpMicroCapRiskPercent         = 3.0;
 input bool            InpUseDailyLossCap             = true;
 input double          InpDailyLossCapPercent         = 6.0;
 input int             InpMaxTradesPerDay             = 1;
@@ -96,7 +100,8 @@ int OnInit()
 
    if(InpFastEMAPeriod <= 0 || InpSlowEMAPeriod <= InpFastEMAPeriod || InpPivotSpan <= 0 ||
       InpTrendScanBars <= 20 || InpSlowSlopeLookback <= 0 || InpTouchTolerancePips < 0.0 ||
-      InpStopLossPips <= 0.0 || InpTakeProfitPips <= 0.0 || InpRiskPercent <= 0.0 ||
+      InpStopLossPips <= 0.0 || InpRiskPercent <= 0.0 || InpTargetRMultiple < 0.0 ||
+      InpMicroCapBalanceThreshold < 0.0 || InpMicroCapRiskPercent <= 0.0 ||
       InpMaxTradesPerDay < 0 || InpRoundStepPips <= 0 || InpVolatilityLookbackBars <= 0 ||
       InpRoundTouchLookbackBars <= 0 || InpBreakoutMinBodyPips <= 0.0 || InpMagicNumber <= 0)
      {
@@ -714,14 +719,21 @@ void OpenPosition(int direction, string tag)
    double bid = SymbolInfoDouble(runtimeSymbol, SYMBOL_BID);
    double pip = GetPipSize();
    double stopDistance = InpStopLossPips * pip;
-   double targetDistance = InpTakeProfitPips * pip;
+   double targetDistance = 0.0;
    double point = SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
    int stopsLevel = (int)SymbolInfoInteger(runtimeSymbol, SYMBOL_TRADE_STOPS_LEVEL);
 
-   if(stopDistance <= 0.0 || targetDistance <= 0.0 || pip <= 0.0 || point <= 0.0)
+   if(stopDistance <= 0.0 || pip <= 0.0 || point <= 0.0)
       return;
 
-   if(stopDistance < stopsLevel * point || targetDistance < stopsLevel * point)
+   if(InpTargetRMultiple > 0.0)
+      targetDistance = stopDistance * InpTargetRMultiple;
+   else if(InpTakeProfitPips > 0.0)
+      targetDistance = InpTakeProfitPips * pip;
+
+   if(stopDistance < stopsLevel * point)
+      return;
+   if(targetDistance > 0.0 && targetDistance < stopsLevel * point)
       return;
 
    double price = direction == TrendUp ? ask : bid;
@@ -733,12 +745,14 @@ void OpenPosition(int direction, string tag)
    if(direction == TrendUp)
      {
       sl = NormalizePrice(price - stopDistance);
-      tp = NormalizePrice(price + targetDistance);
+      if(targetDistance > 0.0)
+         tp = NormalizePrice(price + targetDistance);
      }
    else if(direction == TrendDown)
      {
       sl = NormalizePrice(price + stopDistance);
-      tp = NormalizePrice(price - targetDistance);
+      if(targetDistance > 0.0)
+         tp = NormalizePrice(price - targetDistance);
      }
    else
       return;
@@ -762,7 +776,8 @@ void OpenPosition(int direction, string tag)
 double CalculateVolume(double stopDistance)
   {
    double equity = AccountInfoDouble(ACCOUNT_EQUITY);
-   double riskAmount = equity * (InpRiskPercent / 100.0);
+   double riskPercent = GetEffectiveRiskPercent(equity);
+   double riskAmount = equity * (riskPercent / 100.0);
    if(riskAmount <= 0.0)
       return 0.0;
 
@@ -787,6 +802,13 @@ double CalculateVolume(double stopDistance)
       normalized = maxVolume;
 
    return NormalizeDouble(normalized, VolumeDigits(stepVolume));
+  }
+
+double GetEffectiveRiskPercent(double equity)
+  {
+   if(InpUseMicroCapRiskOverride && equity > 0.0 && equity <= InpMicroCapBalanceThreshold)
+      return InpMicroCapRiskPercent;
+   return InpRiskPercent;
   }
 
 int VolumeDigits(double stepVolume)

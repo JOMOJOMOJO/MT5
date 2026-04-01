@@ -21,11 +21,12 @@
   - Strategy 1 EMA13 touch in the slow-EMA trend direction
   - Strategy 2 round-number breakout, then EMA13 follow-through touch
 - Baseline exits:
-  - `10 pip` stop
-  - `10 pip` target
+  - use the `10 pip / 10 pip` example only as a reference anchor
+  - allow stop / target redesign if that improves expectancy and keeps doctrine fit
 - Baseline risk doctrine:
-  - strategy doctrine references `2% per trade`
-  - deployment risk may still be reduced later for first-capital use
+  - strategy doctrine references mature `2% per trade`
+  - the first capital stage is expected to start around `100 USD`
+  - micro-cap override is allowed if the actual effective risk is explicit and daily hard-loss control remains active
 
 ## Why BTC Is Not The Mainline For This
 
@@ -40,6 +41,10 @@
 
 - First `USDJPY` prototype EA scaffold is created.
 - Baseline preset and `9 months train / 3 months OOS` tester configs are created.
+- The prototype now supports:
+  - flexible take-profit via either fixed pips or explicit `R`,
+  - a documented micro-cap risk override for very small balances,
+  - more than one trade per day if later setup quality supports it.
 - Compile passed.
 - Broker symbol check passed on the current MT5 feed:
   - `USDJPY` exists,
@@ -52,6 +57,7 @@
   - `9 months train`: `net -3402.23 / PF 0.80 / 192 trades / DD 37.87%`
   - `3 months OOS`: `net -3110.48 / PF 0.50 / 52 trades / DD 32.52%`
 - The first implementation is therefore a baseline reject, not a candidate.
+- The next cycle should not keep fixed `10 / 10` just because it was in the first illustration.
 
 ## Next Cycle
 
