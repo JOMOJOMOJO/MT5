@@ -1,0 +1,65 @@
+{
+  "label": "usdjpy_20260402_round_continuation_long-quality12b_stack_guarded-gate",
+  "generated_at": "2026-04-02T17:27:04",
+  "status": "review",
+  "baseline_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\telemetry\\2026-04-02-usdjpy-quality12b-stack-guarded-baseline.json",
+  "candidate_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\telemetry\\2026-04-02-usdjpy-quality12b-stack-guarded-baseline.json",
+  "thresholds": {
+    "min_exits": 5,
+    "min_active_days": 5,
+    "min_profit_factor": 1.0,
+    "min_relative_profit_factor": 0.75,
+    "max_spread_block_ratio": 1.25
+  },
+  "baseline_snapshot": {
+    "net_profit": 368.85,
+    "profit_factor": 1.2053,
+    "exit_count": 124,
+    "active_days": 87,
+    "spread_blocks_per_day": 6.3795
+  },
+  "candidate_snapshot": {
+    "net_profit": 368.85,
+    "profit_factor": 1.2053,
+    "exit_count": 124,
+    "active_days": 87,
+    "spread_blocks_per_day": 6.3795
+  },
+  "checks": [
+    {
+      "name": "evidence_source",
+      "status": "review",
+      "detail": "candidate summary appears to be built from the same telemetry source as the baseline"
+    },
+    {
+      "name": "sample_exits",
+      "status": "pass",
+      "detail": "candidate exits 124"
+    },
+    {
+      "name": "sample_active_days",
+      "status": "pass",
+      "detail": "candidate active days 87"
+    },
+    {
+      "name": "net_profit",
+      "status": "pass",
+      "detail": "candidate net 368.8500, baseline net 368.8500, ratio 1.0000"
+    },
+    {
+      "name": "profit_factor",
+      "status": "pass",
+      "detail": "candidate PF 1.2053, baseline PF 1.2053"
+    },
+    {
+      "name": "kill_switches",
+      "status": "pass",
+      "detail": "no daily/equity cap triggers and no loss-lock activations"
+    },
+    {
+      "name": "spread_pressure",
+      "status": "pass",
+      "detail": "candidate spread/day 6.3795, baseline 6.3795, ratio 1.0000"
+    }
+  ]
+}
