@@ -3,7 +3,7 @@
 //+------------------------------------------------------------------+
 #property copyright   "Trading System"
 #property link        "https://www.mql5.com"
-#property version     "1.11"
+#property version     "1.12"
 #property strict
 #property description "USDJPY M15 long-only continuation prototype using EMA13/EMA100 trend, 50-pip anti-chop state, and wick-based pullback re-entry."
 
@@ -49,6 +49,8 @@ input double          InpMinSlowSlopePips         = 0.0;
 input double          InpStopLossPips             = 22.0;
 input double          InpTargetRMultiple          = 1.5;
 input int             InpMaxHoldBars              = 18;
+input bool            InpAllowParallelBuckets     = true;
+input int             InpMaxOpenPositions         = 3;
 input bool            InpEnableRoundLooseBucket   = false;
 input double          InpRoundLooseMaxEma13DistancePips = 18.0;
 input double          InpRoundLooseStopLossPips   = 18.0;
@@ -432,8 +434,47 @@ int CountManagedPositions()
    return count;
   }
 
+string BucketComment(SignalBucket bucket)
+  {
+   if(bucket == SIGNAL_EMA)
+      return "ema_sidecar_long";
+   if(bucket == SIGNAL_COMPRESSION)
+      return "compression_sidecar_long";
+   if(bucket == SIGNAL_RSI)
+      return "rsi_sidecar_long";
+   if(bucket == SIGNAL_ROUND_LOOSE)
+      return "round_loose_long";
+   if(bucket == SIGNAL_BREAKOUT)
+      return "breakout_sidecar_long";
+   if(bucket == SIGNAL_ROUND)
+      return "round_continuation_long";
+   return "";
+  }
+
+int CountBucketPositions(SignalBucket bucket)
+  {
+   string bucketComment = BucketComment(bucket);
+   if(bucketComment == "")
+      return 0;
+
+   int count = 0;
+   for(int i = PositionsTotal() - 1; i >= 0; --i)
+     {
+      string symbol = PositionGetSymbol(i);
+      if(symbol != runtimeSymbol)
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      string comment = PositionGetString(POSITION_COMMENT);
+      if(StringFind(comment, bucketComment) >= 0)
+         count++;
+     }
+   return count;
+  }
+
 bool ManageOpenPosition()
   {
+   bool actionTaken = false;
    for(int i = PositionsTotal() - 1; i >= 0; --i)
      {
       string symbol = PositionGetSymbol(i);
@@ -459,10 +500,9 @@ bool ManageOpenPosition()
          continue;
       ulong ticket = (ulong)PositionGetInteger(POSITION_TICKET);
       if(trade.PositionClose(ticket))
-         return true;
-      return false;
+         actionTaken = true;
      }
-   return false;
+   return actionTaken;
   }
 
 void FlattenManagedPositions(string reason)
@@ -490,7 +530,9 @@ void FlattenManagedPositions(string reason)
 
 bool CanOpenAnotherTrade(datetime barTime)
   {
-   if(CountManagedPositions() > 0)
+   if(!InpAllowParallelBuckets && CountManagedPositions() > 0)
+      return false;
+   if(InpMaxOpenPositions > 0 && CountManagedPositions() >= InpMaxOpenPositions)
       return false;
    if(IsTradeCountBlocked())
      {
@@ -512,6 +554,19 @@ bool CanOpenAnotherTrade(datetime barTime)
    if(AreOperatorEntriesBlocked())
       return false;
 
+   return true;
+  }
+
+bool CanOpenBucketTrade(SignalBucket bucket, int baseOpenCount, int pendingOpenCount)
+  {
+   if(bucket == SIGNAL_NONE)
+      return false;
+   if(CountBucketPositions(bucket) > 0)
+      return false;
+   if(!InpAllowParallelBuckets && baseOpenCount + pendingOpenCount > 0)
+      return false;
+   if(InpMaxOpenPositions > 0 && baseOpenCount + pendingOpenCount >= InpMaxOpenPositions)
+      return false;
    return true;
   }
 
@@ -931,40 +986,35 @@ bool EvaluateBreakoutSignal(const MqlRates &rates[], const double &fastEma[], co
    return true;
   }
 
-void OpenPosition(SignalBucket bucket)
+bool OpenPosition(SignalBucket bucket)
   {
    double stopLossPips = InpStopLossPips;
    double targetRMultiple = InpTargetRMultiple;
-   string comment = "round_continuation_long";
+   string comment = BucketComment(bucket);
    if(bucket == SIGNAL_EMA)
      {
       stopLossPips = InpEmaStopLossPips;
       targetRMultiple = InpEmaTargetRMultiple;
-      comment = "ema_sidecar_long";
      }
    else if(bucket == SIGNAL_COMPRESSION)
      {
       stopLossPips = InpCompressionStopLossPips;
       targetRMultiple = InpCompressionTargetRMultiple;
-      comment = "compression_sidecar_long";
      }
    else if(bucket == SIGNAL_RSI)
      {
       stopLossPips = InpRsiStopLossPips;
       targetRMultiple = InpRsiTargetRMultiple;
-      comment = "rsi_sidecar_long";
      }
    else if(bucket == SIGNAL_ROUND_LOOSE)
      {
       stopLossPips = InpRoundLooseStopLossPips;
       targetRMultiple = InpRoundLooseTargetRMultiple;
-      comment = "round_loose_long";
      }
    else if(bucket == SIGNAL_BREAKOUT)
      {
       stopLossPips = InpBreakoutStopLossPips;
       targetRMultiple = InpBreakoutTargetRMultiple;
-      comment = "breakout_sidecar_long";
      }
 
    double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
@@ -974,19 +1024,21 @@ void OpenPosition(SignalBucket bucket)
    double point = SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
    int stopsLevel = (int)SymbolInfoInteger(runtimeSymbol, SYMBOL_TRADE_STOPS_LEVEL);
    if(ask <= 0.0 || pip <= 0.0 || point <= 0.0)
-      return;
+      return false;
    if(stopDistance < stopsLevel * point)
-      return;
+      return false;
    if(targetDistance > 0.0 && targetDistance < stopsLevel * point)
-      return;
+      return false;
 
    double volume = CalculateVolume(stopDistance);
    if(volume <= 0.0)
-      return;
+      return false;
 
    double sl = NormalizePrice(ask - stopDistance);
    double tp = NormalizePrice(ask + targetDistance);
-   trade.Buy(volume, runtimeSymbol, 0.0, sl, tp, comment);
+   if(!trade.Buy(volume, runtimeSymbol, 0.0, sl, tp, comment))
+      return false;
+   return true;
   }
 
 bool OpenTelemetryFile()
@@ -1156,8 +1208,10 @@ string DetermineEntryState()
       return "equity_drawdown_cap";
    if(IsTradeCountBlocked())
       return "trade_cap";
-   if(CountManagedPositions() > 0)
+   if(!InpAllowParallelBuckets && CountManagedPositions() > 0)
       return "position_open";
+   if(InpMaxOpenPositions > 0 && CountManagedPositions() >= InpMaxOpenPositions)
+      return "position_cap";
 
    datetime currentBar = iTime(runtimeSymbol, InpSignalTimeframe, 0);
    MqlDateTime ts;
@@ -1262,7 +1316,8 @@ int OnInit()
       InpBreakoutMinRetestCloseLocation < 0.0 || InpBreakoutMinRetestCloseLocation > 1.0 ||
       InpBreakoutMaxRetestDepthPips < 0.0 || InpBreakoutStopLossPips <= 0.0 ||
       InpBreakoutTargetRMultiple <= 0.0 || InpBreakoutMaxHoldBars < 1 ||
-      InpStopLossPips <= 0.0 || InpTargetRMultiple <= 0.0 || InpMaxHoldBars < 1 || InpRiskPercent <= 0.0 ||
+      InpStopLossPips <= 0.0 || InpTargetRMultiple <= 0.0 || InpMaxHoldBars < 1 ||
+      InpMaxOpenPositions < 1 || InpRiskPercent <= 0.0 ||
       InpMicroCapBalanceThreshold < 0.0 || InpMicroCapRiskPercent <= 0.0 || InpDailyLossCapPercent <= 0.0 ||
       InpEquityDrawdownCapPercent < 0.0 || InpMaxTradesPerDay < 0 || InpMaxSpreadPips <= 0.0 || InpMagicNumber <= 0 ||
       InpStatusHeartbeatSeconds < 0 || InpMaxEffectiveRiskPercentAtMinLot < 0.0
@@ -1390,13 +1445,7 @@ void OnTick()
       return;
 
    if(CountManagedPositions() > 0)
-     {
-      if(ManageOpenPosition() || CountManagedPositions() > 0)
-        {
-         WriteStatusSnapshot();
-         return;
-        }
-     }
+      ManageOpenPosition();
 
    WriteStatusSnapshot();
 
@@ -1427,20 +1476,31 @@ void OnTick()
    if(!LoadSignalWindow(rates, fastEma, slowEma, adxValues, rsiValues, 260))
       return;
 
-   SignalBucket bucket = SIGNAL_NONE;
+   SignalBucket buckets[6];
+   int bucketCount = 0;
    if(EvaluateRoundSignal(rates, fastEma, slowEma))
-      bucket = SIGNAL_ROUND;
-   else if(EvaluateEmaSignal(rates, fastEma, slowEma, adxValues))
-      bucket = SIGNAL_EMA;
-   else if(EvaluateCompressionSignal(rates, fastEma, slowEma, adxValues))
-      bucket = SIGNAL_COMPRESSION;
-   else if(EvaluateRsiSignal(rates, fastEma, slowEma, rsiValues))
-      bucket = SIGNAL_RSI;
-   else if(EvaluateBreakoutSignal(rates, fastEma, slowEma))
-      bucket = SIGNAL_BREAKOUT;
-   else if(EvaluateRoundLooseSignal(rates, fastEma, slowEma))
-      bucket = SIGNAL_ROUND_LOOSE;
+      buckets[bucketCount++] = SIGNAL_ROUND;
+   if(EvaluateEmaSignal(rates, fastEma, slowEma, adxValues))
+      buckets[bucketCount++] = SIGNAL_EMA;
+   if(EvaluateCompressionSignal(rates, fastEma, slowEma, adxValues))
+      buckets[bucketCount++] = SIGNAL_COMPRESSION;
+   if(EvaluateRsiSignal(rates, fastEma, slowEma, rsiValues))
+      buckets[bucketCount++] = SIGNAL_RSI;
+   if(EvaluateBreakoutSignal(rates, fastEma, slowEma))
+      buckets[bucketCount++] = SIGNAL_BREAKOUT;
+   if(EvaluateRoundLooseSignal(rates, fastEma, slowEma))
+      buckets[bucketCount++] = SIGNAL_ROUND_LOOSE;
 
-   if(bucket != SIGNAL_NONE)
-      OpenPosition(bucket);
+   int baseOpenCount = CountManagedPositions();
+   int pendingOpenCount = 0;
+   for(int i = 0; i < bucketCount; ++i)
+     {
+      SignalBucket bucket = buckets[i];
+      if(InpMaxTradesPerDay > 0 && dailyTradeCount + pendingOpenCount >= InpMaxTradesPerDay)
+         break;
+      if(!CanOpenBucketTrade(bucket, baseOpenCount, pendingOpenCount))
+         continue;
+      if(OpenPosition(bucket))
+         pendingOpenCount++;
+     }
   }

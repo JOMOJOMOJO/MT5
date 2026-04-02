@@ -58,12 +58,18 @@
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-quality12b-stackadx-cycle1-reject.md` as the formal verdict that the compression sidecar improved OOS only marginally while weakening long-window train quality.
 - [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_stack_guarded.md` as the source of truth for the turnover-biased `USDJPY long-only` live-track branch.
 - [ ] Use `scripts/start-usdjpy-quality12b-stack-demo-forward.ps1` and `scripts/usdjpy-quality12b-stack-live-preflight.ps1` for the stack-guarded demo-forward workflow.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-quality12b-stack-parallel-cycle1-promotion.md` as the formal verdict that allowing parallel bucket entries improves `USDJPY long-only` turnover without damaging recent OOS quality.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-quality12b-stack-parallel-cycle2-cap-tuning-reject.md` as the formal verdict that `max open positions = 2` and mild EMA-sidecar tightening do not improve the active parallel candidate.
+- [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_stack_parallel_guarded.md` as the source of truth for the active turnover-biased `USDJPY long-only` live-track branch.
+- [ ] Use `scripts/start-usdjpy-quality12b-stack-parallel-demo-forward.ps1` and `scripts/usdjpy-quality12b-stack-parallel-live-preflight.ps1` for the stack-parallel demo-forward workflow.
 - [ ] Treat `.company/release/usdjpy_20260402_round_continuation_long-quality12b_smalllive050.md` as the staged first-capital packet after demo-forward passes.
 - [ ] Use `scripts/start-usdjpy-quality12b-demo-forward.ps1` and `scripts/usdjpy-quality12b-live-preflight.ps1` for the quality12b live-track workflow.
 - [ ] Use `scripts/start-usdjpy-quality12b-small-live.ps1` only after the guarded demo-forward gate is accepted.
 - [ ] Keep `quality12b_guarded` as a quality-first secondary live-track candidate, not as the repo's high-turnover mainline.
-- [ ] Keep `quality12b_guarded` as the quality anchor and `quality12b_stack_guarded` as the turnover-biased sidecar until real demo-forward evidence shows which branch survives live friction better.
-- [ ] Keep `quality12b_stack_guarded` as the active turnover-biased demo-forward candidate; do not promote `stackrsi` or `stackadx` over it.
+- [ ] Keep `quality12b_guarded` as the quality anchor and `quality12b_stack_parallel_guarded` as the turnover-biased sidecar until real demo-forward evidence shows which branch survives live friction better.
+- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased demo-forward candidate; do not promote `stackrsi`, `stackadx`, or the older `stack_guarded` over it.
+- [ ] Keep `quality12b_guarded` as the quality anchor and `quality12b_stack_parallel_guarded` as the active turnover-biased demo-forward candidate until real demo-forward evidence shows whether the modest turnover gain survives live friction.
+- [ ] Do not spend another immediate cycle on `quality12b_stack_parallel_guarded` concurrency-cap tuning or mild EMA-sidecar tightening.
 - [ ] Treat the low-risk `quality12b_guarded` rerun as the first `USDJPY long-only` live-track preset that clears the repo's long-window drawdown gate; remaining blockers should now be real demo-forward evidence and a live heartbeat, not backtest drawdown.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.

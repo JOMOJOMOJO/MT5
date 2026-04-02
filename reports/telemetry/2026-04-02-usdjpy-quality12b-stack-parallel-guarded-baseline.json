@@ -1,0 +1,110 @@
+{
+  "label": "usdjpy_20260402_round_continuation_long-quality12b_stack_parallel_guarded",
+  "source_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\mt5_company_usdjpy_20260402_round_continuation_long_quality12b_stack_parallel_guarded.csv",
+  "generated_at": "2026-04-02T19:31:44",
+  "period": {
+    "start": "2025-04-01 00:00:00",
+    "end": "2025-12-30 23:57:58"
+  },
+  "row_count": 679,
+  "event_counts": {
+    "day_reset": 195,
+    "daily_summary": 195,
+    "entry": 145,
+    "exit": 144
+  },
+  "daily": {
+    "summaries": 195,
+    "active_days": 87,
+    "avg_entries_per_day": 0.7436,
+    "avg_entries_per_active_day": 1.6667,
+    "max_entries_per_day": 4,
+    "blocked_totals": {
+      "blocked_spread": 1325,
+      "blocked_daily_loss": 0,
+      "blocked_trade_cap": 161,
+      "blocked_loss_lock": 0,
+      "blocked_equity_cap": 0,
+      "loss_lock_activations": 0
+    }
+  },
+  "exits": {
+    "count": 144,
+    "wins": 76,
+    "losses": 68,
+    "net_profit": 559.23,
+    "gross_profit": 2547.56,
+    "gross_loss": -1988.33,
+    "profit_factor": 1.2813,
+    "average_win": 33.5205,
+    "average_loss": -29.2401
+  },
+  "top_days": {
+    "entries": [
+      {
+        "timestamp": "2025-07-29 00:00:00",
+        "entries": 4,
+        "closed_trades": 4,
+        "net_profit": 86.98999999999978
+      },
+      {
+        "timestamp": "2025-05-14 00:00:00",
+        "entries": 4,
+        "closed_trades": 4,
+        "net_profit": 86.89000000000124
+      },
+      {
+        "timestamp": "2025-10-24 00:00:00",
+        "entries": 4,
+        "closed_trades": 4,
+        "net_profit": 72.86000000000058
+      },
+      {
+        "timestamp": "2025-09-11 00:00:00",
+        "entries": 4,
+        "closed_trades": 4,
+        "net_profit": -54.279999999998836
+      },
+      {
+        "timestamp": "2025-09-19 00:00:00",
+        "entries": 3,
+        "closed_trades": 3,
+        "net_profit": 120.14000000000124
+      }
+    ],
+    "spread_blocked": [
+      {
+        "timestamp": "2025-04-21 00:00:03",
+        "blocked_spread": 43,
+        "entries": 0,
+        "net_profit": 0.0
+      },
+      {
+        "timestamp": "2025-04-22 00:00:00",
+        "blocked_spread": 35,
+        "entries": 0,
+        "net_profit": 0.0
+      },
+      {
+        "timestamp": "2025-04-23 00:00:00",
+        "blocked_spread": 19,
+        "entries": 0,
+        "net_profit": 0.0
+      },
+      {
+        "timestamp": "2025-04-18 00:00:00",
+        "blocked_spread": 18,
+        "entries": 1,
+        "net_profit": -29.61999999999898
+      },
+      {
+        "timestamp": "2025-05-16 00:00:00",
+        "blocked_spread": 18,
+        "entries": 0,
+        "net_profit": 0.0
+      }
+    ]
+  },
+  "run_count": 2,
+  "selected_run_index": 1
+}
