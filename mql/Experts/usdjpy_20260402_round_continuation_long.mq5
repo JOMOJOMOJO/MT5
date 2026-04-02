@@ -23,7 +23,8 @@ enum SignalBucket
   {
    SIGNAL_NONE = 0,
    SIGNAL_ROUND = 1,
-   SIGNAL_EMA = 2
+   SIGNAL_EMA = 2,
+   SIGNAL_ROUND_LOOSE = 3
   };
 
 input string          InpSymbol                   = "USDJPY";
@@ -45,6 +46,11 @@ input double          InpMinSlowSlopePips         = 0.0;
 input double          InpStopLossPips             = 22.0;
 input double          InpTargetRMultiple          = 1.5;
 input int             InpMaxHoldBars              = 18;
+input bool            InpEnableRoundLooseBucket   = false;
+input double          InpRoundLooseMaxEma13DistancePips = 18.0;
+input double          InpRoundLooseStopLossPips   = 18.0;
+input double          InpRoundLooseTargetRMultiple = 1.0;
+input int             InpRoundLooseMaxHoldBars    = 12;
 input bool            InpEnableEmaBucket          = false;
 input int             InpAdxPeriod                = 14;
 input double          InpEmaMaxAdx                = 30.0;
@@ -394,6 +400,8 @@ bool ManageOpenPosition()
       int maxHoldBars = InpMaxHoldBars;
       if(StringFind(comment, "ema_sidecar") >= 0)
          maxHoldBars = InpEmaMaxHoldBars;
+      else if(StringFind(comment, "round_loose") >= 0)
+         maxHoldBars = InpRoundLooseMaxHoldBars;
       int barsOpen = iBarShift(runtimeSymbol, InpSignalTimeframe, openedAt, false);
       if(barsOpen < maxHoldBars)
          continue;
@@ -592,6 +600,47 @@ bool EvaluateRoundSignal(const MqlRates &rates[], const double &fastEma[], const
    return true;
   }
 
+bool EvaluateRoundLooseSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[])
+  {
+   if(!InpEnableRoundLooseBucket)
+      return false;
+   if(!PassesVolatilityState(rates))
+      return false;
+
+   PivotPoint latestHigh, previousHigh, latestLow, previousLow;
+   FindRecentPivots(rates, true, latestHigh, previousHigh);
+   FindRecentPivots(rates, false, latestLow, previousLow);
+   if(!latestHigh.valid || !previousHigh.valid || !latestLow.valid || !previousLow.valid)
+      return false;
+
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return false;
+   if(!(latestHigh.price > previousHigh.price && latestLow.price > previousLow.price))
+      return false;
+   if(fastEma[1] <= slowEma[1])
+      return false;
+   if(rates[1].close <= slowEma[1])
+      return false;
+
+   double slowSlopePips = (slowEma[1] - slowEma[1 + InpSlowSlopeLookback]) / pip;
+   if(slowSlopePips < InpMinSlowSlopePips)
+      return false;
+   if(rates[1].low <= latestLow.price)
+      return false;
+
+   double emaDistancePips = MathAbs(rates[1].close - fastEma[1]) / pip;
+   if(emaDistancePips <= InpMaxEma13DistancePips)
+      return false;
+   if(emaDistancePips > InpRoundLooseMaxEma13DistancePips)
+      return false;
+   if(UpperWickShare(rates[1]) < InpMinUpperWickShare)
+      return false;
+   if(LowerWickShare(rates[1]) > InpMaxLowerWickShare)
+      return false;
+   return true;
+  }
+
 bool EvaluateEmaSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[], const double &adxValues[])
   {
    if(!InpEnableEmaBucket)
@@ -645,6 +694,12 @@ void OpenPosition(SignalBucket bucket)
       stopLossPips = InpEmaStopLossPips;
       targetRMultiple = InpEmaTargetRMultiple;
       comment = "ema_sidecar_long";
+     }
+   else if(bucket == SIGNAL_ROUND_LOOSE)
+     {
+      stopLossPips = InpRoundLooseStopLossPips;
+      targetRMultiple = InpRoundLooseTargetRMultiple;
+      comment = "round_loose_long";
      }
 
    double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
@@ -911,6 +966,8 @@ int OnInit()
       InpSessionEndHour < 0 || InpSessionEndHour > 23 || InpSessionStartHour == InpSessionEndHour ||
       InpMaxEma13DistancePips <= 0.0 || InpMinUpperWickShare < 0.0 || InpMinUpperWickShare > 1.0 ||
       InpMaxLowerWickShare < 0.0 || InpMaxLowerWickShare > 1.0 || InpMinUpperWickShare <= InpMaxLowerWickShare ||
+      InpRoundLooseMaxEma13DistancePips <= InpMaxEma13DistancePips || InpRoundLooseStopLossPips <= 0.0 ||
+      InpRoundLooseTargetRMultiple <= 0.0 || InpRoundLooseMaxHoldBars < 1 ||
       InpAdxPeriod <= 1 || InpEmaMaxAdx <= 0.0 || InpEmaSessionStartHour < 0 || InpEmaSessionStartHour > 23 ||
       InpEmaSessionEndHour < 0 || InpEmaSessionEndHour > 23 || InpEmaSessionStartHour == InpEmaSessionEndHour ||
       InpEmaMaxEma13DistancePips <= 0.0 || InpEmaMaxRet1 < -0.01 || InpEmaMaxRet1 > 0.01 ||
@@ -1082,6 +1139,8 @@ void OnTick()
    SignalBucket bucket = SIGNAL_NONE;
    if(EvaluateRoundSignal(rates, fastEma, slowEma))
       bucket = SIGNAL_ROUND;
+   else if(EvaluateRoundLooseSignal(rates, fastEma, slowEma))
+      bucket = SIGNAL_ROUND_LOOSE;
    else if(EvaluateEmaSignal(rates, fastEma, slowEma, adxValues))
       bucket = SIGNAL_EMA;
 
