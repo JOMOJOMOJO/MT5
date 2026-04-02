@@ -24,7 +24,8 @@ enum SignalBucket
    SIGNAL_NONE = 0,
    SIGNAL_ROUND = 1,
    SIGNAL_EMA = 2,
-   SIGNAL_ROUND_LOOSE = 3
+   SIGNAL_ROUND_LOOSE = 3,
+   SIGNAL_BREAKOUT = 4
   };
 
 input string          InpSymbol                   = "USDJPY";
@@ -64,6 +65,23 @@ input double          InpEmaMaxCloseLocation      = 0.45;
 input double          InpEmaStopLossPips          = 15.0;
 input double          InpEmaTargetRMultiple       = 1.2;
 input int             InpEmaMaxHoldBars           = 12;
+input bool            InpEnableBreakoutBucket     = false;
+input int             InpBreakoutSessionStartHour = 7;
+input int             InpBreakoutSessionEndHour   = 22;
+input int             InpBreakoutLookbackBars     = 12;
+input double          InpBreakoutMidpointDistancePips = 25.0;
+input double          InpBreakoutTouchTolerancePips = 0.5;
+input double          InpBreakoutRetestBufferPips = 2.0;
+input int             InpBreakoutRetestDelayBars  = 1;
+input double          InpBreakoutMinCloseLocation = 0.55;
+input double          InpBreakoutMinBodyPips      = 6.0;
+input double          InpBreakoutMinBodyToRange   = 0.60;
+input double          InpBreakoutMaxToEma13Pips   = 30.0;
+input double          InpBreakoutMinRetestCloseLocation = 0.50;
+input double          InpBreakoutMaxRetestDepthPips = 1.0;
+input double          InpBreakoutStopLossPips     = 20.0;
+input double          InpBreakoutTargetRMultiple  = 1.2;
+input int             InpBreakoutMaxHoldBars      = 18;
 input double          InpRiskPercent              = 2.0;
 input bool            InpUseMicroCapRiskOverride  = true;
 input double          InpMicroCapBalanceThreshold = 150.0;
@@ -402,6 +420,8 @@ bool ManageOpenPosition()
          maxHoldBars = InpEmaMaxHoldBars;
       else if(StringFind(comment, "round_loose") >= 0)
          maxHoldBars = InpRoundLooseMaxHoldBars;
+      else if(StringFind(comment, "breakout_sidecar") >= 0)
+         maxHoldBars = InpBreakoutMaxHoldBars;
       int barsOpen = iBarShift(runtimeSymbol, InpSignalTimeframe, openedAt, false);
       if(barsOpen < maxHoldBars)
          continue;
@@ -539,6 +559,46 @@ double CloseLocation(const MqlRates &bar)
    if(range <= 0.0)
       return 0.5;
    return (bar.close - bar.low) / range;
+  }
+
+double BodyPips(const MqlRates &bar)
+  {
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return 0.0;
+   return MathAbs(bar.close - bar.open) / pip;
+  }
+
+double RangePips(const MqlRates &bar)
+  {
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return 0.0;
+   return (bar.high - bar.low) / pip;
+  }
+
+double FindBreakoutLevel(const MqlRates &bar, double stepPrice)
+  {
+   int startIndex = (int)MathFloor(bar.low / stepPrice) - 1;
+   int endIndex = (int)MathCeil(bar.high / stepPrice) + 1;
+   for(int idx = startIndex; idx <= endIndex; ++idx)
+     {
+      double level = idx * stepPrice;
+      if(bar.open < level && bar.close > level)
+         return level;
+     }
+   return 0.0;
+  }
+
+double RecentHighBreakPips(const MqlRates &rates[], int shift, int lookback)
+  {
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return 0.0;
+   double priorHigh = rates[shift + 1].high;
+   for(int i = shift + 1; i <= shift + lookback; ++i)
+      priorHigh = MathMax(priorHigh, rates[i].high);
+   return (rates[shift].close - priorHigh) / pip;
   }
 
 bool PassesVolatilityState(const MqlRates &rates[])
@@ -684,6 +744,82 @@ bool EvaluateEmaSignal(const MqlRates &rates[], const double &fastEma[], const d
    return true;
   }
 
+bool EvaluateBreakoutSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[])
+  {
+   if(!InpEnableBreakoutBucket)
+      return false;
+
+   const int signalShift = 1;
+   int breakoutShift = signalShift + InpBreakoutRetestDelayBars;
+   if(breakoutShift + MathMax(InpSlowSlopeLookback, InpBreakoutLookbackBars) >= ArraySize(rates))
+      return false;
+
+   datetime barTime = rates[signalShift].time;
+   if(!IsWithinSession(barTime, InpBreakoutSessionStartHour, InpBreakoutSessionEndHour))
+      return false;
+
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return false;
+
+   MqlRates breakout = rates[breakoutShift];
+   MqlRates signalBar = rates[signalShift];
+   double stepPrice = InpRoundStepPips * pip;
+   double level = FindBreakoutLevel(breakout, stepPrice);
+   if(level <= 0.0)
+      return false;
+
+   if(!(fastEma[breakoutShift] > slowEma[breakoutShift]))
+      return false;
+   if(!(breakout.close > slowEma[breakoutShift]))
+      return false;
+   if(!(slowEma[breakoutShift] > slowEma[breakoutShift + InpSlowSlopeLookback]))
+      return false;
+   if(RecentHighBreakPips(rates, breakoutShift, InpBreakoutLookbackBars) <= 0.0)
+      return false;
+   if(((breakout.close - fastEma[breakoutShift]) / pip) > InpBreakoutMaxToEma13Pips)
+      return false;
+
+   double breakoutBodyPips = BodyPips(breakout);
+   double breakoutRangePips = RangePips(breakout);
+   if(breakoutBodyPips < InpBreakoutMinBodyPips || breakoutRangePips <= 0.0)
+      return false;
+   if((breakoutBodyPips / breakoutRangePips) < InpBreakoutMinBodyToRange)
+      return false;
+   if(CloseLocation(breakout) < InpBreakoutMinCloseLocation)
+      return false;
+
+   double midpoint = level + (InpBreakoutMidpointDistancePips * pip);
+   for(int shift = signalShift + 1; shift < breakoutShift; ++shift)
+     {
+      MqlRates followBar = rates[shift];
+      if(followBar.high >= midpoint)
+         return false;
+      if(followBar.close < level)
+         return false;
+     }
+   if(signalBar.high >= midpoint)
+      return false;
+   if(signalBar.close < level)
+      return false;
+
+   bool touchedEma = signalBar.low <= fastEma[signalShift] + (InpBreakoutTouchTolerancePips * pip);
+   bool touchedLevel = signalBar.low <= level + (InpBreakoutRetestBufferPips * pip);
+   if(!(touchedEma || touchedLevel))
+      return false;
+   double retestDepthPips = MathMax(0.0, (level - signalBar.low) / pip);
+   if(retestDepthPips > InpBreakoutMaxRetestDepthPips)
+      return false;
+   if(CloseLocation(signalBar) < InpBreakoutMinRetestCloseLocation)
+      return false;
+   if(signalBar.close <= fastEma[signalShift])
+      return false;
+   if(signalBar.close <= level)
+      return false;
+
+   return true;
+  }
+
 void OpenPosition(SignalBucket bucket)
   {
    double stopLossPips = InpStopLossPips;
@@ -700,6 +836,12 @@ void OpenPosition(SignalBucket bucket)
       stopLossPips = InpRoundLooseStopLossPips;
       targetRMultiple = InpRoundLooseTargetRMultiple;
       comment = "round_loose_long";
+     }
+   else if(bucket == SIGNAL_BREAKOUT)
+     {
+      stopLossPips = InpBreakoutStopLossPips;
+      targetRMultiple = InpBreakoutTargetRMultiple;
+      comment = "breakout_sidecar_long";
      }
 
    double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
@@ -975,6 +1117,15 @@ int OnInit()
       InpEmaMaxLowerWickShare > 1.0 || InpEmaMaxCloseLocation < 0.0 || InpEmaMaxCloseLocation > 1.0 ||
       InpEmaMinUpperWickShare <= InpEmaMaxLowerWickShare || InpEmaStopLossPips <= 0.0 ||
       InpEmaTargetRMultiple <= 0.0 || InpEmaMaxHoldBars < 1 ||
+      InpBreakoutSessionStartHour < 0 || InpBreakoutSessionStartHour > 23 || InpBreakoutSessionEndHour < 0 ||
+      InpBreakoutSessionEndHour > 23 || InpBreakoutSessionStartHour == InpBreakoutSessionEndHour ||
+      InpBreakoutLookbackBars <= 0 || InpBreakoutMidpointDistancePips <= 0.0 || InpBreakoutTouchTolerancePips < 0.0 ||
+      InpBreakoutRetestBufferPips < 0.0 || InpBreakoutRetestDelayBars < 1 || InpBreakoutMinCloseLocation < 0.0 ||
+      InpBreakoutMinCloseLocation > 1.0 || InpBreakoutMinBodyPips <= 0.0 || InpBreakoutMinBodyToRange <= 0.0 ||
+      InpBreakoutMinBodyToRange > 1.0 || InpBreakoutMaxToEma13Pips <= 0.0 ||
+      InpBreakoutMinRetestCloseLocation < 0.0 || InpBreakoutMinRetestCloseLocation > 1.0 ||
+      InpBreakoutMaxRetestDepthPips < 0.0 || InpBreakoutStopLossPips <= 0.0 ||
+      InpBreakoutTargetRMultiple <= 0.0 || InpBreakoutMaxHoldBars < 1 ||
       InpStopLossPips <= 0.0 || InpTargetRMultiple <= 0.0 || InpMaxHoldBars < 1 || InpRiskPercent <= 0.0 ||
       InpMicroCapBalanceThreshold < 0.0 || InpMicroCapRiskPercent <= 0.0 || InpDailyLossCapPercent <= 0.0 ||
       InpEquityDrawdownCapPercent < 0.0 || InpMaxTradesPerDay < 0 || InpMaxSpreadPips <= 0.0 || InpMagicNumber <= 0 ||
@@ -1139,10 +1290,12 @@ void OnTick()
    SignalBucket bucket = SIGNAL_NONE;
    if(EvaluateRoundSignal(rates, fastEma, slowEma))
       bucket = SIGNAL_ROUND;
-   else if(EvaluateRoundLooseSignal(rates, fastEma, slowEma))
-      bucket = SIGNAL_ROUND_LOOSE;
    else if(EvaluateEmaSignal(rates, fastEma, slowEma, adxValues))
       bucket = SIGNAL_EMA;
+   else if(EvaluateBreakoutSignal(rates, fastEma, slowEma))
+      bucket = SIGNAL_BREAKOUT;
+   else if(EvaluateRoundLooseSignal(rates, fastEma, slowEma))
+      bucket = SIGNAL_ROUND_LOOSE;
 
    if(bucket != SIGNAL_NONE)
       OpenPosition(bucket);
