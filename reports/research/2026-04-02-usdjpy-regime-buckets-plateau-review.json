@@ -1,0 +1,112 @@
+{
+  "generated_at": "2026-04-02T10:52:47",
+  "family_label": "usdjpy_20260402_regime_buckets",
+  "objective": "high_turnover_compounding",
+  "decision": "kill",
+  "reasons": [
+    "Latest two serious runs have PF below 1.0."
+  ],
+  "runs": [
+    {
+      "path": "reports/backtest/runs/usdjpy-20260402-regime-buckets/usdjpy/m5/2026-04-02-032754-483038-usdjpy-20260402-regime-buckets-o.json",
+      "imported_at": "2026-04-02T03:27:54",
+      "profit_factor": 0.47,
+      "net_profit": -1164.34,
+      "drawdown_percent": 11.64,
+      "trades": 82.0,
+      "days": 91,
+      "trades_per_day": 0.9010989010989011,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "usdjpy",
+        "regime-buckets",
+        "oos-3m"
+      ]
+    },
+    {
+      "path": "reports/backtest/runs/usdjpy-20260402-regime-buckets/usdjpy/m5/2026-04-02-104546-632721-usdjpy-20260402-regime-buckets-l.json",
+      "imported_at": "2026-04-02T10:45:46",
+      "profit_factor": 0.9,
+      "net_profit": -266.31,
+      "drawdown_percent": 7.71,
+      "trades": 112.0,
+      "days": 91,
+      "trades_per_day": 1.2307692307692308,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "usdjpy",
+        "regime-buckets",
+        "long-only",
+        "oos-3m"
+      ]
+    },
+    {
+      "path": "reports/backtest/runs/usdjpy-20260402-regime-buckets/usdjpy/m5/2026-04-02-104546-622615-usdjpy-20260402-regime-buckets-s.json",
+      "imported_at": "2026-04-02T10:45:46",
+      "profit_factor": 0.37,
+      "net_profit": -1180.96,
+      "drawdown_percent": 11.81,
+      "trades": 69.0,
+      "days": 91,
+      "trades_per_day": 0.7582417582417582,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "usdjpy",
+        "regime-buckets",
+        "short-only",
+        "oos-3m"
+      ]
+    },
+    {
+      "path": "reports/backtest/runs/usdjpy-20260402-regime-buckets/usdjpy/m5/2026-04-02-104945-720406-usdjpy-20260402-regime-buckets-l.json",
+      "imported_at": "2026-04-02T10:49:45",
+      "profit_factor": 0.94,
+      "net_profit": -49.81,
+      "drawdown_percent": 3.9,
+      "trades": 36.0,
+      "days": 91,
+      "trades_per_day": 0.3956043956043956,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "usdjpy",
+        "regime-buckets",
+        "long1-only",
+        "oos-3m"
+      ]
+    },
+    {
+      "path": "reports/backtest/runs/usdjpy-20260402-regime-buckets/usdjpy/m5/2026-04-02-104946-402531-usdjpy-20260402-regime-buckets-l.json",
+      "imported_at": "2026-04-02T10:49:46",
+      "profit_factor": 0.9,
+      "net_profit": -266.31,
+      "drawdown_percent": 7.71,
+      "trades": 112.0,
+      "days": 91,
+      "trades_per_day": 1.2307692307692308,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "usdjpy",
+        "regime-buckets",
+        "long2-only",
+        "oos-3m"
+      ]
+    },
+    {
+      "path": "reports/backtest/runs/usdjpy-20260402-regime-buckets/usdjpy/m5/2026-04-02-105210-067577-usdjpy-20260402-regime-buckets-l.json",
+      "imported_at": "2026-04-02T10:52:10",
+      "profit_factor": 0.0,
+      "net_profit": 0.0,
+      "drawdown_percent": 0.0,
+      "trades": 0.0,
+      "days": 91,
+      "trades_per_day": 0.0,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "usdjpy",
+        "regime-buckets",
+        "long-ny-sp15",
+        "oos-3m"
+      ]
+    }
+  ]
+}

@@ -13,7 +13,8 @@
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-baseline-reject.md` as the current verdict that the first direct Golden Method translation failed both `9 months train` and `3 months OOS`.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-flexible-risk-rerun.md` as the current verdict that flexible `1.2R` exits plus micro-cap risk override increased turnover but made the baseline worse.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-followthrough-cycle1-reject.md` as the current verdict that `Strategy 2` is dead in its current form, `Strategy 1 buy-only` is harmful, and `Strategy 1 sell-only` is the only surviving research branch.
-- [ ] Keep `usdjpy_20260402_golden_method` as the active mainline family, but do not discuss promotion until the next cycle fixes follow-through quality and breakout selectivity.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-plateau-review.md` as the formal verdict that `usdjpy_20260402_golden_method` is killed for the active high-turnover objective.
+- [ ] Do not spend another immediate tuning cycle on `usdjpy_20260402_golden_method` unless a genuinely fresh Golden-Method-compatible breakout thesis is opened.
 - [ ] Use `scripts/run-symbol-feature-lab.ps1 -Symbol USDJPY` before large tuning so the next cycle is informed by bar-data evidence as well as the doctrine.
 - [ ] Do not keep fixed `10 pip / 10 pip` exits by default; treat them as a reference anchor and promote a different stop / target structure if it improves expectancy without breaking doctrine fit.
 - [ ] Treat `1 trade/day` as the minimum operating target and `2+ trades/day` as the preferred target for the USDJPY Golden Method family.
@@ -29,6 +30,10 @@
 - [ ] Do not spend another immediate cycle on tighter `S1 sell-only` threshold combinations; the next USDJPY cycle should start from a fresh `Strategy 2` round-number breakout study or a new USDJPY family if breakout evidence is absent.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-golden-method-s2-gatefix-cycle2.md` as the current verdict that `Strategy 2` had a real gate-order bug, but after repair the executable `Model=4` OOS edge is still not promotable.
 - [ ] Do not spend another immediate cycle on `Strategy 2` spread loosening or raw threshold retuning; the next USDJPY cycle should either run plateau review on the Golden Method family or open a fresh USDJPY family from bar-data evidence.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-regime-buckets-cycle1-kill.md` as the formal verdict that the first fresh USDJPY family `usdjpy_20260402_regime_buckets` is killed after baseline, side-split, and NY/low-spread quality probes.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-regime-buckets-plateau-review.md` as the machine verdict that the latest serious regime-buckets runs are below the minimum quality floor.
+- [ ] Open the next USDJPY mainline from a fresh `50 pip zone / round-number / EMA13-EMA100 continuation / volatility-state` thesis, not from more `golden_method` or `regime_buckets` retuning.
+- [ ] Use `scripts/run-symbol-feature-lab.ps1 -Symbol USDJPY` plus a dedicated event study on `50 pip zone escape` before writing the next USDJPY EA family.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.
 - [ ] Keep `BTCUSD` high-turnover families as secondary until the USDJPY Golden Method family either clears the live gate or fails plateau review.

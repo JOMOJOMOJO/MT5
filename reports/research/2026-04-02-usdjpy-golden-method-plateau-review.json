@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-04-02T03:16:41",
+  "family_label": "usdjpy_20260402_golden_method",
+  "objective": "high_turnover_compounding",
+  "decision": "kill",
+  "reasons": [
+    "Latest two serious runs have PF below 1.0."
+  ],
+  "runs": [
+    {
+      "path": "reports/backtest/runs/usdjpy-20260402-golden-method/usdjpy/m5/2026-04-02-005529-660467-usdjpy-20260402-golden-method-oo.json",
+      "imported_at": "2026-04-02T00:55:29",
+      "profit_factor": 0.5,
+      "net_profit": -3110.48,
+      "drawdown_percent": 32.52,
+      "trades": 52.0,
+      "days": 91,
+      "trades_per_day": 0.5714285714285714,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "usdjpy",
+        "golden-method",
+        "oos-3m"
+      ]
+    },
+    {
+      "path": "reports/backtest/runs/usdjpy-20260402-golden-method/usdjpy/m5/2026-04-02-010922-915506-usdjpy-20260402-golden-method-oo.json",
+      "imported_at": "2026-04-02T01:09:22",
+      "profit_factor": 0.58,
+      "net_profit": -4635.25,
+      "drawdown_percent": 50.66,
+      "trades": 111.0,
+      "days": 91,
+      "trades_per_day": 1.2197802197802199,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "flexible-risk-oos"
+      ]
+    },
+    {
+      "path": "reports/backtest/runs/usdjpy-20260402-golden-method/usdjpy/m5/2026-04-02-013434-960657-usdjpy-20260402-golden-method-s1.json",
+      "imported_at": "2026-04-02T01:34:34",
+      "profit_factor": 1.15,
+      "net_profit": 32.32,
+      "drawdown_percent": 2.06,
+      "trades": 2.0,
+      "days": 91,
+      "trades_per_day": 0.02197802197802198,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": []
+    },
+    {
+      "path": "reports/backtest/runs/usdjpy-20260402-golden-method/usdjpy/m5/2026-04-02-025405-223021-usdjpy-20260402-golden-method-s2.json",
+      "imported_at": "2026-04-02T02:54:05",
+      "profit_factor": 0.0,
+      "net_profit": 0.0,
+      "drawdown_percent": 0.0,
+      "trades": 0.0,
+      "days": 91,
+      "trades_per_day": 0.0,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "s2-gatefix",
+        "oos-3m"
+      ]
+    },
+    {
+      "path": "reports/backtest/runs/usdjpy-20260402-golden-method/usdjpy/m5/2026-04-02-030717-697943-usdjpy-20260402-golden-method-s2.json",
+      "imported_at": "2026-04-02T03:07:17",
+      "profit_factor": 0.38,
+      "net_profit": -377.1,
+      "drawdown_percent": 4.0,
+      "trades": 4.0,
+      "days": 91,
+      "trades_per_day": 0.04395604395604396,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "s2-spread23",
+        "oos-3m"
+      ]
+    }
+  ]
+}
