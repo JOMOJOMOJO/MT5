@@ -3,7 +3,7 @@
 //+------------------------------------------------------------------+
 #property copyright   "Trading System"
 #property link        "https://www.mql5.com"
-#property version     "1.10"
+#property version     "1.11"
 #property strict
 #property description "USDJPY M15 long-only continuation prototype using EMA13/EMA100 trend, 50-pip anti-chop state, and wick-based pullback re-entry."
 
@@ -25,7 +25,9 @@ enum SignalBucket
    SIGNAL_ROUND = 1,
    SIGNAL_EMA = 2,
    SIGNAL_ROUND_LOOSE = 3,
-   SIGNAL_BREAKOUT = 4
+   SIGNAL_BREAKOUT = 4,
+   SIGNAL_RSI = 5,
+   SIGNAL_COMPRESSION = 6
   };
 
 input string          InpSymbol                   = "USDJPY";
@@ -65,6 +67,29 @@ input double          InpEmaMaxCloseLocation      = 0.45;
 input double          InpEmaStopLossPips          = 15.0;
 input double          InpEmaTargetRMultiple       = 1.2;
 input int             InpEmaMaxHoldBars           = 12;
+input bool            InpEnableCompressionBucket  = false;
+input int             InpCompressionSessionStartHour = 23;
+input int             InpCompressionSessionEndHour = 22;
+input double          InpCompressionMaxAdx        = 20.5;
+input double          InpCompressionMaxEma13DistancePips = 30.0;
+input double          InpCompressionMinUpperWickShare = 0.45;
+input double          InpCompressionMaxLowerWickShare = 0.07;
+input double          InpCompressionStopLossPips  = 15.0;
+input double          InpCompressionTargetRMultiple = 1.2;
+input int             InpCompressionMaxHoldBars   = 12;
+input bool            InpEnableRsiBucket          = false;
+input int             InpRsiPeriod                = 3;
+input double          InpRsiOversold              = 18.0;
+input int             InpRsiSessionStartHour      = 7;
+input int             InpRsiSessionEndHour        = 22;
+input double          InpRsiMaxEma13DistancePips  = 25.0;
+input double          InpRsiTouchBufferPips       = 1.0;
+input double          InpRsiMinCloseLocation      = 0.55;
+input double          InpRsiMinBodyPips           = 2.0;
+input double          InpRsiMaxLowerWickShare     = 0.45;
+input double          InpRsiStopLossPips          = 16.0;
+input double          InpRsiTargetRMultiple       = 1.1;
+input int             InpRsiMaxHoldBars           = 12;
 input bool            InpEnableBreakoutBucket     = false;
 input int             InpBreakoutSessionStartHour = 7;
 input int             InpBreakoutSessionEndHour   = 22;
@@ -109,6 +134,7 @@ input long            InpMagicNumber              = 20260498;
 int fastEmaHandle = INVALID_HANDLE;
 int slowEmaHandle = INVALID_HANDLE;
 int adxHandle = INVALID_HANDLE;
+int rsiHandle = INVALID_HANDLE;
 string runtimeSymbol = "";
 string runtimeAllowedWeekdays = "";
 string runtimeTelemetryFileName = "";
@@ -374,19 +400,21 @@ bool IsWithinActiveSession(datetime barTime)
    return IsWithinSession(barTime, InpSessionStartHour, InpSessionEndHour);
   }
 
-bool LoadSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[], double &adxValues[], int count)
+bool LoadSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[], double &adxValues[], double &rsiValues[], int count)
   {
    ArraySetAsSeries(rates, true);
    ArraySetAsSeries(fastEma, true);
    ArraySetAsSeries(slowEma, true);
    ArraySetAsSeries(adxValues, true);
+   ArraySetAsSeries(rsiValues, true);
    int copiedRates = CopyRates(runtimeSymbol, InpSignalTimeframe, 0, count, rates);
    if(copiedRates < 140)
       return false;
    int copiedFast = CopyBuffer(fastEmaHandle, 0, 0, count, fastEma);
    int copiedSlow = CopyBuffer(slowEmaHandle, 0, 0, count, slowEma);
    int copiedAdx = CopyBuffer(adxHandle, 0, 0, count, adxValues);
-   return copiedFast == copiedRates && copiedSlow == copiedRates && copiedAdx == copiedRates;
+   int copiedRsi = CopyBuffer(rsiHandle, 0, 0, count, rsiValues);
+   return copiedFast == copiedRates && copiedSlow == copiedRates && copiedAdx == copiedRates && copiedRsi == copiedRates;
   }
 
 int CountManagedPositions()
@@ -418,6 +446,10 @@ bool ManageOpenPosition()
       int maxHoldBars = InpMaxHoldBars;
       if(StringFind(comment, "ema_sidecar") >= 0)
          maxHoldBars = InpEmaMaxHoldBars;
+      else if(StringFind(comment, "compression_sidecar") >= 0)
+         maxHoldBars = InpCompressionMaxHoldBars;
+      else if(StringFind(comment, "rsi_sidecar") >= 0)
+         maxHoldBars = InpRsiMaxHoldBars;
       else if(StringFind(comment, "round_loose") >= 0)
          maxHoldBars = InpRoundLooseMaxHoldBars;
       else if(StringFind(comment, "breakout_sidecar") >= 0)
@@ -744,6 +776,85 @@ bool EvaluateEmaSignal(const MqlRates &rates[], const double &fastEma[], const d
    return true;
   }
 
+bool EvaluateCompressionSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[], const double &adxValues[])
+  {
+   if(!InpEnableCompressionBucket)
+      return false;
+
+   datetime barTime = rates[1].time;
+   if(!IsWithinSession(barTime, InpCompressionSessionStartHour, InpCompressionSessionEndHour))
+      return false;
+
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return false;
+   if(fastEma[1] <= slowEma[1])
+      return false;
+   if(rates[1].close <= slowEma[1])
+      return false;
+
+   double slowSlopePips = (slowEma[1] - slowEma[1 + InpSlowSlopeLookback]) / pip;
+   if(slowSlopePips < InpMinSlowSlopePips)
+      return false;
+
+   if(adxValues[1] <= 0.0 || adxValues[1] > InpCompressionMaxAdx)
+      return false;
+
+   double emaDistancePips = MathAbs(rates[1].close - fastEma[1]) / pip;
+   if(emaDistancePips > InpCompressionMaxEma13DistancePips)
+      return false;
+
+   if(UpperWickShare(rates[1]) < InpCompressionMinUpperWickShare)
+      return false;
+   if(LowerWickShare(rates[1]) > InpCompressionMaxLowerWickShare)
+      return false;
+   return true;
+  }
+
+bool EvaluateRsiSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[], const double &rsiValues[])
+  {
+   if(!InpEnableRsiBucket)
+      return false;
+
+   datetime barTime = rates[1].time;
+   if(!IsWithinSession(barTime, InpRsiSessionStartHour, InpRsiSessionEndHour))
+      return false;
+
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return false;
+   if(fastEma[1] <= slowEma[1])
+      return false;
+   if(rates[1].close <= slowEma[1])
+      return false;
+
+   double slowSlopePips = (slowEma[1] - slowEma[1 + InpSlowSlopeLookback]) / pip;
+   if(slowSlopePips < InpMinSlowSlopePips)
+      return false;
+
+   if(rsiValues[1] <= 0.0 || rsiValues[1] > InpRsiOversold)
+      return false;
+
+   double emaDistancePips = MathAbs(rates[1].close - fastEma[1]) / pip;
+   if(emaDistancePips > InpRsiMaxEma13DistancePips)
+      return false;
+
+   if(rates[1].low > fastEma[1] + (InpRsiTouchBufferPips * pip))
+      return false;
+   if(rates[1].close <= rates[1].open)
+      return false;
+   if(rates[1].close <= rates[2].close)
+      return false;
+   if(CloseLocation(rates[1]) < InpRsiMinCloseLocation)
+      return false;
+   if(BodyPips(rates[1]) < InpRsiMinBodyPips)
+      return false;
+   if(LowerWickShare(rates[1]) > InpRsiMaxLowerWickShare)
+      return false;
+
+   return true;
+  }
+
 bool EvaluateBreakoutSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[])
   {
    if(!InpEnableBreakoutBucket)
@@ -830,6 +941,18 @@ void OpenPosition(SignalBucket bucket)
       stopLossPips = InpEmaStopLossPips;
       targetRMultiple = InpEmaTargetRMultiple;
       comment = "ema_sidecar_long";
+     }
+   else if(bucket == SIGNAL_COMPRESSION)
+     {
+      stopLossPips = InpCompressionStopLossPips;
+      targetRMultiple = InpCompressionTargetRMultiple;
+      comment = "compression_sidecar_long";
+     }
+   else if(bucket == SIGNAL_RSI)
+     {
+      stopLossPips = InpRsiStopLossPips;
+      targetRMultiple = InpRsiTargetRMultiple;
+      comment = "rsi_sidecar_long";
      }
    else if(bucket == SIGNAL_ROUND_LOOSE)
      {
@@ -1117,6 +1240,19 @@ int OnInit()
       InpEmaMaxLowerWickShare > 1.0 || InpEmaMaxCloseLocation < 0.0 || InpEmaMaxCloseLocation > 1.0 ||
       InpEmaMinUpperWickShare <= InpEmaMaxLowerWickShare || InpEmaStopLossPips <= 0.0 ||
       InpEmaTargetRMultiple <= 0.0 || InpEmaMaxHoldBars < 1 ||
+      InpCompressionSessionStartHour < 0 || InpCompressionSessionStartHour > 23 || InpCompressionSessionEndHour < 0 ||
+      InpCompressionSessionEndHour > 23 || InpCompressionSessionStartHour == InpCompressionSessionEndHour ||
+      InpCompressionMaxAdx <= 0.0 || InpCompressionMaxEma13DistancePips <= 0.0 ||
+      InpCompressionMinUpperWickShare < 0.0 || InpCompressionMinUpperWickShare > 1.0 ||
+      InpCompressionMaxLowerWickShare < 0.0 || InpCompressionMaxLowerWickShare > 1.0 ||
+      InpCompressionMinUpperWickShare <= InpCompressionMaxLowerWickShare ||
+      InpCompressionStopLossPips <= 0.0 || InpCompressionTargetRMultiple <= 0.0 || InpCompressionMaxHoldBars < 1 ||
+      InpRsiPeriod < 2 || InpRsiOversold <= 0.0 || InpRsiOversold >= 100.0 || InpRsiSessionStartHour < 0 ||
+      InpRsiSessionStartHour > 23 || InpRsiSessionEndHour < 0 || InpRsiSessionEndHour > 23 ||
+      InpRsiSessionStartHour == InpRsiSessionEndHour || InpRsiMaxEma13DistancePips <= 0.0 ||
+      InpRsiTouchBufferPips < 0.0 || InpRsiMinCloseLocation < 0.0 || InpRsiMinCloseLocation > 1.0 ||
+      InpRsiMinBodyPips <= 0.0 || InpRsiMaxLowerWickShare < 0.0 || InpRsiMaxLowerWickShare > 1.0 ||
+      InpRsiStopLossPips <= 0.0 || InpRsiTargetRMultiple <= 0.0 || InpRsiMaxHoldBars < 1 ||
       InpBreakoutSessionStartHour < 0 || InpBreakoutSessionStartHour > 23 || InpBreakoutSessionEndHour < 0 ||
       InpBreakoutSessionEndHour > 23 || InpBreakoutSessionStartHour == InpBreakoutSessionEndHour ||
       InpBreakoutLookbackBars <= 0 || InpBreakoutMidpointDistancePips <= 0.0 || InpBreakoutTouchTolerancePips < 0.0 ||
@@ -1142,7 +1278,8 @@ int OnInit()
    fastEmaHandle = iMA(runtimeSymbol, InpSignalTimeframe, InpFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
    slowEmaHandle = iMA(runtimeSymbol, InpSignalTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
    adxHandle = iADX(runtimeSymbol, InpSignalTimeframe, InpAdxPeriod);
-   if(fastEmaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE || adxHandle == INVALID_HANDLE)
+   rsiHandle = iRSI(runtimeSymbol, InpSignalTimeframe, InpRsiPeriod, PRICE_CLOSE);
+   if(fastEmaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE || adxHandle == INVALID_HANDLE || rsiHandle == INVALID_HANDLE)
       return INIT_FAILED;
 
    trade.SetExpertMagicNumber((ulong)InpMagicNumber);
@@ -1189,6 +1326,8 @@ void OnDeinit(const int reason)
       IndicatorRelease(slowEmaHandle);
    if(adxHandle != INVALID_HANDLE)
       IndicatorRelease(adxHandle);
+   if(rsiHandle != INVALID_HANDLE)
+      IndicatorRelease(rsiHandle);
   }
 
 void OnTimer()
@@ -1284,7 +1423,8 @@ void OnTick()
    double fastEma[];
    double slowEma[];
    double adxValues[];
-   if(!LoadSignalWindow(rates, fastEma, slowEma, adxValues, 260))
+   double rsiValues[];
+   if(!LoadSignalWindow(rates, fastEma, slowEma, adxValues, rsiValues, 260))
       return;
 
    SignalBucket bucket = SIGNAL_NONE;
@@ -1292,6 +1432,10 @@ void OnTick()
       bucket = SIGNAL_ROUND;
    else if(EvaluateEmaSignal(rates, fastEma, slowEma, adxValues))
       bucket = SIGNAL_EMA;
+   else if(EvaluateCompressionSignal(rates, fastEma, slowEma, adxValues))
+      bucket = SIGNAL_COMPRESSION;
+   else if(EvaluateRsiSignal(rates, fastEma, slowEma, rsiValues))
+      bucket = SIGNAL_RSI;
    else if(EvaluateBreakoutSignal(rates, fastEma, slowEma))
       bucket = SIGNAL_BREAKOUT;
    else if(EvaluateRoundLooseSignal(rates, fastEma, slowEma))
