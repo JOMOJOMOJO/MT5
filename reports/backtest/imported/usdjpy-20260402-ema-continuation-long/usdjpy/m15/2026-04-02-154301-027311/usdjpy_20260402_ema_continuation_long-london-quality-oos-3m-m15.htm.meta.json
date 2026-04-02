@@ -1,0 +1,50 @@
+﻿{
+    "generated_at":  "2026-04-02T15:41:10.0291396+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260402_ema_continuation_long-london-quality-oos-3m.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpCD01.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpCD01.ini"
+               },
+    "tester":  {
+                   "symbol":  "USDJPY",
+                   "period":  "M15",
+                   "from_date":  "2026.01.01",
+                   "to_date":  "2026.03.31",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260402_ema_continuation_long-london-quality-oos-3m-m15.htm"
+               },
+    "preset":  {
+                   "name":  "usdjpy_20260402_ema_continuation_long-london-quality.set",
+                   "source":  "reports\\presets\\usdjpy_20260402_ema_continuation_long-london-quality.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\usdjpy_20260402_ema_continuation_long-london-quality.set",
+                   "parameters":  {
+                                      "InpSymbol":  "USDJPY",
+                                      "InpSignalTimeframe":  "15",
+                                      "InpFastEMAPeriod":  "13",
+                                      "InpSlowEMAPeriod":  "100",
+                                      "InpSlowSlopeLookback":  "5",
+                                      "InpMinSlowSlopePips":  "0.0",
+                                      "InpAdxPeriod":  "14",
+                                      "InpMaxAdx":  "30.0",
+                                      "InpSessionStartHour":  "7",
+                                      "InpSessionEndHour":  "16",
+                                      "InpMaxEma13DistancePips":  "22.0",
+                                      "InpMaxRet1":  "0.0004",
+                                      "InpMinUpperWickShare":  "0.45",
+                                      "InpMaxLowerWickShare":  "0.10",
+                                      "InpMaxCloseLocation":  "0.45",
+                                      "InpStopLossPips":  "15.0",
+                                      "InpTargetRMultiple":  "1.2",
+                                      "InpMaxHoldBars":  "12",
+                                      "InpRiskPercent":  "2.0",
+                                      "InpUseMicroCapRiskOverride":  "true",
+                                      "InpMicroCapBalanceThreshold":  "150.0",
+                                      "InpMicroCapRiskPercent":  "3.0",
+                                      "InpUseDailyLossCap":  "true",
+                                      "InpDailyLossCapPercent":  "6.0",
+                                      "InpMaxTradesPerDay":  "3",
+                                      "InpMaxSpreadPips":  "2.0",
+                                      "InpAllowedWeekdays":  "1,2,3,4,5",
+                                      "InpMagicNumber":  "20260511"
+                                  }
+               }
+}

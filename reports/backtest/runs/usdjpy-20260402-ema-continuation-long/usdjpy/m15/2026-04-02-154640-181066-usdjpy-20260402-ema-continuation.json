@@ -1,0 +1,425 @@
+{
+  "imported_at": "2026-04-02T15:46:40",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "usdjpy_20260402_ema_continuation_long",
+    "symbol": "USDJPY",
+    "timeframe": "M15",
+    "tested_range": "2026.01.01 - 2026.03.31",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "usdjpy-20260402-ema-continuation-long",
+    "symbol_key": "usdjpy",
+    "timeframe_key": "m15",
+    "run_path": "reports/backtest/runs/usdjpy-20260402-ema-continuation-long/usdjpy/m15/2026-04-02-154640-181066-usdjpy-20260402-ema-continuation.json",
+    "knowledge_path": "knowledge/backtests/usdjpy-20260402-ema-continuation-long/usdjpy/m15/2026-04-02-154640-181066-usdjpy-20260402-ema-continuation.md",
+    "imported_dir": "reports/backtest/imported/usdjpy-20260402-ema-continuation-long/usdjpy/m15/2026-04-02-154640-181066",
+    "imported_report": "reports/backtest/imported/usdjpy-20260402-ema-continuation-long/usdjpy/m15/2026-04-02-154640-181066/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260402_ema_continuation_long-london-mid-oos-3m-m15.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "USDJPY",
+    "tester_period": "M15",
+    "preset_name": "usdjpy_20260402_ema_continuation_long-london-mid.set",
+    "preset_source": "reports\\presets\\usdjpy_20260402_ema_continuation_long-london-mid.set",
+    "signal_timeframe": "M15"
+  },
+  "metrics": {
+    "ea_name": "usdjpy_20260402_ema_continuation_long",
+    "symbol": "USDJPY",
+    "period": "M15 (2026.01.01 - 2026.03.31)",
+    "history_quality_percent": 100.0,
+    "bars": 5952,
+    "ticks": 12665736,
+    "initial_deposit": 10000.0,
+    "total_net_profit": 481.65,
+    "gross_profit": 1193.37,
+    "gross_loss": -711.72,
+    "profit_factor": 1.68,
+    "expected_payoff": 48.16,
+    "recovery_factor": 0.71,
+    "sharpe_ratio": 2.36,
+    "absolute_drawdown": 510.82,
+    "maximal_drawdown_amount": 510.82,
+    "maximal_drawdown_percent": 5.11,
+    "relative_drawdown_amount": 510.82,
+    "relative_drawdown_percent": 5.11,
+    "total_trades": 10,
+    "short_positions_count": 0,
+    "short_positions_percent": 0.0,
+    "long_positions_count": 10,
+    "long_positions_percent": 50.0,
+    "profit_trades_count": 5,
+    "profit_trades_percent": 50.0,
+    "loss_trades_count": 5,
+    "loss_trades_percent": 50.0,
+    "largest_profit_trade": 245.72,
+    "largest_loss_trade": -200.9,
+    "average_profit_trade": 238.67,
+    "average_loss_trade": -142.34,
+    "timeframe": "M15",
+    "tested_range": "2026.01.01 - 2026.03.31",
+    "win_rate_percent": 50.0
+  },
+  "summary": {
+    "headline": "Profit Factor は深掘りに値する水準です。 / 総損益はプラスです。",
+    "strengths": [
+      "Profit Factor は深掘りに値する水準です。",
+      "総損益はプラスです。",
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [],
+    "notes": [
+      "取引回数は少なめなので、別期間や別レジームで補強が必要です。"
+    ]
+  },
+  "tags": [],
+  "raw_fields": {
+    "expert": "usdjpy_20260402_ema_continuation_long",
+    "symbol": [
+      "USDJPY",
+      "1"
+    ],
+    "period": "M15 (2026.01.01 - 2026.03.31)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "5952",
+    "ticks": "12665736",
+    "total net profit": "481.65",
+    "absolute drawdown": "510.82",
+    "gross profit": "1 193.37",
+    "maximal drawdown": "510.82 (5.11%)",
+    "gross loss": "-711.72",
+    "relative drawdown": "5.11% (510.82)",
+    "profit factor": "1.68",
+    "expected payoff": "48.16",
+    "recovery factor": "0.71",
+    "sharpe ratio": "2.36",
+    "z score": "-1.01 (68.75%)",
+    "ahpr": "1.0049 (0.49%)",
+    "lr correlation": "0.63",
+    "ontester": "0",
+    "ghpr": "1.0047 (0.47%)",
+    "lr standard error": "235.41",
+    "total trades": "10",
+    "short trades won percent": "0 (0.00%)",
+    "long positions won percent": "10 (50.00%)",
+    "profit trades percent of total": "5 (50.00%)",
+    "loss trades percent of total": "5 (50.00%)",
+    "largest profit trade": "245.72",
+    "largest loss trade": "-200.90",
+    "average profit trade": "238.67",
+    "average loss trade": "-142.34",
+    "correlation profits mfe": "0.91",
+    "correlation profits mae": "0.63",
+    "correlation mfe mae": "0.5868",
+    "t p": "時間",
+    "2": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "buy": [
+      "2.09 / 2.09",
+      "2.07 / 2.07",
+      "2.06 / 2.06",
+      "2.03 / 2.03",
+      "2.01 / 2.01",
+      "1.99 / 1.99",
+      "2.05 / 2.05",
+      "2.08 / 2.08",
+      "2.07 / 2.07",
+      "2.17 / 2.17",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 000": [
+      "156.728",
+      "156.607",
+      "157.709",
+      "2026.01.12 15:46:45",
+      "159.013",
+      "2026.01.14 10:05:57",
+      "153.605",
+      "2026.01.30 10:59:31",
+      "154.622",
+      "2026.02.02 14:20:19",
+      "153.175",
+      "2026.02.16 11:39:18",
+      "155.300",
+      "2026.02.20 12:43:05",
+      "158.711",
+      "2026.03.25 15:45:18",
+      "159.353",
+      "2026.03.26 15:01:24"
+    ],
+    "157 058": "2026.01.02 13:30:00",
+    "filled": [
+      "ema_continuation_long",
+      "ema_continuation_long",
+      "ema_continuation_long",
+      "sl 157.709",
+      "ema_continuation_long",
+      "sl 159.013",
+      "ema_continuation_long",
+      "tp 153.935",
+      "ema_continuation_long",
+      "tp 154.952",
+      "ema_continuation_long",
+      "tp 153.505",
+      "ema_continuation_long",
+      "sl 155.300",
+      "ema_continuation_long",
+      "tp 159.041",
+      "ema_continuation_long",
+      "tp 159.683"
+    ],
+    "2026 01 02 16 30 00": [
+      "3",
+      "filled",
+      "3"
+    ],
+    "usdjpy": [
+      "sell",
+      "sell",
+      "sell",
+      "sell"
+    ],
+    "2 09 2 09": "0.000",
+    "4": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "156 937": "2026.01.08 12:00:00",
+    "2026 01 08 15 00 00": [
+      "5",
+      "filled",
+      "5"
+    ],
+    "2 07 2 07": "0.000",
+    "6": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "158 039": "2026.01.12 13:45:00",
+    "7": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "sell": [
+      "2.06 / 2.06",
+      "2.03 / 2.03",
+      "2.01 / 2.01",
+      "1.99 / 1.99",
+      "2.05 / 2.05",
+      "2.08 / 2.08",
+      "2.07 / 2.07",
+      "2.17 / 2.17",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out"
+    ],
+    "8": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "159 343": "2026.01.14 09:45:00",
+    "9": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "10": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "153 935": "2026.01.30 10:15:00",
+    "11": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "12": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "154 952": "2026.02.02 12:15:00",
+    "13": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "14": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "153 505": "2026.02.16 09:45:00",
+    "15": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "16": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "155 630": "2026.02.20 11:30:00",
+    "17": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "18": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "159 041": "2026.03.25 15:00:00",
+    "19": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "20": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "159 683": "2026.03.26 13:00:00",
+    "21": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "1": "balance",
+    "0 00": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-198.55",
+      "0.00",
+      "-191.49",
+      "0.00",
+      "235.03",
+      "0.00",
+      "233.73",
+      "0.00",
+      "245.72",
+      "0.00",
+      "-200.90",
+      "0.00",
+      "234.28",
+      "0.00",
+      "244.61",
+      "0.00"
+    ],
+    "10 000 00": [
+      "10 000.00",
+      "ema_continuation_long"
+    ],
+    "2 09": "156.878",
+    "out": [
+      "2.09",
+      "2.07"
+    ],
+    "156 829": "3",
+    "65 30": "9 934.70",
+    "2 07": [
+      "156.757",
+      "158.861",
+      "159.041"
+    ],
+    "9 934 70": "ema_continuation_long",
+    "156 715": "5",
+    "55 48": "9 879.22",
+    "2 06": [
+      "157.859",
+      "157.707"
+    ],
+    "9 879 22": "ema_continuation_long",
+    "9 680 67": [
+      "sl 157.709",
+      "ema_continuation_long"
+    ],
+    "2 03": [
+      "159.163",
+      "159.013"
+    ],
+    "9 489 18": [
+      "sl 159.013",
+      "ema_continuation_long"
+    ],
+    "2 01": [
+      "153.755",
+      "153.935"
+    ],
+    "9 724 21": [
+      "tp 153.935",
+      "ema_continuation_long"
+    ],
+    "1 99": [
+      "154.772",
+      "154.954"
+    ],
+    "9 957 94": [
+      "tp 154.952",
+      "ema_continuation_long"
+    ],
+    "2 05": [
+      "153.325",
+      "153.509"
+    ],
+    "10 203 66": [
+      "tp 153.505",
+      "ema_continuation_long"
+    ],
+    "2 08": [
+      "155.450",
+      "155.300"
+    ],
+    "10 002 76": [
+      "sl 155.300",
+      "ema_continuation_long"
+    ],
+    "10 237 04": [
+      "tp 159.041",
+      "ema_continuation_long"
+    ],
+    "2 17": [
+      "159.503",
+      "159.683"
+    ],
+    "10 481 65": "tp 159.683",
+    "481 65": "10 481.65"
+  },
+  "records_preview": [],
+  "run_id": "2026-04-02-154640-181066-usdjpy-20260402-ema-continuation"
+}
