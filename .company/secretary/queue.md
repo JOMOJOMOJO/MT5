@@ -46,6 +46,9 @@
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-breakout-followthrough-long-delay2-probe.md` as the study note that opened `breakout_followthrough_long`, not as a promotion note.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-breakout-followthrough-long-cycle2-actual-review.md` as the formal verdict that `breakout_followthrough_long` reached actual MT5 but failed as a `quality12b` second bucket because train stayed weak or frequency became too sparse.
 - [ ] Do not spend another immediate tuning cycle on `breakout_followthrough_long`; open the next `USDJPY long-only` bucket from a fresh thesis instead.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-ema-continuation-long-cycle1-review.md` as the formal verdict that `usdjpy_20260402_ema_continuation_long` produced one surviving sidecar, `london-loose`, but still did not solve the monthly turnover target by itself.
+- [ ] Keep `usdjpy_20260402_ema_continuation_long-london-loose.set` as the current best `EMA13/EMA100 continuation` sidecar inside this family.
+- [ ] Do not promote `usdjpy_20260402_ema_continuation_long` as a standalone long-only mainline; next cycle should be either `quality12b + london-loose` stack actualization or a fresh third `USDJPY long-only` bucket.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.
 - [ ] Keep `BTCUSD` high-turnover families as secondary until the USDJPY Golden Method family either clears the live gate or fails plateau review.
