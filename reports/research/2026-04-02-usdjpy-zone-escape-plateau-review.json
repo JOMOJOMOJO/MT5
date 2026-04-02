@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-04-02T11:49:25",
+  "family_label": "usdjpy_20260402_zone_escape",
+  "objective": "high_turnover_compounding",
+  "decision": "kill",
+  "reasons": [
+    "Latest two serious runs have PF below 1.0."
+  ],
+  "runs": [
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/usdjpy-20260402-zone-escape/usdjpy/m5/2026-04-02-112922-432668-usdjpy-20260402-zone-escape-asia.json",
+      "imported_at": "2026-04-02T11:29:22",
+      "profit_factor": 0.91,
+      "net_profit": -13.3,
+      "drawdown_percent": 0.73,
+      "trades": 7.0,
+      "days": 275,
+      "trades_per_day": 0.025454545454545455,
+      "tested_range": "2025.04.01 - 2025.12.31",
+      "tags": [
+        "train-9m",
+        "zone-escape"
+      ]
+    },
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/usdjpy-20260402-zone-escape/usdjpy/m5/2026-04-02-113122-919203-usdjpy-20260402-zone-escape-asia.json",
+      "imported_at": "2026-04-02T11:31:22",
+      "profit_factor": 0.0,
+      "net_profit": 0.0,
+      "drawdown_percent": 0.0,
+      "trades": 0.0,
+      "days": 91,
+      "trades_per_day": 0.0,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "oos-3m",
+        "zone-escape"
+      ]
+    },
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/usdjpy-20260402-zone-escape/usdjpy/m5/2026-04-02-114316-697301-usdjpy-20260402-zone-escape-asia.json",
+      "imported_at": "2026-04-02T11:43:16",
+      "profit_factor": 0.91,
+      "net_profit": -13.3,
+      "drawdown_percent": 0.73,
+      "trades": 7.0,
+      "days": 275,
+      "trades_per_day": 0.025454545454545455,
+      "tested_range": "2025.04.01 - 2025.12.31",
+      "tags": [
+        "train-9m",
+        "zone-escape",
+        "spread22"
+      ]
+    },
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/usdjpy-20260402-zone-escape/usdjpy/m5/2026-04-02-114316-701291-usdjpy-20260402-zone-escape-asia.json",
+      "imported_at": "2026-04-02T11:43:16",
+      "profit_factor": 0.0,
+      "net_profit": 0.0,
+      "drawdown_percent": 0.0,
+      "trades": 0.0,
+      "days": 91,
+      "trades_per_day": 0.0,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "oos-3m",
+        "zone-escape",
+        "spread22"
+      ]
+    },
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/usdjpy-20260402-zone-escape/usdjpy/m5/2026-04-02-114744-247023-usdjpy-20260402-zone-escape-asia.json",
+      "imported_at": "2026-04-02T11:47:44",
+      "profit_factor": 0.72,
+      "net_profit": -48.5,
+      "drawdown_percent": 1.06,
+      "trades": 8.0,
+      "days": 275,
+      "trades_per_day": 0.02909090909090909,
+      "tested_range": "2025.04.01 - 2025.12.31",
+      "tags": [
+        "train-9m",
+        "zone-escape",
+        "spread30"
+      ]
+    },
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/backtest/runs/usdjpy-20260402-zone-escape/usdjpy/m5/2026-04-02-114812-327059-usdjpy-20260402-zone-escape-asia.json",
+      "imported_at": "2026-04-02T11:48:12",
+      "profit_factor": 0.57,
+      "net_profit": -30.96,
+      "drawdown_percent": 0.72,
+      "trades": 3.0,
+      "days": 91,
+      "trades_per_day": 0.03296703296703297,
+      "tested_range": "2026.01.01 - 2026.04.01",
+      "tags": [
+        "oos-3m",
+        "zone-escape",
+        "spread30"
+      ]
+    }
+  ]
+}

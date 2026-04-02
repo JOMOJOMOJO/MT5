@@ -1,0 +1,367 @@
+{
+  "imported_at": "2026-04-02T11:47:44",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "usdjpy_20260402_zone_escape",
+    "symbol": "USDJPY",
+    "timeframe": "M5",
+    "tested_range": "2025.04.01 - 2025.12.31",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "usdjpy-20260402-zone-escape",
+    "symbol_key": "usdjpy",
+    "timeframe_key": "m5",
+    "run_path": "reports/backtest/runs/usdjpy-20260402-zone-escape/usdjpy/m5/2026-04-02-114744-247023-usdjpy-20260402-zone-escape-asia.json",
+    "knowledge_path": "knowledge/backtests/usdjpy-20260402-zone-escape/usdjpy/m5/2026-04-02-114744-247023-usdjpy-20260402-zone-escape-asia.md",
+    "imported_dir": null,
+    "imported_report": null
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260402_zone_escape-asia-sell-spread30-train-9m-m5.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "USDJPY",
+    "tester_period": "M5",
+    "preset_name": "usdjpy_20260402_zone_escape-asia-sell-spread30.set",
+    "preset_source": "reports\\presets\\usdjpy_20260402_zone_escape-asia-sell-spread30.set",
+    "signal_timeframe": "M5"
+  },
+  "metrics": {
+    "ea_name": "usdjpy_20260402_zone_escape",
+    "symbol": "USDJPY",
+    "period": "M5 (2025.04.01 - 2025.12.31)",
+    "history_quality_percent": 100.0,
+    "bars": 56153,
+    "ticks": 23147312,
+    "initial_deposit": 10000.0,
+    "total_net_profit": -48.5,
+    "gross_profit": 125.95,
+    "gross_loss": -174.45,
+    "profit_factor": 0.72,
+    "expected_payoff": -6.06,
+    "recovery_factor": -0.35,
+    "sharpe_ratio": -2.21,
+    "absolute_drawdown": 105.55,
+    "maximal_drawdown_amount": 105.55,
+    "maximal_drawdown_percent": 1.06,
+    "relative_drawdown_amount": 105.55,
+    "relative_drawdown_percent": 1.06,
+    "total_trades": 8,
+    "short_positions_count": 8,
+    "short_positions_percent": 37.5,
+    "long_positions_count": 0,
+    "long_positions_percent": 0.0,
+    "profit_trades_count": 3,
+    "profit_trades_percent": 37.5,
+    "loss_trades_count": 5,
+    "loss_trades_percent": 62.5,
+    "largest_profit_trade": 42.69,
+    "largest_loss_trade": -36.41,
+    "average_profit_trade": 41.98,
+    "average_loss_trade": -34.89,
+    "timeframe": "M5",
+    "tested_range": "2025.04.01 - 2025.12.31",
+    "win_rate_percent": 37.5
+  },
+  "summary": {
+    "headline": "取引回数が少なすぎて判断が不安定です。 / Profit Factor が 1.0 未満で、収益性はまだ不足しています。",
+    "strengths": [
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [
+      "取引回数が少なすぎて判断が不安定です。",
+      "Profit Factor が 1.0 未満で、収益性はまだ不足しています。",
+      "総損益がまだプラスではありません。"
+    ],
+    "notes": []
+  },
+  "tags": [
+    "train-9m",
+    "zone-escape",
+    "spread30"
+  ],
+  "raw_fields": {
+    "expert": "usdjpy_20260402_zone_escape",
+    "symbol": [
+      "USDJPY",
+      "1"
+    ],
+    "period": "M5 (2025.04.01 - 2025.12.31)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "56153",
+    "ticks": "23147312",
+    "total net profit": "-48.50",
+    "absolute drawdown": "105.55",
+    "gross profit": "125.95",
+    "maximal drawdown": "105.55 (1.06%)",
+    "gross loss": "-174.45",
+    "relative drawdown": "1.06% (105.55)",
+    "profit factor": "0.72",
+    "expected payoff": "-6.06",
+    "recovery factor": "-0.35",
+    "sharpe ratio": "-2.21",
+    "z score": "-0.21 (16.63%)",
+    "ahpr": "0.9994 (-0.06%)",
+    "lr correlation": "-0.28",
+    "ontester": "0",
+    "ghpr": "0.9994 (-0.06%)",
+    "lr standard error": "33.08",
+    "total trades": "8",
+    "short trades won percent": "8 (37.50%)",
+    "long positions won percent": "0 (0.00%)",
+    "profit trades percent of total": "3 (37.50%)",
+    "loss trades percent of total": "5 (62.50%)",
+    "largest profit trade": "42.69",
+    "largest loss trade": "-36.41",
+    "average profit trade": "41.98",
+    "average loss trade": "-34.89",
+    "correlation profits mfe": "0.98",
+    "correlation profits mae": "0.88",
+    "correlation mfe mae": "0.8479",
+    "t p": "時間",
+    "2": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "sell": [
+      "0.51 / 0.51",
+      "0.51 / 0.51",
+      "0.51 / 0.51",
+      "0.51 / 0.51",
+      "0.52 / 0.52",
+      "0.53 / 0.53",
+      "0.54 / 0.54",
+      "0.53 / 0.53",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 000": [
+      "147.059",
+      "2025.09.16 08:45:20",
+      "147.538",
+      "2025.09.19 08:26:29",
+      "148.993",
+      "2025.09.29 08:02:10",
+      "151.971",
+      "2025.10.14 08:37:44",
+      "154.001",
+      "2025.11.04 07:31:18",
+      "155.534",
+      "2025.12.01 06:43:34",
+      "155.087",
+      "2025.12.08 05:43:45",
+      "155.423",
+      "2025.12.15 06:43:24"
+    ],
+    "146 839": "2025.09.16 08:30:00",
+    "filled": [
+      "zone_escape_short",
+      "sl 147.059",
+      "zone_escape_short",
+      "sl 147.538",
+      "zone_escape_short",
+      "sl 148.993",
+      "zone_escape_short",
+      "tp 151.751",
+      "zone_escape_short",
+      "tp 153.781",
+      "zone_escape_short",
+      "sl 155.534",
+      "zone_escape_short",
+      "sl 155.087",
+      "zone_escape_short",
+      "tp 155.203"
+    ],
+    "3": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "buy": [
+      "0.51 / 0.51",
+      "0.51 / 0.51",
+      "0.51 / 0.51",
+      "0.51 / 0.51",
+      "0.52 / 0.52",
+      "0.53 / 0.53",
+      "0.54 / 0.54",
+      "0.53 / 0.53",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out"
+    ],
+    "4": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "147 318": "2025.09.19 08:10:00",
+    "5": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "6": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "148 773": "2025.09.29 06:45:00",
+    "7": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "8": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "151 751": "2025.10.14 08:15:00",
+    "9": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "10": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "153 781": "2025.11.04 07:15:00",
+    "11": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "12": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "155 314": "2025.12.01 05:45:00",
+    "13": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "14": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "154 867": "2025.12.08 05:05:00",
+    "15": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "16": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "155 203": "2025.12.15 06:05:00",
+    "17": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "1": "balance",
+    "0 00": [
+      "0.00",
+      "0.00",
+      "-36.41",
+      "0.00",
+      "-34.57",
+      "0.00",
+      "-34.57",
+      "0.00",
+      "42.68",
+      "0.00",
+      "40.58",
+      "0.00",
+      "-34.08",
+      "0.00",
+      "-34.82",
+      "0.00",
+      "42.69",
+      "0.00"
+    ],
+    "10 000 00": [
+      "10 000.00",
+      "zone_escape_short"
+    ],
+    "0 51": [
+      "146.959",
+      "147.064",
+      "147.438",
+      "147.538",
+      "148.893",
+      "148.994",
+      "151.871",
+      "151.744"
+    ],
+    "9 963 59": [
+      "sl 147.059",
+      "zone_escape_short"
+    ],
+    "9 929 02": [
+      "sl 147.538",
+      "zone_escape_short"
+    ],
+    "9 894 45": [
+      "sl 148.993",
+      "zone_escape_short"
+    ],
+    "9 937 13": [
+      "tp 151.751",
+      "zone_escape_short"
+    ],
+    "0 52": [
+      "153.901",
+      "153.781"
+    ],
+    "9 977 71": [
+      "tp 153.781",
+      "zone_escape_short"
+    ],
+    "0 53": [
+      "155.434",
+      "155.534",
+      "155.323",
+      "155.198"
+    ],
+    "9 943 63": [
+      "sl 155.534",
+      "zone_escape_short"
+    ],
+    "0 54": [
+      "154.987",
+      "155.087"
+    ],
+    "9 908 81": [
+      "sl 155.087",
+      "zone_escape_short"
+    ],
+    "9 951 50": "tp 155.203",
+    "48 50": "9 951.50"
+  },
+  "records_preview": [],
+  "run_id": "2026-04-02-114744-247023-usdjpy-20260402-zone-escape-asia"
+}
