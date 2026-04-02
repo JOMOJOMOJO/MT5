@@ -1,0 +1,5987 @@
+{
+  "imported_at": "2026-04-02T03:27:54",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "usdjpy_20260402_regime_buckets",
+    "symbol": "USDJPY",
+    "timeframe": "M5",
+    "tested_range": "2025.04.01 - 2025.12.31",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "usdjpy-20260402-regime-buckets",
+    "symbol_key": "usdjpy",
+    "timeframe_key": "m5",
+    "run_path": "reports/backtest/runs/usdjpy-20260402-regime-buckets/usdjpy/m5/2026-04-02-032754-514796-usdjpy-20260402-regime-buckets-t.json",
+    "knowledge_path": "knowledge/backtests/usdjpy-20260402-regime-buckets/usdjpy/m5/2026-04-02-032754-514796-usdjpy-20260402-regime-buckets-t.md",
+    "imported_dir": "reports/backtest/imported/usdjpy-20260402-regime-buckets/usdjpy/m5/2026-04-02-032754-514796",
+    "imported_report": "reports/backtest/imported/usdjpy-20260402-regime-buckets/usdjpy/m5/2026-04-02-032754-514796/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260402_regime_buckets-train-9m-m5.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "USDJPY",
+    "tester_period": "M5",
+    "preset_name": "usdjpy_20260402_regime_buckets-baseline.set",
+    "preset_source": "reports\\presets\\usdjpy_20260402_regime_buckets-baseline.set",
+    "signal_timeframe": "M5"
+  },
+  "metrics": {
+    "ea_name": "usdjpy_20260402_regime_buckets",
+    "symbol": "USDJPY",
+    "period": "M5 (2025.04.01 - 2025.12.31)",
+    "history_quality_percent": 100.0,
+    "bars": 56153,
+    "ticks": 23147312,
+    "initial_deposit": 10000.0,
+    "total_net_profit": -807.88,
+    "gross_profit": 4119.03,
+    "gross_loss": -4926.91,
+    "profit_factor": 0.84,
+    "expected_payoff": -3.81,
+    "recovery_factor": -0.65,
+    "sharpe_ratio": -5.0,
+    "absolute_drawdown": 807.88,
+    "maximal_drawdown_amount": 1173.9,
+    "maximal_drawdown_percent": 11.32,
+    "relative_drawdown_amount": 1173.9,
+    "relative_drawdown_percent": 11.32,
+    "total_trades": 212,
+    "short_positions_count": 163,
+    "short_positions_percent": 35.58,
+    "long_positions_count": 49,
+    "long_positions_percent": 30.61,
+    "profit_trades_count": 73,
+    "profit_trades_percent": 34.43,
+    "loss_trades_count": 139,
+    "loss_trades_percent": 65.57,
+    "largest_profit_trade": 177.39,
+    "largest_loss_trade": -86.42,
+    "average_profit_trade": 56.43,
+    "average_loss_trade": -35.45,
+    "timeframe": "M5",
+    "tested_range": "2025.04.01 - 2025.12.31",
+    "win_rate_percent": 34.43
+  },
+  "summary": {
+    "headline": "Profit Factor が 1.0 未満で、収益性はまだ不足しています。 / 総損益がまだプラスではありません。",
+    "strengths": [
+      "取引回数は初期評価に耐える水準です。",
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [
+      "Profit Factor が 1.0 未満で、収益性はまだ不足しています。",
+      "総損益がまだプラスではありません。"
+    ],
+    "notes": []
+  },
+  "tags": [
+    "usdjpy",
+    "regime-buckets",
+    "train-9m"
+  ],
+  "raw_fields": {
+    "expert": "usdjpy_20260402_regime_buckets",
+    "symbol": [
+      "USDJPY",
+      "1"
+    ],
+    "period": "M5 (2025.04.01 - 2025.12.31)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "56153",
+    "ticks": "23147312",
+    "total net profit": "-807.88",
+    "absolute drawdown": "807.88",
+    "gross profit": "4 119.03",
+    "maximal drawdown": "1 173.90 (11.32%)",
+    "gross loss": "-4 926.91",
+    "relative drawdown": "11.32% (1 173.90)",
+    "profit factor": "0.84",
+    "expected payoff": "-3.81",
+    "recovery factor": "-0.65",
+    "sharpe ratio": "-5.00",
+    "z score": "0.27 (21.28%)",
+    "ahpr": "0.9996 (-0.04%)",
+    "lr correlation": "-0.85",
+    "ontester": "0",
+    "ghpr": "0.9996 (-0.04%)",
+    "lr standard error": "137.46",
+    "total trades": "212",
+    "short trades won percent": "163 (35.58%)",
+    "long positions won percent": "49 (30.61%)",
+    "profit trades percent of total": "73 (34.43%)",
+    "loss trades percent of total": "139 (65.57%)",
+    "largest profit trade": "177.39",
+    "largest loss trade": "-86.42",
+    "average profit trade": "56.43",
+    "average loss trade": "-35.45",
+    "correlation profits mfe": "0.88",
+    "correlation profits mae": "0.70",
+    "correlation mfe mae": "0.5618",
+    "t p": "時間",
+    "2025 04 01 02 25 00": "2",
+    "usdjpy": [
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy",
+      "sell",
+      "buy",
+      "buy"
+    ],
+    "0 73 0 73": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "150 172": "2025.04.01 02:25:00",
+    "filled": [
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 149.584",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 149.711",
+      "regime_buckets_long",
+      "sl 149.277",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 149.700",
+      "regime_buckets_short",
+      "sl 149.755",
+      "regime_buckets_short",
+      "sl 149.827",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 149.705",
+      "regime_buckets_short",
+      "sl 149.938",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 149.638",
+      "regime_buckets_short",
+      "sl 149.700",
+      "regime_buckets_short",
+      "sl 149.813",
+      "regime_buckets_short",
+      "sl 149.968",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 150.239",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 146.929",
+      "regime_buckets_short",
+      "sl 146.411",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 146.355",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 145.877",
+      "regime_buckets_long",
+      "sl 145.631",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "sl 146.694",
+      "regime_buckets_short",
+      "sl 146.952",
+      "regime_buckets_short",
+      "sl 147.130",
+      "regime_buckets_short",
+      "sl 147.306",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 146.376",
+      "regime_buckets_short",
+      "sl 146.633",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 145.887",
+      "regime_buckets_short",
+      "sl 146.278",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 146.555",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "sl 147.787",
+      "regime_buckets_long",
+      "sl 147.408",
+      "regime_buckets_long",
+      "sl 147.329",
+      "regime_buckets_long",
+      "sl 147.042",
+      "regime_buckets_short",
+      "sl 147.509",
+      "regime_buckets_short",
+      "sl 147.654",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 146.832",
+      "regime_buckets_long",
+      "sl 144.848",
+      "regime_buckets_long",
+      "regime_buckets_long",
+      "sl 144.904",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "sl 147.027",
+      "regime_buckets_short",
+      "sl 148.002",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 146.441",
+      "regime_buckets_short",
+      "sl 143.884",
+      "regime_buckets_short",
+      "sl 144.054",
+      "regime_buckets_short",
+      "sl 144.131",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 143.908",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 143.520",
+      "regime_buckets_long",
+      "sl 142.735",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 143.465",
+      "regime_buckets_short",
+      "sl 143.923",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 143.147",
+      "regime_buckets_short",
+      "sl 143.338",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 143.536",
+      "regime_buckets_long",
+      "sl 143.071",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 142.985",
+      "regime_buckets_long",
+      "regime_buckets_long",
+      "sl 142.971",
+      "regime_buckets_long",
+      "sl 142.922",
+      "regime_buckets_short",
+      "sl 142.846",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "sl 142.625",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 142.842",
+      "regime_buckets_short",
+      "sl 142.890",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "sl 140.976",
+      "regime_buckets_short",
+      "sl 141.057",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 140.725",
+      "regime_buckets_short",
+      "sl 140.960",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 140.666",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 140.190",
+      "regime_buckets_short",
+      "sl 140.763",
+      "regime_buckets_short",
+      "sl 140.884",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 141.039",
+      "regime_buckets_short",
+      "sl 141.301",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 141.518",
+      "regime_buckets_short",
+      "sl 141.578",
+      "regime_buckets_short",
+      "sl 141.621",
+      "regime_buckets_short",
+      "sl 142.906",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 141.928",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 142.295",
+      "regime_buckets_short",
+      "sl 142.739",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 143.062",
+      "regime_buckets_short",
+      "sl 143.172",
+      "regime_buckets_short",
+      "sl 143.265",
+      "regime_buckets_short",
+      "sl 143.447",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 143.563",
+      "regime_buckets_long",
+      "sl 142.822",
+      "regime_buckets_long",
+      "regime_buckets_long",
+      "sl 142.583",
+      "regime_buckets_short",
+      "sl 142.820",
+      "regime_buckets_short",
+      "sl 142.919",
+      "regime_buckets_short",
+      "sl 142.963",
+      "regime_buckets_short",
+      "sl 143.031",
+      "regime_buckets_short",
+      "sl 143.103",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 143.392",
+      "regime_buckets_short",
+      "sl 143.493",
+      "regime_buckets_short",
+      "sl 143.572",
+      "regime_buckets_short",
+      "sl 143.766",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 143.690",
+      "regime_buckets_short",
+      "sl 143.869",
+      "regime_buckets_short",
+      "sl 143.900",
+      "regime_buckets_short",
+      "sl 144.038",
+      "regime_buckets_short",
+      "sl 143.760",
+      "regime_buckets_short",
+      "sl 143.790",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 143.531",
+      "regime_buckets_short",
+      "sl 143.759",
+      "regime_buckets_short",
+      "sl 143.845",
+      "regime_buckets_short",
+      "sl 143.903",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 143.417",
+      "regime_buckets_short",
+      "sl 142.207",
+      "regime_buckets_short",
+      "sl 142.225",
+      "regime_buckets_short",
+      "sl 142.254",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "sl 142.722",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 142.422",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "sl 142.187",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 142.831",
+      "regime_buckets_short",
+      "sl 142.971",
+      "regime_buckets_short",
+      "sl 143.030",
+      "regime_buckets_short",
+      "sl 143.078",
+      "regime_buckets_short",
+      "sl 143.135",
+      "regime_buckets_long",
+      "sl 142.781",
+      "regime_buckets_long",
+      "sl 142.751",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 143.126",
+      "regime_buckets_short",
+      "sl 143.182",
+      "regime_buckets_short",
+      "regime_buckets_long",
+      "regime_buckets_short",
+      "sl 143.216",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 143.322",
+      "regime_buckets_short",
+      "sl 143.531",
+      "regime_buckets_short",
+      "sl 143.634",
+      "regime_buckets_short",
+      "sl 143.748",
+      "regime_buckets_short",
+      "sl 143.869",
+      "regime_buckets_short",
+      "sl 143.942",
+      "regime_buckets_short",
+      "sl 144.026",
+      "regime_buckets_short",
+      "sl 144.253",
+      "regime_buckets_short",
+      "sl 144.249",
+      "regime_buckets_short",
+      "sl 144.657",
+      "regime_buckets_short",
+      "regime_buckets_short",
+      "sl 144.585",
+      "regime_buckets_short",
+      "sl 144.689",
+      "regime_buckets_short",
+      "sl 145.160",
+      "regime_buckets_short",
+      "sl 145.345",
+      "regime_buckets_short",
+      "sl 145.547",
+      "regime_buckets_short",
+      "sl 145.589"
+    ],
+    "2025 04 01 03 25 00": [
+      "3",
+      "filled",
+      "3"
+    ],
+    "2025 04 01 04 00 00": "4",
+    "0 39 0 39": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "149 614": "2025.04.01 04:00:00",
+    "2025 04 01 05 00 00": [
+      "5",
+      "filled",
+      "5"
+    ],
+    "2025 04 01 08 30 00": "6",
+    "0 74 0 74": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "149 934": "2025.04.01 08:30:00",
+    "2025 04 01 09 30 00": [
+      "7",
+      "filled",
+      "7"
+    ],
+    "2025 04 01 09 50 00": "8",
+    "0 6 0 6": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "150 056": "2025.04.01 09:50:00",
+    "2025 04 01 10 50 00": [
+      "9",
+      "filled",
+      "10",
+      "9"
+    ],
+    "0 57 0 57": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "149 584": "2025.04.01 10:50:00",
+    "11": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "sell": [
+      "0.57 / 0.57",
+      "0.69 / 0.69",
+      "0.99 / 0.99",
+      "0.38 / 0.38",
+      "0.41 / 0.41",
+      "0.31 / 0.31",
+      "0.35 / 0.35",
+      "0.5 / 0.5",
+      "0.49 / 0.49",
+      "0.33 / 0.33",
+      "0.37 / 0.37",
+      "0.22 / 0.22",
+      "0.34 / 0.34",
+      "0.34 / 0.34",
+      "0.48 / 0.48",
+      "0.34 / 0.34",
+      "0.33 / 0.33",
+      "0.41 / 0.41",
+      "0.4 / 0.4",
+      "0.9 / 0.9",
+      "0.49 / 0.49",
+      "0.78 / 0.78",
+      "0.49 / 0.49",
+      "0.49 / 0.49",
+      "0.54 / 0.54",
+      "0.36 / 0.36",
+      "0.94 / 0.94",
+      "0.74 / 0.74",
+      "0.57 / 0.57",
+      "0.61 / 0.61",
+      "0.96 / 0.96",
+      "0.61 / 0.61",
+      "0.6 / 0.6",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 000": [
+      "2025.04.01 10:55:48",
+      "2025.04.01 19:17:19",
+      "2025.04.01 21:27:38",
+      "2025.04.02 01:06:18",
+      "2025.04.02 01:10:14",
+      "2025.04.02 01:16:20",
+      "2025.04.02 06:51:11",
+      "2025.04.02 08:01:29",
+      "2025.04.02 17:01:51",
+      "2025.04.02 17:40:55",
+      "2025.04.02 18:02:27",
+      "2025.04.02 18:22:08",
+      "2025.04.02 19:42:59",
+      "2025.04.03 11:41:34",
+      "2025.04.03 19:26:28",
+      "2025.04.04 03:03:22",
+      "2025.04.04 06:30:40",
+      "2025.04.04 13:21:42",
+      "2025.04.04 19:52:04",
+      "2025.04.04 20:23:28",
+      "2025.04.04 20:40:29",
+      "2025.04.04 20:49:48",
+      "2025.04.07 05:04:43",
+      "2025.04.07 05:34:42",
+      "2025.04.07 07:43:07",
+      "2025.04.07 11:36:14",
+      "2025.04.07 13:44:35",
+      "2025.04.08 08:00:02",
+      "2025.04.08 09:10:32",
+      "2025.04.08 09:35:08",
+      "2025.04.08 13:20:33",
+      "2025.04.08 17:16:06",
+      "2025.04.08 17:26:10",
+      "2025.04.08 18:51:16",
+      "2025.04.09 09:49:36",
+      "2025.04.09 14:00:47",
+      "2025.04.09 20:57:35",
+      "2025.04.09 21:06:53",
+      "2025.04.10 10:41:47",
+      "2025.04.11 09:03:21",
+      "2025.04.11 09:19:55",
+      "2025.04.11 09:40:47",
+      "2025.04.11 19:18:56",
+      "2025.04.11 22:53:01",
+      "2025.04.14 08:56:30",
+      "2025.04.14 15:45:20",
+      "2025.04.14 16:09:25",
+      "2025.04.14 18:27:52",
+      "2025.04.15 02:14:49",
+      "2025.04.15 03:50:17",
+      "2025.04.15 06:17:07",
+      "2025.04.15 11:32:18",
+      "2025.04.16 01:12:40",
+      "2025.04.16 03:12:04",
+      "2025.04.16 11:42:03",
+      "2025.04.17 04:00:15",
+      "2025.04.17 08:40:42",
+      "2025.04.17 09:06:35",
+      "2025.04.21 13:55:32",
+      "2025.04.21 14:01:19",
+      "2025.04.21 20:51:51",
+      "2025.04.21 23:41:43",
+      "2025.04.22 05:22:22",
+      "2025.04.22 14:15:24",
+      "2025.04.22 16:41:04",
+      "2025.04.22 17:05:22",
+      "2025.04.22 19:21:35",
+      "2025.04.22 19:46:47",
+      "2025.04.22 21:55:17",
+      "2025.04.22 22:08:29",
+      "2025.04.22 22:58:02",
+      "2025.04.23 01:20:25",
+      "2025.04.23 07:51:51",
+      "2025.04.23 16:46:45",
+      "2025.04.23 17:00:11",
+      "2025.04.23 19:58:02",
+      "2025.04.23 20:17:44",
+      "2025.04.23 20:57:06",
+      "2025.04.23 21:24:59",
+      "2025.04.23 23:35:16",
+      "2025.04.24 04:42:55",
+      "2025.04.24 22:25:17",
+      "2025.04.25 02:13:54",
+      "2025.04.25 02:21:00",
+      "2025.04.25 03:02:44",
+      "2025.04.25 03:28:23",
+      "2025.04.25 03:37:55",
+      "2025.04.25 06:35:46",
+      "2025.04.25 06:54:19",
+      "2025.04.25 06:58:16",
+      "2025.04.25 07:00:41",
+      "2025.04.25 16:30:34",
+      "2025.04.25 16:45:56",
+      "2025.04.25 17:00:49",
+      "2025.04.25 18:25:36",
+      "2025.04.25 23:37:08",
+      "2025.04.28 01:30:14",
+      "2025.04.28 06:46:23",
+      "2025.04.28 09:37:39",
+      "2025.04.28 09:57:35",
+      "2025.04.28 10:00:25",
+      "2025.04.28 12:28:44",
+      "2025.04.29 01:23:13",
+      "2025.04.29 01:25:01",
+      "2025.04.29 02:08:53",
+      "2025.04.29 12:45:44",
+      "2025.04.29 15:47:24",
+      "2025.04.30 02:21:03",
+      "2025.04.30 10:33:10",
+      "2025.04.30 12:04:54",
+      "2025.04.30 12:30:48",
+      "2025.04.30 12:49:24",
+      "2025.04.30 12:54:17",
+      "2025.04.30 15:20:44",
+      "2025.04.30 15:45:09",
+      "2025.04.30 23:24:59",
+      "2025.04.30 23:32:06",
+      "2025.05.01 04:54:40",
+      "2025.05.01 06:05:33",
+      "2025.05.01 06:30:37",
+      "2025.05.01 06:36:45",
+      "2025.05.01 06:54:44",
+      "2025.05.01 07:33:06",
+      "2025.05.01 08:01:43",
+      "2025.05.01 08:16:59",
+      "2025.05.01 08:33:30",
+      "2025.05.01 09:30:33",
+      "2025.05.01 10:07:29",
+      "2025.05.01 15:13:50",
+      "2025.05.01 15:54:01",
+      "2025.05.01 17:30:33",
+      "2025.05.01 17:48:53",
+      "2025.05.01 18:35:58",
+      "2025.05.02 02:43:36"
+    ],
+    "2025 04 01 16 25 00": "12",
+    "0 7 0 7": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "149 565": "2025.04.01 16:25:00",
+    "2025 04 01 17 25 00": [
+      "13",
+      "filled",
+      "13"
+    ],
+    "2025 04 01 19 15 00": "14",
+    "0 45 0 45": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "149 711": "2025.04.01 19:15:00",
+    "15": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "buy": [
+      "0.45 / 0.45",
+      "1.47 / 1.47",
+      "1.26 / 1.26",
+      "1.12 / 1.12",
+      "1.19 / 1.19",
+      "0.63 / 0.63",
+      "0.54 / 0.54",
+      "0.42 / 0.42",
+      "0.39 / 0.39",
+      "0.53 / 0.53",
+      "0.23 / 0.23",
+      "0.39 / 0.39",
+      "0.15 / 0.15",
+      "0.2 / 0.2",
+      "0.24 / 0.24",
+      "0.24 / 0.24",
+      "0.22 / 0.22",
+      "0.21 / 0.21",
+      "0.25 / 0.25",
+      "0.28 / 0.28",
+      "0.49 / 0.49",
+      "0.29 / 0.29",
+      "0.32 / 0.32",
+      "0.11 / 0.11",
+      "0.09 / 0.09",
+      "0.29 / 0.29",
+      "0.25 / 0.25",
+      "0.24 / 0.24",
+      "0.3 / 0.3",
+      "0.38 / 0.38",
+      "0.32 / 0.32",
+      "0.58 / 0.58",
+      "0.43 / 0.43",
+      "0.24 / 0.24",
+      "0.28 / 0.28",
+      "0.63 / 0.63",
+      "0.62 / 0.62",
+      "0.6 / 0.6",
+      "0.62 / 0.62",
+      "0.76 / 0.76",
+      "0.43 / 0.43",
+      "0.44 / 0.44",
+      "0.47 / 0.47",
+      "0.37 / 0.37",
+      "0.53 / 0.53",
+      "0.6 / 0.6",
+      "0.63 / 0.63",
+      "0.22 / 0.22",
+      "0.36 / 0.36",
+      "0.25 / 0.25",
+      "0.24 / 0.24",
+      "0.31 / 0.31",
+      "0.32 / 0.32",
+      "0.4 / 0.4",
+      "0.69 / 0.69",
+      "0.99 / 0.99",
+      "0.67 / 0.67",
+      "0.75 / 0.75",
+      "0.59 / 0.59",
+      "0.52 / 0.52",
+      "0.46 / 0.46",
+      "0.44 / 0.44",
+      "0.43 / 0.43",
+      "0.38 / 0.38",
+      "0.51 / 0.51",
+      "0.45 / 0.45",
+      "0.42 / 0.42",
+      "0.39 / 0.39",
+      "1.1 / 1.1",
+      "0.71 / 0.71",
+      "0.58 / 0.58",
+      "0.54 / 0.54",
+      "0.62 / 0.62",
+      "1.49 / 1.49",
+      "1.39 / 1.39",
+      "1 / 1",
+      "0.62 / 0.62",
+      "0.56 / 0.56",
+      "0.57 / 0.57",
+      "0.67 / 0.67",
+      "0.69 / 0.69",
+      "0.69 / 0.69",
+      "0.62 / 0.62",
+      "0.6 / 0.6",
+      "0.73 / 0.73",
+      "0.56 / 0.56",
+      "0.47 / 0.47",
+      "0.38 / 0.38",
+      "0.36 / 0.36",
+      "0.33 / 0.33",
+      "0.46 / 0.46",
+      "0.58 / 0.58",
+      "0.52 / 0.52",
+      "0.49 / 0.49",
+      "0.35 / 0.35",
+      "0.53 / 0.53",
+      "0.43 / 0.43",
+      "0.29 / 0.29",
+      "0.27 / 0.27",
+      "0.25 / 0.25",
+      "0.76 / 0.76",
+      "in",
+      "in",
+      "out",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "in",
+      "out",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "out",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "out",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "in",
+      "out",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "out",
+      "in",
+      "out",
+      "in",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "in",
+      "in",
+      "in",
+      "out",
+      "out",
+      "in",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out"
+    ],
+    "2025 04 01 21 20 00": "16",
+    "0 69 0 69": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "149 277": "2025.04.01 21:20:00",
+    "17": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 01 22 40 00": "18",
+    "0 71 0 71": [
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "149 659": "2025.04.01 22:40:00",
+    "2025 04 01 23 40 00": [
+      "19",
+      "filled",
+      "19"
+    ],
+    "2025 04 02 01 05 00": "20",
+    "1 47 1 47": "0.000",
+    "149 700": [
+      "2025.04.02 01:05:00",
+      "2025.04.02 17:10:00"
+    ],
+    "21": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 02 01 10 00": "22",
+    "1 26 1 26": "0.000",
+    "149 755": "2025.04.02 01:10:00",
+    "23": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 02 01 15 00": "24",
+    "1 12 1 12": "0.000",
+    "149 827": "2025.04.02 01:15:00",
+    "25": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 02 01 20 00": "26",
+    "1 02 1 02": [
+      "0.000",
+      "0.000"
+    ],
+    "149 905": "2025.04.02 01:20:00",
+    "2025 04 02 02 20 00": [
+      "27",
+      "filled",
+      "27"
+    ],
+    "2025 04 02 06 05 00": "28",
+    "0 99 0 99": [
+      "0.000",
+      "0.000"
+    ],
+    "149 705": "2025.04.02 06:05:00",
+    "29": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 02 07 55 00": "30",
+    "1 19 1 19": "0.000",
+    "149 938": "2025.04.02 07:55:00",
+    "31": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 02 08 05 00": "32",
+    "1 23 1 23": [
+      "0.000",
+      "0.000"
+    ],
+    "149 962": "2025.04.02 08:05:00",
+    "2025 04 02 09 05 00": [
+      "33",
+      "filled",
+      "33"
+    ],
+    "2025 04 02 09 30 00": "34",
+    "0 91 0 91": [
+      "0.000",
+      "0.000"
+    ],
+    "150 022": "2025.04.02 09:30:00",
+    "2025 04 02 10 30 00": [
+      "35",
+      "filled",
+      "35"
+    ],
+    "2025 04 02 16 50 00": "36",
+    "0 63 0 63": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "149 638": "2025.04.02 16:50:00",
+    "37": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 02 17 10 00": "38",
+    "0 54 0 54": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "39": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 02 17 45 00": "40",
+    "0 42 0 42": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "149 813": "2025.04.02 17:45:00",
+    "41": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 02 18 10 00": "42",
+    "149 968": "2025.04.02 18:10:00",
+    "43": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 02 18 25 00": "44",
+    "0 41 0 41": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "150 162": "2025.04.02 18:25:00",
+    "2025 04 02 19 25 00": [
+      "45",
+      "filled",
+      "45"
+    ],
+    "2025 04 02 19 30 00": "46",
+    "0 53 0 53": [
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "150 239": "2025.04.02 19:30:00",
+    "47": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 02 19 50 00": "48",
+    "0 58 0 58": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "150 333": "2025.04.02 19:50:00",
+    "2025 04 02 20 50 00": [
+      "49",
+      "filled",
+      "49"
+    ],
+    "2025 04 03 11 35 00": "50",
+    "0 38 0 38": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "146 929": "2025.04.03 11:35:00",
+    "51": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 03 18 45 00": "52",
+    "0 23 0 23": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "146 411": "2025.04.03 18:45:00",
+    "53": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 03 19 30 00": "54",
+    "0 27 0 27": [
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "146 538": "2025.04.03 19:30:00",
+    "2025 04 03 20 30 00": [
+      "55",
+      "filled",
+      "55"
+    ],
+    "2025 04 03 21 55 00": "56",
+    "146 548": "2025.04.03 21:55:00",
+    "2025 04 03 22 55 00": [
+      "57",
+      "filled",
+      "57"
+    ],
+    "2025 04 04 02 50 00": "58",
+    "146 355": "2025.04.04 02:50:00",
+    "59": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 04 03 05 00": "60",
+    "146 467": "2025.04.04 03:05:00",
+    "2025 04 04 04 05 00": [
+      "61",
+      "filled",
+      "61"
+    ],
+    "2025 04 04 06 20 00": "62",
+    "145 877": "2025.04.04 06:20:00",
+    "63": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 04 13 20 00": "64",
+    "0 31 0 31": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "145 631": "2025.04.04 13:20:00",
+    "65": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 04 17 50 00": "66",
+    "0 19 0 19": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "144 864": "2025.04.04 17:50:00",
+    "2025 04 04 18 50 00": [
+      "67",
+      "filled",
+      "67"
+    ],
+    "2025 04 04 19 15 00": "68",
+    "0 15 0 15": "0.000",
+    "146 694": "2025.04.04 19:15:00",
+    "69": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 04 19 55 00": "70",
+    "0 2 0 2": "0.000",
+    "146 952": "2025.04.04 19:55:00",
+    "71": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 04 20 25 00": "72",
+    "0 24 0 24": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "147 130": "2025.04.04 20:25:00",
+    "73": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 04 20 45 00": "74",
+    "147 306": "2025.04.04 20:45:00",
+    "75": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 04 21 00 00": "76",
+    "147 461": "2025.04.04 21:00:00",
+    "2025 04 04 22 00 00": [
+      "77",
+      "filled",
+      "77"
+    ],
+    "2025 04 07 04 20 00": "78",
+    "0 22 0 22": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "146 376": "2025.04.07 04:20:00",
+    "79": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 07 05 15 00": "80",
+    "0 21 0 21": [
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "146 633": "2025.04.07 05:15:00",
+    "81": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 07 05 35 00": "82",
+    "146 861": "2025.04.07 05:35:00",
+    "2025 04 07 06 35 00": [
+      "83",
+      "filled",
+      "83"
+    ],
+    "2025 04 07 07 30 00": "84",
+    "0 35 0 35": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "145 887": "2025.04.07 07:30:00",
+    "85": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 07 11 20 00": "86",
+    "0 25 0 25": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "146 278": "2025.04.07 11:20:00",
+    "87": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 07 11 40 00": "88",
+    "0 28 0 28": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "146 438": "2025.04.07 11:40:00",
+    "2025 04 07 12 40 00": [
+      "89",
+      "filled",
+      "89"
+    ],
+    "2025 04 07 13 20 00": "90",
+    "146 555": "2025.04.07 13:20:00",
+    "91": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 07 15 30 00": "92",
+    "147 176": "2025.04.07 15:30:00",
+    "2025 04 07 16 30 00": [
+      "93",
+      "filled",
+      "93"
+    ],
+    "2025 04 07 17 20 00": "94",
+    "0 16 0 16": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "147 985": "2025.04.07 17:20:00",
+    "2025 04 07 18 20 00": [
+      "95",
+      "filled",
+      "95"
+    ],
+    "2025 04 07 19 00 00": "96",
+    "0 17 0 17": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "148 261": "2025.04.07 19:00:00",
+    "2025 04 07 20 00 00": [
+      "97",
+      "filled",
+      "97"
+    ],
+    "2025 04 07 22 30 00": "98",
+    "0 29 0 29": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "147 435": "2025.04.07 22:30:00",
+    "2025 04 07 23 30 00": [
+      "99",
+      "filled",
+      "99"
+    ],
+    "2025 04 08 07 05 00": "100",
+    "0 49 0 49": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "147 787": "2025.04.08 07:05:00",
+    "101": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 08 09 05 00": "102",
+    "0 5 0 5": "0.000",
+    "147 408": "2025.04.08 09:05:00",
+    "103": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 08 09 15 00": "104",
+    "147 329": "2025.04.08 09:15:00",
+    "105": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 08 13 00 00": "106",
+    "0 33 0 33": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "147 042": "2025.04.08 13:00:00",
+    "107": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 08 16 45 00": "108",
+    "147 509": "2025.04.08 16:45:00",
+    "109": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 08 17 20 00": "110",
+    "0 32 0 32": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "147 654": "2025.04.08 17:20:00",
+    "111": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 08 17 30 00": "112",
+    "147 673": "2025.04.08 17:30:00",
+    "2025 04 08 18 30 00": [
+      "113",
+      "filled",
+      "114",
+      "113"
+    ],
+    "0 37 0 37": [
+      "0.000",
+      "0.000"
+    ],
+    "146 832": "2025.04.08 18:30:00",
+    "115": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 09 09 45 00": "116",
+    "144 848": "2025.04.09 09:45:00",
+    "117": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 09 09 50 00": "118",
+    "144 615": "2025.04.09 09:50:00",
+    "2025 04 09 10 50 00": [
+      "119",
+      "filled",
+      "119"
+    ],
+    "2025 04 09 13 20 00": "120",
+    "0 34 0 34": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "144 904": "2025.04.09 13:20:00",
+    "121": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 09 17 55 00": "122",
+    "144 352": "2025.04.09 17:55:00",
+    "2025 04 09 18 55 00": [
+      "123",
+      "filled",
+      "123"
+    ],
+    "2025 04 09 20 40 00": "124",
+    "0 11 0 11": "0.000",
+    "147 027": "2025.04.09 20:40:00",
+    "125": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 09 21 05 00": "126",
+    "0 09 0 09": "0.000",
+    "148 002": "2025.04.09 21:05:00",
+    "127": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 09 21 15 00": "128",
+    "0 08 0 08": [
+      "0.000",
+      "0.000"
+    ],
+    "148 515": "2025.04.09 21:15:00",
+    "2025 04 09 22 15 00": [
+      "129",
+      "filled",
+      "129"
+    ],
+    "2025 04 09 22 40 00": "130",
+    "148 397": "2025.04.09 22:40:00",
+    "2025 04 09 23 40 00": [
+      "131",
+      "filled",
+      "131"
+    ],
+    "2025 04 10 10 40 00": "132",
+    "146 441": "2025.04.10 10:40:00",
+    "133": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 11 08 45 00": "134",
+    "143 884": "2025.04.11 08:45:00",
+    "135": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 11 09 05 00": "136",
+    "144 054": "2025.04.11 09:05:00",
+    "137": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 11 09 25 00": "138",
+    "144 131": "2025.04.11 09:25:00",
+    "139": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 11 09 45 00": "140",
+    "144 293": "2025.04.11 09:45:00",
+    "2025 04 11 10 45 00": [
+      "141",
+      "filled",
+      "141"
+    ],
+    "2025 04 11 14 50 00": "142",
+    "142 347": "2025.04.11 14:50:00",
+    "2025 04 11 15 50 00": [
+      "143",
+      "filled",
+      "143"
+    ],
+    "2025 04 11 16 40 00": "144",
+    "143 710": "2025.04.11 16:40:00",
+    "2025 04 11 17 40 00": [
+      "145",
+      "filled",
+      "145"
+    ],
+    "2025 04 11 17 55 00": "146",
+    "143 852": "2025.04.11 17:55:00",
+    "2025 04 11 18 55 00": [
+      "147",
+      "filled",
+      "147"
+    ],
+    "2025 04 11 19 15 00": "148",
+    "0 3 0 3": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "143 908": "2025.04.11 19:15:00",
+    "149": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 11 19 20 00": "150",
+    "144 095": "2025.04.11 19:20:00",
+    "2025 04 11 20 20 00": [
+      "151",
+      "filled",
+      "151"
+    ],
+    "2025 04 11 21 00 00": "152",
+    "144 285": "2025.04.11 21:00:00",
+    "2025 04 11 22 00 00": [
+      "153",
+      "filled",
+      "153"
+    ],
+    "2025 04 11 22 45 00": "154",
+    "0 48 0 48": [
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "143 520": "2025.04.11 22:45:00",
+    "155": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 14 08 40 00": "156",
+    "142 735": "2025.04.14 08:40:00",
+    "157": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 14 11 00 00": "158",
+    "143 269": "2025.04.14 11:00:00",
+    "2025 04 14 12 00 00": [
+      "159",
+      "filled",
+      "159"
+    ],
+    "2025 04 14 13 20 00": "160",
+    "143 374": "2025.04.14 13:20:00",
+    "2025 04 14 14 20 00": [
+      "161",
+      "filled",
+      "161"
+    ],
+    "2025 04 14 15 20 00": "162",
+    "143 465": "2025.04.14 15:20:00",
+    "163": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 14 16 05 00": "164",
+    "143 923": "2025.04.14 16:05:00",
+    "165": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 14 16 10 00": "166",
+    "144 101": "2025.04.14 16:10:00",
+    "2025 04 14 17 10 00": [
+      "167",
+      "filled",
+      "167"
+    ],
+    "2025 04 14 17 55 00": "168",
+    "143 147": "2025.04.14 17:55:00",
+    "169": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 15 02 10 00": "170",
+    "143 338": "2025.04.15 02:10:00",
+    "171": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 15 02 15 00": "172",
+    "143 406": "2025.04.15 02:15:00",
+    "2025 04 15 03 15 00": [
+      "173",
+      "filled",
+      "173"
+    ],
+    "2025 04 15 03 30 00": "174",
+    "0 43 0 43": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "143 536": "2025.04.15 03:30:00",
+    "175": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 15 05 20 00": "176",
+    "143 071": "2025.04.15 05:20:00",
+    "177": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 15 09 05 00": "178",
+    "0 47 0 47": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "142 804": "2025.04.15 09:05:00",
+    "2025 04 15 10 05 00": [
+      "179",
+      "filled",
+      "180",
+      "179"
+    ],
+    "143 533": "2025.04.15 10:05:00",
+    "2025 04 15 11 05 00": [
+      "181",
+      "filled",
+      "181"
+    ],
+    "2025 04 15 11 25 00": "182",
+    "0 4 0 4": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "142 985": "2025.04.15 11:25:00",
+    "183": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 15 17 35 00": "184",
+    "0 26 0 26": [
+      "0.000",
+      "0.000"
+    ],
+    "142 580": "2025.04.15 17:35:00",
+    "2025 04 15 18 35 00": [
+      "185",
+      "filled",
+      "185"
+    ],
+    "2025 04 16 01 05 00": "186",
+    "0 9 0 9": "0.000",
+    "142 971": [
+      "2025.04.16 01:05:00",
+      "2025.04.30 11:30:00"
+    ],
+    "187": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 16 03 05 00": "188",
+    "142 922": "2025.04.16 03:05:00",
+    "189": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 16 11 40 00": "190",
+    "142 846": "2025.04.16 11:40:00",
+    "191": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 16 11 45 00": "192",
+    "142 989": "2025.04.16 11:45:00",
+    "2025 04 16 12 45 00": [
+      "193",
+      "filled",
+      "193"
+    ],
+    "2025 04 16 12 50 00": "194",
+    "143 008": "2025.04.16 12:50:00",
+    "2025 04 16 13 50 00": [
+      "195",
+      "filled",
+      "195"
+    ],
+    "2025 04 16 15 45 00": "196",
+    "0 36 0 36": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "142 326": "2025.04.16 15:45:00",
+    "2025 04 16 16 45 00": [
+      "197",
+      "filled",
+      "197"
+    ],
+    "2025 04 17 03 05 00": "198",
+    "142 625": "2025.04.17 03:05:00",
+    "199": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 17 04 30 00": "200",
+    "142 942": "2025.04.17 04:30:00",
+    "2025 04 17 05 30 00": [
+      "201",
+      "filled",
+      "201"
+    ],
+    "2025 04 17 08 40 00": "202",
+    "142 842": "2025.04.17 08:40:00",
+    "203": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 17 08 45 00": "204",
+    "0 62 0 62": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "142 890": "2025.04.17 08:45:00",
+    "205": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 17 09 10 00": "206",
+    "0 51 0 51": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "142 934": "2025.04.17 09:10:00",
+    "2025 04 17 10 10 00": [
+      "207",
+      "filled",
+      "207"
+    ],
+    "2025 04 17 13 20 00": "208",
+    "142 444": "2025.04.17 13:20:00",
+    "2025 04 17 14 20 00": [
+      "209",
+      "filled",
+      "209"
+    ],
+    "2025 04 21 13 50 00": "210",
+    "140 976": "2025.04.21 13:50:00",
+    "211": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 21 14 00 00": "212",
+    "141 057": "2025.04.21 14:00:00",
+    "213": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 21 14 15 00": "214",
+    "0 61 0 61": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "141 094": "2025.04.21 14:15:00",
+    "2025 04 21 15 15 00": [
+      "215",
+      "filled",
+      "215"
+    ],
+    "2025 04 21 20 45 00": "216",
+    "0 78 0 78": [
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "140 725": "2025.04.21 20:45:00",
+    "217": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 21 23 25 00": "218",
+    "0 76 0 76": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "140 960": "2025.04.21 23:25:00",
+    "219": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 22 03 35 00": "220",
+    "141 233": "2025.04.22 03:35:00",
+    "2025 04 22 04 35 00": [
+      "221",
+      "filled",
+      "221"
+    ],
+    "2025 04 22 05 15 00": "222",
+    "140 666": "2025.04.22 05:15:00",
+    "223": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 22 09 55 00": "224",
+    "140 587": "2025.04.22 09:55:00",
+    "2025 04 22 10 55 00": [
+      "225",
+      "filled",
+      "225"
+    ],
+    "2025 04 22 11 45 00": "226",
+    "140 758": "2025.04.22 11:45:00",
+    "2025 04 22 12 45 00": [
+      "227",
+      "filled",
+      "227"
+    ],
+    "2025 04 22 13 25 00": "228",
+    "140 190": "2025.04.22 13:25:00",
+    "229": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 22 16 10 00": "230",
+    "140 763": "2025.04.22 16:10:00",
+    "231": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 22 16 45 00": "232",
+    "0 44 0 44": [
+      "0.000",
+      "0.000"
+    ],
+    "140 884": [
+      "2025.04.22 16:45:00",
+      "221"
+    ],
+    "233": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 22 17 10 00": "234",
+    "140 975": "2025.04.22 17:10:00",
+    "2025 04 22 18 10 00": [
+      "235",
+      "filled",
+      "235"
+    ],
+    "2025 04 22 19 05 00": "236",
+    "141 039": "2025.04.22 19:05:00",
+    "237": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 22 19 25 00": "238",
+    "141 301": "2025.04.22 19:25:00",
+    "239": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 22 19 50 00": "240",
+    "141 405": "2025.04.22 19:50:00",
+    "2025 04 22 20 50 00": [
+      "241",
+      "filled",
+      "241"
+    ],
+    "2025 04 22 21 50 00": "242",
+    "141 518": "2025.04.22 21:50:00",
+    "243": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 22 22 05 00": "244",
+    "141 578": "2025.04.22 22:05:00",
+    "245": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 22 22 15 00": "246",
+    "141 621": "2025.04.22 22:15:00",
+    "247": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 23 01 15 00": "248",
+    "142 906": "2025.04.23 01:15:00",
+    "249": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 23 01 40 00": "250",
+    "0 18 0 18": [
+      "0.000",
+      "0.000"
+    ],
+    "143 392": [
+      "2025.04.23 01:40:00",
+      "2025.04.25 06:35:00"
+    ],
+    "2025 04 23 02 40 00": [
+      "251",
+      "filled",
+      "251"
+    ],
+    "2025 04 23 07 40 00": "252",
+    "141 928": "2025.04.23 07:40:00",
+    "253": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 23 12 05 00": "254",
+    "141 507": "2025.04.23 12:05:00",
+    "2025 04 23 13 05 00": [
+      "255",
+      "filled",
+      "255"
+    ],
+    "2025 04 23 14 10 00": "256",
+    "142 237": "2025.04.23 14:10:00",
+    "2025 04 23 15 10 00": [
+      "257",
+      "filled",
+      "257"
+    ],
+    "2025 04 23 16 40 00": "258",
+    "142 295": "2025.04.23 16:40:00",
+    "259": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 23 16 50 00": "260",
+    "142 739": "2025.04.23 16:50:00",
+    "261": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 23 17 05 00": "262",
+    "142 899": "2025.04.23 17:05:00",
+    "2025 04 23 18 05 00": [
+      "263",
+      "filled",
+      "263"
+    ],
+    "2025 04 23 19 25 00": "264",
+    "143 062": "2025.04.23 19:25:00",
+    "265": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 23 20 00 00": "266",
+    "143 172": "2025.04.23 20:00:00",
+    "267": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 23 20 20 00": "268",
+    "143 265": "2025.04.23 20:20:00",
+    "269": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 23 21 10 00": "270",
+    "143 447": "2025.04.23 21:10:00",
+    "271": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 23 21 25 00": "272",
+    "143 561": "2025.04.23 21:25:00",
+    "2025 04 23 22 25 00": [
+      "273",
+      "filled",
+      "273"
+    ],
+    "2025 04 23 23 25 00": "274",
+    "143 563": "2025.04.23 23:25:00",
+    "275": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 24 04 00 00": "276",
+    "142 822": [
+      "2025.04.24 04:00:00",
+      "193"
+    ],
+    "277": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 24 15 55 00": "278",
+    "142 242": "2025.04.24 15:55:00",
+    "2025 04 24 16 55 00": [
+      "279",
+      "filled",
+      "279"
+    ],
+    "2025 04 24 22 20 00": "280",
+    "0 94 0 94": "0.000",
+    "142 583": "2025.04.24 22:20:00",
+    "281": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 01 15 00": "282",
+    "142 820": "2025.04.25 01:15:00",
+    "283": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 02 15 00": "284",
+    "0 67 0 67": [
+      "0.000",
+      "0.000"
+    ],
+    "142 919": "2025.04.25 02:15:00",
+    "285": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 02 25 00": "286",
+    "0 75 0 75": "0.000",
+    "142 963": "2025.04.25 02:25:00",
+    "287": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 03 05 00": "288",
+    "0 59 0 59": [
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "143 031": "2025.04.25 03:05:00",
+    "289": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 03 30 00": "290",
+    "0 52 0 52": [
+      "0.000",
+      "0.000"
+    ],
+    "143 103": "2025.04.25 03:30:00",
+    "291": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 03 40 00": "292",
+    "143 179": "2025.04.25 03:40:00",
+    "2025 04 25 04 40 00": [
+      "293",
+      "filled",
+      "293"
+    ],
+    "2025 04 25 06 35 00": "294",
+    "0 46 0 46": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "295": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 06 40 00": "296",
+    "143 493": "2025.04.25 06:40:00",
+    "297": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 06 55 00": "298",
+    "143 572": "2025.04.25 06:55:00",
+    "299": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 07 00 00": "300",
+    "143 766": "2025.04.25 07:00:00",
+    "301": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 07 10 00": "302",
+    "143 877": "2025.04.25 07:10:00",
+    "2025 04 25 08 10 00": [
+      "303",
+      "filled",
+      "303"
+    ],
+    "2025 04 25 10 20 00": "304",
+    "143 125": "2025.04.25 10:20:00",
+    "2025 04 25 11 20 00": [
+      "305",
+      "filled",
+      "305"
+    ],
+    "2025 04 25 13 20 00": "306",
+    "143 804": "2025.04.25 13:20:00",
+    "2025 04 25 14 20 00": [
+      "307",
+      "filled",
+      "307"
+    ],
+    "2025 04 25 16 30 00": "308",
+    "143 690": "2025.04.25 16:30:00",
+    "309": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 16 40 00": "310",
+    "143 869": [
+      "2025.04.25 16:40:00",
+      "2025.05.01 06:55:00"
+    ],
+    "311": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 16 50 00": "312",
+    "143 900": "2025.04.25 16:50:00",
+    "313": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 17 50 00": "314",
+    "144 038": "2025.04.25 17:50:00",
+    "315": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 25 23 35 00": "316",
+    "1 1 1 1": "0.000",
+    "143 760": "2025.04.25 23:35:00",
+    "317": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 28 01 05 00": "318",
+    "143 790": "2025.04.28 01:05:00",
+    "319": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 28 01 35 00": "320",
+    "143 899": "2025.04.28 01:35:00",
+    "2025 04 28 02 35 00": [
+      "321",
+      "filled",
+      "321"
+    ],
+    "2025 04 28 03 00 00": "322",
+    "143 910": "2025.04.28 03:00:00",
+    "2025 04 28 04 00 00": [
+      "323",
+      "filled",
+      "323"
+    ],
+    "2025 04 28 06 30 00": "324",
+    "143 531": [
+      "2025.04.28 06:30:00",
+      "2025.05.01 06:10:00"
+    ],
+    "325": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 28 09 30 00": "326",
+    "143 759": "2025.04.28 09:30:00",
+    "327": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 28 09 40 00": "328",
+    "143 845": "2025.04.28 09:40:00",
+    "329": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 28 10 00 00": "330",
+    "143 903": "2025.04.28 10:00:00",
+    "331": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 28 10 05 00": "332",
+    "143 897": "2025.04.28 10:05:00",
+    "2025 04 28 11 05 00": [
+      "333",
+      "filled",
+      "333"
+    ],
+    "2025 04 28 12 05 00": "334",
+    "143 417": "2025.04.28 12:05:00",
+    "335": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 29 01 20 00": "336",
+    "1 49 1 49": "0.000",
+    "142 207": "2025.04.29 01:20:00",
+    "337": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 29 01 25 00": "338",
+    "1 39 1 39": "0.000",
+    "142 225": "2025.04.29 01:25:00",
+    "339": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 29 01 50 00": "340",
+    "1 1": [
+      "0.000",
+      "143.715",
+      "143.828"
+    ],
+    "142 254": "2025.04.29 01:50:00",
+    "341": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 29 02 20 00": "342",
+    "142 353": "2025.04.29 02:20:00",
+    "2025 04 29 03 20 00": [
+      "343",
+      "filled",
+      "343"
+    ],
+    "2025 04 29 04 55 00": "344",
+    "142 482": "2025.04.29 04:55:00",
+    "2025 04 29 05 55 00": [
+      "345",
+      "filled",
+      "345"
+    ],
+    "2025 04 29 07 50 00": "346",
+    "142 618": "2025.04.29 07:50:00",
+    "2025 04 29 08 50 00": [
+      "347",
+      "filled",
+      "347"
+    ],
+    "2025 04 29 11 05 00": "348",
+    "142 263": "2025.04.29 11:05:00",
+    "2025 04 29 12 05 00": [
+      "349",
+      "filled",
+      "349"
+    ],
+    "2025 04 29 12 20 00": "350",
+    "142 722": "2025.04.29 12:20:00",
+    "351": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 29 12 50 00": "352",
+    "142 795": "2025.04.29 12:50:00",
+    "2025 04 29 13 50 00": [
+      "353",
+      "filled",
+      "353"
+    ],
+    "2025 04 29 15 40 00": "354",
+    "142 422": "2025.04.29 15:40:00",
+    "355": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 29 21 20 00": "356",
+    "0 68 0 68": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "142 420": "2025.04.29 21:20:00",
+    "2025 04 29 22 20 00": [
+      "357",
+      "filled",
+      "357"
+    ],
+    "2025 04 30 02 20 00": "358",
+    "0 96 0 96": "0.000",
+    "142 187": "2025.04.30 02:20:00",
+    "359": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 30 09 10 00": "360",
+    "142 740": "2025.04.30 09:10:00",
+    "2025 04 30 10 10 00": [
+      "361",
+      "filled",
+      "361"
+    ],
+    "2025 04 30 10 30 00": "362",
+    "0 56 0 56": [
+      "0.000",
+      "0.000",
+      "0.000",
+      "0.000"
+    ],
+    "142 831": "2025.04.30 10:30:00",
+    "363": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 30 11 30 00": "364",
+    "365": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 30 12 10 00": "366",
+    "143 030": "2025.04.30 12:10:00",
+    "367": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 30 12 40 00": "368",
+    "143 078": "2025.04.30 12:40:00",
+    "369": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 30 12 50 00": "370",
+    "143 135": "2025.04.30 12:50:00",
+    "371": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 30 15 20 00": "372",
+    "142 781": "2025.04.30 15:20:00",
+    "373": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 30 15 25 00": "374",
+    "142 751": "2025.04.30 15:25:00",
+    "375": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 30 18 05 00": "376",
+    "142 436": "2025.04.30 18:05:00",
+    "2025 04 30 19 05 00": [
+      "377",
+      "filled",
+      "377"
+    ],
+    "2025 04 30 21 20 00": "378",
+    "143 024": "2025.04.30 21:20:00",
+    "2025 04 30 22 20 00": [
+      "379",
+      "filled",
+      "379"
+    ],
+    "2025 04 30 23 15 00": "380",
+    "143 126": "2025.04.30 23:15:00",
+    "381": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 30 23 25 00": "382",
+    "143 182": "2025.04.30 23:25:00",
+    "383": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 04 30 23 35 00": "384",
+    "143 252": "2025.04.30 23:35:00",
+    "2025 05 01 00 35 00": [
+      "385",
+      "filled",
+      "385"
+    ],
+    "2025 05 01 03 30 00": "386",
+    "142 860": "2025.05.01 03:30:00",
+    "2025 05 01 04 30 00": [
+      "387",
+      "filled",
+      "387"
+    ],
+    "2025 05 01 04 50 00": "388",
+    "143 216": "2025.05.01 04:50:00",
+    "389": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 05 00 00": "390",
+    "143 267": "2025.05.01 05:00:00",
+    "2025 05 01 06 00 00": [
+      "391",
+      "filled",
+      "391"
+    ],
+    "2025 05 01 06 05 00": "392",
+    "143 322": "2025.05.01 06:05:00",
+    "393": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 06 10 00": "394",
+    "395": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 06 35 00": "396",
+    "143 634": "2025.05.01 06:35:00",
+    "397": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 06 40 00": "398",
+    "143 748": "2025.05.01 06:40:00",
+    "399": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 06 55 00": "400",
+    "401": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 07 35 00": "402",
+    "143 942": "2025.05.01 07:35:00",
+    "403": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 08 05 00": "404",
+    "144 026": "2025.05.01 08:05:00",
+    "405": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 08 25 00": "406",
+    "144 253": "2025.05.01 08:25:00",
+    "407": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 08 40 00": "408",
+    "144 249": "2025.05.01 08:40:00",
+    "409": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 09 50 00": "410",
+    "144 657": "2025.05.01 09:50:00",
+    "411": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 10 10 00": "412",
+    "144 849": "2025.05.01 10:10:00",
+    "2025 05 01 11 10 00": [
+      "413",
+      "filled",
+      "413"
+    ],
+    "2025 05 01 14 50 00": "414",
+    "144 585": "2025.05.01 14:50:00",
+    "415": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 15 15 00": "416",
+    "144 689": "2025.05.01 15:15:00",
+    "417": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 17 10 00": "418",
+    "145 160": "2025.05.01 17:10:00",
+    "419": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 17 35 00": "420",
+    "145 345": "2025.05.01 17:35:00",
+    "421": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 01 17 50 00": "422",
+    "145 547": "2025.05.01 17:50:00",
+    "423": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "2025 05 02 02 35 00": "424",
+    "145 589": "2025.05.02 02:35:00",
+    "425": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "1": [
+      "balance",
+      "142.206",
+      "142.254"
+    ],
+    "0 00": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.96",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.37",
+      "0.00",
+      "-37.44",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-49.09",
+      "0.00",
+      "-47.95",
+      "0.00",
+      "-41.86",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.71",
+      "0.00",
+      "-35.71",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.21",
+      "0.00",
+      "-36.79",
+      "0.00",
+      "-35.60",
+      "0.00",
+      "-37.19",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.63",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.21",
+      "0.00",
+      "-34.56",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.44",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.82",
+      "0.00",
+      "-35.55",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.25",
+      "0.00",
+      "-35.25",
+      "0.00",
+      "-35.07",
+      "0.00",
+      "-34.87",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.07",
+      "0.00",
+      "-34.08",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.43",
+      "0.00",
+      "-34.69",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.39",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.46",
+      "0.00",
+      "-37.65",
+      "0.00",
+      "-35.59",
+      "0.00",
+      "-37.03",
+      "0.00",
+      "-37.35",
+      "0.00",
+      "-34.68",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.54",
+      "0.00",
+      "-34.33",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.54",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.03",
+      "0.00",
+      "-35.27",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.22",
+      "0.00",
+      "-36.08",
+      "0.00",
+      "-34.01",
+      "0.00",
+      "-34.30",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-38.15",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.79",
+      "0.00",
+      "-37.88",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.49",
+      "0.00",
+      "-36.68",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.96",
+      "0.00",
+      "-35.61",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.65",
+      "0.00",
+      "-35.82",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.09",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-40.92",
+      "0.00",
+      "-38.06",
+      "0.00",
+      "-37.97",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.55",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.17",
+      "0.00",
+      "-37.75",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.33",
+      "0.00",
+      "-36.92",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.47",
+      "0.00",
+      "-35.05",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.58",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.70",
+      "0.00",
+      "-36.05",
+      "0.00",
+      "-38.72",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.66",
+      "0.00",
+      "-35.09",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.20",
+      "0.00",
+      "-34.75",
+      "0.00",
+      "-40.92",
+      "0.00",
+      "-33.56",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.38",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.91",
+      "0.00",
+      "-36.43",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.73",
+      "0.00",
+      "-34.86",
+      "0.00",
+      "-34.62",
+      "0.00",
+      "-36.25",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.53",
+      "0.00",
+      "-35.29",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.60",
+      "0.00",
+      "-38.82",
+      "0.00",
+      "-34.69",
+      "0.00",
+      "-36.20",
+      "0.00",
+      "-34.24",
+      "0.00",
+      "-34.16",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-38.49",
+      "0.00",
+      "-34.04",
+      "0.00",
+      "-34.44",
+      "0.00",
+      "-33.83",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.07",
+      "0.00",
+      "-35.66",
+      "0.00",
+      "-34.44",
+      "0.00",
+      "-33.57",
+      "0.00",
+      "-86.42",
+      "0.00",
+      "-35.06",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.03",
+      "0.00",
+      "-33.89",
+      "0.00",
+      "-35.29",
+      "0.00",
+      "-35.33",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-33.78",
+      "0.00",
+      "-34.58",
+      "0.00",
+      "-36.16",
+      "0.00",
+      "-33.74",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-35.62",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-34.26",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.81",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.85",
+      "0.00",
+      "-33.89",
+      "0.00",
+      "-35.13",
+      "0.00",
+      "-33.76",
+      "0.00",
+      "-35.19",
+      "0.00",
+      "-35.46",
+      "0.00",
+      "-35.31",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-33.79",
+      "0.00",
+      "-33.52",
+      "0.00",
+      "-19.83",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-37.72",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-36.34",
+      "0.00",
+      "-36.02",
+      "0.00",
+      "-33.86",
+      "0.00",
+      "-35.31",
+      "0.00",
+      "-33.03",
+      "0.00",
+      "-34.51",
+      "0.00",
+      "-33.02",
+      "0.00",
+      "-33.16",
+      "0.00",
+      "-32.61",
+      "0.00",
+      "-36.05",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-32.62",
+      "0.00",
+      "-32.69",
+      "0.00",
+      "-32.96",
+      "0.00",
+      "-32.51",
+      "0.00",
+      "-31.60",
+      "0.00",
+      "-34.45",
+      "-19.83"
+    ],
+    "10 000 00": [
+      "10 000.00",
+      "regime_buckets_short"
+    ],
+    "2": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 73": [
+      "150.100",
+      "142.729",
+      "143.150",
+      "143.224"
+    ],
+    "out": [
+      "0.73",
+      "0.39",
+      "0.74",
+      "0.6",
+      "0.7",
+      "0.71",
+      "1.02",
+      "1.23",
+      "0.91",
+      "0.41",
+      "0.58",
+      "0.27",
+      "0.41",
+      "0.38",
+      "0.19",
+      "0.24",
+      "0.23",
+      "0.28",
+      "0.22",
+      "0.16",
+      "0.17",
+      "0.29",
+      "0.32",
+      "0.21",
+      "0.24",
+      "0.08",
+      "0.19",
+      "0.23",
+      "0.24",
+      "0.16",
+      "0.17",
+      "0.29",
+      "0.32",
+      "0.25",
+      "0.42",
+      "0.33",
+      "0.57",
+      "0.47",
+      "0.35",
+      "0.26",
+      "0.23",
+      "0.31",
+      "0.36",
+      "0.3",
+      "0.51",
+      "0.45",
+      "0.61",
+      "0.41",
+      "0.35",
+      "0.34",
+      "0.45",
+      "0.32",
+      "0.18",
+      "0.4",
+      "0.48",
+      "0.22",
+      "0.4",
+      "0.42",
+      "0.51",
+      "0.34",
+      "0.32",
+      "0.46",
+      "0.63",
+      "0.74",
+      "0.59",
+      "0.7",
+      "0.57",
+      "0.76",
+      "0.54",
+      "0.73",
+      "0.68",
+      "0.78",
+      "0.3",
+      "0.54",
+      "0.56",
+      "0.76",
+      "0.68",
+      "0.28"
+    ],
+    "149 859": "3",
+    "117 40": "10 117.40",
+    "4": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 39": [
+      "149.748",
+      "149.831",
+      "149.974",
+      "146.223",
+      "146.356",
+      "143.914",
+      "144.038"
+    ],
+    "10 117 40": "regime_buckets_long",
+    "149 819": "5",
+    "18 48": "10 135.88",
+    "6": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 74": [
+      "149.862",
+      "143.845",
+      "143.597",
+      "143.531"
+    ],
+    "10 135 88": "regime_buckets_short",
+    "149 873": "7",
+    "5 43": "10 130.45",
+    "8": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 6": [
+      "149.968",
+      "140.893",
+      "140.976",
+      "141.496",
+      "141.578",
+      "142.831",
+      "142.747",
+      "143.103",
+      "143.183"
+    ],
+    "10 130 45": "regime_buckets_short",
+    "149 678": "9",
+    "116 25": "10 246.70",
+    "10": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 57": [
+      "149.678",
+      "149.581",
+      "143.317",
+      "143.502",
+      "143.417",
+      "142.399",
+      "142.886",
+      "142.971"
+    ],
+    "10 246 70": "regime_buckets_long",
+    "10 209 74": [
+      "sl 149.584",
+      "regime_buckets_short"
+    ],
+    "12": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 7": [
+      "149.489",
+      "142.285"
+    ],
+    "149 156": "13",
+    "156 28": "10 366.02",
+    "14": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 45": [
+      "149.591",
+      "149.712",
+      "142.555",
+      "140.864",
+      "143.759",
+      "143.873"
+    ],
+    "10 366 02": "regime_buckets_short",
+    "10 329 65": [
+      "sl 149.711",
+      "regime_buckets_long"
+    ],
+    "16": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 69": [
+      "149.355",
+      "149.274",
+      "143.491",
+      "143.567",
+      "143.009",
+      "143.079",
+      "143.065",
+      "143.138"
+    ],
+    "10 292 21": [
+      "sl 149.277",
+      "regime_buckets_short"
+    ],
+    "18": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 71": [
+      "149.584",
+      "143.722",
+      "143.793"
+    ],
+    "149 542": "19",
+    "19 94": "10 312.15",
+    "20": [
+      "USDJPY",
+      "0.00"
+    ],
+    "1 47": [
+      "149.663",
+      "149.713"
+    ],
+    "10 312 15": "regime_buckets_short",
+    "10 263 06": [
+      "sl 149.700",
+      "regime_buckets_short"
+    ],
+    "22": [
+      "USDJPY",
+      "0.00"
+    ],
+    "1 26": [
+      "149.712",
+      "149.769"
+    ],
+    "10 215 11": [
+      "sl 149.755",
+      "regime_buckets_short"
+    ],
+    "24": [
+      "USDJPY",
+      "0.00"
+    ],
+    "1 12": [
+      "149.779",
+      "149.835"
+    ],
+    "10 173 25": [
+      "sl 149.827",
+      "regime_buckets_short"
+    ],
+    "26": [
+      "USDJPY",
+      "0.00"
+    ],
+    "1 02": "149.853",
+    "149 801": "27",
+    "35 41": "10 208.66",
+    "28": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 99": [
+      "149.759",
+      "149.705",
+      "142.770",
+      "142.826"
+    ],
+    "10 208 66": "regime_buckets_long",
+    "10 172 95": [
+      "sl 149.705",
+      "regime_buckets_short"
+    ],
+    "30": [
+      "USDJPY",
+      "0.00"
+    ],
+    "1 19": [
+      "149.893",
+      "149.938"
+    ],
+    "10 137 24": [
+      "sl 149.938",
+      "regime_buckets_short"
+    ],
+    "32": [
+      "USDJPY",
+      "0.00"
+    ],
+    "1 23": "149.919",
+    "149 845": "33",
+    "60 74": "10 197.98",
+    "34": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 91": "149.963",
+    "10 197 98": "regime_buckets_short",
+    "149 692": "35",
+    "164 74": "10 362.72",
+    "36": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 63": [
+      "149.552",
+      "149.638",
+      "142.762",
+      "142.844",
+      "141.543",
+      "141.635",
+      "143.823"
+    ],
+    "10 362 72": "regime_buckets_short",
+    "10 326 51": [
+      "sl 149.638",
+      "regime_buckets_short"
+    ],
+    "38": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 54": [
+      "149.600",
+      "149.702",
+      "142.019",
+      "141.926",
+      "143.755",
+      "143.849",
+      "142.352",
+      "142.936"
+    ],
+    "10 289 72": [
+      "sl 149.700",
+      "regime_buckets_short"
+    ],
+    "40": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 42": [
+      "149.687",
+      "149.814",
+      "143.254",
+      "142.360",
+      "143.785",
+      "143.903"
+    ],
+    "10 254 12": [
+      "sl 149.813",
+      "regime_buckets_short"
+    ],
+    "42": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 216 93": [
+      "sl 149.968",
+      "regime_buckets_short"
+    ],
+    "44": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 41": [
+      "150.032",
+      "146.424",
+      "146.004",
+      "145.873",
+      "143.192",
+      "143.067",
+      "141.112"
+    ],
+    "150 137": "45",
+    "28 67": "10 188.26",
+    "46": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 53": [
+      "150.138",
+      "150.239",
+      "141.425",
+      "141.519",
+      "144.496",
+      "144.585"
+    ],
+    "10 188 26": "regime_buckets_short",
+    "10 152 63": [
+      "sl 150.239",
+      "regime_buckets_short"
+    ],
+    "48": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 58": [
+      "150.242",
+      "143.251",
+      "143.339",
+      "143.675",
+      "143.759",
+      "143.945",
+      "144.027"
+    ],
+    "150 115": "49",
+    "49 07": "10 201.70",
+    "50": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 38": [
+      "147.068",
+      "146.928",
+      "146.333",
+      "143.332",
+      "143.466",
+      "143.638",
+      "143.766",
+      "143.510",
+      "143.638"
+    ],
+    "10 201 70": "regime_buckets_long",
+    "10 165 49": [
+      "sl 146.929",
+      "regime_buckets_short"
+    ],
+    "52": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 23": [
+      "146.193",
+      "146.413",
+      "146.642",
+      "144.075",
+      "142.772"
+    ],
+    "10 130 93": [
+      "sl 146.411",
+      "regime_buckets_short"
+    ],
+    "54": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 27": [
+      "146.346",
+      "145.171",
+      "145.346"
+    ],
+    "146 257": "55",
+    "16 43": "10 147.36",
+    "56": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 147 36": "regime_buckets_short",
+    "146 342": "57",
+    "22 97": "10 170.33",
+    "58": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 170 33": "regime_buckets_short",
+    "10 134 89": [
+      "sl 146.355",
+      "regime_buckets_short"
+    ],
+    "60": [
+      "USDJPY",
+      "0.00"
+    ],
+    "146 070": "61",
+    "68 42": "10 203.31",
+    "62": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 203 31": "regime_buckets_long",
+    "10 166 49": [
+      "sl 145.877",
+      "regime_buckets_long"
+    ],
+    "64": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 31": [
+      "145.797",
+      "145.630",
+      "142.849",
+      "143.013",
+      "143.174"
+    ],
+    "10 130 94": [
+      "sl 145.631",
+      "regime_buckets_long"
+    ],
+    "66": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 19": [
+      "145.125",
+      "148.127"
+    ],
+    "146 080": "67",
+    "124 21": "10 255.15",
+    "68": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 15": [
+      "146.360",
+      "146.695"
+    ],
+    "10 255 15": "regime_buckets_short",
+    "10 220 90": [
+      "sl 146.694",
+      "regime_buckets_short"
+    ],
+    "70": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 2": [
+      "146.696",
+      "146.955"
+    ],
+    "10 185 65": [
+      "sl 146.952",
+      "regime_buckets_short"
+    ],
+    "72": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 24": [
+      "146.915",
+      "147.130",
+      "147.095",
+      "147.309",
+      "147.249",
+      "144.564",
+      "143.925",
+      "144.131",
+      "142.557",
+      "142.638",
+      "142.864",
+      "142.859",
+      "143.066"
+    ],
+    "10 150 58": [
+      "sl 147.130",
+      "regime_buckets_short"
+    ],
+    "74": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 115 71": [
+      "sl 147.306",
+      "regime_buckets_short"
+    ],
+    "76": [
+      "USDJPY",
+      "0.00"
+    ],
+    "146 904": "77",
+    "56 36": "10 172.07",
+    "78": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 22": [
+      "146.145",
+      "146.385",
+      "146.943",
+      "145.073",
+      "144.847",
+      "142.688",
+      "142.906",
+      "142.672"
+    ],
+    "10 172 07": "regime_buckets_short",
+    "10 136 00": [
+      "sl 146.376",
+      "regime_buckets_short"
+    ],
+    "80": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 21": [
+      "146.396",
+      "146.634",
+      "144.850"
+    ],
+    "10 101 92": [
+      "sl 146.633",
+      "regime_buckets_short"
+    ],
+    "82": [
+      "USDJPY",
+      "0.00"
+    ],
+    "146 292": "83",
+    "55 03": "10 156.95",
+    "84": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 35": [
+      "146.032",
+      "145.876",
+      "143.387",
+      "140.447",
+      "144.524",
+      "144.673"
+    ],
+    "10 156 95": "regime_buckets_long",
+    "10 119 52": [
+      "sl 145.887",
+      "regime_buckets_short"
+    ],
+    "86": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 25": [
+      "146.078",
+      "146.281",
+      "143.859",
+      "144.055",
+      "143.072",
+      "142.539",
+      "142.747",
+      "145.365",
+      "145.549"
+    ],
+    "10 084 83": [
+      "sl 146.278",
+      "regime_buckets_short"
+    ],
+    "88": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 28": [
+      "146.255",
+      "146.375",
+      "146.555",
+      "142.450",
+      "142.626",
+      "144.684"
+    ],
+    "146 088": "89",
+    "32 01": "10 116.84",
+    "90": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 116 84": "regime_buckets_short",
+    "10 082 45": [
+      "sl 146.555",
+      "regime_buckets_short"
+    ],
+    "92": [
+      "USDJPY",
+      "0.00"
+    ],
+    "146 696": "93",
+    "37 04": "10 119.49",
+    "94": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 16": [
+      "147.672",
+      "143.395"
+    ],
+    "10 119 49": "regime_buckets_short",
+    "147 471": "95",
+    "21 81": "10 141.30",
+    "96": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 17": [
+      "147.959",
+      "143.554"
+    ],
+    "10 141 30": "regime_buckets_short",
+    "147 949": "97",
+    "1 15": "10 142.45",
+    "98": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 29": [
+      "147.611",
+      "147.331",
+      "147.521",
+      "143.707",
+      "143.886",
+      "143.919",
+      "145.000",
+      "145.165"
+    ],
+    "10 142 45": "regime_buckets_long",
+    "147 893": "99",
+    "55 30": "10 197.75",
+    "100": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 49": [
+      "147.681",
+      "147.794",
+      "147.434",
+      "147.327",
+      "143.025",
+      "142.914",
+      "140.767",
+      "140.662",
+      "140.292",
+      "140.187",
+      "144.153",
+      "144.249"
+    ],
+    "10 197 75": "regime_buckets_short",
+    "10 160 29": [
+      "sl 147.787",
+      "regime_buckets_long"
+    ],
+    "102": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 5": [
+      "147.513",
+      "147.402"
+    ],
+    "10 122 64": [
+      "sl 147.408",
+      "regime_buckets_long"
+    ],
+    "104": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 087 05": [
+      "sl 147.329",
+      "regime_buckets_long"
+    ],
+    "106": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 33": [
+      "147.198",
+      "147.033",
+      "143.948",
+      "143.300",
+      "143.144",
+      "143.725",
+      "143.869"
+    ],
+    "10 050 02": [
+      "sl 147.042",
+      "regime_buckets_short"
+    ],
+    "108": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 012 67": [
+      "sl 147.509",
+      "regime_buckets_short"
+    ],
+    "110": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 32": [
+      "147.496",
+      "147.656",
+      "147.513",
+      "144.126",
+      "143.767",
+      "143.932",
+      "141.251",
+      "143.110",
+      "143.265",
+      "143.274"
+    ],
+    "9 977 99": [
+      "sl 147.654",
+      "regime_buckets_short"
+    ],
+    "112": [
+      "USDJPY",
+      "0.00"
+    ],
+    "146 971": "113",
+    "118 01": "10 096.00",
+    "114": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 37": [
+      "146.971",
+      "146.826",
+      "141.167",
+      "141.301"
+    ],
+    "10 096 00": "regime_buckets_long",
+    "10 059 46": [
+      "sl 146.832",
+      "regime_buckets_long"
+    ],
+    "116": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 025 13": [
+      "sl 144.848",
+      "regime_buckets_long"
+    ],
+    "118": [
+      "USDJPY",
+      "0.00"
+    ],
+    "145 368": "119",
+    "74 83": "10 099.96",
+    "120": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 34": [
+      "145.053",
+      "144.893",
+      "146.592",
+      "146.436",
+      "142.883",
+      "142.724",
+      "140.615",
+      "143.735"
+    ],
+    "10 099 96": "regime_buckets_long",
+    "10 062 42": [
+      "sl 144.904",
+      "regime_buckets_long"
+    ],
+    "122": [
+      "USDJPY",
+      "0.00"
+    ],
+    "145 036": "123",
+    "78 10": "10 140.52",
+    "124": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 11": [
+      "146.567",
+      "147.062"
+    ],
+    "10 140 52": "regime_buckets_short",
+    "10 103 49": [
+      "sl 147.027",
+      "regime_buckets_short"
+    ],
+    "126": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 09": [
+      "147.425",
+      "148.005"
+    ],
+    "10 068 22": [
+      "sl 148.002",
+      "regime_buckets_short"
+    ],
+    "128": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 08": "147.883",
+    "147 580": "129",
+    "16 42": "10 084.64",
+    "130": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 084 64": "regime_buckets_short",
+    "147 762": "131",
+    "46 93": "10 131.57",
+    "132": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 131 57": "regime_buckets_long",
+    "10 095 35": [
+      "sl 146.441",
+      "regime_buckets_short"
+    ],
+    "134": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 059 27": [
+      "sl 143.884",
+      "regime_buckets_short"
+    ],
+    "136": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 025 26": [
+      "sl 144.054",
+      "regime_buckets_short"
+    ],
+    "138": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 990 96": [
+      "sl 144.131",
+      "regime_buckets_short"
+    ],
+    "140": [
+      "USDJPY",
+      "0.00"
+    ],
+    "143 143": "141",
+    "149 75": "10 140.71",
+    "142": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 140 71": "regime_buckets_long",
+    "142 577": "143",
+    "3 37": "10 144.08",
+    "144": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 144 08": "regime_buckets_short",
+    "143 222": "145",
+    "19 33": "10 163.41",
+    "146": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 163 41": "regime_buckets_short",
+    "143 451": "147",
+    "12 21": "10 175.62",
+    "148": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 3": [
+      "143.738",
+      "143.921",
+      "142.775",
+      "142.592"
+    ],
+    "10 175 62": "regime_buckets_short",
+    "10 137 47": [
+      "sl 143.908",
+      "regime_buckets_short"
+    ],
+    "150": [
+      "USDJPY",
+      "0.00"
+    ],
+    "143 843": "151",
+    "15 32": "10 152.79",
+    "152": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 152 79": "regime_buckets_short",
+    "143 818": "153",
+    "68 53": "10 221.32",
+    "154": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 48": [
+      "143.625",
+      "143.518",
+      "142.133"
+    ],
+    "10 221 32": "regime_buckets_long",
+    "10 185 53": [
+      "sl 143.520",
+      "regime_buckets_long"
+    ],
+    "156": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 147 65": [
+      "sl 142.735",
+      "regime_buckets_short"
+    ],
+    "158": [
+      "USDJPY",
+      "0.00"
+    ],
+    "142 924": "159",
+    "25 89": "10 173.54",
+    "160": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 173 54": "regime_buckets_short",
+    "143 138": "161",
+    "34 04": "10 207.58",
+    "162": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 207 58": "regime_buckets_short",
+    "10 172 09": [
+      "sl 143.465",
+      "regime_buckets_short"
+    ],
+    "164": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 135 41": [
+      "sl 143.923",
+      "regime_buckets_short"
+    ],
+    "166": [
+      "USDJPY",
+      "0.00"
+    ],
+    "143 741": "167",
+    "47 52": "10 182.93",
+    "168": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 182 93": "regime_buckets_long",
+    "10 146 97": [
+      "sl 143.147",
+      "regime_buckets_short"
+    ],
+    "170": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 111 36": [
+      "sl 143.338",
+      "regime_buckets_short"
+    ],
+    "172": [
+      "USDJPY",
+      "0.00"
+    ],
+    "143 360": "173",
+    "17 10": "10 094.26",
+    "174": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 43": [
+      "143.419",
+      "143.538",
+      "140.648",
+      "140.766",
+      "143.458",
+      "143.573",
+      "144.580",
+      "144.690"
+    ],
+    "10 094 26": "regime_buckets_short",
+    "10 058 61": [
+      "sl 143.536",
+      "regime_buckets_long"
+    ],
+    "176": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 022 79": [
+      "sl 143.071",
+      "regime_buckets_long"
+    ],
+    "178": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 47": [
+      "142.909",
+      "140.933",
+      "141.043",
+      "143.430",
+      "143.540"
+    ],
+    "143 387": "179",
+    "156 68": "10 179.47",
+    "180": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 179 47": "regime_buckets_short",
+    "143 044": "181",
+    "83 93": "10 263.40",
+    "182": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 4": [
+      "143.113",
+      "142.984",
+      "141.630",
+      "143.322",
+      "143.452",
+      "143.438"
+    ],
+    "10 263 40": "regime_buckets_long",
+    "10 227 31": [
+      "sl 142.985",
+      "regime_buckets_long"
+    ],
+    "184": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 26": "142.770",
+    "143 017": "185",
+    "44 90": "10 272.21",
+    "186": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 9": [
+      "143.028",
+      "142.963"
+    ],
+    "10 272 21": "regime_buckets_long",
+    "10 231 29": [
+      "sl 142.971",
+      "regime_buckets_long"
+    ],
+    "188": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 193 23": [
+      "sl 142.922",
+      "regime_buckets_short"
+    ],
+    "190": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 155 26": [
+      "sl 142.846",
+      "regime_buckets_short"
+    ],
+    "192": [
+      "USDJPY",
+      "0.00"
+    ],
+    "8 05": "10 147.21",
+    "194": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 147 21": "regime_buckets_short",
+    "142 724": "195",
+    "27 15": "10 174.36",
+    "196": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 36": [
+      "142.464",
+      "142.157",
+      "142.295",
+      "142.959",
+      "142.819",
+      "143.615",
+      "143.756"
+    ],
+    "10 174 36": "regime_buckets_long",
+    "142 504": "197",
+    "10 10": "10 184.46",
+    "198": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 184 46": "regime_buckets_short",
+    "10 149 91": [
+      "sl 142.625",
+      "regime_buckets_short"
+    ],
+    "200": [
+      "USDJPY",
+      "0.00"
+    ],
+    "142 602": "201",
+    "36 40": "10 186.31",
+    "202": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 186 31": "regime_buckets_short",
+    "10 150 14": [
+      "sl 142.842",
+      "regime_buckets_short"
+    ],
+    "204": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 62": [
+      "142.808",
+      "142.895",
+      "140.978",
+      "141.062",
+      "143.825",
+      "143.907",
+      "142.644",
+      "142.726",
+      "143.049",
+      "143.127"
+    ],
+    "10 112 39": [
+      "sl 142.890",
+      "regime_buckets_short"
+    ],
+    "206": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 51": [
+      "142.836",
+      "143.083",
+      "143.594",
+      "143.690"
+    ],
+    "142 639": "207",
+    "70 44": "10 182.83",
+    "208": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 182 83": "regime_buckets_long",
+    "142 475": "209",
+    "25 27": "10 157.56",
+    "210": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 157 56": "regime_buckets_short",
+    "10 122 23": [
+      "sl 140.976",
+      "regime_buckets_short"
+    ],
+    "212": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 085 31": [
+      "sl 141.057",
+      "regime_buckets_short"
+    ],
+    "214": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 61": [
+      "141.013",
+      "142.502",
+      "142.422",
+      "142.859",
+      "142.776"
+    ],
+    "140 803": "215",
+    "90 98": "10 176.29",
+    "216": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 78": [
+      "140.789",
+      "140.725",
+      "142.678"
+    ],
+    "10 176 29": "regime_buckets_long",
+    "10 140 82": [
+      "sl 140.725",
+      "regime_buckets_short"
+    ],
+    "218": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 76": [
+      "140.895",
+      "140.960",
+      "142.555",
+      "142.923",
+      "145.528",
+      "145.594"
+    ],
+    "10 105 77": [
+      "sl 140.960",
+      "regime_buckets_short"
+    ],
+    "220": [
+      "USDJPY",
+      "0.00"
+    ],
+    "66 35": "10 172.12",
+    "222": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 172 12": "regime_buckets_long",
+    "10 135 54": [
+      "sl 140.666",
+      "regime_buckets_short"
+    ],
+    "224": [
+      "USDJPY",
+      "0.00"
+    ],
+    "140 263": "225",
+    "45 91": "10 181.45",
+    "226": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 181 45": "regime_buckets_short",
+    "140 402": "227",
+    "51 58": "10 233.03",
+    "228": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 233 03": "regime_buckets_long",
+    "10 196 33": [
+      "sl 140.190",
+      "regime_buckets_short"
+    ],
+    "230": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 160 28": [
+      "sl 140.763",
+      "regime_buckets_short"
+    ],
+    "232": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 44": [
+      "140.773",
+      "140.897",
+      "143.382",
+      "143.493"
+    ],
+    "10 121 56": [
+      "sl 140.884",
+      "regime_buckets_short"
+    ],
+    "234": [
+      "USDJPY",
+      "0.00"
+    ],
+    "140 794": "235",
+    "22 37": "10 143.93",
+    "236": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 143 93": "regime_buckets_short",
+    "10 107 27": [
+      "sl 141.039",
+      "regime_buckets_short"
+    ],
+    "238": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 072 18": [
+      "sl 141.301",
+      "regime_buckets_short"
+    ],
+    "240": [
+      "USDJPY",
+      "0.00"
+    ],
+    "141 159": "241",
+    "20 86": "10 093.04",
+    "242": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 093 04": "regime_buckets_short",
+    "10 057 84": [
+      "sl 141.518",
+      "regime_buckets_short"
+    ],
+    "244": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 023 09": [
+      "sl 141.578",
+      "regime_buckets_short"
+    ],
+    "246": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 982 17": [
+      "sl 141.621",
+      "regime_buckets_short"
+    ],
+    "248": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 948 61": [
+      "sl 142.906",
+      "regime_buckets_short"
+    ],
+    "250": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 18": "143.124",
+    "142 686": "251",
+    "55 25": "10 003.86",
+    "252": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 003 86": "regime_buckets_long",
+    "9 968 48": [
+      "sl 141.928",
+      "regime_buckets_long"
+    ],
+    "254": [
+      "USDJPY",
+      "0.00"
+    ],
+    "141 869": "255",
+    "67 39": "10 035.87",
+    "256": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 035 87": "regime_buckets_short",
+    "141 646": "257",
+    "165 03": "10 200.90",
+    "258": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 200 90": "regime_buckets_short",
+    "10 165 99": [
+      "sl 142.295",
+      "regime_buckets_short"
+    ],
+    "260": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 129 56": [
+      "sl 142.739",
+      "regime_buckets_short"
+    ],
+    "262": [
+      "USDJPY",
+      "0.00"
+    ],
+    "142 626": "263",
+    "7 10": "10 136.66",
+    "264": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 136 66": "regime_buckets_short",
+    "10 101 93": [
+      "sl 143.062",
+      "regime_buckets_short"
+    ],
+    "266": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 067 07": [
+      "sl 143.172",
+      "regime_buckets_short"
+    ],
+    "268": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 032 45": [
+      "sl 143.265",
+      "regime_buckets_short"
+    ],
+    "270": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 996 20": [
+      "sl 143.447",
+      "regime_buckets_short"
+    ],
+    "272": [
+      "USDJPY",
+      "0.00"
+    ],
+    "143 280": "273",
+    "44 11": "10 040.31",
+    "274": [
+      "USDJPY",
+      "0.00"
+    ],
+    "10 040 31": "regime_buckets_short",
+    "10 003 78": [
+      "sl 143.563",
+      "regime_buckets_long"
+    ],
+    "276": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 968 49": [
+      "sl 142.822",
+      "regime_buckets_long"
+    ],
+    "278": [
+      "USDJPY",
+      "0.00"
+    ],
+    "142 552": "279",
+    "56 57": "10 025.06",
+    "280": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 94": [
+      "142.636",
+      "142.582"
+    ],
+    "10 025 06": "regime_buckets_long",
+    "9 989 46": [
+      "sl 142.583",
+      "regime_buckets_short"
+    ],
+    "282": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 950 64": [
+      "sl 142.820",
+      "regime_buckets_short"
+    ],
+    "284": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 67": [
+      "142.845",
+      "142.919",
+      "142.958",
+      "143.033"
+    ],
+    "9 915 95": [
+      "sl 142.919",
+      "regime_buckets_short"
+    ],
+    "286": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 75": [
+      "142.898",
+      "142.967"
+    ],
+    "9 879 75": [
+      "sl 142.963",
+      "regime_buckets_short"
+    ],
+    "288": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 59": [
+      "142.948",
+      "143.031",
+      "143.815"
+    ],
+    "9 845 51": [
+      "sl 143.031",
+      "regime_buckets_short"
+    ],
+    "290": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 52": [
+      "143.010",
+      "143.104",
+      "144.163",
+      "144.255"
+    ],
+    "9 811 35": [
+      "sl 143.103",
+      "regime_buckets_short"
+    ],
+    "292": [
+      "USDJPY",
+      "0.00"
+    ],
+    "142 955": "293",
+    "45 66": "9 857.01",
+    "294": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 46": [
+      "143.286",
+      "143.406",
+      "143.698",
+      "143.840",
+      "143.948"
+    ],
+    "9 857 01": "regime_buckets_short",
+    "9 818 52": [
+      "sl 143.392",
+      "regime_buckets_short"
+    ],
+    "296": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 784 48": [
+      "sl 143.493",
+      "regime_buckets_short"
+    ],
+    "298": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 750 04": [
+      "sl 143.572",
+      "regime_buckets_short"
+    ],
+    "300": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 716 21": [
+      "sl 143.766",
+      "regime_buckets_short"
+    ],
+    "302": [
+      "USDJPY",
+      "0.00"
+    ],
+    "143 666": "303",
+    "16 33": "9 732.54",
+    "304": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 732 54": "regime_buckets_long",
+    "143 316": "305",
+    "9 38": "9 741.92",
+    "306": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 741 92": "regime_buckets_short",
+    "143 312": "307",
+    "123 90": "9 865.82",
+    "308": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 865 82": "regime_buckets_short",
+    "9 831 75": [
+      "sl 143.690",
+      "regime_buckets_short"
+    ],
+    "310": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 796 09": [
+      "sl 143.869",
+      "regime_buckets_short"
+    ],
+    "312": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 761 65": [
+      "sl 143.900",
+      "regime_buckets_short"
+    ],
+    "314": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 728 08": [
+      "sl 144.038",
+      "regime_buckets_short"
+    ],
+    "316": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 641 66": [
+      "sl 143.760",
+      "regime_buckets_short"
+    ],
+    "318": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 606 60": [
+      "sl 143.790",
+      "regime_buckets_short"
+    ],
+    "320": [
+      "USDJPY",
+      "0.00"
+    ],
+    "143 787": "321",
+    "15 77": "9 622.37",
+    "322": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 622 37": "regime_buckets_short",
+    "143 501": "323",
+    "177 39": "9 799.76",
+    "324": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 799 76": "regime_buckets_long",
+    "9 765 73": [
+      "sl 143.531",
+      "regime_buckets_short"
+    ],
+    "326": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 731 84": [
+      "sl 143.759",
+      "regime_buckets_short"
+    ],
+    "328": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 696 55": [
+      "sl 143.845",
+      "regime_buckets_short"
+    ],
+    "330": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 661 22": [
+      "sl 143.903",
+      "regime_buckets_short"
+    ],
+    "332": [
+      "USDJPY",
+      "0.00"
+    ],
+    "143 635": "333",
+    "73 94": "9 735.16",
+    "334": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 735 16": "regime_buckets_long",
+    "9 701 38": [
+      "sl 143.417",
+      "regime_buckets_short"
+    ],
+    "336": [
+      "USDJPY",
+      "0.00"
+    ],
+    "1 49": [
+      "142.174",
+      "142.207"
+    ],
+    "9 666 80": [
+      "sl 142.207",
+      "regime_buckets_short"
+    ],
+    "338": [
+      "USDJPY",
+      "0.00"
+    ],
+    "1 39": [
+      "142.190",
+      "142.227"
+    ],
+    "9 630 64": [
+      "sl 142.225",
+      "regime_buckets_short"
+    ],
+    "340": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 596 90": [
+      "sl 142.254",
+      "regime_buckets_short"
+    ],
+    "342": [
+      "USDJPY",
+      "0.00"
+    ],
+    "142 120": "343",
+    "81 27": "9 678.17",
+    "344": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 678 17": "regime_buckets_short",
+    "142 335": "345",
+    "25 63": "9 703.80",
+    "346": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 703 80": "regime_buckets_short",
+    "142 463": "347",
+    "49 08": "9 752.88",
+    "348": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 752 88": "regime_buckets_long",
+    "142 536": "349",
+    "69 71": "9 822.59",
+    "350": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 822 59": "regime_buckets_short",
+    "9 786 97": [
+      "sl 142.722",
+      "regime_buckets_short"
+    ],
+    "352": [
+      "USDJPY",
+      "0.00"
+    ],
+    "142 691": "353",
+    "19 44": "9 806.41",
+    "354": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 806 41": "regime_buckets_long",
+    "9 772 15": [
+      "sl 142.422",
+      "regime_buckets_short"
+    ],
+    "356": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 68": [
+      "142.349",
+      "143.197"
+    ],
+    "142 303": "357",
+    "21 98": "9 794.13",
+    "358": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 96": [
+      "142.237",
+      "142.181"
+    ],
+    "9 794 13": "regime_buckets_long",
+    "9 756 32": [
+      "sl 142.187",
+      "regime_buckets_short"
+    ],
+    "360": [
+      "USDJPY",
+      "0.00"
+    ],
+    "142 623": "361",
+    "30 08": "9 786.40",
+    "362": [
+      "USDJPY",
+      "0.00"
+    ],
+    "0 56": [
+      "142.744",
+      "142.838",
+      "143.167",
+      "143.237",
+      "143.330"
+    ],
+    "9 786 40": "regime_buckets_short",
+    "9 749 55": [
+      "sl 142.831",
+      "regime_buckets_short"
+    ],
+    "364": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 715 66": [
+      "sl 142.971",
+      "regime_buckets_short"
+    ],
+    "366": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 680 53": [
+      "sl 143.030",
+      "regime_buckets_short"
+    ],
+    "368": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 646 77": [
+      "sl 143.078",
+      "regime_buckets_short"
+    ],
+    "370": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 611 58": [
+      "sl 143.135",
+      "regime_buckets_long"
+    ],
+    "372": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 576 12": [
+      "sl 142.781",
+      "regime_buckets_long"
+    ],
+    "374": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 540 81": [
+      "sl 142.751",
+      "regime_buckets_long"
+    ],
+    "376": [
+      "USDJPY",
+      "0.00"
+    ],
+    "142 694": "377",
+    "21 44": "9 562.25",
+    "378": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 562 25": "regime_buckets_short",
+    "142 746": "379",
+    "71 88": "9 634.13",
+    "380": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 634 13": "regime_buckets_short",
+    "9 600 34": [
+      "sl 143.126",
+      "regime_buckets_short"
+    ],
+    "382": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 566 82": [
+      "sl 143.182",
+      "regime_buckets_short"
+    ],
+    "384": [
+      "USDJPY",
+      "0.00"
+    ],
+    "143 070": "385",
+    "37 97": "9 584.96",
+    "386": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 584 96": "regime_buckets_long",
+    "143 043": "387",
+    "63 76": "9 648.72",
+    "388": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 648 72": "regime_buckets_short",
+    "9 611 00": [
+      "sl 143.216",
+      "regime_buckets_short"
+    ],
+    "390": [
+      "USDJPY",
+      "0.00"
+    ],
+    "143 099": "391",
+    "46 57": "9 657.57",
+    "392": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 657 57": "regime_buckets_short",
+    "9 621 23": [
+      "sl 143.322",
+      "regime_buckets_short"
+    ],
+    "394": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 585 21": [
+      "sl 143.531",
+      "regime_buckets_short"
+    ],
+    "396": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 551 35": [
+      "sl 143.634",
+      "regime_buckets_short"
+    ],
+    "398": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 516 04": [
+      "sl 143.748",
+      "regime_buckets_short"
+    ],
+    "400": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 483 01": [
+      "sl 143.869",
+      "regime_buckets_short"
+    ],
+    "402": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 448 50": [
+      "sl 143.942",
+      "regime_buckets_short"
+    ],
+    "404": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 415 48": [
+      "sl 144.026",
+      "regime_buckets_short"
+    ],
+    "406": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 382 32": [
+      "sl 144.253",
+      "regime_buckets_short"
+    ],
+    "408": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 349 71": [
+      "sl 144.249",
+      "regime_buckets_short"
+    ],
+    "410": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 313 66": [
+      "sl 144.657",
+      "regime_buckets_short"
+    ],
+    "412": [
+      "USDJPY",
+      "0.00"
+    ],
+    "144 296": "413",
+    "75 29": "9 388.95",
+    "414": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 388 95": "regime_buckets_short",
+    "9 356 33": [
+      "sl 144.585",
+      "regime_buckets_short"
+    ],
+    "416": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 323 64": [
+      "sl 144.689",
+      "regime_buckets_short"
+    ],
+    "418": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 290 68": [
+      "sl 145.160",
+      "regime_buckets_short"
+    ],
+    "420": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 258 17": [
+      "sl 145.345",
+      "regime_buckets_short"
+    ],
+    "422": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 226 57": [
+      "sl 145.547",
+      "regime_buckets_short"
+    ],
+    "424": [
+      "USDJPY",
+      "0.00"
+    ],
+    "9 192 12": "sl 145.589",
+    "788 05": "9 192.12"
+  },
+  "records_preview": [],
+  "run_id": "2026-04-02-032754-514796-usdjpy-20260402-regime-buckets-t"
+}
