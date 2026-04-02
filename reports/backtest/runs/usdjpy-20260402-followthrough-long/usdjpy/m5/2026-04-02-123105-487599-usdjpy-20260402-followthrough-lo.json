@@ -1,0 +1,228 @@
+{
+  "imported_at": "2026-04-02T12:31:05",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "usdjpy-20260402-followthrough-long",
+    "symbol": "USDJPY",
+    "timeframe": "M5",
+    "tested_range": "2025.04.01 - 2025.12.31",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "usdjpy-20260402-followthrough-long",
+    "symbol_key": "usdjpy",
+    "timeframe_key": "m5",
+    "run_path": "reports/backtest/runs/usdjpy-20260402-followthrough-long/usdjpy/m5/2026-04-02-123105-487599-usdjpy-20260402-followthrough-lo.json",
+    "knowledge_path": "knowledge/backtests/usdjpy-20260402-followthrough-long/usdjpy/m5/2026-04-02-123105-487599-usdjpy-20260402-followthrough-lo.md",
+    "imported_dir": "reports/backtest/imported/usdjpy-20260402-followthrough-long/usdjpy/m5/2026-04-02-123105-487599",
+    "imported_report": "reports/backtest/imported/usdjpy-20260402-followthrough-long/usdjpy/m5/2026-04-02-123105-487599/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260402_followthrough_long-train-9m-m5.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "USDJPY",
+    "tester_period": "M5",
+    "preset_name": "usdjpy_20260402_followthrough_long-baseline.set",
+    "preset_source": "reports\\presets\\usdjpy_20260402_followthrough_long-baseline.set",
+    "signal_timeframe": "M5"
+  },
+  "metrics": {
+    "ea_name": "usdjpy_20260402_followthrough_long",
+    "symbol": "USDJPY",
+    "period": "M5 (2025.04.01 - 2025.12.31)",
+    "history_quality_percent": 100.0,
+    "bars": 56153,
+    "ticks": 23147312,
+    "initial_deposit": 10000.0,
+    "total_net_profit": 498.46,
+    "gross_profit": 498.46,
+    "gross_loss": 0.0,
+    "profit_factor": 0.0,
+    "expected_payoff": 166.15,
+    "recovery_factor": 2.5,
+    "sharpe_ratio": 3.63,
+    "absolute_drawdown": 0.0,
+    "maximal_drawdown_amount": 0.0,
+    "maximal_drawdown_percent": 0.0,
+    "relative_drawdown_amount": 0.0,
+    "relative_drawdown_percent": 0.0,
+    "total_trades": 3,
+    "short_positions_count": 0,
+    "short_positions_percent": 0.0,
+    "long_positions_count": 3,
+    "long_positions_percent": 100.0,
+    "profit_trades_count": 3,
+    "profit_trades_percent": 100.0,
+    "loss_trades_count": 0,
+    "loss_trades_percent": 0.0,
+    "largest_profit_trade": 171.06,
+    "largest_loss_trade": 0.0,
+    "average_profit_trade": 166.15,
+    "average_loss_trade": 0.0,
+    "timeframe": "M5",
+    "tested_range": "2025.04.01 - 2025.12.31",
+    "win_rate_percent": 100.0
+  },
+  "summary": {
+    "headline": "取引回数が少なすぎて判断が不安定です。 / Profit Factor が 1.0 未満で、収益性はまだ不足しています。",
+    "strengths": [
+      "総損益はプラスです。",
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [
+      "取引回数が少なすぎて判断が不安定です。",
+      "Profit Factor が 1.0 未満で、収益性はまだ不足しています。"
+    ],
+    "notes": []
+  },
+  "tags": [
+    "train-9m"
+  ],
+  "raw_fields": {
+    "expert": "usdjpy_20260402_followthrough_long",
+    "symbol": [
+      "USDJPY",
+      "1"
+    ],
+    "period": "M5 (2025.04.01 - 2025.12.31)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "56153",
+    "ticks": "23147312",
+    "total net profit": "498.46",
+    "absolute drawdown": "0.00",
+    "gross profit": "498.46",
+    "maximal drawdown": "0.00 (0.00%)",
+    "gross loss": "0.00",
+    "relative drawdown": "0.00% (0.00)",
+    "profit factor": "0.00",
+    "expected payoff": "166.15",
+    "recovery factor": "2.50",
+    "sharpe ratio": "3.63",
+    "z score": "0.00 (0.00%)",
+    "ahpr": "1.0163 (1.63%)",
+    "lr correlation": "0.94",
+    "ontester": "0",
+    "ghpr": "1.0163 (1.63%)",
+    "lr standard error": "3.09",
+    "total trades": "3",
+    "short trades won percent": "0 (0.00%)",
+    "long positions won percent": "3 (100.00%)",
+    "profit trades percent of total": "3 (100.00%)",
+    "loss trades percent of total": "0 (0.00%)",
+    "largest profit trade": "171.06",
+    "largest loss trade": "0.00",
+    "average profit trade": "166.15",
+    "average loss trade": "0.00",
+    "correlation profits mfe": "1.00",
+    "correlation profits mae": "0.16",
+    "correlation mfe mae": "0.1605",
+    "t p": "時間",
+    "2": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "buy": [
+      "1.9 / 1.9",
+      "1.94 / 1.94",
+      "1.99 / 1.99",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 000": [
+      "143.045",
+      "2025.06.05 10:51:49",
+      "144.907",
+      "2025.07.03 19:21:30",
+      "145.144",
+      "2025.07.07 12:25:03"
+    ],
+    "143 315": "2025.06.05 09:55:00",
+    "filled": [
+      "followthrough_s1_long",
+      "tp 143.315",
+      "followthrough_s1_long",
+      "tp 145.177",
+      "followthrough_s1_long",
+      "tp 145.414"
+    ],
+    "3": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "sell": [
+      "1.9 / 1.9",
+      "1.94 / 1.94",
+      "1.99 / 1.99",
+      "out",
+      "out",
+      "out"
+    ],
+    "4": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "145 177": "2025.07.03 19:05:00",
+    "5": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "6": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "145 414": "2025.07.07 11:55:00",
+    "7": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "1": "balance",
+    "0 00": [
+      "0.00",
+      "0.00",
+      "167.04",
+      "0.00",
+      "160.36",
+      "0.00",
+      "171.06",
+      "0.00"
+    ],
+    "10 000 00": [
+      "10 000.00",
+      "followthrough_s1_long"
+    ],
+    "1 9": [
+      "143.195",
+      "143.321"
+    ],
+    "10 167 04": [
+      "tp 143.315",
+      "followthrough_s1_long"
+    ],
+    "1 94": [
+      "145.057",
+      "145.177"
+    ],
+    "10 327 40": [
+      "tp 145.177",
+      "followthrough_s1_long"
+    ],
+    "1 99": [
+      "145.294",
+      "145.419"
+    ],
+    "10 498 46": "tp 145.414",
+    "498 46": "10 498.46"
+  },
+  "records_preview": [],
+  "run_id": "2026-04-02-123105-487599-usdjpy-20260402-followthrough-lo"
+}

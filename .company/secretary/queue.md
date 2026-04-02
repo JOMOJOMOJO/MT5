@@ -167,3 +167,4 @@
 - [x] Move the status heartbeat to a timer-driven live runtime path so stale-heartbeat checks are meaningful outside signal bars.
 - [x] Add guarded wrappers for first-capital launch and operator-action logging.
 - [x] Add launch manifests so every forward or small-live cycle has durable preset and telemetry lineage.
+- [research-director] Open fresh `USDJPY` long-only family after `followthrough_long` reject. Focus on `round-number continuation long` or `volatility-state breakout-follow-through long`; do not keep retuning `S1 long-only` unless a new study shows materially better frequency and OOS survival.
