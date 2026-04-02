@@ -1,0 +1,11 @@
+{
+  "symbol": "USDJPY",
+  "timeframe": "M15",
+  "history_start": "2025-04-02T05:15:00",
+  "history_end": "2026-04-02T05:00:00",
+  "split_train_end": "2026-01-01T04:55:00",
+  "split_test_start": "2026-01-01T05:00:00",
+  "event_count": 312,
+  "candidate_count": 0,
+  "top_candidates": []
+}
