@@ -38,6 +38,9 @@
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-zone-escape-plateau-review.md` as the machine verdict that the latest serious `zone_escape` runs do not survive executable broker friction.
 - [ ] Do not spend another immediate cycle on `usdjpy_20260402_zone_escape` spread loosening, expiry retuning, or touch-buffer tuning.
 - [ ] Open the next USDJPY mainline from a fresh `London/NY EMA13-EMA100 continuation + volatility-state + V-shape pullback` study, not another Asia `zone_escape` variant.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-round-continuation-long-cycle2-quality-promotion.md` as the current verdict that `quality12b` is the best surviving `USDJPY long-only` branch so far.
+- [ ] Use `usdjpy_20260402_round_continuation_long-quality12b.set` as the current best `USDJPY long-only` preset inside this family.
+- [ ] Do not loosen `quality12b` just to force turnover; add a second independent `long-only` bucket if frequency must increase.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.
 - [ ] Keep `BTCUSD` high-turnover families as secondary until the USDJPY Golden Method family either clears the live gate or fails plateau review.
