@@ -19,6 +19,13 @@ struct PivotPoint
    datetime time;
   };
 
+enum SignalBucket
+  {
+   SIGNAL_NONE = 0,
+   SIGNAL_ROUND = 1,
+   SIGNAL_EMA = 2
+  };
+
 input string          InpSymbol                   = "USDJPY";
 input ENUM_TIMEFRAMES InpSignalTimeframe          = PERIOD_M15;
 input int             InpFastEMAPeriod            = 13;
@@ -38,6 +45,19 @@ input double          InpMinSlowSlopePips         = 0.0;
 input double          InpStopLossPips             = 22.0;
 input double          InpTargetRMultiple          = 1.5;
 input int             InpMaxHoldBars              = 18;
+input bool            InpEnableEmaBucket          = false;
+input int             InpAdxPeriod                = 14;
+input double          InpEmaMaxAdx                = 30.0;
+input int             InpEmaSessionStartHour      = 7;
+input int             InpEmaSessionEndHour        = 16;
+input double          InpEmaMaxEma13DistancePips  = 22.0;
+input double          InpEmaMaxRet1               = 0.0004;
+input double          InpEmaMinUpperWickShare     = 0.45;
+input double          InpEmaMaxLowerWickShare     = 0.15;
+input double          InpEmaMaxCloseLocation      = 0.45;
+input double          InpEmaStopLossPips          = 15.0;
+input double          InpEmaTargetRMultiple       = 1.2;
+input int             InpEmaMaxHoldBars           = 12;
 input double          InpRiskPercent              = 2.0;
 input bool            InpUseMicroCapRiskOverride  = true;
 input double          InpMicroCapBalanceThreshold = 150.0;
@@ -64,6 +84,7 @@ input long            InpMagicNumber              = 20260498;
 
 int fastEmaHandle = INVALID_HANDLE;
 int slowEmaHandle = INVALID_HANDLE;
+int adxHandle = INVALID_HANDLE;
 string runtimeSymbol = "";
 string runtimeAllowedWeekdays = "";
 string runtimeTelemetryFileName = "";
@@ -315,26 +336,33 @@ bool IsTradeCountBlocked()
    return (dailyTradeCount >= InpMaxTradesPerDay);
   }
 
-bool IsWithinActiveSession(datetime barTime)
+bool IsWithinSession(datetime barTime, int sessionStartHour, int sessionEndHour)
   {
    MqlDateTime ts;
    TimeToStruct(barTime, ts);
-   if(InpSessionStartHour < InpSessionEndHour)
-      return ts.hour >= InpSessionStartHour && ts.hour < InpSessionEndHour;
-   return ts.hour >= InpSessionStartHour || ts.hour < InpSessionEndHour;
+   if(sessionStartHour < sessionEndHour)
+      return ts.hour >= sessionStartHour && ts.hour < sessionEndHour;
+   return ts.hour >= sessionStartHour || ts.hour < sessionEndHour;
   }
 
-bool LoadSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[], int count)
+bool IsWithinActiveSession(datetime barTime)
+  {
+   return IsWithinSession(barTime, InpSessionStartHour, InpSessionEndHour);
+  }
+
+bool LoadSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[], double &adxValues[], int count)
   {
    ArraySetAsSeries(rates, true);
    ArraySetAsSeries(fastEma, true);
    ArraySetAsSeries(slowEma, true);
+   ArraySetAsSeries(adxValues, true);
    int copiedRates = CopyRates(runtimeSymbol, InpSignalTimeframe, 0, count, rates);
    if(copiedRates < 140)
       return false;
    int copiedFast = CopyBuffer(fastEmaHandle, 0, 0, count, fastEma);
    int copiedSlow = CopyBuffer(slowEmaHandle, 0, 0, count, slowEma);
-   return copiedFast == copiedRates && copiedSlow == copiedRates;
+   int copiedAdx = CopyBuffer(adxHandle, 0, 0, count, adxValues);
+   return copiedFast == copiedRates && copiedSlow == copiedRates && copiedAdx == copiedRates;
   }
 
 int CountManagedPositions()
@@ -362,8 +390,12 @@ bool ManageOpenPosition()
       if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
          continue;
       datetime openedAt = (datetime)PositionGetInteger(POSITION_TIME);
+      string comment = PositionGetString(POSITION_COMMENT);
+      int maxHoldBars = InpMaxHoldBars;
+      if(StringFind(comment, "ema_sidecar") >= 0)
+         maxHoldBars = InpEmaMaxHoldBars;
       int barsOpen = iBarShift(runtimeSymbol, InpSignalTimeframe, openedAt, false);
-      if(barsOpen < InpMaxHoldBars)
+      if(barsOpen < maxHoldBars)
          continue;
       ulong ticket = (ulong)PositionGetInteger(POSITION_TICKET);
       if(trade.PositionClose(ticket))
@@ -493,6 +525,14 @@ double LowerWickShare(const MqlRates &bar)
    return (MathMin(bar.open, bar.close) - bar.low) / range;
   }
 
+double CloseLocation(const MqlRates &bar)
+  {
+   double range = bar.high - bar.low;
+   if(range <= 0.0)
+      return 0.5;
+   return (bar.close - bar.low) / range;
+  }
+
 bool PassesVolatilityState(const MqlRates &rates[])
   {
    int size = ArraySize(rates);
@@ -515,7 +555,7 @@ bool PassesVolatilityState(const MqlRates &rates[])
    return (long)MathFloor(highest / zoneStep) != (long)MathFloor(lowest / zoneStep);
   }
 
-bool EvaluateSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[])
+bool EvaluateRoundSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[])
   {
    if(!PassesVolatilityState(rates))
       return false;
@@ -552,12 +592,65 @@ bool EvaluateSignal(const MqlRates &rates[], const double &fastEma[], const doub
    return true;
   }
 
-void OpenPosition()
+bool EvaluateEmaSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[], const double &adxValues[])
   {
+   if(!InpEnableEmaBucket)
+      return false;
+
+   datetime barTime = rates[1].time;
+   if(!IsWithinSession(barTime, InpEmaSessionStartHour, InpEmaSessionEndHour))
+      return false;
+
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return false;
+   if(fastEma[1] <= slowEma[1])
+      return false;
+   if(rates[1].close <= slowEma[1])
+      return false;
+
+   double slowSlopePips = (slowEma[1] - slowEma[1 + InpSlowSlopeLookback]) / pip;
+   if(slowSlopePips < InpMinSlowSlopePips)
+      return false;
+
+   if(adxValues[1] <= 0.0 || adxValues[1] > InpEmaMaxAdx)
+      return false;
+
+   double emaDistancePips = MathAbs(rates[1].close - fastEma[1]) / pip;
+   if(emaDistancePips > InpEmaMaxEma13DistancePips)
+      return false;
+
+   double ret1 = 0.0;
+   if(rates[2].close > 0.0)
+      ret1 = (rates[1].close - rates[2].close) / rates[2].close;
+   if(ret1 > InpEmaMaxRet1)
+      return false;
+
+   if(UpperWickShare(rates[1]) < InpEmaMinUpperWickShare)
+      return false;
+   if(LowerWickShare(rates[1]) > InpEmaMaxLowerWickShare)
+      return false;
+   if(CloseLocation(rates[1]) > InpEmaMaxCloseLocation)
+      return false;
+   return true;
+  }
+
+void OpenPosition(SignalBucket bucket)
+  {
+   double stopLossPips = InpStopLossPips;
+   double targetRMultiple = InpTargetRMultiple;
+   string comment = "round_continuation_long";
+   if(bucket == SIGNAL_EMA)
+     {
+      stopLossPips = InpEmaStopLossPips;
+      targetRMultiple = InpEmaTargetRMultiple;
+      comment = "ema_sidecar_long";
+     }
+
    double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
    double pip = GetPipSize();
-   double stopDistance = InpStopLossPips * pip;
-   double targetDistance = stopDistance * InpTargetRMultiple;
+   double stopDistance = stopLossPips * pip;
+   double targetDistance = stopDistance * targetRMultiple;
    double point = SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
    int stopsLevel = (int)SymbolInfoInteger(runtimeSymbol, SYMBOL_TRADE_STOPS_LEVEL);
    if(ask <= 0.0 || pip <= 0.0 || point <= 0.0)
@@ -573,7 +666,7 @@ void OpenPosition()
 
    double sl = NormalizePrice(ask - stopDistance);
    double tp = NormalizePrice(ask + targetDistance);
-   trade.Buy(volume, runtimeSymbol, 0.0, sl, tp, "round_continuation_long");
+   trade.Buy(volume, runtimeSymbol, 0.0, sl, tp, comment);
   }
 
 bool OpenTelemetryFile()
@@ -818,6 +911,13 @@ int OnInit()
       InpSessionEndHour < 0 || InpSessionEndHour > 23 || InpSessionStartHour == InpSessionEndHour ||
       InpMaxEma13DistancePips <= 0.0 || InpMinUpperWickShare < 0.0 || InpMinUpperWickShare > 1.0 ||
       InpMaxLowerWickShare < 0.0 || InpMaxLowerWickShare > 1.0 || InpMinUpperWickShare <= InpMaxLowerWickShare ||
+      InpAdxPeriod <= 1 || InpEmaMaxAdx <= 0.0 || InpEmaSessionStartHour < 0 || InpEmaSessionStartHour > 23 ||
+      InpEmaSessionEndHour < 0 || InpEmaSessionEndHour > 23 || InpEmaSessionStartHour == InpEmaSessionEndHour ||
+      InpEmaMaxEma13DistancePips <= 0.0 || InpEmaMaxRet1 < -0.01 || InpEmaMaxRet1 > 0.01 ||
+      InpEmaMinUpperWickShare < 0.0 || InpEmaMinUpperWickShare > 1.0 || InpEmaMaxLowerWickShare < 0.0 ||
+      InpEmaMaxLowerWickShare > 1.0 || InpEmaMaxCloseLocation < 0.0 || InpEmaMaxCloseLocation > 1.0 ||
+      InpEmaMinUpperWickShare <= InpEmaMaxLowerWickShare || InpEmaStopLossPips <= 0.0 ||
+      InpEmaTargetRMultiple <= 0.0 || InpEmaMaxHoldBars < 1 ||
       InpStopLossPips <= 0.0 || InpTargetRMultiple <= 0.0 || InpMaxHoldBars < 1 || InpRiskPercent <= 0.0 ||
       InpMicroCapBalanceThreshold < 0.0 || InpMicroCapRiskPercent <= 0.0 || InpDailyLossCapPercent <= 0.0 ||
       InpEquityDrawdownCapPercent < 0.0 || InpMaxTradesPerDay < 0 || InpMaxSpreadPips <= 0.0 || InpMagicNumber <= 0 ||
@@ -833,7 +933,8 @@ int OnInit()
 
    fastEmaHandle = iMA(runtimeSymbol, InpSignalTimeframe, InpFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
    slowEmaHandle = iMA(runtimeSymbol, InpSignalTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
-   if(fastEmaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE)
+   adxHandle = iADX(runtimeSymbol, InpSignalTimeframe, InpAdxPeriod);
+   if(fastEmaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE || adxHandle == INVALID_HANDLE)
       return INIT_FAILED;
 
    trade.SetExpertMagicNumber((ulong)InpMagicNumber);
@@ -878,6 +979,8 @@ void OnDeinit(const int reason)
       IndicatorRelease(fastEmaHandle);
    if(slowEmaHandle != INVALID_HANDLE)
       IndicatorRelease(slowEmaHandle);
+   if(adxHandle != INVALID_HANDLE)
+      IndicatorRelease(adxHandle);
   }
 
 void OnTimer()
@@ -972,9 +1075,16 @@ void OnTick()
    MqlRates rates[];
    double fastEma[];
    double slowEma[];
-   if(!LoadSignalWindow(rates, fastEma, slowEma, 260))
+   double adxValues[];
+   if(!LoadSignalWindow(rates, fastEma, slowEma, adxValues, 260))
       return;
 
-   if(EvaluateSignal(rates, fastEma, slowEma))
-      OpenPosition();
+   SignalBucket bucket = SIGNAL_NONE;
+   if(EvaluateRoundSignal(rates, fastEma, slowEma))
+      bucket = SIGNAL_ROUND;
+   else if(EvaluateEmaSignal(rates, fastEma, slowEma, adxValues))
+      bucket = SIGNAL_EMA;
+
+   if(bucket != SIGNAL_NONE)
+      OpenPosition(bucket);
   }
