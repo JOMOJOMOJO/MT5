@@ -41,6 +41,8 @@
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-round-continuation-long-cycle2-quality-promotion.md` as the current verdict that `quality12b` is the best surviving `USDJPY long-only` branch so far.
 - [ ] Use `usdjpy_20260402_round_continuation_long-quality12b.set` as the current best `USDJPY long-only` preset inside this family.
 - [ ] Do not loosen `quality12b` just to force turnover; add a second independent `long-only` bucket if frequency must increase.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-long-stack-cycle1-review.md` as the formal verdict that all first `quality12b + EMA sidecar` stacks improved turnover but failed the long-window live gate.
+- [ ] Keep the long-stack variants in research only; do not promote them as live-track candidates.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-downpersist-long-cycle1-reject.md` as the formal verdict that `usdjpy_20260402_downpersist_long` failed actual MT5 and should not consume another immediate tuning cycle.
 - [ ] Keep `quality12b` as the current best `USDJPY long-only` branch until a second bucket survives actual MT5, not just study-level evidence.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-breakout-followthrough-long-delay2-probe.md` as the study note that opened `breakout_followthrough_long`, not as a promotion note.
@@ -48,7 +50,14 @@
 - [ ] Do not spend another immediate tuning cycle on `breakout_followthrough_long`; open the next `USDJPY long-only` bucket from a fresh thesis instead.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-ema-continuation-long-cycle1-review.md` as the formal verdict that `usdjpy_20260402_ema_continuation_long` produced one surviving sidecar, `london-loose`, but still did not solve the monthly turnover target by itself.
 - [ ] Keep `usdjpy_20260402_ema_continuation_long-london-loose.set` as the current best `EMA13/EMA100 continuation` sidecar inside this family.
-- [ ] Do not promote `usdjpy_20260402_ema_continuation_long` as a standalone long-only mainline; next cycle should be either `quality12b + london-loose` stack actualization or a fresh third `USDJPY long-only` bucket.
+- [ ] Do not promote `usdjpy_20260402_ema_continuation_long` as a standalone long-only mainline.
+- [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_guarded.md` as the single source of truth for the current `USDJPY long-only` demo-forward candidate.
+- [ ] Treat `usdjpy_20260402_round_continuation_long-quality12b_guarded.set` as the current quality-first `USDJPY` proving preset.
+- [ ] Treat `.company/release/usdjpy_20260402_round_continuation_long-quality12b_smalllive050.md` as the staged first-capital packet after demo-forward passes.
+- [ ] Use `scripts/start-usdjpy-quality12b-demo-forward.ps1` and `scripts/usdjpy-quality12b-live-preflight.ps1` for the quality12b live-track workflow.
+- [ ] Use `scripts/start-usdjpy-quality12b-small-live.ps1` only after the guarded demo-forward gate is accepted.
+- [ ] Keep `quality12b_guarded` as a quality-first secondary live-track candidate, not as the repo's high-turnover mainline.
+- [ ] Treat the low-risk `quality12b_guarded` rerun as the first `USDJPY long-only` live-track preset that clears the repo's long-window drawdown gate; remaining blockers should now be real demo-forward evidence and a live heartbeat, not backtest drawdown.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.
 - [ ] Keep `BTCUSD` high-turnover families as secondary until the USDJPY Golden Method family either clears the live gate or fails plateau review.

@@ -3,7 +3,7 @@
 //+------------------------------------------------------------------+
 #property copyright   "Trading System"
 #property link        "https://www.mql5.com"
-#property version     "1.00"
+#property version     "1.10"
 #property strict
 #property description "USDJPY M15 long-only continuation prototype using EMA13/EMA100 trend, 50-pip anti-chop state, and wick-based pullback re-entry."
 
@@ -42,21 +42,56 @@ input double          InpRiskPercent              = 2.0;
 input bool            InpUseMicroCapRiskOverride  = true;
 input double          InpMicroCapBalanceThreshold = 150.0;
 input double          InpMicroCapRiskPercent      = 3.0;
+input bool            InpSkipTradeWhenMinLotRiskTooHigh = true;
+input double          InpMaxEffectiveRiskPercentAtMinLot = 3.0;
 input bool            InpUseDailyLossCap          = true;
 input double          InpDailyLossCapPercent      = 6.0;
+input bool            InpFlattenOnDailyLossCap    = true;
+input bool            InpUseEquityDrawdownCap     = true;
+input double          InpEquityDrawdownCapPercent = 12.0;
+input bool            InpFlattenOnEquityDrawdownCap = true;
 input int             InpMaxTradesPerDay          = 2;
 input double          InpMaxSpreadPips            = 2.0;
 input string          InpAllowedWeekdays          = "1,2,3,4,5";
-input long            InpMagicNumber              = 20260494;
+input bool            InpEnableTelemetry          = true;
+input string          InpTelemetryFileName        = "mt5_company_usdjpy_20260402_round_continuation_long_quality12b_guarded.csv";
+input bool            InpEnableOperatorControl    = true;
+input string          InpOperatorCommandFile      = "mt5_company_usdjpy_20260402_round_continuation_long_operator.txt";
+input bool            InpEnableStatusSnapshot     = true;
+input string          InpStatusFileName           = "mt5_company_usdjpy_20260402_round_continuation_long_status.txt";
+input int             InpStatusHeartbeatSeconds   = 60;
+input long            InpMagicNumber              = 20260498;
 
 int fastEmaHandle = INVALID_HANDLE;
 int slowEmaHandle = INVALID_HANDLE;
 string runtimeSymbol = "";
+string runtimeAllowedWeekdays = "";
+string runtimeTelemetryFileName = "";
+string runtimeOperatorCommandFile = "";
+string runtimeStatusFileName = "";
+bool runtimeOperatorControlEnabled = false;
+bool runtimeStatusSnapshotEnabled = false;
 bool allowedWeekdays[7];
 datetime lastBarTime = 0;
 datetime currentDayStart = 0;
+int lastDayOfYear = -1;
+double dailyStartBalance = 0.0;
 double dailyStartEquity = 0.0;
+double equityPeak = 0.0;
 int dailyTradeCount = 0;
+int dailyClosedTrades = 0;
+int dailyEntriesBuy = 0;
+int dailyEntriesSell = 0;
+int consecutiveLosses = 0;
+int dailyBlockedSpread = 0;
+int dailyBlockedDailyLoss = 0;
+int dailyBlockedTradeCap = 0;
+int dailyBlockedEquityCap = 0;
+int dailyLossLockActivations = 0;
+int telemetryHandle = INVALID_HANDLE;
+string operatorMode = "normal";
+bool statusSnapshotErrorLogged = false;
+bool timerStarted = false;
 
 string TrimSpaces(string value)
   {
@@ -68,7 +103,7 @@ string TrimSpaces(string value)
       finish--;
    if(finish < start)
       return "";
-   return StringSubstr(value, start, finish - start + 1);
+   return StringSubstr(value, 0 + start, finish - start + 1);
   }
 
 string NormalizePresetString(string rawValue)
@@ -99,6 +134,13 @@ bool ParseWeekdays(string rawValue)
    return true;
   }
 
+bool IsAllowedWeekday(int dayOfWeek)
+  {
+   if(dayOfWeek < 0 || dayOfWeek > 6)
+      return false;
+   return allowedWeekdays[dayOfWeek];
+  }
+
 double GetPipSize()
   {
    double point = SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
@@ -114,14 +156,25 @@ double NormalizePrice(double price)
    return NormalizeDouble(price, digits);
   }
 
-double GetSpreadPips()
+double GetCurrentSpreadPips()
   {
-   double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
-   double bid = SymbolInfoDouble(runtimeSymbol, SYMBOL_BID);
+   MqlTick tick;
+   if(!SymbolInfoTick(runtimeSymbol, tick))
+      return -1.0;
    double pip = GetPipSize();
-   if(ask <= 0.0 || bid <= 0.0 || pip <= 0.0)
-      return 0.0;
-   return (ask - bid) / pip;
+   if(pip <= 0.0)
+      return -1.0;
+   return (tick.ask - tick.bid) / pip;
+  }
+
+bool IsSpreadAllowed()
+  {
+   if(InpMaxSpreadPips <= 0.0)
+      return true;
+   double spreadPips = GetCurrentSpreadPips();
+   if(spreadPips < 0.0)
+      return false;
+   return (spreadPips <= InpMaxSpreadPips);
   }
 
 int VolumeDigits(double stepVolume)
@@ -166,7 +219,17 @@ double CalculateVolume(double stopDistance)
    double rawVolume = riskAmount / moneyPerLot;
    double normalized = MathFloor(rawVolume / stepVolume) * stepVolume;
    if(normalized < minVolume)
-      return 0.0;
+     {
+      if(InpSkipTradeWhenMinLotRiskTooHigh && InpMaxEffectiveRiskPercentAtMinLot > 0.0)
+        {
+         double minLotRiskAmount = moneyPerLot * minVolume;
+         double minLotRiskPercent = (equity > 0.0 ? (minLotRiskAmount / equity) * 100.0 : 0.0);
+         if(minLotRiskPercent > InpMaxEffectiveRiskPercentAtMinLot)
+            return 0.0;
+        }
+      normalized = minVolume;
+     }
+
    if(normalized > maxVolume)
       normalized = maxVolume;
    return NormalizeDouble(normalized, VolumeDigits(stepVolume));
@@ -185,20 +248,71 @@ bool IsNewBar(datetime &barTime)
    return true;
   }
 
-void ResetDayState(datetime now)
+void ResetDailyCounters()
   {
+   dailyTradeCount = 0;
+   dailyClosedTrades = 0;
+   dailyEntriesBuy = 0;
+   dailyEntriesSell = 0;
+   consecutiveLosses = 0;
+   dailyBlockedSpread = 0;
+   dailyBlockedDailyLoss = 0;
+   dailyBlockedTradeCap = 0;
+   dailyBlockedEquityCap = 0;
+   dailyLossLockActivations = 0;
+  }
+
+void UpdateDailyAnchor()
+  {
+   datetime nowTime = TimeCurrent();
    MqlDateTime ts;
-   TimeToStruct(now, ts);
-   ts.hour = 0;
-   ts.min = 0;
-   ts.sec = 0;
-   datetime dayStart = StructToTime(ts);
-   if(dayStart != currentDayStart)
+   TimeToStruct(nowTime, ts);
+   if(ts.day_of_year != lastDayOfYear)
      {
-      currentDayStart = dayStart;
+      if(currentDayStart > 0)
+         FlushDailySummary(nowTime, "rollover");
+      lastDayOfYear = ts.day_of_year;
+      ts.hour = 0;
+      ts.min = 0;
+      ts.sec = 0;
+      currentDayStart = StructToTime(ts);
+      dailyStartBalance = AccountInfoDouble(ACCOUNT_BALANCE);
       dailyStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
-      dailyTradeCount = 0;
+      if(equityPeak <= 0.0)
+         equityPeak = dailyStartEquity;
+      ResetDailyCounters();
+      LogTelemetryEvent(nowTime, "day_reset", "", "", 0.0, 0.0, 0.0, "");
      }
+  }
+
+void UpdateEquityPeak()
+  {
+   double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+   if(equityPeak <= 0.0 || equity > equityPeak)
+      equityPeak = equity;
+  }
+
+bool IsDailyLossCapBlocked()
+  {
+   if(!InpUseDailyLossCap || InpDailyLossCapPercent <= 0.0 || dailyStartEquity <= 0.0)
+      return false;
+   double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+   return (equity <= dailyStartEquity * (1.0 - InpDailyLossCapPercent / 100.0));
+  }
+
+bool IsEquityDrawdownBlocked()
+  {
+   if(!InpUseEquityDrawdownCap || InpEquityDrawdownCapPercent <= 0.0 || equityPeak <= 0.0)
+      return false;
+   double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+   return (equity <= equityPeak * (1.0 - InpEquityDrawdownCapPercent / 100.0));
+  }
+
+bool IsTradeCountBlocked()
+  {
+   if(InpMaxTradesPerDay <= 0)
+      return false;
+   return (dailyTradeCount >= InpMaxTradesPerDay);
   }
 
 bool IsWithinActiveSession(datetime barTime)
@@ -259,28 +373,54 @@ bool ManageOpenPosition()
    return false;
   }
 
+void FlattenManagedPositions(string reason)
+  {
+   int openCount = CountManagedPositions();
+   if(openCount <= 0)
+      return;
+
+   int closedCount = 0;
+   for(int i = PositionsTotal() - 1; i >= 0; --i)
+     {
+      string symbol = PositionGetSymbol(i);
+      if(symbol != runtimeSymbol)
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      ulong ticket = (ulong)PositionGetInteger(POSITION_TICKET);
+      if(trade.PositionClose(ticket))
+         closedCount++;
+     }
+
+   LogTelemetryEvent(TimeCurrent(), "protective_flatten", reason, "", 0.0, 0.0, 0.0,
+                     StringFormat("closed=%d requested=%d", closedCount, openCount));
+  }
+
 bool CanOpenAnotherTrade(datetime barTime)
   {
    if(CountManagedPositions() > 0)
       return false;
-   if(dailyTradeCount >= InpMaxTradesPerDay)
+   if(IsTradeCountBlocked())
+     {
+      dailyBlockedTradeCap++;
       return false;
+     }
 
    MqlDateTime ts;
    TimeToStruct(barTime, ts);
-   if(ts.day_of_week < 0 || ts.day_of_week > 6 || !allowedWeekdays[ts.day_of_week])
+   if(!IsAllowedWeekday(ts.day_of_week))
       return false;
    if(!IsWithinActiveSession(barTime))
       return false;
-
-   if(InpUseDailyLossCap && dailyStartEquity > 0.0)
+   if(!IsSpreadAllowed())
      {
-      double equity = AccountInfoDouble(ACCOUNT_EQUITY);
-      if(equity <= dailyStartEquity * (1.0 - InpDailyLossCapPercent / 100.0))
-         return false;
+      dailyBlockedSpread++;
+      return false;
      }
+   if(AreOperatorEntriesBlocked())
+      return false;
 
-   return GetSpreadPips() <= InpMaxSpreadPips;
+   return true;
   }
 
 bool IsPivotHigh(const MqlRates &rates[], int shift, int span)
@@ -433,13 +573,244 @@ void OpenPosition()
 
    double sl = NormalizePrice(ask - stopDistance);
    double tp = NormalizePrice(ask + targetDistance);
-   if(trade.Buy(volume, runtimeSymbol, 0.0, sl, tp, "round_continuation_long"))
-      dailyTradeCount++;
+   trade.Buy(volume, runtimeSymbol, 0.0, sl, tp, "round_continuation_long");
+  }
+
+bool OpenTelemetryFile()
+  {
+   if(!InpEnableTelemetry)
+      return false;
+   if(telemetryHandle != INVALID_HANDLE)
+      return true;
+
+   telemetryHandle = FileOpen(runtimeTelemetryFileName, FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_COMMON | FILE_ANSI, ';');
+   if(telemetryHandle == INVALID_HANDLE)
+     {
+      PrintFormat("Telemetry open failed for '%s' (%d)", runtimeTelemetryFileName, GetLastError());
+      return false;
+     }
+
+   if(FileSize(telemetryHandle) == 0)
+     {
+      FileWrite(telemetryHandle,
+                "timestamp", "event", "reason", "side", "price", "volume", "net_profit", "balance", "equity",
+                "daily_closed_trades", "daily_entries_buy", "daily_entries_sell", "consecutive_losses",
+                "blocked_spread", "blocked_daily_loss", "blocked_trade_cap", "blocked_loss_lock", "blocked_equity_cap",
+                "loss_lock_activations", "note");
+     }
+
+   FileSeek(telemetryHandle, 0, SEEK_END);
+   return true;
+  }
+
+void CloseTelemetryFile()
+  {
+   if(telemetryHandle != INVALID_HANDLE)
+     {
+      FileClose(telemetryHandle);
+      telemetryHandle = INVALID_HANDLE;
+     }
+  }
+
+void LogTelemetryEvent(datetime stamp, string eventType, string reason, string side, double price, double volume, double netProfit, string note)
+  {
+   if(!InpEnableTelemetry)
+      return;
+   if(!OpenTelemetryFile())
+      return;
+
+   FileSeek(telemetryHandle, 0, SEEK_END);
+   FileWrite(telemetryHandle,
+             TimeToString(stamp, TIME_DATE | TIME_SECONDS),
+             eventType,
+             reason,
+             side,
+             price,
+             volume,
+             netProfit,
+             AccountInfoDouble(ACCOUNT_BALANCE),
+             AccountInfoDouble(ACCOUNT_EQUITY),
+             dailyClosedTrades,
+             dailyEntriesBuy,
+             dailyEntriesSell,
+             consecutiveLosses,
+             dailyBlockedSpread,
+             dailyBlockedDailyLoss,
+             dailyBlockedTradeCap,
+             0,
+             dailyBlockedEquityCap,
+             dailyLossLockActivations,
+             note);
+   FileFlush(telemetryHandle);
+  }
+
+void FlushDailySummary(datetime stamp, string trigger)
+  {
+   if(currentDayStart <= 0)
+      return;
+   LogTelemetryEvent(stamp, "daily_summary", trigger, "", 0.0, 0.0, AccountInfoDouble(ACCOUNT_BALANCE) - dailyStartBalance, "");
+  }
+
+void RegisterEntryDeal(datetime dealTime, string side, double price, double volume)
+  {
+   UpdateDailyAnchor();
+   dailyTradeCount++;
+   if(side == "buy")
+      dailyEntriesBuy++;
+   else if(side == "sell")
+      dailyEntriesSell++;
+   LogTelemetryEvent(dealTime, "entry", "", side, price, volume, 0.0, "");
+  }
+
+void RegisterClosedDeal(datetime dealTime, double netProfit, string side, double price, double volume)
+  {
+   UpdateDailyAnchor();
+   MqlDateTime nowStruct, dealStruct;
+   TimeToStruct(TimeCurrent(), nowStruct);
+   TimeToStruct(dealTime, dealStruct);
+   if(nowStruct.day_of_year != dealStruct.day_of_year)
+      return;
+
+   dailyClosedTrades++;
+   if(netProfit >= 0.0)
+     {
+      consecutiveLosses = 0;
+      LogTelemetryEvent(dealTime, "exit", "win", side, price, volume, netProfit, "");
+      return;
+     }
+
+   consecutiveLosses++;
+   LogTelemetryEvent(dealTime, "exit", "loss", side, price, volume, netProfit, "");
+  }
+
+string ReadOperatorModeFromFile()
+  {
+   if(!runtimeOperatorControlEnabled || runtimeOperatorCommandFile == "")
+      return "normal";
+
+   int handle = FileOpen(runtimeOperatorCommandFile, FILE_TXT | FILE_READ | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_COMMON | FILE_ANSI);
+   if(handle == INVALID_HANDLE)
+      return "normal";
+
+   string command = "";
+   if(!FileIsEnding(handle))
+      command = FileReadString(handle);
+   FileClose(handle);
+
+   if(command == "")
+      return "normal";
+   if(StringCompare(command, "pause", false) == 0 || StringCompare(command, "pause_entries", false) == 0)
+      return "pause";
+   if(StringCompare(command, "flatten", false) == 0 ||
+      StringCompare(command, "flatten_and_pause", false) == 0 ||
+      StringCompare(command, "kill", false) == 0)
+      return "flatten";
+   return "normal";
+  }
+
+void RefreshOperatorMode()
+  {
+   string nextMode = ReadOperatorModeFromFile();
+   if(nextMode == operatorMode)
+      return;
+
+   operatorMode = nextMode;
+   PrintFormat("Operator mode changed to '%s'", operatorMode);
+   LogTelemetryEvent(TimeCurrent(), "operator_mode", operatorMode, "", 0.0, 0.0, 0.0, runtimeOperatorCommandFile);
+  }
+
+bool AreOperatorEntriesBlocked()
+  {
+   return (operatorMode != "normal");
+  }
+
+string BoolText(bool value)
+  {
+   if(value)
+      return "true";
+   return "false";
+  }
+
+string DetermineEntryState()
+  {
+   if(operatorMode == "flatten")
+      return "operator_flatten";
+   if(operatorMode == "pause")
+      return "operator_pause";
+   if(IsDailyLossCapBlocked())
+      return "daily_loss_cap";
+   if(IsEquityDrawdownBlocked())
+      return "equity_drawdown_cap";
+   if(IsTradeCountBlocked())
+      return "trade_cap";
+   if(CountManagedPositions() > 0)
+      return "position_open";
+
+   datetime currentBar = iTime(runtimeSymbol, InpSignalTimeframe, 0);
+   MqlDateTime ts;
+   TimeToStruct(currentBar, ts);
+   if(!IsAllowedWeekday(ts.day_of_week))
+      return "weekday_blocked";
+   if(!IsWithinActiveSession(currentBar))
+      return "inactive_session";
+   if(!IsSpreadAllowed())
+      return "spread";
+   return "ready";
+  }
+
+void WriteStatusSnapshot()
+  {
+   if(!runtimeStatusSnapshotEnabled || runtimeStatusFileName == "")
+      return;
+
+   int handle = FileOpen(runtimeStatusFileName, FILE_TXT | FILE_WRITE | FILE_COMMON | FILE_ANSI);
+   if(handle == INVALID_HANDLE)
+     {
+      if(!statusSnapshotErrorLogged)
+        {
+         PrintFormat("Status snapshot open failed for '%s' (%d)", runtimeStatusFileName, GetLastError());
+         statusSnapshotErrorLogged = true;
+        }
+      return;
+     }
+
+   statusSnapshotErrorLogged = false;
+   string snapshot =
+      "timestamp=" + TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS) + "\r\n" +
+      "symbol=" + runtimeSymbol + "\r\n" +
+      "timeframe=" + EnumToString(InpSignalTimeframe) + "\r\n" +
+      "operator_mode=" + operatorMode + "\r\n" +
+      "entry_state=" + DetermineEntryState() + "\r\n" +
+      "balance=" + DoubleToString(AccountInfoDouble(ACCOUNT_BALANCE), 2) + "\r\n" +
+      "equity=" + DoubleToString(AccountInfoDouble(ACCOUNT_EQUITY), 2) + "\r\n" +
+      "equity_peak=" + DoubleToString(equityPeak, 2) + "\r\n" +
+      "open_positions=" + IntegerToString(CountManagedPositions()) + "\r\n" +
+      "daily_trades_opened=" + IntegerToString(dailyTradeCount) + "\r\n" +
+      "daily_closed_trades=" + IntegerToString(dailyClosedTrades) + "\r\n" +
+      "daily_entries_buy=" + IntegerToString(dailyEntriesBuy) + "\r\n" +
+      "daily_entries_sell=" + IntegerToString(dailyEntriesSell) + "\r\n" +
+      "consecutive_losses=" + IntegerToString(consecutiveLosses) + "\r\n" +
+      "spread_pips=" + DoubleToString(GetCurrentSpreadPips(), 2) + "\r\n" +
+      "daily_loss_cap_blocked=" + BoolText(IsDailyLossCapBlocked()) + "\r\n" +
+      "equity_drawdown_blocked=" + BoolText(IsEquityDrawdownBlocked()) + "\r\n" +
+      "trade_cap_blocked=" + BoolText(IsTradeCountBlocked()) + "\r\n" +
+      "telemetry_file=" + runtimeTelemetryFileName + "\r\n";
+
+   FileWriteString(handle, snapshot);
+   FileClose(handle);
   }
 
 int OnInit()
   {
    runtimeSymbol = NormalizePresetString(InpSymbol);
+   runtimeAllowedWeekdays = NormalizePresetString(InpAllowedWeekdays);
+   runtimeTelemetryFileName = NormalizePresetString(InpTelemetryFileName);
+   runtimeOperatorCommandFile = NormalizePresetString(InpOperatorCommandFile);
+   runtimeStatusFileName = NormalizePresetString(InpStatusFileName);
+   bool isTesterRuntime = ((bool)MQLInfoInteger(MQL_TESTER) || (bool)MQLInfoInteger(MQL_OPTIMIZATION));
+   runtimeOperatorControlEnabled = (InpEnableOperatorControl && !isTesterRuntime);
+   runtimeStatusSnapshotEnabled = (InpEnableStatusSnapshot && !isTesterRuntime);
+
    if(
       InpFastEMAPeriod <= 0 || InpSlowEMAPeriod <= InpFastEMAPeriod || InpSlowSlopeLookback <= 0 ||
       InpPivotSpan <= 0 || InpTrendScanBars <= 20 || InpVolatilityLookbackBars <= 0 ||
@@ -449,11 +820,12 @@ int OnInit()
       InpMaxLowerWickShare < 0.0 || InpMaxLowerWickShare > 1.0 || InpMinUpperWickShare <= InpMaxLowerWickShare ||
       InpStopLossPips <= 0.0 || InpTargetRMultiple <= 0.0 || InpMaxHoldBars < 1 || InpRiskPercent <= 0.0 ||
       InpMicroCapBalanceThreshold < 0.0 || InpMicroCapRiskPercent <= 0.0 || InpDailyLossCapPercent <= 0.0 ||
-      InpMaxTradesPerDay < 0 || InpMaxSpreadPips <= 0.0 || InpMagicNumber <= 0
+      InpEquityDrawdownCapPercent < 0.0 || InpMaxTradesPerDay < 0 || InpMaxSpreadPips <= 0.0 || InpMagicNumber <= 0 ||
+      InpStatusHeartbeatSeconds < 0 || InpMaxEffectiveRiskPercentAtMinLot < 0.0
    )
       return INIT_PARAMETERS_INCORRECT;
 
-   if(!ParseWeekdays(InpAllowedWeekdays))
+   if(!ParseWeekdays(runtimeAllowedWeekdays))
       return INIT_PARAMETERS_INCORRECT;
    if(!SymbolInfoInteger(runtimeSymbol, SYMBOL_SELECT))
       if(!SymbolSelect(runtimeSymbol, true))
@@ -465,31 +837,133 @@ int OnInit()
       return INIT_FAILED;
 
    trade.SetExpertMagicNumber((ulong)InpMagicNumber);
-   trade.SetDeviationInPoints((int)MathMax(10.0, (InpMaxSpreadPips * GetPipSize()) / SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT)));
-   ResetDayState(TimeCurrent());
+   double point = SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
+   double pip = GetPipSize();
+   if(point > 0.0 && pip > 0.0)
+     {
+      int deviationPoints = (int)MathMax(10.0, MathRound(InpMaxSpreadPips * pip / point));
+      trade.SetDeviationInPoints(deviationPoints);
+     }
+
+   UpdateDailyAnchor();
+   dailyStartBalance = AccountInfoDouble(ACCOUNT_BALANCE);
+   dailyStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
+   equityPeak = AccountInfoDouble(ACCOUNT_EQUITY);
+
+   if(InpEnableTelemetry && !OpenTelemetryFile())
+      Print("Telemetry file could not be opened. Continuing without telemetry.");
+
+   if((runtimeOperatorControlEnabled || runtimeStatusSnapshotEnabled) && InpStatusHeartbeatSeconds > 0)
+     {
+      EventSetTimer(InpStatusHeartbeatSeconds);
+      timerStarted = true;
+     }
+
+   RefreshOperatorMode();
+   WriteStatusSnapshot();
    return INIT_SUCCEEDED;
   }
 
 void OnDeinit(const int reason)
   {
+   FlushDailySummary(TimeCurrent(), "deinit");
+   WriteStatusSnapshot();
+   if(timerStarted)
+     {
+      EventKillTimer();
+      timerStarted = false;
+     }
+   CloseTelemetryFile();
    if(fastEmaHandle != INVALID_HANDLE)
       IndicatorRelease(fastEmaHandle);
    if(slowEmaHandle != INVALID_HANDLE)
       IndicatorRelease(slowEmaHandle);
   }
 
+void OnTimer()
+  {
+   UpdateDailyAnchor();
+   UpdateEquityPeak();
+   RefreshOperatorMode();
+   if(operatorMode == "flatten")
+      FlattenManagedPositions("operator_flatten_timer");
+   WriteStatusSnapshot();
+  }
+
+void OnTradeTransaction(const MqlTradeTransaction &trans, const MqlTradeRequest &request, const MqlTradeResult &result)
+  {
+   if(trans.type != TRADE_TRANSACTION_DEAL_ADD || trans.deal == 0)
+      return;
+   if(!HistoryDealSelect(trans.deal))
+      return;
+   if(HistoryDealGetString(trans.deal, DEAL_SYMBOL) != runtimeSymbol)
+      return;
+
+   long dealMagic = (long)HistoryDealGetInteger(trans.deal, DEAL_MAGIC);
+   if(dealMagic != InpMagicNumber)
+      return;
+
+   long dealEntry = (long)HistoryDealGetInteger(trans.deal, DEAL_ENTRY);
+   long dealType = (long)HistoryDealGetInteger(trans.deal, DEAL_TYPE);
+   string entrySide = (dealType == DEAL_TYPE_BUY) ? "buy" : "sell";
+   string exitSide = (dealType == DEAL_TYPE_BUY) ? "sell" : "buy";
+   double dealPrice = HistoryDealGetDouble(trans.deal, DEAL_PRICE);
+   double dealVolume = HistoryDealGetDouble(trans.deal, DEAL_VOLUME);
+
+   if(dealEntry == (long)DEAL_ENTRY_IN)
+     {
+      RegisterEntryDeal((datetime)HistoryDealGetInteger(trans.deal, DEAL_TIME), entrySide, dealPrice, dealVolume);
+      return;
+     }
+
+   if(dealEntry != (long)DEAL_ENTRY_OUT &&
+      dealEntry != (long)DEAL_ENTRY_OUT_BY &&
+      dealEntry != (long)DEAL_ENTRY_INOUT)
+      return;
+
+   double netProfit = HistoryDealGetDouble(trans.deal, DEAL_PROFIT) +
+                      HistoryDealGetDouble(trans.deal, DEAL_SWAP) +
+                      HistoryDealGetDouble(trans.deal, DEAL_COMMISSION);
+   RegisterClosedDeal((datetime)HistoryDealGetInteger(trans.deal, DEAL_TIME), netProfit, exitSide, dealPrice, dealVolume);
+  }
+
 void OnTick()
   {
+   UpdateDailyAnchor();
+   UpdateEquityPeak();
+   RefreshOperatorMode();
+   if(operatorMode == "flatten")
+      FlattenManagedPositions("operator_flatten");
+
    datetime barTime = 0;
    if(!IsNewBar(barTime))
       return;
 
-   ResetDayState(TimeCurrent());
-
    if(CountManagedPositions() > 0)
      {
       if(ManageOpenPosition() || CountManagedPositions() > 0)
+        {
+         WriteStatusSnapshot();
          return;
+        }
+     }
+
+   WriteStatusSnapshot();
+
+   if(IsDailyLossCapBlocked())
+     {
+      dailyBlockedDailyLoss++;
+      if(InpFlattenOnDailyLossCap)
+         FlattenManagedPositions("daily_loss_cap");
+      return;
+     }
+
+   if(IsEquityDrawdownBlocked())
+     {
+      dailyBlockedEquityCap++;
+      if(InpFlattenOnEquityDrawdownCap)
+         FlattenManagedPositions("equity_drawdown_cap");
+      return;
      }
 
    if(!CanOpenAnotherTrade(barTime))
