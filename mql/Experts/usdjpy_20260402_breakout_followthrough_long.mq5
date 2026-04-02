@@ -5,7 +5,7 @@
 #property link        "https://www.mql5.com"
 #property version     "1.00"
 #property strict
-#property description "USDJPY M15 long-only breakout-followthrough prototype using EMA13/EMA100 trend, round-number breakout, and exact two-bar retest."
+#property description "USDJPY M15 long-only breakout-followthrough prototype using EMA13/EMA100 trend, round-number breakout, and configurable retest timing."
 
 #include <Trade\Trade.mqh>
 
@@ -23,9 +23,13 @@ input int             InpRoundStepPips            = 50;
 input double          InpMidpointDistancePips     = 25.0;
 input double          InpTouchTolerancePips       = 0.5;
 input double          InpRetestBufferPips         = 2.0;
+input int             InpRetestDelayBars          = 1;
 input double          InpMinBreakoutCloseLocation = 0.55;
 input double          InpMinBreakoutBodyPips      = 4.0;
 input double          InpMinBodyToRange           = 0.60;
+input double          InpMaxBreakoutToEma13Pips  = 30.0;
+input double          InpMinRetestCloseLocation   = 0.60;
+input double          InpMaxRetestDepthPips       = 1.0;
 input double          InpMaxSpreadPips            = 2.0;
 input double          InpStopLossPips             = 20.0;
 input double          InpTargetRMultiple          = 1.2;
@@ -328,12 +332,12 @@ bool EvaluateSignal(const MqlRates &rates[], const double &fastEma[], const doub
    if(pip <= 0.0)
       return false;
 
-   const int breakoutShift = 3;
-   const int confirmShift = 2;
    const int signalShift = 1;
+   int breakoutShift = signalShift + InpRetestDelayBars;
+   if(breakoutShift + MathMax(InpSlowSlopeLookback, InpBreakLookbackBars) >= ArraySize(rates))
+      return false;
 
    MqlRates breakout = rates[breakoutShift];
-   MqlRates confirmBar = rates[confirmShift];
    MqlRates signalBar = rates[signalShift];
 
    double stepPrice = InpRoundStepPips * pip;
@@ -349,6 +353,8 @@ bool EvaluateSignal(const MqlRates &rates[], const double &fastEma[], const doub
       return false;
    if(RecentHighBreakPips(rates, breakoutShift, InpBreakLookbackBars) <= 0.0)
       return false;
+   if(((breakout.close - fastEma[breakoutShift]) / pip) > InpMaxBreakoutToEma13Pips)
+      return false;
 
    double breakoutBodyPips = BodyPips(breakout);
    double breakoutRangePips = RangePips(breakout);
@@ -360,10 +366,14 @@ bool EvaluateSignal(const MqlRates &rates[], const double &fastEma[], const doub
       return false;
 
    double midpoint = level + (InpMidpointDistancePips * pip);
-   if(confirmBar.high >= midpoint)
-      return false;
-   if(confirmBar.close < level)
-      return false;
+   for(int shift = signalShift + 1; shift < breakoutShift; ++shift)
+     {
+      MqlRates followBar = rates[shift];
+      if(followBar.high >= midpoint)
+         return false;
+      if(followBar.close < level)
+         return false;
+     }
    if(signalBar.high >= midpoint)
       return false;
    if(signalBar.close < level)
@@ -372,6 +382,11 @@ bool EvaluateSignal(const MqlRates &rates[], const double &fastEma[], const doub
    bool touchedEma = signalBar.low <= fastEma[signalShift] + (InpTouchTolerancePips * pip);
    bool touchedLevel = signalBar.low <= level + (InpRetestBufferPips * pip);
    if(!(touchedEma || touchedLevel))
+      return false;
+   double retestDepthPips = MathMax(0.0, (level - signalBar.low) / pip);
+   if(retestDepthPips > InpMaxRetestDepthPips)
+      return false;
+   if(CloseLocation(signalBar) < InpMinRetestCloseLocation)
       return false;
    if(signalBar.close <= fastEma[signalShift])
       return false;
@@ -413,9 +428,10 @@ int OnInit()
       InpFastEMAPeriod <= 0 || InpSlowEMAPeriod <= InpFastEMAPeriod || InpSlowSlopeLookback <= 0 ||
       InpBreakLookbackBars <= 0 || InpSessionStartHour < 0 || InpSessionStartHour > 23 ||
       InpSessionEndHour < 0 || InpSessionEndHour > 24 || InpRoundStepPips <= 0 ||
-      InpMidpointDistancePips <= 0.0 || InpTouchTolerancePips < 0.0 || InpRetestBufferPips < 0.0 ||
+      InpMidpointDistancePips <= 0.0 || InpTouchTolerancePips < 0.0 || InpRetestBufferPips < 0.0 || InpRetestDelayBars < 1 ||
       InpMinBreakoutCloseLocation < 0.0 || InpMinBreakoutCloseLocation > 1.0 || InpMinBreakoutBodyPips <= 0.0 ||
-      InpMinBodyToRange <= 0.0 || InpMinBodyToRange > 1.0 || InpMaxSpreadPips <= 0.0 ||
+      InpMinBodyToRange <= 0.0 || InpMinBodyToRange > 1.0 || InpMaxBreakoutToEma13Pips <= 0.0 ||
+      InpMinRetestCloseLocation < 0.0 || InpMinRetestCloseLocation > 1.0 || InpMaxRetestDepthPips < 0.0 || InpMaxSpreadPips <= 0.0 ||
       InpStopLossPips <= 0.0 || InpTargetRMultiple <= 0.0 || InpMaxHoldBars < 1 || InpRiskPercent <= 0.0 ||
       InpMicroCapBalanceThreshold < 0.0 || InpMicroCapRiskPercent <= 0.0 || InpDailyLossCapPercent <= 0.0 ||
       InpMaxTradesPerDay < 0 || InpMagicNumber <= 0

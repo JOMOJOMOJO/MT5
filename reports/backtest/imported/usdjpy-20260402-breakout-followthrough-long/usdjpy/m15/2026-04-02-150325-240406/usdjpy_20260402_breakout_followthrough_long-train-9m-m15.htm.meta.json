@@ -1,0 +1,50 @@
+﻿{
+    "generated_at":  "2026-04-02T15:02:52.4065296+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260402_breakout_followthrough_long-train-9m.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpADAC.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpADAC.ini"
+               },
+    "tester":  {
+                   "symbol":  "USDJPY",
+                   "period":  "M15",
+                   "from_date":  "2025.04.01",
+                   "to_date":  "2025.12.31",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260402_breakout_followthrough_long-train-9m-m15.htm"
+               },
+    "preset":  {
+                   "name":  "usdjpy_20260402_breakout_followthrough_long-baseline.set",
+                   "source":  "reports\\presets\\usdjpy_20260402_breakout_followthrough_long-baseline.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\usdjpy_20260402_breakout_followthrough_long-baseline.set",
+                   "parameters":  {
+                                      "InpSymbol":  "USDJPY",
+                                      "InpSignalTimeframe":  "15",
+                                      "InpFastEMAPeriod":  "13",
+                                      "InpSlowEMAPeriod":  "100",
+                                      "InpSlowSlopeLookback":  "5",
+                                      "InpBreakLookbackBars":  "12",
+                                      "InpSessionStartHour":  "0",
+                                      "InpSessionEndHour":  "24",
+                                      "InpRoundStepPips":  "50",
+                                      "InpMidpointDistancePips":  "25.0",
+                                      "InpTouchTolerancePips":  "0.5",
+                                      "InpRetestBufferPips":  "2.0",
+                                      "InpMinBreakoutCloseLocation":  "0.55",
+                                      "InpMinBreakoutBodyPips":  "4.0",
+                                      "InpMinBodyToRange":  "0.60",
+                                      "InpMaxSpreadPips":  "2.0",
+                                      "InpStopLossPips":  "20.0",
+                                      "InpTargetRMultiple":  "1.2",
+                                      "InpMaxHoldBars":  "18",
+                                      "InpRiskPercent":  "2.0",
+                                      "InpUseMicroCapRiskOverride":  "true",
+                                      "InpMicroCapBalanceThreshold":  "150.0",
+                                      "InpMicroCapRiskPercent":  "3.0",
+                                      "InpUseDailyLossCap":  "true",
+                                      "InpDailyLossCapPercent":  "6.0",
+                                      "InpMaxTradesPerDay":  "2",
+                                      "InpAllowedWeekdays":  "1,2,3,4,5",
+                                      "InpMagicNumber":  "20260495"
+                                  }
+               }
+}

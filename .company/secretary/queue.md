@@ -43,8 +43,9 @@
 - [ ] Do not loosen `quality12b` just to force turnover; add a second independent `long-only` bucket if frequency must increase.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-downpersist-long-cycle1-reject.md` as the formal verdict that `usdjpy_20260402_downpersist_long` failed actual MT5 and should not consume another immediate tuning cycle.
 - [ ] Keep `quality12b` as the current best `USDJPY long-only` branch until a second bucket survives actual MT5, not just study-level evidence.
-- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-breakout-followthrough-long-delay2-probe.md` as the current study-backed candidate for the next `USDJPY long-only` second bucket.
-- [ ] Do not merge `breakout_followthrough_long` into `quality12b` until standalone `9 months train / 3 months OOS` actual MT5 exists.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-breakout-followthrough-long-delay2-probe.md` as the study note that opened `breakout_followthrough_long`, not as a promotion note.
+- [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-breakout-followthrough-long-cycle2-actual-review.md` as the formal verdict that `breakout_followthrough_long` reached actual MT5 but failed as a `quality12b` second bucket because train stayed weak or frequency became too sparse.
+- [ ] Do not spend another immediate tuning cycle on `breakout_followthrough_long`; open the next `USDJPY long-only` bucket from a fresh thesis instead.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.
 - [ ] Keep `BTCUSD` high-turnover families as secondary until the USDJPY Golden Method family either clears the live gate or fails plateau review.

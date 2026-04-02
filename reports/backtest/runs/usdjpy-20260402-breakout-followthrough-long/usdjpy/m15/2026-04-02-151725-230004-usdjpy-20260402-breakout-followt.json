@@ -1,0 +1,314 @@
+{
+  "imported_at": "2026-04-02T15:17:25",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "usdjpy-20260402-breakout-followthrough-long",
+    "symbol": "USDJPY",
+    "timeframe": "M15",
+    "tested_range": "2025.04.01 - 2025.12.31",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "usdjpy-20260402-breakout-followthrough-long",
+    "symbol_key": "usdjpy",
+    "timeframe_key": "m15",
+    "run_path": "reports/backtest/runs/usdjpy-20260402-breakout-followthrough-long/usdjpy/m15/2026-04-02-151725-230004-usdjpy-20260402-breakout-followt.json",
+    "knowledge_path": "knowledge/backtests/usdjpy-20260402-breakout-followthrough-long/usdjpy/m15/2026-04-02-151725-230004-usdjpy-20260402-breakout-followt.md",
+    "imported_dir": "reports/backtest/imported/usdjpy-20260402-breakout-followthrough-long/usdjpy/m15/2026-04-02-151725-230004",
+    "imported_report": "reports/backtest/imported/usdjpy-20260402-breakout-followthrough-long/usdjpy/m15/2026-04-02-151725-230004/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260402_breakout_followthrough_long-delay1-tight-train-9m-m15.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "USDJPY",
+    "tester_period": "M15",
+    "preset_name": "usdjpy_20260402_breakout_followthrough_long-delay1-tight.set",
+    "preset_source": "reports\\presets\\usdjpy_20260402_breakout_followthrough_long-delay1-tight.set",
+    "signal_timeframe": "M15"
+  },
+  "metrics": {
+    "ea_name": "usdjpy_20260402_breakout_followthrough_long",
+    "symbol": "USDJPY",
+    "period": "M15 (2025.04.01 - 2025.12.31)",
+    "history_quality_percent": 100.0,
+    "bars": 18719,
+    "ticks": 23147312,
+    "initial_deposit": 10000.0,
+    "total_net_profit": 247.62,
+    "gross_profit": 716.09,
+    "gross_loss": -468.47,
+    "profit_factor": 1.53,
+    "expected_payoff": 41.27,
+    "recovery_factor": 0.5,
+    "sharpe_ratio": 0.81,
+    "absolute_drawdown": 177.52,
+    "maximal_drawdown_amount": 290.95,
+    "maximal_drawdown_percent": 2.76,
+    "relative_drawdown_amount": 290.95,
+    "relative_drawdown_percent": 2.76,
+    "total_trades": 6,
+    "short_positions_count": 0,
+    "short_positions_percent": 0.0,
+    "long_positions_count": 6,
+    "long_positions_percent": 50.0,
+    "profit_trades_count": 3,
+    "profit_trades_percent": 50.0,
+    "loss_trades_count": 3,
+    "loss_trades_percent": 50.0,
+    "largest_profit_trade": 241.43,
+    "largest_loss_trade": -206.85,
+    "average_profit_trade": 238.7,
+    "average_loss_trade": -156.16,
+    "timeframe": "M15",
+    "tested_range": "2025.04.01 - 2025.12.31",
+    "win_rate_percent": 50.0
+  },
+  "summary": {
+    "headline": "取引回数が少なすぎて判断が不安定です。",
+    "strengths": [
+      "Profit Factor は深掘りに値する水準です。",
+      "総損益はプラスです。",
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [
+      "取引回数が少なすぎて判断が不安定です。"
+    ],
+    "notes": []
+  },
+  "tags": [
+    "train-9m",
+    "delay1-tight"
+  ],
+  "raw_fields": {
+    "expert": "usdjpy_20260402_breakout_followthrough_long",
+    "symbol": [
+      "USDJPY",
+      "1"
+    ],
+    "period": "M15 (2025.04.01 - 2025.12.31)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "18719",
+    "ticks": "23147312",
+    "total net profit": "247.62",
+    "absolute drawdown": "177.52",
+    "gross profit": "716.09",
+    "maximal drawdown": "290.95 (2.76%)",
+    "gross loss": "-468.47",
+    "relative drawdown": "2.76% (290.95)",
+    "profit factor": "1.53",
+    "expected payoff": "41.27",
+    "recovery factor": "0.50",
+    "sharpe ratio": "0.81",
+    "z score": "-0.46 (35.45%)",
+    "ahpr": "1.0043 (0.43%)",
+    "lr correlation": "0.76",
+    "ontester": "0",
+    "ghpr": "1.0041 (0.41%)",
+    "lr standard error": "185.86",
+    "total trades": "6",
+    "short trades won percent": "0 (0.00%)",
+    "long positions won percent": "6 (50.00%)",
+    "profit trades percent of total": "3 (50.00%)",
+    "loss trades percent of total": "3 (50.00%)",
+    "largest profit trade": "241.43",
+    "largest loss trade": "-206.85",
+    "average profit trade": "238.70",
+    "average loss trade": "-156.16",
+    "correlation profits mfe": "0.84",
+    "correlation profits mae": "0.75",
+    "correlation mfe mae": "0.7089",
+    "t p": "時間",
+    "2": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "buy": [
+      "1.43 / 1.43",
+      "1.4 / 1.4",
+      "1.45 / 1.45",
+      "1.52 / 1.52",
+      "1.62 / 1.62",
+      "1.61 / 1.61",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 000": [
+      "142.888",
+      "2025.05.01 00:55:39",
+      "143.941",
+      "2025.06.13 13:48:24",
+      "147.397",
+      "2025.08.18 16:14:33",
+      "153.925",
+      "2025.10.30 16:04:51",
+      "153.980",
+      "156.445",
+      "2025.12.26 20:42:13"
+    ],
+    "143 328": "2025.04.30 23:30:00",
+    "filled": [
+      "breakout_followthrough_long",
+      "sl 142.888",
+      "breakout_followthrough_long",
+      "tp 144.381",
+      "breakout_followthrough_long",
+      "tp 147.837",
+      "breakout_followthrough_long",
+      "tp 154.365",
+      "breakout_followthrough_long",
+      "breakout_followthrough_long",
+      "sl 156.445"
+    ],
+    "3": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "sell": [
+      "1.43 / 1.43",
+      "1.4 / 1.4",
+      "1.45 / 1.45",
+      "1.52 / 1.52",
+      "1.61 / 1.61",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out"
+    ],
+    "4": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "144 381": "2025.06.13 12:45:00",
+    "5": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "6": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "147 837": "2025.08.18 15:15:00",
+    "7": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "8": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "154 365": "2025.10.30 15:00:00",
+    "9": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "10": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "154 420": "2025.10.31 09:45:00",
+    "2025 10 31 14 15 00": [
+      "11",
+      "filled",
+      "11"
+    ],
+    "usdjpy": [
+      "sell",
+      "sell"
+    ],
+    "1 62 1 62": "0.000",
+    "12": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "156 885": "2025.12.26 18:30:00",
+    "13": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "1": "balance",
+    "0 00": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "241.43",
+      "0.00",
+      "236.37",
+      "0.00",
+      "238.29",
+      "0.00",
+      "0.00",
+      "0.00",
+      "-206.85",
+      "22.64"
+    ],
+    "10 000 00": [
+      "10 000.00",
+      "breakout_followthrough_long"
+    ],
+    "1 43": [
+      "143.088",
+      "142.888"
+    ],
+    "22 64": "-200.16",
+    "9 822 48": [
+      "sl 142.888",
+      "breakout_followthrough_long"
+    ],
+    "1 4": [
+      "144.141",
+      "144.390"
+    ],
+    "10 063 91": [
+      "tp 144.381",
+      "breakout_followthrough_long"
+    ],
+    "1 45": [
+      "147.597",
+      "147.838"
+    ],
+    "10 300 28": [
+      "tp 147.837",
+      "breakout_followthrough_long"
+    ],
+    "1 52": [
+      "154.125",
+      "154.367"
+    ],
+    "10 538 57": [
+      "tp 154.365",
+      "breakout_followthrough_long"
+    ],
+    "1 62": "154.180",
+    "out": "1.62",
+    "154 100": "11",
+    "84 10": "10 454.47",
+    "1 61": [
+      "156.645",
+      "156.444"
+    ],
+    "10 454 47": "breakout_followthrough_long",
+    "10 247 62": "sl 156.445",
+    "224 98": "10 247.62"
+  },
+  "records_preview": [],
+  "run_id": "2026-04-02-151725-230004-usdjpy-20260402-breakout-followt"
+}
