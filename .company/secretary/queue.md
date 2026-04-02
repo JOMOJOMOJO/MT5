@@ -193,3 +193,5 @@
 - [x] Add launch manifests so every forward or small-live cycle has durable preset and telemetry lineage.
 - [research-director] Open fresh `USDJPY` long-only family after `followthrough_long` reject. Focus on `round-number continuation long` or `volatility-state breakout-follow-through long`; do not keep retuning `S1 long-only` unless a new study shows materially better frequency and OOS survival.
 - [research-director] Keep `usdjpy_20260402_round_continuation_long-quality12b_stack_guarded` as the active turnover-biased demo-forward candidate. Reject `quality12b_stackplus_guarded` because it raised train trades but did not improve the latest OOS count.
+- [research-director] Treat `knowledge/experiments/2026-04-02-usdjpy-quality12b-stack3-cycle1-reject.md` as the formal verdict that the first truly independent third bucket (`breakout-followthrough`) improved train slightly but added nothing to the latest 3-month OOS window.
+- [research-director] Keep `quality12b_stack_guarded` as the active turnover-biased demo-forward candidate. Do not promote `quality12b_stack3_guarded` because OOS stayed at `19 trades` with unchanged net/PF/DD.
