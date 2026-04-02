@@ -1,0 +1,577 @@
+{
+  "imported_at": "2026-04-02T16:11:29",
+  "identity": {
+    "title": "ストラテジーテスターレポート",
+    "ea_name": "usdjpy_20260402_long_stack",
+    "symbol": "USDJPY",
+    "timeframe": "M15",
+    "tested_range": "2026.01.01 - 2026.03.31",
+    "report_kind": "single_test_report"
+  },
+  "storage": {
+    "ea_key": "usdjpy-20260402-long-stack",
+    "symbol_key": "usdjpy",
+    "timeframe_key": "m15",
+    "run_path": "reports/backtest/runs/usdjpy-20260402-long-stack/usdjpy/m15/2026-04-02-161129-390369-usdjpy-20260402-long-stack-quali.json",
+    "knowledge_path": "knowledge/backtests/usdjpy-20260402-long-stack/usdjpy/m15/2026-04-02-161129-390369-usdjpy-20260402-long-stack-quali.md",
+    "imported_dir": "reports/backtest/imported/usdjpy-20260402-long-stack/usdjpy/m15/2026-04-02-161129-390369",
+    "imported_report": "reports/backtest/imported/usdjpy-20260402-long-stack/usdjpy/m15/2026-04-02-161129-390369/report.htm"
+  },
+  "source": {
+    "original_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260402_long_stack-quality12b-london-quality-oos-3m-m15.htm",
+    "type": "htm"
+  },
+  "strategy": {
+    "tester_symbol": "USDJPY",
+    "tester_period": "M15",
+    "preset_name": "usdjpy_20260402_long_stack-quality12b-london-quality.set",
+    "preset_source": "reports\\presets\\usdjpy_20260402_long_stack-quality12b-london-quality.set",
+    "signal_timeframe": "M15"
+  },
+  "metrics": {
+    "ea_name": "usdjpy_20260402_long_stack",
+    "symbol": "USDJPY",
+    "period": "M15 (2026.01.01 - 2026.03.31)",
+    "history_quality_percent": 100.0,
+    "bars": 5952,
+    "ticks": 12665736,
+    "initial_deposit": 10000.0,
+    "total_net_profit": 1022.12,
+    "gross_profit": 1650.74,
+    "gross_loss": -628.62,
+    "profit_factor": 2.63,
+    "expected_payoff": 63.88,
+    "recovery_factor": 2.48,
+    "sharpe_ratio": 7.35,
+    "absolute_drawdown": 170.01,
+    "maximal_drawdown_amount": 256.01,
+    "maximal_drawdown_percent": 2.52,
+    "relative_drawdown_amount": 256.01,
+    "relative_drawdown_percent": 2.52,
+    "total_trades": 16,
+    "short_positions_count": 0,
+    "short_positions_percent": 0.0,
+    "long_positions_count": 16,
+    "long_positions_percent": 62.5,
+    "profit_trades_count": 10,
+    "profit_trades_percent": 62.5,
+    "loss_trades_count": 6,
+    "loss_trades_percent": 37.5,
+    "largest_profit_trade": 295.65,
+    "largest_loss_trade": -205.29,
+    "average_profit_trade": 165.07,
+    "average_loss_trade": -104.77,
+    "timeframe": "M15",
+    "tested_range": "2026.01.01 - 2026.03.31",
+    "win_rate_percent": 62.5
+  },
+  "summary": {
+    "headline": "Profit Factor は深掘りに値する水準です。 / 総損益はプラスです。",
+    "strengths": [
+      "Profit Factor は深掘りに値する水準です。",
+      "総損益はプラスです。",
+      "ドローダウンは比較的抑えられています。"
+    ],
+    "weak_points": [],
+    "notes": [
+      "取引回数は少なめなので、別期間や別レジームで補強が必要です。"
+    ]
+  },
+  "tags": [],
+  "raw_fields": {
+    "expert": "usdjpy_20260402_long_stack",
+    "symbol": [
+      "USDJPY",
+      "1"
+    ],
+    "period": "M15 (2026.01.01 - 2026.03.31)",
+    "initial deposit": "10 000.00",
+    "history quality": "100% リアルティック",
+    "bars": "5952",
+    "ticks": "12665736",
+    "total net profit": "1 022.12",
+    "absolute drawdown": "170.01",
+    "gross profit": "1 650.74",
+    "maximal drawdown": "256.01 (2.52%)",
+    "gross loss": "-628.62",
+    "relative drawdown": "2.52% (256.01)",
+    "profit factor": "2.63",
+    "expected payoff": "63.88",
+    "recovery factor": "2.48",
+    "sharpe ratio": "7.35",
+    "z score": "-1.11 (73.30%)",
+    "ahpr": "1.0062 (0.62%)",
+    "lr correlation": "0.84",
+    "ontester": "0",
+    "ghpr": "1.0061 (0.61%)",
+    "lr standard error": "217.27",
+    "total trades": "16",
+    "short trades won percent": "0 (0.00%)",
+    "long positions won percent": "16 (62.50%)",
+    "profit trades percent of total": "10 (62.50%)",
+    "loss trades percent of total": "6 (37.50%)",
+    "largest profit trade": "295.65",
+    "largest loss trade": "-205.29",
+    "average profit trade": "165.07",
+    "average loss trade": "-104.77",
+    "correlation profits mfe": "0.76",
+    "correlation profits mae": "0.51",
+    "correlation mfe mae": "0.3931",
+    "t p": "時間",
+    "2": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "buy": [
+      "2.09 / 2.09",
+      "1.41 / 1.41",
+      "2.06 / 2.06",
+      "1.4 / 1.4",
+      "1.45 / 1.45",
+      "2.08 / 2.08",
+      "2.13 / 2.13",
+      "1.42 / 1.42",
+      "1.42 / 1.42",
+      "1.44 / 1.44",
+      "1.46 / 1.46",
+      "2.14 / 2.14",
+      "1.45 / 1.45",
+      "2.17 / 2.17",
+      "2.19 / 2.19",
+      "1.58 / 1.58",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in"
+    ],
+    "0 000": [
+      "156.728",
+      "156.495",
+      "156.607",
+      "157.131",
+      "2026.01.09 11:46:05",
+      "157.451",
+      "2026.01.09 15:32:43",
+      "157.267",
+      "2026.01.09 16:11:56",
+      "157.709",
+      "2026.01.12 15:46:45",
+      "157.895",
+      "158.549",
+      "158.907",
+      "157.880",
+      "153.605",
+      "2026.01.30 10:59:31",
+      "155.296",
+      "153.175",
+      "2026.02.16 11:39:18",
+      "158.711",
+      "2026.03.25 15:45:18",
+      "159.283"
+    ],
+    "157 058": "2026.01.02 13:30:00",
+    "filled": [
+      "stack_ema",
+      "stack_round",
+      "stack_ema",
+      "stack_round",
+      "tp 157.681",
+      "stack_round",
+      "sl 157.451",
+      "stack_ema",
+      "tp 157.597",
+      "stack_ema",
+      "sl 157.709",
+      "stack_round",
+      "stack_round",
+      "stack_round",
+      "stack_round",
+      "stack_ema",
+      "tp 153.935",
+      "stack_round",
+      "stack_ema",
+      "tp 153.505",
+      "stack_ema",
+      "tp 159.041",
+      "stack_round"
+    ],
+    "2026 01 02 16 30 00": [
+      "3",
+      "filled",
+      "3"
+    ],
+    "usdjpy": [
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell",
+      "sell"
+    ],
+    "2 09 2 09": "0.000",
+    "4": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "157 045": "2026.01.06 19:00:00",
+    "2026 01 06 23 30 00": [
+      "5",
+      "filled",
+      "5"
+    ],
+    "1 41 1 41": "0.000",
+    "6": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "156 937": "2026.01.08 12:00:00",
+    "2026 01 08 15 00 00": [
+      "7",
+      "filled",
+      "7"
+    ],
+    "2 06 2 06": "0.000",
+    "8": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "157 681": "2026.01.09 07:45:00",
+    "9": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "sell": [
+      "1.4 / 1.4",
+      "1.45 / 1.45",
+      "2.08 / 2.08",
+      "2.13 / 2.13",
+      "2.14 / 2.14",
+      "2.17 / 2.17",
+      "2.19 / 2.19",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out",
+      "out"
+    ],
+    "10": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "158 001": "2026.01.09 14:45:00",
+    "11": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "12": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "157 597": "2026.01.09 15:45:00",
+    "13": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "14": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "158 039": "2026.01.12 13:45:00",
+    "15": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "16": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "158 445": "2026.01.12 19:30:00",
+    "2026 01 13 00 15 00": [
+      "17",
+      "filled",
+      "17"
+    ],
+    "1 42 1 42": [
+      "0.000",
+      "0.000"
+    ],
+    "18": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "159 099": "2026.01.13 07:15:00",
+    "2026 01 13 11 45 00": [
+      "19",
+      "filled",
+      "19"
+    ],
+    "20": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "159 457": "2026.01.13 21:45:00",
+    "2026 01 14 02 15 00": [
+      "21",
+      "filled",
+      "21"
+    ],
+    "1 44 1 44": "0.000",
+    "22": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "158 430": "2026.01.19 21:30:00",
+    "2026 01 20 02 00 00": [
+      "23",
+      "filled",
+      "23"
+    ],
+    "1 46 1 46": "0.000",
+    "24": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "153 935": "2026.01.30 10:15:00",
+    "25": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "26": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "155 846": "2026.02.02 19:00:00",
+    "2026 02 02 23 30 00": [
+      "27",
+      "filled",
+      "27"
+    ],
+    "1 45 1 45": "0.000",
+    "28": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "153 505": "2026.02.16 09:45:00",
+    "29": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "30": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "159 041": "2026.03.25 15:00:00",
+    "31": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "32": [
+      "USDJPY",
+      "USDJPY",
+      "0.00"
+    ],
+    "159 833": "2026.03.26 13:00:00",
+    "2026 03 26 17 30 00": [
+      "33",
+      "filled",
+      "33"
+    ],
+    "1 58 1 58": "0.000",
+    "1": "balance",
+    "0 00": [
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "0.00",
+      "295.65",
+      "0.00",
+      "-202.60",
+      "0.00",
+      "245.48",
+      "0.00",
+      "-205.29",
+      "0.00",
+      "6.78",
+      "0.00",
+      "0.00",
+      "0.00",
+      "6.83",
+      "0.00",
+      "6.97",
+      "0.00",
+      "250.24",
+      "0.00",
+      "0.00",
+      "0.00",
+      "260.10",
+      "0.00",
+      "247.86",
+      "0.00",
+      "0.00",
+      "20.58"
+    ],
+    "10 000 00": [
+      "10 000.00",
+      "stack_ema"
+    ],
+    "2 09": "156.878",
+    "out": [
+      "2.09",
+      "1.41",
+      "2.06",
+      "1.42",
+      "1.42",
+      "1.44",
+      "1.46",
+      "1.45",
+      "1.58"
+    ],
+    "156 829": "3",
+    "65 30": "9 934.70",
+    "1 41": "156.715",
+    "9 934 70": "stack_round",
+    "156 660": "5",
+    "49 50": "9 885.20",
+    "2 06": "156.757",
+    "9 885 20": "stack_ema",
+    "156 715": "7",
+    "55 21": "9 829.99",
+    "1 4": [
+      "157.351",
+      "157.684"
+    ],
+    "9 829 99": "stack_round",
+    "10 125 64": [
+      "tp 157.681",
+      "stack_round"
+    ],
+    "1 45": [
+      "157.671",
+      "157.451",
+      "155.516"
+    ],
+    "9 923 04": [
+      "sl 157.451",
+      "stack_ema"
+    ],
+    "2 08": [
+      "157.417",
+      "157.603"
+    ],
+    "10 168 52": [
+      "tp 157.597",
+      "stack_ema"
+    ],
+    "2 13": [
+      "157.859",
+      "157.707"
+    ],
+    "9 963 23": [
+      "sl 157.709",
+      "stack_round"
+    ],
+    "1 42": [
+      "158.115",
+      "158.769"
+    ],
+    "158 051": "17",
+    "57 50": "9 912.51",
+    "9 912 51": "stack_round",
+    "158 845": "19",
+    "67 94": "9 980.45",
+    "1 44": "159.127",
+    "9 980 45": "stack_round",
+    "159 259": "21",
+    "119 35": "10 106.63",
+    "1 46": "158.100",
+    "10 106 63": "stack_round",
+    "158 155": "23",
+    "50 77": "10 164.37",
+    "2 14": [
+      "153.755",
+      "153.935"
+    ],
+    "10 164 37": "stack_ema",
+    "10 414 61": [
+      "tp 153.935",
+      "stack_round"
+    ],
+    "155 575": "27",
+    "54 99": "10 469.60",
+    "2 17": [
+      "153.325",
+      "153.509"
+    ],
+    "10 469 60": "stack_ema",
+    "10 729 70": [
+      "tp 153.505",
+      "stack_ema"
+    ],
+    "2 19": [
+      "158.861",
+      "159.041"
+    ],
+    "10 977 56": [
+      "tp 159.041",
+      "stack_round"
+    ],
+    "1 58": "159.503",
+    "159 548": "33",
+    "44 56": "11 022.12",
+    "1 001 54": "11 022.12"
+  },
+  "records_preview": [],
+  "run_id": "2026-04-02-161129-390369-usdjpy-20260402-long-stack-quali"
+}

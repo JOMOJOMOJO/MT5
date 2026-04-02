@@ -2,7 +2,12 @@ param(
     [string]$BasePresetPath = "reports/presets/btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.set",
     [string]$RunLabel = "demo-forward",
     [string]$ReleaseNotePath = ".company/release/btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.md",
-    [string]$Stage = "demo-forward"
+    [string]$Stage = "demo-forward",
+    [string]$OperatorCommandFileName = "mt5_company_btcusd_20260330_session_meanrev_operator.txt",
+    [string]$StatusFileName = "mt5_company_btcusd_20260330_session_meanrev_status.txt",
+    [string]$TelemetryFilePrefix = "",
+    [string]$ChartSymbol = "",
+    [string]$ChartTimeframe = ""
 )
 
 $workspaceRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
@@ -14,7 +19,12 @@ $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
 $datePrefix = Get-Date -Format "yyyy-MM-dd"
 $baseName = [System.IO.Path]::GetFileNameWithoutExtension($resolvedBasePresetPath)
 $runtimePresetPath = Join-Path $runtimePresetDir "$baseName-$RunLabel-$timestamp.set"
-$telemetryFileName = "mt5_company_btcusd_20260330_session_meanrev_$RunLabel-$timestamp.csv"
+$telemetrySlug = if ([string]::IsNullOrWhiteSpace($TelemetryFilePrefix)) {
+    "mt5_company_" + ($baseName -replace '[^A-Za-z0-9]+', '_').Trim('_').ToLowerInvariant()
+} else {
+    $TelemetryFilePrefix
+}
+$telemetryFileName = "$telemetrySlug`_$RunLabel-$timestamp.csv"
 $manifestJsonPath = Join-Path $manifestDir "$datePrefix-$baseName-$RunLabel-$timestamp-launch.json"
 $manifestMarkdownPath = Join-Path $manifestNoteDir "$datePrefix-$baseName-$RunLabel-$timestamp-launch.md"
 
@@ -32,7 +42,7 @@ $updatedLines = foreach ($line in Get-Content -Path $resolvedBasePresetPath) {
 Set-Content -Path $runtimePresetPath -Value $updatedLines -Encoding ascii
 
 $operatorScriptPath = Join-Path $workspaceRoot "scripts/set-ea-operator-mode.ps1"
-& powershell -ExecutionPolicy Bypass -File $operatorScriptPath -Mode normal | Out-Null
+& powershell -ExecutionPolicy Bypass -File $operatorScriptPath -Mode normal -CommandFileName $OperatorCommandFileName | Out-Null
 
 $commonFilesPath = Join-Path $env:APPDATA "MetaQuotes\Terminal\Common\Files"
 $telemetryPath = Join-Path $commonFilesPath $telemetryFileName
@@ -50,8 +60,8 @@ $manifest = [ordered]@{
     telemetry_file_name = $telemetryFileName
     telemetry_path = $telemetryPath
     release_note_path = $releaseNoteResolvedPath
-    operator_command_file = (Join-Path $commonFilesPath "mt5_company_btcusd_20260330_session_meanrev_operator.txt")
-    status_file = (Join-Path $commonFilesPath "mt5_company_btcusd_20260330_session_meanrev_status.txt")
+    operator_command_file = (Join-Path $commonFilesPath $OperatorCommandFileName)
+    status_file = (Join-Path $commonFilesPath $StatusFileName)
 }
 
 $manifest | ConvertTo-Json -Depth 5 | Set-Content -Path $manifestJsonPath -Encoding utf8
@@ -78,7 +88,11 @@ Write-Host "Telemetry file : $telemetryPath"
 Write-Host "Launch manifest: $manifestJsonPath"
 Write-Host "Launch note    : $manifestMarkdownPath"
 Write-Host "Next steps:"
-Write-Host "1. Attach the EA to BTCUSD M5 and load the runtime preset above."
+if (-not [string]::IsNullOrWhiteSpace($ChartSymbol) -and -not [string]::IsNullOrWhiteSpace($ChartTimeframe)) {
+    Write-Host "1. Attach the EA to $ChartSymbol $ChartTimeframe and load the runtime preset above."
+} else {
+    Write-Host "1. Attach the EA to the target chart and load the runtime preset above."
+}
 Write-Host "2. Leave the EA in operator mode normal."
 Write-Host "3. After the forward window, run:"
 Write-Host "   powershell -ExecutionPolicy Bypass -File `"$workspaceRoot\\scripts\\close-demo-forward.ps1`" -ManifestPath `"$manifestJsonPath`""

@@ -2,7 +2,13 @@ param(
     [string]$TelemetryFileName,
     [string]$ManifestPath,
     [string]$BaselineSummaryPath = "reports/telemetry/2026-03-31-btcusd-session-meanrev-live035-guarded2-demo-forward.json",
-    [string]$RunLabel = "demo-forward"
+    [string]$RunLabel = "demo-forward",
+    [string]$ForwardLabel = "btcusd_20260330_session_meanrev",
+    [string]$ReleaseNotePath = ".company/release/btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.md",
+    [string]$RunJsonPath = "reports/backtest/runs/btcusd-20260330-session-meanrev/btcusd/m5/2026-03-31-131610-294712-btcusd-20260330-session-meanrev-.json",
+    [string]$PresetPath = "reports/presets/btcusd_20260330_session_meanrev-bull37_long_h12_live035_guarded2.set",
+    [string]$OperatorCommandFileName = "mt5_company_btcusd_20260330_session_meanrev_operator.txt",
+    [string]$StatusFileName = "mt5_company_btcusd_20260330_session_meanrev_status.txt"
 )
 
 $workspaceRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
@@ -51,7 +57,7 @@ $summaryMarkdownPath = Join-Path $workspaceRoot "knowledge/experiments/$datePref
 $gateJsonPath = Join-Path $workspaceRoot "reports/forward/$datePrefix-$slug-gate.json"
 $gateMarkdownPath = Join-Path $workspaceRoot "knowledge/experiments/$datePrefix-$slug-gate.md"
 $resolvedBaselinePath = (Resolve-Path (Join-Path $workspaceRoot $BaselineSummaryPath)).Path
-$label = "btcusd_20260330_session_meanrev-$slug"
+$label = "$ForwardLabel-$slug"
 
 & python $summaryScriptPath `
     --input $telemetryPath `
@@ -77,8 +83,13 @@ if ($LASTEXITCODE -ne 0) {
 
 $preflightScriptPath = Join-Path $workspaceRoot "scripts/live-preflight.ps1"
 & powershell -ExecutionPolicy Bypass -File $preflightScriptPath `
+    -ReleaseNotePath $ReleaseNotePath `
+    -RunJsonPath $RunJsonPath `
     -TelemetrySummaryPath $summaryJsonPath `
-    -ForwardGatePath $gateJsonPath
+    -ForwardGatePath $gateJsonPath `
+    -PresetPath $PresetPath `
+    -OperatorCommandFileName $OperatorCommandFileName `
+    -StatusFileName $StatusFileName
 
 if ($manifestData) {
     $manifestData | Add-Member -NotePropertyName closed_at -NotePropertyValue (Get-Date).ToString("s") -Force
