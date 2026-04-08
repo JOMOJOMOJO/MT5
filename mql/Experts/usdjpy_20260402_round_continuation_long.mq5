@@ -28,7 +28,8 @@ enum SignalBucket
    SIGNAL_BREAKOUT = 4,
    SIGNAL_RSI = 5,
    SIGNAL_COMPRESSION = 6,
-   SIGNAL_DOW_SWEEP = 7
+   SIGNAL_DOW_SWEEP = 7,
+   SIGNAL_RANGE_RECLAIM = 8
   };
 
 input string          InpSymbol                   = "USDJPY";
@@ -125,6 +126,24 @@ input double          InpDowStopBufferPips        = 2.0;
 input double          InpDowTargetBufferPips      = 3.0;
 input double          InpDowMinTargetRMultiple    = 1.0;
 input int             InpDowMaxHoldBars           = 24;
+input bool            InpEnableRangeReclaimBucket = false;
+input ENUM_TIMEFRAMES InpRangeSignalTimeframe     = PERIOD_M5;
+input int             InpRangeSessionStartHour    = 7;
+input int             InpRangeSessionEndHour      = 20;
+input int             InpRangeLookbackBars        = 24;
+input int             InpRangeAdxPeriod           = 14;
+input double          InpRangeMaxAdx             = 20.0;
+input int             InpRangeAtrPeriod           = 14;
+input double          InpRangeMaxWidthAtrMultiple = 3.5;
+input double          InpRangeMinBreachPips       = 1.0;
+input double          InpRangeMaxBreachPips       = 7.0;
+input double          InpRangeMinCloseLocation    = 0.55;
+input double          InpRangeMinLowerWickShare   = 0.30;
+input double          InpRangeMaxUpperWickShare   = 0.25;
+input double          InpRangeStopBufferPips      = 1.5;
+input double          InpRangeTargetBufferPips    = 2.0;
+input double          InpRangeMinTargetRMultiple  = 1.0;
+input int             InpRangeMaxHoldBars         = 20;
 input double          InpRiskPercent              = 2.0;
 input bool            InpUseMicroCapRiskOverride  = true;
 input double          InpMicroCapBalanceThreshold = 150.0;
@@ -155,6 +174,10 @@ int adxHandle = INVALID_HANDLE;
 int rsiHandle = INVALID_HANDLE;
 int dowFastEmaHandle = INVALID_HANDLE;
 int dowSlowEmaHandle = INVALID_HANDLE;
+int rangeFastEmaHandle = INVALID_HANDLE;
+int rangeSlowEmaHandle = INVALID_HANDLE;
+int rangeAdxHandle = INVALID_HANDLE;
+int rangeAtrHandle = INVALID_HANDLE;
 string runtimeSymbol = "";
 string runtimeAllowedWeekdays = "";
 string runtimeTelemetryFileName = "";
@@ -165,6 +188,7 @@ bool runtimeStatusSnapshotEnabled = false;
 bool allowedWeekdays[7];
 datetime lastBarTime = 0;
 datetime lastDowBarTime = 0;
+datetime lastRangeBarTime = 0;
 datetime currentDayStart = 0;
 int lastDayOfYear = -1;
 double dailyStartBalance = 0.0;
@@ -186,6 +210,8 @@ bool statusSnapshotErrorLogged = false;
 bool timerStarted = false;
 double dowPlannedStopPrice = 0.0;
 double dowPlannedTargetPrice = 0.0;
+double rangePlannedStopPrice = 0.0;
+double rangePlannedTargetPrice = 0.0;
 
 string TrimSpaces(string value)
   {
@@ -458,6 +484,23 @@ bool LoadDowSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[]
    return copiedFast == copiedRates && copiedSlow == copiedRates;
   }
 
+bool LoadRangeSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[], double &adxValues[], double &atrValues[], int count)
+  {
+   ArraySetAsSeries(rates, true);
+   ArraySetAsSeries(fastEma, true);
+   ArraySetAsSeries(slowEma, true);
+   ArraySetAsSeries(adxValues, true);
+   ArraySetAsSeries(atrValues, true);
+   int copiedRates = CopyRates(runtimeSymbol, InpRangeSignalTimeframe, 0, count, rates);
+   if(copiedRates < 80)
+      return false;
+   int copiedFast = CopyBuffer(rangeFastEmaHandle, 0, 0, count, fastEma);
+   int copiedSlow = CopyBuffer(rangeSlowEmaHandle, 0, 0, count, slowEma);
+   int copiedAdx = CopyBuffer(rangeAdxHandle, 0, 0, count, adxValues);
+   int copiedAtr = CopyBuffer(rangeAtrHandle, 0, 0, count, atrValues);
+   return copiedFast == copiedRates && copiedSlow == copiedRates && copiedAdx == copiedRates && copiedAtr == copiedRates;
+  }
+
 int CountManagedPositions()
   {
    int count = 0;
@@ -487,6 +530,8 @@ string BucketComment(SignalBucket bucket)
       return "breakout_sidecar_long";
    if(bucket == SIGNAL_DOW_SWEEP)
       return "dow_sweep_long";
+   if(bucket == SIGNAL_RANGE_RECLAIM)
+      return "range_reclaim_long";
    if(bucket == SIGNAL_ROUND)
       return "round_continuation_long";
    return "";
@@ -496,6 +541,8 @@ ENUM_TIMEFRAMES BucketSignalTimeframe(SignalBucket bucket)
   {
    if(bucket == SIGNAL_DOW_SWEEP)
       return InpDowSignalTimeframe;
+   if(bucket == SIGNAL_RANGE_RECLAIM)
+      return InpRangeSignalTimeframe;
    return InpSignalTimeframe;
   }
 
@@ -545,9 +592,13 @@ bool ManageOpenPosition()
          maxHoldBars = InpBreakoutMaxHoldBars;
       else if(StringFind(comment, "dow_sweep") >= 0)
          maxHoldBars = InpDowMaxHoldBars;
+      else if(StringFind(comment, "range_reclaim") >= 0)
+         maxHoldBars = InpRangeMaxHoldBars;
       ENUM_TIMEFRAMES holdTimeframe = InpSignalTimeframe;
       if(StringFind(comment, "dow_sweep") >= 0)
          holdTimeframe = InpDowSignalTimeframe;
+      else if(StringFind(comment, "range_reclaim") >= 0)
+         holdTimeframe = InpRangeSignalTimeframe;
       int barsOpen = iBarShift(runtimeSymbol, holdTimeframe, openedAt, false);
       if(barsOpen < maxHoldBars)
          continue;
@@ -1122,6 +1173,98 @@ bool EvaluateDowSweepSignal(const MqlRates &envRates[], const double &envFastEma
    return true;
   }
 
+bool EvaluateRangeReclaimSignal(const MqlRates &envRates[], const double &envFastEma[], const double &envSlowEma[],
+                                const MqlRates &signalRates[], const double &signalFastEma[], const double &signalSlowEma[],
+                                const double &signalAdx[], const double &signalAtr[])
+  {
+   rangePlannedStopPrice = 0.0;
+   rangePlannedTargetPrice = 0.0;
+   if(!InpEnableRangeReclaimBucket)
+      return false;
+
+   datetime signalBarTime = signalRates[1].time;
+   if(!IsWithinSession(signalBarTime, InpRangeSessionStartHour, InpRangeSessionEndHour))
+      return false;
+   if(!PassesVolatilityState(envRates))
+      return false;
+
+   PivotPoint envLatestHigh, envPreviousHigh, envLatestLow, envPreviousLow;
+   FindRecentPivots(envRates, true, envLatestHigh, envPreviousHigh);
+   FindRecentPivots(envRates, false, envLatestLow, envPreviousLow);
+   if(!envLatestHigh.valid || !envPreviousHigh.valid || !envLatestLow.valid || !envPreviousLow.valid)
+      return false;
+   if(!(envLatestHigh.price > envPreviousHigh.price && envLatestLow.price > envPreviousLow.price))
+      return false;
+   if(envFastEma[1] <= envSlowEma[1])
+      return false;
+   if(envRates[1].close <= envSlowEma[1])
+      return false;
+
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return false;
+   if(signalAdx[1] > InpRangeMaxAdx)
+      return false;
+   if(signalAtr[1] <= 0.0)
+      return false;
+
+   int size = ArraySize(signalRates);
+   if(size <= InpRangeLookbackBars + 2)
+      return false;
+
+   double rangeHigh = -DBL_MAX;
+   double rangeLow = DBL_MAX;
+   for(int shift = 2; shift < 2 + InpRangeLookbackBars && shift < size; ++shift)
+     {
+      if(signalRates[shift].high > rangeHigh)
+         rangeHigh = signalRates[shift].high;
+      if(signalRates[shift].low < rangeLow)
+         rangeLow = signalRates[shift].low;
+     }
+   if(rangeHigh <= rangeLow)
+      return false;
+
+   double rangeWidth = rangeHigh - rangeLow;
+   if(rangeWidth > signalAtr[1] * InpRangeMaxWidthAtrMultiple)
+      return false;
+
+   MqlRates signalBar = signalRates[1];
+   double breachPips = (rangeLow - signalBar.low) / pip;
+   if(breachPips < InpRangeMinBreachPips || breachPips > InpRangeMaxBreachPips)
+      return false;
+   if(signalBar.close <= rangeLow)
+      return false;
+   if(signalBar.close <= signalBar.open)
+      return false;
+   if(CloseLocation(signalBar) < InpRangeMinCloseLocation)
+      return false;
+   if(LowerWickShare(signalBar) < InpRangeMinLowerWickShare)
+      return false;
+   if(UpperWickShare(signalBar) > InpRangeMaxUpperWickShare)
+      return false;
+   if(signalFastEma[1] <= signalSlowEma[1])
+      return false;
+   if(signalBar.close <= signalSlowEma[1])
+      return false;
+
+   double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
+   if(ask <= 0.0)
+      return false;
+
+   double plannedStop = signalBar.low - (InpRangeStopBufferPips * pip);
+   double plannedTarget = rangeHigh - (InpRangeTargetBufferPips * pip);
+   double stopDistance = ask - plannedStop;
+   double targetDistance = plannedTarget - ask;
+   if(stopDistance <= 0.0 || targetDistance <= 0.0)
+      return false;
+   if((targetDistance / stopDistance) < InpRangeMinTargetRMultiple)
+      return false;
+
+   rangePlannedStopPrice = NormalizePrice(plannedStop);
+   rangePlannedTargetPrice = NormalizePrice(plannedTarget);
+   return true;
+  }
+
 bool OpenPosition(SignalBucket bucket)
   {
    double stopLossPips = InpStopLossPips;
@@ -1152,6 +1295,11 @@ bool OpenPosition(SignalBucket bucket)
       stopLossPips = InpBreakoutStopLossPips;
       targetRMultiple = InpBreakoutTargetRMultiple;
      }
+   else if(bucket == SIGNAL_RANGE_RECLAIM)
+     {
+      stopLossPips = 0.0;
+      targetRMultiple = 0.0;
+     }
 
    double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
    double pip = GetPipSize();
@@ -1169,6 +1317,15 @@ bool OpenPosition(SignalBucket bucket)
          return false;
       sl = dowPlannedStopPrice;
       tp = dowPlannedTargetPrice;
+      stopDistance = ask - sl;
+      targetDistance = tp - ask;
+     }
+   else if(bucket == SIGNAL_RANGE_RECLAIM)
+     {
+      if(rangePlannedStopPrice <= 0.0 || rangePlannedTargetPrice <= 0.0)
+         return false;
+      sl = rangePlannedStopPrice;
+      tp = rangePlannedTargetPrice;
       stopDistance = ask - sl;
       targetDistance = tp - ask;
      }
@@ -1469,6 +1626,16 @@ int OnInit()
       InpDowMaxUpperWickShare < 0.0 || InpDowMaxUpperWickShare > 1.0 ||
       InpDowStopBufferPips < 0.0 || InpDowTargetBufferPips < 0.0 ||
       InpDowMinTargetRMultiple <= 0.0 || InpDowMaxHoldBars < 1 ||
+      InpRangeSessionStartHour < 0 || InpRangeSessionStartHour > 23 || InpRangeSessionEndHour < 0 ||
+      InpRangeSessionEndHour > 23 || InpRangeSessionStartHour == InpRangeSessionEndHour ||
+      InpRangeLookbackBars < 5 || InpRangeAdxPeriod < 2 || InpRangeMaxAdx <= 0.0 ||
+      InpRangeAtrPeriod < 2 || InpRangeMaxWidthAtrMultiple <= 0.0 ||
+      InpRangeMinBreachPips < 0.0 || InpRangeMaxBreachPips < InpRangeMinBreachPips ||
+      InpRangeMinCloseLocation < 0.0 || InpRangeMinCloseLocation > 1.0 ||
+      InpRangeMinLowerWickShare < 0.0 || InpRangeMinLowerWickShare > 1.0 ||
+      InpRangeMaxUpperWickShare < 0.0 || InpRangeMaxUpperWickShare > 1.0 ||
+      InpRangeStopBufferPips < 0.0 || InpRangeTargetBufferPips < 0.0 ||
+      InpRangeMinTargetRMultiple <= 0.0 || InpRangeMaxHoldBars < 1 ||
       InpStopLossPips <= 0.0 || InpTargetRMultiple <= 0.0 || InpMaxHoldBars < 1 ||
       InpMaxOpenPositions < 1 || InpRiskPercent <= 0.0 ||
       InpMicroCapBalanceThreshold < 0.0 || InpMicroCapRiskPercent <= 0.0 || InpDailyLossCapPercent <= 0.0 ||
@@ -1489,8 +1656,14 @@ int OnInit()
    rsiHandle = iRSI(runtimeSymbol, InpSignalTimeframe, InpRsiPeriod, PRICE_CLOSE);
    dowFastEmaHandle = iMA(runtimeSymbol, InpDowSignalTimeframe, InpFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
    dowSlowEmaHandle = iMA(runtimeSymbol, InpDowSignalTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   rangeFastEmaHandle = iMA(runtimeSymbol, InpRangeSignalTimeframe, InpFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   rangeSlowEmaHandle = iMA(runtimeSymbol, InpRangeSignalTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   rangeAdxHandle = iADX(runtimeSymbol, InpRangeSignalTimeframe, InpRangeAdxPeriod);
+   rangeAtrHandle = iATR(runtimeSymbol, InpRangeSignalTimeframe, InpRangeAtrPeriod);
    if(fastEmaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE || adxHandle == INVALID_HANDLE || rsiHandle == INVALID_HANDLE ||
-      dowFastEmaHandle == INVALID_HANDLE || dowSlowEmaHandle == INVALID_HANDLE)
+      dowFastEmaHandle == INVALID_HANDLE || dowSlowEmaHandle == INVALID_HANDLE ||
+      rangeFastEmaHandle == INVALID_HANDLE || rangeSlowEmaHandle == INVALID_HANDLE ||
+      rangeAdxHandle == INVALID_HANDLE || rangeAtrHandle == INVALID_HANDLE)
       return INIT_FAILED;
 
    trade.SetExpertMagicNumber((ulong)InpMagicNumber);
@@ -1543,6 +1716,14 @@ void OnDeinit(const int reason)
       IndicatorRelease(dowFastEmaHandle);
    if(dowSlowEmaHandle != INVALID_HANDLE)
       IndicatorRelease(dowSlowEmaHandle);
+   if(rangeFastEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(rangeFastEmaHandle);
+   if(rangeSlowEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(rangeSlowEmaHandle);
+   if(rangeAdxHandle != INVALID_HANDLE)
+      IndicatorRelease(rangeAdxHandle);
+   if(rangeAtrHandle != INVALID_HANDLE)
+      IndicatorRelease(rangeAtrHandle);
   }
 
 void OnTimer()
@@ -1606,7 +1787,11 @@ void OnTick()
    bool newDowBar = false;
    if(InpEnableDowSweepBucket)
       newDowBar = IsNewBarForTimeframe(InpDowSignalTimeframe, lastDowBarTime, dowBarTime);
-   if(!newMainBar && !newDowBar)
+   datetime rangeBarTime = 0;
+   bool newRangeBar = false;
+   if(InpEnableRangeReclaimBucket)
+      newRangeBar = IsNewBarForTimeframe(InpRangeSignalTimeframe, lastRangeBarTime, rangeBarTime);
+   if(!newMainBar && !newDowBar && !newRangeBar)
       return;
 
    if(CountManagedPositions() > 0)
@@ -1689,6 +1874,33 @@ void OnTick()
                EvaluateDowSweepSignal(envRates, envFastEma, envSlowEma, dowRates, dowFastEma, dowSlowEma))
               {
                if(OpenPosition(SIGNAL_DOW_SWEEP))
+                  pendingOpenCount++;
+              }
+           }
+        }
+     }
+
+   if(newRangeBar && CanOpenAnotherTrade(rangeBarTime))
+     {
+      if(InpMaxTradesPerDay <= 0 || dailyTradeCount + pendingOpenCount < InpMaxTradesPerDay)
+        {
+         MqlRates envRates[];
+         double envFastEma[];
+         double envSlowEma[];
+         double envAdxValues[];
+         double envRsiValues[];
+         MqlRates rangeRates[];
+         double rangeFastEma[];
+         double rangeSlowEma[];
+         double rangeAdx[];
+         double rangeAtr[];
+         if(LoadSignalWindow(envRates, envFastEma, envSlowEma, envAdxValues, envRsiValues, 260) &&
+            LoadRangeSignalWindow(rangeRates, rangeFastEma, rangeSlowEma, rangeAdx, rangeAtr, 220))
+           {
+            if(CanOpenBucketTrade(SIGNAL_RANGE_RECLAIM, baseOpenCount, pendingOpenCount) &&
+               EvaluateRangeReclaimSignal(envRates, envFastEma, envSlowEma, rangeRates, rangeFastEma, rangeSlowEma, rangeAdx, rangeAtr))
+              {
+               if(OpenPosition(SIGNAL_RANGE_RECLAIM))
                   pendingOpenCount++;
               }
            }

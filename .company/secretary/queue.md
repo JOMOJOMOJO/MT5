@@ -73,6 +73,10 @@
 - [ ] Treat `knowledge/experiments/2026-04-09-usdjpy-quality12b-stack-parallel-dow-cycle1-reject.md` as the formal verdict that the first `M5 dow_sweep_long` bucket proved the code path for mixed bucket timeframes but did not beat the active live-track branch.
 - [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased demo-forward candidate; do not promote either `quality12b_stack_parallel_dow_guarded` or `quality12b_stack_parallel_dowloose_guarded`.
 - [ ] Do not spend another immediate cycle on looser `dow sweep` thresholds; the next `USDJPY` cycle should add a truly independent `short` bucket or a fresh `M5` long thesis outside the support-sweep neighborhood.
+- [ ] Treat `knowledge/patterns/2026-04-09-old-ea-fractal-range-risk-lessons.md` as the durable reference for the uploaded legacy EA's two methods and stop-first sizing doctrine.
+- [ ] Treat `knowledge/experiments/2026-04-09-usdjpy-quality12b-stack-parallel-range-cycle1-reject.md` as the formal verdict that the first `M5 range reclaim long` bucket imported from the legacy EA did not improve the latest executable OOS turnover.
+- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased demo-forward candidate; do not promote `quality12b_stack_parallel_range_guarded` or `quality12b_stack_parallel_range_loose`.
+- [ ] Do not spend another immediate cycle on looser low-ADX `range reclaim` thresholds; the next serious `USDJPY` cycle should test a `fractal / stochastic pullback` long bucket or open a truly independent `short` bucket.
 - [ ] Treat the low-risk `quality12b_guarded` rerun as the first `USDJPY long-only` live-track preset that clears the repo's long-window drawdown gate; remaining blockers should now be real demo-forward evidence and a live heartbeat, not backtest drawdown.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.
