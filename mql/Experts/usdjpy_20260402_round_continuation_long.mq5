@@ -3,7 +3,7 @@
 //+------------------------------------------------------------------+
 #property copyright   "Trading System"
 #property link        "https://www.mql5.com"
-#property version     "1.12"
+#property version     "1.13"
 #property strict
 #property description "USDJPY M15 long-only continuation prototype using EMA13/EMA100 trend, 50-pip anti-chop state, and wick-based pullback re-entry."
 
@@ -27,7 +27,8 @@ enum SignalBucket
    SIGNAL_ROUND_LOOSE = 3,
    SIGNAL_BREAKOUT = 4,
    SIGNAL_RSI = 5,
-   SIGNAL_COMPRESSION = 6
+   SIGNAL_COMPRESSION = 6,
+   SIGNAL_DOW_SWEEP = 7
   };
 
 input string          InpSymbol                   = "USDJPY";
@@ -109,6 +110,21 @@ input double          InpBreakoutMaxRetestDepthPips = 1.0;
 input double          InpBreakoutStopLossPips     = 20.0;
 input double          InpBreakoutTargetRMultiple  = 1.2;
 input int             InpBreakoutMaxHoldBars      = 18;
+input bool            InpEnableDowSweepBucket     = false;
+input ENUM_TIMEFRAMES InpDowSignalTimeframe       = PERIOD_M5;
+input int             InpDowSessionStartHour      = 7;
+input int             InpDowSessionEndHour        = 20;
+input int             InpDowPivotSpan             = 2;
+input int             InpDowTrendScanBars         = 120;
+input double          InpDowMinBreachPips         = 2.0;
+input double          InpDowMaxBreachPips         = 12.0;
+input double          InpDowMinCloseLocation      = 0.65;
+input double          InpDowMinLowerWickShare     = 0.35;
+input double          InpDowMaxUpperWickShare     = 0.20;
+input double          InpDowStopBufferPips        = 2.0;
+input double          InpDowTargetBufferPips      = 3.0;
+input double          InpDowMinTargetRMultiple    = 1.0;
+input int             InpDowMaxHoldBars           = 24;
 input double          InpRiskPercent              = 2.0;
 input bool            InpUseMicroCapRiskOverride  = true;
 input double          InpMicroCapBalanceThreshold = 150.0;
@@ -137,6 +153,8 @@ int fastEmaHandle = INVALID_HANDLE;
 int slowEmaHandle = INVALID_HANDLE;
 int adxHandle = INVALID_HANDLE;
 int rsiHandle = INVALID_HANDLE;
+int dowFastEmaHandle = INVALID_HANDLE;
+int dowSlowEmaHandle = INVALID_HANDLE;
 string runtimeSymbol = "";
 string runtimeAllowedWeekdays = "";
 string runtimeTelemetryFileName = "";
@@ -146,6 +164,7 @@ bool runtimeOperatorControlEnabled = false;
 bool runtimeStatusSnapshotEnabled = false;
 bool allowedWeekdays[7];
 datetime lastBarTime = 0;
+datetime lastDowBarTime = 0;
 datetime currentDayStart = 0;
 int lastDayOfYear = -1;
 double dailyStartBalance = 0.0;
@@ -165,6 +184,8 @@ int telemetryHandle = INVALID_HANDLE;
 string operatorMode = "normal";
 bool statusSnapshotErrorLogged = false;
 bool timerStarted = false;
+double dowPlannedStopPrice = 0.0;
+double dowPlannedTargetPrice = 0.0;
 
 string TrimSpaces(string value)
   {
@@ -308,17 +329,22 @@ double CalculateVolume(double stopDistance)
    return NormalizeDouble(normalized, VolumeDigits(stepVolume));
   }
 
-bool IsNewBar(datetime &barTime)
+bool IsNewBarForTimeframe(ENUM_TIMEFRAMES timeframe, datetime &lastSeenBarTime, datetime &barTime)
   {
    datetime times[];
    ArraySetAsSeries(times, true);
-   if(CopyTime(runtimeSymbol, InpSignalTimeframe, 0, 2, times) < 2)
+   if(CopyTime(runtimeSymbol, timeframe, 0, 2, times) < 2)
       return false;
-   if(times[0] == lastBarTime)
+   if(times[0] == lastSeenBarTime)
       return false;
-   lastBarTime = times[0];
+   lastSeenBarTime = times[0];
    barTime = times[0];
    return true;
+  }
+
+bool IsNewBar(datetime &barTime)
+  {
+   return IsNewBarForTimeframe(InpSignalTimeframe, lastBarTime, barTime);
   }
 
 void ResetDailyCounters()
@@ -419,6 +445,19 @@ bool LoadSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[], d
    return copiedFast == copiedRates && copiedSlow == copiedRates && copiedAdx == copiedRates && copiedRsi == copiedRates;
   }
 
+bool LoadDowSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma[], int count)
+  {
+   ArraySetAsSeries(rates, true);
+   ArraySetAsSeries(fastEma, true);
+   ArraySetAsSeries(slowEma, true);
+   int copiedRates = CopyRates(runtimeSymbol, InpDowSignalTimeframe, 0, count, rates);
+   if(copiedRates < 80)
+      return false;
+   int copiedFast = CopyBuffer(dowFastEmaHandle, 0, 0, count, fastEma);
+   int copiedSlow = CopyBuffer(dowSlowEmaHandle, 0, 0, count, slowEma);
+   return copiedFast == copiedRates && copiedSlow == copiedRates;
+  }
+
 int CountManagedPositions()
   {
    int count = 0;
@@ -446,9 +485,18 @@ string BucketComment(SignalBucket bucket)
       return "round_loose_long";
    if(bucket == SIGNAL_BREAKOUT)
       return "breakout_sidecar_long";
+   if(bucket == SIGNAL_DOW_SWEEP)
+      return "dow_sweep_long";
    if(bucket == SIGNAL_ROUND)
       return "round_continuation_long";
    return "";
+  }
+
+ENUM_TIMEFRAMES BucketSignalTimeframe(SignalBucket bucket)
+  {
+   if(bucket == SIGNAL_DOW_SWEEP)
+      return InpDowSignalTimeframe;
+   return InpSignalTimeframe;
   }
 
 int CountBucketPositions(SignalBucket bucket)
@@ -495,7 +543,12 @@ bool ManageOpenPosition()
          maxHoldBars = InpRoundLooseMaxHoldBars;
       else if(StringFind(comment, "breakout_sidecar") >= 0)
          maxHoldBars = InpBreakoutMaxHoldBars;
-      int barsOpen = iBarShift(runtimeSymbol, InpSignalTimeframe, openedAt, false);
+      else if(StringFind(comment, "dow_sweep") >= 0)
+         maxHoldBars = InpDowMaxHoldBars;
+      ENUM_TIMEFRAMES holdTimeframe = InpSignalTimeframe;
+      if(StringFind(comment, "dow_sweep") >= 0)
+         holdTimeframe = InpDowSignalTimeframe;
+      int barsOpen = iBarShift(runtimeSymbol, holdTimeframe, openedAt, false);
       if(barsOpen < maxHoldBars)
          continue;
       ulong ticket = (ulong)PositionGetInteger(POSITION_TICKET);
@@ -598,15 +651,15 @@ bool IsPivotLow(const MqlRates &rates[], int shift, int span)
    return true;
   }
 
-void FindRecentPivots(const MqlRates &rates[], bool wantHigh, PivotPoint &latest, PivotPoint &previous)
+void FindRecentPivotsWithSpan(const MqlRates &rates[], bool wantHigh, int span, int scanBars, PivotPoint &latest, PivotPoint &previous)
   {
    latest.valid = false;
    previous.valid = false;
    int size = ArraySize(rates);
-   int maxShift = MathMin(size - 1 - InpPivotSpan, InpTrendScanBars);
-   for(int shift = InpPivotSpan + 1; shift <= maxShift; ++shift)
+   int maxShift = MathMin(size - 1 - span, scanBars);
+   for(int shift = span + 1; shift <= maxShift; ++shift)
      {
-      bool match = wantHigh ? IsPivotHigh(rates, shift, InpPivotSpan) : IsPivotLow(rates, shift, InpPivotSpan);
+      bool match = wantHigh ? IsPivotHigh(rates, shift, span) : IsPivotLow(rates, shift, span);
       if(!match)
          continue;
       PivotPoint point;
@@ -622,6 +675,11 @@ void FindRecentPivots(const MqlRates &rates[], bool wantHigh, PivotPoint &latest
          break;
         }
      }
+  }
+
+void FindRecentPivots(const MqlRates &rates[], bool wantHigh, PivotPoint &latest, PivotPoint &previous)
+  {
+   FindRecentPivotsWithSpan(rates, wantHigh, InpPivotSpan, InpTrendScanBars, latest, previous);
   }
 
 double UpperWickShare(const MqlRates &bar)
@@ -986,6 +1044,84 @@ bool EvaluateBreakoutSignal(const MqlRates &rates[], const double &fastEma[], co
    return true;
   }
 
+bool EvaluateDowSweepSignal(const MqlRates &envRates[], const double &envFastEma[], const double &envSlowEma[],
+                            const MqlRates &signalRates[], const double &signalFastEma[], const double &signalSlowEma[])
+  {
+   dowPlannedStopPrice = 0.0;
+   dowPlannedTargetPrice = 0.0;
+   if(!InpEnableDowSweepBucket)
+      return false;
+
+   datetime signalBarTime = signalRates[1].time;
+   if(!IsWithinSession(signalBarTime, InpDowSessionStartHour, InpDowSessionEndHour))
+      return false;
+
+   if(!PassesVolatilityState(envRates))
+      return false;
+
+   PivotPoint envLatestHigh, envPreviousHigh, envLatestLow, envPreviousLow;
+   FindRecentPivots(envRates, true, envLatestHigh, envPreviousHigh);
+   FindRecentPivots(envRates, false, envLatestLow, envPreviousLow);
+   if(!envLatestHigh.valid || !envPreviousHigh.valid || !envLatestLow.valid || !envPreviousLow.valid)
+      return false;
+   if(!(envLatestHigh.price > envPreviousHigh.price && envLatestLow.price > envPreviousLow.price))
+      return false;
+   if(envFastEma[1] <= envSlowEma[1])
+      return false;
+   if(envRates[1].close <= envSlowEma[1])
+      return false;
+
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return false;
+
+   PivotPoint signalLatestHigh, signalPreviousHigh, signalLatestLow, signalPreviousLow;
+   FindRecentPivotsWithSpan(signalRates, true, InpDowPivotSpan, InpDowTrendScanBars, signalLatestHigh, signalPreviousHigh);
+   FindRecentPivotsWithSpan(signalRates, false, InpDowPivotSpan, InpDowTrendScanBars, signalLatestLow, signalPreviousLow);
+   if(!signalLatestHigh.valid || !signalLatestLow.valid)
+      return false;
+   if(!(signalLatestHigh.time < signalLatestLow.time))
+      return false;
+
+   double support = signalLatestLow.price;
+   double priorHigh = signalLatestHigh.price;
+   MqlRates signalBar = signalRates[1];
+   double breachPips = (support - signalBar.low) / pip;
+   if(breachPips < InpDowMinBreachPips || breachPips > InpDowMaxBreachPips)
+      return false;
+   if(signalBar.close <= support)
+      return false;
+   if(signalBar.close <= signalBar.open)
+      return false;
+   if(CloseLocation(signalBar) < InpDowMinCloseLocation)
+      return false;
+   if(LowerWickShare(signalBar) < InpDowMinLowerWickShare)
+      return false;
+   if(UpperWickShare(signalBar) > InpDowMaxUpperWickShare)
+      return false;
+   if(signalFastEma[1] <= signalSlowEma[1])
+      return false;
+   if(signalBar.close <= signalSlowEma[1])
+      return false;
+
+   double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
+   if(ask <= 0.0)
+      return false;
+
+   double plannedStop = signalBar.low - (InpDowStopBufferPips * pip);
+   double plannedTarget = priorHigh - (InpDowTargetBufferPips * pip);
+   double stopDistance = ask - plannedStop;
+   double targetDistance = plannedTarget - ask;
+   if(stopDistance <= 0.0 || targetDistance <= 0.0)
+      return false;
+   if((targetDistance / stopDistance) < InpDowMinTargetRMultiple)
+      return false;
+
+   dowPlannedStopPrice = NormalizePrice(plannedStop);
+   dowPlannedTargetPrice = NormalizePrice(plannedTarget);
+   return true;
+  }
+
 bool OpenPosition(SignalBucket bucket)
   {
    double stopLossPips = InpStopLossPips;
@@ -1019,12 +1155,23 @@ bool OpenPosition(SignalBucket bucket)
 
    double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
    double pip = GetPipSize();
-   double stopDistance = stopLossPips * pip;
-   double targetDistance = stopDistance * targetRMultiple;
    double point = SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
    int stopsLevel = (int)SymbolInfoInteger(runtimeSymbol, SYMBOL_TRADE_STOPS_LEVEL);
    if(ask <= 0.0 || pip <= 0.0 || point <= 0.0)
       return false;
+   double stopDistance = stopLossPips * pip;
+   double targetDistance = stopDistance * targetRMultiple;
+   double sl = NormalizePrice(ask - stopDistance);
+   double tp = NormalizePrice(ask + targetDistance);
+   if(bucket == SIGNAL_DOW_SWEEP)
+     {
+      if(dowPlannedStopPrice <= 0.0 || dowPlannedTargetPrice <= 0.0)
+         return false;
+      sl = dowPlannedStopPrice;
+      tp = dowPlannedTargetPrice;
+      stopDistance = ask - sl;
+      targetDistance = tp - ask;
+     }
    if(stopDistance < stopsLevel * point)
       return false;
    if(targetDistance > 0.0 && targetDistance < stopsLevel * point)
@@ -1033,9 +1180,6 @@ bool OpenPosition(SignalBucket bucket)
    double volume = CalculateVolume(stopDistance);
    if(volume <= 0.0)
       return false;
-
-   double sl = NormalizePrice(ask - stopDistance);
-   double tp = NormalizePrice(ask + targetDistance);
    if(!trade.Buy(volume, runtimeSymbol, 0.0, sl, tp, comment))
       return false;
    return true;
@@ -1316,6 +1460,15 @@ int OnInit()
       InpBreakoutMinRetestCloseLocation < 0.0 || InpBreakoutMinRetestCloseLocation > 1.0 ||
       InpBreakoutMaxRetestDepthPips < 0.0 || InpBreakoutStopLossPips <= 0.0 ||
       InpBreakoutTargetRMultiple <= 0.0 || InpBreakoutMaxHoldBars < 1 ||
+      InpDowSessionStartHour < 0 || InpDowSessionStartHour > 23 || InpDowSessionEndHour < 0 ||
+      InpDowSessionEndHour > 23 || InpDowSessionStartHour == InpDowSessionEndHour ||
+      InpDowPivotSpan <= 0 || InpDowTrendScanBars <= 20 ||
+      InpDowMinBreachPips < 0.0 || InpDowMaxBreachPips < InpDowMinBreachPips ||
+      InpDowMinCloseLocation < 0.0 || InpDowMinCloseLocation > 1.0 ||
+      InpDowMinLowerWickShare < 0.0 || InpDowMinLowerWickShare > 1.0 ||
+      InpDowMaxUpperWickShare < 0.0 || InpDowMaxUpperWickShare > 1.0 ||
+      InpDowStopBufferPips < 0.0 || InpDowTargetBufferPips < 0.0 ||
+      InpDowMinTargetRMultiple <= 0.0 || InpDowMaxHoldBars < 1 ||
       InpStopLossPips <= 0.0 || InpTargetRMultiple <= 0.0 || InpMaxHoldBars < 1 ||
       InpMaxOpenPositions < 1 || InpRiskPercent <= 0.0 ||
       InpMicroCapBalanceThreshold < 0.0 || InpMicroCapRiskPercent <= 0.0 || InpDailyLossCapPercent <= 0.0 ||
@@ -1334,7 +1487,10 @@ int OnInit()
    slowEmaHandle = iMA(runtimeSymbol, InpSignalTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
    adxHandle = iADX(runtimeSymbol, InpSignalTimeframe, InpAdxPeriod);
    rsiHandle = iRSI(runtimeSymbol, InpSignalTimeframe, InpRsiPeriod, PRICE_CLOSE);
-   if(fastEmaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE || adxHandle == INVALID_HANDLE || rsiHandle == INVALID_HANDLE)
+   dowFastEmaHandle = iMA(runtimeSymbol, InpDowSignalTimeframe, InpFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   dowSlowEmaHandle = iMA(runtimeSymbol, InpDowSignalTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   if(fastEmaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE || adxHandle == INVALID_HANDLE || rsiHandle == INVALID_HANDLE ||
+      dowFastEmaHandle == INVALID_HANDLE || dowSlowEmaHandle == INVALID_HANDLE)
       return INIT_FAILED;
 
    trade.SetExpertMagicNumber((ulong)InpMagicNumber);
@@ -1383,6 +1539,10 @@ void OnDeinit(const int reason)
       IndicatorRelease(adxHandle);
    if(rsiHandle != INVALID_HANDLE)
       IndicatorRelease(rsiHandle);
+   if(dowFastEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(dowFastEmaHandle);
+   if(dowSlowEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(dowSlowEmaHandle);
   }
 
 void OnTimer()
@@ -1441,7 +1601,12 @@ void OnTick()
       FlattenManagedPositions("operator_flatten");
 
    datetime barTime = 0;
-   if(!IsNewBar(barTime))
+   bool newMainBar = IsNewBar(barTime);
+   datetime dowBarTime = 0;
+   bool newDowBar = false;
+   if(InpEnableDowSweepBucket)
+      newDowBar = IsNewBarForTimeframe(InpDowSignalTimeframe, lastDowBarTime, dowBarTime);
+   if(!newMainBar && !newDowBar)
       return;
 
    if(CountManagedPositions() > 0)
@@ -1465,42 +1630,68 @@ void OnTick()
       return;
      }
 
-   if(!CanOpenAnotherTrade(barTime))
-      return;
-
-   MqlRates rates[];
-   double fastEma[];
-   double slowEma[];
-   double adxValues[];
-   double rsiValues[];
-   if(!LoadSignalWindow(rates, fastEma, slowEma, adxValues, rsiValues, 260))
-      return;
-
-   SignalBucket buckets[6];
-   int bucketCount = 0;
-   if(EvaluateRoundSignal(rates, fastEma, slowEma))
-      buckets[bucketCount++] = SIGNAL_ROUND;
-   if(EvaluateEmaSignal(rates, fastEma, slowEma, adxValues))
-      buckets[bucketCount++] = SIGNAL_EMA;
-   if(EvaluateCompressionSignal(rates, fastEma, slowEma, adxValues))
-      buckets[bucketCount++] = SIGNAL_COMPRESSION;
-   if(EvaluateRsiSignal(rates, fastEma, slowEma, rsiValues))
-      buckets[bucketCount++] = SIGNAL_RSI;
-   if(EvaluateBreakoutSignal(rates, fastEma, slowEma))
-      buckets[bucketCount++] = SIGNAL_BREAKOUT;
-   if(EvaluateRoundLooseSignal(rates, fastEma, slowEma))
-      buckets[bucketCount++] = SIGNAL_ROUND_LOOSE;
-
    int baseOpenCount = CountManagedPositions();
    int pendingOpenCount = 0;
-   for(int i = 0; i < bucketCount; ++i)
+
+   if(newMainBar && CanOpenAnotherTrade(barTime))
      {
-      SignalBucket bucket = buckets[i];
-      if(InpMaxTradesPerDay > 0 && dailyTradeCount + pendingOpenCount >= InpMaxTradesPerDay)
-         break;
-      if(!CanOpenBucketTrade(bucket, baseOpenCount, pendingOpenCount))
-         continue;
-      if(OpenPosition(bucket))
-         pendingOpenCount++;
+      MqlRates rates[];
+      double fastEma[];
+      double slowEma[];
+      double adxValues[];
+      double rsiValues[];
+      if(LoadSignalWindow(rates, fastEma, slowEma, adxValues, rsiValues, 260))
+        {
+         SignalBucket buckets[6];
+         int bucketCount = 0;
+         if(EvaluateRoundSignal(rates, fastEma, slowEma))
+            buckets[bucketCount++] = SIGNAL_ROUND;
+         if(EvaluateEmaSignal(rates, fastEma, slowEma, adxValues))
+            buckets[bucketCount++] = SIGNAL_EMA;
+         if(EvaluateCompressionSignal(rates, fastEma, slowEma, adxValues))
+            buckets[bucketCount++] = SIGNAL_COMPRESSION;
+         if(EvaluateRsiSignal(rates, fastEma, slowEma, rsiValues))
+            buckets[bucketCount++] = SIGNAL_RSI;
+         if(EvaluateBreakoutSignal(rates, fastEma, slowEma))
+            buckets[bucketCount++] = SIGNAL_BREAKOUT;
+         if(EvaluateRoundLooseSignal(rates, fastEma, slowEma))
+            buckets[bucketCount++] = SIGNAL_ROUND_LOOSE;
+
+         for(int i = 0; i < bucketCount; ++i)
+           {
+            SignalBucket bucket = buckets[i];
+            if(InpMaxTradesPerDay > 0 && dailyTradeCount + pendingOpenCount >= InpMaxTradesPerDay)
+               break;
+            if(!CanOpenBucketTrade(bucket, baseOpenCount, pendingOpenCount))
+               continue;
+            if(OpenPosition(bucket))
+               pendingOpenCount++;
+           }
+        }
+     }
+
+   if(newDowBar && CanOpenAnotherTrade(dowBarTime))
+     {
+      if(InpMaxTradesPerDay <= 0 || dailyTradeCount + pendingOpenCount < InpMaxTradesPerDay)
+        {
+         MqlRates envRates[];
+         double envFastEma[];
+         double envSlowEma[];
+         double envAdxValues[];
+         double envRsiValues[];
+         MqlRates dowRates[];
+         double dowFastEma[];
+         double dowSlowEma[];
+         if(LoadSignalWindow(envRates, envFastEma, envSlowEma, envAdxValues, envRsiValues, 260) &&
+            LoadDowSignalWindow(dowRates, dowFastEma, dowSlowEma, 220))
+           {
+            if(CanOpenBucketTrade(SIGNAL_DOW_SWEEP, baseOpenCount, pendingOpenCount) &&
+               EvaluateDowSweepSignal(envRates, envFastEma, envSlowEma, dowRates, dowFastEma, dowSlowEma))
+              {
+               if(OpenPosition(SIGNAL_DOW_SWEEP))
+                  pendingOpenCount++;
+              }
+           }
+        }
      }
   }
