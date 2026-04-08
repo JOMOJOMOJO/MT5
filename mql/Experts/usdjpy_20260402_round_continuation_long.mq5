@@ -29,7 +29,8 @@ enum SignalBucket
    SIGNAL_RSI = 5,
    SIGNAL_COMPRESSION = 6,
    SIGNAL_DOW_SWEEP = 7,
-   SIGNAL_RANGE_RECLAIM = 8
+   SIGNAL_RANGE_RECLAIM = 8,
+   SIGNAL_FRACTAL_TREND = 9
   };
 
 input string          InpSymbol                   = "USDJPY";
@@ -144,6 +145,22 @@ input double          InpRangeStopBufferPips      = 1.5;
 input double          InpRangeTargetBufferPips    = 2.0;
 input double          InpRangeMinTargetRMultiple  = 1.0;
 input int             InpRangeMaxHoldBars         = 20;
+input bool            InpEnableFractalTrendBucket = false;
+input ENUM_TIMEFRAMES InpFractalSignalTimeframe   = PERIOD_M5;
+input int             InpFractalSessionStartHour  = 7;
+input int             InpFractalSessionEndHour    = 20;
+input int             InpFractalPivotSpan         = 2;
+input int             InpFractalScanBars          = 120;
+input int             InpFractalMidEMAPeriod      = 50;
+input int             InpFractalSlowEMAPeriod     = 100;
+input int             InpFractalStochKPeriod      = 5;
+input int             InpFractalStochDPeriod      = 1;
+input int             InpFractalStochSlowing      = 1;
+input double          InpFractalStochBuyLevel     = 20.0;
+input double          InpFractalStopBufferPips    = 1.0;
+input double          InpFractalTargetBufferPips  = 2.0;
+input double          InpFractalMinTargetRMultiple = 1.0;
+input int             InpFractalMaxHoldBars       = 18;
 input double          InpRiskPercent              = 2.0;
 input bool            InpUseMicroCapRiskOverride  = true;
 input double          InpMicroCapBalanceThreshold = 150.0;
@@ -178,6 +195,10 @@ int rangeFastEmaHandle = INVALID_HANDLE;
 int rangeSlowEmaHandle = INVALID_HANDLE;
 int rangeAdxHandle = INVALID_HANDLE;
 int rangeAtrHandle = INVALID_HANDLE;
+int fractalFastEmaHandle = INVALID_HANDLE;
+int fractalMidEmaHandle = INVALID_HANDLE;
+int fractalSlowEmaHandle = INVALID_HANDLE;
+int fractalStochHandle = INVALID_HANDLE;
 string runtimeSymbol = "";
 string runtimeAllowedWeekdays = "";
 string runtimeTelemetryFileName = "";
@@ -189,6 +210,7 @@ bool allowedWeekdays[7];
 datetime lastBarTime = 0;
 datetime lastDowBarTime = 0;
 datetime lastRangeBarTime = 0;
+datetime lastFractalBarTime = 0;
 datetime currentDayStart = 0;
 int lastDayOfYear = -1;
 double dailyStartBalance = 0.0;
@@ -212,6 +234,8 @@ double dowPlannedStopPrice = 0.0;
 double dowPlannedTargetPrice = 0.0;
 double rangePlannedStopPrice = 0.0;
 double rangePlannedTargetPrice = 0.0;
+double fractalPlannedStopPrice = 0.0;
+double fractalPlannedTargetPrice = 0.0;
 
 string TrimSpaces(string value)
   {
@@ -501,6 +525,27 @@ bool LoadRangeSignalWindow(MqlRates &rates[], double &fastEma[], double &slowEma
    return copiedFast == copiedRates && copiedSlow == copiedRates && copiedAdx == copiedRates && copiedAtr == copiedRates;
   }
 
+bool LoadFractalSignalWindow(MqlRates &rates[], double &fastEma[], double &midEma[], double &slowEma[],
+                             double &stochK[], double &stochD[], int count)
+  {
+   ArraySetAsSeries(rates, true);
+   ArraySetAsSeries(fastEma, true);
+   ArraySetAsSeries(midEma, true);
+   ArraySetAsSeries(slowEma, true);
+   ArraySetAsSeries(stochK, true);
+   ArraySetAsSeries(stochD, true);
+   int copiedRates = CopyRates(runtimeSymbol, InpFractalSignalTimeframe, 0, count, rates);
+   if(copiedRates < 80)
+      return false;
+   int copiedFast = CopyBuffer(fractalFastEmaHandle, 0, 0, count, fastEma);
+   int copiedMid = CopyBuffer(fractalMidEmaHandle, 0, 0, count, midEma);
+   int copiedSlow = CopyBuffer(fractalSlowEmaHandle, 0, 0, count, slowEma);
+   int copiedK = CopyBuffer(fractalStochHandle, 0, 0, count, stochK);
+   int copiedD = CopyBuffer(fractalStochHandle, 1, 0, count, stochD);
+   return copiedFast == copiedRates && copiedMid == copiedRates && copiedSlow == copiedRates &&
+          copiedK == copiedRates && copiedD == copiedRates;
+  }
+
 int CountManagedPositions()
   {
    int count = 0;
@@ -532,6 +577,8 @@ string BucketComment(SignalBucket bucket)
       return "dow_sweep_long";
    if(bucket == SIGNAL_RANGE_RECLAIM)
       return "range_reclaim_long";
+   if(bucket == SIGNAL_FRACTAL_TREND)
+      return "fractal_trend_long";
    if(bucket == SIGNAL_ROUND)
       return "round_continuation_long";
    return "";
@@ -543,6 +590,8 @@ ENUM_TIMEFRAMES BucketSignalTimeframe(SignalBucket bucket)
       return InpDowSignalTimeframe;
    if(bucket == SIGNAL_RANGE_RECLAIM)
       return InpRangeSignalTimeframe;
+   if(bucket == SIGNAL_FRACTAL_TREND)
+      return InpFractalSignalTimeframe;
    return InpSignalTimeframe;
   }
 
@@ -594,11 +643,15 @@ bool ManageOpenPosition()
          maxHoldBars = InpDowMaxHoldBars;
       else if(StringFind(comment, "range_reclaim") >= 0)
          maxHoldBars = InpRangeMaxHoldBars;
+      else if(StringFind(comment, "fractal_trend") >= 0)
+         maxHoldBars = InpFractalMaxHoldBars;
       ENUM_TIMEFRAMES holdTimeframe = InpSignalTimeframe;
       if(StringFind(comment, "dow_sweep") >= 0)
          holdTimeframe = InpDowSignalTimeframe;
       else if(StringFind(comment, "range_reclaim") >= 0)
          holdTimeframe = InpRangeSignalTimeframe;
+      else if(StringFind(comment, "fractal_trend") >= 0)
+         holdTimeframe = InpFractalSignalTimeframe;
       int barsOpen = iBarShift(runtimeSymbol, holdTimeframe, openedAt, false);
       if(barsOpen < maxHoldBars)
          continue;
@@ -1265,6 +1318,88 @@ bool EvaluateRangeReclaimSignal(const MqlRates &envRates[], const double &envFas
    return true;
   }
 
+bool EvaluateFractalTrendSignal(const MqlRates &envRates[], const double &envFastEma[], const double &envSlowEma[],
+                                const MqlRates &signalRates[], const double &signalFastEma[], const double &signalMidEma[],
+                                const double &signalSlowEma[], const double &stochK[], const double &stochD[])
+  {
+   fractalPlannedStopPrice = 0.0;
+   fractalPlannedTargetPrice = 0.0;
+   if(!InpEnableFractalTrendBucket)
+      return false;
+
+   datetime signalBarTime = signalRates[1].time;
+   if(!IsWithinSession(signalBarTime, InpFractalSessionStartHour, InpFractalSessionEndHour))
+      return false;
+   if(!PassesVolatilityState(envRates))
+      return false;
+
+   PivotPoint envLatestHigh, envPreviousHigh, envLatestLow, envPreviousLow;
+   FindRecentPivots(envRates, true, envLatestHigh, envPreviousHigh);
+   FindRecentPivots(envRates, false, envLatestLow, envPreviousLow);
+   if(!envLatestHigh.valid || !envPreviousHigh.valid || !envLatestLow.valid || !envPreviousLow.valid)
+      return false;
+   if(!(envLatestHigh.price > envPreviousHigh.price && envLatestLow.price > envPreviousLow.price))
+      return false;
+   if(envFastEma[1] <= envSlowEma[1])
+      return false;
+   if(envRates[1].close <= envSlowEma[1])
+      return false;
+
+   PivotPoint signalLatestHigh, signalPreviousHigh, signalLatestLow, signalPreviousLow;
+   FindRecentPivotsWithSpan(signalRates, true, InpFractalPivotSpan, InpFractalScanBars, signalLatestHigh, signalPreviousHigh);
+   FindRecentPivotsWithSpan(signalRates, false, InpFractalPivotSpan, InpFractalScanBars, signalLatestLow, signalPreviousLow);
+   if(!signalLatestHigh.valid || !signalLatestLow.valid)
+      return false;
+   if(!(signalLatestHigh.time < signalLatestLow.time))
+      return false;
+
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return false;
+
+   MqlRates signalBar = signalRates[1];
+   if(signalFastEma[1] <= signalMidEma[1] || signalMidEma[1] <= signalSlowEma[1])
+      return false;
+   if(signalBar.close <= signalSlowEma[1])
+      return false;
+   if(signalBar.close <= signalBar.open)
+      return false;
+   if(signalBar.close <= signalRates[2].close)
+      return false;
+
+   bool betweenFastAndMid = (signalBar.close < signalFastEma[1] && signalBar.close > signalMidEma[1]);
+   bool betweenMidAndSlow = (signalBar.close <= signalMidEma[1] && signalBar.close > signalSlowEma[1]);
+   if(!(betweenFastAndMid || betweenMidAndSlow))
+      return false;
+
+   bool stochBuySignal = (stochK[2] < InpFractalStochBuyLevel &&
+                          stochK[1] > stochK[2] &&
+                          stochK[1] > InpFractalStochBuyLevel &&
+                          stochK[1] >= stochD[1]);
+   if(!stochBuySignal)
+      return false;
+
+   double priorHigh = signalLatestHigh.price;
+   double stopAnchor = betweenFastAndMid ? signalMidEma[1] : signalSlowEma[1];
+   stopAnchor = MathMin(stopAnchor, signalLatestLow.price);
+   double plannedStop = stopAnchor - (InpFractalStopBufferPips * pip);
+
+   double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
+   if(ask <= 0.0)
+      return false;
+   double plannedTarget = priorHigh - (InpFractalTargetBufferPips * pip);
+   double stopDistance = ask - plannedStop;
+   double targetDistance = plannedTarget - ask;
+   if(stopDistance <= 0.0 || targetDistance <= 0.0)
+      return false;
+   if((targetDistance / stopDistance) < InpFractalMinTargetRMultiple)
+      return false;
+
+   fractalPlannedStopPrice = NormalizePrice(plannedStop);
+   fractalPlannedTargetPrice = NormalizePrice(plannedTarget);
+   return true;
+  }
+
 bool OpenPosition(SignalBucket bucket)
   {
    double stopLossPips = InpStopLossPips;
@@ -1300,6 +1435,11 @@ bool OpenPosition(SignalBucket bucket)
       stopLossPips = 0.0;
       targetRMultiple = 0.0;
      }
+   else if(bucket == SIGNAL_FRACTAL_TREND)
+     {
+      stopLossPips = 0.0;
+      targetRMultiple = 0.0;
+     }
 
    double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
    double pip = GetPipSize();
@@ -1326,6 +1466,15 @@ bool OpenPosition(SignalBucket bucket)
          return false;
       sl = rangePlannedStopPrice;
       tp = rangePlannedTargetPrice;
+      stopDistance = ask - sl;
+      targetDistance = tp - ask;
+     }
+   else if(bucket == SIGNAL_FRACTAL_TREND)
+     {
+      if(fractalPlannedStopPrice <= 0.0 || fractalPlannedTargetPrice <= 0.0)
+         return false;
+      sl = fractalPlannedStopPrice;
+      tp = fractalPlannedTargetPrice;
       stopDistance = ask - sl;
       targetDistance = tp - ask;
      }
@@ -1636,6 +1785,14 @@ int OnInit()
       InpRangeMaxUpperWickShare < 0.0 || InpRangeMaxUpperWickShare > 1.0 ||
       InpRangeStopBufferPips < 0.0 || InpRangeTargetBufferPips < 0.0 ||
       InpRangeMinTargetRMultiple <= 0.0 || InpRangeMaxHoldBars < 1 ||
+      InpFractalSessionStartHour < 0 || InpFractalSessionStartHour > 23 || InpFractalSessionEndHour < 0 ||
+      InpFractalSessionEndHour > 23 || InpFractalSessionStartHour == InpFractalSessionEndHour ||
+      InpFractalPivotSpan <= 0 || InpFractalScanBars <= 20 || InpFractalMidEMAPeriod <= InpFastEMAPeriod ||
+      InpFractalSlowEMAPeriod <= InpFractalMidEMAPeriod || InpFractalStochKPeriod < 2 ||
+      InpFractalStochDPeriod < 1 || InpFractalStochSlowing < 1 ||
+      InpFractalStochBuyLevel <= 0.0 || InpFractalStochBuyLevel >= 100.0 ||
+      InpFractalStopBufferPips < 0.0 || InpFractalTargetBufferPips < 0.0 ||
+      InpFractalMinTargetRMultiple <= 0.0 || InpFractalMaxHoldBars < 1 ||
       InpStopLossPips <= 0.0 || InpTargetRMultiple <= 0.0 || InpMaxHoldBars < 1 ||
       InpMaxOpenPositions < 1 || InpRiskPercent <= 0.0 ||
       InpMicroCapBalanceThreshold < 0.0 || InpMicroCapRiskPercent <= 0.0 || InpDailyLossCapPercent <= 0.0 ||
@@ -1660,10 +1817,17 @@ int OnInit()
    rangeSlowEmaHandle = iMA(runtimeSymbol, InpRangeSignalTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
    rangeAdxHandle = iADX(runtimeSymbol, InpRangeSignalTimeframe, InpRangeAdxPeriod);
    rangeAtrHandle = iATR(runtimeSymbol, InpRangeSignalTimeframe, InpRangeAtrPeriod);
+   fractalFastEmaHandle = iMA(runtimeSymbol, InpFractalSignalTimeframe, InpFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   fractalMidEmaHandle = iMA(runtimeSymbol, InpFractalSignalTimeframe, InpFractalMidEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   fractalSlowEmaHandle = iMA(runtimeSymbol, InpFractalSignalTimeframe, InpFractalSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   fractalStochHandle = iStochastic(runtimeSymbol, InpFractalSignalTimeframe, InpFractalStochKPeriod, InpFractalStochDPeriod,
+                                    InpFractalStochSlowing, MODE_SMA, STO_LOWHIGH);
    if(fastEmaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE || adxHandle == INVALID_HANDLE || rsiHandle == INVALID_HANDLE ||
       dowFastEmaHandle == INVALID_HANDLE || dowSlowEmaHandle == INVALID_HANDLE ||
       rangeFastEmaHandle == INVALID_HANDLE || rangeSlowEmaHandle == INVALID_HANDLE ||
-      rangeAdxHandle == INVALID_HANDLE || rangeAtrHandle == INVALID_HANDLE)
+      rangeAdxHandle == INVALID_HANDLE || rangeAtrHandle == INVALID_HANDLE ||
+      fractalFastEmaHandle == INVALID_HANDLE || fractalMidEmaHandle == INVALID_HANDLE ||
+      fractalSlowEmaHandle == INVALID_HANDLE || fractalStochHandle == INVALID_HANDLE)
       return INIT_FAILED;
 
    trade.SetExpertMagicNumber((ulong)InpMagicNumber);
@@ -1724,6 +1888,14 @@ void OnDeinit(const int reason)
       IndicatorRelease(rangeAdxHandle);
    if(rangeAtrHandle != INVALID_HANDLE)
       IndicatorRelease(rangeAtrHandle);
+   if(fractalFastEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(fractalFastEmaHandle);
+   if(fractalMidEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(fractalMidEmaHandle);
+   if(fractalSlowEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(fractalSlowEmaHandle);
+   if(fractalStochHandle != INVALID_HANDLE)
+      IndicatorRelease(fractalStochHandle);
   }
 
 void OnTimer()
@@ -1791,7 +1963,11 @@ void OnTick()
    bool newRangeBar = false;
    if(InpEnableRangeReclaimBucket)
       newRangeBar = IsNewBarForTimeframe(InpRangeSignalTimeframe, lastRangeBarTime, rangeBarTime);
-   if(!newMainBar && !newDowBar && !newRangeBar)
+   datetime fractalBarTime = 0;
+   bool newFractalBar = false;
+   if(InpEnableFractalTrendBucket)
+      newFractalBar = IsNewBarForTimeframe(InpFractalSignalTimeframe, lastFractalBarTime, fractalBarTime);
+   if(!newMainBar && !newDowBar && !newRangeBar && !newFractalBar)
       return;
 
    if(CountManagedPositions() > 0)
@@ -1901,6 +2077,34 @@ void OnTick()
                EvaluateRangeReclaimSignal(envRates, envFastEma, envSlowEma, rangeRates, rangeFastEma, rangeSlowEma, rangeAdx, rangeAtr))
               {
                if(OpenPosition(SIGNAL_RANGE_RECLAIM))
+                  pendingOpenCount++;
+              }
+           }
+        }
+     }
+
+   if(newFractalBar && CanOpenAnotherTrade(fractalBarTime))
+     {
+      if(InpMaxTradesPerDay <= 0 || dailyTradeCount + pendingOpenCount < InpMaxTradesPerDay)
+        {
+         MqlRates envRates[];
+         double envFastEma[];
+         double envSlowEma[];
+         double envAdxValues[];
+         double envRsiValues[];
+         MqlRates fractalRates[];
+         double fractalFastEma[];
+         double fractalMidEma[];
+         double fractalSlowEma[];
+         double stochK[];
+         double stochD[];
+         if(LoadSignalWindow(envRates, envFastEma, envSlowEma, envAdxValues, envRsiValues, 260) &&
+            LoadFractalSignalWindow(fractalRates, fractalFastEma, fractalMidEma, fractalSlowEma, stochK, stochD, 220))
+           {
+            if(CanOpenBucketTrade(SIGNAL_FRACTAL_TREND, baseOpenCount, pendingOpenCount) &&
+               EvaluateFractalTrendSignal(envRates, envFastEma, envSlowEma, fractalRates, fractalFastEma, fractalMidEma, fractalSlowEma, stochK, stochD))
+              {
+               if(OpenPosition(SIGNAL_FRACTAL_TREND))
                   pendingOpenCount++;
               }
            }

@@ -15,14 +15,14 @@
 - Preset:
   - `reports/presets/usdjpy_20260402_round_continuation_long-quality12b_stack_parallel_guarded.set`
 - Long-window actual run:
-  - `reports/backtest/runs/usdjpy-20260402-round-continuation-long/usdjpy/m15/2026-04-02-192837-849112-usdjpy-20260402-round-continuati.json`
+  - `reports/backtest/runs/usdjpy-20260402-round-continuation-long/usdjpy/m15/2026-04-09-013454-001141-usdjpy-20260402-round-continuati.json`
 
 ## Long-Window Actual
 
 - Window:
   - `2025-04-01` to `2025-12-31`
 - Net profit:
-  - `+563.31`
+  - `+563.86`
 - Profit factor:
   - `1.28`
 - Trades:
@@ -35,9 +35,9 @@
 - Window:
   - `2026-01-01` to `2026-03-31`
 - OOS run:
-  - `reports/backtest/runs/usdjpy-20260402-round-continuation-long/usdjpy/m15/2026-04-02-192748-350119-usdjpy-20260402-round-continuati.json`
+  - `reports/backtest/runs/usdjpy-20260402-round-continuation-long/usdjpy/m15/2026-04-09-013456-574460-usdjpy-20260402-round-continuati.json`
 - OOS metrics:
-  - `net +160.12`
+  - `net +160.27`
   - `PF 2.06`
   - `20` trades
   - `max DD 0.38%`
