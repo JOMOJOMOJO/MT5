@@ -1,11 +1,11 @@
 //+------------------------------------------------------------------+
-//| USDJPY Round Continuation Long                                   |
+//| USDJPY Round Continuation Stack                                  |
 //+------------------------------------------------------------------+
 #property copyright   "Trading System"
 #property link        "https://www.mql5.com"
-#property version     "1.13"
+#property version     "1.14"
 #property strict
-#property description "USDJPY M15 long-only continuation prototype using EMA13/EMA100 trend, 50-pip anti-chop state, and wick-based pullback re-entry."
+#property description "USDJPY multi-bucket continuation prototype using EMA13/EMA100 trend, 50-pip anti-chop state, and parallel bucket entries."
 
 #include <Trade\Trade.mqh>
 
@@ -30,7 +30,9 @@ enum SignalBucket
    SIGNAL_COMPRESSION = 6,
    SIGNAL_DOW_SWEEP = 7,
    SIGNAL_RANGE_RECLAIM = 8,
-   SIGNAL_FRACTAL_TREND = 9
+   SIGNAL_FRACTAL_TREND = 9,
+   SIGNAL_ROUND_SHORT = 10,
+   SIGNAL_RANGE_RECLAIM_SHORT = 11
   };
 
 input string          InpSymbol                   = "USDJPY";
@@ -43,6 +45,7 @@ input int             InpTrendScanBars            = 180;
 input int             InpVolatilityLookbackBars   = 24;
 input double          InpMinWindowRangePips       = 18.0;
 input int             InpRoundStepPips            = 50;
+input bool            InpEnableRoundBucket        = true;
 input int             InpSessionStartHour         = 7;
 input int             InpSessionEndHour           = 22;
 input double          InpMaxEma13DistancePips     = 12.0;
@@ -54,6 +57,16 @@ input double          InpTargetRMultiple          = 1.5;
 input int             InpMaxHoldBars              = 18;
 input bool            InpAllowParallelBuckets     = true;
 input int             InpMaxOpenPositions         = 3;
+input bool            InpEnableRoundShortBucket   = false;
+input int             InpRoundShortSessionStartHour = 7;
+input int             InpRoundShortSessionEndHour = 22;
+input double          InpRoundShortMaxEma13DistancePips = 12.0;
+input double          InpRoundShortMinLowerWickShare = 0.50;
+input double          InpRoundShortMaxUpperWickShare = 0.10;
+input double          InpRoundShortMinSlowSlopePips = 0.0;
+input double          InpRoundShortStopLossPips   = 22.0;
+input double          InpRoundShortTargetRMultiple = 1.5;
+input int             InpRoundShortMaxHoldBars    = 18;
 input bool            InpEnableRoundLooseBucket   = false;
 input double          InpRoundLooseMaxEma13DistancePips = 18.0;
 input double          InpRoundLooseStopLossPips   = 18.0;
@@ -145,6 +158,7 @@ input double          InpRangeStopBufferPips      = 1.5;
 input double          InpRangeTargetBufferPips    = 2.0;
 input double          InpRangeMinTargetRMultiple  = 1.0;
 input int             InpRangeMaxHoldBars         = 20;
+input bool            InpEnableRangeShortBucket   = false;
 input bool            InpEnableFractalTrendBucket = false;
 input ENUM_TIMEFRAMES InpFractalSignalTimeframe   = PERIOD_M5;
 input int             InpFractalSessionStartHour  = 7;
@@ -234,6 +248,8 @@ double dowPlannedStopPrice = 0.0;
 double dowPlannedTargetPrice = 0.0;
 double rangePlannedStopPrice = 0.0;
 double rangePlannedTargetPrice = 0.0;
+double rangeShortPlannedStopPrice = 0.0;
+double rangeShortPlannedTargetPrice = 0.0;
 double fractalPlannedStopPrice = 0.0;
 double fractalPlannedTargetPrice = 0.0;
 
@@ -563,6 +579,8 @@ int CountManagedPositions()
 
 string BucketComment(SignalBucket bucket)
   {
+   if(bucket == SIGNAL_ROUND_SHORT)
+      return "round_continuation_short";
    if(bucket == SIGNAL_EMA)
       return "ema_sidecar_long";
    if(bucket == SIGNAL_COMPRESSION)
@@ -577,6 +595,8 @@ string BucketComment(SignalBucket bucket)
       return "dow_sweep_long";
    if(bucket == SIGNAL_RANGE_RECLAIM)
       return "range_reclaim_long";
+   if(bucket == SIGNAL_RANGE_RECLAIM_SHORT)
+      return "range_reclaim_short";
    if(bucket == SIGNAL_FRACTAL_TREND)
       return "fractal_trend_long";
    if(bucket == SIGNAL_ROUND)
@@ -590,9 +610,16 @@ ENUM_TIMEFRAMES BucketSignalTimeframe(SignalBucket bucket)
       return InpDowSignalTimeframe;
    if(bucket == SIGNAL_RANGE_RECLAIM)
       return InpRangeSignalTimeframe;
+   if(bucket == SIGNAL_RANGE_RECLAIM_SHORT)
+      return InpRangeSignalTimeframe;
    if(bucket == SIGNAL_FRACTAL_TREND)
       return InpFractalSignalTimeframe;
    return InpSignalTimeframe;
+  }
+
+bool BucketIsSell(SignalBucket bucket)
+  {
+   return (bucket == SIGNAL_ROUND_SHORT || bucket == SIGNAL_RANGE_RECLAIM_SHORT);
   }
 
 int CountBucketPositions(SignalBucket bucket)
@@ -629,7 +656,9 @@ bool ManageOpenPosition()
       datetime openedAt = (datetime)PositionGetInteger(POSITION_TIME);
       string comment = PositionGetString(POSITION_COMMENT);
       int maxHoldBars = InpMaxHoldBars;
-      if(StringFind(comment, "ema_sidecar") >= 0)
+      if(StringFind(comment, "round_continuation_short") >= 0)
+         maxHoldBars = InpRoundShortMaxHoldBars;
+      else if(StringFind(comment, "ema_sidecar") >= 0)
          maxHoldBars = InpEmaMaxHoldBars;
       else if(StringFind(comment, "compression_sidecar") >= 0)
          maxHoldBars = InpCompressionMaxHoldBars;
@@ -874,6 +903,8 @@ bool PassesVolatilityState(const MqlRates &rates[])
 
 bool EvaluateRoundSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[])
   {
+   if(!InpEnableRoundBucket)
+      return false;
    if(!PassesVolatilityState(rates))
       return false;
 
@@ -905,6 +936,49 @@ bool EvaluateRoundSignal(const MqlRates &rates[], const double &fastEma[], const
    if(UpperWickShare(rates[1]) < InpMinUpperWickShare)
       return false;
    if(LowerWickShare(rates[1]) > InpMaxLowerWickShare)
+      return false;
+   return true;
+  }
+
+bool EvaluateRoundShortSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[])
+  {
+   if(!InpEnableRoundShortBucket)
+      return false;
+   if(!PassesVolatilityState(rates))
+      return false;
+
+   datetime barTime = rates[1].time;
+   if(!IsWithinSession(barTime, InpRoundShortSessionStartHour, InpRoundShortSessionEndHour))
+      return false;
+
+   PivotPoint latestHigh, previousHigh, latestLow, previousLow;
+   FindRecentPivots(rates, true, latestHigh, previousHigh);
+   FindRecentPivots(rates, false, latestLow, previousLow);
+   if(!latestHigh.valid || !previousHigh.valid || !latestLow.valid || !previousLow.valid)
+      return false;
+
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return false;
+   if(!(latestHigh.price < previousHigh.price && latestLow.price < previousLow.price))
+      return false;
+   if(fastEma[1] >= slowEma[1])
+      return false;
+   if(rates[1].close >= slowEma[1])
+      return false;
+
+   double slowSlopePips = (slowEma[1] - slowEma[1 + InpSlowSlopeLookback]) / pip;
+   if(slowSlopePips > -InpRoundShortMinSlowSlopePips)
+      return false;
+   if(rates[1].high >= latestHigh.price)
+      return false;
+
+   double emaDistancePips = MathAbs(rates[1].close - fastEma[1]) / pip;
+   if(emaDistancePips > InpRoundShortMaxEma13DistancePips)
+      return false;
+   if(LowerWickShare(rates[1]) < InpRoundShortMinLowerWickShare)
+      return false;
+   if(UpperWickShare(rates[1]) > InpRoundShortMaxUpperWickShare)
       return false;
    return true;
   }
@@ -1318,6 +1392,98 @@ bool EvaluateRangeReclaimSignal(const MqlRates &envRates[], const double &envFas
    return true;
   }
 
+bool EvaluateRangeReclaimShortSignal(const MqlRates &envRates[], const double &envFastEma[], const double &envSlowEma[],
+                                     const MqlRates &signalRates[], const double &signalFastEma[], const double &signalSlowEma[],
+                                     const double &signalAdx[], const double &signalAtr[])
+  {
+   rangeShortPlannedStopPrice = 0.0;
+   rangeShortPlannedTargetPrice = 0.0;
+   if(!InpEnableRangeShortBucket)
+      return false;
+
+   datetime signalBarTime = signalRates[1].time;
+   if(!IsWithinSession(signalBarTime, InpRangeSessionStartHour, InpRangeSessionEndHour))
+      return false;
+   if(!PassesVolatilityState(envRates))
+      return false;
+
+   PivotPoint envLatestHigh, envPreviousHigh, envLatestLow, envPreviousLow;
+   FindRecentPivots(envRates, true, envLatestHigh, envPreviousHigh);
+   FindRecentPivots(envRates, false, envLatestLow, envPreviousLow);
+   if(!envLatestHigh.valid || !envPreviousHigh.valid || !envLatestLow.valid || !envPreviousLow.valid)
+      return false;
+   if(!(envLatestHigh.price < envPreviousHigh.price && envLatestLow.price < envPreviousLow.price))
+      return false;
+   if(envFastEma[1] >= envSlowEma[1])
+      return false;
+   if(envRates[1].close >= envSlowEma[1])
+      return false;
+
+   double pip = GetPipSize();
+   if(pip <= 0.0)
+      return false;
+   if(signalAdx[1] > InpRangeMaxAdx)
+      return false;
+   if(signalAtr[1] <= 0.0)
+      return false;
+
+   int size = ArraySize(signalRates);
+   if(size <= InpRangeLookbackBars + 2)
+      return false;
+
+   double rangeHigh = -DBL_MAX;
+   double rangeLow = DBL_MAX;
+   for(int shift = 2; shift < 2 + InpRangeLookbackBars && shift < size; ++shift)
+     {
+      if(signalRates[shift].high > rangeHigh)
+         rangeHigh = signalRates[shift].high;
+      if(signalRates[shift].low < rangeLow)
+         rangeLow = signalRates[shift].low;
+     }
+   if(rangeHigh <= rangeLow)
+      return false;
+
+   double rangeWidth = rangeHigh - rangeLow;
+   if(rangeWidth > signalAtr[1] * InpRangeMaxWidthAtrMultiple)
+      return false;
+
+   MqlRates signalBar = signalRates[1];
+   double breachPips = (signalBar.high - rangeHigh) / pip;
+   if(breachPips < InpRangeMinBreachPips || breachPips > InpRangeMaxBreachPips)
+      return false;
+   if(signalBar.close >= rangeHigh)
+      return false;
+   if(signalBar.close >= signalBar.open)
+      return false;
+   if(CloseLocation(signalBar) > (1.0 - InpRangeMinCloseLocation))
+      return false;
+   if(UpperWickShare(signalBar) < InpRangeMinLowerWickShare)
+      return false;
+   if(LowerWickShare(signalBar) > InpRangeMaxUpperWickShare)
+      return false;
+   if(signalFastEma[1] >= signalSlowEma[1])
+      return false;
+   if(signalBar.close >= signalSlowEma[1])
+      return false;
+
+   double bid = SymbolInfoDouble(runtimeSymbol, SYMBOL_BID);
+   if(bid <= 0.0)
+      return false;
+
+   double plannedStop = signalBar.high + (InpRangeStopBufferPips * pip);
+   double plannedTarget = rangeLow + (InpRangeTargetBufferPips * pip);
+   double stopDistance = plannedStop - bid;
+   double targetDistance = bid - plannedTarget;
+   if(stopDistance <= 0.0 || targetDistance <= 0.0)
+      return false;
+   if((targetDistance / stopDistance) < InpRangeMinTargetRMultiple)
+      return false;
+
+   rangeShortPlannedStopPrice = NormalizePrice(plannedStop);
+   rangeShortPlannedTargetPrice = NormalizePrice(plannedTarget);
+   return true;
+  }
+
 bool EvaluateFractalTrendSignal(const MqlRates &envRates[], const double &envFastEma[], const double &envSlowEma[],
                                 const MqlRates &signalRates[], const double &signalFastEma[], const double &signalMidEma[],
                                 const double &signalSlowEma[], const double &stochK[], const double &stochD[])
@@ -1405,6 +1571,12 @@ bool OpenPosition(SignalBucket bucket)
    double stopLossPips = InpStopLossPips;
    double targetRMultiple = InpTargetRMultiple;
    string comment = BucketComment(bucket);
+   bool isSell = BucketIsSell(bucket);
+   if(bucket == SIGNAL_ROUND_SHORT)
+     {
+      stopLossPips = InpRoundShortStopLossPips;
+      targetRMultiple = InpRoundShortTargetRMultiple;
+     }
    if(bucket == SIGNAL_EMA)
      {
       stopLossPips = InpEmaStopLossPips;
@@ -1442,23 +1614,25 @@ bool OpenPosition(SignalBucket bucket)
      }
 
    double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
+   double bid = SymbolInfoDouble(runtimeSymbol, SYMBOL_BID);
    double pip = GetPipSize();
    double point = SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
    int stopsLevel = (int)SymbolInfoInteger(runtimeSymbol, SYMBOL_TRADE_STOPS_LEVEL);
-   if(ask <= 0.0 || pip <= 0.0 || point <= 0.0)
+   double entryPrice = isSell ? bid : ask;
+   if(entryPrice <= 0.0 || pip <= 0.0 || point <= 0.0)
       return false;
    double stopDistance = stopLossPips * pip;
    double targetDistance = stopDistance * targetRMultiple;
-   double sl = NormalizePrice(ask - stopDistance);
-   double tp = NormalizePrice(ask + targetDistance);
+   double sl = NormalizePrice(isSell ? entryPrice + stopDistance : entryPrice - stopDistance);
+   double tp = NormalizePrice(isSell ? entryPrice - targetDistance : entryPrice + targetDistance);
    if(bucket == SIGNAL_DOW_SWEEP)
      {
       if(dowPlannedStopPrice <= 0.0 || dowPlannedTargetPrice <= 0.0)
          return false;
       sl = dowPlannedStopPrice;
       tp = dowPlannedTargetPrice;
-      stopDistance = ask - sl;
-      targetDistance = tp - ask;
+      stopDistance = entryPrice - sl;
+      targetDistance = tp - entryPrice;
      }
    else if(bucket == SIGNAL_RANGE_RECLAIM)
      {
@@ -1466,8 +1640,17 @@ bool OpenPosition(SignalBucket bucket)
          return false;
       sl = rangePlannedStopPrice;
       tp = rangePlannedTargetPrice;
-      stopDistance = ask - sl;
-      targetDistance = tp - ask;
+      stopDistance = entryPrice - sl;
+      targetDistance = tp - entryPrice;
+     }
+   else if(bucket == SIGNAL_RANGE_RECLAIM_SHORT)
+     {
+      if(rangeShortPlannedStopPrice <= 0.0 || rangeShortPlannedTargetPrice <= 0.0)
+         return false;
+      sl = rangeShortPlannedStopPrice;
+      tp = rangeShortPlannedTargetPrice;
+      stopDistance = sl - entryPrice;
+      targetDistance = entryPrice - tp;
      }
    else if(bucket == SIGNAL_FRACTAL_TREND)
      {
@@ -1475,8 +1658,13 @@ bool OpenPosition(SignalBucket bucket)
          return false;
       sl = fractalPlannedStopPrice;
       tp = fractalPlannedTargetPrice;
-      stopDistance = ask - sl;
-      targetDistance = tp - ask;
+      stopDistance = entryPrice - sl;
+      targetDistance = tp - entryPrice;
+     }
+   if(isSell)
+     {
+      stopDistance = sl - entryPrice;
+      targetDistance = entryPrice - tp;
      }
    if(stopDistance < stopsLevel * point)
       return false;
@@ -1486,9 +1674,9 @@ bool OpenPosition(SignalBucket bucket)
    double volume = CalculateVolume(stopDistance);
    if(volume <= 0.0)
       return false;
-   if(!trade.Buy(volume, runtimeSymbol, 0.0, sl, tp, comment))
-      return false;
-   return true;
+   if(isSell)
+      return trade.Sell(volume, runtimeSymbol, 0.0, sl, tp, comment);
+   return trade.Buy(volume, runtimeSymbol, 0.0, sl, tp, comment);
   }
 
 bool OpenTelemetryFile()
@@ -1735,6 +1923,12 @@ int OnInit()
       InpSessionEndHour < 0 || InpSessionEndHour > 23 || InpSessionStartHour == InpSessionEndHour ||
       InpMaxEma13DistancePips <= 0.0 || InpMinUpperWickShare < 0.0 || InpMinUpperWickShare > 1.0 ||
       InpMaxLowerWickShare < 0.0 || InpMaxLowerWickShare > 1.0 || InpMinUpperWickShare <= InpMaxLowerWickShare ||
+      InpRoundShortSessionStartHour < 0 || InpRoundShortSessionStartHour > 23 || InpRoundShortSessionEndHour < 0 ||
+      InpRoundShortSessionEndHour > 23 || InpRoundShortSessionStartHour == InpRoundShortSessionEndHour ||
+      InpRoundShortMaxEma13DistancePips <= 0.0 || InpRoundShortMinLowerWickShare < 0.0 ||
+      InpRoundShortMinLowerWickShare > 1.0 || InpRoundShortMaxUpperWickShare < 0.0 ||
+      InpRoundShortMaxUpperWickShare > 1.0 || InpRoundShortMinLowerWickShare <= InpRoundShortMaxUpperWickShare ||
+      InpRoundShortStopLossPips <= 0.0 || InpRoundShortTargetRMultiple <= 0.0 || InpRoundShortMaxHoldBars < 1 ||
       InpRoundLooseMaxEma13DistancePips <= InpMaxEma13DistancePips || InpRoundLooseStopLossPips <= 0.0 ||
       InpRoundLooseTargetRMultiple <= 0.0 || InpRoundLooseMaxHoldBars < 1 ||
       InpAdxPeriod <= 1 || InpEmaMaxAdx <= 0.0 || InpEmaSessionStartHour < 0 || InpEmaSessionStartHour > 23 ||
@@ -2003,10 +2197,12 @@ void OnTick()
       double rsiValues[];
       if(LoadSignalWindow(rates, fastEma, slowEma, adxValues, rsiValues, 260))
         {
-         SignalBucket buckets[6];
+         SignalBucket buckets[7];
          int bucketCount = 0;
          if(EvaluateRoundSignal(rates, fastEma, slowEma))
             buckets[bucketCount++] = SIGNAL_ROUND;
+         if(EvaluateRoundShortSignal(rates, fastEma, slowEma))
+            buckets[bucketCount++] = SIGNAL_ROUND_SHORT;
          if(EvaluateEmaSignal(rates, fastEma, slowEma, adxValues))
             buckets[bucketCount++] = SIGNAL_EMA;
          if(EvaluateCompressionSignal(rates, fastEma, slowEma, adxValues))
@@ -2077,6 +2273,12 @@ void OnTick()
                EvaluateRangeReclaimSignal(envRates, envFastEma, envSlowEma, rangeRates, rangeFastEma, rangeSlowEma, rangeAdx, rangeAtr))
               {
                if(OpenPosition(SIGNAL_RANGE_RECLAIM))
+                  pendingOpenCount++;
+              }
+            if(CanOpenBucketTrade(SIGNAL_RANGE_RECLAIM_SHORT, baseOpenCount, pendingOpenCount) &&
+               EvaluateRangeReclaimShortSignal(envRates, envFastEma, envSlowEma, rangeRates, rangeFastEma, rangeSlowEma, rangeAdx, rangeAtr))
+              {
+               if(OpenPosition(SIGNAL_RANGE_RECLAIM_SHORT))
                   pendingOpenCount++;
               }
            }
