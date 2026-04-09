@@ -7,6 +7,10 @@
 
 ## Active
 
+- [ ] Treat the current `USDJPY` operations goal as `single-EA operationalization` of `quality12b_guarded`, not turnover expansion.
+- [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_guarded.md` as the single source of truth for the active `USDJPY` mainline `demo-forward candidate ready to launch`.
+- [ ] Use `scripts/start-usdjpy-mainline-demo-forward.ps1`, `scripts/close-usdjpy-mainline-demo-forward.ps1`, and `scripts/usdjpy-mainline-live-preflight.ps1` as the canonical public interface for the current `USDJPY` mainline ops cycle.
+- [ ] Keep `quality12b_stack_parallel_guarded` as turnover research / comparison inventory for now; it is out of the current operational mainline scope.
 - [ ] Treat `knowledge/company/2026-04-02-usdjpy-mainline-reset.md` as the formal verdict that `USDJPY` is now the active mainline and `BTCUSD` stays as secondary research inventory.
 - [ ] Use `knowledge/patterns/2026-04-02-usdjpy-golden-method-spec.md` as the single source of truth for the CEO-provided Golden Method doctrine.
 - [ ] Use `knowledge/patterns/2026-04-02-usdjpy-golden-method-validation.md` as the always-on scorecard for the USDJPY Golden Method family.
@@ -51,37 +55,37 @@
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-ema-continuation-long-cycle1-review.md` as the formal verdict that `usdjpy_20260402_ema_continuation_long` produced one surviving sidecar, `london-loose`, but still did not solve the monthly turnover target by itself.
 - [ ] Keep `usdjpy_20260402_ema_continuation_long-london-loose.set` as the current best `EMA13/EMA100 continuation` sidecar inside this family.
 - [ ] Do not promote `usdjpy_20260402_ema_continuation_long` as a standalone long-only mainline.
-- [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_guarded.md` as the single source of truth for the current `USDJPY long-only` demo-forward candidate.
+- [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_guarded.md` as the single source of truth for the current `USDJPY long-only` single-EA demo-forward candidate.
 - [ ] Treat `usdjpy_20260402_round_continuation_long-quality12b_guarded.set` as the current quality-first `USDJPY` proving preset.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-quality12b-stack-guarded-promotion.md` as the formal note that `quality12b_stack_guarded` is the current turnover-biased `USDJPY long-only` demo-forward sidecar candidate.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-quality12b-stackrsi-cycle1-reject.md` as the formal verdict that the first RSI-based third bucket did not improve the latest executable `3 months OOS` window.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-quality12b-stackadx-cycle1-reject.md` as the formal verdict that the compression sidecar improved OOS only marginally while weakening long-window train quality.
-- [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_stack_guarded.md` as the source of truth for the turnover-biased `USDJPY long-only` live-track branch.
+- [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_stack_guarded.md` as the source of truth for the turnover-biased `USDJPY long-only` research comparison branch.
 - [ ] Use `scripts/start-usdjpy-quality12b-stack-demo-forward.ps1` and `scripts/usdjpy-quality12b-stack-live-preflight.ps1` for the stack-guarded demo-forward workflow.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-quality12b-stack-parallel-cycle1-promotion.md` as the formal verdict that allowing parallel bucket entries improves `USDJPY long-only` turnover without damaging recent OOS quality.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-quality12b-stack-parallel-cycle2-cap-tuning-reject.md` as the formal verdict that `max open positions = 2` and mild EMA-sidecar tightening do not improve the active parallel candidate.
-- [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_stack_parallel_guarded.md` as the source of truth for the active turnover-biased `USDJPY long-only` live-track branch.
-- [ ] Use `scripts/start-usdjpy-quality12b-stack-parallel-demo-forward.ps1` and `scripts/usdjpy-quality12b-stack-parallel-live-preflight.ps1` for the stack-parallel demo-forward workflow.
+- [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_stack_parallel_guarded.md` as the source of truth for the turnover-biased `USDJPY long-only` research comparison branch.
+- [ ] Use `scripts/start-usdjpy-quality12b-stack-parallel-demo-forward.ps1` and `scripts/usdjpy-quality12b-stack-parallel-live-preflight.ps1` only for stack-parallel comparison workflow, not for the current operational mainline.
 - [ ] Treat `.company/release/usdjpy_20260402_round_continuation_long-quality12b_smalllive050.md` as the staged first-capital packet after demo-forward passes.
-- [ ] Use `scripts/start-usdjpy-quality12b-demo-forward.ps1` and `scripts/usdjpy-quality12b-live-preflight.ps1` for the quality12b live-track workflow.
+- [ ] Use `scripts/start-usdjpy-mainline-demo-forward.ps1` and `scripts/usdjpy-mainline-live-preflight.ps1` for the quality12b mainline workflow.
 - [ ] Use `scripts/start-usdjpy-quality12b-small-live.ps1` only after the guarded demo-forward gate is accepted.
-- [ ] Keep `quality12b_guarded` as a quality-first secondary live-track candidate, not as the repo's high-turnover mainline.
-- [ ] Keep `quality12b_guarded` as the quality anchor and `quality12b_stack_parallel_guarded` as the turnover-biased sidecar until real demo-forward evidence shows which branch survives live friction better.
-- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased demo-forward candidate; do not promote `stackrsi`, `stackadx`, or the older `stack_guarded` over it.
-- [ ] Keep `quality12b_guarded` as the quality anchor and `quality12b_stack_parallel_guarded` as the active turnover-biased demo-forward candidate until real demo-forward evidence shows whether the modest turnover gain survives live friction.
+- [ ] Keep `quality12b_guarded` as the quality-first operational mainline for the current `USDJPY` ops cycle.
+- [ ] Keep `quality12b_guarded` as the operational mainline and `quality12b_stack_parallel_guarded` as the turnover-biased comparison branch until real demo-forward evidence justifies a different routing decision.
+- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased research branch; do not promote `stackrsi`, `stackadx`, or the older `stack_guarded` over it.
+- [ ] Keep `quality12b_guarded` as the operational mainline and `quality12b_stack_parallel_guarded` as the active turnover-biased research branch until a later ops cycle explicitly reopens turnover promotion.
 - [ ] Do not spend another immediate cycle on `quality12b_stack_parallel_guarded` concurrency-cap tuning or mild EMA-sidecar tightening.
 - [ ] Treat `knowledge/experiments/2026-04-09-usdjpy-quality12b-stack-parallel-dow-cycle1-reject.md` as the formal verdict that the first `M5 dow_sweep_long` bucket proved the code path for mixed bucket timeframes but did not beat the active live-track branch.
-- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased demo-forward candidate; do not promote either `quality12b_stack_parallel_dow_guarded` or `quality12b_stack_parallel_dowloose_guarded`.
+- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased research branch; do not promote either `quality12b_stack_parallel_dow_guarded` or `quality12b_stack_parallel_dowloose_guarded`.
 - [ ] Do not spend another immediate cycle on looser `dow sweep` thresholds; the next `USDJPY` cycle should add a truly independent `short` bucket or a fresh `M5` long thesis outside the support-sweep neighborhood.
 - [ ] Treat `knowledge/patterns/2026-04-09-old-ea-fractal-range-risk-lessons.md` as the durable reference for the uploaded legacy EA's two methods and stop-first sizing doctrine.
 - [ ] Treat `knowledge/experiments/2026-04-09-usdjpy-quality12b-stack-parallel-range-cycle1-reject.md` as the formal verdict that the first `M5 range reclaim long` bucket imported from the legacy EA did not improve the latest executable OOS turnover.
-- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased demo-forward candidate; do not promote `quality12b_stack_parallel_range_guarded` or `quality12b_stack_parallel_range_loose`.
+- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased research branch; do not promote `quality12b_stack_parallel_range_guarded` or `quality12b_stack_parallel_range_loose`.
 - [ ] Do not spend another immediate cycle on looser low-ADX `range reclaim` thresholds; the next serious `USDJPY` cycle should test a `fractal / stochastic pullback` long bucket or open a truly independent `short` bucket.
 - [ ] Treat `knowledge/experiments/2026-04-09-usdjpy-quality12b-stack-parallel-fractal-cycle1-review.md` as the formal verdict that the first legacy-style `fractal + stochastic + EMA pullback` bucket did not add executable OOS turnover, even though the loose version slightly improved train quality.
-- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased demo-forward candidate; do not promote `quality12b_stack_parallel_fractal_guarded` or `quality12b_stack_parallel_fractal_loose`.
+- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased research branch; do not promote `quality12b_stack_parallel_fractal_guarded` or `quality12b_stack_parallel_fractal_loose`.
 - [ ] Do not spend another immediate cycle on looser long fractal thresholds; the next serious `USDJPY` cycle should add a truly independent `short` bucket or a fresh `M5` long thesis outside the same continuation / pullback neighborhood.
 - [ ] Treat `knowledge/experiments/2026-04-09-usdjpy-quality12b-stack-parallel-short-and-rangeshort-cycle1-review.md` as the formal verdict that the first mirrored `trend-down short` bucket raised turnover but damaged quality, while the first `range short` bucket was non-material.
-- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased demo-forward candidate; do not promote `quality12b_stack_parallel_short_guarded`, `roundshort_only_guarded`, `quality12b_stack_parallel_rangeshort_guarded`, or `rangeshort_only_guarded`.
+- [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased research branch; do not promote `quality12b_stack_parallel_short_guarded`, `roundshort_only_guarded`, `quality12b_stack_parallel_rangeshort_guarded`, or `rangeshort_only_guarded`.
 - [ ] Do not spend another immediate cycle on looser mirrored `round short` thresholds or on the same `range reclaim short` idea; the next serious `USDJPY` cycle should use an event-study-informed `M5 short` thesis or a fresh executable `range` thesis.
 - [ ] Treat the low-risk `quality12b_guarded` rerun as the first `USDJPY long-only` live-track preset that clears the repo's long-window drawdown gate; remaining blockers should now be real demo-forward evidence and a live heartbeat, not backtest drawdown.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.

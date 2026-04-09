@@ -1,9 +1,9 @@
 ﻿{
-    "generated_at":  "2026-04-02T16:59:08.1739983+09:00",
+    "generated_at":  "2026-04-10T01:55:27.8526866+09:00",
     "config":  {
                    "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260402_round_continuation_long-quality12b_guarded-train-9m.ini",
-                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp16D3.ini",
-                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp16D3.ini"
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp7E3E.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp7E3E.ini"
                },
     "tester":  {
                    "symbol":  "USDJPY",

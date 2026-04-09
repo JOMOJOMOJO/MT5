@@ -1,10 +1,10 @@
 # Release Packet: `usdjpy_20260402_round_continuation_long-quality12b_guarded`
 
-- Date: `2026-04-02`
-- Status: `demo-forward candidate`
-- Family status: `quality-first secondary live-track candidate`
+- Date: `2026-04-10`
+- Status: `active single-EA demo-forward candidate`
+- Family status: `quality-first active USDJPY operational mainline`
 - Owner: `CEO / repo operator`
-- Next quarterly review: `2026-07-02`
+- Next quarterly review: `2026-07-10`
 
 ## Candidate
 
@@ -12,36 +12,68 @@
   - `mql/Experts/usdjpy_20260402_round_continuation_long.mq5`
 - Preset:
   - `reports/presets/usdjpy_20260402_round_continuation_long-quality12b_guarded.set`
-- Long-window actual run:
+- Canonical public wrappers:
+  - `scripts/start-usdjpy-mainline-demo-forward.ps1`
+  - `scripts/close-usdjpy-mainline-demo-forward.ps1`
+  - `scripts/usdjpy-mainline-live-preflight.ps1`
+- Reusable lesson:
+  - `knowledge/patterns/2026-04-01-ea-improvement-cycle.md`
+- Org review reference:
+  - `.company/improvement/org-scorecard.md`
+- Fresh validation artifacts:
+  - `reports/backtest/imported/usdjpy_20260402_round_continuation_long-quality12b_guarded-train-9m-m15.htm`
+  - `reports/backtest/imported/usdjpy_20260402_round_continuation_long-quality12b_guarded-train-9m-m15.htm.meta.json`
+  - `reports/backtest/imported/usdjpy_20260402_round_continuation_long-quality12b_guarded-oos-3m-m15.htm`
+  - `reports/backtest/imported/usdjpy_20260402_round_continuation_long-quality12b_guarded-oos-3m-m15.htm.meta.json`
+- Baseline live-state references:
   - `reports/backtest/runs/usdjpy-20260402-round-continuation-long/usdjpy/m15/2026-04-02-165730-877395-usdjpy-20260402-round-continuati.json`
+  - `reports/telemetry/2026-04-02-usdjpy-quality12b-guarded-baseline.json`
+  - `reports/forward/2026-04-02-usdjpy-quality12b-guarded-forward-gate.json`
 
 ## Long-Window Actual
 
 - Window:
   - `2025-04-01` to `2025-12-31`
+- Validation artifact:
+  - `reports/backtest/imported/usdjpy_20260402_round_continuation_long-quality12b_guarded-train-9m-m15.htm`
 - Net profit:
-  - `+804.29`
+  - `+914.94`
 - Profit factor:
-  - `1.49`
+  - `1.56`
 - Trades:
-  - `59`
-- Max drawdown:
+  - `60`
+- Max balance drawdown:
   - `2.91%`
 
 ## Recent OOS Check
 
 - Window:
   - `2026-01-01` to `2026-04-01`
-- OOS run:
-  - `reports/backtest/runs/usdjpy-20260402-round-continuation-long/usdjpy/m15/2026-04-02-163430-849482-usdjpy-20260402-round-continuati.json`
+- Validation artifact:
+  - `reports/backtest/imported/usdjpy_20260402_round_continuation_long-quality12b_guarded-oos-3m-m15.htm`
 - OOS metrics:
-  - `net +343.11`
-  - `PF 2.13`
+  - `net +113.20`
+  - `PF 2.17`
   - `9` trades
-  - `max DD 2.49%`
+  - `max balance DD 0.80%`
 - Interpretation:
-  - quality is strong enough for demo-forward proving,
-  - but turnover is still thin, so this is not the repo's high-turnover mainline.
+  - latest actual MT5 rerun stayed positive and above the repo acceptance floor,
+  - turnover remains intentionally thin because this cycle values quality over frequency.
+
+## Operational Status
+
+- Current cycle routing:
+  - `quality12b_guarded` is the active single-EA `USDJPY` operational mainline,
+  - `quality12b_stack_parallel_guarded` stays as turnover research / comparison inventory and is out of this operational scope.
+- Acceptance result:
+  - compile is clean,
+  - long-window actual is positive with `PF >= 1.30`,
+  - latest `3 months OOS` is positive with `PF >= 1.20`,
+  - candidate is ready for a new `demo-forward` launch.
+- Still not approved:
+  - direct `small-live` launch,
+  - turnover expansion work inside this packet,
+  - new bucket or timeframe research under the mainline name.
 
 ## Next Capital Stage
 
@@ -52,8 +84,9 @@
 - Staged long-window actual:
   - `reports/backtest/runs/usdjpy-20260402-round-continuation-long/usdjpy/m15/2026-04-02-165730-841822-usdjpy-20260402-round-continuati.json`
 - Route:
-  - `quality12b_guarded` stays the demo-forward proving preset,
-  - first capital should use `smalllive050`, not the proving preset.
+  - `quality12b_guarded` remains the proving preset,
+  - first capital should use `smalllive050`, not the proving preset,
+  - no first-capital discussion should reopen until a real demo-forward review and forward gate pass exist.
 
 ## Strategy Shape
 
@@ -115,12 +148,12 @@
   - `powershell -ExecutionPolicy Bypass -File scripts/backtest.ps1 -TerminalPath "C:\Program Files\XMTrading MT5\terminal64.exe" -ConfigPath reports/backtest/usdjpy_20260402_round_continuation_long-quality12b_guarded-train-9m.ini`
 - Re-run recent OOS:
   - `powershell -ExecutionPolicy Bypass -File scripts/backtest.ps1 -TerminalPath "C:\Program Files\XMTrading MT5\terminal64.exe" -ConfigPath reports/backtest/usdjpy_20260402_round_continuation_long-quality12b_guarded-oos-3m.ini`
+- Run the canonical live preflight:
+  - `powershell -ExecutionPolicy Bypass -File scripts/usdjpy-mainline-live-preflight.ps1`
 - Launch a demo-forward run:
-  - `powershell -ExecutionPolicy Bypass -File scripts/start-usdjpy-quality12b-demo-forward.ps1`
+  - `powershell -ExecutionPolicy Bypass -File scripts/start-usdjpy-mainline-demo-forward.ps1`
 - Close the demo-forward run:
-  - `powershell -ExecutionPolicy Bypass -File scripts/close-usdjpy-quality12b-demo-forward.ps1 -ManifestPath <launch-manifest.json>`
-- Run the live preflight:
-  - `powershell -ExecutionPolicy Bypass -File scripts/usdjpy-quality12b-live-preflight.ps1`
+  - `powershell -ExecutionPolicy Bypass -File scripts/close-usdjpy-mainline-demo-forward.ps1 -ManifestPath <launch-manifest.json>`
 
 ## Promotion Gate
 
@@ -142,6 +175,6 @@
 
 ## Notes
 
-- This is the best current USDJPY long-only quality branch.
-- It now satisfies the repo's long-window drawdown gate and is ready for `demo-forward proving`, not for direct first capital.
-- It does not satisfy the repo's high-turnover objective by itself.
+- This is the current `USDJPY` single-EA operational mainline.
+- It is ready for `demo-forward proving`, not for direct first capital.
+- `quality12b_stack_parallel_guarded` remains valuable comparison inventory, but it is not the active operational branch for this cycle.
