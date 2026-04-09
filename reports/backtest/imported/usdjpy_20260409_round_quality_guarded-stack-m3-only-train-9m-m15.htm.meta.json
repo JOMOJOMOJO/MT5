@@ -1,0 +1,26 @@
+﻿{
+    "generated_at":  "2026-04-09T15:54:21.5730529+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260409_round_quality_guarded-stack-m3-only-train-9m.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp1527.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp1527.ini"
+               },
+    "tester":  {
+                   "symbol":  "USDJPY",
+                   "period":  "M15",
+                   "from_date":  "2025.04.01",
+                   "to_date":  "2025.12.31",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260409_round_quality_guarded-stack-m3-only-train-9m-m15.htm"
+               },
+    "preset":  {
+                   "name":  "usdjpy_20260409_round_quality_guarded-stack-m3-only.set",
+                   "source":  "reports\\presets\\usdjpy_20260409_round_quality_guarded-stack-m3-only.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\usdjpy_20260409_round_quality_guarded-stack-m3-only.set",
+                   "parameters":  {
+                                      "InpEnableRangeReclaimBucket":  "false",
+                                      "InpMaxTradesPerDay":  "4",
+                                      "InpDowTargetRMultiple":  "1.3",
+                                      "InpDowRiskMultiplier":  "0.90"
+                                  }
+               }
+}

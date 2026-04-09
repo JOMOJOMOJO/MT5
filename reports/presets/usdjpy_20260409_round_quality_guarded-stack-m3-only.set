@@ -1,0 +1,5 @@
+; USDJPY round quality guarded stack M15/M3 only
+InpEnableRangeReclaimBucket=false||false||0||true||N
+InpMaxTradesPerDay=4||4||1||12||N
+InpDowTargetRMultiple=1.3||1.3||0.1||3.0||N
+InpDowRiskMultiplier=0.90||0.90||0.05||2.0||N

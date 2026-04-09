@@ -1,0 +1,8 @@
+; USDJPY round quality guarded stack with round-loose and EMA sidecar
+InpEnableEmaBucket=true||true||0||true||N
+InpEnableRoundLooseBucket=true||true||0||true||N
+InpEnableDowSweepBucket=false||false||0||true||N
+InpEnableRangeReclaimBucket=false||false||0||true||N
+InpAllowParallelBuckets=true||true||0||true||N
+InpMaxOpenPositions=3||3||1||6||N
+InpMaxTradesPerDay=4||4||1||10||N

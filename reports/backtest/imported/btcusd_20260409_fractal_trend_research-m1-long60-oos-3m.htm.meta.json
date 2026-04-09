@@ -1,0 +1,61 @@
+﻿{
+    "generated_at":  "2026-04-10T00:35:59.6507924+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\btcusd_20260409_fractal_trend_research-m1-long60-oos-3m.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpCCBF.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpCCBF.ini"
+               },
+    "tester":  {
+                   "symbol":  "BTCUSD",
+                   "period":  "M1",
+                   "from_date":  "2026.01.01",
+                   "to_date":  "2026.04.01",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\btcusd_20260409_fractal_trend_research-m1-long60-oos-3m.htm"
+               },
+    "preset":  {
+                   "name":  "btcusd_20260409_fractal_trend_research-m1-long60.set",
+                   "source":  "reports\\presets\\btcusd_20260409_fractal_trend_research-m1-long60.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\btcusd_20260409_fractal_trend_research-m1-long60.set",
+                   "parameters":  {
+                                      "InpSymbol":  "BTCUSD",
+                                      "InpSignalTimeframe":  "1",
+                                      "InpAllowLong":  "true",
+                                      "InpAllowShort":  "false",
+                                      "InpFastEmaPeriod":  "12",
+                                      "InpMidEmaPeriod":  "60",
+                                      "InpSlowEmaPeriod":  "150",
+                                      "InpEnableAdxFilter":  "true",
+                                      "InpAdxPeriod":  "22",
+                                      "InpAdxThreshold":  "30.0",
+                                      "InpEnableRsiFilter":  "true",
+                                      "InpRsiPeriod":  "24",
+                                      "InpLongRsiMin":  "60.0",
+                                      "InpShortRsiMax":  "44.0",
+                                      "InpEnableStochFilter":  "true",
+                                      "InpStochKPeriod":  "5",
+                                      "InpStochDPeriod":  "1",
+                                      "InpStochSlowing":  "1",
+                                      "InpStochBuyLevel":  "18.0",
+                                      "InpStochSellLevel":  "84.0",
+                                      "InpAtrPeriod":  "14",
+                                      "InpMinAtrValue":  "83.0",
+                                      "InpFractalLookbackBars":  "5",
+                                      "InpRiskReward":  "1.40",
+                                      "InpStopBufferAtrMultiplier":  "0.00",
+                                      "InpMaxHoldBars":  "0",
+                                      "InpRiskPercent":  "0.30",
+                                      "InpMinLot":  "0.01",
+                                      "InpMaxLot":  "0.50",
+                                      "InpMaxTradesPerDay":  "2",
+                                      "InpMaxConsecutiveLosses":  "3",
+                                      "InpCooldownBars":  "60",
+                                      "InpDailyLossCapPercent":  "3.0",
+                                      "InpEquityDrawdownCapPercent":  "8.0",
+                                      "InpFlattenOnDailyLoss":  "true",
+                                      "InpFlattenOnEquityCap":  "true",
+                                      "InpMaxSpreadValue":  "120.0",
+                                      "InpSlippagePoints":  "200",
+                                      "InpMagicNumber":  "2026040902"
+                                  }
+               }
+}

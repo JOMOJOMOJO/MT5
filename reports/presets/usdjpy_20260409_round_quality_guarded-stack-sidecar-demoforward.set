@@ -1,0 +1,11 @@
+; USDJPY round quality guarded stack with EMA sidecar, demo-forward guard rails
+InpEnableEmaBucket=true||true||0||true||N
+InpEnableDowSweepBucket=false||false||0||true||N
+InpEnableRangeReclaimBucket=false||false||0||true||N
+InpAllowParallelBuckets=true||true||0||true||N
+InpMaxOpenPositions=3||3||1||6||N
+InpMaxTradesPerDay=4||4||1||10||N
+InpMicroCapRiskPercent=1.50||1.50||0.1||10.0||N
+InpDailyLossCapPercent=4.0||4.0||0.5||20.0||N
+InpEquityDrawdownCapPercent=12.0||12.0||0.5||25.0||N
+InpUseConsecutiveLossCooldown=false||false||0||true||N

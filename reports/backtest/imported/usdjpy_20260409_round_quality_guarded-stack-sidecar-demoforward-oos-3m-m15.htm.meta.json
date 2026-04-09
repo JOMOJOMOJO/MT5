@@ -1,0 +1,32 @@
+﻿{
+    "generated_at":  "2026-04-09T15:59:43.0236261+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260409_round_quality_guarded-stack-sidecar-demoforward-oos-3m.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp23F4.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp23F4.ini"
+               },
+    "tester":  {
+                   "symbol":  "USDJPY",
+                   "period":  "M15",
+                   "from_date":  "2026.01.01",
+                   "to_date":  "2026.04.01",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260409_round_quality_guarded-stack-sidecar-demoforward-oos-3m-m15.htm"
+               },
+    "preset":  {
+                   "name":  "usdjpy_20260409_round_quality_guarded-stack-sidecar-demoforward.set",
+                   "source":  "reports\\presets\\usdjpy_20260409_round_quality_guarded-stack-sidecar-demoforward.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\usdjpy_20260409_round_quality_guarded-stack-sidecar-demoforward.set",
+                   "parameters":  {
+                                      "InpEnableEmaBucket":  "true",
+                                      "InpEnableDowSweepBucket":  "false",
+                                      "InpEnableRangeReclaimBucket":  "false",
+                                      "InpAllowParallelBuckets":  "true",
+                                      "InpMaxOpenPositions":  "3",
+                                      "InpMaxTradesPerDay":  "4",
+                                      "InpMicroCapRiskPercent":  "1.50",
+                                      "InpDailyLossCapPercent":  "4.0",
+                                      "InpEquityDrawdownCapPercent":  "12.0",
+                                      "InpUseConsecutiveLossCooldown":  "false"
+                                  }
+               }
+}
