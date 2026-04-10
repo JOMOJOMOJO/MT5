@@ -11,6 +11,8 @@
 - [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_guarded.md` as the single source of truth for the active `USDJPY` mainline `demo-forward candidate ready to launch`.
 - [ ] Use `scripts/start-usdjpy-mainline-demo-forward.ps1`, `scripts/close-usdjpy-mainline-demo-forward.ps1`, and `scripts/usdjpy-mainline-live-preflight.ps1` as the canonical public interface for the current `USDJPY` mainline ops cycle.
 - [ ] Keep `quality12b_stack_parallel_guarded` as turnover research / comparison inventory for now; it is out of the current operational mainline scope.
+- [ ] Use `quality12b_stack_parallel_guarded` as the current second `USDJPY` demo-forward track while the three-method integration path is being proven.
+- [ ] Do not code a third `USDJPY` bucket into the combined EA until it first survives standalone actual MT5 validation.
 - [ ] Treat `knowledge/company/2026-04-02-usdjpy-mainline-reset.md` as the formal verdict that `USDJPY` is now the active mainline and `BTCUSD` stays as secondary research inventory.
 - [ ] Use `knowledge/patterns/2026-04-02-usdjpy-golden-method-spec.md` as the single source of truth for the CEO-provided Golden Method doctrine.
 - [ ] Use `knowledge/patterns/2026-04-02-usdjpy-golden-method-validation.md` as the always-on scorecard for the USDJPY Golden Method family.
