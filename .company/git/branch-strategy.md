@@ -84,7 +84,19 @@
   - `powershell -ExecutionPolicy Bypass -File scripts/git-start-task.ps1 -Category research -Family btcusd-20260330-session-meanrev -Slug oos-review`
 - Publish a task branch:
   - `powershell -ExecutionPolicy Bypass -File scripts/git-publish-task.ps1 -CommitMessage "research: add recent OOS gate" -Paths reports/backtest/...,.company/qa/checklist.md`
+- Checkpoint the current task and immediately switch to the next branch:
+  - `powershell -ExecutionPolicy Bypass -File scripts/git-checkpoint-and-start-next.ps1 -CommitMessage "research: checkpoint short family" -AddAllChanges -NextCategory research -NextFamily usdjpy-fractal-short -NextSlug triple-top-design`
 - Land a task branch into `main`:
   - `powershell -ExecutionPolicy Bypass -File scripts/git-land-task.ps1 -SourceBranch research/btcusd-mainline/2026-04-01-feature-lab -TargetBranch main`
 - Open a PR when `main` is protected:
   - `powershell -ExecutionPolicy Bypass -File scripts/git-open-pr.ps1 -HeadBranch research/btcusd-mainline/2026-04-01-feature-lab -BaseBranch main -Title "research: add flow feature lab"`
+
+## Rotation Rule
+
+- When a coherent conclusion has been reached, checkpoint the current branch before starting the next workstream.
+- When the work category changes, rotate the branch instead of stretching one long-lived branch across unrelated tasks.
+- Default rotation order for Codex in this repo:
+  - finish the current task branch with a direct checkpoint commit,
+  - start the next branch immediately from the checkpointed HEAD,
+  - log the branch handoff in `.company/git/branch-rotation-log.jsonl`.
+- Use `scripts/git-checkpoint-and-start-next.ps1` as the default helper for this handoff instead of manually chaining commit, push, and branch creation.
