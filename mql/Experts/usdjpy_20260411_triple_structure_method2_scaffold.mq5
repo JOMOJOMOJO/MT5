@@ -11,6 +11,12 @@
 
 CTrade trade;
 
+enum EntryGradeMode
+  {
+   ENTRY_GRADE_STRONG_ONLY = 0,
+   ENTRY_GRADE_STRONG_PLUS_STANDARD = 1
+  };
+
 struct PivotPoint
   {
    bool     valid;
@@ -52,6 +58,10 @@ struct TriplePattern
    double   neckline;
    double   stopAnchor;
    bool     breakoutConfirmed;
+   double   breakoutBodyPips;
+   double   rangePosition;
+   string   rangeBucket;
+   string   breakoutType;
    string   label;
   };
 
@@ -60,10 +70,33 @@ struct EntryPlan
    bool     valid;
    int      direction;
    int      score;
+   string   tradeSide;
    double   entry;
    double   stop;
    double   target;
+   string   grade;
+   string   patternLabel;
+   string   rangeBucket;
+   string   breakoutType;
+   double   stopDistancePips;
+   double   breakoutBodyPips;
    string   reason;
+  };
+
+struct TradeTelemetryContext
+  {
+   bool     active;
+   ulong    positionId;
+   datetime entryTime;
+   int      entryHour;
+   int      score;
+   string   tradeSide;
+   string   grade;
+   string   patternLabel;
+   string   rangeBucket;
+   string   breakoutType;
+   double   stopDistancePips;
+   double   breakoutBodyPips;
   };
 
 input string          InpSymbol                       = "USDJPY";
@@ -89,8 +122,9 @@ input double          InpMinBreakBufferPips           = 1.0;
 input double          InpStopBufferATR                = 0.10;
 input double          InpMinStopBufferPips            = 1.5;
 input double          InpTargetRMultiple              = 1.6;
-input int             InpMinimumPatternScore          = 6;
+input int             InpStandardPatternScore         = 6;
 input int             InpStrongPatternScore           = 8;
+input EntryGradeMode  InpEntryGradeMode               = ENTRY_GRADE_STRONG_PLUS_STANDARD;
 input double          InpRiskPercent                  = 0.35;
 input int             InpSessionStartHour             = 7;
 input int             InpSessionEndHour               = 23;
@@ -99,15 +133,18 @@ input string          InpAllowedWeekdays              = "1,2,3,4,5";
 input int             InpMaxTradesPerDay              = 4;
 input double          InpMaxSpreadPips                = 2.2;
 input int             InpMaxHoldBars                  = 24;
-input bool            InpEnableLong                   = true;
+input bool            InpEnableLong                   = false;
 input bool            InpEnableShort                  = true;
 input bool            InpUseDailyLossCap              = true;
 input double          InpDailyLossCapPercent          = 3.0;
 input bool            InpUseEquityDrawdownCap         = true;
 input double          InpEquityDrawdownCapPercent     = 8.0;
+input bool            InpEnableTelemetry              = true;
+input string          InpTelemetryFileName            = "mt5_company_usdjpy_20260411_triple_structure_method2_short.csv";
 input long            InpMagicNumber                  = 202604111;
 
 string runtimeSymbol = "";
+string runtimeTelemetryFileName = "";
 bool allowedWeekdays[7];
 bool blockedEntryHours[24];
 datetime lastSignalBarTime = 0;
@@ -115,6 +152,10 @@ datetime currentDayStart = 0;
 double dailyStartEquity = 0.0;
 double equityPeak = 0.0;
 int dailyTradeCount = 0;
+int telemetryHandle = INVALID_HANDLE;
+TradeTelemetryContext pendingTelemetryContext;
+TradeTelemetryContext activeTelemetryContext;
+string pendingExitReason = "";
 
 int htfAtrHandle = INVALID_HANDLE;
 int htfFastEmaHandle = INVALID_HANDLE;
@@ -171,6 +212,22 @@ bool ParseIntegerCsv(string rawValue, bool &target[], int minValue, int maxValue
    return true;
   }
 
+void ResetTradeTelemetryContext(TradeTelemetryContext &ctx)
+  {
+   ctx.active = false;
+   ctx.positionId = 0;
+   ctx.entryTime = 0;
+   ctx.entryHour = -1;
+   ctx.score = 0;
+   ctx.tradeSide = "";
+   ctx.grade = "";
+   ctx.patternLabel = "";
+   ctx.rangeBucket = "";
+   ctx.breakoutType = "";
+   ctx.stopDistancePips = 0.0;
+   ctx.breakoutBodyPips = 0.0;
+  }
+
 double GetPipSize()
   {
    double point = SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
@@ -199,6 +256,31 @@ double GetSpreadPips()
    if(ask <= 0.0 || bid <= 0.0 || pip <= 0.0)
       return DBL_MAX;
    return (ask - bid) / pip;
+  }
+
+string RangePositionBucket(double value)
+  {
+   if(value >= 0.80)
+      return "upper";
+   if(value >= 0.60)
+      return "mid_upper";
+   if(value >= 0.40)
+      return "middle";
+   if(value >= 0.20)
+      return "mid_lower";
+   return "lower";
+  }
+
+int GetMinimumEntryScore()
+  {
+   if(InpEntryGradeMode == ENTRY_GRADE_STRONG_ONLY)
+      return InpStrongPatternScore;
+   return InpStandardPatternScore;
+  }
+
+bool EntryScoreAllowed(int score)
+  {
+   return (score >= GetMinimumEntryScore());
   }
 
 bool HourInWindow(int hour, int startHour, int endHour)
@@ -496,9 +578,9 @@ string GradeFromScore(int score)
   {
    if(score >= InpStrongPatternScore)
       return "strong";
-   if(score >= InpMinimumPatternScore)
+   if(score >= InpStandardPatternScore)
       return "standard";
-   if(score >= InpMinimumPatternScore - 1)
+   if(score >= InpStandardPatternScore - 1)
       return "soft";
    return "weak";
   }
@@ -523,6 +605,105 @@ bool SpacingOk(const PivotPoint &a, const PivotPoint &b)
 double BarBody(double openPrice, double closePrice)
   {
    return MathAbs(closePrice - openPrice);
+  }
+
+bool OpenTelemetryFile()
+  {
+   if(!InpEnableTelemetry)
+      return false;
+   if(telemetryHandle != INVALID_HANDLE)
+      return true;
+
+   telemetryHandle = FileOpen(runtimeTelemetryFileName,
+                              FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_COMMON | FILE_ANSI,
+                              ';');
+   if(telemetryHandle == INVALID_HANDLE)
+     {
+      PrintFormat("Telemetry open failed for '%s' (%d)", runtimeTelemetryFileName, GetLastError());
+      return false;
+     }
+
+   if(FileSize(telemetryHandle) == 0)
+     {
+      FileWrite(telemetryHandle,
+                "timestamp",
+                "event_type",
+                "side",
+                "position_id",
+                "score",
+                "grade",
+                "pattern_label",
+                "breakout_type",
+                "range_bucket",
+                "entry_hour",
+                "stop_distance_pips",
+                "breakout_body_pips",
+                "price",
+                "volume",
+                "net_profit",
+                "outcome",
+                "reason",
+                "note");
+     }
+
+   FileSeek(telemetryHandle, 0, SEEK_END);
+   return true;
+  }
+
+void CloseTelemetryFile()
+  {
+   if(telemetryHandle != INVALID_HANDLE)
+     {
+      FileClose(telemetryHandle);
+      telemetryHandle = INVALID_HANDLE;
+     }
+  }
+
+void LogTelemetryEvent(datetime stamp,
+                       string eventType,
+                       string side,
+                       ulong positionId,
+                       int score,
+                       string grade,
+                       string patternLabel,
+                       string breakoutType,
+                       string rangeBucket,
+                       int entryHour,
+                       double stopDistancePips,
+                       double breakoutBodyPips,
+                       double price,
+                       double volume,
+                       double netProfit,
+                       string outcome,
+                       string reason,
+                       string note)
+  {
+   if(!InpEnableTelemetry)
+      return;
+   if(!OpenTelemetryFile())
+      return;
+
+   FileSeek(telemetryHandle, 0, SEEK_END);
+   FileWrite(telemetryHandle,
+             TimeToString(stamp, TIME_DATE | TIME_SECONDS),
+             eventType,
+             side,
+             (long)positionId,
+             score,
+             grade,
+             patternLabel,
+             breakoutType,
+             rangeBucket,
+             entryHour,
+             stopDistancePips,
+             breakoutBodyPips,
+             price,
+             volume,
+             netProfit,
+             outcome,
+             reason,
+             note);
+   FileFlush(telemetryHandle);
   }
 
 bool EvaluateTripleTop(const TrendContext &ctx, TriplePattern &bestPattern)
@@ -550,6 +731,7 @@ bool EvaluateTripleTop(const TrendContext &ctx, TriplePattern &bestPattern)
       return false;
 
    int bestScore = -1;
+   double bestBreakBodyPips = -1.0;
    int count = ArraySize(pivots);
    for(int i = count - 1; i >= 4; --i)
      {
@@ -576,16 +758,17 @@ bool EvaluateTripleTop(const TrendContext &ctx, TriplePattern &bestPattern)
       bool breakoutConfirmed = (close1 < neckline - breakBuffer);
       bool weakBreak = (low1 < neckline - breakBuffer && close1 < neckline + breakBuffer * 0.25);
       bool failureClear = (p4.price <= MathMax(p0.price, p2.price) + tolerance * 0.25);
+      double breakBodyPips = BarBody(open1, close1) / GetPipSize();
 
       int score = 0;
-      if(ctx.rangePosition >= 0.65)
+      if(ctx.rangePosition >= 0.25 && ctx.rangePosition <= 0.60)
          score += 2;
-      else if(ctx.rangePosition >= 0.55)
+      else if(ctx.rangePosition > 0.60 && ctx.rangePosition <= 0.75)
          score += 1;
 
-      if(ctx.latestHigh.price > ctx.previousHigh.price)
+      if(ctx.latestHigh.price <= ctx.previousHigh.price)
          score += 1;
-      if(ctx.emaFast >= ctx.emaSlow)
+      if(ctx.emaFast <= ctx.emaSlow)
          score += 1;
 
       if(maxDeviation <= tolerance)
@@ -605,9 +788,10 @@ bool EvaluateTripleTop(const TrendContext &ctx, TriplePattern &bestPattern)
 
       score += ExecutionQualityScore();
 
-      if(score > bestScore)
+      if(score > bestScore || (score == bestScore && breakBodyPips > bestBreakBodyPips))
         {
          bestScore = score;
+         bestBreakBodyPips = breakBodyPips;
          bestPattern.valid = true;
          bestPattern.direction = -1;
          bestPattern.score = score;
@@ -622,6 +806,10 @@ bool EvaluateTripleTop(const TrendContext &ctx, TriplePattern &bestPattern)
          bestPattern.neckline = neckline;
          bestPattern.stopAnchor = Max3(p0.price, p2.price, p4.price);
          bestPattern.breakoutConfirmed = breakoutConfirmed;
+         bestPattern.breakoutBodyPips = breakBodyPips;
+         bestPattern.rangePosition = ctx.rangePosition;
+         bestPattern.rangeBucket = RangePositionBucket(ctx.rangePosition);
+         bestPattern.breakoutType = breakoutConfirmed ? "close_break" : "wick_break";
          bestPattern.label = "triple_top";
         }
      }
@@ -654,6 +842,7 @@ bool EvaluateInverseTripleBottom(const TrendContext &ctx, TriplePattern &bestPat
       return false;
 
    int bestScore = -1;
+   double bestBreakBodyPips = -1.0;
    int count = ArraySize(pivots);
    for(int i = count - 1; i >= 4; --i)
      {
@@ -680,6 +869,7 @@ bool EvaluateInverseTripleBottom(const TrendContext &ctx, TriplePattern &bestPat
       bool breakoutConfirmed = (close1 > neckline + breakBuffer);
       bool weakBreak = (high1 > neckline + breakBuffer && close1 > neckline - breakBuffer * 0.25);
       bool failureClear = (p4.price >= MathMin(p0.price, p2.price) - tolerance * 0.25);
+      double breakBodyPips = BarBody(open1, close1) / GetPipSize();
 
       int score = 0;
       if(ctx.rangePosition <= 0.35)
@@ -709,9 +899,10 @@ bool EvaluateInverseTripleBottom(const TrendContext &ctx, TriplePattern &bestPat
 
       score += ExecutionQualityScore();
 
-      if(score > bestScore)
+      if(score > bestScore || (score == bestScore && breakBodyPips > bestBreakBodyPips))
         {
          bestScore = score;
+         bestBreakBodyPips = breakBodyPips;
          bestPattern.valid = true;
          bestPattern.direction = 1;
          bestPattern.score = score;
@@ -726,6 +917,10 @@ bool EvaluateInverseTripleBottom(const TrendContext &ctx, TriplePattern &bestPat
          bestPattern.neckline = neckline;
          bestPattern.stopAnchor = Min3(p0.price, p2.price, p4.price);
          bestPattern.breakoutConfirmed = breakoutConfirmed;
+         bestPattern.breakoutBodyPips = breakBodyPips;
+         bestPattern.rangePosition = ctx.rangePosition;
+         bestPattern.rangeBucket = RangePositionBucket(ctx.rangePosition);
+         bestPattern.breakoutType = breakoutConfirmed ? "close_break" : "wick_break";
          bestPattern.label = "inverse_triple_bottom";
         }
      }
@@ -830,7 +1025,7 @@ double CalculateVolumeByRisk(double entry, double stop)
 bool BuildEntryPlan(const TriplePattern &pattern, EntryPlan &plan)
   {
    plan.valid = false;
-   if(!pattern.valid || pattern.score < InpMinimumPatternScore || !pattern.breakoutConfirmed)
+   if(!pattern.valid || !EntryScoreAllowed(pattern.score) || !pattern.breakoutConfirmed)
       return false;
 
    double ltfAtr = 0.0;
@@ -840,7 +1035,13 @@ bool BuildEntryPlan(const TriplePattern &pattern, EntryPlan &plan)
 
    plan.direction = pattern.direction;
    plan.score = pattern.score;
-   plan.reason = pattern.label + "_" + pattern.grade;
+   plan.tradeSide = (pattern.direction < 0) ? "short" : "long";
+   plan.grade = pattern.grade;
+   plan.patternLabel = pattern.label;
+   plan.rangeBucket = pattern.rangeBucket;
+   plan.breakoutType = pattern.breakoutType;
+   plan.breakoutBodyPips = pattern.breakoutBodyPips;
+   plan.reason = pattern.label + "_" + pattern.grade + "_s" + IntegerToString(pattern.score);
 
    if(pattern.direction < 0)
      {
@@ -852,6 +1053,7 @@ bool BuildEntryPlan(const TriplePattern &pattern, EntryPlan &plan)
       if(plan.stop <= plan.entry)
          return false;
       double risk = plan.stop - plan.entry;
+      plan.stopDistancePips = risk / GetPipSize();
       plan.target = NormalizePrice(plan.entry - risk * InpTargetRMultiple);
      }
    else if(pattern.direction > 0)
@@ -864,6 +1066,7 @@ bool BuildEntryPlan(const TriplePattern &pattern, EntryPlan &plan)
       if(plan.stop >= plan.entry)
          return false;
       double risk = plan.entry - plan.stop;
+      plan.stopDistancePips = risk / GetPipSize();
       plan.target = NormalizePrice(plan.entry + risk * InpTargetRMultiple);
      }
    else
@@ -883,6 +1086,20 @@ bool ExecuteEntry(const EntryPlan &plan)
       return false;
 
    bool result = false;
+   pendingTelemetryContext.active = true;
+   pendingTelemetryContext.positionId = 0;
+   pendingTelemetryContext.entryTime = TimeCurrent();
+   MqlDateTime tm;
+   TimeToStruct(TimeCurrent(), tm);
+   pendingTelemetryContext.entryHour = tm.hour;
+   pendingTelemetryContext.score = plan.score;
+   pendingTelemetryContext.tradeSide = plan.tradeSide;
+   pendingTelemetryContext.grade = plan.grade;
+   pendingTelemetryContext.patternLabel = plan.patternLabel;
+   pendingTelemetryContext.rangeBucket = plan.rangeBucket;
+   pendingTelemetryContext.breakoutType = plan.breakoutType;
+   pendingTelemetryContext.stopDistancePips = plan.stopDistancePips;
+   pendingTelemetryContext.breakoutBodyPips = plan.breakoutBodyPips;
    if(plan.direction > 0)
       result = trade.Buy(volume, runtimeSymbol, 0.0, plan.stop, plan.target, plan.reason);
    else if(plan.direction < 0)
@@ -890,6 +1107,8 @@ bool ExecuteEntry(const EntryPlan &plan)
 
    if(result)
       dailyTradeCount++;
+   else
+      ResetTradeTelemetryContext(pendingTelemetryContext);
 
    return result;
   }
@@ -910,17 +1129,118 @@ void ManageOpenPositions()
       datetime openedAt = (datetime)PositionGetInteger(POSITION_TIME);
       int barsSinceEntry = iBarShift(runtimeSymbol, InpSignalTimeframe, openedAt, false);
       if(barsSinceEntry >= InpMaxHoldBars && barsSinceEntry >= 0)
+        {
+         pendingExitReason = "time_stop";
          trade.PositionClose(runtimeSymbol);
+        }
+     }
+  }
+
+void OnTradeTransaction(const MqlTradeTransaction &trans,
+                        const MqlTradeRequest &request,
+                        const MqlTradeResult &result)
+  {
+   if(trans.type != TRADE_TRANSACTION_DEAL_ADD)
+      return;
+   if(!HistoryDealSelect(trans.deal))
+      return;
+
+   string symbol = HistoryDealGetString(trans.deal, DEAL_SYMBOL);
+   if(symbol != runtimeSymbol)
+      return;
+
+   long magic = HistoryDealGetInteger(trans.deal, DEAL_MAGIC);
+   if(magic != InpMagicNumber)
+      return;
+
+   ENUM_DEAL_ENTRY dealEntry = (ENUM_DEAL_ENTRY)HistoryDealGetInteger(trans.deal, DEAL_ENTRY);
+   ulong positionId = (ulong)HistoryDealGetInteger(trans.deal, DEAL_POSITION_ID);
+   datetime dealTime = (datetime)HistoryDealGetInteger(trans.deal, DEAL_TIME);
+   double price = HistoryDealGetDouble(trans.deal, DEAL_PRICE);
+   double volume = HistoryDealGetDouble(trans.deal, DEAL_VOLUME);
+   double profit = HistoryDealGetDouble(trans.deal, DEAL_PROFIT) +
+                   HistoryDealGetDouble(trans.deal, DEAL_SWAP) +
+                   HistoryDealGetDouble(trans.deal, DEAL_COMMISSION);
+   string comment = HistoryDealGetString(trans.deal, DEAL_COMMENT);
+
+   if(dealEntry == DEAL_ENTRY_IN || dealEntry == DEAL_ENTRY_INOUT)
+     {
+      if(pendingTelemetryContext.active)
+        {
+         activeTelemetryContext = pendingTelemetryContext;
+         activeTelemetryContext.active = true;
+         activeTelemetryContext.positionId = positionId;
+         activeTelemetryContext.entryTime = dealTime;
+         LogTelemetryEvent(dealTime,
+                           "entry",
+                           activeTelemetryContext.tradeSide,
+                           positionId,
+                           activeTelemetryContext.score,
+                           activeTelemetryContext.grade,
+                           activeTelemetryContext.patternLabel,
+                           activeTelemetryContext.breakoutType,
+                           activeTelemetryContext.rangeBucket,
+                           activeTelemetryContext.entryHour,
+                           activeTelemetryContext.stopDistancePips,
+                           activeTelemetryContext.breakoutBodyPips,
+                           price,
+                           volume,
+                           0.0,
+                           "",
+                           comment,
+                           "");
+         ResetTradeTelemetryContext(pendingTelemetryContext);
+        }
+      return;
+     }
+
+   if(dealEntry == DEAL_ENTRY_OUT || dealEntry == DEAL_ENTRY_OUT_BY || dealEntry == DEAL_ENTRY_INOUT)
+     {
+      string outcome = "flat";
+      if(profit > 0.0)
+         outcome = "win";
+      else if(profit < 0.0)
+         outcome = "loss";
+
+      string reason = comment;
+      if(reason == "" && pendingExitReason != "")
+         reason = pendingExitReason;
+
+      LogTelemetryEvent(dealTime,
+                        "exit",
+                        activeTelemetryContext.tradeSide,
+                        positionId,
+                        activeTelemetryContext.score,
+                        activeTelemetryContext.grade,
+                        activeTelemetryContext.patternLabel,
+                        activeTelemetryContext.breakoutType,
+                        activeTelemetryContext.rangeBucket,
+                        activeTelemetryContext.entryHour,
+                        activeTelemetryContext.stopDistancePips,
+                        activeTelemetryContext.breakoutBodyPips,
+                        price,
+                        volume,
+                        profit,
+                        outcome,
+                        reason,
+                        "");
+
+      pendingExitReason = "";
+      if(activeTelemetryContext.active && (activeTelemetryContext.positionId == 0 || activeTelemetryContext.positionId == positionId))
+         ResetTradeTelemetryContext(activeTelemetryContext);
      }
   }
 
 int OnInit()
   {
    runtimeSymbol = NormalizePresetString(InpSymbol);
+   runtimeTelemetryFileName = NormalizePresetString(InpTelemetryFileName);
+   ResetTradeTelemetryContext(pendingTelemetryContext);
+   ResetTradeTelemetryContext(activeTelemetryContext);
 
    if(InpMagicNumber <= 0 || InpTrendPivotSpan <= 0 || InpSignalPivotSpan <= 0 ||
       InpTrendATRPeriod <= 0 || InpSignalATRPeriod <= 0 || InpTargetRMultiple <= 0.0 ||
-      InpRiskPercent <= 0.0 || InpMinimumPatternScore <= 0 || InpStrongPatternScore < InpMinimumPatternScore)
+      InpRiskPercent <= 0.0 || InpStandardPatternScore <= 0 || InpStrongPatternScore < InpStandardPatternScore)
      {
       Print("Invalid Method2 triple structure parameters.");
       return INIT_PARAMETERS_INCORRECT;
@@ -957,6 +1277,8 @@ int OnInit()
 
    InitializeDayState(TimeCurrent());
    equityPeak = AccountInfoDouble(ACCOUNT_EQUITY);
+   if(InpEnableTelemetry && !OpenTelemetryFile())
+      Print("Telemetry file could not be opened. Continuing without telemetry.");
    return INIT_SUCCEEDED;
   }
 
@@ -970,6 +1292,7 @@ void OnDeinit(const int reason)
       IndicatorRelease(htfSlowEmaHandle);
    if(ltfAtrHandle != INVALID_HANDLE)
       IndicatorRelease(ltfAtrHandle);
+   CloseTelemetryFile();
   }
 
 void OnTick()
