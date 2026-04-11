@@ -1,9 +1,9 @@
 ﻿{
-    "generated_at":  "2026-04-02T15:41:36.5379583+09:00",
+    "generated_at":  "2026-04-10T16:18:38.8542557+09:00",
     "config":  {
                    "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260402_ema_continuation_long-london-loose-oos-3m.ini",
-                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp3188.ini",
-                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp3188.ini"
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpD7D5.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpD7D5.ini"
                },
     "tester":  {
                    "symbol":  "USDJPY",

@@ -57,6 +57,7 @@
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-ema-continuation-long-cycle1-review.md` as the formal verdict that `usdjpy_20260402_ema_continuation_long` produced one surviving sidecar, `london-loose`, but still did not solve the monthly turnover target by itself.
 - [ ] Keep `usdjpy_20260402_ema_continuation_long-london-loose.set` as the current best `EMA13/EMA100 continuation` sidecar inside this family.
 - [ ] Do not promote `usdjpy_20260402_ema_continuation_long` as a standalone long-only mainline.
+- [ ] Treat `knowledge/experiments/2026-04-10-usdjpy-method2-ema-standalone-promotion-cycle1-reject.md` as the formal verdict that the first standalone-promotion retune for Method 2 still failed; keep `EMA continuation` as coexistence-only sidecar inventory.
 - [ ] Use `.company/release/usdjpy_20260402_round_continuation_long-quality12b_guarded.md` as the single source of truth for the current `USDJPY long-only` single-EA demo-forward candidate.
 - [ ] Treat `usdjpy_20260402_round_continuation_long-quality12b_guarded.set` as the current quality-first `USDJPY` proving preset.
 - [ ] Treat `knowledge/experiments/2026-04-02-usdjpy-quality12b-stack-guarded-promotion.md` as the formal note that `quality12b_stack_guarded` is the current turnover-biased `USDJPY long-only` demo-forward sidecar candidate.
@@ -89,6 +90,10 @@
 - [ ] Treat `knowledge/experiments/2026-04-09-usdjpy-quality12b-stack-parallel-short-and-rangeshort-cycle1-review.md` as the formal verdict that the first mirrored `trend-down short` bucket raised turnover but damaged quality, while the first `range short` bucket was non-material.
 - [ ] Keep `quality12b_stack_parallel_guarded` as the active turnover-biased research branch; do not promote `quality12b_stack_parallel_short_guarded`, `roundshort_only_guarded`, `quality12b_stack_parallel_rangeshort_guarded`, or `rangeshort_only_guarded`.
 - [ ] Do not spend another immediate cycle on looser mirrored `round short` thresholds or on the same `range reclaim short` idea; the next serious `USDJPY` cycle should use an event-study-informed `M5 short` thesis or a fresh executable `range` thesis.
+- [ ] Treat `knowledge/experiments/2026-04-10-usdjpy-round-continuation-short-standalone-cycle1-reject.md` as the formal verdict that the standalone Method1-style short branch still fails the latest `3 months OOS` window and must not be merged into the mainline.
+- [ ] Treat `knowledge/experiments/2026-04-10-usdjpy-method2-s2-short-reactivation-cycle1.md` as the current verdict that `S2 sell breakout exec22-tight` is the first surviving short-side Method2 candidate, but still too sparse for standalone promotion.
+- [ ] Treat `knowledge/experiments/2026-04-10-usdjpy-method2-s2-standalone-guarded-cycle1.md` as the current verdict that the standalone short-only Method2 EA survives train, latest OOS, and longer actual MT5, but remains a quality-first secondary candidate rather than an operational mainline.
+- [ ] Use `mql/Experts/usdjpy_20260410_method2_s2_short_guarded.mq5` as the source of truth for the standalone short-only Method2 branch.
 - [ ] Treat the low-risk `quality12b_guarded` rerun as the first `USDJPY long-only` live-track preset that clears the repo's long-window drawdown gate; remaining blockers should now be real demo-forward evidence and a live heartbeat, not backtest drawdown.
 - [ ] Treat broker symbol and lot-floor viability for `USDJPY` as preliminarily confirmed on the current feed; the blocker is edge quality, not minimum lot expression.
 - [ ] Allow a documented micro-cap risk override for the first `100 USD` stage if strict `2%` sizing would distort the method, but keep daily hard-loss control active.

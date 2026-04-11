@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "symbol": "USDJPY",
+    "timeframe": "M5",
+    "bars": 50000,
+    "split_date": "2026-01-01",
+    "history_start": "2025-08-08T01:15:00",
+    "history_end": "2026-04-10T15:50:00",
+    "full_count": 2280,
+    "filtered_count": 0
+  },
+  "summary": {},
+  "top_rows": []
+}

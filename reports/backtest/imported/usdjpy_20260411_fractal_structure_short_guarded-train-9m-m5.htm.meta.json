@@ -1,0 +1,56 @@
+﻿{
+    "generated_at":  "2026-04-11T16:41:29.3966668+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260411_fractal_structure_short_guarded-train-9m.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpD1F8.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpD1F8.ini"
+               },
+    "tester":  {
+                   "symbol":  "USDJPY",
+                   "period":  "M5",
+                   "from_date":  "2025.04.01",
+                   "to_date":  "2025.12.31",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\imported\\usdjpy_20260411_fractal_structure_short_guarded-train-9m-m5.htm"
+               },
+    "preset":  {
+                   "name":  "usdjpy_20260411_fractal_structure_short_guarded-baseline.set",
+                   "source":  "reports\\presets\\usdjpy_20260411_fractal_structure_short_guarded-baseline.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\usdjpy_20260411_fractal_structure_short_guarded-baseline.set",
+                   "parameters":  {
+                                      "InpSymbol":  "USDJPY",
+                                      "InpTrendTimeframe":  "15",
+                                      "InpSignalTimeframe":  "5",
+                                      "InpTrendPivotSpan":  "2",
+                                      "InpTrendScanBars":  "220",
+                                      "InpFastEMAPeriod":  "20",
+                                      "InpSlowEMAPeriod":  "50",
+                                      "InpATRPeriod":  "14",
+                                      "InpSlopeLookbackBars":  "4",
+                                      "InpMinSlowSlopePips":  "0.8",
+                                      "InpZoneATRMultiple":  "0.40",
+                                      "InpMinZonePips":  "4.0",
+                                      "InpLocalSweepLookbackBars":  "6",
+                                      "InpSweepBufferPips":  "0.6",
+                                      "InpMinSignalRangePips":  "4.0",
+                                      "InpMinSignalBodyPips":  "1.5",
+                                      "InpMaxSignalCloseLocation":  "0.45",
+                                      "InpConfirmBreakBars":  "2",
+                                      "InpConfirmBreakBufferPips":  "0.2",
+                                      "InpStopBufferPips":  "1.2",
+                                      "InpTargetRMultiple":  "1.5",
+                                      "InpUseTimeStop":  "true",
+                                      "InpMaxHoldBars":  "12",
+                                      "InpRiskPercent":  "0.35",
+                                      "InpSessionStartHour":  "0",
+                                      "InpSessionEndHour":  "0",
+                                      "InpMaxSpreadPips":  "2.0",
+                                      "InpMaxTradesPerDay":  "3",
+                                      "InpUseDailyLossCap":  "true",
+                                      "InpDailyLossCapPercent":  "3.0",
+                                      "InpUseEquityDrawdownCap":  "true",
+                                      "InpEquityDrawdownCapPercent":  "8.0",
+                                      "InpAllowedWeekdays":  "1,2,3,4,5",
+                                      "InpMagicNumber":  "202604111"
+                                  }
+               }
+}
