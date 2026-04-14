@@ -94,6 +94,14 @@ enum ExitExecutionMode
    EXIT_EXEC_SERVER_PARTIAL = 1
   };
 
+enum ExecutionTriggerMode
+  {
+   EXEC_M5_MARKET_CONFIRM = 0,
+   EXEC_M1_MICRO_HIGH_STOP = 1,
+   EXEC_M1_BREAK_CLOSE_CONFIRM = 2,
+   EXEC_M1_RETEST_HOLD_CONFIRM = 3
+  };
+
 struct PivotPoint
   {
    bool     valid;
@@ -161,6 +169,7 @@ struct LtfStateMachine
    double    continuationLevel;
    double    retestLevel;
    double    higherLowPrice;
+   datetime  higherLowTime;
    double    targetSwingHigh;
    double    closeLocation;
    double    pullbackDepthPips;
@@ -200,6 +209,7 @@ struct PullbackSetup
    double    pullbackRetracement;
    double    pullbackLowPrice;
    double    higherLowPrice;
+   datetime  higherLowTime;
    double    reclaimLevel;
    double    continuationLevel;
    double    targetSwingHigh;
@@ -224,6 +234,10 @@ struct EntryPlan
    string    stopBasis;
    string    targetType;
    string    orderMode;
+   string    executionMode;
+   string    setupTimeframe;
+   string    executionTimeframe;
+   string    microTriggerType;
    string    partialTargetLabel;
    string    runnerTargetLabel;
    string    volatilityBucket;
@@ -233,6 +247,9 @@ struct EntryPlan
    double    pullbackDepthPips;
    double    ltfAtrPips;
    double    invalidationLevel;
+   double    setupBaselineEntry;
+   double    setupToEntryPips;
+   double    breakoutDistancePips;
    double    entry;
    double    stop;
    double    target;
@@ -241,7 +258,23 @@ struct EntryPlan
    bool      runnerTargetEnabled;
    double    stopDistancePips;
    double    plannedRiskAmount;
+   int       barsFromSetupToEntry;
    string    reason;
+  };
+
+struct PendingExecutionContext
+  {
+   bool          valid;
+   PullbackSetup setup;
+   double        setupBaselineEntry;
+   datetime      detectedTime;
+   double        microHigh;
+   datetime      microHighTime;
+   double        breakoutLevel;
+   double        breakoutDistancePips;
+   bool          breakoutSeen;
+   datetime      breakoutTime;
+   string        microTriggerType;
   };
 
 input string          InpSymbol                   = "USDJPY";
@@ -280,6 +313,8 @@ input FibTargetLevel  InpFibTargetLevel           = FIB_TARGET_500;
 input HybridPartialTargetLevel InpHybridPartialTargetLevel = HYBRID_PARTIAL_EXT_382;
 input HybridRunnerTargetMode InpHybridRunnerTargetMode = HYBRID_RUNNER_FIB_618;
 input ExitExecutionMode InpExitExecutionMode      = EXIT_EXEC_EA_MANAGED;
+input ExecutionTriggerMode InpExecutionTriggerMode = EXEC_M5_MARKET_CONFIRM;
+input ENUM_TIMEFRAMES InpExecutionTimeframe      = PERIOD_M1;
 input double          InpTargetFrontRunPips       = 1.0;
 input double          InpHybridPartialFraction    = 0.50;
 input int             InpMaxHoldBars              = 16;
@@ -295,7 +330,8 @@ input long            InpMagicNumber              = 202604141;
 
 string runtimeSymbol = "";
 string runtimeTelemetryFileName = "";
-datetime lastBarTime = 0;
+datetime lastSetupBarTime = 0;
+datetime lastExecutionBarTime = 0;
 int htfFastHandle = INVALID_HANDLE;
 int htfSlowHandle = INVALID_HANDLE;
 int htfAtrHandle = INVALID_HANDLE;
@@ -304,6 +340,7 @@ int telemetryHandle = INVALID_HANDLE;
 
 EntryPlan pendingPlan;
 EntryPlan activePlan;
+PendingExecutionContext pendingExecution;
 bool hasPendingPlan = false;
 bool activePartialTaken = false;
 bool pendingPartialExit = false;
@@ -318,6 +355,10 @@ double activePlannedRiskAmount = 0.0;
 int activeBarsToPartial = -1;
 int activeBarsToFinal = -1;
 int activeBarsToTimeStop = -1;
+double activeMfePips = 0.0;
+double activeMaePips = 0.0;
+double activeMaxUnrealizedR = 0.0;
+double activeMinUnrealizedR = 0.0;
 
 string NormalizePresetString(string rawValue)
   {
@@ -440,6 +481,30 @@ string ExitExecutionModeLabel(ExitExecutionMode mode)
    return "ea_managed";
   }
 
+string ExecutionTriggerModeLabel(ExecutionTriggerMode mode)
+  {
+   switch(mode)
+     {
+      case EXEC_M1_MICRO_HIGH_STOP: return "m1_micro_high_stop";
+      case EXEC_M1_BREAK_CLOSE_CONFIRM: return "m1_break_close_confirm";
+      case EXEC_M1_RETEST_HOLD_CONFIRM: return "m1_retest_hold_confirm";
+      default: return "m5_market_confirm";
+     }
+  }
+
+string TimeframeLabel(ENUM_TIMEFRAMES tf)
+  {
+   switch(tf)
+     {
+      case PERIOD_M1: return "m1";
+      case PERIOD_M5: return "m5";
+      case PERIOD_M15: return "m15";
+      case PERIOD_M30: return "m30";
+      case PERIOD_H1: return "h1";
+      default: return EnumToString(tf);
+     }
+  }
+
 string HybridPartialTargetLabel(HybridPartialTargetLevel level)
   {
    if(level == HYBRID_PARTIAL_EXT_500)
@@ -507,6 +572,10 @@ void ResetEntryPlan(EntryPlan &plan)
    plan.stopBasis = "";
    plan.targetType = "";
    plan.orderMode = "";
+   plan.executionMode = "";
+   plan.setupTimeframe = "";
+   plan.executionTimeframe = "";
+   plan.microTriggerType = "";
    plan.partialTargetLabel = "";
    plan.runnerTargetLabel = "";
    plan.volatilityBucket = "";
@@ -516,6 +585,9 @@ void ResetEntryPlan(EntryPlan &plan)
    plan.pullbackDepthPips = 0.0;
    plan.ltfAtrPips = 0.0;
    plan.invalidationLevel = 0.0;
+   plan.setupBaselineEntry = 0.0;
+   plan.setupToEntryPips = 0.0;
+   plan.breakoutDistancePips = 0.0;
    plan.entry = 0.0;
    plan.stop = 0.0;
    plan.target = 0.0;
@@ -524,7 +596,23 @@ void ResetEntryPlan(EntryPlan &plan)
    plan.runnerTargetEnabled = false;
    plan.stopDistancePips = 0.0;
    plan.plannedRiskAmount = 0.0;
+   plan.barsFromSetupToEntry = -1;
    plan.reason = "";
+  }
+
+void ResetPendingExecution(PendingExecutionContext &ctx)
+  {
+   ctx.valid = false;
+   ctx.setup.valid = false;
+   ctx.setupBaselineEntry = 0.0;
+   ctx.detectedTime = 0;
+   ctx.microHigh = 0.0;
+   ctx.microHighTime = 0;
+   ctx.breakoutLevel = 0.0;
+   ctx.breakoutDistancePips = 0.0;
+   ctx.breakoutSeen = false;
+   ctx.breakoutTime = 0;
+   ctx.microTriggerType = "";
   }
 
 void ResetTradeRuntimeState()
@@ -540,19 +628,23 @@ void ResetTradeRuntimeState()
    activeBarsToPartial = -1;
    activeBarsToFinal = -1;
    activeBarsToTimeStop = -1;
+   activeMfePips = 0.0;
+   activeMaePips = 0.0;
+   activeMaxUnrealizedR = 0.0;
+   activeMinUnrealizedR = 0.0;
    pendingPartialExit = false;
    pendingExitReason = "";
   }
 
-bool IsNewBar(ENUM_TIMEFRAMES tf, datetime &barTime)
+bool IsNewBar(ENUM_TIMEFRAMES tf, datetime &lastSeenBarTime, datetime &barTime)
   {
    datetime times[];
    ArraySetAsSeries(times, true);
    if(CopyTime(runtimeSymbol, tf, 0, 2, times) < 2)
       return false;
-   if(times[0] == lastBarTime)
+   if(times[0] == lastSeenBarTime)
       return false;
-   lastBarTime = times[0];
+   lastSeenBarTime = times[0];
    barTime = times[0];
    return true;
   }
@@ -936,6 +1028,7 @@ bool BuildLtfStateMachine(const HtfPhaseContext &ctx, LtfStateMachine &machine)
 
    machine.higherLowFormed = false;
    machine.higherLowPrice = 0.0;
+   machine.higherLowTime = 0;
    if(machine.latestLow.valid &&
       machine.latestLow.shift < machine.pullbackLowShift &&
       machine.latestLow.shift <= 6 &&
@@ -943,6 +1036,7 @@ bool BuildLtfStateMachine(const HtfPhaseContext &ctx, LtfStateMachine &machine)
      {
       machine.higherLowFormed = true;
       machine.higherLowPrice = machine.latestLow.price;
+      machine.higherLowTime = machine.latestLow.time;
       machine.state = LTF_HIGHER_LOW_FORMED;
      }
 
@@ -1049,6 +1143,7 @@ void FillPullbackSetup(const HtfPhaseContext &ctx,
    setup.pullbackRetracement = machine.pullbackRetracement;
    setup.pullbackLowPrice = machine.pullbackLowPrice;
    setup.higherLowPrice = machine.higherLowPrice;
+    setup.higherLowTime = machine.higherLowTime;
    setup.reclaimLevel = machine.reclaimLevel;
    setup.continuationLevel = machine.continuationLevel;
    setup.targetSwingHigh = machine.targetSwingHigh;
@@ -1191,14 +1286,21 @@ double SelectHybridRunnerTarget(const PullbackSetup &setup,
    return target;
   }
 
-bool BuildEntryPlan(const PullbackSetup &setup, EntryPlan &plan)
+bool BuildEntryPlan(const PullbackSetup &setup,
+                    double entryPrice,
+                    string executionModeLabel,
+                    string microTriggerType,
+                    double setupBaselineEntry,
+                    double breakoutDistancePips,
+                    int barsFromSetupToEntry,
+                    EntryPlan &plan)
   {
    ResetEntryPlan(plan);
    if(!setup.valid)
       return false;
 
-   double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
-   if(ask <= 0.0)
+   double entry = NormalizePrice(entryPrice);
+   if(entry <= 0.0)
       return false;
 
    double stopBufferPrice = MathMax(PipsToPrice(InpMinStopBufferPips),
@@ -1207,7 +1309,6 @@ bool BuildEntryPlan(const PullbackSetup &setup, EntryPlan &plan)
    if(InpStopBasisMode == STOP_HIGHER_LOW && setup.higherLowPrice > 0.0)
       stopAnchor = setup.higherLowPrice;
 
-   double entry = NormalizePrice(ask);
    double stop = NormalizePrice(stopAnchor - stopBufferPrice);
    if(stop >= entry)
       return false;
@@ -1285,6 +1386,10 @@ bool BuildEntryPlan(const PullbackSetup &setup, EntryPlan &plan)
    plan.stopBasis = setup.stopBasis;
    plan.targetType = targetType;
    plan.orderMode = orderMode;
+   plan.executionMode = executionModeLabel;
+   plan.setupTimeframe = TimeframeLabel(InpSignalTimeframe);
+   plan.executionTimeframe = TimeframeLabel(InpExecutionTimeframe);
+   plan.microTriggerType = microTriggerType;
    plan.partialTargetLabel = partialTargetLabel;
    plan.runnerTargetLabel = runnerTargetLabel;
    plan.volatilityBucket = setup.volatilityBucket;
@@ -1294,14 +1399,18 @@ bool BuildEntryPlan(const PullbackSetup &setup, EntryPlan &plan)
    plan.pullbackDepthPips = setup.pullbackDepthPips;
    plan.ltfAtrPips = setup.ltfAtrPips;
    plan.invalidationLevel = NormalizePrice(stopAnchor - PipsToPrice(InpAcceptanceExitBufferPips));
+   plan.setupBaselineEntry = setupBaselineEntry;
+   plan.setupToEntryPips = (setupBaselineEntry > 0.0) ? (entry - setupBaselineEntry) / GetPipSize() : 0.0;
+   plan.breakoutDistancePips = breakoutDistancePips;
    plan.entry = entry;
    plan.stop = stop;
    plan.target = target;
    plan.partialTarget = partialTarget;
    plan.usePartial = usePartial;
-    plan.runnerTargetEnabled = runnerTargetEnabled;
+   plan.runnerTargetEnabled = runnerTargetEnabled;
    plan.stopDistancePips = risk / GetPipSize();
    plan.plannedRiskAmount = 0.0;
+   plan.barsFromSetupToEntry = barsFromSetupToEntry;
    plan.reason = "trend_continuation_" + setup.tier + "_" + setup.entryTypeLabel;
    return true;
   }
@@ -1367,14 +1476,290 @@ double CalculateRiskAmountByVolume(double entry, double stop, double volume)
    return moneyPerLot * volume;
   }
 
+int BarsBetweenTimes(datetime olderTime, datetime newerTime, ENUM_TIMEFRAMES tf)
+  {
+   if(olderTime <= 0 || newerTime <= 0)
+      return -1;
+   int olderShift = iBarShift(runtimeSymbol, tf, olderTime, false);
+   int newerShift = iBarShift(runtimeSymbol, tf, newerTime, false);
+   if(olderShift < 0 || newerShift < 0)
+      return -1;
+   return olderShift - newerShift;
+  }
+
 int BarsSinceSignalTime(datetime eventTime)
   {
    if(eventTime <= 0)
       return -1;
-   int shift = iBarShift(runtimeSymbol, InpSignalTimeframe, eventTime, false);
-   if(shift < 0)
-      return -1;
-   return shift;
+   return BarsBetweenTimes(eventTime, TimeCurrent(), InpSignalTimeframe);
+  }
+
+void UpdateOpenTradeExcursion()
+  {
+   if(!activePlan.valid)
+      return;
+   if(!PositionSelect(runtimeSymbol))
+      return;
+   if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+      return;
+
+   double bid = SymbolInfoDouble(runtimeSymbol, SYMBOL_BID);
+   if(bid <= 0.0 || activePlan.stopDistancePips <= 0.0)
+      return;
+
+   double unrealizedPips = (bid - activePlan.entry) / GetPipSize();
+   if(unrealizedPips > activeMfePips)
+      activeMfePips = unrealizedPips;
+
+   double adversePips = (activePlan.entry - bid) / GetPipSize();
+   if(adversePips > activeMaePips)
+      activeMaePips = adversePips;
+
+   double unrealizedR = unrealizedPips / activePlan.stopDistancePips;
+   if(unrealizedR > activeMaxUnrealizedR)
+      activeMaxUnrealizedR = unrealizedR;
+   if(unrealizedR < activeMinUnrealizedR)
+      activeMinUnrealizedR = unrealizedR;
+  }
+
+bool ResolveExecutionMicroHigh(PendingExecutionContext &ctx)
+  {
+   if(!ctx.valid)
+      return false;
+   if(ctx.breakoutSeen && InpExecutionTriggerMode == EXEC_M1_RETEST_HOLD_CONFIRM)
+      return (ctx.breakoutLevel > 0.0);
+
+   datetime anchorTime = ctx.setup.higherLowTime;
+   if(anchorTime <= 0)
+      anchorTime = ctx.setup.setupTime;
+
+   int anchorShift = iBarShift(runtimeSymbol, InpExecutionTimeframe, anchorTime, false);
+   if(anchorShift < 2)
+      return false;
+
+   PivotPoint pivots[];
+   int scanBars = MathMin(MathMax(anchorShift + 10, 20), 90);
+   if(CollectConfirmedPivots(runtimeSymbol, InpExecutionTimeframe, 1, scanBars, pivots))
+     {
+      for(int i = ArraySize(pivots) - 1; i >= 0; --i)
+        {
+         if(!pivots[i].isHigh)
+            continue;
+         if(pivots[i].time < anchorTime)
+            continue;
+         if(pivots[i].shift < 2)
+            continue;
+
+         ctx.microHigh = pivots[i].price;
+         ctx.microHighTime = pivots[i].time;
+         ctx.microTriggerType = "m1_pivot_high_break";
+         ctx.breakoutLevel = NormalizePrice(ctx.microHigh + PipsToPrice(InpConfirmBreakPips));
+         ctx.breakoutDistancePips = (ctx.breakoutLevel - ctx.setup.continuationLevel) / GetPipSize();
+         return true;
+        }
+     }
+
+   int searchCount = MathMax(1, anchorShift - 1);
+   int highestShift = iHighest(runtimeSymbol, InpExecutionTimeframe, MODE_HIGH, searchCount, 2);
+   if(highestShift < 0)
+      return false;
+
+   ctx.microHigh = iHigh(runtimeSymbol, InpExecutionTimeframe, highestShift);
+   ctx.microHighTime = iTime(runtimeSymbol, InpExecutionTimeframe, highestShift);
+   ctx.microTriggerType = "m1_range_high_break";
+   ctx.breakoutLevel = NormalizePrice(ctx.microHigh + PipsToPrice(InpConfirmBreakPips));
+   ctx.breakoutDistancePips = (ctx.breakoutLevel - ctx.setup.continuationLevel) / GetPipSize();
+   return true;
+  }
+
+void StagePendingExecution(const PullbackSetup &setup)
+  {
+   ResetPendingExecution(pendingExecution);
+   pendingExecution.valid = setup.valid;
+   pendingExecution.setup = setup;
+   pendingExecution.setupBaselineEntry = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
+   if(pendingExecution.setupBaselineEntry <= 0.0)
+      pendingExecution.setupBaselineEntry = iClose(runtimeSymbol, InpSignalTimeframe, 1);
+   pendingExecution.detectedTime = TimeCurrent();
+   ResolveExecutionMicroHigh(pendingExecution);
+  }
+
+bool ExecuteSetupEntry(const PullbackSetup &setup,
+                      double entryPrice,
+                      string executionModeLabel,
+                      string microTriggerType,
+                      double setupBaselineEntry,
+                      double breakoutDistancePips,
+                      int barsFromSetupToEntry)
+  {
+   EntryPlan plan;
+   if(!BuildEntryPlan(setup,
+                      entryPrice,
+                      executionModeLabel,
+                      microTriggerType,
+                      setupBaselineEntry,
+                      breakoutDistancePips,
+                      barsFromSetupToEntry,
+                      plan))
+      return false;
+
+   double volume = CalculateVolumeByRisk(plan.entry, plan.stop);
+   if(volume <= 0.0)
+      return false;
+
+   plan.plannedRiskAmount = CalculateRiskAmountByVolume(plan.entry, plan.stop, volume);
+   ResetEntryPlan(pendingPlan);
+   pendingPlan = plan;
+   hasPendingPlan = false;
+
+   if(trade.Buy(volume, runtimeSymbol, 0.0, plan.stop, 0.0, plan.reason))
+     {
+      pendingPlan = plan;
+      hasPendingPlan = true;
+      ResetPendingExecution(pendingExecution);
+      return true;
+     }
+
+   ResetEntryPlan(pendingPlan);
+   return false;
+  }
+
+void ProcessNewSetupBar()
+  {
+   ManageOpenPositions();
+
+   if(hasPendingPlan || CountManagedPositions() > 0)
+      return;
+   if(!PassGlobalGuards())
+     {
+      ResetPendingExecution(pendingExecution);
+      return;
+     }
+
+   HtfPhaseContext ctx;
+   if(!BuildHtfPhaseContext(ctx))
+     {
+      ResetPendingExecution(pendingExecution);
+      return;
+     }
+
+   PullbackSetup setup;
+   if(!DetectContinuationSetup(ctx, setup))
+     {
+      ResetPendingExecution(pendingExecution);
+      return;
+     }
+
+   if(InpExecutionTriggerMode == EXEC_M5_MARKET_CONFIRM)
+     {
+      double baselineEntry = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
+      if(baselineEntry <= 0.0)
+         baselineEntry = iClose(runtimeSymbol, InpSignalTimeframe, 1);
+      ExecuteSetupEntry(setup,
+                        baselineEntry,
+                        ExecutionTriggerModeLabel(InpExecutionTriggerMode),
+                        "m5_setup_market",
+                        baselineEntry,
+                        0.0,
+                        0);
+      return;
+     }
+
+   StagePendingExecution(setup);
+  }
+
+void ProcessExecutionTick()
+  {
+   if(InpExecutionTriggerMode != EXEC_M1_MICRO_HIGH_STOP)
+      return;
+   if(!pendingExecution.valid || hasPendingPlan || CountManagedPositions() > 0 || !PassGlobalGuards())
+      return;
+   if(!ResolveExecutionMicroHigh(pendingExecution))
+      return;
+
+   double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
+   if(ask <= 0.0 || ask < pendingExecution.breakoutLevel)
+      return;
+
+   int barsFromSetup = BarsBetweenTimes(pendingExecution.detectedTime, TimeCurrent(), InpExecutionTimeframe);
+   ExecuteSetupEntry(pendingExecution.setup,
+                     ask,
+                     ExecutionTriggerModeLabel(InpExecutionTriggerMode),
+                     pendingExecution.microTriggerType + "_stop",
+                     pendingExecution.setupBaselineEntry,
+                     pendingExecution.breakoutDistancePips,
+                     barsFromSetup);
+  }
+
+void ProcessExecutionBar()
+  {
+   if(!pendingExecution.valid)
+      return;
+   if(InpExecutionTriggerMode == EXEC_M5_MARKET_CONFIRM)
+      return;
+   if(hasPendingPlan || CountManagedPositions() > 0 || !PassGlobalGuards())
+      return;
+
+   double open1 = iOpen(runtimeSymbol, InpExecutionTimeframe, 1);
+   double high1 = iHigh(runtimeSymbol, InpExecutionTimeframe, 1);
+   double low1 = iLow(runtimeSymbol, InpExecutionTimeframe, 1);
+   double close1 = iClose(runtimeSymbol, InpExecutionTimeframe, 1);
+   if(open1 <= 0.0 || high1 <= 0.0 || low1 <= 0.0 || close1 <= 0.0)
+      return;
+
+   double ask = SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
+   if(ask <= 0.0)
+      return;
+
+   if(InpExecutionTriggerMode == EXEC_M1_BREAK_CLOSE_CONFIRM)
+     {
+      if(!ResolveExecutionMicroHigh(pendingExecution))
+         return;
+      if(close1 <= pendingExecution.breakoutLevel || close1 <= open1)
+         return;
+
+      int barsFromSetup = BarsBetweenTimes(pendingExecution.detectedTime, TimeCurrent(), InpExecutionTimeframe);
+      ExecuteSetupEntry(pendingExecution.setup,
+                        ask,
+                        ExecutionTriggerModeLabel(InpExecutionTriggerMode),
+                        pendingExecution.microTriggerType + "_close_confirm",
+                        pendingExecution.setupBaselineEntry,
+                        pendingExecution.breakoutDistancePips,
+                        barsFromSetup);
+      return;
+     }
+
+   if(InpExecutionTriggerMode != EXEC_M1_RETEST_HOLD_CONFIRM)
+      return;
+
+   if(!pendingExecution.breakoutSeen)
+     {
+      if(!ResolveExecutionMicroHigh(pendingExecution))
+         return;
+      if(close1 > pendingExecution.breakoutLevel && close1 > open1)
+        {
+         pendingExecution.breakoutSeen = true;
+         pendingExecution.breakoutTime = iTime(runtimeSymbol, InpExecutionTimeframe, 1);
+         pendingExecution.microTriggerType = pendingExecution.microTriggerType + "_breakout_seen";
+        }
+      return;
+     }
+
+   double retestTolerancePrice = PipsToPrice(InpRetestTolerancePips);
+   double confirmBreakPrice = PipsToPrice(InpConfirmBreakPips);
+   if(low1 > pendingExecution.breakoutLevel + retestTolerancePrice)
+      return;
+   if(close1 <= pendingExecution.breakoutLevel + confirmBreakPrice || close1 <= open1)
+      return;
+
+   int barsFromSetup = BarsBetweenTimes(pendingExecution.detectedTime, TimeCurrent(), InpExecutionTimeframe);
+   ExecuteSetupEntry(pendingExecution.setup,
+                     ask,
+                     ExecutionTriggerModeLabel(InpExecutionTriggerMode),
+                     "m1_breakout_retest_hold",
+                     pendingExecution.setupBaselineEntry,
+                     pendingExecution.breakoutDistancePips,
+                     barsFromSetup);
   }
 
 bool MoveStopToBreakeven()
@@ -1508,6 +1893,10 @@ bool OpenTelemetryFile()
                 "stop_basis",
                 "target_type",
                 "order_mode",
+                "execution_mode",
+                "setup_tf",
+                "execution_tf",
+                "micro_trigger_type",
                 "partial_target_label",
                 "runner_target_label",
                 "hour",
@@ -1518,7 +1907,12 @@ bool OpenTelemetryFile()
                 "pullback_depth_pips",
                 "ltf_atr_pips",
                 "stop_distance_pips",
+                "distance_from_m5_setup_to_m1_entry_pips",
+                "breakout_distance_pips",
+                "bars_from_m5_setup_to_entry",
                 "planned_risk_amount",
+                "partial_hit",
+                "be_move",
                 "partial_taken",
                 "be_moved",
                 "partial_order_armed",
@@ -1529,6 +1923,10 @@ bool OpenTelemetryFile()
                 "bars_to_partial",
                 "bars_to_final",
                 "bars_to_time_stop",
+                "mfe_pips",
+                "mae_pips",
+                "max_unrealized_r",
+                "min_unrealized_r",
                 "target_reached_before_timeout",
                 "event_r_multiple",
                 "price",
@@ -1610,6 +2008,10 @@ void LogTelemetry(string eventType,
              plan.stopBasis,
              plan.targetType,
              plan.orderMode,
+             plan.executionMode,
+             plan.setupTimeframe,
+             plan.executionTimeframe,
+             plan.microTriggerType,
              plan.partialTargetLabel,
              plan.runnerTargetLabel,
              tm.hour,
@@ -1620,7 +2022,12 @@ void LogTelemetry(string eventType,
              plan.pullbackDepthPips,
              plan.ltfAtrPips,
              plan.stopDistancePips,
+             plan.setupToEntryPips,
+             plan.breakoutDistancePips,
+             plan.barsFromSetupToEntry,
              plannedRiskAmount,
+             (int)activePartialTaken,
+             (int)activeBreakEvenMoved,
              (int)activePartialTaken,
              (int)activeBreakEvenMoved,
              (int)activeServerPartialArmed,
@@ -1631,6 +2038,10 @@ void LogTelemetry(string eventType,
              barsToPartial,
              barsToFinal,
              barsToTimeStop,
+             activeMfePips,
+             activeMaePips,
+             activeMaxUnrealizedR,
+             activeMinUnrealizedR,
              (int)targetReachedBeforeTimeout,
              eventRMultiple,
              price,
@@ -1793,6 +2204,7 @@ int OnInit()
    runtimeTelemetryFileName = NormalizePresetString(InpTelemetryFileName);
    ResetEntryPlan(pendingPlan);
    ResetEntryPlan(activePlan);
+   ResetPendingExecution(pendingExecution);
    ResetTradeRuntimeState();
 
    if(InpMagicNumber <= 0 || InpTrendPivotSpan <= 0 || InpSignalPivotSpan <= 0 ||
@@ -1918,6 +2330,7 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,
          if(!stillOpen)
            {
             ResetEntryPlan(activePlan);
+            ResetPendingExecution(pendingExecution);
             ResetTradeRuntimeState();
            }
         }
@@ -1926,43 +2339,15 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,
 
 void OnTick()
   {
-   datetime barTime = 0;
-   if(!IsNewBar(InpSignalTimeframe, barTime))
-      return;
+   UpdateOpenTradeExcursion();
 
-   ManageOpenPositions();
+   datetime setupBarTime = 0;
+   if(IsNewBar(InpSignalTimeframe, lastSetupBarTime, setupBarTime))
+      ProcessNewSetupBar();
 
-   if(!PassGlobalGuards())
-      return;
+   datetime executionBarTime = 0;
+   if(IsNewBar(InpExecutionTimeframe, lastExecutionBarTime, executionBarTime))
+      ProcessExecutionBar();
 
-   HtfPhaseContext ctx;
-   if(!BuildHtfPhaseContext(ctx))
-      return;
-
-   PullbackSetup setup;
-   if(!DetectContinuationSetup(ctx, setup))
-      return;
-
-   EntryPlan plan;
-   if(!BuildEntryPlan(setup, plan))
-      return;
-
-   double volume = CalculateVolumeByRisk(plan.entry, plan.stop);
-   if(volume <= 0.0)
-      return;
-   plan.plannedRiskAmount = CalculateRiskAmountByVolume(plan.entry, plan.stop, volume);
-
-   ResetEntryPlan(pendingPlan);
-   pendingPlan = plan;
-   hasPendingPlan = false;
-
-   if(trade.Buy(volume, runtimeSymbol, 0.0, plan.stop, 0.0, plan.reason))
-     {
-      pendingPlan = plan;
-      hasPendingPlan = true;
-     }
-   else
-     {
-      ResetEntryPlan(pendingPlan);
-     }
+   ProcessExecutionTick();
   }
