@@ -46,8 +46,25 @@ Total runs: `72`
 
 ### OOS
 
-- All execution modes: `0 trades`
-- This remains the first hard reject signal. Entry timing changes did not revive OOS inventory.
+- All execution modes in the published fixed slice: `0 trades`
+- This applies only to the validation slice defined in `Scope`:
+  - `ENTRY_ON_HIGHER_LOW_BREAK only`
+  - `Tier A strict`
+  - `STOP_PULLBACK_LOW`
+  - `TARGET_HYBRID_PARTIAL`
+  - `runner_fib_618`
+  - `ea_managed`
+- Separate tester-journal verification on `2026-04-14` showed that a broader OOS run from `2026-01-01 .. 2026-04-01` did trade materially.
+  - Journal path: `C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/tester/logs/20260414.log`
+  - Logged inputs there were broader than the fixed slice:
+    - `InpTierMode=1`
+    - `InpEntryPathMode=0`
+    - `InpStopBasisMode=1`
+    - `InpTargetMode=0`
+    - `InpMaxHoldBars=16`
+    - `InpExecutionTriggerMode=0`
+  - The journal segment for that run contains `68` `market buy` log hits, which corresponds to about `34` actual entries because MT5 logs both the `CTrade::OrderSend` line and the resulting market order line.
+- Therefore the earlier blanket phrasing `OOS 0 trades` should be read as `OOS 0 trades for the published fixed slice`, not as `the whole current EA has zero OOS inventory`.
 
 ### Actual best repeatable runs
 
