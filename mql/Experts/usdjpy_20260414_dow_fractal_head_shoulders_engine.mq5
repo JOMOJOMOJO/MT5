@@ -54,6 +54,12 @@ enum FinalTargetMode
    FINAL_TARGET_FIXED_R = 2
   };
 
+enum ExitMode
+  {
+   EXIT_MODE_SCAFFOLD_HYBRID = 0,
+   EXIT_MODE_DIAGNOSTIC_FIXED_TP = 1
+  };
+
 struct PivotPoint
   {
    bool     valid;
@@ -179,6 +185,7 @@ struct EntryPlan
    string    executionTimeframe;
    string    partialTargetLabel;
    string    finalTargetLabel;
+   string    exitModeLabel;
    string    volatilityBucket;
    double    neckline;
    double    structureHeightPips;
@@ -232,6 +239,8 @@ input TradeBiasMode   InpTradeBiasMode            = TRADE_BIAS_SHORT_ONLY;
 input ExecutionTriggerMode InpExecutionTriggerMode = EXEC_NECK_RETEST_FAILURE;
 input PartialTargetLevel InpPartialTargetLevel    = PARTIAL_TARGET_382;
 input FinalTargetMode InpFinalTargetMode          = FINAL_TARGET_FIB_618;
+input ExitMode        InpExitMode                 = EXIT_MODE_SCAFFOLD_HYBRID;
+input double          InpDiagnosticFixedTPPips    = 4.0;
 input double          InpTargetRMultiple          = 1.40;
 input double          InpMinStopBufferPips        = 1.4;
 input double          InpStopBufferATR            = 0.10;
@@ -275,6 +284,15 @@ double activeMfePips = 0.0;
 double activeMaePips = 0.0;
 double activeMaxUnrealizedR = 0.0;
 double activeMinUnrealizedR = 0.0;
+int activeBarsToMfePeak = -1;
+int activeBarsToAcceptanceExit = -1;
+bool activeConfiguredTpHit = false;
+int activeBarsToConfiguredTp = -1;
+
+#define DIAGNOSTIC_TP_LEVEL_COUNT 6
+double diagnosticTpLevels[DIAGNOSTIC_TP_LEVEL_COUNT] = {2.0, 3.0, 4.0, 5.0, 6.0, 8.0};
+bool activeDidHitTpLevel[DIAGNOSTIC_TP_LEVEL_COUNT];
+int activeBarsToTpLevel[DIAGNOSTIC_TP_LEVEL_COUNT];
 
 string NormalizePresetString(string rawValue)
   {
@@ -406,6 +424,54 @@ string FinalTargetModeLabel(FinalTargetMode mode)
      }
   }
 
+string ExitModeLabel(ExitMode mode)
+  {
+   if(mode == EXIT_MODE_DIAGNOSTIC_FIXED_TP)
+      return "diagnostic_fixed_tp";
+   return "scaffold_hybrid";
+  }
+
+bool IsDiagnosticFixedTpMode()
+  {
+   return (InpExitMode == EXIT_MODE_DIAGNOSTIC_FIXED_TP);
+  }
+
+void ResetTpDiagnosticState()
+  {
+   activeBarsToMfePeak = -1;
+   activeBarsToAcceptanceExit = -1;
+   activeConfiguredTpHit = false;
+   activeBarsToConfiguredTp = -1;
+   for(int i = 0; i < DIAGNOSTIC_TP_LEVEL_COUNT; ++i)
+     {
+      activeDidHitTpLevel[i] = false;
+      activeBarsToTpLevel[i] = -1;
+     }
+  }
+
+void UpdateTpThresholdState(double favorablePips, int barsSinceEntry)
+  {
+   if(barsSinceEntry < 0)
+      return;
+
+   for(int i = 0; i < DIAGNOSTIC_TP_LEVEL_COUNT; ++i)
+     {
+      if(activeDidHitTpLevel[i])
+         continue;
+      if(favorablePips >= diagnosticTpLevels[i])
+        {
+         activeDidHitTpLevel[i] = true;
+         activeBarsToTpLevel[i] = barsSinceEntry;
+        }
+     }
+
+   if(!activeConfiguredTpHit && IsDiagnosticFixedTpMode() && favorablePips >= InpDiagnosticFixedTPPips)
+     {
+      activeConfiguredTpHit = true;
+      activeBarsToConfiguredTp = barsSinceEntry;
+     }
+  }
+
 void ResetPivot(PivotPoint &pivot)
   {
    pivot.valid = false;
@@ -460,6 +526,7 @@ void ResetEntryPlan(EntryPlan &plan)
    plan.executionTimeframe = "";
    plan.partialTargetLabel = "";
    plan.finalTargetLabel = "";
+   plan.exitModeLabel = "";
    plan.volatilityBucket = "";
    plan.neckline = 0.0;
    plan.structureHeightPips = 0.0;
@@ -506,6 +573,7 @@ void ResetTradeRuntimeState()
    activeMaePips = 0.0;
    activeMaxUnrealizedR = 0.0;
    activeMinUnrealizedR = 0.0;
+   ResetTpDiagnosticState();
   }
 
 bool IsNewBar(ENUM_TIMEFRAMES tf, datetime &lastSeenBarTime, datetime &barTime)
@@ -1337,23 +1405,48 @@ bool BuildEntryPlan(const ReversalSetup &setup,
    double risk = MathAbs(entry - stop);
    string partialLabel = "";
    string finalLabel = "";
-   double partialTarget = NormalizePrice(SelectPartialTarget(setup, entry, partialLabel));
-   double finalTarget = NormalizePrice(SelectFinalTarget(setup, entry, risk, finalLabel));
-   bool partialValid = (setup.direction < 0) ? (partialTarget > 0.0 && partialTarget < entry)
-                                             : (partialTarget > entry);
-   bool finalValid = (setup.direction < 0) ? (finalTarget > 0.0 && finalTarget < entry)
-                                           : (finalTarget > entry);
-   if(!partialValid)
-      return false;
-   if(!finalValid)
-      return false;
-   if((setup.direction < 0 && finalTarget >= partialTarget) || (setup.direction > 0 && finalTarget <= partialTarget))
+   double partialTarget = 0.0;
+   double finalTarget = 0.0;
+   bool partialValid = false;
+   bool finalValid = false;
+   bool usePartial = false;
+   bool runnerTargetEnabled = false;
+
+   if(IsDiagnosticFixedTpMode())
      {
-      finalLabel += "_fallback_r";
-      finalTarget = NormalizePrice((setup.direction < 0) ? entry - risk * InpTargetRMultiple
-                                                         : entry + risk * InpTargetRMultiple);
-      if((setup.direction < 0 && finalTarget >= partialTarget) || (setup.direction > 0 && finalTarget <= partialTarget))
+      finalLabel = StringFormat("diagnostic_fixed_tp_%.1f", InpDiagnosticFixedTPPips);
+      partialLabel = "partial_disabled";
+      finalTarget = NormalizePrice((setup.direction < 0)
+                                   ? entry - PipsToPrice(InpDiagnosticFixedTPPips)
+                                   : entry + PipsToPrice(InpDiagnosticFixedTPPips));
+      finalValid = (setup.direction < 0) ? (finalTarget > 0.0 && finalTarget < entry)
+                                         : (finalTarget > entry);
+      if(!finalValid)
          return false;
+     }
+   else
+     {
+      partialTarget = NormalizePrice(SelectPartialTarget(setup, entry, partialLabel));
+      finalTarget = NormalizePrice(SelectFinalTarget(setup, entry, risk, finalLabel));
+      partialValid = (setup.direction < 0) ? (partialTarget > 0.0 && partialTarget < entry)
+                                           : (partialTarget > entry);
+      finalValid = (setup.direction < 0) ? (finalTarget > 0.0 && finalTarget < entry)
+                                         : (finalTarget > entry);
+      if(!partialValid)
+         return false;
+      if(!finalValid)
+         return false;
+      if((setup.direction < 0 && finalTarget >= partialTarget) || (setup.direction > 0 && finalTarget <= partialTarget))
+        {
+         finalLabel += "_fallback_r";
+         finalTarget = NormalizePrice((setup.direction < 0) ? entry - risk * InpTargetRMultiple
+                                                            : entry + risk * InpTargetRMultiple);
+         if((setup.direction < 0 && finalTarget >= partialTarget) || (setup.direction > 0 && finalTarget <= partialTarget))
+            return false;
+        }
+
+      usePartial = true;
+      runnerTargetEnabled = true;
      }
 
    plan.valid = true;
@@ -1370,6 +1463,7 @@ bool BuildEntryPlan(const ReversalSetup &setup,
    plan.executionTimeframe = TimeframeLabel(InpExecutionTimeframe);
    plan.partialTargetLabel = partialLabel;
    plan.finalTargetLabel = finalLabel;
+   plan.exitModeLabel = ExitModeLabel(InpExitMode);
    plan.volatilityBucket = setup.volatilityBucket;
    plan.neckline = setup.neckline;
    plan.structureHeightPips = setup.structureHeightPips;
@@ -1383,8 +1477,8 @@ bool BuildEntryPlan(const ReversalSetup &setup,
    plan.stop = stop;
    plan.target = finalTarget;
    plan.partialTarget = partialTarget;
-   plan.usePartial = true;
-   plan.runnerTargetEnabled = true;
+   plan.usePartial = usePartial;
+   plan.runnerTargetEnabled = runnerTargetEnabled;
    plan.stopDistancePips = risk / GetPipSize();
    plan.plannedRiskAmount = 0.0;
    plan.barsFromSetupToEntry = trigger.barsFromSetupToEntry;
@@ -1484,6 +1578,7 @@ bool OpenTelemetryFile()
                 "execution_tf",
                 "partial_target_label",
                 "final_target_label",
+                "exit_mode",
                 "neckline",
                 "structure_height_pips",
                 "pattern_atr_pips",
@@ -1501,10 +1596,22 @@ bool OpenTelemetryFile()
                 "bars_to_partial",
                 "bars_to_final",
                 "bars_to_time_stop",
+                "bars_to_mfe_peak",
+                "bars_to_tp_hit",
                 "mfe_pips",
                 "mae_pips",
                 "max_unrealized_r",
                 "min_unrealized_r",
+                "configured_fixed_tp_pips",
+                "did_hit_configured_tp",
+                "tp_hit_before_time_stop",
+                "tp_hit_before_acceptance_exit",
+                "did_hit_tp_2_pips",
+                "did_hit_tp_3_pips",
+                "did_hit_tp_4_pips",
+                "did_hit_tp_5_pips",
+                "did_hit_tp_6_pips",
+                "did_hit_tp_8_pips",
                 "event_r_multiple",
                 "price",
                 "volume",
@@ -1555,6 +1662,11 @@ void LogTelemetry(string eventType,
 
    bool runnerTargetHit = (reason == "runner_target");
    bool runnerStopAtBreakeven = (reason == "breakeven_after_partial");
+   bool didHitConfiguredTp = activeConfiguredTpHit;
+   bool tpHitBeforeTimeStop = (activeBarsToConfiguredTp >= 0 &&
+                               (activeBarsToTimeStop < 0 || activeBarsToConfiguredTp <= activeBarsToTimeStop));
+   bool tpHitBeforeAcceptanceExit = (activeBarsToConfiguredTp >= 0 &&
+                                     (activeBarsToAcceptanceExit < 0 || activeBarsToConfiguredTp <= activeBarsToAcceptanceExit));
 
    FileSeek(telemetryHandle, 0, SEEK_END);
    FileWrite(telemetryHandle,
@@ -1573,6 +1685,7 @@ void LogTelemetry(string eventType,
              plan.executionTimeframe,
              plan.partialTargetLabel,
              plan.finalTargetLabel,
+             plan.exitModeLabel,
              plan.neckline,
              plan.structureHeightPips,
              plan.patternAtrPips,
@@ -1590,10 +1703,22 @@ void LogTelemetry(string eventType,
              activeBarsToPartial,
              activeBarsToFinal,
              activeBarsToTimeStop,
+             activeBarsToMfePeak,
+             activeBarsToConfiguredTp,
              activeMfePips,
              activeMaePips,
              activeMaxUnrealizedR,
              activeMinUnrealizedR,
+             IsDiagnosticFixedTpMode() ? InpDiagnosticFixedTPPips : 0.0,
+             (int)didHitConfiguredTp,
+             (int)tpHitBeforeTimeStop,
+             (int)tpHitBeforeAcceptanceExit,
+             (int)activeDidHitTpLevel[0],
+             (int)activeDidHitTpLevel[1],
+             (int)activeDidHitTpLevel[2],
+             (int)activeDidHitTpLevel[3],
+             (int)activeDidHitTpLevel[4],
+             (int)activeDidHitTpLevel[5],
              eventRMultiple,
              price,
              volume,
@@ -1666,6 +1791,8 @@ void UpdateOpenTradeExcursion()
    if(currentPrice <= 0.0 || activePlan.stopDistancePips <= 0.0)
       return;
 
+   int barsSinceEntry = BarsSinceEntry(activeEntryTime);
+
    double favorablePips = 0.0;
    double adversePips = 0.0;
    if(activePlan.direction > 0)
@@ -1680,9 +1807,14 @@ void UpdateOpenTradeExcursion()
      }
 
    if(favorablePips > activeMfePips)
+     {
       activeMfePips = favorablePips;
+      activeBarsToMfePeak = barsSinceEntry;
+     }
    if(adversePips > activeMaePips)
       activeMaePips = adversePips;
+
+   UpdateTpThresholdState(favorablePips, barsSinceEntry);
 
    double unrealizedR = favorablePips / activePlan.stopDistancePips;
    double adverseR = -adversePips / activePlan.stopDistancePips;
@@ -1802,10 +1934,10 @@ void ManageOpenPositions()
 
    bool finalReached = activePlan.direction > 0 ? (currentPrice >= activePlan.target)
                                                 : (currentPrice <= activePlan.target);
-   if(activePlan.runnerTargetEnabled && finalReached)
+   if(finalReached && (activePlan.runnerTargetEnabled || activePlan.exitModeLabel == ExitModeLabel(EXIT_MODE_DIAGNOSTIC_FIXED_TP)))
      {
       activeBarsToFinal = barsSinceEntry;
-      pendingExitReason = activePartialTaken ? "runner_target" : "target";
+      pendingExitReason = (activePartialTaken && activePlan.runnerTargetEnabled) ? "runner_target" : "target";
       trade.PositionClose(runtimeSymbol);
       return;
      }
@@ -1817,6 +1949,7 @@ void ManageOpenPositions()
                                                        : (execClose > activePlan.invalidationLevel);
       if(acceptanceFailed)
         {
+         activeBarsToAcceptanceExit = barsSinceEntry;
          pendingExitReason = activePlan.direction > 0 ? "acceptance_back_below_neck" : "acceptance_back_above_neck";
          trade.PositionClose(runtimeSymbol);
          return;
@@ -2077,7 +2210,7 @@ int OnInit()
       return INIT_PARAMETERS_INCORRECT;
    if(InpMagicNumber <= 0 || InpContextPivotSpan <= 0 || InpPatternPivotSpan <= 0 || InpExecutionPivotSpan <= 0 ||
       InpContextATRPeriod <= 0 || InpPatternATRPeriod <= 0 || InpExecutionATRPeriod <= 0 ||
-      InpRiskPercent <= 0.0 || InpTargetRMultiple <= 0.0 ||
+      InpRiskPercent <= 0.0 || InpTargetRMultiple <= 0.0 || InpDiagnosticFixedTPPips <= 0.0 ||
       InpContextHighZoneMin < 0.0 || InpContextHighZoneMin > 1.0 ||
       InpContextLowZoneMax < 0.0 || InpContextLowZoneMax > 1.0 ||
       InpHybridPartialFraction <= 0.0 || InpHybridPartialFraction >= 1.0)
