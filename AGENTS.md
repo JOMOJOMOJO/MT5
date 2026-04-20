@@ -4,6 +4,15 @@
 - Prefer repo-local assets in `plugins/mt5-company/` over editing `~/.codex`, unless the change is personal or machine-specific.
 - Use `.company/secretary/queue.md` for intake and routing when the user is planning, triaging, or juggling multiple threads of work.
 - Save durable findings under `knowledge/` rather than leaving them only in chat or ad hoc notes.
+- Use `docs/devlog/` for task-level development logs that explain what changed, why it changed, and which repo evidence supports it.
+- Use `content/seeds/` for publishable idea seeds that may later become posts for X, note, or the user's site.
+- Keep `knowledge/` as durable internal knowledge, not as the default place for audience-facing article seeds.
+- In `docs/devlog/` and `content/seeds/`, prefer links to existing `knowledge/` and `reports/` artifacts instead of copying their contents.
+- Treat `reports/` as the primary store for backtest, forward-test, optimization, chart, and image evidence; link those artifacts from logs and seeds when they support a claim.
+- Do not save full chat transcripts. Save only reusable decisions, hypotheses, rejected options, evidence, failures, and lessons.
+- When a task produces non-trivial reasoning or validation, decide whether a short devlog entry should be added before finishing.
+- When a task produces a reusable external insight, comparison, or failure story, decide whether an article seed should be added before finishing.
+- Save human or spiritual reflections here only when they materially affected a development decision and can be stated as a reusable discipline or judgment lesson.
 - Prefer structured imports into `reports/backtest/runs/` before writing narrative notes into `knowledge/backtests/`.
 - Save parameter-search outcomes, rejected ranges, and selected candidate sets under `knowledge/optimizations/`.
 - Keep EA code under `mql/Experts/` and shared logic under `mql/Include/`.
@@ -35,3 +44,19 @@
 - Before promoting a candidate toward live, review `.company/improvement/org-scorecard.md` and cite at least one reusable lesson from `knowledge/patterns/` or `knowledge/company/`.
 - Before discussing `100 USD` or similarly small first-capital deployment, confirm the broker's minimum lot and symbol contract size do not force oversized per-trade risk.
 - Any root-level change to company structure, approval routes, or shared skill roster requires CEO approval recorded under `.company/executive/ceo-approval-log.md` before the change is treated as accepted.
+
+## Logging Rules For Codex
+
+- Before changing strategy behavior or validation stance, review the relevant `.company/` file when one exists, then connect the work to `reports/`, `.company/`, or `knowledge/`.
+- Create or update a file in `docs/devlog/` when the task changes EA logic, changes validation direction, rejects a meaningful option, or turns a failed test into a concrete next step.
+- Create or update a file in `content/seeds/` when the task yields a reusable insight that could plausibly become an external post.
+- A devlog should summarize the task and point to evidence. It is an internal bridge between code changes and proof.
+- A seed should summarize the public-facing insight and point to evidence. It is not a full article draft.
+- Logs and seeds should link to the smallest useful set of supporting artifacts, such as:
+  - `knowledge/experiments/`
+  - `knowledge/lessons/`
+  - `knowledge/patterns/`
+  - `reports/backtest/`
+  - `reports/forward/`
+  - images or charts stored under `reports/`
+- If no durable insight or non-trivial decision occurred, do not create a log entry just to satisfy process.
