@@ -1,25 +1,25 @@
-# Devlog
+# 開発ログ
 
-`docs/devlog/` stores task-level development logs for this repo.
+`docs/devlog/` には、この repo におけるタスク単位の開発ログを置きます。
 
-Use this directory when a task produced a decision that should be easy to review later without replaying the full chat:
+フルの会話を見返さなくても判断の流れを追えるようにしたいときに使います。たとえば次のような場面です。
 
-- EA logic changed
-- validation direction changed
-- a meaningful option was rejected
-- a failed run produced a concrete next move
-- a branch of work needs a short audit trail
+- EA ロジックを変更した
+- 検証方針を切り替えた
+- 意味のある選択肢を棄却した
+- 失敗した run から次の具体的な一手が決まった
+- ブランチ単位で短い監査ログを残したい
 
-Keep each entry short. A devlog is not the primary evidence store.
+各エントリは短く保ちます。開発ログ自体を一次証拠の置き場にはしません。
 
-Primary evidence should stay in existing repo areas:
+一次証拠は既存の置き場に残します。
 
-- `reports/` for backtest, forward, optimization, charts, and screenshots
-- `knowledge/` for durable internal findings and reusable doctrine
-- `.company/` for governance, QA, release, and operating policy
+- `reports/`: バックテスト、フォワード、最適化、画像、スクリーンショット
+- `knowledge/`: 再利用可能な知見、原則、学び
+- `.company/`: ガバナンス、QA、リリース、運用ルール
 
-Each devlog should link to the smallest useful set of supporting files instead of copying them.
+開発ログには内容を複写しすぎず、必要最小限の参照リンクを載せます。
 
-Suggested filename:
+推奨ファイル名:
 
 - `YYYY-MM-DD-short-topic.md`

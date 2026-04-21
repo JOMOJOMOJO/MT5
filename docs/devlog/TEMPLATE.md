@@ -1,37 +1,37 @@
-# Devlog: YYYY-MM-DD - short-title
+# 開発ログ: YYYY-MM-DD - short-title
 
-## Context
+## 背景
 
-- Task:
+- タスク:
 - EA / family:
-- Scope:
+- 対象範囲:
 
-## Problem
+## 問題
 
-- What needed attention:
-- Why it mattered:
+- 何に対応する必要があったか:
+- なぜ重要だったか:
 
-## Decision
+## 判断
 
-- Chosen approach:
-- Rejected alternatives:
-- Why this approach:
+- 採用した方針:
+- 棄却した案:
+- この方針を選んだ理由:
 
-## Evidence Links
+## 参照リンク
 
-- Code:
+- コード:
 - Company / QA / release note:
 - Knowledge note:
 - Reports:
 - Charts / images:
 
-## Outcome
+## 結果
 
-- What changed:
-- What improved:
-- What failed or remains uncertain:
+- 何を変えたか:
+- 何が改善したか:
+- 何が失敗したか / 何が未確定か:
 
-## Next
+## 次
 
-- Immediate next step:
-- Validation still needed:
+- 次の一手:
+- 追加で必要な検証:
