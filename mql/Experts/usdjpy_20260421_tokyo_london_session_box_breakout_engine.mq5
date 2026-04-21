@@ -43,6 +43,8 @@ struct SessionContext
    string    rangeTimeframeLabel;
    string    executionTimeframeLabel;
    string    volatilityBucket;
+   string    boxWidthBucket;
+   string    weekdayLabel;
    datetime  rangeStart;
    datetime  rangeEnd;
    datetime  breakoutStart;
@@ -54,10 +56,15 @@ struct SessionContext
    double    rangePips;
    double    rangeAtr;
    double    rangeAtrPips;
+   double    boxWidthAtrRatio;
    double    executionAtr;
    double    executionAtrPips;
    double    breakoutBuffer;
    double    retestTolerance;
+   double    previousDayHigh;
+   double    previousDayLow;
+   double    m30PriorSwingHigh;
+   double    m30PriorSwingLow;
    bool      breakoutWindowActive;
    bool      breakoutWindowExpired;
    int       rangeBarCount;
@@ -70,13 +77,20 @@ struct BreakoutSetup
    int       direction;
    string    sideLabel;
    string    sessionTypeLabel;
+   string    breakoutSideLabel;
    string    breakoutTypeLabel;
    string    breakoutStateLabel;
    string    volatilityBucket;
+   string    boxWidthBucket;
+   string    prevDayAlignmentType;
+   string    m30SwingAlignmentType;
+   string    weekdayLabel;
    string    rangeTimeframeLabel;
    string    executionTimeframeLabel;
    double    rangeHigh;
    double    rangeLow;
+   double    boxWidthPips;
+   double    boxWidthAtrRatio;
    double    breakoutLevel;
    double    stopAnchor;
    double    invalidationLevel;
@@ -90,9 +104,15 @@ struct ExecutionTrigger
   {
    bool      fired;
    string    triggerLabel;
+   string    triggerTypeLabel;
+   string    breakoutStrengthBucket;
+   string    breakoutTimingBucket;
    double    entryPrice;
    double    setupToEntryPips;
+   double    breakoutCloseDistancePips;
+   double    breakoutCloseDistanceAtr;
    int       barsFromSetupToEntry;
+   int       londonMinutesFromOpen;
    double    referenceLevel;
   };
 
@@ -106,6 +126,11 @@ struct PendingExecutionContext
    bool      breakoutSeen;
    datetime  breakoutTime;
    double    breakoutBarExtreme;
+   double    breakoutCloseDistancePips;
+   double    breakoutCloseDistanceAtr;
+   int       londonMinutesFromOpen;
+   string    breakoutStrengthBucket;
+   string    breakoutTimingBucket;
    double    recentSwingLevel;
    string    recentSwingLabel;
   };
@@ -117,17 +142,31 @@ struct EntryPlan
    int       sessionDayId;
    string    sideLabel;
    string    sessionTypeLabel;
+   string    breakoutSideLabel;
    string    breakoutTypeLabel;
    string    breakoutStateLabel;
    string    executionTriggerLabel;
+   string    triggerTypeLabel;
    string    rangeTimeframeLabel;
    string    executionTimeframeLabel;
    string    partialTargetLabel;
    string    finalTargetLabel;
    string    volatilityBucket;
+   string    boxWidthBucket;
+   string    breakoutStrengthBucket;
+   string    breakoutTimingBucket;
+   string    prevDayAlignmentType;
+   string    m30SwingAlignmentType;
+   string    weekdayLabel;
+   double    rangeHigh;
+   double    rangeLow;
    double    breakoutLevel;
+   double    boxWidthPips;
+   double    boxWidthAtrRatio;
    double    structureHeightPips;
    double    rangeAtrPips;
+   double    breakoutCloseDistancePips;
+   double    breakoutCloseDistanceAtr;
    double    invalidationLevel;
    double    setupBaselineEntry;
    double    setupToEntryPips;
@@ -140,6 +179,7 @@ struct EntryPlan
    double    stopDistancePips;
    double    plannedRiskAmount;
    int       barsFromSetupToEntry;
+   int       londonMinutesFromOpen;
    string    reason;
   };
 
@@ -204,6 +244,11 @@ double activeMfePips = 0.0;
 double activeMaePips = 0.0;
 double activeMaxUnrealizedR = 0.0;
 double activeMinUnrealizedR = 0.0;
+datetime activeLastDiagnosticBarTime = 0;
+int activeAcceptedOutsideBoxBars = 0;
+int activeFailedBackInsideBoxBars = 0;
+double activeMfeBeforeAcceptanceExit = 0.0;
+double activeMaeBeforeAcceptanceExit = 0.0;
 
 string NormalizePresetString(string rawValue)
   {
@@ -309,6 +354,206 @@ string FinalTargetModeLabel(FinalTargetMode mode)
    return "final_session_extension";
   }
 
+string WeekdayLabel(datetime timeValue)
+  {
+   MqlDateTime tm;
+   TimeToStruct(timeValue, tm);
+   switch(tm.day_of_week)
+     {
+      case 1: return "Mon";
+      case 2: return "Tue";
+      case 3: return "Wed";
+      case 4: return "Thu";
+      case 5: return "Fri";
+      case 6: return "Sat";
+      default: return "Sun";
+     }
+  }
+
+string BoxWidthBucket(double atrRatio)
+  {
+   if(atrRatio <= 0.0)
+      return "unknown";
+   if(atrRatio < 0.85)
+      return "narrow";
+   if(atrRatio < 1.35)
+      return "normal";
+   return "wide";
+  }
+
+string BreakoutStrengthBucket(double distanceAtr)
+  {
+   if(distanceAtr <= 0.0)
+      return "unknown";
+   if(distanceAtr < 0.20)
+      return "weak_close";
+   if(distanceAtr < 0.45)
+      return "medium_close";
+   return "strong_close";
+  }
+
+string BreakoutTimingBucket(int londonMinutesFromOpen)
+  {
+   if(londonMinutesFromOpen < 0)
+      return "unknown";
+   if(londonMinutesFromOpen < 30)
+      return "0_30m";
+   if(londonMinutesFromOpen < 60)
+      return "30_60m";
+   return "60m_plus";
+  }
+
+bool IsPivotHigh(string symbol, ENUM_TIMEFRAMES tf, int shift, int span)
+  {
+   double center = iHigh(symbol, tf, shift);
+   if(center <= 0.0)
+      return false;
+
+   for(int i = 1; i <= span; ++i)
+     {
+      if(center <= iHigh(symbol, tf, shift - i))
+         return false;
+      if(center <= iHigh(symbol, tf, shift + i))
+         return false;
+     }
+   return true;
+  }
+
+bool IsPivotLow(string symbol, ENUM_TIMEFRAMES tf, int shift, int span)
+  {
+   double center = iLow(symbol, tf, shift);
+   if(center <= 0.0)
+      return false;
+
+   for(int i = 1; i <= span; ++i)
+     {
+      if(center >= iLow(symbol, tf, shift - i))
+         return false;
+      if(center >= iLow(symbol, tf, shift + i))
+         return false;
+     }
+   return true;
+  }
+
+bool FindLatestConfirmedPivotLevelBeforeTime(ENUM_TIMEFRAMES tf,
+                                             bool wantHigh,
+                                             datetime beforeTime,
+                                             int span,
+                                             int scanBars,
+                                             double &price)
+  {
+   price = 0.0;
+   int bars = Bars(runtimeSymbol, tf);
+   if(bars <= span * 3 + 5)
+      return false;
+
+   int maxShift = MathMin(scanBars, bars - span - 2);
+   for(int shift = span + 1; shift <= maxShift; ++shift)
+     {
+      datetime barTime = iTime(runtimeSymbol, tf, shift);
+      if(barTime <= 0)
+         break;
+      if(barTime >= beforeTime)
+         continue;
+
+      bool isPivot = wantHigh ? IsPivotHigh(runtimeSymbol, tf, shift, span)
+                              : IsPivotLow(runtimeSymbol, tf, shift, span);
+      if(!isPivot)
+         continue;
+
+      price = wantHigh ? iHigh(runtimeSymbol, tf, shift) : iLow(runtimeSymbol, tf, shift);
+      return (price > 0.0);
+     }
+
+   return false;
+  }
+
+bool CollectPreviousDayRange(datetime referenceTime, double &dayHigh, double &dayLow)
+  {
+   dayHigh = 0.0;
+   dayLow = 0.0;
+
+   datetime previousDayTime = referenceTime - 86400;
+   int previousDayId = BuildDayId(previousDayTime);
+   bool found = false;
+   double highValue = -DBL_MAX;
+   double lowValue = DBL_MAX;
+   int bars = Bars(runtimeSymbol, InpRangeTimeframe);
+   int maxShift = MathMin(bars - 1, InpRangeScanBars * 6);
+
+   for(int shift = 1; shift <= maxShift; ++shift)
+     {
+      datetime barTime = iTime(runtimeSymbol, InpRangeTimeframe, shift);
+      if(barTime <= 0)
+         break;
+
+      int barDayId = BuildDayId(barTime);
+      if(barDayId > previousDayId)
+         continue;
+      if(barDayId < previousDayId && found)
+         break;
+      if(barDayId != previousDayId)
+         continue;
+
+      double barHigh = iHigh(runtimeSymbol, InpRangeTimeframe, shift);
+      double barLow = iLow(runtimeSymbol, InpRangeTimeframe, shift);
+      if(barHigh <= 0.0 || barLow <= 0.0)
+         continue;
+
+      if(barHigh > highValue)
+         highValue = barHigh;
+      if(barLow < lowValue)
+         lowValue = barLow;
+      found = true;
+     }
+
+   if(!found || highValue <= lowValue)
+      return false;
+
+   dayHigh = highValue;
+   dayLow = lowValue;
+   return true;
+  }
+
+double AlignmentThresholdPips(const SessionContext &ctx)
+  {
+   return MathMax(2.0, MathMin(6.0, ctx.rangeAtrPips * 0.25));
+  }
+
+string BuildAlignmentType(int direction, double breakoutLevel, double referenceLevel, double thresholdPips, string nearPrefix, string farPrefix)
+  {
+   if(referenceLevel <= 0.0)
+      return "unavailable";
+
+   double distancePips = MathAbs(breakoutLevel - referenceLevel) / GetPipSize();
+   if(distancePips <= thresholdPips)
+      return nearPrefix;
+   return farPrefix;
+  }
+
+void RecordBreakoutDiagnostics(PendingExecutionContext &ctx,
+                               const SessionContext &sessionCtx,
+                               datetime breakoutBarTime,
+                               double breakoutClosePrice)
+  {
+   if(!ctx.valid)
+      return;
+
+   double distancePips = 0.0;
+   if(ctx.setup.direction > 0)
+      distancePips = (breakoutClosePrice - ctx.setup.breakoutLevel) / GetPipSize();
+   else
+      distancePips = (ctx.setup.breakoutLevel - breakoutClosePrice) / GetPipSize();
+   if(distancePips < 0.0)
+      distancePips = 0.0;
+
+   ctx.breakoutCloseDistancePips = distancePips;
+   ctx.breakoutCloseDistanceAtr = (sessionCtx.executionAtrPips > 0.0) ? (distancePips / sessionCtx.executionAtrPips) : 0.0;
+   ctx.londonMinutesFromOpen = (int)((breakoutBarTime - sessionCtx.breakoutStart) / 60);
+   ctx.breakoutStrengthBucket = BreakoutStrengthBucket(ctx.breakoutCloseDistanceAtr);
+   ctx.breakoutTimingBucket = BreakoutTimingBucket(ctx.londonMinutesFromOpen);
+  }
+
 void ResetBreakoutSetup(BreakoutSetup &setup)
   {
    setup.valid = false;
@@ -316,13 +561,20 @@ void ResetBreakoutSetup(BreakoutSetup &setup)
    setup.direction = 0;
    setup.sideLabel = "";
    setup.sessionTypeLabel = "";
+   setup.breakoutSideLabel = "";
    setup.breakoutTypeLabel = "";
    setup.breakoutStateLabel = "";
    setup.volatilityBucket = "";
+   setup.boxWidthBucket = "";
+   setup.prevDayAlignmentType = "";
+   setup.m30SwingAlignmentType = "";
+   setup.weekdayLabel = "";
    setup.rangeTimeframeLabel = "";
    setup.executionTimeframeLabel = "";
    setup.rangeHigh = 0.0;
    setup.rangeLow = 0.0;
+   setup.boxWidthPips = 0.0;
+   setup.boxWidthAtrRatio = 0.0;
    setup.breakoutLevel = 0.0;
    setup.stopAnchor = 0.0;
    setup.invalidationLevel = 0.0;
@@ -342,6 +594,11 @@ void ResetPendingExecution(PendingExecutionContext &ctx)
    ctx.breakoutSeen = false;
    ctx.breakoutTime = 0;
    ctx.breakoutBarExtreme = 0.0;
+   ctx.breakoutCloseDistancePips = 0.0;
+   ctx.breakoutCloseDistanceAtr = 0.0;
+   ctx.londonMinutesFromOpen = -1;
+   ctx.breakoutStrengthBucket = "";
+   ctx.breakoutTimingBucket = "";
    ctx.recentSwingLevel = 0.0;
    ctx.recentSwingLabel = "";
   }
@@ -353,17 +610,31 @@ void ResetEntryPlan(EntryPlan &plan)
    plan.sessionDayId = -1;
    plan.sideLabel = "";
    plan.sessionTypeLabel = "";
+   plan.breakoutSideLabel = "";
    plan.breakoutTypeLabel = "";
    plan.breakoutStateLabel = "";
    plan.executionTriggerLabel = "";
+   plan.triggerTypeLabel = "";
    plan.rangeTimeframeLabel = "";
    plan.executionTimeframeLabel = "";
    plan.partialTargetLabel = "";
    plan.finalTargetLabel = "";
    plan.volatilityBucket = "";
+   plan.boxWidthBucket = "";
+   plan.breakoutStrengthBucket = "";
+   plan.breakoutTimingBucket = "";
+   plan.prevDayAlignmentType = "";
+   plan.m30SwingAlignmentType = "";
+   plan.weekdayLabel = "";
+   plan.rangeHigh = 0.0;
+   plan.rangeLow = 0.0;
    plan.breakoutLevel = 0.0;
+   plan.boxWidthPips = 0.0;
+   plan.boxWidthAtrRatio = 0.0;
    plan.structureHeightPips = 0.0;
    plan.rangeAtrPips = 0.0;
+   plan.breakoutCloseDistancePips = 0.0;
+   plan.breakoutCloseDistanceAtr = 0.0;
    plan.invalidationLevel = 0.0;
    plan.setupBaselineEntry = 0.0;
    plan.setupToEntryPips = 0.0;
@@ -376,6 +647,7 @@ void ResetEntryPlan(EntryPlan &plan)
    plan.stopDistancePips = 0.0;
    plan.plannedRiskAmount = 0.0;
    plan.barsFromSetupToEntry = -1;
+   plan.londonMinutesFromOpen = -1;
    plan.reason = "";
   }
 
@@ -394,6 +666,11 @@ void ResetTradeRuntimeState()
    activeMaePips = 0.0;
    activeMaxUnrealizedR = 0.0;
    activeMinUnrealizedR = 0.0;
+   activeLastDiagnosticBarTime = 0;
+   activeAcceptedOutsideBoxBars = 0;
+   activeFailedBackInsideBoxBars = 0;
+   activeMfeBeforeAcceptanceExit = 0.0;
+   activeMaeBeforeAcceptanceExit = 0.0;
   }
 
 bool IsNewBar(ENUM_TIMEFRAMES tf, datetime &lastSeenBarTime, datetime &barTime)
@@ -475,6 +752,13 @@ bool LongBiasAllowed()
 bool BuildSessionContext(SessionContext &ctx)
   {
    ctx.valid = false;
+   ctx.boxWidthBucket = "";
+   ctx.weekdayLabel = "";
+   ctx.previousDayHigh = 0.0;
+   ctx.previousDayLow = 0.0;
+   ctx.m30PriorSwingHigh = 0.0;
+   ctx.m30PriorSwingLow = 0.0;
+   ctx.boxWidthAtrRatio = 0.0;
 
    datetime now = TimeCurrent();
    ctx.sessionTypeLabel = "tokyo_range_london_break";
@@ -487,6 +771,7 @@ bool BuildSessionContext(SessionContext &ctx)
    ctx.breakoutWindowActive = (now >= ctx.breakoutStart && now < ctx.breakoutEnd);
    ctx.breakoutWindowExpired = (now >= ctx.breakoutEnd);
    ctx.sessionDayId = BuildDayId(ctx.rangeStart);
+   ctx.weekdayLabel = WeekdayLabel(ctx.rangeStart);
 
    if(now < ctx.rangeEnd)
       return false;
@@ -505,10 +790,15 @@ bool BuildSessionContext(SessionContext &ctx)
 
    ctx.rangePips = ctx.rangeHeight / GetPipSize();
    ctx.rangeAtrPips = ctx.rangeAtr / GetPipSize();
+   ctx.boxWidthAtrRatio = (ctx.rangeAtrPips > 0.0) ? (ctx.rangePips / ctx.rangeAtrPips) : 0.0;
+   ctx.boxWidthBucket = BoxWidthBucket(ctx.boxWidthAtrRatio);
    ctx.executionAtrPips = ctx.executionAtr / GetPipSize();
    ctx.breakoutBuffer = MathMax(PipsToPrice(InpMinBreakoutBufferPips), ctx.executionAtr * InpBreakoutBufferATR);
    ctx.retestTolerance = PipsToPrice(InpRetestTolerancePips);
    ctx.volatilityBucket = VolatilityBucket(MathMax(ctx.rangeAtrPips, ctx.executionAtrPips));
+   CollectPreviousDayRange(ctx.rangeStart, ctx.previousDayHigh, ctx.previousDayLow);
+   FindLatestConfirmedPivotLevelBeforeTime(PERIOD_M30, true, ctx.rangeStart, 2, 160, ctx.m30PriorSwingHigh);
+   FindLatestConfirmedPivotLevelBeforeTime(PERIOD_M30, false, ctx.rangeStart, 2, 160, ctx.m30PriorSwingLow);
 
    if(ctx.rangePips < InpMinRangePips)
       return false;
@@ -535,13 +825,18 @@ bool BuildBreakoutSetup(const SessionContext &ctx, int direction, BreakoutSetup 
    setup.direction = direction;
    setup.sideLabel = (direction > 0) ? "long" : "short";
    setup.sessionTypeLabel = ctx.sessionTypeLabel;
+   setup.breakoutSideLabel = (direction > 0) ? "high_breakout" : "low_breakout";
    setup.breakoutTypeLabel = (direction > 0) ? "session_high_breakout" : "session_low_breakout";
    setup.breakoutStateLabel = "session_box_ready";
    setup.volatilityBucket = ctx.volatilityBucket;
+   setup.boxWidthBucket = ctx.boxWidthBucket;
+   setup.weekdayLabel = ctx.weekdayLabel;
    setup.rangeTimeframeLabel = ctx.rangeTimeframeLabel;
    setup.executionTimeframeLabel = ctx.executionTimeframeLabel;
    setup.rangeHigh = ctx.rangeHigh;
    setup.rangeLow = ctx.rangeLow;
+   setup.boxWidthPips = ctx.rangePips;
+   setup.boxWidthAtrRatio = ctx.boxWidthAtrRatio;
    setup.breakoutLevel = (direction > 0) ? ctx.rangeHigh : ctx.rangeLow;
    setup.stopAnchor = (direction > 0) ? ctx.rangeLow : ctx.rangeHigh;
    setup.invalidationLevel = NormalizePrice((direction > 0)
@@ -550,6 +845,23 @@ bool BuildBreakoutSetup(const SessionContext &ctx, int direction, BreakoutSetup 
    setup.structureHeight = ctx.rangeHeight;
    setup.structureHeightPips = ctx.rangePips;
    setup.rangeAtrPips = ctx.rangeAtrPips;
+   double alignmentThresholdPips = AlignmentThresholdPips(ctx);
+   setup.prevDayAlignmentType = BuildAlignmentType(
+      direction,
+      setup.breakoutLevel,
+      (direction > 0) ? ctx.previousDayHigh : ctx.previousDayLow,
+      alignmentThresholdPips,
+      (direction > 0) ? "near_prev_day_high" : "near_prev_day_low",
+      (direction > 0) ? "far_prev_day_high" : "far_prev_day_low"
+   );
+   setup.m30SwingAlignmentType = BuildAlignmentType(
+      direction,
+      setup.breakoutLevel,
+      (direction > 0) ? ctx.m30PriorSwingHigh : ctx.m30PriorSwingLow,
+      alignmentThresholdPips,
+      (direction > 0) ? "near_m30_prior_swing_high" : "near_m30_prior_swing_low",
+      (direction > 0) ? "far_m30_prior_swing_high" : "far_m30_prior_swing_low"
+   );
    setup.setupTime = TimeCurrent();
    return true;
   }
@@ -605,9 +917,15 @@ bool BuildEntryTrigger(PendingExecutionContext &ctx, const SessionContext &sessi
   {
    trigger.fired = false;
    trigger.triggerLabel = "";
+   trigger.triggerTypeLabel = "";
+   trigger.breakoutStrengthBucket = "";
+   trigger.breakoutTimingBucket = "";
    trigger.entryPrice = 0.0;
    trigger.setupToEntryPips = 0.0;
+   trigger.breakoutCloseDistancePips = 0.0;
+   trigger.breakoutCloseDistanceAtr = 0.0;
    trigger.barsFromSetupToEntry = -1;
+   trigger.londonMinutesFromOpen = -1;
    trigger.referenceLevel = 0.0;
 
    if(!ctx.valid || !sessionCtx.valid || !sessionCtx.breakoutWindowActive)
@@ -641,8 +959,10 @@ bool BuildEntryTrigger(PendingExecutionContext &ctx, const SessionContext &sessi
      {
       if(closeBreak)
         {
+         RecordBreakoutDiagnostics(ctx, sessionCtx, iTime(runtimeSymbol, InpExecutionTimeframe, 1), close1);
          trigger.fired = true;
          trigger.triggerLabel = "exec_range_close_confirm";
+         trigger.triggerTypeLabel = trigger.triggerLabel;
          trigger.entryPrice = (ctx.setup.direction > 0) ? ask : bid;
          trigger.referenceLevel = ctx.setup.breakoutLevel;
         }
@@ -656,6 +976,7 @@ bool BuildEntryTrigger(PendingExecutionContext &ctx, const SessionContext &sessi
             ctx.breakoutSeen = true;
             ctx.breakoutTime = iTime(runtimeSymbol, InpExecutionTimeframe, 1);
             ctx.breakoutBarExtreme = (ctx.setup.direction > 0) ? high1 : low1;
+            RecordBreakoutDiagnostics(ctx, sessionCtx, ctx.breakoutTime, close1);
            }
          return false;
         }
@@ -668,6 +989,7 @@ bool BuildEntryTrigger(PendingExecutionContext &ctx, const SessionContext &sessi
            {
             trigger.fired = true;
             trigger.triggerLabel = "exec_range_retest_confirm";
+            trigger.triggerTypeLabel = trigger.triggerLabel;
             trigger.entryPrice = ask;
             trigger.referenceLevel = ctx.setup.breakoutLevel;
            }
@@ -680,6 +1002,7 @@ bool BuildEntryTrigger(PendingExecutionContext &ctx, const SessionContext &sessi
            {
             trigger.fired = true;
             trigger.triggerLabel = "exec_range_retest_confirm";
+            trigger.triggerTypeLabel = trigger.triggerLabel;
             trigger.entryPrice = bid;
             trigger.referenceLevel = ctx.setup.breakoutLevel;
            }
@@ -694,6 +1017,7 @@ bool BuildEntryTrigger(PendingExecutionContext &ctx, const SessionContext &sessi
             ctx.breakoutSeen = true;
             ctx.breakoutTime = iTime(runtimeSymbol, InpExecutionTimeframe, 1);
             ctx.breakoutBarExtreme = (ctx.setup.direction > 0) ? high1 : low1;
+            RecordBreakoutDiagnostics(ctx, sessionCtx, ctx.breakoutTime, close1);
             ctx.recentSwingLevel = ctx.breakoutBarExtreme;
             ctx.recentSwingLabel = (ctx.setup.direction > 0) ? "breakout_bar_high" : "breakout_bar_low";
            }
@@ -706,6 +1030,7 @@ bool BuildEntryTrigger(PendingExecutionContext &ctx, const SessionContext &sessi
            {
             trigger.fired = true;
             trigger.triggerLabel = "exec_breakout_bar_continuation";
+            trigger.triggerTypeLabel = trigger.triggerLabel;
             trigger.entryPrice = ask;
             trigger.referenceLevel = ctx.recentSwingLevel;
            }
@@ -716,6 +1041,7 @@ bool BuildEntryTrigger(PendingExecutionContext &ctx, const SessionContext &sessi
            {
             trigger.fired = true;
             trigger.triggerLabel = "exec_breakout_bar_continuation";
+            trigger.triggerTypeLabel = trigger.triggerLabel;
             trigger.entryPrice = bid;
             trigger.referenceLevel = ctx.recentSwingLevel;
            }
@@ -727,6 +1053,11 @@ bool BuildEntryTrigger(PendingExecutionContext &ctx, const SessionContext &sessi
 
    trigger.setupToEntryPips = setupToEntryPips;
    trigger.barsFromSetupToEntry = barsFromSetup;
+   trigger.breakoutCloseDistancePips = ctx.breakoutCloseDistancePips;
+   trigger.breakoutCloseDistanceAtr = ctx.breakoutCloseDistanceAtr;
+   trigger.breakoutStrengthBucket = ctx.breakoutStrengthBucket;
+   trigger.londonMinutesFromOpen = ctx.londonMinutesFromOpen;
+   trigger.breakoutTimingBucket = ctx.breakoutTimingBucket;
    return true;
   }
 
@@ -797,17 +1128,31 @@ bool BuildEntryPlan(const BreakoutSetup &setup, const ExecutionTrigger &trigger,
    plan.sessionDayId = setup.sessionDayId;
    plan.sideLabel = setup.sideLabel;
    plan.sessionTypeLabel = setup.sessionTypeLabel;
+   plan.breakoutSideLabel = setup.breakoutSideLabel;
    plan.breakoutTypeLabel = setup.breakoutTypeLabel;
    plan.breakoutStateLabel = setup.breakoutStateLabel;
    plan.executionTriggerLabel = trigger.triggerLabel;
+   plan.triggerTypeLabel = trigger.triggerTypeLabel;
    plan.rangeTimeframeLabel = setup.rangeTimeframeLabel;
    plan.executionTimeframeLabel = setup.executionTimeframeLabel;
    plan.partialTargetLabel = partialLabel;
    plan.finalTargetLabel = finalLabel;
    plan.volatilityBucket = setup.volatilityBucket;
+   plan.boxWidthBucket = setup.boxWidthBucket;
+   plan.breakoutStrengthBucket = trigger.breakoutStrengthBucket;
+   plan.breakoutTimingBucket = trigger.breakoutTimingBucket;
+   plan.prevDayAlignmentType = setup.prevDayAlignmentType;
+   plan.m30SwingAlignmentType = setup.m30SwingAlignmentType;
+   plan.weekdayLabel = setup.weekdayLabel;
+   plan.rangeHigh = setup.rangeHigh;
+   plan.rangeLow = setup.rangeLow;
    plan.breakoutLevel = setup.breakoutLevel;
+   plan.boxWidthPips = setup.boxWidthPips;
+   plan.boxWidthAtrRatio = setup.boxWidthAtrRatio;
    plan.structureHeightPips = setup.structureHeightPips;
    plan.rangeAtrPips = setup.rangeAtrPips;
+   plan.breakoutCloseDistancePips = trigger.breakoutCloseDistancePips;
+   plan.breakoutCloseDistanceAtr = trigger.breakoutCloseDistanceAtr;
    plan.invalidationLevel = setup.invalidationLevel;
    plan.setupBaselineEntry = (setup.direction > 0)
                              ? SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK)
@@ -824,6 +1169,7 @@ bool BuildEntryPlan(const BreakoutSetup &setup, const ExecutionTrigger &trigger,
    plan.stopDistancePips = risk / GetPipSize();
    plan.plannedRiskAmount = 0.0;
    plan.barsFromSetupToEntry = trigger.barsFromSetupToEntry;
+   plan.londonMinutesFromOpen = trigger.londonMinutesFromOpen;
    plan.reason = "session_box_" + setup.sideLabel + "_" + trigger.triggerLabel;
    return true;
   }
@@ -910,15 +1256,28 @@ bool OpenTelemetryFile()
                 "side",
                 "position_id",
                 "session_type",
+                "breakout_side",
                 "breakout_type",
                 "breakout_state",
                 "execution_trigger",
+                "trigger_type",
                 "range_tf",
                 "execution_tf",
                 "partial_target_label",
                 "final_target_label",
                 "volatility_bucket",
+                "box_width_pips",
+                "box_width_atr_ratio",
+                "box_width_bucket",
                 "breakout_level",
+                "breakout_close_distance_pips",
+                "breakout_close_distance_atr",
+                "breakout_strength_bucket",
+                "london_minutes_from_open",
+                "breakout_timing_bucket",
+                "prev_day_alignment_type",
+                "m30_swing_alignment_type",
+                "weekday",
                 "range_height_pips",
                 "range_atr_pips",
                 "setup_to_entry_pips",
@@ -934,6 +1293,12 @@ bool OpenTelemetryFile()
                 "bars_to_partial",
                 "bars_to_final",
                 "bars_to_time_stop",
+                "accepted_outside_box_bars",
+                "failed_back_inside_box_bars",
+                "mfe_before_acceptance_exit",
+                "mae_before_acceptance_exit",
+                "did_time_stop_after_partial",
+                "did_runner_hit_before_time_stop",
                 "mfe_pips",
                 "mae_pips",
                 "max_unrealized_r",
@@ -988,6 +1353,8 @@ void LogTelemetry(string eventType,
 
    bool runnerTargetHit = (reason == "runner_target");
    bool runnerStopAtBreakeven = (reason == "breakeven_after_partial");
+   bool didTimeStopAfterPartial = (reason == "time_stop" && activePartialTaken);
+   bool didRunnerHitBeforeTimeStop = (reason == "runner_target");
 
    FileSeek(telemetryHandle, 0, SEEK_END);
    FileWrite(telemetryHandle,
@@ -996,15 +1363,28 @@ void LogTelemetry(string eventType,
              plan.sideLabel,
              (long)positionId,
              plan.sessionTypeLabel,
+             plan.breakoutSideLabel,
              plan.breakoutTypeLabel,
              plan.breakoutStateLabel,
              plan.executionTriggerLabel,
+             plan.triggerTypeLabel,
              plan.rangeTimeframeLabel,
              plan.executionTimeframeLabel,
              plan.partialTargetLabel,
              plan.finalTargetLabel,
              plan.volatilityBucket,
+             plan.boxWidthPips,
+             plan.boxWidthAtrRatio,
+             plan.boxWidthBucket,
              plan.breakoutLevel,
+             plan.breakoutCloseDistancePips,
+             plan.breakoutCloseDistanceAtr,
+             plan.breakoutStrengthBucket,
+             plan.londonMinutesFromOpen,
+             plan.breakoutTimingBucket,
+             plan.prevDayAlignmentType,
+             plan.m30SwingAlignmentType,
+             plan.weekdayLabel,
              plan.structureHeightPips,
              plan.rangeAtrPips,
              plan.setupToEntryPips,
@@ -1020,6 +1400,12 @@ void LogTelemetry(string eventType,
              activeBarsToPartial,
              activeBarsToFinal,
              activeBarsToTimeStop,
+             activeAcceptedOutsideBoxBars,
+             activeFailedBackInsideBoxBars,
+             activeMfeBeforeAcceptanceExit,
+             activeMaeBeforeAcceptanceExit,
+             (int)didTimeStopAfterPartial,
+             (int)didRunnerHitBeforeTimeStop,
              activeMfePips,
              activeMaePips,
              activeMaxUnrealizedR,
@@ -1122,6 +1508,31 @@ void UpdateOpenTradeExcursion()
       activeMinUnrealizedR = adverseR;
   }
 
+void UpdateActiveBoxAcceptanceDiagnostics()
+  {
+   if(!activePlan.valid)
+      return;
+
+   datetime diagnosticBarTime = iTime(runtimeSymbol, InpExecutionTimeframe, 1);
+   if(diagnosticBarTime <= 0 || diagnosticBarTime == activeLastDiagnosticBarTime)
+      return;
+
+   double execClose = iClose(runtimeSymbol, InpExecutionTimeframe, 1);
+   if(execClose <= 0.0)
+      return;
+
+   activeLastDiagnosticBarTime = diagnosticBarTime;
+   bool acceptedOutside = (activePlan.direction > 0)
+                          ? (execClose > activePlan.rangeHigh)
+                          : (execClose < activePlan.rangeLow);
+   bool failedBackInside = (execClose >= activePlan.rangeLow && execClose <= activePlan.rangeHigh);
+
+   if(acceptedOutside)
+      activeAcceptedOutsideBoxBars++;
+   if(failedBackInside)
+      activeFailedBackInsideBoxBars++;
+  }
+
 bool MoveStopToBreakeven()
   {
    if(!PositionSelect(runtimeSymbol))
@@ -1201,6 +1612,8 @@ void ManageOpenPositions()
    datetime openedAt = (datetime)PositionGetInteger(POSITION_TIME);
    int barsSinceEntry = iBarShift(runtimeSymbol, InpExecutionTimeframe, openedAt, false);
 
+   UpdateActiveBoxAcceptanceDiagnostics();
+
    if(activePlan.usePartial && activePartialTaken && !activeBreakEvenMoved)
       MoveStopToBreakeven();
 
@@ -1248,6 +1661,8 @@ void ManageOpenPositions()
                               : (execClose > activePlan.invalidationLevel);
       if(acceptanceFailed)
         {
+         activeMfeBeforeAcceptanceExit = activeMfePips;
+         activeMaeBeforeAcceptanceExit = activeMaePips;
          pendingExitReason = (activePlan.direction > 0)
                              ? "acceptance_back_inside_box"
                              : "acceptance_back_inside_box";

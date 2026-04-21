@@ -16,7 +16,7 @@ from typing import Any
 SCRIPT_PATH = Path(__file__).resolve()
 REPO_ROOT = SCRIPT_PATH.parents[3]
 COMMON_FILES_ROOT = Path(os.environ["APPDATA"]) / "MetaQuotes" / "Terminal" / "Common" / "Files"
-SWEEP_ROOT = REPO_ROOT / "reports" / "backtest" / "sweeps" / "2026-04-21-usdjpy-session-box-validation"
+SWEEP_ROOT = REPO_ROOT / "reports" / "backtest" / "sweeps" / "2026-04-21-usdjpy-session-box-regime-diagnostics"
 RESULTS_ROOT = SWEEP_ROOT / "results"
 CONFIGS_ROOT = SWEEP_ROOT / "configs"
 PRESETS_ROOT = SWEEP_ROOT / "presets"
@@ -94,7 +94,7 @@ class RunSpec:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Validate the USDJPY Tokyo-London session box breakout family.")
+    parser = argparse.ArgumentParser(description="Run regime diagnostics for the USDJPY Tokyo-London session box breakout family.")
     parser.add_argument("--terminal-path", default=str(TERMINAL_DEFAULT))
     parser.add_argument("--timeout-seconds", type=int, default=1200)
     parser.add_argument("--reuse-existing", action="store_true")
@@ -153,7 +153,7 @@ def write_preset(base_preset: Path, overrides: dict[str, Any], target_path: Path
 
 
 def build_report_relative_path(slug: str) -> str:
-    return f"MQL5\\Experts\\dev\\reports\\backtest\\sweeps\\2026-04-21-usdjpy-session-box-validation\\reports\\{slug}.htm"
+    return f"MQL5\\Experts\\dev\\reports\\backtest\\sweeps\\2026-04-21-usdjpy-session-box-regime-diagnostics\\reports\\{slug}.htm"
 
 
 def write_config(spec: RunSpec) -> None:
@@ -382,7 +382,7 @@ def aggregate_dimension(trades: list[dict[str, Any]], key: str) -> dict[str, Any
     )
 
 
-def summarize_telemetry(path: Path) -> dict[str, Any]:
+def summarize_telemetry_legacy(path: Path) -> dict[str, Any]:
     rows = read_telemetry_rows(path)
     if not rows:
         empty = finalize_rollup(init_rollup())
@@ -622,6 +622,358 @@ def summarize_telemetry(path: Path) -> dict[str, Any]:
     return summary
 
 
+def summarize_telemetry(path: Path) -> dict[str, Any]:
+    rows = read_telemetry_rows(path)
+    if not rows:
+        empty = finalize_rollup(init_rollup())
+        empty.update(
+            {
+                "rows": 0,
+                "closed_trades": 0,
+                "partial_hit_count": 0,
+                "partial_hit_rate": 0.0,
+                "be_move_count": 0,
+                "be_move_rate": 0.0,
+                "runner_target_hit_count": 0,
+                "runner_target_hit_rate": 0.0,
+                "runner_breakeven_stop_count": 0,
+                "avg_bars_from_setup_to_entry": 0.0,
+                "avg_setup_to_entry_pips": 0.0,
+                "avg_bars_to_partial": 0.0,
+                "avg_bars_to_final": 0.0,
+                "avg_bars_to_time_stop": 0.0,
+                "avg_mfe_pips": 0.0,
+                "avg_mae_pips": 0.0,
+                "avg_max_unrealized_r": 0.0,
+                "avg_min_unrealized_r": 0.0,
+                "avg_accepted_outside_box_bars": 0.0,
+                "avg_failed_back_inside_box_bars": 0.0,
+                "avg_mfe_before_acceptance_exit": 0.0,
+                "avg_mae_before_acceptance_exit": 0.0,
+                "time_stop_after_partial_count": 0,
+                "runner_hit_before_time_stop_count": 0,
+                "exit_reason_breakdown": {},
+                "dimensions": {},
+                "acceptance_dimensions": {},
+            }
+        )
+        return empty
+
+    campaigns: dict[str, dict[str, Any]] = {}
+    active_trade_key: str | None = None
+    trade_sequence = 0
+
+    for row in rows:
+        event_type = row.get("event_type", "")
+        position_id = row.get("position_id", "") or "0"
+
+        if event_type == "entry":
+            trade_sequence += 1
+            active_trade_key = f"campaign_{trade_sequence}"
+        trade_key = active_trade_key or f"orphan_{position_id}"
+
+        trade = campaigns.setdefault(
+            trade_key,
+            {
+                "trade_key": trade_key,
+                "position_id": position_id,
+                "side": row.get("side", ""),
+                "session_type": row.get("session_type", ""),
+                "breakout_side": row.get("breakout_side", ""),
+                "breakout_type": row.get("breakout_type", ""),
+                "breakout_state": row.get("breakout_state", ""),
+                "execution_trigger": row.get("execution_trigger", ""),
+                "trigger_type": row.get("trigger_type", ""),
+                "range_tf": row.get("range_tf", ""),
+                "execution_tf": row.get("execution_tf", ""),
+                "partial_target_label": row.get("partial_target_label", ""),
+                "final_target_label": row.get("final_target_label", ""),
+                "volatility_bucket": row.get("volatility_bucket", ""),
+                "box_width_pips": 0.0,
+                "box_width_atr_ratio": 0.0,
+                "box_width_bucket": "",
+                "breakout_close_distance_pips": 0.0,
+                "breakout_close_distance_atr": 0.0,
+                "breakout_strength_bucket": "",
+                "london_minutes_from_open": -1,
+                "breakout_timing_bucket": "",
+                "prev_day_alignment_type": "",
+                "m30_swing_alignment_type": "",
+                "weekday": "",
+                "planned_risk_amount": 0.0,
+                "bars_from_setup_to_entry": -1,
+                "setup_to_entry_pips": 0.0,
+                "bars_to_partial": -1,
+                "bars_to_final": -1,
+                "bars_to_time_stop": -1,
+                "accepted_outside_box_bars": 0,
+                "failed_back_inside_box_bars": 0,
+                "mfe_before_acceptance_exit": 0.0,
+                "mae_before_acceptance_exit": 0.0,
+                "mfe_pips": 0.0,
+                "mae_pips": 0.0,
+                "max_unrealized_r": 0.0,
+                "min_unrealized_r": 0.0,
+                "net_profit": 0.0,
+                "partial_hit": False,
+                "be_move": False,
+                "runner_target_enabled": False,
+                "runner_target_hit": False,
+                "runner_stop_at_breakeven": False,
+                "did_time_stop_after_partial": False,
+                "did_runner_hit_before_time_stop": False,
+                "final_reason": "",
+                "final_outcome": "",
+                "has_exit": False,
+                "total_realized_r": None,
+                "subtype": "",
+            },
+        )
+
+        planned_risk_amount = parse_float(row.get("planned_risk_amount"))
+        if planned_risk_amount > 0.0:
+            trade["planned_risk_amount"] = planned_risk_amount
+
+        bars_from_setup = parse_int(row.get("bars_from_setup_to_entry"))
+        if bars_from_setup >= 0:
+            trade["bars_from_setup_to_entry"] = bars_from_setup
+        london_minutes = parse_int(row.get("london_minutes_from_open"))
+        if london_minutes >= 0:
+            trade["london_minutes_from_open"] = london_minutes
+
+        trade["setup_to_entry_pips"] = parse_float(row.get("setup_to_entry_pips"))
+        trade["box_width_pips"] = max(trade["box_width_pips"], parse_float(row.get("box_width_pips")))
+        trade["box_width_atr_ratio"] = max(trade["box_width_atr_ratio"], parse_float(row.get("box_width_atr_ratio")))
+        trade["breakout_close_distance_pips"] = max(
+            trade["breakout_close_distance_pips"], parse_float(row.get("breakout_close_distance_pips"))
+        )
+        trade["breakout_close_distance_atr"] = max(
+            trade["breakout_close_distance_atr"], parse_float(row.get("breakout_close_distance_atr"))
+        )
+        trade["mfe_pips"] = max(trade["mfe_pips"], parse_float(row.get("mfe_pips")))
+        trade["mae_pips"] = max(trade["mae_pips"], parse_float(row.get("mae_pips")))
+        trade["max_unrealized_r"] = max(trade["max_unrealized_r"], parse_float(row.get("max_unrealized_r")))
+        trade["min_unrealized_r"] = min(trade["min_unrealized_r"], parse_float(row.get("min_unrealized_r")))
+        trade["mfe_before_acceptance_exit"] = max(
+            trade["mfe_before_acceptance_exit"], parse_float(row.get("mfe_before_acceptance_exit"))
+        )
+        trade["mae_before_acceptance_exit"] = max(
+            trade["mae_before_acceptance_exit"], parse_float(row.get("mae_before_acceptance_exit"))
+        )
+
+        accepted_outside = parse_int(row.get("accepted_outside_box_bars"))
+        if accepted_outside >= 0:
+            trade["accepted_outside_box_bars"] = max(trade["accepted_outside_box_bars"], accepted_outside)
+        failed_back_inside = parse_int(row.get("failed_back_inside_box_bars"))
+        if failed_back_inside >= 0:
+            trade["failed_back_inside_box_bars"] = max(trade["failed_back_inside_box_bars"], failed_back_inside)
+
+        trade["did_time_stop_after_partial"] = parse_bool(row.get("did_time_stop_after_partial")) or trade["did_time_stop_after_partial"]
+        trade["did_runner_hit_before_time_stop"] = parse_bool(row.get("did_runner_hit_before_time_stop")) or trade[
+            "did_runner_hit_before_time_stop"
+        ]
+
+        if event_type == "entry":
+            trade["side"] = row.get("side", trade["side"])
+            trade["session_type"] = row.get("session_type", trade["session_type"])
+            trade["breakout_side"] = row.get("breakout_side", trade["breakout_side"])
+            trade["breakout_type"] = row.get("breakout_type", trade["breakout_type"])
+            trade["breakout_state"] = row.get("breakout_state", trade["breakout_state"])
+            trade["execution_trigger"] = row.get("execution_trigger", trade["execution_trigger"])
+            trade["trigger_type"] = row.get("trigger_type", trade["trigger_type"])
+            trade["range_tf"] = row.get("range_tf", trade["range_tf"])
+            trade["execution_tf"] = row.get("execution_tf", trade["execution_tf"])
+            trade["partial_target_label"] = row.get("partial_target_label", trade["partial_target_label"])
+            trade["final_target_label"] = row.get("final_target_label", trade["final_target_label"])
+            trade["volatility_bucket"] = row.get("volatility_bucket", trade["volatility_bucket"])
+            trade["box_width_bucket"] = row.get("box_width_bucket", trade["box_width_bucket"])
+            trade["breakout_strength_bucket"] = row.get("breakout_strength_bucket", trade["breakout_strength_bucket"])
+            trade["breakout_timing_bucket"] = row.get("breakout_timing_bucket", trade["breakout_timing_bucket"])
+            trade["prev_day_alignment_type"] = row.get("prev_day_alignment_type", trade["prev_day_alignment_type"])
+            trade["m30_swing_alignment_type"] = row.get("m30_swing_alignment_type", trade["m30_swing_alignment_type"])
+            trade["weekday"] = row.get("weekday", trade["weekday"])
+            trade["runner_target_enabled"] = parse_bool(row.get("runner_target_enabled"))
+            continue
+
+        if event_type == "partial_exit":
+            profit = parse_float(row.get("net_profit"))
+            trade["net_profit"] += profit
+            trade["partial_hit"] = True
+            trade["be_move"] = parse_bool(row.get("be_move")) or trade["be_move"]
+            bars_to_partial = parse_int(row.get("bars_to_partial"))
+            if bars_to_partial >= 0:
+                trade["bars_to_partial"] = bars_to_partial
+            continue
+
+        if event_type == "exit":
+            profit = parse_float(row.get("net_profit"))
+            trade["net_profit"] += profit
+            trade["be_move"] = parse_bool(row.get("be_move")) or trade["be_move"]
+            trade["runner_target_hit"] = parse_bool(row.get("runner_target_hit"))
+            trade["runner_stop_at_breakeven"] = parse_bool(row.get("runner_stop_at_breakeven"))
+            trade["final_reason"] = row.get("reason", "")
+            trade["final_outcome"] = row.get("outcome", "")
+            bars_to_final = parse_int(row.get("bars_to_final"))
+            if bars_to_final >= 0:
+                trade["bars_to_final"] = bars_to_final
+            bars_to_time_stop = parse_int(row.get("bars_to_time_stop"))
+            if bars_to_time_stop >= 0:
+                trade["bars_to_time_stop"] = bars_to_time_stop
+            trade["has_exit"] = True
+            active_trade_key = None
+
+    closed_trades = [trade for trade in campaigns.values() if trade["has_exit"]]
+    summary_rollup = init_rollup()
+    exit_reason_breakdown: dict[str, dict[str, Any]] = defaultdict(lambda: {"count": 0, "net_profit": 0.0})
+
+    partial_hit_count = 0
+    be_move_count = 0
+    runner_target_hit_count = 0
+    runner_breakeven_stop_count = 0
+    time_stop_after_partial_count = 0
+    runner_hit_before_time_stop_count = 0
+    bars_from_setup_values: list[float] = []
+    setup_to_entry_values: list[float] = []
+    bars_to_partial_values: list[float] = []
+    bars_to_final_values: list[float] = []
+    bars_to_time_stop_values: list[float] = []
+    mfe_values: list[float] = []
+    mae_values: list[float] = []
+    max_unrealized_r_values: list[float] = []
+    min_unrealized_r_values: list[float] = []
+    accepted_outside_values: list[float] = []
+    failed_back_inside_values: list[float] = []
+    acceptance_mfe_values: list[float] = []
+    acceptance_mae_values: list[float] = []
+
+    for trade in closed_trades:
+        planned_risk_amount = float(trade["planned_risk_amount"])
+        total_realized_r = None
+        if planned_risk_amount > 0.0:
+            total_realized_r = float(trade["net_profit"]) / planned_risk_amount
+            trade["total_realized_r"] = total_realized_r
+
+        trade["subtype"] = "|".join(
+            [
+                str(trade["side"] or "unknown"),
+                str(trade["breakout_side"] or "unknown"),
+                str(trade["execution_trigger"] or "unknown"),
+                str(trade["box_width_bucket"] or "unknown"),
+                str(trade["breakout_timing_bucket"] or "unknown"),
+            ]
+        )
+
+        add_trade_to_rollup(summary_rollup, float(trade["net_profit"]), total_realized_r)
+        if trade["partial_hit"]:
+            partial_hit_count += 1
+        if trade["be_move"]:
+            be_move_count += 1
+        if trade["runner_target_hit"]:
+            runner_target_hit_count += 1
+        if trade["runner_stop_at_breakeven"]:
+            runner_breakeven_stop_count += 1
+        if trade["did_time_stop_after_partial"]:
+            time_stop_after_partial_count += 1
+        if trade["did_runner_hit_before_time_stop"]:
+            runner_hit_before_time_stop_count += 1
+
+        if trade["bars_from_setup_to_entry"] >= 0:
+            bars_from_setup_values.append(float(trade["bars_from_setup_to_entry"]))
+        setup_to_entry_values.append(float(trade["setup_to_entry_pips"]))
+        if trade["bars_to_partial"] >= 0:
+            bars_to_partial_values.append(float(trade["bars_to_partial"]))
+        if trade["bars_to_final"] >= 0:
+            bars_to_final_values.append(float(trade["bars_to_final"]))
+        if trade["bars_to_time_stop"] >= 0:
+            bars_to_time_stop_values.append(float(trade["bars_to_time_stop"]))
+        mfe_values.append(float(trade["mfe_pips"]))
+        mae_values.append(float(trade["mae_pips"]))
+        max_unrealized_r_values.append(float(trade["max_unrealized_r"]))
+        min_unrealized_r_values.append(float(trade["min_unrealized_r"]))
+        accepted_outside_values.append(float(trade["accepted_outside_box_bars"]))
+        failed_back_inside_values.append(float(trade["failed_back_inside_box_bars"]))
+
+        final_reason = trade["final_reason"] or "unknown"
+        exit_reason_breakdown[final_reason]["count"] += 1
+        exit_reason_breakdown[final_reason]["net_profit"] += float(trade["net_profit"])
+        if final_reason == "acceptance_back_inside_box":
+            acceptance_mfe_values.append(float(trade["mfe_before_acceptance_exit"]))
+            acceptance_mae_values.append(float(trade["mae_before_acceptance_exit"]))
+
+    dimensions = {}
+    for key in (
+        "subtype",
+        "session_type",
+        "breakout_side",
+        "breakout_type",
+        "breakout_state",
+        "execution_trigger",
+        "trigger_type",
+        "final_reason",
+        "range_tf",
+        "execution_tf",
+        "side",
+        "box_width_bucket",
+        "breakout_strength_bucket",
+        "breakout_timing_bucket",
+        "prev_day_alignment_type",
+        "m30_swing_alignment_type",
+        "weekday",
+    ):
+        dimensions[key] = aggregate_dimension(closed_trades, key)
+
+    acceptance_trades = [trade for trade in closed_trades if trade["final_reason"] == "acceptance_back_inside_box"]
+    acceptance_dimensions = {}
+    for key in (
+        "breakout_side",
+        "trigger_type",
+        "box_width_bucket",
+        "breakout_strength_bucket",
+        "breakout_timing_bucket",
+        "prev_day_alignment_type",
+        "m30_swing_alignment_type",
+        "weekday",
+    ):
+        acceptance_dimensions[key] = aggregate_dimension(acceptance_trades, key)
+
+    summary = finalize_rollup(summary_rollup)
+    summary.update(
+        {
+            "rows": len(rows),
+            "closed_trades": len(closed_trades),
+            "partial_hit_count": partial_hit_count,
+            "partial_hit_rate": round((partial_hit_count / len(closed_trades)) * 100.0, 2) if closed_trades else 0.0,
+            "be_move_count": be_move_count,
+            "be_move_rate": round((be_move_count / partial_hit_count) * 100.0, 2) if partial_hit_count else 0.0,
+            "runner_target_hit_count": runner_target_hit_count,
+            "runner_target_hit_rate": round((runner_target_hit_count / partial_hit_count) * 100.0, 2) if partial_hit_count else 0.0,
+            "runner_breakeven_stop_count": runner_breakeven_stop_count,
+            "avg_bars_from_setup_to_entry": average(bars_from_setup_values),
+            "avg_setup_to_entry_pips": average(setup_to_entry_values),
+            "avg_bars_to_partial": average(bars_to_partial_values),
+            "avg_bars_to_final": average(bars_to_final_values),
+            "avg_bars_to_time_stop": average(bars_to_time_stop_values),
+            "avg_mfe_pips": average(mfe_values),
+            "avg_mae_pips": average(mae_values),
+            "avg_max_unrealized_r": average(max_unrealized_r_values),
+            "avg_min_unrealized_r": average(min_unrealized_r_values),
+            "avg_accepted_outside_box_bars": average(accepted_outside_values),
+            "avg_failed_back_inside_box_bars": average(failed_back_inside_values),
+            "avg_mfe_before_acceptance_exit": average(acceptance_mfe_values),
+            "avg_mae_before_acceptance_exit": average(acceptance_mae_values),
+            "time_stop_after_partial_count": time_stop_after_partial_count,
+            "runner_hit_before_time_stop_count": runner_hit_before_time_stop_count,
+            "exit_reason_breakdown": {
+                reason: {"count": values["count"], "net_profit": round(values["net_profit"], 4)}
+                for reason, values in sorted(exit_reason_breakdown.items(), key=lambda item: item[1]["count"], reverse=True)
+            },
+            "dimensions": dimensions,
+            "acceptance_dimensions": acceptance_dimensions,
+        }
+    )
+    return summary
+
+
 def summarize_run(spec: RunSpec) -> dict[str, Any]:
     return {
         "slug": spec.slug,
@@ -732,7 +1084,7 @@ def write_results_json(results: list[dict[str, Any]]) -> Path:
     return path
 
 
-def write_summary_markdown(results: list[dict[str, Any]]) -> Path:
+def write_summary_markdown_legacy(results: list[dict[str, Any]]) -> Path:
     path = RESULTS_ROOT / "summary.md"
     lines: list[str] = []
     lines.append("# USDJPY Tokyo-London Session Box Breakout Validation")
@@ -804,6 +1156,147 @@ def write_summary_markdown(results: list[dict[str, Any]]) -> Path:
                 )
         else:
             lines.append("| none | 0 | 0.00 | 0.00 | 0.0000 |")
+
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return path
+
+
+def aggregate_acceptance_dimension_summaries(items: list[dict[str, Any]], dimension_key: str) -> dict[str, dict[str, Any]]:
+    buckets: dict[str, dict[str, Any]] = defaultdict(init_rollup)
+    for item in items:
+        for bucket, values in item["telemetry"].get("acceptance_dimensions", {}).get(dimension_key, {}).items():
+            data = buckets[bucket]
+            data["trades"] += int(values.get("trades", 0))
+            data["wins"] += int(values.get("wins", 0))
+            data["losses"] += int(values.get("losses", 0))
+            data["gross_profit"] += float(values.get("gross_profit", 0.0))
+            data["gross_loss_abs"] += abs(float(values.get("gross_loss", 0.0)))
+            data["net_profit"] += float(values.get("net_profit", 0.0))
+            realized_r_count = int(values.get("realized_r_count", 0))
+            data["sum_realized_r"] += float(values.get("avg_realized_r", 0.0)) * realized_r_count
+            data["realized_r_count"] += realized_r_count
+            data["sum_win_r"] += float(values.get("avg_win_r", 0.0)) * int(values.get("win_r_count", 0))
+            data["win_r_count"] += int(values.get("win_r_count", 0))
+            data["sum_loss_r"] += float(values.get("avg_loss_r", 0.0)) * int(values.get("loss_r_count", 0))
+            data["loss_r_count"] += int(values.get("loss_r_count", 0))
+
+    result: dict[str, dict[str, Any]] = {}
+    for bucket, data in sorted(buckets.items(), key=lambda item: (item[1]["trades"], item[1]["net_profit"]), reverse=True):
+        result[bucket] = finalize_rollup(data)
+    return result
+
+
+def append_rollup_table(lines: list[str], title: str, column_label: str, data: dict[str, dict[str, Any]]) -> None:
+    lines.append("")
+    lines.append(f"### {title}")
+    lines.append("")
+    lines.append(f"| {column_label} | trades | pf | net | avg R |")
+    lines.append("|---|---:|---:|---:|---:|")
+    if not data:
+        lines.append(f"| none | 0 | 0.00 | 0.00 | 0.0000 |")
+        return
+    for bucket, values in data.items():
+        lines.append(
+            f"| {bucket} | {values['trades']} | {values['profit_factor']:.2f} | {values['net_profit']:.2f} | {values['avg_realized_r']:.4f} |"
+        )
+
+
+def append_run_rollup_table(lines: list[str], title: str, data: dict[str, dict[str, Any]]) -> None:
+    lines.append("")
+    lines.append(f"### {title}")
+    lines.append("")
+    lines.append("| bucket | trades | pf | net | avg R | partial hit % | be move % | runner hit % |")
+    lines.append("|---|---:|---:|---:|---:|---:|---:|---:|")
+    if not data:
+        lines.append("| none | 0 | 0.00 | 0.00 | 0.0000 | 0.00 | 0.00 | 0.00 |")
+        return
+    for bucket, values in data.items():
+        lines.append(
+            f"| {bucket} | {values['trades']} | {values['profit_factor']:.2f} | {values['net_profit']:.2f} | "
+            f"{values['avg_realized_r']:.4f} | {values['partial_hit_rate']:.2f} | {values['be_move_rate']:.2f} | "
+            f"{values['runner_hit_rate']:.2f} |"
+        )
+
+
+def write_summary_markdown(results: list[dict[str, Any]]) -> Path:
+    path = RESULTS_ROOT / "summary.md"
+    lines: list[str] = []
+    lines.append("# USDJPY Tokyo-London Session Box Breakout Regime Diagnostics")
+    lines.append("")
+    lines.append(f"- total runs: {len(results)}")
+    lines.append("- fixed family: `Tokyo 00:00-07:00 box -> London 07:00-16:00 breakout`")
+    lines.append("- fixed exits: `partial 38.2`, `final session extension`, `hold 24`, `EA managed exits`")
+    lines.append("- diagnostic focus: `breakout side`, `trigger`, `box width`, `breakout strength`, `breakout timing`, `prev-day alignment`, `M30 prior swing alignment`, `weekday`")
+
+    for window in ("train", "oos", "actual"):
+        window_items = [item for item in results if item["window"] == window]
+        total_trades = sum(int(item["telemetry"]["closed_trades"]) for item in window_items)
+        total_net = sum(float(item["telemetry"]["net_profit"]) for item in window_items)
+        total_gross_profit = sum(float(item["telemetry"]["gross_profit"]) for item in window_items)
+        total_gross_loss_abs = sum(float(item["telemetry"]["gross_loss_abs"]) for item in window_items)
+        aggregate_pf = round(total_gross_profit / total_gross_loss_abs, 4) if total_gross_loss_abs > 0.0 else 0.0
+        avg_acceptance_fail = average([float(item["telemetry"]["avg_failed_back_inside_box_bars"]) for item in window_items])
+        avg_acceptance_mfe = average([float(item["telemetry"]["avg_mfe_before_acceptance_exit"]) for item in window_items])
+
+        lines.append("")
+        lines.append(f"## {window.upper()}")
+        lines.append("")
+        lines.append(f"- aggregate trades: `{total_trades}`")
+        lines.append(f"- aggregate PF: `{aggregate_pf:.2f}`")
+        lines.append(f"- aggregate net: `{total_net:.2f}`")
+        lines.append(f"- avg failed-back-inside bars: `{avg_acceptance_fail:.2f}`")
+        lines.append(f"- avg MFE before acceptance exit: `{avg_acceptance_mfe:.2f}`")
+        lines.append("")
+        lines.append("| slug | pair | trigger | trades | pf | net | exp payoff | max dd % | win rate % | avg win | avg loss | avg R |")
+        lines.append("|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
+        for item in sorted(
+            window_items,
+            key=lambda run: (run["telemetry"]["closed_trades"], run["metrics"]["profit_factor"], run["metrics"]["net_profit"]),
+            reverse=True,
+        ):
+            metrics = item["metrics"]
+            telemetry = item["telemetry"]
+            lines.append(
+                f"| {item['slug']} | {item['pair_label']} | {item['trigger_key']} | "
+                f"{telemetry['closed_trades']} | {metrics['profit_factor']:.2f} | {metrics['net_profit']:.2f} | "
+                f"{metrics['expected_payoff']:.2f} | {metrics['max_drawdown_percent']:.2f} | {metrics['win_rate']:.2f} | "
+                f"{metrics['average_win']:.2f} | {metrics['average_loss']:.2f} | {telemetry['avg_realized_r']:.4f} |"
+            )
+
+        append_run_rollup_table(lines, "Aggregate By Pair", aggregate_run_items(window_items, "pair_label"))
+        append_run_rollup_table(lines, "Aggregate By Trigger", aggregate_run_items(window_items, "trigger_key"))
+        append_rollup_table(lines, "Aggregate By Breakout Side", "breakout side", aggregate_dimension_summaries(window_items, "breakout_side"))
+        append_rollup_table(lines, "Aggregate By Box Width Bucket", "box width bucket", aggregate_dimension_summaries(window_items, "box_width_bucket"))
+        append_rollup_table(lines, "Aggregate By Breakout Strength Bucket", "breakout strength bucket", aggregate_dimension_summaries(window_items, "breakout_strength_bucket"))
+        append_rollup_table(lines, "Aggregate By Breakout Timing Bucket", "breakout timing bucket", aggregate_dimension_summaries(window_items, "breakout_timing_bucket"))
+        append_rollup_table(lines, "Aggregate By Previous Day Alignment", "prev-day alignment", aggregate_dimension_summaries(window_items, "prev_day_alignment_type"))
+        append_rollup_table(lines, "Aggregate By M30 Prior Swing Alignment", "m30 swing alignment", aggregate_dimension_summaries(window_items, "m30_swing_alignment_type"))
+        append_rollup_table(lines, "Aggregate By Weekday", "weekday", aggregate_dimension_summaries(window_items, "weekday"))
+
+        append_rollup_table(
+            lines,
+            "Acceptance Back Inside Box By Breakout Side",
+            "breakout side",
+            aggregate_acceptance_dimension_summaries(window_items, "breakout_side"),
+        )
+        append_rollup_table(
+            lines,
+            "Acceptance Back Inside Box By Trigger",
+            "trigger",
+            aggregate_acceptance_dimension_summaries(window_items, "trigger_type"),
+        )
+        append_rollup_table(
+            lines,
+            "Acceptance Back Inside Box By Box Width Bucket",
+            "box width bucket",
+            aggregate_acceptance_dimension_summaries(window_items, "box_width_bucket"),
+        )
+        append_rollup_table(
+            lines,
+            "Acceptance Back Inside Box By Breakout Timing Bucket",
+            "breakout timing bucket",
+            aggregate_acceptance_dimension_summaries(window_items, "breakout_timing_bucket"),
+        )
 
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return path

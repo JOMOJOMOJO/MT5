@@ -1,0 +1,56 @@
+﻿{
+    "generated_at":  "2026-04-21T14:59:44.9016116+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\sweeps\\2026-04-21-usdjpy-session-box-regime-diagnostics\\configs\\oos-m30_m5-close.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpB032.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpB032.ini"
+               },
+    "tester":  {
+                   "symbol":  "USDJPY",
+                   "period":  "M5",
+                   "from_date":  "2026.01.01",
+                   "to_date":  "2026.04.01",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\sweeps\\2026-04-21-usdjpy-session-box-regime-diagnostics\\reports\\oos-m30_m5-close.htm"
+               },
+    "preset":  {
+                   "name":  "oos-m30_m5-close.set",
+                   "source":  "reports\\backtest\\sweeps\\2026-04-21-usdjpy-session-box-regime-diagnostics\\presets\\oos-m30_m5-close.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\sweeps\\2026-04-21-usdjpy-session-box-regime-diagnostics\\presets\\oos-m30_m5-close.set",
+                   "parameters":  {
+                                      "InpSymbol":  "USDJPY",
+                                      "InpRangeTimeframe":  "30",
+                                      "InpExecutionTimeframe":  "5",
+                                      "InpRangeATRPeriod":  "14",
+                                      "InpExecutionATRPeriod":  "14",
+                                      "InpRangeStartHour":  "0",
+                                      "InpRangeEndHour":  "7",
+                                      "InpBreakoutStartHour":  "7",
+                                      "InpBreakoutEndHour":  "16",
+                                      "InpRangeScanBars":  "96",
+                                      "InpExecutionScanBars":  "48",
+                                      "InpMinRangePips":  "4.0",
+                                      "InpMaxRangePips":  "40.0",
+                                      "InpBreakoutBufferATR":  "0.06",
+                                      "InpMinBreakoutBufferPips":  "0.4",
+                                      "InpRetestTolerancePips":  "1.0",
+                                      "InpTradeBiasMode":  "2",
+                                      "InpBreakoutTriggerMode":  "0",
+                                      "InpPartialTargetLevel":  "382",
+                                      "InpFinalTargetMode":  "0",
+                                      "InpTargetRMultiple":  "1.20",
+                                      "InpMinStopBufferPips":  "1.2",
+                                      "InpStopBufferATR":  "0.10",
+                                      "InpAcceptanceExitBufferPips":  "0.5",
+                                      "InpHybridPartialFraction":  "0.50",
+                                      "InpMaxHoldBars":  "24",
+                                      "InpRiskPercent":  "0.35",
+                                      "InpOneTradePerSessionDay":  "true",
+                                      "InpSessionStartHour":  "0",
+                                      "InpSessionEndHour":  "0",
+                                      "InpMaxSpreadPips":  "2.0",
+                                      "InpEnableTelemetry":  "true",
+                                      "InpTelemetryFileName":  "mt5_company_session_box_oos-m30_m5-close.csv",
+                                      "InpMagicNumber":  "2026047011"
+                                  }
+               }
+}
