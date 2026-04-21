@@ -47,6 +47,7 @@ STAGE_KEYS = [
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run single-slice HTF swing continuation diagnostics.")
     parser.add_argument("--tier-mode", choices=("a_only", "a_and_b"), default="a_only")
+    parser.add_argument("--trade-bias", choices=("both", "long_only", "short_only"), default="both")
     return parser.parse_args()
 
 
@@ -90,13 +91,19 @@ def format_preset_value(raw_value: str, new_value: Any) -> str:
     return "||".join(parts)
 
 
-def write_preset(target_path: Path, telemetry_name: str, magic_number: int, tier_mode_value: int) -> None:
+def write_preset(
+    target_path: Path,
+    telemetry_name: str,
+    magic_number: int,
+    tier_mode_value: int,
+    trade_bias_value: int,
+) -> None:
     overrides = {
         "InpContextTimeframe": 30,
         "InpPatternTimeframe": 15,
         "InpExecutionTimeframe": 5,
         "InpTierMode": tier_mode_value,
-        "InpTradeBiasMode": 2,
+        "InpTradeBiasMode": trade_bias_value,
         "InpExecutionTriggerMode": 0,
         "InpSessionStartHour": 0,
         "InpSessionEndHour": 0,
@@ -254,7 +261,7 @@ def identify_bottleneck(stage_counts: dict[str, int]) -> str:
     bottleneck = "no_clear_bottleneck"
     for label, previous_count, next_count in stage_chain:
         if previous_count <= 0:
-            return label
+            break
         ratio = next_count / previous_count
         if ratio < lowest_ratio:
             lowest_ratio = ratio
@@ -305,25 +312,31 @@ def main() -> None:
     ensure_dirs()
     tier_mode_value = 0 if args.tier_mode == "a_only" else 1
     tier_mode_label = "ENTRY_TIER_A_ONLY" if args.tier_mode == "a_only" else "ENTRY_TIER_A_AND_B"
-    slug = f"actual-m30-m15-m5-reclaim-diagnostics-{args.tier_mode}"
+    trade_bias_value = {"short_only": 0, "long_only": 1, "both": 2}[args.trade_bias]
+    trade_bias_label = {
+        "short_only": "TRADE_BIAS_SHORT_ONLY",
+        "long_only": "TRADE_BIAS_LONG_ONLY",
+        "both": "TRADE_BIAS_BOTH",
+    }[args.trade_bias]
+    slug = f"actual-m30-m15-m5-reclaim-diagnostics-{args.tier_mode}-{args.trade_bias}"
     telemetry_name = f"mt5_company_{slug}.csv"
     stage_count_name = f"mt5_company_{slug}_stage_counts.csv"
-    magic_number = 2026042190 if args.tier_mode == "a_only" else 2026042191
+    magic_number = 2026042190 + (0 if args.tier_mode == "a_only" else 10) + trade_bias_value
 
     preset_path = PRESETS_ROOT / f"{slug}.set"
     config_path = CONFIGS_ROOT / f"{slug}.ini"
     report_path = REPORTS_ROOT / f"{slug}.htm"
     telemetry_path = COMMON_FILES_ROOT / telemetry_name
     stage_count_path = COMMON_FILES_ROOT / stage_count_name
-    summary_path = RESULTS_ROOT / f"summary-{args.tier_mode}.md"
-    result_json_path = RESULTS_ROOT / f"result-{args.tier_mode}.json"
+    summary_path = RESULTS_ROOT / f"summary-{args.tier_mode}-{args.trade_bias}.md"
+    result_json_path = RESULTS_ROOT / f"result-{args.tier_mode}-{args.trade_bias}.json"
 
     settings = {
         "InpContextTimeframe": "M30",
         "InpPatternTimeframe": "M15",
         "InpExecutionTimeframe": "M5",
         "InpExecutionTriggerMode": "EXEC_RECLAIM_CLOSE_CONFIRM",
-        "InpTradeBiasMode": "TRADE_BIAS_BOTH",
+        "InpTradeBiasMode": trade_bias_label,
         "InpTierMode": tier_mode_label,
         "InpSessionStartHour": 0,
         "InpSessionEndHour": 0,
@@ -335,7 +348,7 @@ def main() -> None:
         "TierB Fib": "0.236..0.786",
     }
 
-    write_preset(preset_path, telemetry_name, magic_number, tier_mode_value)
+    write_preset(preset_path, telemetry_name, magic_number, tier_mode_value, trade_bias_value)
     write_config(config_path, preset_path, report_path)
     if telemetry_path.exists():
         telemetry_path.unlink()

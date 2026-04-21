@@ -1,0 +1,53 @@
+{
+  "settings": {
+    "InpContextTimeframe": "M30",
+    "InpPatternTimeframe": "M15",
+    "InpExecutionTimeframe": "M5",
+    "InpExecutionTriggerMode": "EXEC_RECLAIM_CLOSE_CONFIRM",
+    "InpTradeBiasMode": "TRADE_BIAS_LONG_ONLY",
+    "InpTierMode": "ENTRY_TIER_A_ONLY",
+    "InpSessionStartHour": 0,
+    "InpSessionEndHour": 0,
+    "InpMaxManagedPositions": 2,
+    "InpReentryCooldownBars": 3,
+    "InpAllowSameDirectionReentry": true,
+    "InpMaxTotalRiskPercent": 1.0,
+    "TierA Fib": "0.382..0.618",
+    "TierB Fib": "0.236..0.786"
+  },
+  "metrics": {
+    "net_profit": 0.0,
+    "profit_factor": 0.0,
+    "trades": 0,
+    "expected_payoff": 0.0,
+    "win_rate": 0.0,
+    "average_win": 0.0,
+    "average_loss": 0.0,
+    "max_drawdown_percent": 0.0
+  },
+  "stage_counts": {
+    "context_valid_count": 23286,
+    "tierA_long_eligible_count": 1000,
+    "tierB_long_eligible_count": 1879,
+    "tierA_short_eligible_count": 1851,
+    "tierB_short_eligible_count": 2027,
+    "fib_filter_pass_count": 268,
+    "pullback_structure_built_count": 23286,
+    "higher_low_formed_count": 2,
+    "lower_high_formed_count": 0,
+    "reclaim_confirmed_count": 24,
+    "setup_valid_count": 0,
+    "trigger_fired_count": 0,
+    "order_sent_count": 0
+  },
+  "trade_flags": {
+    "entries": 0,
+    "partial_time_stops": 0,
+    "runner_before_time_stop": 0
+  },
+  "bottleneck": "reclaim_to_setup",
+  "telemetry_rows": 1,
+  "report_path": "reports\\backtest\\sweeps\\2026-04-21-usdjpy-htf-swing-continuation-zero-trade-diagnostics\\reports\\actual-m30-m15-m5-reclaim-diagnostics-a_only-long_only.htm",
+  "telemetry_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\mt5_company_actual-m30-m15-m5-reclaim-diagnostics-a_only-long_only.csv",
+  "stage_count_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\mt5_company_actual-m30-m15-m5-reclaim-diagnostics-a_only-long_only_stage_counts.csv"
+}
