@@ -4,3 +4,14 @@
 Thumbs.db
 .DS_Store
 __pycache__/
+
+# Generated MT5 tester artifacts kept out of git unless explicitly force-added.
+reports/backtest/imported/
+reports/backtest/runs/**/raw/
+reports/backtest/runs/**/raw_summaries/
+reports/backtest/runs/**/ini/
+reports/backtest/runs/**/ini_direct/
+reports/backtest/runs/**/presets/
+reports/backtest/runs/**/diagnostics.csv
+reports/backtest/runs/**/exit_simulation.csv
+reports/backtest/runs/**/summary.csv
