@@ -1,0 +1,106 @@
+{
+  "g039_usd100_fixed_min_lot_001_2025": {
+    "direction_filter_failed": 1790,
+    "break_candle_strength_filter_failed": 71,
+    "trend_alignment_filter_failed": 1223,
+    "pattern_adx_bucket_filter_failed": 338,
+    "": 196,
+    "entry_open_count_filter_failed": 52,
+    "fibo_filter_failed": 75,
+    "spread_too_wide": 10,
+    "rr_too_low": 1
+  },
+  "g039_usd100_fixed_min_lot_001_2026_jan_apr": {
+    "pattern_adx_bucket_filter_failed": 183,
+    "direction_filter_failed": 560,
+    "": 78,
+    "entry_open_count_filter_failed": 22,
+    "break_candle_strength_filter_failed": 27,
+    "trend_alignment_filter_failed": 264,
+    "spread_too_wide": 8,
+    "fibo_filter_failed": 7
+  },
+  "g039_usd100_fixed_min_lot_001_2024_2026": {
+    "fibo_filter_failed": 168,
+    "direction_filter_failed": 4071,
+    "trend_alignment_filter_failed": 2214,
+    "": 606,
+    "pattern_adx_bucket_filter_failed": 1077,
+    "entry_open_count_filter_failed": 156,
+    "break_candle_strength_filter_failed": 207,
+    "spread_too_wide": 26,
+    "min_bars_between_entries_blocked": 2,
+    "rr_too_low": 1
+  },
+  "g039_usd100_safer_ladder_5_2_1_existing_2025": {
+    "direction_filter_failed": 1790,
+    "break_candle_strength_filter_failed": 71,
+    "trend_alignment_filter_failed": 1223,
+    "pattern_adx_bucket_filter_failed": 338,
+    "": 156,
+    "entry_open_count_filter_failed": 38,
+    "fibo_filter_failed": 75,
+    "spread_too_wide": 8,
+    "small_capital_margin_insufficient": 11,
+    "small_capital_soft_pause_dd": 28,
+    "rr_too_low": 1
+  },
+  "g039_usd100_safer_ladder_5_2_1_existing_2026_jan_apr": {
+    "pattern_adx_bucket_filter_failed": 183,
+    "direction_filter_failed": 560,
+    "": 50,
+    "entry_open_count_filter_failed": 9,
+    "break_candle_strength_filter_failed": 27,
+    "trend_alignment_filter_failed": 264,
+    "spread_too_wide": 7,
+    "small_capital_margin_insufficient": 7,
+    "fibo_filter_failed": 7,
+    "small_capital_margin_insufficient_repeated": 22
+  },
+  "g039_usd100_safer_ladder_5_2_1_existing_2024_2026": {
+    "fibo_filter_failed": 168,
+    "direction_filter_failed": 4071,
+    "trend_alignment_filter_failed": 2214,
+    "": 102,
+    "pattern_adx_bucket_filter_failed": 1077,
+    "entry_open_count_filter_failed": 11,
+    "break_candle_strength_filter_failed": 207,
+    "small_capital_margin_insufficient": 34,
+    "spread_too_wide": 25,
+    "small_capital_margin_insufficient_repeated": 373,
+    "rr_too_low": 1
+  },
+  "g039_usd100_hybrid_usd100_2025": {
+    "direction_filter_failed": 1790,
+    "break_candle_strength_filter_failed": 71,
+    "trend_alignment_filter_failed": 1223,
+    "pattern_adx_bucket_filter_failed": 338,
+    "": 196,
+    "entry_open_count_filter_failed": 52,
+    "fibo_filter_failed": 75,
+    "spread_too_wide": 10,
+    "rr_too_low": 1
+  },
+  "g039_usd100_hybrid_usd100_2026_jan_apr": {
+    "pattern_adx_bucket_filter_failed": 183,
+    "direction_filter_failed": 560,
+    "": 78,
+    "entry_open_count_filter_failed": 22,
+    "break_candle_strength_filter_failed": 27,
+    "trend_alignment_filter_failed": 264,
+    "spread_too_wide": 8,
+    "fibo_filter_failed": 7
+  },
+  "g039_usd100_hybrid_usd100_2024_2026": {
+    "fibo_filter_failed": 168,
+    "direction_filter_failed": 4071,
+    "trend_alignment_filter_failed": 2214,
+    "": 606,
+    "pattern_adx_bucket_filter_failed": 1077,
+    "entry_open_count_filter_failed": 156,
+    "break_candle_strength_filter_failed": 207,
+    "spread_too_wide": 26,
+    "min_bars_between_entries_blocked": 2,
+    "rr_too_low": 1
+  }
+}
