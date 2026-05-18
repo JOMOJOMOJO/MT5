@@ -1,0 +1,16 @@
+Id,Symbol,From,To,Diagnostics,Summary,Html
+baseline-b-usdjpy-full-2024-2026q1,USDJPY,2024.01.01,2026.03.30,True,True,True
+baseline-b-usdjpy-2024,USDJPY,2024.01.01,2024.12.31,True,True,True
+baseline-b-usdjpy-2025,USDJPY,2025.01.01,2025.12.31,True,True,True
+baseline-b-usdjpy-2026q1,USDJPY,2026.01.01,2026.03.30,True,True,True
+baseline-b-usdjpy-2024q1,USDJPY,2024.01.01,2024.03.31,True,True,True
+baseline-b-usdjpy-2024q2,USDJPY,2024.04.01,2024.06.30,True,True,True
+baseline-b-usdjpy-2024q3,USDJPY,2024.07.01,2024.09.30,True,True,True
+baseline-b-usdjpy-2024q4,USDJPY,2024.10.01,2024.12.31,True,True,True
+baseline-b-usdjpy-2025q1,USDJPY,2025.01.01,2025.03.31,True,True,True
+baseline-b-usdjpy-2025q2,USDJPY,2025.04.01,2025.06.30,True,True,True
+baseline-b-usdjpy-2025q3,USDJPY,2025.07.01,2025.09.30,True,True,True
+baseline-b-usdjpy-2025q4,USDJPY,2025.10.01,2025.12.31,True,True,True
+baseline-b-usdjpy-2026q1-quarter,USDJPY,2026.01.01,2026.03.30,True,True,True
+baseline-b-eurusd-full-2024-2026q1,EURUSD,2024.01.01,2026.03.30,True,True,True
+baseline-b-xauusd-full-2024-2026q1,XAUUSD,2024.01.01,2026.03.30,True,True,True

@@ -1,0 +1,7 @@
+RejectReason,Count
+consecutive_loss_blocked,1320
+daily_loss_blocked,316
+fibo_filter_failed,184
+max_positions_blocked,2620
+rr_too_low,1
+spread_too_wide,329

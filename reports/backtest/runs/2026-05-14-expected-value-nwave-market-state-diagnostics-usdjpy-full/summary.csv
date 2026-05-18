@@ -1,0 +1,2 @@
+Time;Trigger;Symbol;StrategyName;TotalTrades;WinRate;AvgWinR;AvgLossR;ExpectancyR;ProfitFactor;MaxConsecutiveLosses;LongTrades;ShortTrades;LongExpectancyR;ShortExpectancyR;MaxDD_R
+2026.03.27 23:56:59;OnTester;USDJPY;Strategy_01_NWave_ExpectedValue;2848;38.51825842696629;1.499967969283906;-1.0;-0.037055876999843904;0.939728647803795;12;1437;1411;-0.03777874892839784;-0.0363196849648814;141.03377628177583

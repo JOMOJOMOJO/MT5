@@ -1,0 +1,3 @@
+Mode,FullTrades,FullExpectancyR,FullPF,FullMaxDD_R,PositiveYears,PositiveQuarters,PassFullExpectancy,PassFullPF,PassYears,PassQuarters
+C_SHORT_MODE,505,0.1483518814375375,1.2744238099851892,16.00480050531634,3/3,9/9,yes,yes,yes,yes
+J_SHORT_MODE,340,0.1467250994383543,1.2711224663534806,11.506979500460073,3/3,8/9,yes,yes,yes,yes
