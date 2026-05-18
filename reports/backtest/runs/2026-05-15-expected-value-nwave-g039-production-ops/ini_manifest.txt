@@ -1,0 +1,4 @@
+C:\Users\windows\AppData\Roaming\MetaQuotes\Terminal\2FA8A7E69CED7DC259B1AD86A247F675\MQL5\Experts\dev\reports\backtest\runs\2026-05-15-expected-value-nwave-g039-production-ops\ini\g039_raw_livepath_2024_2026.ini
+C:\Users\windows\AppData\Roaming\MetaQuotes\Terminal\2FA8A7E69CED7DC259B1AD86A247F675\MQL5\Experts\dev\reports\backtest\runs\2026-05-15-expected-value-nwave-g039-production-ops\ini\g039_production_guard_2025.ini
+C:\Users\windows\AppData\Roaming\MetaQuotes\Terminal\2FA8A7E69CED7DC259B1AD86A247F675\MQL5\Experts\dev\reports\backtest\runs\2026-05-15-expected-value-nwave-g039-production-ops\ini\g039_production_guard_2026_jan_apr.ini
+C:\Users\windows\AppData\Roaming\MetaQuotes\Terminal\2FA8A7E69CED7DC259B1AD86A247F675\MQL5\Experts\dev\reports\backtest\runs\2026-05-15-expected-value-nwave-g039-production-ops\ini\g039_production_guard_2024_2026.ini
