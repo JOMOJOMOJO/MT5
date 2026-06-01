@@ -1,0 +1,7 @@
+event,reason,bucket_type,count
+entry_blocked,max_open_positions,EXPANSION_PULLBACK,30
+entry_blocked,averaging_down_blocked,EXPANSION_PULLBACK,20
+entry_blocked,same_quality_bar_entry_blocked,EXPANSION_PULLBACK,18
+entry_blocked,max_consecutive_losses,EXPANSION_PULLBACK,12
+entry_blocked,cooldown_bars_blocked,EXPANSION_PULLBACK,6
+entry_blocked,additional_entry_not_expansion_pullback,DISCOUNT_RECLAIM,5

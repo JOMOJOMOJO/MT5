@@ -1,0 +1,5 @@
+event,reason,count
+entry_blocked,max_open_positions,106
+candidate_score,risk_distance_pips_too_wide,25
+candidate_score,stop_distance_atr_too_wide,3
+candidate_score,risk_distance_atr_too_wide,1

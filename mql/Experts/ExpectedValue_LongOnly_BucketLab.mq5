@@ -1,0 +1,3392 @@
+//+------------------------------------------------------------------+
+//| ExpectedValue_LongOnly_BucketLab                                 |
+//+------------------------------------------------------------------+
+#property strict
+#property version   "1.04"
+#property description "Long-only USDJPY bucket lab using M1 execution under M5 quality and M15/H1/H4 context, with risk guards and relative diagnostics."
+
+#include <Trade\Trade.mqh>
+
+CTrade trade;
+
+static const string STRATEGY_NAME = "ExpectedValue_LongOnly_BucketLab";
+static const string EA_VERSION = "v2_6_final_check_lab";
+
+enum ENUM_BUCKET_SL_MODE
+  {
+   SL_ATR_ONLY = 0,
+   SL_M1_SWING = 1,
+   SL_M5_SWING = 2,
+   SL_HYBRID = 3
+  };
+
+enum ENUM_BUCKET_TP_MODE
+  {
+   TP_FIXED_R = 0,
+   TP_RECENT_HIGH_OR_R = 1
+  };
+
+input bool            InpEnableTrading              = false;
+input string          InpSymbol                     = "USDJPY";
+input ENUM_TIMEFRAMES InpExecutionTimeframe         = PERIOD_M1;
+input ENUM_TIMEFRAMES InpQualityTimeframe           = PERIOD_M5;
+input ENUM_TIMEFRAMES InpBiasTimeframe              = PERIOD_M15;
+input ENUM_TIMEFRAMES InpTrendTimeframe             = PERIOD_H1;
+input ENUM_TIMEFRAMES InpAvoidTimeframe             = PERIOD_H4;
+input long            InpMagicNumber                = 2026051902;
+
+input int             InpExecFastEMAPeriod          = 9;
+input int             InpExecSlowEMAPeriod          = 34;
+input int             InpFastEMAPeriod              = 13;
+input int             InpSlowEMAPeriod              = 100;
+input int             InpSlowSlopeBars              = 5;
+input int             InpATRPeriod                  = 14;
+input int             InpATRAveragePeriod           = 80;
+input int             InpADXPeriod                  = 14;
+
+input bool            InpUseSessionFilter           = false;
+input int             InpSessionStartHour           = 7;
+input int             InpSessionEndHour             = 22;
+input string          InpAllowedWeekdays            = "1,2,3,4,5";
+
+input double          InpFixedLot                   = 0.01;
+input double          InpFixedLotEquityThreshold    = 300.0;
+input double          InpRiskPercent                = 3.0;
+input double          InpMaxLotCap                  = 1.0;
+
+input double          InpDailyMaxLossPercent        = 10.0;
+input double          InpWeeklyMaxLossPercent       = 20.0;
+input double          InpMaxDrawdownPercent         = 35.0;
+input int             InpMaxConsecutiveLosses       = 6;
+input bool            InpLossStreakStopForDayOnly   = true;
+input int             InpMaxOpenPositions           = 1;
+input double          InpMaxTotalOpenRiskPercent    = 8.0;
+input int             InpCooldownBars               = 6;
+input bool            InpAdditionalEntryExpansionOnly = true;
+input bool            InpAdditionalEntrySameBucketOnly = true;
+input bool            InpBlockSameQualityBarEntry   = true;
+input bool            InpAdditionalEntryQualityGate = true;
+input int             InpAdditionalEntryMaxLossStreak = 1;
+input double          InpAdditionalEntryMinDayPnLPercent = -1.0;
+input double          InpAdditionalEntryMinOpenProfitR = 0.20;
+input double          InpAdditionalEntryMinATRRatio = 1.45;
+input double          InpAdditionalEntryMinUpPressure = 0.60;
+input double          InpAdditionalEntryMaxDownPressure = 0.40;
+input double          InpAdditionalEntryPreferredMaxRangePosition = 0.92;
+input double          InpAdditionalEntryExtendedMinUpPressure = 0.72;
+input double          InpAdditionalEntryExtendedMaxDownPressure = 0.30;
+input double          InpAdditionalEntryPreferredMaxRiskDistancePips = 15.0;
+input double          InpAdditionalEntryWideRiskMinUpPressure = 0.68;
+input double          InpAdditionalEntryWideRiskMaxDownPressure = 0.33;
+input bool            InpFlattenOnRiskStop          = true;
+
+input ENUM_BUCKET_SL_MODE InpStopMode               = SL_HYBRID;
+input ENUM_BUCKET_TP_MODE InpTPMode                 = TP_FIXED_R;
+input double          InpTargetRMultiple            = 1.35;
+input double          InpMinTargetRMultiple         = 1.15;
+input int             InpM1SwingLookbackBars        = 10;
+input int             InpM5SwingLookbackBars        = 10;
+input double          InpStopATRMultiplier          = 0.90;
+input double          InpM1SwingBufferATR           = 0.08;
+input double          InpM5SwingBufferATR           = 0.12;
+input double          InpMinStopATR                 = 0.45;
+input double          InpMaxStopATR                 = 2.20;
+input double          InpMinStopSpreadMultiple      = 3.00;
+input int             InpMaxHoldBars                = 45;
+
+input double          InpMaxSpreadATR               = 0.12;
+input double          InpMaxEMADeviationATR         = 1.20;
+input double          InpMinBodyATR                 = 0.00;
+input double          InpMaxBodyATR                 = 0.75;
+input double          InpMinATRRatio                = 0.65;
+input double          InpMaxATRRatio                = 1.55;
+input int             InpRangeLookbackBars          = 48;
+input int             InpRecentRangeBars            = 18;
+input double          InpMinRangePosition           = 0.55;
+input double          InpMaxRangePosition           = 0.92;
+input double          InpMinSlowSlopeATR            = -0.03;
+input double          InpMaxADX                     = 35.0;
+
+input bool            InpEnablePullbackScoreBucket  = false;
+input double          InpPullbackScoreThreshold     = 6.20;
+input double          InpCandidateLogMinScore       = 4.20;
+input double          InpMinExtremeATRRatio         = 0.35;
+input double          InpMaxExtremeATRRatio         = 2.80;
+input bool            InpEnableDiscountReclaimBucket = true;
+input bool            InpEnableExpansionPullbackBucket = true;
+input double          InpDiscountScoreThreshold     = 5.95;
+input double          InpExpansionScoreThreshold    = 6.05;
+input double          InpDiscountMinRangePosition   = 0.25;
+input double          InpDiscountMaxRangePosition   = 0.45;
+input double          InpDiscountMinUpPressure      = 0.60;
+input double          InpDiscountMaxDownPressure    = 0.40;
+input double          InpExpansionMinRangePosition  = 0.55;
+input double          InpExpansionMinATRRatio       = 1.20;
+input double          InpExpansionUpperNormalATRRatio = 1.60;
+input double          InpExpansionMaxATRRatio       = 1.80;
+input double          InpExpansionMinPullbackDepthATR = 0.45;
+input double          InpExpansionMaxPullbackDepthATR = 1.70;
+input double          InpExpansionExtraUpPressure   = 0.60;
+input bool            InpEnableShallowContinuationBucket = false;
+input double          InpShallowScoreThreshold      = 6.30;
+input double          InpShallowMinRangePosition    = 0.55;
+input double          InpShallowMaxRangePosition    = 0.92;
+input double          InpShallowMinATRRatio         = 1.20;
+input double          InpShallowUpperNormalATRRatio = 1.60;
+input double          InpShallowMaxATRRatio         = 1.80;
+input double          InpShallowMinPullbackDepthATR = 0.10;
+input double          InpShallowMaxPullbackDepthATR = 0.70;
+input double          InpShallowMinUpPressure       = 0.62;
+input double          InpShallowMaxDownPressure     = 0.38;
+input double          InpShallowMaxEMADeviationATR  = 1.05;
+input double          InpShallowMinRecentRangeATR   = 2.20;
+input bool            InpEnableMidRangeContinuationBucket = false;
+input double          InpMidRangeScoreThreshold     = 6.10;
+input double          InpMidRangeMinRangePosition   = 0.45;
+input double          InpMidRangeMaxRangePosition   = 0.78;
+input double          InpMidRangeMinATRRatio        = 0.85;
+input double          InpMidRangeMaxATRRatio        = 1.55;
+input double          InpMidRangeMinPullbackDepthATR = 0.10;
+input double          InpMidRangeMaxPullbackDepthATR = 1.10;
+input double          InpMidRangeMinUpPressure      = 0.58;
+input double          InpMidRangeMaxDownPressure    = 0.42;
+input double          InpMidRangeMaxEMADeviationATR = 1.00;
+input double          InpMidRangeMinRecentRangeATR  = 2.80;
+input double          InpMidRangeMinRecentHighDistanceATR = 0.25;
+input bool            InpEnableMicroBreakoutBucket  = false;
+input bool            InpLogMicroNearMissDiagnostics = true;
+input int             InpMicroNearMissMaxBars       = 45;
+input double          InpMicroBreakoutScoreThreshold = 6.05;
+input int             InpMicroBreakoutLookbackBars  = 5;
+input double          InpMicroMinRangePosition      = 0.55;
+input double          InpMicroMaxRangePosition      = 0.75;
+input double          InpMicroExtendedMaxRangePosition = 0.92;
+input double          InpMicroExtendedMinUpPressure = 0.70;
+input double          InpMicroMinATRRatio           = 1.20;
+input double          InpMicroUpperNormalATRRatio   = 1.60;
+input double          InpMicroMaxATRRatio           = 1.80;
+input double          InpMicroMinUpPressure         = 0.60;
+input double          InpMicroMaxDownPressure       = 0.40;
+input double          InpMicroBreakoutBufferATR     = 0.04;
+input double          InpMicroMinBreakoutAcceptanceATR = 0.04;
+input double          InpMicroMaxBreakoutAcceptanceATR = 0.38;
+input double          InpMicroMaxRetestDepthATR     = 0.30;
+input double          InpMicroExtraAcceptanceATR    = 0.08;
+input double          InpMicroExtraCloseLocation    = 0.62;
+input double          InpMicroTargetRMultiple       = 1.25;
+input bool            InpMicroUseBreakoutStructureSL = true;
+input double          InpMicroBreakoutSLBufferATR   = 0.35;
+input double          InpMicroPreferredMaxRiskDistancePips = 15.0;
+input double          InpMicroMaxRiskDistancePips   = 18.0;
+input double          InpMicroMaxRiskDistanceATR    = 1.45;
+input double          InpMicroMaxSpreadToRisk       = 0.18;
+input double          InpMicroMaxSpreadToReward     = 0.14;
+input double          InpMicroWideRiskMinScore      = 6.45;
+input double          InpMicroWideRiskMinUpPressure = 0.65;
+input bool            InpEnableCompressionExpansionBucket = true;
+input double          InpCompressionScoreThreshold  = 5.80;
+input int             InpCompressionLookbackBars    = 6;
+input double          InpCompressionMaxRangeATR     = 1.80;
+input double          InpCompressionMinATRRatio     = 0.85;
+input double          InpCompressionMaxATRRatio     = 1.45;
+input double          InpCompressionExtendedMaxATRRatio = 1.80;
+input double          InpCompressionMinRangePosition = 0.45;
+input double          InpCompressionMaxRangePosition = 0.75;
+input double          InpCompressionExtendedMaxRangePosition = 0.92;
+input double          InpCompressionMinBodyATR      = 0.06;
+input double          InpCompressionMaxBodyATR      = 0.75;
+input double          InpCompressionBreakoutBufferATR = 0.02;
+input double          InpCompressionMaxBreakoutATR  = 0.45;
+input double          InpCompressionMinUpPressure   = 0.60;
+input double          InpCompressionMaxDownPressure = 0.40;
+input double          InpCompressionExtendedMinUpPressure = 0.70;
+input double          InpCompressionMaxEMADeviationATR = 1.20;
+input bool            InpCompressionUseRangeSL      = true;
+input double          InpCompressionSLBufferATR     = 0.12;
+input double          InpCompressionTargetRMultiple = 1.25;
+input double          InpCompressionPreferredMaxRiskDistancePips = 15.0;
+input double          InpCompressionMaxRiskDistancePips = 18.0;
+input double          InpCompressionMaxRiskDistanceATR = 1.45;
+input double          InpCompressionMaxSpreadToRisk = 0.18;
+input double          InpCompressionMaxSpreadToReward = 0.14;
+input double          InpCompressionWideRiskMinScore = 6.45;
+input double          InpCompressionWideRiskMinUpPressure = 0.65;
+input double          InpMaxEntryRiskDistancePips   = 28.0;
+input double          InpMaxEntryRiskDistanceATR    = 1.85;
+input double          InpMaxEntrySpreadToRisk       = 0.18;
+input double          InpMaxEntrySpreadToReward     = 0.14;
+input double          InpScoreMinDiscountRangePos   = 0.25;
+input double          InpScoreMaxDiscountRangePos   = 0.45;
+input double          InpScoreDeepPullbackATR       = 0.80;
+input double          InpScoreMinExpansionATRRatio  = 1.45;
+input double          InpScoreMaxExpansionATRRatio  = 1.80;
+input bool            InpEnableM1PullbackBucket     = true;
+input bool            InpEnableBreakoutBucket       = true;
+input int             InpMinBiasScore               = 2;
+input double          InpH4MaxBearSlopeATR          = 0.12;
+input double          InpH4MaxBelowSlowATR          = 0.60;
+input double          InpPullbackTouchATR           = 0.18;
+input double          InpPullbackMaxDepthATR        = 1.20;
+input double          InpMinCloseLocation           = 0.56;
+input double          InpMinLowerWickATR            = 0.03;
+input double          InpMinLowerWickShare          = 0.18;
+input double          InpBreakoutBufferATR          = 0.04;
+input double          InpBreakoutMaxChaseATR        = 0.45;
+input double          InpBreakoutRetestBufferATR    = 0.12;
+input double          InpMinUpPressure              = 0.52;
+input double          InpMaxDownPressure            = 0.48;
+
+input bool            InpLogDiagnostics             = true;
+input bool            InpLogNoSignalDiagnostics     = true;
+input bool            InpLogCandidateScores         = true;
+input bool            InpLogBucketNearMissDiagnostics = false;
+input double          InpNearMissMinScore           = 5.20;
+input string          InpPresetName                 = "v2_research";
+input bool            InpUseCommonFiles             = true;
+input string          InpEventLogFileName           = "mt5_company_expected_value_long_bucketlab_events.csv";
+input string          InpSummaryFileName            = "mt5_company_expected_value_long_bucketlab_summary.csv";
+input string          InpMonthlySummaryFileName     = "mt5_company_expected_value_long_bucketlab_monthly.csv";
+
+struct TradePlan
+  {
+   bool     valid;
+   string   bucket;
+   string   bucketType;
+   string   entryReason;
+   string   slMode;
+   string   tpMode;
+   datetime signalBarTime;
+   double   entryPrice;
+   double   stopLoss;
+   double   takeProfit;
+   double   riskDistance;
+   double   rewardDistance;
+   double   riskMoney;
+   double   riskPercent;
+   double   lot;
+   double   marginRequired;
+   double   freeMarginAfterEntry;
+   double   riskDistancePips;
+   double   candidateScore;
+   double   spreadScore;
+   double   volatilityScore;
+   double   h4ContextScore;
+   double   h1M15BiasScore;
+   double   trendScore;
+   double   pullbackScore;
+   double   pressureScore;
+   double   structureScore;
+   double   breakoutScore;
+   double   compressionScore;
+   double   rrScore;
+   double   spreadToRisk;
+   double   spreadToReward;
+   double   riskDistanceATR;
+   double   rewardDistanceATR;
+   double   spreadATR;
+   double   emaDeviationATR;
+   double   bodyATR;
+   double   wickATR;
+   double   atrRatio;
+   double   rangePosition;
+   double   slowSlopeATR;
+   double   adxValue;
+   double   distanceRecentHighATR;
+   double   distanceRecentLowATR;
+   double   recentRangeATR;
+   double   pullbackDepthATR;
+   double   breakoutAcceptanceATR;
+   double   breakoutRetestDepthATR;
+   double   compressionRangeATR;
+   double   compressionBodyATR;
+   double   compressionBreakoutATR;
+   double   upPressure;
+   double   downPressure;
+   int      hourOfDay;
+   int      dayOfWeek;
+   bool     fixedLotMode;
+   bool     minLotForced;
+  };
+
+struct VirtualCandidate
+  {
+   bool     active;
+   TradePlan plan;
+   datetime signalTime;
+   int      barsElapsed;
+   string   rejectReason;
+  };
+
+struct TrackedPosition
+  {
+   ulong    identifier;
+   datetime entryTime;
+   double   entryPrice;
+   double   stopLoss;
+   double   takeProfit;
+   double   volume;
+   double   riskMoney;
+   string   bucket;
+   string   bucketType;
+   string   entryReason;
+   string   slMode;
+   string   tpMode;
+  };
+
+struct PendingCloseReason
+  {
+   ulong  identifier;
+   string reason;
+  };
+
+struct MonthStat
+  {
+   int    monthKey;
+   int    trades;
+   int    wins;
+   int    losses;
+   double netMoney;
+   double netR;
+   double grossWinR;
+   double grossLossR;
+  };
+
+string runtimeSymbol = "";
+string runtimeAllowedWeekdays = "";
+bool allowedWeekdays[7];
+
+int fastEmaHandle = INVALID_HANDLE;
+int slowEmaHandle = INVALID_HANDLE;
+int atrHandle = INVALID_HANDLE;
+int adxHandle = INVALID_HANDLE;
+int qualityFastEmaHandle = INVALID_HANDLE;
+int qualitySlowEmaHandle = INVALID_HANDLE;
+int qualityAtrHandle = INVALID_HANDLE;
+int qualityAdxHandle = INVALID_HANDLE;
+int biasFastEmaHandle = INVALID_HANDLE;
+int biasSlowEmaHandle = INVALID_HANDLE;
+int biasAtrHandle = INVALID_HANDLE;
+int trendFastEmaHandle = INVALID_HANDLE;
+int trendSlowEmaHandle = INVALID_HANDLE;
+int trendAtrHandle = INVALID_HANDLE;
+int avoidFastEmaHandle = INVALID_HANDLE;
+int avoidSlowEmaHandle = INVALID_HANDLE;
+int avoidAtrHandle = INVALID_HANDLE;
+
+datetime lastBarTime = 0;
+datetime lastEntryBarTime = 0;
+datetime lastEntryQualityBarTime = 0;
+datetime currentDayStart = 0;
+int currentDayKey = -1;
+int currentWeekKey = -1;
+
+double dayStartEquity = 0.0;
+double weekStartEquity = 0.0;
+double accountPeakEquity = 0.0;
+bool dailyStopActive = false;
+bool weeklyStopActive = false;
+bool drawdownStopActive = false;
+bool lossStreakStopActive = false;
+string dailyStopReason = "";
+string weeklyStopReason = "";
+string drawdownStopReason = "";
+string lossStreakStopReason = "";
+
+int consecutiveLosses = 0;
+int observedMaxConsecutiveLosses = 0;
+int totalClosedTrades = 0;
+int totalWins = 0;
+int totalLosses = 0;
+double totalNetMoney = 0.0;
+double totalR = 0.0;
+double grossWinR = 0.0;
+double grossLossR = 0.0;
+double equityCurveR = 0.0;
+double equityPeakR = 0.0;
+double maxDrawdownR = 0.0;
+double maxDrawdownPercent = 0.0;
+
+int dailySignals = 0;
+int dailyEntries = 0;
+int dailyRejects = 0;
+int dailyRiskBlocks = 0;
+int dailyClosedTrades = 0;
+
+int eventLogHandle = INVALID_HANDLE;
+
+TrackedPosition trackedPositions[];
+PendingCloseReason pendingCloseReasons[];
+MonthStat monthStats[];
+VirtualCandidate virtualCandidates[];
+
+double pendingEntryRiskMoney = 0.0;
+double pendingEntrySL = 0.0;
+double pendingEntryTP = 0.0;
+double pendingEntryVolume = 0.0;
+string pendingEntryBucket = "";
+string pendingEntryBucketType = "";
+string pendingEntryReason = "";
+string pendingEntrySLMode = "";
+string pendingEntryTPMode = "";
+
+string TrimSpaces(string value)
+  {
+   int start = 0;
+   int finish = StringLen(value) - 1;
+   while(start <= finish && StringGetCharacter(value, start) <= 32)
+      start++;
+   while(finish >= start && StringGetCharacter(value, finish) <= 32)
+      finish--;
+   if(finish < start)
+      return "";
+   return StringSubstr(value, start, finish - start + 1);
+  }
+
+string CleanPresetString(string value)
+  {
+   string cleaned = value;
+   int marker = StringFind(cleaned, "||");
+   if(marker >= 0)
+      cleaned = StringSubstr(cleaned, 0, marker);
+   return TrimSpaces(cleaned);
+  }
+
+bool ParseAllowedWeekdays()
+  {
+   for(int i = 0; i < 7; ++i)
+      allowedWeekdays[i] = false;
+
+   string text = CleanPresetString(runtimeAllowedWeekdays);
+   if(text == "")
+      return false;
+
+   string parts[];
+   int count = StringSplit(text, ',', parts);
+   if(count <= 0)
+      return false;
+   for(int i = 0; i < count; ++i)
+     {
+      int day = (int)StringToInteger(TrimSpaces(parts[i]));
+      if(day < 0 || day > 6)
+         return false;
+      allowedWeekdays[day] = true;
+     }
+   return true;
+  }
+
+bool IsAllowedWeekday(datetime stamp)
+  {
+   MqlDateTime dt;
+   TimeToStruct(stamp, dt);
+   return allowedWeekdays[dt.day_of_week];
+  }
+
+bool IsWithinSession(datetime stamp, int startHour, int endHour)
+  {
+   MqlDateTime dt;
+   TimeToStruct(stamp, dt);
+   if(startHour == endHour)
+      return true;
+   if(startHour < endHour)
+      return (dt.hour >= startHour && dt.hour < endHour);
+   return (dt.hour >= startHour || dt.hour < endHour);
+  }
+
+string BoolWord(bool value)
+  {
+   return value ? "true" : "false";
+  }
+
+double ClampDouble(double value, double low, double high)
+  {
+   if(value < low)
+      return low;
+   if(value > high)
+      return high;
+   return value;
+  }
+
+double ScoreBand(double value, double idealLow, double idealHigh, double softLow, double softHigh)
+  {
+   if(value >= idealLow && value <= idealHigh)
+      return 1.0;
+   if(value >= softLow && value <= softHigh)
+      return 0.55;
+   return 0.0;
+  }
+
+double ScoreMin(double value, double idealMin, double softMin)
+  {
+   if(value >= idealMin)
+      return 1.0;
+   if(value >= softMin)
+      return 0.55;
+   return 0.0;
+  }
+
+double ScoreMax(double value, double idealMax, double softMax)
+  {
+   if(value <= idealMax)
+      return 1.0;
+   if(value <= softMax)
+      return 0.55;
+   return 0.0;
+  }
+
+string TimeframeText()
+  {
+   return EnumToString(InpExecutionTimeframe) + "|quality=" + EnumToString(InpQualityTimeframe);
+  }
+
+int DayKey(datetime stamp)
+  {
+   MqlDateTime dt;
+   TimeToStruct(stamp, dt);
+   return dt.year * 1000 + dt.day_of_year;
+  }
+
+int WeekKey(datetime stamp)
+  {
+   MqlDateTime dt;
+   TimeToStruct(stamp, dt);
+   int week = (dt.day_of_year + 6) / 7;
+   return dt.year * 100 + week;
+  }
+
+int MonthKey(datetime stamp)
+  {
+   MqlDateTime dt;
+   TimeToStruct(stamp, dt);
+   return dt.year * 100 + dt.mon;
+  }
+
+double PointValue()
+  {
+   return SymbolInfoDouble(runtimeSymbol, SYMBOL_POINT);
+  }
+
+double PipSize()
+  {
+   double point = PointValue();
+   int digits = SymbolDigits();
+   if(digits == 3 || digits == 5)
+      return point * 10.0;
+   return point;
+  }
+
+int SymbolDigits()
+  {
+   return (int)SymbolInfoInteger(runtimeSymbol, SYMBOL_DIGITS);
+  }
+
+double CurrentBid()
+  {
+   return SymbolInfoDouble(runtimeSymbol, SYMBOL_BID);
+  }
+
+double CurrentAsk()
+  {
+   return SymbolInfoDouble(runtimeSymbol, SYMBOL_ASK);
+  }
+
+double CloseLocation(const MqlRates &bar)
+  {
+   double range = bar.high - bar.low;
+   if(range <= 0.0)
+      return 0.5;
+   return (bar.close - bar.low) / range;
+  }
+
+double UpperWickShare(const MqlRates &bar)
+  {
+   double range = bar.high - bar.low;
+   if(range <= 0.0)
+      return 0.0;
+   return (bar.high - MathMax(bar.open, bar.close)) / range;
+  }
+
+double LowerWickShare(const MqlRates &bar)
+  {
+   double range = bar.high - bar.low;
+   if(range <= 0.0)
+      return 0.0;
+   return (MathMin(bar.open, bar.close) - bar.low) / range;
+  }
+
+bool OpenEventLog()
+  {
+   if(!InpLogDiagnostics)
+      return true;
+   if(eventLogHandle != INVALID_HANDLE)
+      return true;
+
+   string fileName = CleanPresetString(InpEventLogFileName);
+   int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
+   if(InpUseCommonFiles)
+      flags |= FILE_COMMON;
+   eventLogHandle = FileOpen(fileName, flags, ';');
+   if(eventLogHandle == INVALID_HANDLE)
+     {
+      PrintFormat("%s event log open failed: %s err=%d", STRATEGY_NAME, fileName, GetLastError());
+      return false;
+     }
+
+   if(FileSize(eventLogHandle) == 0)
+     {
+      FileWrite(eventLogHandle,
+                "time", "event", "reason", "symbol", "timeframe",
+                 "preset_name", "ea_version", "bucket", "bucket_type",
+                 "entry_reason", "sl_mode", "tp_mode", "equity", "balance",
+                 "price", "sl", "tp", "lot", "risk_money", "risk_percent",
+                 "risk_percent_of_equity", "min_lot_forced",
+                 "risk_distance_pips", "free_margin_after_entry",
+                 "candidate_score", "spread_score", "volatility_score",
+                 "h4_context_score", "h1_m15_bias_score", "trend_score",
+                 "pullback_score", "pressure_score", "structure_score",
+                 "breakout_score", "rr_score", "spread_to_risk", "spread_to_reward",
+                 "risk_distance_atr", "reward_distance_atr",
+                 "spread_atr", "ema_deviation_atr", "body_atr", "wick_atr",
+                 "atr_ratio", "range_position", "slow_slope_atr", "adx",
+                "distance_recent_high_atr", "distance_recent_low_atr",
+                "recent_range_atr", "pullback_depth_atr",
+                "breakout_acceptance_atr", "breakout_retest_depth_atr",
+                "up_pressure", "down_pressure",
+                "hour", "day_of_week", "open_positions",
+                "total_open_risk_percent", "consecutive_losses", "detail");
+     }
+   FileSeek(eventLogHandle, 0, SEEK_END);
+   return true;
+  }
+
+void CloseEventLog()
+  {
+   if(eventLogHandle != INVALID_HANDLE)
+     {
+      FileFlush(eventLogHandle);
+      FileClose(eventLogHandle);
+      eventLogHandle = INVALID_HANDLE;
+     }
+  }
+
+void LogEvent(string eventName,
+              string reason,
+              const TradePlan &plan,
+              string detail)
+  {
+   if(!InpLogDiagnostics)
+      return;
+   if(!OpenEventLog())
+      return;
+
+   FileWrite(eventLogHandle,
+             TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
+             eventName,
+              reason,
+              runtimeSymbol,
+              TimeframeText(),
+              CleanPresetString(InpPresetName),
+              EA_VERSION,
+              plan.bucket,
+              plan.bucketType,
+              plan.entryReason,
+             plan.slMode,
+             plan.tpMode,
+             AccountInfoDouble(ACCOUNT_EQUITY),
+             AccountInfoDouble(ACCOUNT_BALANCE),
+             plan.entryPrice,
+             plan.stopLoss,
+             plan.takeProfit,
+               plan.lot,
+               plan.riskMoney,
+               plan.riskPercent,
+               plan.riskPercent,
+               BoolWord(plan.minLotForced),
+               plan.riskDistancePips,
+               plan.freeMarginAfterEntry,
+               plan.candidateScore,
+              plan.spreadScore,
+              plan.volatilityScore,
+              plan.h4ContextScore,
+              plan.h1M15BiasScore,
+              plan.trendScore,
+              plan.pullbackScore,
+              plan.pressureScore,
+              plan.structureScore,
+              plan.breakoutScore,
+              plan.rrScore,
+              plan.spreadToRisk,
+              plan.spreadToReward,
+              plan.riskDistanceATR,
+              plan.rewardDistanceATR,
+              plan.spreadATR,
+              plan.emaDeviationATR,
+             plan.bodyATR,
+             plan.wickATR,
+             plan.atrRatio,
+             plan.rangePosition,
+             plan.slowSlopeATR,
+             plan.adxValue,
+             plan.distanceRecentHighATR,
+             plan.distanceRecentLowATR,
+             plan.recentRangeATR,
+             plan.pullbackDepthATR,
+             plan.breakoutAcceptanceATR,
+             plan.breakoutRetestDepthATR,
+             plan.upPressure,
+             plan.downPressure,
+             plan.hourOfDay,
+             plan.dayOfWeek,
+             CountManagedPositions(),
+             CurrentTotalOpenRiskPercent(),
+             consecutiveLosses,
+             detail);
+   FileFlush(eventLogHandle);
+  }
+
+void LogSimpleEvent(string eventName, string reason, string detail)
+  {
+   TradePlan empty;
+   ZeroMemory(empty);
+   empty.bucket = "";
+   LogEvent(eventName, reason, empty, detail);
+  }
+
+void AppendMissingCondition(string &text, string conditionName, bool conditionOk)
+  {
+   if(conditionOk)
+      return;
+   if(text != "")
+      text += ",";
+   text += conditionName;
+  }
+
+void LogCandidateScore(const TradePlan &plan, bool wouldEnter, string rejectReason)
+  {
+   if(!InpLogCandidateScores)
+      return;
+   if(!wouldEnter && plan.candidateScore < InpCandidateLogMinScore)
+      return;
+
+   string detail =
+      "candidate_time=" + TimeToString(plan.signalBarTime, TIME_DATE | TIME_SECONDS) +
+      "|score_components=spread:" + DoubleToString(plan.spreadScore, 3) +
+      ",volatility:" + DoubleToString(plan.volatilityScore, 3) +
+      ",h4:" + DoubleToString(plan.h4ContextScore, 3) +
+      ",bias:" + DoubleToString(plan.h1M15BiasScore, 3) +
+      ",trend:" + DoubleToString(plan.trendScore, 3) +
+      ",pullback:" + DoubleToString(plan.pullbackScore, 3) +
+      ",pressure:" + DoubleToString(plan.pressureScore, 3) +
+      ",structure:" + DoubleToString(plan.structureScore, 3) +
+      ",breakout:" + DoubleToString(plan.breakoutScore, 3) +
+      ",compression:" + DoubleToString(plan.compressionScore, 3) +
+      ",rr:" + DoubleToString(plan.rrScore, 3) +
+      "|compression_range_atr=" + DoubleToString(plan.compressionRangeATR, 3) +
+      "|compression_body_atr=" + DoubleToString(plan.compressionBodyATR, 3) +
+      "|compression_breakout_atr=" + DoubleToString(plan.compressionBreakoutATR, 3) +
+      "|would_enter=" + BoolWord(wouldEnter) +
+      "|reject_reason=" + rejectReason +
+      "|bucket_type=" + plan.bucketType +
+      "|proposed_sl=" + DoubleToString(plan.stopLoss, SymbolDigits()) +
+      "|proposed_tp=" + DoubleToString(plan.takeProfit, SymbolDigits());
+   LogEvent("candidate_score", rejectReason, plan, detail);
+   if(plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" && !wouldEnter && InpLogMicroNearMissDiagnostics)
+      AddVirtualCandidate(plan, rejectReason);
+  }
+
+void AddVirtualCandidate(const TradePlan &plan, string rejectReason)
+  {
+   if(plan.entryPrice <= 0.0 || plan.stopLoss <= 0.0 || plan.takeProfit <= plan.entryPrice)
+      return;
+
+   int size = ArraySize(virtualCandidates);
+   ArrayResize(virtualCandidates, size + 1);
+   virtualCandidates[size].active = true;
+   virtualCandidates[size].plan = plan;
+   virtualCandidates[size].signalTime = plan.signalBarTime;
+   virtualCandidates[size].barsElapsed = 0;
+   virtualCandidates[size].rejectReason = rejectReason;
+  }
+
+void RemoveVirtualCandidate(int index)
+  {
+   int size = ArraySize(virtualCandidates);
+   if(index < 0 || index >= size)
+      return;
+   for(int i = index; i < size - 1; ++i)
+      virtualCandidates[i] = virtualCandidates[i + 1];
+   ArrayResize(virtualCandidates, size - 1);
+  }
+
+void CheckVirtualCandidates()
+  {
+   int size = ArraySize(virtualCandidates);
+   if(size <= 0)
+      return;
+
+   MqlRates closedBar[];
+   ArraySetAsSeries(closedBar, true);
+   if(CopyRates(runtimeSymbol, InpExecutionTimeframe, 1, 1, closedBar) != 1)
+      return;
+
+   for(int i = ArraySize(virtualCandidates) - 1; i >= 0; --i)
+     {
+      if(!virtualCandidates[i].active)
+        {
+         RemoveVirtualCandidate(i);
+         continue;
+        }
+      if(closedBar[0].time <= virtualCandidates[i].signalTime)
+         continue;
+
+      virtualCandidates[i].barsElapsed++;
+      TradePlan plan = virtualCandidates[i].plan;
+      bool hitTP = (closedBar[0].high >= plan.takeProfit);
+      bool hitSL = (closedBar[0].low <= plan.stopLoss);
+      string outcome = "";
+      if(hitTP && hitSL)
+         outcome = "VIRTUAL_AMBIGUOUS_BOTH";
+      else if(hitTP)
+         outcome = "VIRTUAL_TP_FIRST";
+      else if(hitSL)
+         outcome = "VIRTUAL_SL_FIRST";
+      else if(virtualCandidates[i].barsElapsed >= InpMicroNearMissMaxBars)
+         outcome = "VIRTUAL_TIMEOUT";
+
+      if(outcome == "")
+         continue;
+
+      string detail = "original_reject_reason=" + virtualCandidates[i].rejectReason +
+                      "|virtual_entry=" + DoubleToString(plan.entryPrice, SymbolDigits()) +
+                      "|virtual_sl=" + DoubleToString(plan.stopLoss, SymbolDigits()) +
+                      "|virtual_tp=" + DoubleToString(plan.takeProfit, SymbolDigits()) +
+                      "|virtual_bars_elapsed=" + (string)virtualCandidates[i].barsElapsed +
+                      "|bar_high=" + DoubleToString(closedBar[0].high, SymbolDigits()) +
+                      "|bar_low=" + DoubleToString(closedBar[0].low, SymbolDigits());
+      LogEvent("micro_near_miss_exit", outcome, plan, detail);
+      RemoveVirtualCandidate(i);
+     }
+  }
+
+void ResetDayState(datetime now)
+  {
+   currentDayKey = DayKey(now);
+   MqlDateTime dt;
+   TimeToStruct(now, dt);
+   dt.hour = 0;
+   dt.min = 0;
+   dt.sec = 0;
+   currentDayStart = StructToTime(dt);
+   dayStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
+   dailyStopActive = false;
+   dailyStopReason = "";
+   dailySignals = 0;
+   dailyEntries = 0;
+   dailyRejects = 0;
+   dailyRiskBlocks = 0;
+   dailyClosedTrades = 0;
+   if(InpLossStreakStopForDayOnly)
+     {
+      lossStreakStopActive = false;
+      lossStreakStopReason = "";
+     }
+   LogSimpleEvent("period_reset", "day_reset", "day_start_equity=" + DoubleToString(dayStartEquity, 2));
+  }
+
+void ResetWeekState(datetime now)
+  {
+   currentWeekKey = WeekKey(now);
+   weekStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
+   weeklyStopActive = false;
+   weeklyStopReason = "";
+   LogSimpleEvent("period_reset", "week_reset", "week_start_equity=" + DoubleToString(weekStartEquity, 2));
+  }
+
+void UpdatePeriodAnchors()
+  {
+   datetime now = TimeCurrent();
+   int dayKey = DayKey(now);
+   int weekKey = WeekKey(now);
+   if(currentDayKey != dayKey)
+      ResetDayState(now);
+   if(currentWeekKey != weekKey)
+      ResetWeekState(now);
+  }
+
+void UpdateDrawdown()
+  {
+   double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+   if(accountPeakEquity <= 0.0 || equity > accountPeakEquity)
+      accountPeakEquity = equity;
+
+   double currentDDPercent = 0.0;
+   if(accountPeakEquity > 0.0)
+      currentDDPercent = 100.0 * (accountPeakEquity - equity) / accountPeakEquity;
+   if(currentDDPercent > maxDrawdownPercent)
+      maxDrawdownPercent = currentDDPercent;
+  }
+
+void AddPendingCloseReason(ulong identifier, string reason)
+  {
+   int size = ArraySize(pendingCloseReasons);
+   for(int i = 0; i < size; ++i)
+     {
+      if(pendingCloseReasons[i].identifier == identifier)
+        {
+         pendingCloseReasons[i].reason = reason;
+         return;
+        }
+     }
+   ArrayResize(pendingCloseReasons, size + 1);
+   pendingCloseReasons[size].identifier = identifier;
+   pendingCloseReasons[size].reason = reason;
+  }
+
+string PopPendingCloseReason(ulong identifier)
+  {
+   int size = ArraySize(pendingCloseReasons);
+   for(int i = 0; i < size; ++i)
+     {
+      if(pendingCloseReasons[i].identifier != identifier)
+         continue;
+      string reason = pendingCloseReasons[i].reason;
+      for(int j = i; j < size - 1; ++j)
+         pendingCloseReasons[j] = pendingCloseReasons[j + 1];
+      ArrayResize(pendingCloseReasons, size - 1);
+      return reason;
+     }
+   return "";
+  }
+
+int FindTrackedPositionIndex(ulong identifier)
+  {
+   int size = ArraySize(trackedPositions);
+   for(int i = 0; i < size; ++i)
+      if(trackedPositions[i].identifier == identifier)
+         return i;
+   return -1;
+  }
+
+void AddTrackedPosition(ulong identifier, datetime entryTime, double entryPrice, double volume)
+  {
+   if(identifier == 0)
+      return;
+   int index = FindTrackedPositionIndex(identifier);
+   if(index < 0)
+     {
+      int size = ArraySize(trackedPositions);
+      ArrayResize(trackedPositions, size + 1);
+      index = size;
+     }
+
+   trackedPositions[index].identifier = identifier;
+   trackedPositions[index].entryTime = entryTime;
+   trackedPositions[index].entryPrice = entryPrice;
+   trackedPositions[index].stopLoss = pendingEntrySL;
+   trackedPositions[index].takeProfit = pendingEntryTP;
+   trackedPositions[index].volume = volume;
+    trackedPositions[index].riskMoney = pendingEntryRiskMoney;
+    trackedPositions[index].bucket = pendingEntryBucket;
+    trackedPositions[index].bucketType = pendingEntryBucketType;
+    trackedPositions[index].entryReason = pendingEntryReason;
+   trackedPositions[index].slMode = pendingEntrySLMode;
+   trackedPositions[index].tpMode = pendingEntryTPMode;
+  }
+
+TrackedPosition RemoveTrackedPosition(ulong identifier)
+  {
+   TrackedPosition result;
+   ZeroMemory(result);
+   int index = FindTrackedPositionIndex(identifier);
+   if(index < 0)
+      return result;
+
+   int size = ArraySize(trackedPositions);
+   result = trackedPositions[index];
+   for(int i = index; i < size - 1; ++i)
+      trackedPositions[i] = trackedPositions[i + 1];
+   ArrayResize(trackedPositions, size - 1);
+   return result;
+  }
+
+int EnsureMonthStat(int monthKey)
+  {
+   int size = ArraySize(monthStats);
+   for(int i = 0; i < size; ++i)
+      if(monthStats[i].monthKey == monthKey)
+         return i;
+   ArrayResize(monthStats, size + 1);
+   monthStats[size].monthKey = monthKey;
+   monthStats[size].trades = 0;
+   monthStats[size].wins = 0;
+   monthStats[size].losses = 0;
+   monthStats[size].netMoney = 0.0;
+   monthStats[size].netR = 0.0;
+   monthStats[size].grossWinR = 0.0;
+   monthStats[size].grossLossR = 0.0;
+   return size;
+  }
+
+void UpdateMonthlyStats(datetime closeTime, double netMoney, double realizedR)
+  {
+   int index = EnsureMonthStat(MonthKey(closeTime));
+   monthStats[index].trades++;
+   monthStats[index].netMoney += netMoney;
+   monthStats[index].netR += realizedR;
+   if(realizedR > 0.0)
+     {
+      monthStats[index].wins++;
+      monthStats[index].grossWinR += realizedR;
+     }
+   else if(realizedR < 0.0)
+     {
+      monthStats[index].losses++;
+      monthStats[index].grossLossR += realizedR;
+     }
+  }
+
+double CalculateRiskMoney(ENUM_ORDER_TYPE orderType, double volume, double entryPrice, double stopLoss)
+  {
+   double profit = 0.0;
+   if(!OrderCalcProfit(orderType, runtimeSymbol, volume, entryPrice, stopLoss, profit))
+      return 0.0;
+   return MathAbs(profit);
+  }
+
+double NormalizeVolumeToBroker(double volume)
+  {
+   double minLot = SymbolInfoDouble(runtimeSymbol, SYMBOL_VOLUME_MIN);
+   double maxLot = SymbolInfoDouble(runtimeSymbol, SYMBOL_VOLUME_MAX);
+   double step = SymbolInfoDouble(runtimeSymbol, SYMBOL_VOLUME_STEP);
+   if(step <= 0.0)
+      step = minLot;
+
+   double cap = maxLot;
+   if(InpMaxLotCap > 0.0)
+      cap = MathMin(cap, InpMaxLotCap);
+
+   volume = MathMax(volume, minLot);
+   volume = MathMin(volume, cap);
+   double steps = MathFloor((volume - minLot + 0.000000001) / step);
+   double normalized = minLot + steps * step;
+   if(normalized < minLot)
+      normalized = minLot;
+   if(normalized > cap)
+      normalized = cap;
+   return NormalizeDouble(normalized, 8);
+  }
+
+bool CalculateVolume(TradePlan &plan, string &rejectReason)
+  {
+   double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+   double riskPerLot = CalculateRiskMoney(ORDER_TYPE_BUY, 1.0, plan.entryPrice, plan.stopLoss);
+   if(riskPerLot <= 0.0)
+     {
+      rejectReason = "risk_per_lot_failed";
+      return false;
+     }
+
+   double requestedVolume = 0.0;
+   plan.fixedLotMode = (equity <= InpFixedLotEquityThreshold);
+   if(plan.fixedLotMode)
+      requestedVolume = InpFixedLot;
+   else
+      requestedVolume = (equity * InpRiskPercent / 100.0) / riskPerLot;
+
+   double minLot = SymbolInfoDouble(runtimeSymbol, SYMBOL_VOLUME_MIN);
+   plan.minLotForced = (requestedVolume > 0.0 && requestedVolume < minLot);
+   plan.lot = NormalizeVolumeToBroker(requestedVolume);
+   if(plan.lot <= 0.0)
+     {
+      rejectReason = "lot_normalization_failed";
+      return false;
+     }
+
+   plan.riskMoney = CalculateRiskMoney(ORDER_TYPE_BUY, plan.lot, plan.entryPrice, plan.stopLoss);
+   if(plan.riskMoney <= 0.0)
+     {
+      rejectReason = "planned_risk_failed";
+      return false;
+     }
+   plan.riskPercent = equity > 0.0 ? 100.0 * plan.riskMoney / equity : 0.0;
+
+   if(!OrderCalcMargin(ORDER_TYPE_BUY, runtimeSymbol, plan.lot, plan.entryPrice, plan.marginRequired))
+     {
+      rejectReason = "margin_calc_failed";
+      return false;
+     }
+    double freeMargin = AccountInfoDouble(ACCOUNT_MARGIN_FREE);
+    plan.freeMarginAfterEntry = freeMargin - plan.marginRequired;
+    if(plan.marginRequired > freeMargin)
+      {
+       rejectReason = "margin_insufficient";
+      return false;
+     }
+   return true;
+  }
+
+int CountManagedPositions()
+  {
+   int count = 0;
+   int total = PositionsTotal();
+   for(int i = 0; i < total; ++i)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != runtimeSymbol)
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      count++;
+     }
+   return count;
+  }
+
+bool HasLosingManagedLong()
+  {
+   int total = PositionsTotal();
+   for(int i = 0; i < total; ++i)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != runtimeSymbol)
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      if((ENUM_POSITION_TYPE)PositionGetInteger(POSITION_TYPE) != POSITION_TYPE_BUY)
+         continue;
+      if(PositionGetDouble(POSITION_PROFIT) < 0.0)
+         return true;
+     }
+   return false;
+  }
+
+bool AllTrackedOpenPositionsBucketType(string bucketType)
+  {
+   int tracked = ArraySize(trackedPositions);
+   int managed = CountManagedPositions();
+   if(managed <= 0)
+      return true;
+   if(tracked < managed)
+      return false;
+   for(int i = 0; i < tracked; ++i)
+     {
+      if(trackedPositions[i].bucketType != bucketType)
+         return false;
+     }
+   return true;
+  }
+
+datetime QualityBarOpenTime(datetime timeValue)
+  {
+   int shift = iBarShift(runtimeSymbol, InpQualityTimeframe, timeValue, false);
+   if(shift < 0)
+      return 0;
+   return iTime(runtimeSymbol, InpQualityTimeframe, shift);
+  }
+
+bool IsSameQualityBarEntryBlocked(datetime signalTime)
+  {
+   if(!InpBlockSameQualityBarEntry || lastEntryQualityBarTime <= 0)
+      return false;
+   datetime qualityBarTime = QualityBarOpenTime(signalTime);
+   if(qualityBarTime <= 0)
+      return false;
+   return (qualityBarTime == lastEntryQualityBarTime);
+  }
+
+double CurrentTrackedOpenProfitR()
+  {
+   double openProfitR = 0.0;
+   int total = PositionsTotal();
+   for(int i = 0; i < total; ++i)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != runtimeSymbol)
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      if((ENUM_POSITION_TYPE)PositionGetInteger(POSITION_TYPE) != POSITION_TYPE_BUY)
+         continue;
+
+      ulong identifier = (ulong)PositionGetInteger(POSITION_IDENTIFIER);
+      int trackedIndex = FindTrackedPositionIndex(identifier);
+      if(trackedIndex < 0 || trackedPositions[trackedIndex].riskMoney <= 0.0)
+         continue;
+
+      double netProfit = PositionGetDouble(POSITION_PROFIT) +
+                         PositionGetDouble(POSITION_SWAP);
+      openProfitR += netProfit / trackedPositions[trackedIndex].riskMoney;
+     }
+   return openProfitR;
+  }
+
+bool AdditionalEntryQualityPass(const TradePlan &plan, string &rejectReason)
+  {
+   if(!InpAdditionalEntryQualityGate)
+      return true;
+
+   if(InpAdditionalEntryMaxLossStreak >= 0 &&
+      consecutiveLosses > InpAdditionalEntryMaxLossStreak)
+     {
+      rejectReason = "additional_entry_loss_streak_throttle";
+      return false;
+     }
+
+   if(dayStartEquity > 0.0)
+     {
+      double dayPnlPercent = 100.0 * (AccountInfoDouble(ACCOUNT_EQUITY) - dayStartEquity) / dayStartEquity;
+      if(dayPnlPercent < InpAdditionalEntryMinDayPnLPercent)
+        {
+         rejectReason = "additional_entry_day_dd_throttle";
+         return false;
+        }
+     }
+
+   double openProfitR = CurrentTrackedOpenProfitR();
+   if(InpAdditionalEntryMinOpenProfitR > 0.0 &&
+      openProfitR < InpAdditionalEntryMinOpenProfitR)
+     {
+      rejectReason = "additional_entry_open_profit_r_too_low";
+      return false;
+     }
+
+   if(InpAdditionalEntryMinATRRatio > 0.0 &&
+      plan.atrRatio < InpAdditionalEntryMinATRRatio)
+     {
+      rejectReason = "additional_entry_atr_ratio_too_low";
+      return false;
+     }
+
+   if(plan.upPressure < InpAdditionalEntryMinUpPressure)
+     {
+      rejectReason = "additional_entry_up_pressure_too_low";
+      return false;
+     }
+
+   if(plan.downPressure > InpAdditionalEntryMaxDownPressure)
+     {
+      rejectReason = "additional_entry_down_pressure_too_high";
+      return false;
+     }
+
+   if(InpAdditionalEntryPreferredMaxRangePosition > 0.0 &&
+      plan.rangePosition > InpAdditionalEntryPreferredMaxRangePosition &&
+      (plan.upPressure < InpAdditionalEntryExtendedMinUpPressure ||
+       plan.downPressure > InpAdditionalEntryExtendedMaxDownPressure))
+     {
+      rejectReason = "additional_entry_extended_range_needs_pressure";
+      return false;
+     }
+
+   if(InpAdditionalEntryPreferredMaxRiskDistancePips > 0.0 &&
+      plan.riskDistancePips > InpAdditionalEntryPreferredMaxRiskDistancePips &&
+      (plan.upPressure < InpAdditionalEntryWideRiskMinUpPressure ||
+       plan.downPressure > InpAdditionalEntryWideRiskMaxDownPressure))
+     {
+      rejectReason = "additional_entry_wide_risk_needs_pressure";
+      return false;
+     }
+
+   return true;
+  }
+
+double CurrentTotalOpenRiskMoney()
+  {
+   double totalRisk = 0.0;
+   int total = PositionsTotal();
+   for(int i = 0; i < total; ++i)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != runtimeSymbol)
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      ENUM_POSITION_TYPE type = (ENUM_POSITION_TYPE)PositionGetInteger(POSITION_TYPE);
+      if(type != POSITION_TYPE_BUY)
+         continue;
+      double entry = PositionGetDouble(POSITION_PRICE_OPEN);
+      double stop = PositionGetDouble(POSITION_SL);
+      double volume = PositionGetDouble(POSITION_VOLUME);
+      if(stop <= 0.0 || stop >= entry)
+         continue;
+      totalRisk += CalculateRiskMoney(ORDER_TYPE_BUY, volume, entry, stop);
+     }
+   return totalRisk;
+  }
+
+double CurrentTotalOpenRiskPercent()
+  {
+   double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+   if(equity <= 0.0)
+      return 0.0;
+   return 100.0 * CurrentTotalOpenRiskMoney() / equity;
+  }
+
+void TriggerStop(string scope, string reason, string detail)
+  {
+   if(scope == "daily")
+     {
+      if(dailyStopActive)
+         return;
+      dailyStopActive = true;
+      dailyStopReason = reason;
+     }
+   else if(scope == "weekly")
+     {
+      if(weeklyStopActive)
+         return;
+      weeklyStopActive = true;
+      weeklyStopReason = reason;
+     }
+   else if(scope == "drawdown")
+     {
+      if(drawdownStopActive)
+         return;
+      drawdownStopActive = true;
+      drawdownStopReason = reason;
+     }
+   else if(scope == "loss_streak")
+     {
+      if(lossStreakStopActive)
+         return;
+      lossStreakStopActive = true;
+      lossStreakStopReason = reason;
+     }
+
+   string message = STRATEGY_NAME + " STOP " + scope + " " + reason + " " + detail;
+   Print(message);
+   LogSimpleEvent("stop_condition_triggered", reason, detail);
+  }
+
+void CloseManagedPositionByTicket(ulong ticket, string reason)
+  {
+   if(ticket == 0)
+      return;
+   if(!PositionSelectByTicket(ticket))
+      return;
+   ulong identifier = (ulong)PositionGetInteger(POSITION_IDENTIFIER);
+   AddPendingCloseReason(identifier, reason);
+   if(!trade.PositionClose(ticket))
+     {
+      PrintFormat("%s position close failed ticket=%I64u reason=%s retcode=%d",
+                  STRATEGY_NAME, ticket, reason, trade.ResultRetcode());
+      LogSimpleEvent("close_failed", reason, "ticket=" + (string)ticket + " retcode=" + (string)trade.ResultRetcode());
+     }
+  }
+
+void FlattenManagedPositions(string reason)
+  {
+   int total = PositionsTotal();
+   for(int i = total - 1; i >= 0; --i)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != runtimeSymbol)
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      CloseManagedPositionByTicket(ticket, reason);
+     }
+  }
+
+void CheckRiskStops()
+  {
+   UpdateDrawdown();
+   double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+
+   if(InpDailyMaxLossPercent > 0.0 && dayStartEquity > 0.0)
+     {
+      double dailyLossPercent = 100.0 * (dayStartEquity - equity) / dayStartEquity;
+      if(dailyLossPercent >= InpDailyMaxLossPercent)
+        {
+         TriggerStop("daily", "daily_max_loss", "daily_loss_percent=" + DoubleToString(dailyLossPercent, 4));
+         if(InpFlattenOnRiskStop)
+            FlattenManagedPositions("RISK_STOP");
+        }
+     }
+
+   if(InpWeeklyMaxLossPercent > 0.0 && weekStartEquity > 0.0)
+     {
+      double weeklyLossPercent = 100.0 * (weekStartEquity - equity) / weekStartEquity;
+      if(weeklyLossPercent >= InpWeeklyMaxLossPercent)
+        {
+         TriggerStop("weekly", "weekly_max_loss", "weekly_loss_percent=" + DoubleToString(weeklyLossPercent, 4));
+         if(InpFlattenOnRiskStop)
+            FlattenManagedPositions("RISK_STOP");
+        }
+     }
+
+   if(InpMaxDrawdownPercent > 0.0 && accountPeakEquity > 0.0)
+     {
+      double ddPercent = 100.0 * (accountPeakEquity - equity) / accountPeakEquity;
+      if(ddPercent >= InpMaxDrawdownPercent)
+        {
+         TriggerStop("drawdown", "max_drawdown", "drawdown_percent=" + DoubleToString(ddPercent, 4));
+         if(InpFlattenOnRiskStop)
+            FlattenManagedPositions("RISK_STOP");
+        }
+     }
+  }
+
+bool IsCooldownBlocked(datetime barTime)
+  {
+   if(InpCooldownBars <= 0 || lastEntryBarTime <= 0)
+      return false;
+   int barsSince = iBarShift(runtimeSymbol, InpExecutionTimeframe, lastEntryBarTime, false);
+   if(barsSince < 0)
+      return false;
+   return (barsSince < InpCooldownBars);
+  }
+
+bool LoadMarketData(MqlRates &execRates[],
+                    double &execFastEma[],
+                    double &execSlowEma[],
+                    double &execAtr[],
+                    MqlRates &qualityRates[],
+                    double &qualityFastEma[],
+                    double &qualitySlowEma[],
+                    double &qualityAtr[],
+                    double &qualityAdx[])
+  {
+   int needExecBars = MathMax(InpExecSlowEMAPeriod + 10,
+                              MathMax(InpM1SwingLookbackBars, InpRecentRangeBars) + 12);
+   int needQualityBars = MathMax(InpSlowEMAPeriod + InpSlowSlopeBars + 10,
+                                 MathMax(InpATRAveragePeriod + InpATRPeriod + 10,
+                                         MathMax(InpRangeLookbackBars, MathMax(InpM5SwingLookbackBars, InpRecentRangeBars)) + 10));
+   ArraySetAsSeries(execRates, true);
+   ArraySetAsSeries(execFastEma, true);
+   ArraySetAsSeries(execSlowEma, true);
+   ArraySetAsSeries(execAtr, true);
+   ArraySetAsSeries(qualityRates, true);
+   ArraySetAsSeries(qualityFastEma, true);
+   ArraySetAsSeries(qualitySlowEma, true);
+   ArraySetAsSeries(qualityAtr, true);
+   ArraySetAsSeries(qualityAdx, true);
+
+   if(CopyRates(runtimeSymbol, InpExecutionTimeframe, 0, needExecBars, execRates) < needExecBars)
+      return false;
+   if(CopyBuffer(fastEmaHandle, 0, 0, needExecBars, execFastEma) < needExecBars)
+      return false;
+   if(CopyBuffer(slowEmaHandle, 0, 0, needExecBars, execSlowEma) < needExecBars)
+      return false;
+   if(CopyBuffer(atrHandle, 0, 0, needExecBars, execAtr) < needExecBars)
+      return false;
+   if(CopyRates(runtimeSymbol, InpQualityTimeframe, 0, needQualityBars, qualityRates) < needQualityBars)
+      return false;
+   if(CopyBuffer(qualityFastEmaHandle, 0, 0, needQualityBars, qualityFastEma) < needQualityBars)
+      return false;
+   if(CopyBuffer(qualitySlowEmaHandle, 0, 0, needQualityBars, qualitySlowEma) < needQualityBars)
+      return false;
+   if(CopyBuffer(qualityAtrHandle, 0, 0, needQualityBars, qualityAtr) < needQualityBars)
+      return false;
+   if(CopyBuffer(qualityAdxHandle, 0, 0, needQualityBars, qualityAdx) < needQualityBars)
+      return false;
+   return true;
+  }
+
+double AverageATR(const double &atr[])
+  {
+   double sum = 0.0;
+   int count = 0;
+   int size = ArraySize(atr);
+   int limit = MathMin(InpATRAveragePeriod, size - 2);
+   for(int i = 1; i <= limit; ++i)
+     {
+      if(atr[i] <= 0.0)
+         continue;
+      sum += atr[i];
+      count++;
+     }
+   if(count <= 0)
+      return 0.0;
+   return sum / count;
+  }
+
+bool RecentRangePosition(const MqlRates &rates[], double &position)
+  {
+   int size = ArraySize(rates);
+   int limit = MathMin(InpRangeLookbackBars, size - 2);
+   if(limit < 5)
+      return false;
+   double highest = rates[1].high;
+   double lowest = rates[1].low;
+   for(int i = 1; i <= limit; ++i)
+     {
+      highest = MathMax(highest, rates[i].high);
+      lowest = MathMin(lowest, rates[i].low);
+     }
+   double width = highest - lowest;
+   if(width <= 0.0)
+      return false;
+   position = (rates[1].close - lowest) / width;
+   return true;
+  }
+
+double RecentSwingLow(const MqlRates &rates[], int lookbackBars)
+  {
+   int size = ArraySize(rates);
+   int limit = MathMin(lookbackBars, size - 2);
+   double lowest = rates[1].low;
+   for(int i = 1; i <= limit; ++i)
+      lowest = MathMin(lowest, rates[i].low);
+   return lowest;
+  }
+
+double RecentHighestHigh(const MqlRates &rates[], int lookbackBars, int startShift)
+  {
+   int size = ArraySize(rates);
+   int limit = MathMin(startShift + lookbackBars - 1, size - 2);
+   if(startShift > limit)
+      return 0.0;
+   double highest = rates[startShift].high;
+   for(int i = startShift; i <= limit; ++i)
+      highest = MathMax(highest, rates[i].high);
+   return highest;
+  }
+
+double RecentLowestLow(const MqlRates &rates[], int lookbackBars, int startShift)
+  {
+   int size = ArraySize(rates);
+   int limit = MathMin(startShift + lookbackBars - 1, size - 2);
+   if(startShift > limit)
+      return 0.0;
+   double lowest = rates[startShift].low;
+   for(int i = startShift; i <= limit; ++i)
+      lowest = MathMin(lowest, rates[i].low);
+   return lowest;
+  }
+
+bool RecentRangeStats(const MqlRates &rates[],
+                      int lookbackBars,
+                      double currentATR,
+                      double &distanceHighATR,
+                      double &distanceLowATR,
+                      double &rangeATR)
+  {
+   if(currentATR <= 0.0)
+      return false;
+   double highest = RecentHighestHigh(rates, lookbackBars, 1);
+   double lowest = RecentLowestLow(rates, lookbackBars, 1);
+   if(highest <= 0.0 || lowest <= 0.0 || highest <= lowest)
+      return false;
+   double close = rates[1].close;
+   distanceHighATR = (highest - close) / currentATR;
+   distanceLowATR = (close - lowest) / currentATR;
+   rangeATR = (highest - lowest) / currentATR;
+   return true;
+  }
+
+bool DirectionalPressure(const MqlRates &rates[], int lookbackBars, double &upPressure, double &downPressure)
+  {
+   int size = ArraySize(rates);
+   int limit = MathMin(lookbackBars, size - 2);
+   if(limit < 3)
+      return false;
+
+   double upMove = 0.0;
+   double downMove = 0.0;
+   for(int i = 1; i <= limit; ++i)
+     {
+      double delta = rates[i].close - rates[i + 1].close;
+      if(delta > 0.0)
+         upMove += delta;
+      else
+         downMove += MathAbs(delta);
+     }
+   double total = upMove + downMove;
+   if(total <= 0.0)
+     {
+      upPressure = 0.5;
+      downPressure = 0.5;
+      return true;
+     }
+   upPressure = upMove / total;
+   downPressure = downMove / total;
+   return true;
+  }
+
+string StopModeText()
+  {
+   if(InpStopMode == SL_ATR_ONLY)
+      return "ATR_ONLY";
+   if(InpStopMode == SL_M1_SWING)
+      return "M1_SWING";
+   if(InpStopMode == SL_M5_SWING)
+      return "M5_SWING";
+   return "HYBRID";
+  }
+
+string TPModeText()
+  {
+   if(InpTPMode == TP_RECENT_HIGH_OR_R)
+      return "RECENT_HIGH_OR_R";
+   return "FIXED_R";
+  }
+
+bool LoadContextFrame(ENUM_TIMEFRAMES timeframe,
+                      int fastHandle,
+                      int slowHandle,
+                      int atrHandleParam,
+                      MqlRates &rates[],
+                      double &fastEma[],
+                      double &slowEma[],
+                      double &atr[])
+  {
+   int needBars = MathMax(InpSlowEMAPeriod + InpSlowSlopeBars + 10, InpATRPeriod + 10);
+   ArraySetAsSeries(rates, true);
+   ArraySetAsSeries(fastEma, true);
+   ArraySetAsSeries(slowEma, true);
+   ArraySetAsSeries(atr, true);
+   if(CopyRates(runtimeSymbol, timeframe, 0, needBars, rates) < needBars)
+      return false;
+   if(CopyBuffer(fastHandle, 0, 0, needBars, fastEma) < needBars)
+      return false;
+   if(CopyBuffer(slowHandle, 0, 0, needBars, slowEma) < needBars)
+      return false;
+   if(CopyBuffer(atrHandleParam, 0, 0, needBars, atr) < needBars)
+      return false;
+   return true;
+  }
+
+int BiasScore(const MqlRates &rates[], const double &fastEma[], const double &slowEma[], const double &atr[])
+  {
+   if(ArraySize(rates) <= InpSlowSlopeBars + 1 || ArraySize(atr) <= 1 || atr[1] <= 0.0)
+      return 0;
+   int score = 0;
+   double slopeATR = (slowEma[1] - slowEma[1 + InpSlowSlopeBars]) / atr[1];
+   if(rates[1].close >= slowEma[1])
+      score++;
+   if(fastEma[1] >= slowEma[1])
+      score++;
+   if(slopeATR >= InpMinSlowSlopeATR)
+      score++;
+   return score;
+  }
+
+double H4ContextScore(const MqlRates &rates[], const double &fastEma[], const double &slowEma[], const double &atr[])
+  {
+   if(ArraySize(rates) <= InpSlowSlopeBars + 1 || ArraySize(atr) <= 1 || atr[1] <= 0.0)
+      return 0.0;
+
+   double slopeATR = (slowEma[1] - slowEma[1 + InpSlowSlopeBars]) / atr[1];
+   double belowSlowATR = (slowEma[1] - rates[1].close) / atr[1];
+   bool strongBear = (fastEma[1] < slowEma[1] &&
+                      slopeATR < -InpH4MaxBearSlopeATR &&
+                      belowSlowATR > InpH4MaxBelowSlowATR);
+   if(strongBear)
+      return 0.15;
+   if(rates[1].close < slowEma[1] || fastEma[1] < slowEma[1])
+      return 0.55;
+   if(slopeATR < InpMinSlowSlopeATR)
+      return 0.75;
+   return 1.0;
+  }
+
+bool AvoidFrameIsStrongBearish()
+  {
+   MqlRates rates[];
+   double fastEma[];
+   double slowEma[];
+   double atr[];
+   if(!LoadContextFrame(InpAvoidTimeframe, avoidFastEmaHandle, avoidSlowEmaHandle, avoidAtrHandle,
+                        rates, fastEma, slowEma, atr))
+      return true;
+   if(atr[1] <= 0.0)
+      return true;
+   double slopeATR = (slowEma[1] - slowEma[1 + InpSlowSlopeBars]) / atr[1];
+   double belowSlowATR = (slowEma[1] - rates[1].close) / atr[1];
+   return (fastEma[1] < slowEma[1] &&
+           slopeATR < -InpH4MaxBearSlopeATR &&
+           belowSlowATR > InpH4MaxBelowSlowATR);
+  }
+
+void ResetPlan(TradePlan &plan)
+  {
+    ZeroMemory(plan);
+    plan.valid = false;
+    plan.bucket = "";
+    plan.bucketType = "";
+  }
+
+bool BuildTradePlan(TradePlan &plan, string &rejectReason)
+  {
+   ResetPlan(plan);
+
+   MqlRates execRates[];
+   double execFastEma[];
+   double execSlowEma[];
+   double execAtr[];
+   MqlRates qualityRates[];
+   double qualityFastEma[];
+   double qualitySlowEma[];
+   double qualityAtr[];
+   double qualityAdx[];
+   if(!LoadMarketData(execRates, execFastEma, execSlowEma, execAtr,
+                      qualityRates, qualityFastEma, qualitySlowEma, qualityAtr, qualityAdx))
+     {
+      rejectReason = "market_data_unavailable";
+      return false;
+     }
+
+   MqlRates signalBar = execRates[1];
+   MqlRates qualityBar = qualityRates[1];
+   plan.signalBarTime = signalBar.time;
+   plan.slMode = StopModeText();
+   plan.tpMode = TPModeText();
+   MqlDateTime signalDt;
+   TimeToStruct(signalBar.time, signalDt);
+   plan.hourOfDay = signalDt.hour;
+   plan.dayOfWeek = signalDt.day_of_week;
+   plan.entryPrice = CurrentAsk();
+   if(plan.entryPrice <= 0.0)
+     {
+      rejectReason = "ask_unavailable";
+      return false;
+     }
+
+   if(!IsAllowedWeekday(signalBar.time))
+     {
+      rejectReason = "weekday_filter_failed";
+      return false;
+     }
+   if(InpUseSessionFilter && !IsWithinSession(signalBar.time, InpSessionStartHour, InpSessionEndHour))
+     {
+      rejectReason = "session_filter_failed";
+      return false;
+     }
+
+   double currentATR = qualityAtr[1];
+   if(currentATR <= 0.0)
+     {
+      rejectReason = "atr_unavailable";
+      return false;
+     }
+
+   double atrAverage = AverageATR(qualityAtr);
+   if(atrAverage <= 0.0)
+     {
+      rejectReason = "atr_average_unavailable";
+      return false;
+     }
+
+   double bid = CurrentBid();
+   if(bid <= 0.0)
+     {
+      rejectReason = "bid_unavailable";
+      return false;
+     }
+
+   plan.spreadATR = (plan.entryPrice - bid) / currentATR;
+   plan.atrRatio = currentATR / atrAverage;
+   plan.emaDeviationATR = MathAbs(qualityBar.close - qualityFastEma[1]) / currentATR;
+   plan.bodyATR = MathAbs(qualityBar.close - qualityBar.open) / currentATR;
+   plan.wickATR = (MathMin(signalBar.open, signalBar.close) - signalBar.low) / currentATR;
+   plan.slowSlopeATR = (qualitySlowEma[1] - qualitySlowEma[1 + InpSlowSlopeBars]) / currentATR;
+   plan.adxValue = qualityAdx[1];
+   if(!RecentRangePosition(qualityRates, plan.rangePosition))
+     {
+      rejectReason = "range_position_unavailable";
+      return false;
+     }
+   if(!RecentRangeStats(qualityRates, InpRecentRangeBars, currentATR,
+                        plan.distanceRecentHighATR, plan.distanceRecentLowATR, plan.recentRangeATR))
+     {
+      rejectReason = "recent_range_stats_unavailable";
+      return false;
+     }
+    if(!DirectionalPressure(qualityRates, InpRecentRangeBars, plan.upPressure, plan.downPressure))
+      {
+       rejectReason = "pressure_unavailable";
+       return false;
+      }
+
+    if(plan.spreadATR > InpMaxSpreadATR)
+      {
+       rejectReason = "spread_atr_too_wide";
+       return false;
+      }
+    if(plan.atrRatio < InpMinExtremeATRRatio)
+      {
+       rejectReason = "atr_ratio_extreme_low";
+       return false;
+      }
+    if(plan.atrRatio > InpMaxExtremeATRRatio)
+      {
+       rejectReason = "atr_ratio_extreme_high";
+       return false;
+      }
+
+    MqlRates biasRates[];
+   double biasFastEma[];
+   double biasSlowEma[];
+   double biasAtr[];
+   MqlRates trendRates[];
+    double trendFastEma[];
+    double trendSlowEma[];
+    double trendAtr[];
+    MqlRates avoidRates[];
+    double avoidFastEma[];
+    double avoidSlowEma[];
+    double avoidAtr[];
+    if(!LoadContextFrame(InpBiasTimeframe, biasFastEmaHandle, biasSlowEmaHandle, biasAtrHandle,
+                         biasRates, biasFastEma, biasSlowEma, biasAtr) ||
+       !LoadContextFrame(InpTrendTimeframe, trendFastEmaHandle, trendSlowEmaHandle, trendAtrHandle,
+                         trendRates, trendFastEma, trendSlowEma, trendAtr) ||
+       !LoadContextFrame(InpAvoidTimeframe, avoidFastEmaHandle, avoidSlowEmaHandle, avoidAtrHandle,
+                         avoidRates, avoidFastEma, avoidSlowEma, avoidAtr))
+      {
+       rejectReason = "context_data_unavailable";
+       return false;
+      }
+    int biasScore = BiasScore(biasRates, biasFastEma, biasSlowEma, biasAtr) +
+                    BiasScore(trendRates, trendFastEma, trendSlowEma, trendAtr);
+    plan.h1M15BiasScore = ClampDouble((double)biasScore / 6.0 * 1.35, 0.0, 1.35);
+    plan.h4ContextScore = H4ContextScore(avoidRates, avoidFastEma, avoidSlowEma, avoidAtr);
+
+    double closeLoc = CloseLocation(signalBar);
+    double lowerWickShare = LowerWickShare(signalBar);
+   double m1RecentHigh = RecentHighestHigh(execRates, InpRecentRangeBars, 2);
+   double m1RecentLow = RecentLowestLow(execRates, InpRecentRangeBars, 2);
+   double microRecentHigh = RecentHighestHigh(execRates, InpMicroBreakoutLookbackBars, 2);
+   double compressionHigh = RecentHighestHigh(execRates, InpCompressionLookbackBars, 2);
+   double compressionLow = RecentLowestLow(execRates, InpCompressionLookbackBars, 2);
+   if(m1RecentHigh <= 0.0 || m1RecentLow <= 0.0 || microRecentHigh <= 0.0 ||
+      compressionHigh <= 0.0 || compressionLow <= 0.0 || compressionHigh <= compressionLow)
+     {
+      rejectReason = "m1_range_unavailable";
+      return false;
+     }
+    plan.pullbackDepthATR = (m1RecentHigh - signalBar.low) / currentATR;
+    plan.breakoutAcceptanceATR = (signalBar.close - microRecentHigh) / currentATR;
+    plan.breakoutRetestDepthATR = MathMax(0.0, microRecentHigh - signalBar.low) / currentATR;
+    plan.compressionRangeATR = (compressionHigh - compressionLow) / currentATR;
+    plan.compressionBodyATR = MathAbs(signalBar.close - signalBar.open) / currentATR;
+    plan.compressionBreakoutATR = (signalBar.close - compressionHigh) / currentATR;
+
+    plan.spreadScore = ScoreMax(plan.spreadATR, 0.10, InpMaxSpreadATR);
+    plan.volatilityScore = ScoreBand(plan.atrRatio, 0.85, 1.45,
+                                     InpMinATRRatio, MathMax(InpMaxATRRatio, 1.85));
+    plan.trendScore = 0.0;
+    if(qualityFastEma[1] > qualitySlowEma[1])
+       plan.trendScore += 0.35;
+    if(qualityBar.close > qualitySlowEma[1])
+       plan.trendScore += 0.35;
+    if(plan.slowSlopeATR >= InpMinSlowSlopeATR)
+       plan.trendScore += 0.25;
+    if(plan.emaDeviationATR <= InpMaxEMADeviationATR)
+       plan.trendScore += 0.20;
+    if(InpMaxADX <= 0.0 || plan.adxValue <= InpMaxADX)
+       plan.trendScore += 0.20;
+    plan.trendScore = ClampDouble(plan.trendScore, 0.0, 1.35);
+
+    bool pressureOk = (plan.upPressure >= InpMinUpPressure || plan.downPressure <= InpMaxDownPressure);
+    bool pressureConfirmed = (plan.upPressure >= InpMinUpPressure && plan.downPressure <= InpMaxDownPressure);
+    bool discountPressureConfirmed = (plan.upPressure >= InpDiscountMinUpPressure &&
+                                      plan.downPressure <= InpDiscountMaxDownPressure);
+    bool touchedExecFast = (signalBar.low <= execFastEma[1] + InpPullbackTouchATR * currentATR ||
+                            execRates[2].low <= execFastEma[2] + InpPullbackTouchATR * currentATR);
+    bool closeRecovered = (signalBar.close > signalBar.open || signalBar.close > execFastEma[1]);
+    bool lowerWickConfirmed = (plan.wickATR >= InpMinLowerWickATR || lowerWickShare >= InpMinLowerWickShare);
+    bool m1ReclaimConfirmed = (signalBar.close > signalBar.open &&
+                               signalBar.close > execFastEma[1] &&
+                               closeLoc >= InpMinCloseLocation);
+    bool m5TrendConstructive = (qualityFastEma[1] > qualitySlowEma[1] &&
+                                qualityBar.close > qualitySlowEma[1] &&
+                                plan.slowSlopeATR >= InpMinSlowSlopeATR);
+    bool discountRangePullback = (plan.rangePosition >= InpScoreMinDiscountRangePos &&
+                                  plan.rangePosition <= InpScoreMaxDiscountRangePos);
+    bool expansionDeepPullback = (plan.pullbackDepthATR >= InpScoreDeepPullbackATR &&
+                                  plan.atrRatio >= InpScoreMinExpansionATRRatio &&
+                                  plan.atrRatio <= InpScoreMaxExpansionATRRatio);
+    bool scorePullbackShape = InpEnablePullbackScoreBucket &&
+                              touchedExecFast &&
+                              closeRecovered &&
+                              signalBar.close >= execSlowEma[1] &&
+                              closeLoc >= 0.42 &&
+                              plan.pullbackDepthATR >= 0.0 &&
+                              plan.pullbackDepthATR <= MathMax(InpPullbackMaxDepthATR, 1.80) &&
+                              (discountRangePullback || expansionDeepPullback);
+
+    plan.pullbackScore = 0.0;
+    if(touchedExecFast)
+       plan.pullbackScore += 0.35;
+    if(signalBar.close > signalBar.open)
+       plan.pullbackScore += 0.25;
+    if(signalBar.close > execFastEma[1])
+       plan.pullbackScore += 0.25;
+    if(closeLoc >= InpMinCloseLocation)
+       plan.pullbackScore += 0.25;
+    else if(closeLoc >= 0.45)
+       plan.pullbackScore += 0.12;
+    if(plan.wickATR >= InpMinLowerWickATR || lowerWickShare >= InpMinLowerWickShare)
+       plan.pullbackScore += 0.25;
+    if(plan.pullbackDepthATR >= 0.25 && plan.pullbackDepthATR <= InpPullbackMaxDepthATR)
+       plan.pullbackScore += 0.25;
+    else if(plan.pullbackDepthATR >= 0.0 && plan.pullbackDepthATR <= MathMax(InpPullbackMaxDepthATR, 1.80))
+       plan.pullbackScore += 0.10;
+    plan.pullbackScore = ClampDouble(plan.pullbackScore, 0.0, 1.60);
+
+    plan.pressureScore = 0.0;
+    plan.pressureScore += 0.55 * ScoreMin(plan.upPressure, 0.65, InpMinUpPressure);
+    plan.pressureScore += 0.45 * ScoreMax(plan.downPressure, 0.35, InpMaxDownPressure);
+    if(signalBar.close > signalBar.open)
+       plan.pressureScore += 0.20;
+    plan.pressureScore = ClampDouble(plan.pressureScore, 0.0, 1.20);
+
+    plan.structureScore = 0.0;
+    plan.structureScore += 0.35 * ScoreBand(plan.rangePosition,
+                                             InpScoreMinDiscountRangePos,
+                                             InpScoreMaxDiscountRangePos,
+                                             0.15, 0.75);
+    plan.structureScore += 0.30 * ScoreBand(plan.distanceRecentHighATR, 0.75, 1.80, 0.25, 3.00);
+    plan.structureScore += 0.35 * ScoreMin(plan.recentRangeATR, 3.50, 2.00);
+    plan.structureScore += 0.25 * ScoreMin(plan.distanceRecentLowATR, 2.00, 1.00);
+    plan.structureScore = ClampDouble(plan.structureScore, 0.0, 1.25);
+    plan.breakoutScore = 0.0;
+
+    bool discountCandidate = InpEnableDiscountReclaimBucket &&
+                             plan.rangePosition >= InpDiscountMinRangePosition &&
+                             plan.rangePosition <= InpDiscountMaxRangePosition &&
+                             touchedExecFast &&
+                             m1ReclaimConfirmed &&
+                             lowerWickConfirmed &&
+                             signalBar.close >= execSlowEma[1] &&
+                             pressureConfirmed &&
+                             discountPressureConfirmed;
+
+    bool expansionNeedsExtra = (plan.atrRatio > InpExpansionUpperNormalATRRatio);
+    bool expansionExtraOk = (!expansionNeedsExtra ||
+                             (plan.upPressure >= InpExpansionExtraUpPressure &&
+                              plan.downPressure <= InpMaxDownPressure &&
+                              lowerWickConfirmed));
+    bool expansionCandidate = InpEnableExpansionPullbackBucket &&
+                              plan.rangePosition >= InpExpansionMinRangePosition &&
+                              plan.atrRatio >= InpExpansionMinATRRatio &&
+                              plan.atrRatio <= InpExpansionMaxATRRatio &&
+                              plan.pullbackDepthATR >= InpExpansionMinPullbackDepthATR &&
+                              plan.pullbackDepthATR <= InpExpansionMaxPullbackDepthATR &&
+                              touchedExecFast &&
+                              closeRecovered &&
+                              closeLoc >= 0.50 &&
+                              signalBar.close > execFastEma[1] &&
+                              execFastEma[1] >= execSlowEma[1] &&
+                              m5TrendConstructive &&
+                              pressureOk &&
+                              expansionExtraOk;
+
+    bool shallowNeedsExtra = (plan.atrRatio > InpShallowUpperNormalATRRatio ||
+                              plan.rangePosition > 0.85);
+    bool shallowExtraOk = (!shallowNeedsExtra ||
+                           (plan.upPressure >= MathMax(InpShallowMinUpPressure, InpExpansionExtraUpPressure) &&
+                            plan.downPressure <= InpShallowMaxDownPressure &&
+                            closeLoc >= InpMinCloseLocation));
+    bool shallowContinuationCandidate = InpEnableShallowContinuationBucket &&
+                                        plan.rangePosition >= InpShallowMinRangePosition &&
+                                        plan.rangePosition <= InpShallowMaxRangePosition &&
+                                        plan.atrRatio >= InpShallowMinATRRatio &&
+                                        plan.atrRatio <= InpShallowMaxATRRatio &&
+                                        plan.pullbackDepthATR >= InpShallowMinPullbackDepthATR &&
+                                        plan.pullbackDepthATR <= InpShallowMaxPullbackDepthATR &&
+                                        signalBar.close > signalBar.open &&
+                                        signalBar.close > execFastEma[1] &&
+                                        execFastEma[1] >= execSlowEma[1] &&
+                                        closeLoc >= InpMinCloseLocation &&
+                                        m5TrendConstructive &&
+                                        plan.upPressure >= InpShallowMinUpPressure &&
+                                        plan.downPressure <= InpShallowMaxDownPressure &&
+                                        plan.emaDeviationATR <= InpShallowMaxEMADeviationATR &&
+                                        plan.recentRangeATR >= InpShallowMinRecentRangeATR &&
+                                        shallowExtraOk;
+
+    bool midRangeContinuationCandidate = InpEnableMidRangeContinuationBucket &&
+                                         plan.rangePosition >= InpMidRangeMinRangePosition &&
+                                         plan.rangePosition <= InpMidRangeMaxRangePosition &&
+                                         plan.atrRatio >= InpMidRangeMinATRRatio &&
+                                         plan.atrRatio <= InpMidRangeMaxATRRatio &&
+                                         plan.pullbackDepthATR >= InpMidRangeMinPullbackDepthATR &&
+                                         plan.pullbackDepthATR <= InpMidRangeMaxPullbackDepthATR &&
+                                         signalBar.close > signalBar.open &&
+                                         signalBar.close > execFastEma[1] &&
+                                         execFastEma[1] >= execSlowEma[1] &&
+                                         closeLoc >= InpMinCloseLocation &&
+                                         m5TrendConstructive &&
+                                         plan.upPressure >= InpMidRangeMinUpPressure &&
+                                         plan.downPressure <= InpMidRangeMaxDownPressure &&
+                                         plan.emaDeviationATR <= InpMidRangeMaxEMADeviationATR &&
+                                         plan.recentRangeATR >= InpMidRangeMinRecentRangeATR &&
+                                         plan.distanceRecentHighATR >= InpMidRangeMinRecentHighDistanceATR;
+
+    double microRangeScore = ScoreBand(plan.rangePosition,
+                                       InpMicroMinRangePosition,
+                                       InpMicroMaxRangePosition,
+                                       MathMax(0.0, InpMicroMinRangePosition - 0.10),
+                                       MathMin(1.0, InpMicroExtendedMaxRangePosition));
+    double microVolScore = ScoreBand(plan.atrRatio,
+                                     InpMicroMinATRRatio,
+                                     InpMicroUpperNormalATRRatio,
+                                     MathMax(0.01, InpMicroMinATRRatio - 0.10),
+                                     InpMicroMaxATRRatio);
+    double microPressureScore = 0.0;
+    microPressureScore += 0.55 * ScoreMin(plan.upPressure, 0.70, InpMicroMinUpPressure);
+    microPressureScore += 0.45 * ScoreMax(plan.downPressure, 0.30, InpMicroMaxDownPressure);
+    if(signalBar.close > signalBar.open)
+       microPressureScore += 0.15;
+    microPressureScore = ClampDouble(microPressureScore, 0.0, 1.20);
+
+    double microBreakoutScore = 0.0;
+    microBreakoutScore += 0.35 * ScoreMin(plan.breakoutAcceptanceATR,
+                                          InpMicroMinBreakoutAcceptanceATR,
+                                          InpMicroBreakoutBufferATR);
+    microBreakoutScore += 0.35 * ScoreMax(plan.breakoutAcceptanceATR,
+                                          InpMicroMaxBreakoutAcceptanceATR * 0.55,
+                                          InpMicroMaxBreakoutAcceptanceATR);
+    microBreakoutScore += 0.25 * ScoreMax(plan.breakoutRetestDepthATR,
+                                          0.02,
+                                          InpMicroMaxRetestDepthATR);
+    if(closeLoc >= InpMinCloseLocation)
+       microBreakoutScore += 0.20;
+    if(closeLoc >= InpMicroExtraCloseLocation)
+       microBreakoutScore += 0.15;
+    microBreakoutScore = ClampDouble(microBreakoutScore, 0.0, 1.30);
+
+    bool microNeedsExtra = (plan.atrRatio > InpMicroUpperNormalATRRatio);
+    bool microPrimaryRange = (plan.rangePosition >= InpMicroMinRangePosition &&
+                              plan.rangePosition <= InpMicroMaxRangePosition);
+    bool microExtendedRange = (plan.rangePosition > InpMicroMaxRangePosition &&
+                               plan.rangePosition <= InpMicroExtendedMaxRangePosition &&
+                               plan.upPressure >= InpMicroExtendedMinUpPressure &&
+                               plan.breakoutAcceptanceATR >= InpMicroExtraAcceptanceATR &&
+                               closeLoc >= InpMicroExtraCloseLocation);
+    bool microExtraOk = (!microNeedsExtra ||
+                         (plan.breakoutAcceptanceATR >= InpMicroExtraAcceptanceATR &&
+                          closeLoc >= InpMicroExtraCloseLocation &&
+                          plan.upPressure >= InpMicroWideRiskMinUpPressure));
+    bool microBreakoutCandidate = InpEnableMicroBreakoutBucket &&
+                                  (microPrimaryRange || microExtendedRange) &&
+                                  plan.atrRatio >= InpMicroMinATRRatio &&
+                                  plan.atrRatio <= InpMicroMaxATRRatio &&
+                                  signalBar.close > microRecentHigh + InpMicroBreakoutBufferATR * currentATR &&
+                                  plan.breakoutAcceptanceATR >= InpMicroMinBreakoutAcceptanceATR &&
+                                  plan.breakoutAcceptanceATR <= InpMicroMaxBreakoutAcceptanceATR &&
+                                  plan.breakoutRetestDepthATR <= InpMicroMaxRetestDepthATR &&
+                                  signalBar.close > signalBar.open &&
+                                  closeLoc >= InpMinCloseLocation &&
+                                  (execFastEma[1] >= execSlowEma[1] ||
+                                   qualityBar.close >= qualityFastEma[1] ||
+                                   qualityFastEma[1] >= qualitySlowEma[1]) &&
+                                  plan.upPressure >= InpMicroMinUpPressure &&
+                                  plan.downPressure <= InpMicroMaxDownPressure &&
+                                  microExtraOk;
+
+    double compressionRangeScore = ScoreMax(plan.compressionRangeATR,
+                                            InpCompressionMaxRangeATR * 0.75,
+                                            InpCompressionMaxRangeATR);
+    double compressionVolScore = ScoreBand(plan.atrRatio,
+                                           InpCompressionMinATRRatio,
+                                           InpCompressionMaxATRRatio,
+                                           MathMax(0.01, InpCompressionMinATRRatio - 0.15),
+                                           InpCompressionExtendedMaxATRRatio);
+    double compressionBodyScore = ScoreBand(plan.compressionBodyATR,
+                                            InpCompressionMinBodyATR,
+                                            InpCompressionMaxBodyATR,
+                                            MathMax(0.0, InpCompressionMinBodyATR * 0.55),
+                                            InpCompressionMaxBodyATR + 0.20);
+    double compressionBreakoutScore = 0.0;
+    compressionBreakoutScore += 0.50 * ScoreMin(plan.compressionBreakoutATR,
+                                                InpCompressionBreakoutBufferATR,
+                                                InpCompressionBreakoutBufferATR * 0.60);
+    compressionBreakoutScore += 0.35 * ScoreMax(plan.compressionBreakoutATR,
+                                                InpCompressionMaxBreakoutATR * 0.55,
+                                                InpCompressionMaxBreakoutATR);
+    if(closeLoc >= InpMinCloseLocation)
+       compressionBreakoutScore += 0.20;
+    compressionBreakoutScore = ClampDouble(compressionBreakoutScore, 0.0, 1.25);
+    double compressionPressureScore = 0.0;
+    compressionPressureScore += 0.55 * ScoreMin(plan.upPressure, 0.70, InpCompressionMinUpPressure);
+    compressionPressureScore += 0.45 * ScoreMax(plan.downPressure, 0.30, InpCompressionMaxDownPressure);
+    if(signalBar.close > signalBar.open)
+       compressionPressureScore += 0.15;
+    compressionPressureScore = ClampDouble(compressionPressureScore, 0.0, 1.20);
+    double compressionRangePositionScore = ScoreBand(plan.rangePosition,
+                                                     InpCompressionMinRangePosition,
+                                                     InpCompressionMaxRangePosition,
+                                                     MathMax(0.0, InpCompressionMinRangePosition - 0.10),
+                                                     InpCompressionExtendedMaxRangePosition);
+    bool compressionPrimaryRange = (plan.rangePosition >= InpCompressionMinRangePosition &&
+                                    plan.rangePosition <= InpCompressionMaxRangePosition);
+    bool compressionExtendedRange = (plan.rangePosition > InpCompressionMaxRangePosition &&
+                                     plan.rangePosition <= InpCompressionExtendedMaxRangePosition &&
+                                     plan.upPressure >= InpCompressionExtendedMinUpPressure &&
+                                     closeLoc >= InpMicroExtraCloseLocation);
+    bool compressionNeedsExtra = (plan.atrRatio > InpCompressionMaxATRRatio ||
+                                  plan.rangePosition > InpCompressionMaxRangePosition);
+    bool compressionExtraOk = (!compressionNeedsExtra ||
+                               (plan.upPressure >= InpCompressionExtendedMinUpPressure &&
+                                plan.compressionBodyATR >= InpCompressionMinBodyATR &&
+                                closeLoc >= InpMicroExtraCloseLocation));
+    bool compressionCandidate = InpEnableCompressionExpansionBucket &&
+                                (compressionPrimaryRange || compressionExtendedRange) &&
+                                plan.atrRatio >= InpCompressionMinATRRatio &&
+                                plan.atrRatio <= InpCompressionExtendedMaxATRRatio &&
+                                plan.compressionRangeATR <= InpCompressionMaxRangeATR &&
+                                plan.compressionBodyATR >= InpCompressionMinBodyATR &&
+                                plan.compressionBodyATR <= InpCompressionMaxBodyATR &&
+                                signalBar.close > compressionHigh + InpCompressionBreakoutBufferATR * currentATR &&
+                                plan.compressionBreakoutATR <= InpCompressionMaxBreakoutATR &&
+                                plan.upPressure >= InpCompressionMinUpPressure &&
+                                plan.downPressure <= InpCompressionMaxDownPressure &&
+                                plan.emaDeviationATR <= InpCompressionMaxEMADeviationATR &&
+                                signalBar.close > signalBar.open &&
+                                closeLoc >= InpMinCloseLocation &&
+                                (execFastEma[1] >= execSlowEma[1] ||
+                                 qualityBar.close >= qualityFastEma[1] ||
+                                 qualityFastEma[1] >= qualitySlowEma[1]) &&
+                                compressionExtraOk;
+
+    double baseScore = plan.spreadScore + plan.h4ContextScore + plan.h1M15BiasScore +
+                       plan.trendScore + plan.pullbackScore + plan.pressureScore + plan.structureScore;
+    double discountScore = baseScore + ScoreBand(plan.atrRatio, 0.85, 1.45, InpMinATRRatio, InpExpansionUpperNormalATRRatio);
+    double expansionVolScore = ScoreBand(plan.atrRatio,
+                                         InpExpansionMinATRRatio,
+                                         InpExpansionUpperNormalATRRatio,
+                                         InpExpansionMinATRRatio,
+                                         InpExpansionMaxATRRatio);
+    if(expansionNeedsExtra)
+       expansionVolScore *= 0.75;
+    double expansionScore = baseScore + expansionVolScore;
+    double shallowVolScore = ScoreBand(plan.atrRatio,
+                                       InpShallowMinATRRatio,
+                                       InpShallowUpperNormalATRRatio,
+                                       InpShallowMinATRRatio,
+                                       InpShallowMaxATRRatio);
+    if(shallowNeedsExtra)
+       shallowVolScore *= 0.75;
+    double shallowStructureScore = 0.0;
+    shallowStructureScore += 0.35 * ScoreBand(plan.rangePosition,
+                                               InpShallowMinRangePosition,
+                                               MathMin(InpShallowMaxRangePosition, 0.85),
+                                               MathMax(0.0, InpShallowMinRangePosition - 0.10),
+                                               InpShallowMaxRangePosition);
+    shallowStructureScore += 0.30 * ScoreBand(plan.pullbackDepthATR,
+                                               InpShallowMinPullbackDepthATR,
+                                               InpShallowMaxPullbackDepthATR,
+                                               0.0,
+                                               MathMax(InpShallowMaxPullbackDepthATR, 1.00));
+    shallowStructureScore += 0.20 * ScoreMin(plan.recentRangeATR, 3.00, InpShallowMinRecentRangeATR);
+    shallowStructureScore += 0.15 * ScoreMax(plan.emaDeviationATR, 0.80, InpShallowMaxEMADeviationATR);
+    shallowStructureScore = ClampDouble(shallowStructureScore, 0.0, 1.20);
+    double shallowPressureScore = 0.0;
+    shallowPressureScore += 0.55 * ScoreMin(plan.upPressure, 0.70, InpShallowMinUpPressure);
+    shallowPressureScore += 0.45 * ScoreMax(plan.downPressure, 0.32, InpShallowMaxDownPressure);
+    if(closeLoc >= InpMinCloseLocation)
+       shallowPressureScore += 0.15;
+    shallowPressureScore = ClampDouble(shallowPressureScore, 0.0, 1.20);
+    double shallowScore = plan.spreadScore + shallowVolScore + plan.h4ContextScore +
+                          plan.h1M15BiasScore + plan.trendScore + shallowStructureScore +
+                          shallowPressureScore;
+    double midRangeVolScore = ScoreBand(plan.atrRatio,
+                                        InpMidRangeMinATRRatio,
+                                        MathMin(1.35, InpMidRangeMaxATRRatio),
+                                        MathMax(0.01, InpMidRangeMinATRRatio - 0.15),
+                                        InpMidRangeMaxATRRatio);
+    double midRangeStructureScore = 0.0;
+    midRangeStructureScore += 0.35 * ScoreBand(plan.rangePosition,
+                                                InpMidRangeMinRangePosition,
+                                                InpMidRangeMaxRangePosition,
+                                                MathMax(0.0, InpMidRangeMinRangePosition - 0.10),
+                                                MathMin(1.0, InpMidRangeMaxRangePosition + 0.12));
+    midRangeStructureScore += 0.25 * ScoreBand(plan.pullbackDepthATR,
+                                                InpMidRangeMinPullbackDepthATR,
+                                                MathMin(0.80, InpMidRangeMaxPullbackDepthATR),
+                                                0.0,
+                                                InpMidRangeMaxPullbackDepthATR);
+    midRangeStructureScore += 0.20 * ScoreMin(plan.recentRangeATR, 3.80, InpMidRangeMinRecentRangeATR);
+    midRangeStructureScore += 0.20 * ScoreBand(plan.distanceRecentHighATR,
+                                                0.55,
+                                                1.80,
+                                                InpMidRangeMinRecentHighDistanceATR,
+                                                2.80);
+    midRangeStructureScore = ClampDouble(midRangeStructureScore, 0.0, 1.20);
+    double midRangePressureScore = 0.0;
+    midRangePressureScore += 0.55 * ScoreMin(plan.upPressure, 0.68, InpMidRangeMinUpPressure);
+    midRangePressureScore += 0.45 * ScoreMax(plan.downPressure, 0.34, InpMidRangeMaxDownPressure);
+    if(closeLoc >= InpMinCloseLocation)
+       midRangePressureScore += 0.15;
+    midRangePressureScore = ClampDouble(midRangePressureScore, 0.0, 1.20);
+    double midRangeScore = plan.spreadScore + midRangeVolScore + plan.h4ContextScore +
+                           plan.h1M15BiasScore + plan.trendScore + midRangeStructureScore +
+                           midRangePressureScore;
+    double microScore = plan.spreadScore + microVolScore + plan.h4ContextScore +
+                        plan.h1M15BiasScore + plan.trendScore + microBreakoutScore +
+                        microPressureScore + microRangeScore;
+    double compressionScore = plan.spreadScore + compressionVolScore + plan.h4ContextScore +
+                              plan.h1M15BiasScore + plan.trendScore + compressionRangeScore +
+                              compressionPressureScore + compressionRangePositionScore +
+                              compressionBreakoutScore + compressionBodyScore;
+    plan.candidateScore = MathMax(discountScore, expansionScore);
+
+    bool m1Pullback = InpEnableM1PullbackBucket &&
+                      touchedExecFast &&
+                      signalBar.close > signalBar.open &&
+                     signalBar.close > execFastEma[1] &&
+                     execFastEma[1] >= execSlowEma[1] &&
+                     closeLoc >= InpMinCloseLocation &&
+                     (plan.wickATR >= InpMinLowerWickATR || lowerWickShare >= InpMinLowerWickShare) &&
+                     plan.pullbackDepthATR >= 0.0 &&
+                     plan.pullbackDepthATR <= InpPullbackMaxDepthATR &&
+                     pressureOk;
+
+   bool breakoutAcceptance = InpEnableBreakoutBucket &&
+                             signalBar.close > m1RecentHigh + InpBreakoutBufferATR * currentATR &&
+                             plan.breakoutAcceptanceATR <= InpBreakoutMaxChaseATR &&
+                             signalBar.low >= m1RecentHigh - InpBreakoutRetestBufferATR * currentATR &&
+                             closeLoc >= InpMinCloseLocation &&
+                              execFastEma[1] >= execSlowEma[1] &&
+                              pressureOk;
+
+    if(discountCandidate && (!expansionCandidate || discountScore >= expansionScore))
+      {
+       plan.bucket = "DISCOUNT_RECLAIM_PULLBACK_LONG";
+       plan.bucketType = "DISCOUNT_RECLAIM";
+       plan.entryReason = "discount_reclaim_pressure_confirmed";
+       plan.volatilityScore = ScoreBand(plan.atrRatio, 0.85, 1.45, InpMinATRRatio, InpExpansionUpperNormalATRRatio);
+       plan.candidateScore = discountScore;
+      }
+    else if(expansionCandidate)
+      {
+       plan.bucket = "EXPANSION_PULLBACK_CONTINUATION_LONG";
+       plan.bucketType = "EXPANSION_PULLBACK";
+       plan.entryReason = "expansion_pullback_continuation_confirmed";
+       plan.volatilityScore = expansionVolScore;
+       plan.candidateScore = expansionScore;
+      }
+    else if(shallowContinuationCandidate)
+      {
+       plan.bucket = "SHALLOW_CONTINUATION_PULLBACK_LONG";
+       plan.bucketType = "SHALLOW_CONTINUATION";
+       plan.entryReason = "shallow_pullback_continuation_confirmed";
+       plan.volatilityScore = shallowVolScore;
+       plan.structureScore = shallowStructureScore;
+       plan.pressureScore = shallowPressureScore;
+       plan.candidateScore = shallowScore;
+      }
+    else if(midRangeContinuationCandidate)
+      {
+       plan.bucket = "MID_RANGE_CONTINUATION_LONG";
+       plan.bucketType = "MID_RANGE_CONTINUATION";
+       plan.entryReason = "mid_range_continuation_confirmed";
+       plan.volatilityScore = midRangeVolScore;
+       plan.structureScore = midRangeStructureScore;
+       plan.pressureScore = midRangePressureScore;
+       plan.candidateScore = midRangeScore;
+      }
+    else if(compressionCandidate)
+      {
+       plan.bucket = "VOLATILITY_COMPRESSION_EXPANSION_LONG";
+       plan.bucketType = "COMPRESSION_EXPANSION";
+       plan.entryReason = "m1_compression_range_upside_expansion";
+       plan.volatilityScore = compressionVolScore;
+       plan.pullbackScore = 0.0;
+       plan.pressureScore = compressionPressureScore;
+       plan.structureScore = compressionRangePositionScore;
+       plan.breakoutScore = compressionBreakoutScore;
+       plan.compressionScore = compressionRangeScore + compressionBodyScore;
+       plan.recentRangeATR = plan.compressionRangeATR;
+       plan.bodyATR = plan.compressionBodyATR;
+       plan.breakoutAcceptanceATR = plan.compressionBreakoutATR;
+       plan.candidateScore = compressionScore;
+       plan.tpMode = "FIXED_R_COMPRESSION";
+      }
+    else if(microBreakoutCandidate)
+      {
+       plan.bucket = "MICRO_BREAKOUT_ACCEPTANCE_LONG";
+       plan.bucketType = "MICRO_BREAKOUT_ACCEPTANCE";
+       plan.entryReason = "m1_micro_breakout_acceptance_confirmed";
+       plan.volatilityScore = microVolScore;
+       plan.pullbackScore = 0.0;
+       plan.pressureScore = microPressureScore;
+       plan.structureScore = microRangeScore;
+       plan.breakoutScore = microBreakoutScore;
+       plan.candidateScore = microScore;
+       plan.tpMode = "FIXED_R_MICRO";
+      }
+    else if(!InpEnableMicroBreakoutBucket && InpLogMicroNearMissDiagnostics && microBreakoutCandidate == false &&
+            (microPrimaryRange || microExtendedRange) &&
+            plan.atrRatio >= InpMicroMinATRRatio &&
+            plan.atrRatio <= InpMicroMaxATRRatio &&
+            signalBar.close > microRecentHigh + InpMicroBreakoutBufferATR * currentATR &&
+            plan.breakoutAcceptanceATR >= InpMicroMinBreakoutAcceptanceATR &&
+            plan.breakoutAcceptanceATR <= InpMicroMaxBreakoutAcceptanceATR &&
+            plan.breakoutRetestDepthATR <= InpMicroMaxRetestDepthATR &&
+            signalBar.close > signalBar.open &&
+            closeLoc >= InpMinCloseLocation &&
+            plan.upPressure >= InpMicroMinUpPressure &&
+            plan.downPressure <= InpMicroMaxDownPressure)
+      {
+       plan.bucket = "MICRO_BREAKOUT_ACCEPTANCE_LONG";
+       plan.bucketType = "MICRO_BREAKOUT_ACCEPTANCE";
+       plan.entryReason = "micro_breakout_near_miss_diagnostic_only";
+       plan.volatilityScore = microVolScore;
+       plan.pullbackScore = 0.0;
+       plan.pressureScore = microPressureScore;
+       plan.structureScore = microRangeScore;
+       plan.breakoutScore = microBreakoutScore;
+       plan.candidateScore = microScore;
+       plan.tpMode = "FIXED_R_MICRO";
+      }
+    else if(scorePullbackShape)
+      {
+       plan.bucket = "M1_PULLBACK_SCORE_LONG";
+       plan.bucketType = "LEGACY_SCORE";
+       plan.entryReason = "m1_pullback_score_reclaim";
+      }
+    else if(m1Pullback)
+      {
+       plan.bucket = "M1_PULLBACK_EXECUTION_LONG";
+       plan.bucketType = "LEGACY_PULLBACK";
+       plan.entryReason = "m1_fast_reclaim_after_pullback";
+      }
+    else if(breakoutAcceptance)
+      {
+       plan.bucket = "BREAKOUT_ACCEPTANCE_RETEST_LONG";
+       plan.bucketType = "LEGACY_BREAKOUT";
+       plan.entryReason = "m1_breakout_acceptance";
+      }
+    else
+      {
+       if(InpLogBucketNearMissDiagnostics)
+         {
+          TradePlan nearPlan = plan;
+          double nearScore = -1.0;
+          string nearBucket = "";
+          string nearType = "";
+          string nearEntryReason = "";
+          string missingConditions = "";
+
+          if(InpEnableDiscountReclaimBucket && discountScore > nearScore)
+            {
+             nearScore = discountScore;
+             nearBucket = "DISCOUNT_RECLAIM_PULLBACK_LONG";
+             nearType = "DISCOUNT_RECLAIM";
+             nearEntryReason = "near_miss_discount_reclaim";
+            }
+          if(InpEnableExpansionPullbackBucket && expansionScore > nearScore)
+            {
+             nearScore = expansionScore;
+             nearBucket = "EXPANSION_PULLBACK_CONTINUATION_LONG";
+             nearType = "EXPANSION_PULLBACK";
+             nearEntryReason = "near_miss_expansion_pullback";
+            }
+          if(InpEnableShallowContinuationBucket && shallowScore > nearScore)
+            {
+             nearScore = shallowScore;
+             nearBucket = "SHALLOW_CONTINUATION_PULLBACK_LONG";
+             nearType = "SHALLOW_CONTINUATION";
+             nearEntryReason = "near_miss_shallow_continuation";
+            }
+          if(InpEnableMidRangeContinuationBucket && midRangeScore > nearScore)
+            {
+             nearScore = midRangeScore;
+             nearBucket = "MID_RANGE_CONTINUATION_LONG";
+             nearType = "MID_RANGE_CONTINUATION";
+             nearEntryReason = "near_miss_mid_range_continuation";
+            }
+          if(InpEnableCompressionExpansionBucket && compressionScore > nearScore)
+            {
+             nearScore = compressionScore;
+             nearBucket = "VOLATILITY_COMPRESSION_EXPANSION_LONG";
+             nearType = "COMPRESSION_EXPANSION";
+             nearEntryReason = "near_miss_compression_expansion";
+            }
+          if(InpEnableMicroBreakoutBucket && microScore > nearScore)
+            {
+             nearScore = microScore;
+             nearBucket = "MICRO_BREAKOUT_ACCEPTANCE_LONG";
+             nearType = "MICRO_BREAKOUT_ACCEPTANCE";
+             nearEntryReason = "near_miss_micro_breakout";
+            }
+
+          if(nearBucket != "" && nearScore >= InpNearMissMinScore)
+            {
+             nearPlan.bucket = nearBucket;
+             nearPlan.bucketType = nearType;
+             nearPlan.entryReason = nearEntryReason;
+             nearPlan.candidateScore = nearScore;
+
+             if(nearType == "DISCOUNT_RECLAIM")
+               {
+                nearPlan.volatilityScore = ScoreBand(plan.atrRatio, 0.85, 1.45, InpMinATRRatio, InpExpansionUpperNormalATRRatio);
+                AppendMissingCondition(missingConditions, "range_position_outside_discount", plan.rangePosition >= InpDiscountMinRangePosition && plan.rangePosition <= InpDiscountMaxRangePosition);
+                AppendMissingCondition(missingConditions, "exec_fast_not_touched", touchedExecFast);
+                AppendMissingCondition(missingConditions, "m1_reclaim_missing", m1ReclaimConfirmed);
+                AppendMissingCondition(missingConditions, "lower_wick_missing", lowerWickConfirmed);
+                AppendMissingCondition(missingConditions, "close_below_exec_slow", signalBar.close >= execSlowEma[1]);
+                AppendMissingCondition(missingConditions, "pressure_not_confirmed", pressureConfirmed && discountPressureConfirmed);
+               }
+             else if(nearType == "EXPANSION_PULLBACK")
+               {
+                nearPlan.volatilityScore = expansionVolScore;
+                AppendMissingCondition(missingConditions, "range_position_below_expansion", plan.rangePosition >= InpExpansionMinRangePosition);
+                AppendMissingCondition(missingConditions, "atr_ratio_below_expansion", plan.atrRatio >= InpExpansionMinATRRatio);
+                AppendMissingCondition(missingConditions, "atr_ratio_above_expansion", plan.atrRatio <= InpExpansionMaxATRRatio);
+                AppendMissingCondition(missingConditions, "pullback_depth_outside_expansion", plan.pullbackDepthATR >= InpExpansionMinPullbackDepthATR && plan.pullbackDepthATR <= InpExpansionMaxPullbackDepthATR);
+                AppendMissingCondition(missingConditions, "exec_fast_not_touched", touchedExecFast);
+                AppendMissingCondition(missingConditions, "close_not_recovered", closeRecovered);
+                AppendMissingCondition(missingConditions, "close_location_low", closeLoc >= 0.50);
+                AppendMissingCondition(missingConditions, "close_below_exec_fast", signalBar.close > execFastEma[1]);
+                AppendMissingCondition(missingConditions, "exec_fast_below_slow", execFastEma[1] >= execSlowEma[1]);
+                AppendMissingCondition(missingConditions, "m5_trend_not_constructive", m5TrendConstructive);
+                AppendMissingCondition(missingConditions, "pressure_weak", pressureOk);
+                AppendMissingCondition(missingConditions, "high_atr_extra_missing", expansionExtraOk);
+               }
+             else if(nearType == "SHALLOW_CONTINUATION")
+               {
+                nearPlan.volatilityScore = shallowVolScore;
+                nearPlan.structureScore = shallowStructureScore;
+                nearPlan.pressureScore = shallowPressureScore;
+                AppendMissingCondition(missingConditions, "range_position_outside_shallow", plan.rangePosition >= InpShallowMinRangePosition && plan.rangePosition <= InpShallowMaxRangePosition);
+                AppendMissingCondition(missingConditions, "atr_ratio_outside_shallow", plan.atrRatio >= InpShallowMinATRRatio && plan.atrRatio <= InpShallowMaxATRRatio);
+                AppendMissingCondition(missingConditions, "pullback_depth_outside_shallow", plan.pullbackDepthATR >= InpShallowMinPullbackDepthATR && plan.pullbackDepthATR <= InpShallowMaxPullbackDepthATR);
+                AppendMissingCondition(missingConditions, "m1_bar_not_bullish", signalBar.close > signalBar.open);
+                AppendMissingCondition(missingConditions, "close_below_exec_fast", signalBar.close > execFastEma[1]);
+                AppendMissingCondition(missingConditions, "exec_fast_below_slow", execFastEma[1] >= execSlowEma[1]);
+                AppendMissingCondition(missingConditions, "close_location_low", closeLoc >= InpMinCloseLocation);
+                AppendMissingCondition(missingConditions, "m5_trend_not_constructive", m5TrendConstructive);
+                AppendMissingCondition(missingConditions, "up_pressure_weak", plan.upPressure >= InpShallowMinUpPressure);
+                AppendMissingCondition(missingConditions, "down_pressure_high", plan.downPressure <= InpShallowMaxDownPressure);
+                AppendMissingCondition(missingConditions, "ema_deviation_high", plan.emaDeviationATR <= InpShallowMaxEMADeviationATR);
+                AppendMissingCondition(missingConditions, "recent_range_low", plan.recentRangeATR >= InpShallowMinRecentRangeATR);
+                AppendMissingCondition(missingConditions, "shallow_extra_missing", shallowExtraOk);
+               }
+             else if(nearType == "MID_RANGE_CONTINUATION")
+               {
+                nearPlan.volatilityScore = midRangeVolScore;
+                nearPlan.structureScore = midRangeStructureScore;
+                nearPlan.pressureScore = midRangePressureScore;
+                AppendMissingCondition(missingConditions, "range_position_outside_mid_range", plan.rangePosition >= InpMidRangeMinRangePosition && plan.rangePosition <= InpMidRangeMaxRangePosition);
+                AppendMissingCondition(missingConditions, "atr_ratio_outside_mid_range", plan.atrRatio >= InpMidRangeMinATRRatio && plan.atrRatio <= InpMidRangeMaxATRRatio);
+                AppendMissingCondition(missingConditions, "pullback_depth_outside_mid_range", plan.pullbackDepthATR >= InpMidRangeMinPullbackDepthATR && plan.pullbackDepthATR <= InpMidRangeMaxPullbackDepthATR);
+                AppendMissingCondition(missingConditions, "m1_bar_not_bullish", signalBar.close > signalBar.open);
+                AppendMissingCondition(missingConditions, "close_below_exec_fast", signalBar.close > execFastEma[1]);
+                AppendMissingCondition(missingConditions, "exec_fast_below_slow", execFastEma[1] >= execSlowEma[1]);
+                AppendMissingCondition(missingConditions, "close_location_low", closeLoc >= InpMinCloseLocation);
+                AppendMissingCondition(missingConditions, "m5_trend_not_constructive", m5TrendConstructive);
+                AppendMissingCondition(missingConditions, "up_pressure_weak", plan.upPressure >= InpMidRangeMinUpPressure);
+                AppendMissingCondition(missingConditions, "down_pressure_high", plan.downPressure <= InpMidRangeMaxDownPressure);
+                AppendMissingCondition(missingConditions, "ema_deviation_high", plan.emaDeviationATR <= InpMidRangeMaxEMADeviationATR);
+                AppendMissingCondition(missingConditions, "recent_range_low", plan.recentRangeATR >= InpMidRangeMinRecentRangeATR);
+                AppendMissingCondition(missingConditions, "recent_high_too_close", plan.distanceRecentHighATR >= InpMidRangeMinRecentHighDistanceATR);
+               }
+             else if(nearType == "COMPRESSION_EXPANSION")
+               {
+                nearPlan.volatilityScore = compressionVolScore;
+                nearPlan.pullbackScore = 0.0;
+                nearPlan.pressureScore = compressionPressureScore;
+                nearPlan.structureScore = compressionRangePositionScore;
+                nearPlan.breakoutScore = compressionBreakoutScore;
+                nearPlan.compressionScore = compressionRangeScore + compressionBodyScore;
+                AppendMissingCondition(missingConditions, "range_position_outside_compression", compressionPrimaryRange || compressionExtendedRange);
+                AppendMissingCondition(missingConditions, "atr_ratio_outside_compression", plan.atrRatio >= InpCompressionMinATRRatio && plan.atrRatio <= InpCompressionExtendedMaxATRRatio);
+                AppendMissingCondition(missingConditions, "compression_range_wide", plan.compressionRangeATR <= InpCompressionMaxRangeATR);
+                AppendMissingCondition(missingConditions, "compression_body_outside", plan.compressionBodyATR >= InpCompressionMinBodyATR && plan.compressionBodyATR <= InpCompressionMaxBodyATR);
+                AppendMissingCondition(missingConditions, "range_breakout_missing", signalBar.close > compressionHigh + InpCompressionBreakoutBufferATR * currentATR);
+                AppendMissingCondition(missingConditions, "breakout_chase_high", plan.compressionBreakoutATR <= InpCompressionMaxBreakoutATR);
+                AppendMissingCondition(missingConditions, "pressure_not_confirmed", plan.upPressure >= InpCompressionMinUpPressure && plan.downPressure <= InpCompressionMaxDownPressure);
+                AppendMissingCondition(missingConditions, "ema_deviation_high", plan.emaDeviationATR <= InpCompressionMaxEMADeviationATR);
+                AppendMissingCondition(missingConditions, "m1_bar_not_bullish", signalBar.close > signalBar.open);
+                AppendMissingCondition(missingConditions, "close_location_low", closeLoc >= InpMinCloseLocation);
+                AppendMissingCondition(missingConditions, "compression_extra_missing", compressionExtraOk);
+               }
+             else if(nearType == "MICRO_BREAKOUT_ACCEPTANCE")
+               {
+                nearPlan.volatilityScore = microVolScore;
+                nearPlan.pullbackScore = 0.0;
+                nearPlan.pressureScore = microPressureScore;
+                nearPlan.structureScore = microRangeScore;
+                nearPlan.breakoutScore = microBreakoutScore;
+                AppendMissingCondition(missingConditions, "range_position_outside_micro", microPrimaryRange || microExtendedRange);
+                AppendMissingCondition(missingConditions, "atr_ratio_outside_micro", plan.atrRatio >= InpMicroMinATRRatio && plan.atrRatio <= InpMicroMaxATRRatio);
+                AppendMissingCondition(missingConditions, "breakout_missing", signalBar.close > microRecentHigh + InpMicroBreakoutBufferATR * currentATR);
+                AppendMissingCondition(missingConditions, "breakout_acceptance_outside", plan.breakoutAcceptanceATR >= InpMicroMinBreakoutAcceptanceATR && plan.breakoutAcceptanceATR <= InpMicroMaxBreakoutAcceptanceATR);
+                AppendMissingCondition(missingConditions, "retest_too_deep", plan.breakoutRetestDepthATR <= InpMicroMaxRetestDepthATR);
+                AppendMissingCondition(missingConditions, "m1_bar_not_bullish", signalBar.close > signalBar.open);
+                AppendMissingCondition(missingConditions, "close_location_low", closeLoc >= InpMinCloseLocation);
+                AppendMissingCondition(missingConditions, "pressure_not_confirmed", plan.upPressure >= InpMicroMinUpPressure && plan.downPressure <= InpMicroMaxDownPressure);
+                AppendMissingCondition(missingConditions, "micro_extra_missing", microExtraOk);
+               }
+
+             if(missingConditions == "")
+                missingConditions = "none_but_bucket_boolean_false";
+             LogEvent("bucket_near_miss",
+                      "bucket_setup_failed",
+                      nearPlan,
+                      "candidate_time=" + TimeToString(plan.signalBarTime, TIME_DATE | TIME_SECONDS) +
+                      "|top_bucket=" + nearBucket +
+                      "|top_score=" + DoubleToString(nearScore, 3) +
+                      "|missing_conditions=" + missingConditions +
+                      "|close_location=" + DoubleToString(closeLoc, 3));
+            }
+         }
+       rejectReason = "bucket_setup_failed";
+       return false;
+      }
+
+   double m1SwingLow = RecentSwingLow(execRates, InpM1SwingLookbackBars);
+   double m5SwingLow = RecentSwingLow(qualityRates, InpM5SwingLookbackBars);
+   double m1StructuralStop = m1SwingLow - InpM1SwingBufferATR * currentATR;
+   double m5StructuralStop = m5SwingLow - InpM5SwingBufferATR * currentATR;
+   double microBreakoutStructureStop = microRecentHigh - InpMicroBreakoutSLBufferATR * currentATR;
+   double compressionRangeStop = compressionLow - InpCompressionSLBufferATR * currentATR;
+   double m1StructuralDistance = plan.entryPrice - m1StructuralStop;
+   double m5StructuralDistance = plan.entryPrice - m5StructuralStop;
+   double microBreakoutStructureDistance = plan.entryPrice - microBreakoutStructureStop;
+   double compressionRangeDistance = plan.entryPrice - compressionRangeStop;
+   double atrDistance = InpStopATRMultiplier * currentATR;
+   double spreadDistance = (plan.entryPrice - bid) * InpMinStopSpreadMultiple;
+   double minDistance = MathMax(InpMinStopATR * currentATR, spreadDistance);
+
+   if(plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" && InpMicroUseBreakoutStructureSL)
+     {
+      plan.riskDistance = MathMax(microBreakoutStructureDistance, minDistance);
+      plan.slMode = "M1_BREAKOUT_STRUCTURE";
+     }
+   else if(plan.bucket == "VOLATILITY_COMPRESSION_EXPANSION_LONG" && InpCompressionUseRangeSL)
+     {
+      plan.riskDistance = MathMax(compressionRangeDistance, minDistance);
+      plan.slMode = "COMPRESSION_RANGE_LOW";
+     }
+   else if(InpStopMode == SL_ATR_ONLY)
+      plan.riskDistance = MathMax(atrDistance, minDistance);
+   else if(InpStopMode == SL_M1_SWING)
+      plan.riskDistance = MathMax(m1StructuralDistance, minDistance);
+   else if(InpStopMode == SL_M5_SWING)
+      plan.riskDistance = MathMax(m5StructuralDistance, minDistance);
+   else
+      plan.riskDistance = MathMax(MathMax(m1StructuralDistance, atrDistance), minDistance);
+
+    if(plan.riskDistance <= 0.0)
+      {
+       rejectReason = "stop_distance_invalid";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(InpMaxStopATR > 0.0 && plan.riskDistance > InpMaxStopATR * currentATR)
+      {
+       rejectReason = "stop_distance_atr_too_wide";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+   double point = PointValue();
+   int stopsLevel = (int)SymbolInfoInteger(runtimeSymbol, SYMBOL_TRADE_STOPS_LEVEL);
+    double minBrokerDistance = (stopsLevel + 2) * point;
+    if(minBrokerDistance > 0.0 && plan.riskDistance < minBrokerDistance)
+       plan.riskDistance = minBrokerDistance;
+    plan.riskDistanceATR = plan.riskDistance / currentATR;
+    double pip = PipSize();
+    plan.riskDistancePips = pip > 0.0 ? plan.riskDistance / pip : 0.0;
+
+    double targetRMultiple = plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" ?
+                             InpMicroTargetRMultiple :
+                             (plan.bucket == "VOLATILITY_COMPRESSION_EXPANSION_LONG" ?
+                              InpCompressionTargetRMultiple : InpTargetRMultiple);
+    plan.rewardDistance = plan.riskDistance * targetRMultiple;
+   if(InpTPMode == TP_RECENT_HIGH_OR_R)
+     {
+      double qualityHigh = RecentHighestHigh(qualityRates, InpRangeLookbackBars, 1);
+      double highDistance = qualityHigh - plan.entryPrice;
+      if(highDistance >= plan.riskDistance * InpMinTargetRMultiple &&
+         highDistance <= plan.riskDistance * InpTargetRMultiple)
+         plan.rewardDistance = highDistance;
+     }
+    plan.stopLoss = NormalizeDouble(plan.entryPrice - plan.riskDistance, SymbolDigits());
+    plan.takeProfit = NormalizeDouble(plan.entryPrice + plan.rewardDistance, SymbolDigits());
+    plan.rewardDistanceATR = plan.rewardDistance / currentATR;
+    plan.spreadToRisk = plan.riskDistance > 0.0 ? (plan.entryPrice - bid) / plan.riskDistance : 0.0;
+    plan.spreadToReward = plan.rewardDistance > 0.0 ? (plan.entryPrice - bid) / plan.rewardDistance : 0.0;
+    plan.rrScore = 0.0;
+    plan.rrScore += 0.45 * ScoreMax(plan.spreadToRisk, 0.18, 0.28);
+    plan.rrScore += 0.35 * ScoreBand(plan.riskDistanceATR, 0.45, 1.35, 0.35, InpMaxStopATR);
+    plan.rrScore += 0.20 * ScoreMin(plan.rewardDistanceATR, 0.80, 0.55);
+    plan.rrScore = ClampDouble(plan.rrScore, 0.0, 1.00);
+    plan.candidateScore = plan.spreadScore + plan.volatilityScore + plan.h4ContextScore +
+                          plan.h1M15BiasScore + plan.trendScore + plan.pullbackScore +
+                          plan.pressureScore + plan.structureScore + plan.breakoutScore + plan.rrScore;
+
+    if(plan.stopLoss <= 0.0 || plan.takeProfit <= plan.entryPrice || plan.stopLoss >= plan.entryPrice)
+      {
+       rejectReason = "sl_tp_invalid";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    bool guardedV2Bucket = (plan.bucket == "DISCOUNT_RECLAIM_PULLBACK_LONG" ||
+                            plan.bucket == "EXPANSION_PULLBACK_CONTINUATION_LONG" ||
+                            plan.bucket == "SHALLOW_CONTINUATION_PULLBACK_LONG" ||
+                            plan.bucket == "MID_RANGE_CONTINUATION_LONG" ||
+                            plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" ||
+                            plan.bucket == "VOLATILITY_COMPRESSION_EXPANSION_LONG");
+    double maxRiskDistancePips = plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" ?
+                                 InpMicroMaxRiskDistancePips :
+                                 (plan.bucket == "VOLATILITY_COMPRESSION_EXPANSION_LONG" ?
+                                  InpCompressionMaxRiskDistancePips : InpMaxEntryRiskDistancePips);
+    double maxRiskDistanceATR = plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" ?
+                                InpMicroMaxRiskDistanceATR :
+                                (plan.bucket == "VOLATILITY_COMPRESSION_EXPANSION_LONG" ?
+                                 InpCompressionMaxRiskDistanceATR : InpMaxEntryRiskDistanceATR);
+    double maxSpreadToRisk = plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" ?
+                             InpMicroMaxSpreadToRisk :
+                             (plan.bucket == "VOLATILITY_COMPRESSION_EXPANSION_LONG" ?
+                              InpCompressionMaxSpreadToRisk : InpMaxEntrySpreadToRisk);
+    double maxSpreadToReward = plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" ?
+                               InpMicroMaxSpreadToReward :
+                               (plan.bucket == "VOLATILITY_COMPRESSION_EXPANSION_LONG" ?
+                                InpCompressionMaxSpreadToReward : InpMaxEntrySpreadToReward);
+
+    if(guardedV2Bucket &&
+       maxRiskDistancePips > 0.0 &&
+       plan.riskDistancePips > maxRiskDistancePips)
+      {
+       rejectReason = "risk_distance_pips_too_wide";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" &&
+       InpMicroPreferredMaxRiskDistancePips > 0.0 &&
+       plan.riskDistancePips > InpMicroPreferredMaxRiskDistancePips &&
+       (plan.candidateScore < InpMicroWideRiskMinScore ||
+        plan.upPressure < InpMicroWideRiskMinUpPressure))
+      {
+       rejectReason = "micro_wide_risk_requires_extra_confirmation";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(plan.bucket == "VOLATILITY_COMPRESSION_EXPANSION_LONG" &&
+       InpCompressionPreferredMaxRiskDistancePips > 0.0 &&
+       plan.riskDistancePips > InpCompressionPreferredMaxRiskDistancePips &&
+       (plan.candidateScore < InpCompressionWideRiskMinScore ||
+        plan.upPressure < InpCompressionWideRiskMinUpPressure))
+      {
+       rejectReason = "compression_wide_risk_requires_extra_confirmation";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(guardedV2Bucket &&
+       maxRiskDistanceATR > 0.0 &&
+       plan.riskDistanceATR > maxRiskDistanceATR)
+      {
+       rejectReason = "risk_distance_atr_too_wide";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(guardedV2Bucket &&
+       maxSpreadToRisk > 0.0 &&
+       plan.spreadToRisk > maxSpreadToRisk)
+      {
+       rejectReason = "spread_to_risk_too_high";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(guardedV2Bucket &&
+       maxSpreadToReward > 0.0 &&
+       plan.spreadToReward > maxSpreadToReward)
+      {
+       rejectReason = "spread_to_reward_too_high";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(plan.bucket == "DISCOUNT_RECLAIM_PULLBACK_LONG" && plan.candidateScore < InpDiscountScoreThreshold)
+      {
+       rejectReason = "discount_score_below_threshold";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(plan.bucket == "EXPANSION_PULLBACK_CONTINUATION_LONG" && plan.candidateScore < InpExpansionScoreThreshold)
+      {
+       rejectReason = "expansion_score_below_threshold";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(plan.bucket == "SHALLOW_CONTINUATION_PULLBACK_LONG" && plan.candidateScore < InpShallowScoreThreshold)
+      {
+       rejectReason = "shallow_score_below_threshold";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(plan.bucket == "MID_RANGE_CONTINUATION_LONG" && plan.candidateScore < InpMidRangeScoreThreshold)
+      {
+       rejectReason = "mid_range_score_below_threshold";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(plan.bucket == "VOLATILITY_COMPRESSION_EXPANSION_LONG" && plan.candidateScore < InpCompressionScoreThreshold)
+      {
+       rejectReason = "compression_score_below_threshold";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" && plan.candidateScore < InpMicroBreakoutScoreThreshold)
+      {
+       rejectReason = "micro_breakout_score_below_threshold";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" && !InpEnableMicroBreakoutBucket)
+      {
+       rejectReason = "micro_breakout_diagnostic_only";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(plan.bucket == "M1_PULLBACK_SCORE_LONG" && plan.candidateScore < InpPullbackScoreThreshold)
+      {
+       rejectReason = "candidate_score_below_threshold";
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    if(!CalculateVolume(plan, rejectReason))
+      {
+       LogCandidateScore(plan, false, rejectReason);
+       return false;
+      }
+
+    plan.valid = true;
+    if(plan.bucket == "M1_PULLBACK_SCORE_LONG" ||
+       plan.bucket == "DISCOUNT_RECLAIM_PULLBACK_LONG" ||
+       plan.bucket == "EXPANSION_PULLBACK_CONTINUATION_LONG" ||
+       plan.bucket == "SHALLOW_CONTINUATION_PULLBACK_LONG" ||
+       plan.bucket == "MID_RANGE_CONTINUATION_LONG" ||
+       plan.bucket == "MICRO_BREAKOUT_ACCEPTANCE_LONG" ||
+       plan.bucket == "VOLATILITY_COMPRESSION_EXPANSION_LONG")
+       LogCandidateScore(plan, true, "accepted");
+    return true;
+  }
+
+bool EntryGuardsPass(const TradePlan &plan, string &rejectReason)
+  {
+   if(dailyStopActive)
+     {
+      rejectReason = dailyStopReason == "" ? "daily_stop_active" : dailyStopReason;
+      return false;
+     }
+   if(weeklyStopActive)
+     {
+      rejectReason = weeklyStopReason == "" ? "weekly_stop_active" : weeklyStopReason;
+      return false;
+     }
+   if(drawdownStopActive)
+     {
+      rejectReason = drawdownStopReason == "" ? "drawdown_stop_active" : drawdownStopReason;
+      return false;
+     }
+   if(lossStreakStopActive)
+     {
+      rejectReason = lossStreakStopReason == "" ? "loss_streak_stop_active" : lossStreakStopReason;
+      return false;
+     }
+   int openPositions = CountManagedPositions();
+   if(InpMaxOpenPositions > 0 && openPositions >= InpMaxOpenPositions)
+     {
+      rejectReason = "max_open_positions";
+      return false;
+     }
+   if(openPositions > 0)
+     {
+      if(InpAdditionalEntryExpansionOnly && plan.bucketType != "EXPANSION_PULLBACK")
+        {
+         rejectReason = "additional_entry_not_expansion_pullback";
+         return false;
+        }
+      if(InpAdditionalEntrySameBucketOnly && !AllTrackedOpenPositionsBucketType(plan.bucketType))
+        {
+         rejectReason = "additional_entry_bucket_mismatch";
+         return false;
+        }
+      if(IsSameQualityBarEntryBlocked(plan.signalBarTime))
+        {
+         rejectReason = "same_quality_bar_entry_blocked";
+         return false;
+        }
+      if(HasLosingManagedLong())
+        {
+         rejectReason = "averaging_down_blocked";
+         return false;
+        }
+      if(!AdditionalEntryQualityPass(plan, rejectReason))
+         return false;
+     }
+   if(IsCooldownBlocked(plan.signalBarTime))
+     {
+      rejectReason = "cooldown_bars_blocked";
+      return false;
+     }
+   if(InpMaxTotalOpenRiskPercent > 0.0)
+     {
+      double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+      double riskAfter = CurrentTotalOpenRiskMoney() + plan.riskMoney;
+      double riskAfterPercent = equity > 0.0 ? 100.0 * riskAfter / equity : 0.0;
+      if(riskAfterPercent > InpMaxTotalOpenRiskPercent)
+        {
+         rejectReason = "total_open_risk_limit";
+         return false;
+        }
+     }
+   return true;
+  }
+
+bool PlaceTrade(const TradePlan &plan)
+  {
+   pendingEntryRiskMoney = plan.riskMoney;
+   pendingEntrySL = plan.stopLoss;
+   pendingEntryTP = plan.takeProfit;
+   pendingEntryVolume = plan.lot;
+   pendingEntryBucket = plan.bucket;
+   pendingEntryBucketType = plan.bucketType;
+   pendingEntryReason = plan.entryReason;
+   pendingEntrySLMode = plan.slMode;
+   pendingEntryTPMode = plan.tpMode;
+
+   string comment = "EV_LONG_LAB|" + plan.bucket;
+   bool ok = trade.Buy(plan.lot, runtimeSymbol, 0.0, plan.stopLoss, plan.takeProfit, comment);
+   if(!ok)
+     {
+      LogEvent("entry_failed", "order_send_failed", plan, "retcode=" + (string)trade.ResultRetcode());
+      PrintFormat("%s entry failed retcode=%d", STRATEGY_NAME, trade.ResultRetcode());
+      return false;
+     }
+
+   dailyEntries++;
+   lastEntryBarTime = plan.signalBarTime;
+   lastEntryQualityBarTime = QualityBarOpenTime(plan.signalBarTime);
+   LogEvent("entry", "ENTRY", plan,
+            "fixed_lot_mode=" + BoolWord(plan.fixedLotMode) +
+            "|min_lot_forced=" + BoolWord(plan.minLotForced) +
+            "|sl_mode=" + plan.slMode +
+            "|tp_mode=" + plan.tpMode +
+            "|entry_reason=" + plan.entryReason +
+            "|margin=" + DoubleToString(plan.marginRequired, 2));
+   return true;
+  }
+
+void ManageTimeouts()
+  {
+   int total = PositionsTotal();
+   for(int i = total - 1; i >= 0; --i)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != runtimeSymbol)
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      if((ENUM_POSITION_TYPE)PositionGetInteger(POSITION_TYPE) != POSITION_TYPE_BUY)
+         continue;
+
+      datetime openedAt = (datetime)PositionGetInteger(POSITION_TIME);
+      int openShift = iBarShift(runtimeSymbol, InpExecutionTimeframe, openedAt, false);
+      if(openShift >= InpMaxHoldBars)
+         CloseManagedPositionByTicket(ticket, "TIMEOUT");
+     }
+  }
+
+string DealExitReason(long dealReason, ulong positionIdentifier)
+  {
+   if(dealReason == DEAL_REASON_SL)
+      return "SL";
+   if(dealReason == DEAL_REASON_TP)
+      return "TP";
+
+   string pending = PopPendingCloseReason(positionIdentifier);
+   if(pending == "TIMEOUT")
+      return "TIMEOUT";
+   if(pending == "RISK_STOP" || pending == "daily_max_loss" || pending == "weekly_max_loss" ||
+      pending == "max_drawdown" || pending == "loss_streak")
+      return "RISK_STOP";
+   if(pending != "")
+      return pending;
+   return "MANUAL_OR_UNKNOWN";
+  }
+
+void RegisterClosedTrade(datetime closeTime,
+                         ulong positionIdentifier,
+                         double netMoney,
+                         double closePrice,
+                         double volume,
+                         string exitReason)
+  {
+   TrackedPosition tracked = RemoveTrackedPosition(positionIdentifier);
+   double riskMoney = tracked.riskMoney;
+   if(riskMoney <= 0.0)
+      riskMoney = MathAbs(netMoney);
+   double realizedR = riskMoney > 0.0 ? netMoney / riskMoney : 0.0;
+
+   totalClosedTrades++;
+   dailyClosedTrades++;
+   totalNetMoney += netMoney;
+   totalR += realizedR;
+   equityCurveR += realizedR;
+   if(equityCurveR > equityPeakR)
+      equityPeakR = equityCurveR;
+   double ddR = equityPeakR - equityCurveR;
+   if(ddR > maxDrawdownR)
+      maxDrawdownR = ddR;
+
+   if(realizedR > 0.0)
+     {
+      totalWins++;
+      grossWinR += realizedR;
+      consecutiveLosses = 0;
+     }
+   else if(realizedR < 0.0)
+     {
+      totalLosses++;
+      grossLossR += realizedR;
+      consecutiveLosses++;
+      if(consecutiveLosses > observedMaxConsecutiveLosses)
+         observedMaxConsecutiveLosses = consecutiveLosses;
+     }
+
+   if(InpMaxConsecutiveLosses > 0 && consecutiveLosses >= InpMaxConsecutiveLosses)
+     {
+      TriggerStop("loss_streak", "max_consecutive_losses",
+                  "consecutive_losses=" + IntegerToString(consecutiveLosses));
+      if(InpFlattenOnRiskStop)
+         FlattenManagedPositions("RISK_STOP");
+     }
+
+   UpdateMonthlyStats(closeTime, netMoney, realizedR);
+
+   TradePlan eventPlan;
+    ResetPlan(eventPlan);
+    eventPlan.bucket = tracked.bucket;
+    eventPlan.bucketType = tracked.bucketType;
+    eventPlan.entryReason = tracked.entryReason;
+   eventPlan.slMode = tracked.slMode;
+   eventPlan.tpMode = tracked.tpMode;
+   eventPlan.entryPrice = tracked.entryPrice;
+   eventPlan.stopLoss = tracked.stopLoss;
+   eventPlan.takeProfit = tracked.takeProfit;
+   eventPlan.lot = volume;
+   eventPlan.riskMoney = riskMoney;
+   int holdingSeconds = tracked.entryTime > 0 ? (int)(closeTime - tracked.entryTime) : 0;
+   LogEvent("exit", exitReason, eventPlan,
+            "close_price=" + DoubleToString(closePrice, SymbolDigits()) +
+            "|net_money=" + DoubleToString(netMoney, 2) +
+            "|realized_r=" + DoubleToString(realizedR, 6) +
+            "|holding_seconds=" + IntegerToString(holdingSeconds));
+  }
+
+void OnTradeTransaction(const MqlTradeTransaction &trans,
+                        const MqlTradeRequest &request,
+                        const MqlTradeResult &result)
+  {
+   if(trans.type != TRADE_TRANSACTION_DEAL_ADD || trans.deal == 0)
+      return;
+   if(!HistoryDealSelect(trans.deal))
+      return;
+   if(HistoryDealGetString(trans.deal, DEAL_SYMBOL) != runtimeSymbol)
+      return;
+   if((long)HistoryDealGetInteger(trans.deal, DEAL_MAGIC) != InpMagicNumber)
+      return;
+
+   ENUM_DEAL_ENTRY entryType = (ENUM_DEAL_ENTRY)HistoryDealGetInteger(trans.deal, DEAL_ENTRY);
+   ENUM_DEAL_TYPE dealType = (ENUM_DEAL_TYPE)HistoryDealGetInteger(trans.deal, DEAL_TYPE);
+   ulong positionIdentifier = (ulong)HistoryDealGetInteger(trans.deal, DEAL_POSITION_ID);
+   datetime dealTime = (datetime)HistoryDealGetInteger(trans.deal, DEAL_TIME);
+   double dealPrice = HistoryDealGetDouble(trans.deal, DEAL_PRICE);
+   double dealVolume = HistoryDealGetDouble(trans.deal, DEAL_VOLUME);
+
+   if(entryType == DEAL_ENTRY_IN && dealType == DEAL_TYPE_BUY)
+     {
+      AddTrackedPosition(positionIdentifier, dealTime, dealPrice, dealVolume);
+      return;
+     }
+
+   if(entryType != DEAL_ENTRY_OUT && entryType != DEAL_ENTRY_OUT_BY && entryType != DEAL_ENTRY_INOUT)
+      return;
+
+   double netMoney = HistoryDealGetDouble(trans.deal, DEAL_PROFIT) +
+                     HistoryDealGetDouble(trans.deal, DEAL_SWAP) +
+                     HistoryDealGetDouble(trans.deal, DEAL_COMMISSION);
+   long dealReason = (long)HistoryDealGetInteger(trans.deal, DEAL_REASON);
+   string exitReason = DealExitReason(dealReason, positionIdentifier);
+   RegisterClosedTrade(dealTime, positionIdentifier, netMoney, dealPrice, dealVolume, exitReason);
+  }
+
+bool IsNewBar(datetime &barTime)
+  {
+   barTime = iTime(runtimeSymbol, InpExecutionTimeframe, 0);
+   if(barTime <= 0)
+      return false;
+   if(barTime == lastBarTime)
+      return false;
+   lastBarTime = barTime;
+   return true;
+  }
+
+void ProcessNewBar(datetime barTime)
+  {
+   TradePlan plan;
+   string rejectReason = "";
+   bool hasPlan = BuildTradePlan(plan, rejectReason);
+   if(!hasPlan)
+     {
+      dailyRejects++;
+      if(InpLogNoSignalDiagnostics)
+         LogEvent("candidate_rejected", rejectReason, plan, "bar_time=" + TimeToString(barTime, TIME_DATE | TIME_SECONDS));
+      return;
+     }
+
+   dailySignals++;
+   LogEvent("signal", "SIGNAL", plan, "enable_trading=" + BoolWord(InpEnableTrading));
+   if(!InpEnableTrading)
+      return;
+
+   if(!EntryGuardsPass(plan, rejectReason))
+     {
+      dailyRiskBlocks++;
+      LogEvent("entry_blocked", rejectReason, plan, "risk_or_position_guard");
+      return;
+     }
+
+   PlaceTrade(plan);
+  }
+
+void WriteSummary()
+  {
+   string fileName = CleanPresetString(InpSummaryFileName);
+   int flags = FILE_CSV | FILE_WRITE | FILE_ANSI;
+   if(InpUseCommonFiles)
+      flags |= FILE_COMMON;
+   int handle = FileOpen(fileName, flags, ';');
+   if(handle == INVALID_HANDLE)
+     {
+      PrintFormat("%s summary open failed: %s err=%d", STRATEGY_NAME, fileName, GetLastError());
+      return;
+     }
+
+   double expectancyR = totalClosedTrades > 0 ? totalR / totalClosedTrades : 0.0;
+   double profitFactor = grossLossR < 0.0 ? grossWinR / MathAbs(grossLossR) : 0.0;
+   double winRate = totalClosedTrades > 0 ? 100.0 * totalWins / totalClosedTrades : 0.0;
+
+    FileWrite(handle,
+              "time", "strategy", "ea_version", "preset_name", "symbol", "timeframe", "enable_trading",
+              "closed_trades", "wins", "losses", "win_rate", "expectancy_r",
+             "profit_factor", "total_r", "net_money", "max_dd_r",
+             "max_dd_percent", "max_consecutive_losses", "daily_stop_active",
+             "weekly_stop_active", "drawdown_stop_active", "loss_streak_stop_active");
+   FileWrite(handle,
+              TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
+              STRATEGY_NAME,
+              EA_VERSION,
+              CleanPresetString(InpPresetName),
+              runtimeSymbol,
+             TimeframeText(),
+             BoolWord(InpEnableTrading),
+             totalClosedTrades,
+             totalWins,
+             totalLosses,
+             winRate,
+             expectancyR,
+             profitFactor,
+             totalR,
+             totalNetMoney,
+             maxDrawdownR,
+             maxDrawdownPercent,
+             observedMaxConsecutiveLosses,
+             BoolWord(dailyStopActive),
+             BoolWord(weeklyStopActive),
+             BoolWord(drawdownStopActive),
+             BoolWord(lossStreakStopActive));
+   FileClose(handle);
+  }
+
+void WriteMonthlySummary()
+  {
+   string fileName = CleanPresetString(InpMonthlySummaryFileName);
+   int flags = FILE_CSV | FILE_WRITE | FILE_ANSI;
+   if(InpUseCommonFiles)
+      flags |= FILE_COMMON;
+   int handle = FileOpen(fileName, flags, ';');
+   if(handle == INVALID_HANDLE)
+     {
+      PrintFormat("%s monthly summary open failed: %s err=%d", STRATEGY_NAME, fileName, GetLastError());
+      return;
+     }
+
+   FileWrite(handle, "month", "trades", "wins", "losses", "net_money", "net_r", "expectancy_r", "profit_factor");
+   int size = ArraySize(monthStats);
+   for(int i = 0; i < size; ++i)
+     {
+      double expectancyR = monthStats[i].trades > 0 ? monthStats[i].netR / monthStats[i].trades : 0.0;
+      double profitFactor = monthStats[i].grossLossR < 0.0 ? monthStats[i].grossWinR / MathAbs(monthStats[i].grossLossR) : 0.0;
+      FileWrite(handle,
+                monthStats[i].monthKey,
+                monthStats[i].trades,
+                monthStats[i].wins,
+                monthStats[i].losses,
+                monthStats[i].netMoney,
+                monthStats[i].netR,
+                expectancyR,
+                profitFactor);
+     }
+   FileClose(handle);
+  }
+
+int OnInit()
+  {
+   runtimeSymbol = CleanPresetString(InpSymbol);
+   runtimeAllowedWeekdays = CleanPresetString(InpAllowedWeekdays);
+   if(runtimeSymbol == "")
+      return INIT_PARAMETERS_INCORRECT;
+   if(!ParseAllowedWeekdays())
+      return INIT_PARAMETERS_INCORRECT;
+
+   if(InpExecFastEMAPeriod <= 1 || InpExecSlowEMAPeriod <= InpExecFastEMAPeriod ||
+      InpFastEMAPeriod <= 1 || InpSlowEMAPeriod <= InpFastEMAPeriod ||
+      InpSlowSlopeBars <= 0 || InpATRPeriod <= 1 || InpATRAveragePeriod < InpATRPeriod ||
+      InpADXPeriod <= 1 || InpSessionStartHour < 0 || InpSessionStartHour > 23 ||
+      InpSessionEndHour < 0 || InpSessionEndHour > 23 || InpFixedLot <= 0.0 ||
+      InpFixedLotEquityThreshold < 0.0 || InpRiskPercent <= 0.0 || InpDailyMaxLossPercent <= 0.0 ||
+      InpWeeklyMaxLossPercent <= 0.0 || InpMaxDrawdownPercent <= 0.0 ||
+      InpMaxConsecutiveLosses < 0 || InpMaxOpenPositions < 1 || InpMaxTotalOpenRiskPercent <= 0.0 ||
+      InpCooldownBars < 0 || InpTargetRMultiple <= 0.0 || InpMinTargetRMultiple <= 0.0 ||
+      InpAdditionalEntryMaxLossStreak < -1 ||
+      InpAdditionalEntryMinOpenProfitR < 0.0 ||
+      InpAdditionalEntryMinATRRatio < 0.0 ||
+      InpAdditionalEntryMinUpPressure < 0.0 || InpAdditionalEntryMinUpPressure > 1.0 ||
+      InpAdditionalEntryMaxDownPressure < 0.0 || InpAdditionalEntryMaxDownPressure > 1.0 ||
+      InpAdditionalEntryPreferredMaxRangePosition < 0.0 || InpAdditionalEntryPreferredMaxRangePosition > 1.0 ||
+      InpAdditionalEntryExtendedMinUpPressure < 0.0 || InpAdditionalEntryExtendedMinUpPressure > 1.0 ||
+      InpAdditionalEntryExtendedMaxDownPressure < 0.0 || InpAdditionalEntryExtendedMaxDownPressure > 1.0 ||
+      InpAdditionalEntryPreferredMaxRiskDistancePips < 0.0 ||
+      InpAdditionalEntryWideRiskMinUpPressure < 0.0 || InpAdditionalEntryWideRiskMinUpPressure > 1.0 ||
+      InpAdditionalEntryWideRiskMaxDownPressure < 0.0 || InpAdditionalEntryWideRiskMaxDownPressure > 1.0 ||
+      InpTargetRMultiple < InpMinTargetRMultiple || InpM1SwingLookbackBars < 2 ||
+      InpM5SwingLookbackBars < 2 || InpStopATRMultiplier <= 0.0 ||
+      InpM1SwingBufferATR < 0.0 || InpM5SwingBufferATR < 0.0 || InpMinStopATR <= 0.0 ||
+      InpMinStopSpreadMultiple < 0.0 ||
+      InpMaxStopATR < InpMinStopATR || InpMaxHoldBars < 1 || InpMaxSpreadATR <= 0.0 ||
+      InpMaxEMADeviationATR <= 0.0 || InpMinBodyATR < 0.0 || InpMaxBodyATR <= InpMinBodyATR ||
+      InpMinATRRatio <= 0.0 || InpMaxATRRatio < InpMinATRRatio || InpRangeLookbackBars < 5 ||
+      InpRecentRangeBars < 3 ||
+      InpMinRangePosition < 0.0 || InpMinRangePosition > 1.0 ||
+      InpMaxRangePosition < 0.0 || InpMaxRangePosition > 1.0 ||
+      InpMinRangePosition >= InpMaxRangePosition || InpMaxADX < 0.0 ||
+      InpDiscountScoreThreshold <= 0.0 || InpExpansionScoreThreshold <= 0.0 ||
+      InpDiscountMinRangePosition < 0.0 || InpDiscountMaxRangePosition > 1.0 ||
+      InpDiscountMinRangePosition >= InpDiscountMaxRangePosition ||
+      InpDiscountMinUpPressure < 0.0 || InpDiscountMinUpPressure > 1.0 ||
+      InpDiscountMaxDownPressure < 0.0 || InpDiscountMaxDownPressure > 1.0 ||
+      InpExpansionMinRangePosition < 0.0 || InpExpansionMinRangePosition > 1.0 ||
+      InpExpansionMinATRRatio <= 0.0 || InpExpansionUpperNormalATRRatio < InpExpansionMinATRRatio ||
+      InpExpansionMaxATRRatio < InpExpansionUpperNormalATRRatio ||
+      InpExpansionMinPullbackDepthATR < 0.0 || InpExpansionMaxPullbackDepthATR <= InpExpansionMinPullbackDepthATR ||
+      InpExpansionExtraUpPressure < 0.0 || InpExpansionExtraUpPressure > 1.0 ||
+      InpShallowScoreThreshold <= 0.0 ||
+      InpShallowMinRangePosition < 0.0 || InpShallowMaxRangePosition > 1.0 ||
+      InpShallowMinRangePosition >= InpShallowMaxRangePosition ||
+      InpShallowMinATRRatio <= 0.0 || InpShallowUpperNormalATRRatio < InpShallowMinATRRatio ||
+      InpShallowMaxATRRatio < InpShallowUpperNormalATRRatio ||
+      InpShallowMinPullbackDepthATR < 0.0 || InpShallowMaxPullbackDepthATR <= InpShallowMinPullbackDepthATR ||
+      InpShallowMinUpPressure < 0.0 || InpShallowMinUpPressure > 1.0 ||
+      InpShallowMaxDownPressure < 0.0 || InpShallowMaxDownPressure > 1.0 ||
+      InpShallowMaxEMADeviationATR <= 0.0 || InpShallowMinRecentRangeATR < 0.0 ||
+      InpMidRangeScoreThreshold <= 0.0 ||
+      InpMidRangeMinRangePosition < 0.0 || InpMidRangeMaxRangePosition > 1.0 ||
+      InpMidRangeMinRangePosition >= InpMidRangeMaxRangePosition ||
+      InpMidRangeMinATRRatio <= 0.0 || InpMidRangeMaxATRRatio < InpMidRangeMinATRRatio ||
+      InpMidRangeMinPullbackDepthATR < 0.0 || InpMidRangeMaxPullbackDepthATR <= InpMidRangeMinPullbackDepthATR ||
+      InpMidRangeMinUpPressure < 0.0 || InpMidRangeMinUpPressure > 1.0 ||
+      InpMidRangeMaxDownPressure < 0.0 || InpMidRangeMaxDownPressure > 1.0 ||
+      InpMidRangeMaxEMADeviationATR <= 0.0 || InpMidRangeMinRecentRangeATR < 0.0 ||
+      InpMidRangeMinRecentHighDistanceATR < 0.0 ||
+      InpMicroBreakoutScoreThreshold <= 0.0 ||
+      InpMicroBreakoutLookbackBars < 3 ||
+      InpMicroMinRangePosition < 0.0 || InpMicroMaxRangePosition > 1.0 ||
+      InpMicroMinRangePosition >= InpMicroMaxRangePosition ||
+      InpMicroExtendedMaxRangePosition < InpMicroMaxRangePosition || InpMicroExtendedMaxRangePosition > 1.0 ||
+      InpMicroExtendedMinUpPressure < 0.0 || InpMicroExtendedMinUpPressure > 1.0 ||
+      InpMicroMinATRRatio <= 0.0 || InpMicroUpperNormalATRRatio < InpMicroMinATRRatio ||
+      InpMicroMaxATRRatio < InpMicroUpperNormalATRRatio ||
+      InpMicroMinUpPressure < 0.0 || InpMicroMinUpPressure > 1.0 ||
+      InpMicroMaxDownPressure < 0.0 || InpMicroMaxDownPressure > 1.0 ||
+      InpMicroBreakoutBufferATR < 0.0 ||
+      InpMicroMinBreakoutAcceptanceATR < 0.0 ||
+      InpMicroMaxBreakoutAcceptanceATR <= InpMicroMinBreakoutAcceptanceATR ||
+      InpMicroMaxRetestDepthATR < 0.0 ||
+      InpMicroExtraAcceptanceATR < 0.0 ||
+      InpMicroExtraCloseLocation < 0.0 || InpMicroExtraCloseLocation > 1.0 ||
+      InpMicroTargetRMultiple <= 0.0 ||
+      InpMicroBreakoutSLBufferATR < 0.0 ||
+      InpMicroPreferredMaxRiskDistancePips < 0.0 || InpMicroMaxRiskDistancePips < 0.0 ||
+      (InpMicroMaxRiskDistancePips > 0.0 && InpMicroPreferredMaxRiskDistancePips > InpMicroMaxRiskDistancePips) ||
+      InpMicroMaxRiskDistanceATR < 0.0 ||
+      InpMicroMaxSpreadToRisk < 0.0 || InpMicroMaxSpreadToReward < 0.0 ||
+      InpMicroWideRiskMinScore < 0.0 ||
+      InpMicroWideRiskMinUpPressure < 0.0 || InpMicroWideRiskMinUpPressure > 1.0 ||
+      InpMicroNearMissMaxBars < 1 ||
+      InpCompressionScoreThreshold <= 0.0 || InpCompressionLookbackBars < 3 ||
+      InpCompressionMaxRangeATR <= 0.0 ||
+      InpCompressionMinATRRatio <= 0.0 ||
+      InpCompressionMaxATRRatio < InpCompressionMinATRRatio ||
+      InpCompressionExtendedMaxATRRatio < InpCompressionMaxATRRatio ||
+      InpCompressionMinRangePosition < 0.0 || InpCompressionMaxRangePosition > 1.0 ||
+      InpCompressionMinRangePosition >= InpCompressionMaxRangePosition ||
+      InpCompressionExtendedMaxRangePosition < InpCompressionMaxRangePosition ||
+      InpCompressionExtendedMaxRangePosition > 1.0 ||
+      InpCompressionMinBodyATR < 0.0 || InpCompressionMaxBodyATR <= InpCompressionMinBodyATR ||
+      InpCompressionBreakoutBufferATR < 0.0 || InpCompressionMaxBreakoutATR <= InpCompressionBreakoutBufferATR ||
+      InpCompressionMinUpPressure < 0.0 || InpCompressionMinUpPressure > 1.0 ||
+      InpCompressionMaxDownPressure < 0.0 || InpCompressionMaxDownPressure > 1.0 ||
+      InpCompressionExtendedMinUpPressure < 0.0 || InpCompressionExtendedMinUpPressure > 1.0 ||
+      InpCompressionMaxEMADeviationATR <= 0.0 ||
+      InpCompressionSLBufferATR < 0.0 || InpCompressionTargetRMultiple <= 0.0 ||
+      InpCompressionPreferredMaxRiskDistancePips < 0.0 || InpCompressionMaxRiskDistancePips < 0.0 ||
+      (InpCompressionMaxRiskDistancePips > 0.0 && InpCompressionPreferredMaxRiskDistancePips > InpCompressionMaxRiskDistancePips) ||
+      InpCompressionMaxRiskDistanceATR < 0.0 ||
+      InpCompressionMaxSpreadToRisk < 0.0 || InpCompressionMaxSpreadToReward < 0.0 ||
+      InpCompressionWideRiskMinScore < 0.0 ||
+      InpCompressionWideRiskMinUpPressure < 0.0 || InpCompressionWideRiskMinUpPressure > 1.0 ||
+      InpMaxEntryRiskDistancePips < 0.0 || InpMaxEntryRiskDistanceATR < 0.0 ||
+      InpMaxEntrySpreadToRisk < 0.0 || InpMaxEntrySpreadToReward < 0.0 ||
+      InpMinBiasScore < 0 || InpH4MaxBearSlopeATR < 0.0 || InpH4MaxBelowSlowATR < 0.0 ||
+      InpPullbackTouchATR < 0.0 || InpMinCloseLocation < 0.0 || InpMinCloseLocation > 1.0 ||
+      InpPullbackMaxDepthATR <= 0.0 || InpMinLowerWickATR < 0.0 ||
+      InpMinLowerWickShare < 0.0 || InpMinLowerWickShare > 1.0 ||
+      InpBreakoutBufferATR < 0.0 || InpBreakoutMaxChaseATR <= 0.0 ||
+      InpBreakoutRetestBufferATR < 0.0 || InpMinUpPressure < 0.0 || InpMinUpPressure > 1.0 ||
+      InpMaxDownPressure < 0.0 || InpMaxDownPressure > 1.0 ||
+      InpMagicNumber <= 0)
+      return INIT_PARAMETERS_INCORRECT;
+
+   if(!SymbolInfoInteger(runtimeSymbol, SYMBOL_SELECT))
+      if(!SymbolSelect(runtimeSymbol, true))
+         return INIT_FAILED;
+
+   fastEmaHandle = iMA(runtimeSymbol, InpExecutionTimeframe, InpExecFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   slowEmaHandle = iMA(runtimeSymbol, InpExecutionTimeframe, InpExecSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   atrHandle = iATR(runtimeSymbol, InpExecutionTimeframe, InpATRPeriod);
+   adxHandle = iADX(runtimeSymbol, InpExecutionTimeframe, InpADXPeriod);
+   qualityFastEmaHandle = iMA(runtimeSymbol, InpQualityTimeframe, InpFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   qualitySlowEmaHandle = iMA(runtimeSymbol, InpQualityTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   qualityAtrHandle = iATR(runtimeSymbol, InpQualityTimeframe, InpATRPeriod);
+   qualityAdxHandle = iADX(runtimeSymbol, InpQualityTimeframe, InpADXPeriod);
+   biasFastEmaHandle = iMA(runtimeSymbol, InpBiasTimeframe, InpFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   biasSlowEmaHandle = iMA(runtimeSymbol, InpBiasTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   biasAtrHandle = iATR(runtimeSymbol, InpBiasTimeframe, InpATRPeriod);
+   trendFastEmaHandle = iMA(runtimeSymbol, InpTrendTimeframe, InpFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   trendSlowEmaHandle = iMA(runtimeSymbol, InpTrendTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   trendAtrHandle = iATR(runtimeSymbol, InpTrendTimeframe, InpATRPeriod);
+   avoidFastEmaHandle = iMA(runtimeSymbol, InpAvoidTimeframe, InpFastEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   avoidSlowEmaHandle = iMA(runtimeSymbol, InpAvoidTimeframe, InpSlowEMAPeriod, 0, MODE_EMA, PRICE_CLOSE);
+   avoidAtrHandle = iATR(runtimeSymbol, InpAvoidTimeframe, InpATRPeriod);
+   if(fastEmaHandle == INVALID_HANDLE || slowEmaHandle == INVALID_HANDLE ||
+      atrHandle == INVALID_HANDLE || adxHandle == INVALID_HANDLE ||
+      qualityFastEmaHandle == INVALID_HANDLE || qualitySlowEmaHandle == INVALID_HANDLE ||
+      qualityAtrHandle == INVALID_HANDLE || qualityAdxHandle == INVALID_HANDLE ||
+      biasFastEmaHandle == INVALID_HANDLE || biasSlowEmaHandle == INVALID_HANDLE ||
+      biasAtrHandle == INVALID_HANDLE || trendFastEmaHandle == INVALID_HANDLE ||
+      trendSlowEmaHandle == INVALID_HANDLE || trendAtrHandle == INVALID_HANDLE ||
+      avoidFastEmaHandle == INVALID_HANDLE || avoidSlowEmaHandle == INVALID_HANDLE ||
+      avoidAtrHandle == INVALID_HANDLE)
+      return INIT_FAILED;
+
+   trade.SetExpertMagicNumber((ulong)InpMagicNumber);
+   trade.SetDeviationInPoints(20);
+
+   datetime now = TimeCurrent();
+   currentDayKey = -1;
+   currentWeekKey = -1;
+   dayStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
+   weekStartEquity = AccountInfoDouble(ACCOUNT_EQUITY);
+   accountPeakEquity = AccountInfoDouble(ACCOUNT_EQUITY);
+   UpdatePeriodAnchors();
+   UpdateDrawdown();
+   OpenEventLog();
+   LogSimpleEvent("init", "INIT",
+                  "enable_trading=" + BoolWord(InpEnableTrading) +
+                  "|preset_name=" + CleanPresetString(InpPresetName) +
+                  "|ea_version=" + EA_VERSION +
+                  "|now=" + TimeToString(now, TIME_DATE | TIME_SECONDS));
+   return INIT_SUCCEEDED;
+  }
+
+void OnDeinit(const int reason)
+  {
+   LogSimpleEvent("deinit", "DEINIT", "reason=" + IntegerToString(reason));
+   WriteSummary();
+   WriteMonthlySummary();
+   CloseEventLog();
+   if(fastEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(fastEmaHandle);
+   if(slowEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(slowEmaHandle);
+   if(atrHandle != INVALID_HANDLE)
+      IndicatorRelease(atrHandle);
+   if(adxHandle != INVALID_HANDLE)
+      IndicatorRelease(adxHandle);
+   if(qualityFastEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(qualityFastEmaHandle);
+   if(qualitySlowEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(qualitySlowEmaHandle);
+   if(qualityAtrHandle != INVALID_HANDLE)
+      IndicatorRelease(qualityAtrHandle);
+   if(qualityAdxHandle != INVALID_HANDLE)
+      IndicatorRelease(qualityAdxHandle);
+   if(biasFastEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(biasFastEmaHandle);
+   if(biasSlowEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(biasSlowEmaHandle);
+   if(biasAtrHandle != INVALID_HANDLE)
+      IndicatorRelease(biasAtrHandle);
+   if(trendFastEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(trendFastEmaHandle);
+   if(trendSlowEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(trendSlowEmaHandle);
+   if(trendAtrHandle != INVALID_HANDLE)
+      IndicatorRelease(trendAtrHandle);
+   if(avoidFastEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(avoidFastEmaHandle);
+   if(avoidSlowEmaHandle != INVALID_HANDLE)
+      IndicatorRelease(avoidSlowEmaHandle);
+   if(avoidAtrHandle != INVALID_HANDLE)
+      IndicatorRelease(avoidAtrHandle);
+  }
+
+void OnTick()
+  {
+   UpdatePeriodAnchors();
+   UpdateDrawdown();
+   ManageTimeouts();
+   CheckRiskStops();
+
+   datetime barTime = 0;
+   if(!IsNewBar(barTime))
+      return;
+   CheckVirtualCandidates();
+   ProcessNewBar(barTime);
+  }
+//+------------------------------------------------------------------+

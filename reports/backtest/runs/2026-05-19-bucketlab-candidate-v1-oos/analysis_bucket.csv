@@ -1,0 +1,2 @@
+bucket,trades,winrate,avg_win_r,avg_loss_r,expectancy_r,pf,total_r,net_money,avg_hold_seconds
+M1_PULLBACK_SCORE_LONG,9,0.222222,1.345633,-0.843181,-0.356777,0.455972,-3.210997,-4.85,1312.11

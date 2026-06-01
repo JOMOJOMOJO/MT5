@@ -1,0 +1,3 @@
+time,reason,detail
+2026.03.23 15:41:24,max_consecutive_losses,consecutive_losses=6
+2026.04.30 16:10:08,max_consecutive_losses,consecutive_losses=7

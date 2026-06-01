@@ -1,0 +1,9 @@
+variant,preset,trades,expectancy_r,pf,max_dd_percent,max_losses,net_money,stops,margin_rejects,tp_exits,sl_exits,timeout_exits
+ref_v2_5,ExpectedValue_LongOnly_BucketLab_final_ref_v2_5_2025.set,76,0.261166582966462,1.90429981171404,8.20851974324061,3,22.79,0,0,28,16,32
+mid_range_family,ExpectedValue_LongOnly_BucketLab_final_mid_range_family_2025.set,76,0.268708303120506,1.95536115431675,8.12098813460416,3,22.88,0,0,28,15,33
+sl_m1_swing,ExpectedValue_LongOnly_BucketLab_final_sl_m1_swing_2025.set,72,0.242819093780631,1.79311616909774,8.76417451470306,3,19.48,0,0,27,18,27
+sl_m5_swing,ExpectedValue_LongOnly_BucketLab_final_sl_m5_swing_2025.set,13,0.059797034163651,1.23382559831867,3.75446960667461,3,0.78,0,0,2,1,10
+tp_recent_high_or_r,ExpectedValue_LongOnly_BucketLab_final_tp_recent_high_or_r_2025.set,76,0.261166582966462,1.90429981171404,8.20851974324061,3,22.79,0,0,28,16,32
+hold_long_r135,ExpectedValue_LongOnly_BucketLab_final_hold_long_r135_2025.set,60,0.293548037045914,1.80856899915522,10.0781845919146,6,20.92,1,0,26,20,14
+second_entry_conservative,ExpectedValue_LongOnly_BucketLab_final_second_entry_conservative_2025.set,72,0.232886013619576,1.80102925449379,8.15853069115514,3,20.45,0,0,24,15,33
+one_position_control,ExpectedValue_LongOnly_BucketLab_final_one_position_control_2025.set,70,0.23612679403991,1.7889978171766,8.30872218940736,3,19.93,0,0,25,15,30

@@ -1,0 +1,16 @@
+﻿{
+    "generated_at":  "2026-05-19T00:39:46.1715831+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\2026-05-19-expected-value-long-relative-scalper-initial\\ini\\long_relative_usd100_2025.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\2026-05-19-expected-value-long-relative-scalper-initial\\ini\\long_relative_usd100_2025.ini",
+                   "generated_config_path":  null
+               },
+    "tester":  {
+                   "symbol":  "USDJPY",
+                   "period":  "M5",
+                   "from_date":  "2025.01.01",
+                   "to_date":  "2025.12.31",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\2026-05-19-expected-value-long-relative-scalper-initial\\long_relative_usd100_2025.htm"
+               },
+    "preset":  null
+}

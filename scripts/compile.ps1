@@ -5,6 +5,15 @@ param(
 )
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+$repoDefaultMetaEditorPath = "C:\Program Files\XMTrading MT5 - 2\MetaEditor64.exe"
+$legacyDefaultMetaEditorPath = "C:\Program Files\XMTrading MT5\MetaEditor64.exe"
+
+if (-not $MetaEditorPath -and (Test-Path $repoDefaultMetaEditorPath)) {
+    $MetaEditorPath = $repoDefaultMetaEditorPath
+}
+if (-not $MetaEditorPath -and (Test-Path $legacyDefaultMetaEditorPath)) {
+    $MetaEditorPath = $legacyDefaultMetaEditorPath
+}
 
 if (-not $Source) {
     $candidates = Get-ChildItem -Path (Join-Path $repoRoot "mql") -Recurse -Filter *.mq5 | Sort-Object FullName

@@ -118,6 +118,15 @@ function Test-DirectoryWritable {
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $terminalDataRoot = (Resolve-Path (Join-Path $repoRoot "..\..\..")).Path
+$repoDefaultTerminalPath = "C:\Program Files\XMTrading MT5 - 2\terminal64.exe"
+$legacyDefaultTerminalPath = "C:\Program Files\XMTrading MT5\terminal64.exe"
+
+if (-not $TerminalPath -and (Test-Path $repoDefaultTerminalPath)) {
+    $TerminalPath = $repoDefaultTerminalPath
+}
+if (-not $TerminalPath -and (Test-Path $legacyDefaultTerminalPath)) {
+    $TerminalPath = $legacyDefaultTerminalPath
+}
 
 if (-not $TerminalPath) {
     throw "Terminal path is not set. Pass -TerminalPath or set MT5_TERMINAL."

@@ -1,0 +1,10 @@
+event,count
+period_reset,312
+candidate_score,218
+signal,164
+entry_blocked,107
+entry,57
+exit,57
+micro_near_miss_exit,10
+deinit,1
+init,1

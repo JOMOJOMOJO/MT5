@@ -1,0 +1,5 @@
+item,value
+candidate_score_events,873
+accepted_candidate_score_events,470
+reject_candidate_score_below_threshold,380
+reject_stop_distance_atr_too_wide,23

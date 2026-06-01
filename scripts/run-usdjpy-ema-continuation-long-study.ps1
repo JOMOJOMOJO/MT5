@@ -1,5 +1,5 @@
 param(
-  [string]$TerminalPath = "C:\Program Files\XMTrading MT5\terminal64.exe",
+  [string]$TerminalPath = $(if ($env:MT5_TERMINAL) { $env:MT5_TERMINAL } elseif (Test-Path "C:\Program Files\XMTrading MT5 - 2\terminal64.exe") { "C:\Program Files\XMTrading MT5 - 2\terminal64.exe" } else { "C:\Program Files\XMTrading MT5\terminal64.exe" }),
   [string]$Symbol = "USDJPY",
   [string]$Timeframe = "M15",
   [int]$AnalysisDays = 365,
