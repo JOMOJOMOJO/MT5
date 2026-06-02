@@ -1,0 +1,3 @@
+reason,symbol,direction,retcode,count
+ea_order_failed_market_closed,XAUUSD,LONG,10018,615
+trade_market_closed,XAUUSD,LONG,,615

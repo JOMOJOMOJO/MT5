@@ -1,0 +1,5 @@
+run,group,trades,wins,losses,win_rate,net_profit,gross_profit,gross_loss,profit_factor,expected_payoff,avg_win,avg_loss
+stop_on,LONG,145,60,85,41.38,28.08,4429.86,-4401.78,1.006,0.19,73.83,-51.79
+stop_on,SHORT,80,28,52,35.0,-528.29,2140.12,-2668.41,0.802,-6.6,76.43,-51.32
+stop_off,LONG,1066,458,608,42.96,2729.32,27663.93,-24934.61,1.109,2.56,60.4,-41.01
+stop_off,SHORT,626,219,407,34.98,-3402.23,13501.54,-16903.77,0.799,-5.43,61.65,-41.53
