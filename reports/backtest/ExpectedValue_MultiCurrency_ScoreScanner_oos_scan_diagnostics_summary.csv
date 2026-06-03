@@ -1,0 +1,5 @@
+run,year,scenario,events,new_bar_scans,same_bar_skips,avg_scan_elapsed_ms,max_scan_elapsed_ms
+2024D,2024,LONG_ONLY_DowFractal_5m_new_bar,"{'scan_executed_new_execution_bar': 74279, 'scan_skipped_same_execution_bar': 353}",74279,353,17.5,40531
+2024E,2024,XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar,"{'scan_executed_new_execution_bar': 74279, 'scan_skipped_same_execution_bar': 353}",74279,353,15.08,1250
+2026D,2026YTD,LONG_ONLY_DowFractal_5m_new_bar,"{'scan_executed_new_execution_bar': 30696, 'scan_skipped_same_execution_bar': 143}",30696,143,16.95,20469
+2026E,2026YTD,XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar,"{'scan_executed_new_execution_bar': 30696, 'scan_skipped_same_execution_bar': 143}",30696,143,14.53,1281

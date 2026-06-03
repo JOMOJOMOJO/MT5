@@ -1,0 +1,560 @@
+{
+  "runs": {
+    "2024D": {
+      "trades": 510,
+      "wins": 196,
+      "losses": 314,
+      "win_rate": 38.43137254901961,
+      "net_profit": -1305.4300000000005,
+      "gross_profit": 12939.259999999997,
+      "gross_loss": -14244.689999999997,
+      "profit_factor": 0.9083567280158431,
+      "expected_payoff": -2.5596666666666676,
+      "avg_win": 66.01663265306121,
+      "avg_loss": -45.36525477707006,
+      "max_balance_dd": 1920.989999999998,
+      "max_balance_dd_pct": 18.553585467666732,
+      "max_balance_dd_time": "2024.11.08 03:10:50",
+      "max_consecutive_wins": {
+        "count": 6,
+        "amount": 371.53,
+        "start": "2024.11.21 15:20:00",
+        "end": "2024.11.25 01:42:31"
+      },
+      "max_consecutive_losses": {
+        "count": 10,
+        "amount": -431.15999999999997,
+        "start": "2024.07.03 17:20:00",
+        "end": "2024.07.11 16:24:03"
+      }
+    },
+    "2024E": {
+      "trades": 357,
+      "wins": 142,
+      "losses": 215,
+      "win_rate": 39.77591036414566,
+      "net_profit": -401.1099999999996,
+      "gross_profit": 9785.139999999998,
+      "gross_loss": -10186.250000000007,
+      "profit_factor": 0.9606224076573804,
+      "expected_payoff": -1.1235574229691867,
+      "avg_win": 68.90943661971829,
+      "avg_loss": -47.37790697674422,
+      "max_balance_dd": 975.3599999999897,
+      "max_balance_dd_pct": 9.694030184516045,
+      "max_balance_dd_time": "2024.11.08 03:10:50",
+      "max_consecutive_wins": {
+        "count": 6,
+        "amount": 398.58,
+        "start": "2024.11.21 15:20:00",
+        "end": "2024.11.25 01:42:31"
+      },
+      "max_consecutive_losses": {
+        "count": 9,
+        "amount": -436.49999999999994,
+        "start": "2024.01.31 16:50:00",
+        "end": "2024.02.22 13:05:15"
+      }
+    },
+    "2026D": {
+      "trades": 181,
+      "wins": 73,
+      "losses": 108,
+      "win_rate": 40.331491712707184,
+      "net_profit": 36.70000000000031,
+      "gross_profit": 5134.709999999997,
+      "gross_loss": -5098.010000000001,
+      "profit_factor": 1.0071988874090079,
+      "expected_payoff": 0.20276243093922822,
+      "avg_win": 70.3384931506849,
+      "avg_loss": -47.203796296296304,
+      "max_balance_dd": 901.4699999999921,
+      "max_balance_dd_pct": 8.335097800810809,
+      "max_balance_dd_time": "2026.05.01 17:35:54",
+      "max_consecutive_wins": {
+        "count": 5,
+        "amount": 356.12,
+        "start": "2026.01.09 22:20:00",
+        "end": "2026.01.12 02:43:07"
+      },
+      "max_consecutive_losses": {
+        "count": 10,
+        "amount": -496.09,
+        "start": "2026.04.08 09:35:00",
+        "end": "2026.05.01 17:35:54"
+      }
+    },
+    "2026E": {
+      "trades": 162,
+      "wins": 68,
+      "losses": 94,
+      "win_rate": 41.9753086419753,
+      "net_profit": 381.2100000000006,
+      "gross_profit": 4813.099999999999,
+      "gross_loss": -4431.89,
+      "profit_factor": 1.0860152214969232,
+      "expected_payoff": 2.353148148148152,
+      "avg_win": 70.78088235294116,
+      "avg_loss": -47.147765957446815,
+      "max_balance_dd": 701.4899999999943,
+      "max_balance_dd_pct": 6.4341238139350905,
+      "max_balance_dd_time": "2026.02.27 18:24:08",
+      "max_consecutive_wins": {
+        "count": 5,
+        "amount": 356.12,
+        "start": "2026.01.09 22:20:00",
+        "end": "2026.01.12 02:43:07"
+      },
+      "max_consecutive_losses": {
+        "count": 8,
+        "amount": -385.29999999999995,
+        "start": "2026.04.08 09:35:00",
+        "end": "2026.04.30 19:15:55"
+      }
+    }
+  },
+  "comparison_rows": [
+    {
+      "run": "2024D",
+      "year": "2024",
+      "scenario": "LONG_ONLY_DowFractal_5m_new_bar",
+      "from": "2024.01.01",
+      "to": "2024.12.31",
+      "elapsed_seconds": 1424.7,
+      "trades": 510,
+      "wins": 196,
+      "losses": 314,
+      "win_rate": 38.43,
+      "net_profit": -1305.43,
+      "profit_factor": 0.908,
+      "expected_payoff": -2.56,
+      "gross_profit": 12939.26,
+      "gross_loss": -14244.69,
+      "avg_win": 66.02,
+      "avg_loss": -45.37,
+      "max_balance_dd": 1920.99,
+      "max_balance_dd_pct": 18.55,
+      "max_balance_dd_time": "2024.11.08 03:10:50",
+      "max_consecutive_losses": 10,
+      "max_consecutive_losses_amount": -431.16,
+      "xauusd_trades": 350,
+      "xauusd_trade_share_pct": 68.63,
+      "xauusd_net_profit": -585.39,
+      "major_winning_symbols": "EURJPY:310.35; GBPJPY:296.60",
+      "major_losing_symbols": "USDJPY:-735.63; XAUUSD:-585.39; GBPUSD:-339.37",
+      "score_detail_rows": 149121,
+      "entry_score_ok_rows": 1643,
+      "best_candidate_rows": 74279,
+      "new_bar_scans": 74279,
+      "same_bar_skips": 353,
+      "avg_scan_elapsed_ms": 17.5,
+      "max_scan_elapsed_ms": 40531,
+      "structure_evaluations": 519953,
+      "structure_detail_rows": 169844,
+      "structure_pass_rate": 10.38,
+      "structure_top_fail_reason": "no_trend_up"
+    },
+    {
+      "run": "2024E",
+      "year": "2024",
+      "scenario": "XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar",
+      "from": "2024.01.01",
+      "to": "2024.12.31",
+      "elapsed_seconds": 1184.2,
+      "trades": 357,
+      "wins": 142,
+      "losses": 215,
+      "win_rate": 39.78,
+      "net_profit": -401.11,
+      "profit_factor": 0.961,
+      "expected_payoff": -1.12,
+      "gross_profit": 9785.14,
+      "gross_loss": -10186.25,
+      "avg_win": 68.91,
+      "avg_loss": -47.38,
+      "max_balance_dd": 975.36,
+      "max_balance_dd_pct": 9.69,
+      "max_balance_dd_time": "2024.11.08 03:10:50",
+      "max_consecutive_losses": 9,
+      "max_consecutive_losses_amount": -436.5,
+      "xauusd_trades": 357,
+      "xauusd_trade_share_pct": 100.0,
+      "xauusd_net_profit": -401.11,
+      "major_winning_symbols": "",
+      "major_losing_symbols": "XAUUSD:-401.11",
+      "score_detail_rows": 148928,
+      "entry_score_ok_rows": 1110,
+      "best_candidate_rows": 74279,
+      "new_bar_scans": 74279,
+      "same_bar_skips": 353,
+      "avg_scan_elapsed_ms": 15.08,
+      "max_scan_elapsed_ms": 1250,
+      "structure_evaluations": 74279,
+      "structure_detail_rows": 148928,
+      "structure_pass_rate": 11.0,
+      "structure_top_fail_reason": "no_trend_up"
+    },
+    {
+      "run": "2026D",
+      "year": "2026YTD",
+      "scenario": "LONG_ONLY_DowFractal_5m_new_bar",
+      "from": "2026.01.01",
+      "to": "2026.06.02",
+      "elapsed_seconds": 596.9,
+      "trades": 181,
+      "wins": 73,
+      "losses": 108,
+      "win_rate": 40.33,
+      "net_profit": 36.7,
+      "profit_factor": 1.007,
+      "expected_payoff": 0.2,
+      "gross_profit": 5134.71,
+      "gross_loss": -5098.01,
+      "avg_win": 70.34,
+      "avg_loss": -47.2,
+      "max_balance_dd": 901.47,
+      "max_balance_dd_pct": 8.34,
+      "max_balance_dd_time": "2026.05.01 17:35:54",
+      "max_consecutive_losses": 10,
+      "max_consecutive_losses_amount": -496.09,
+      "xauusd_trades": 160,
+      "xauusd_trade_share_pct": 88.4,
+      "xauusd_net_profit": 495.2,
+      "major_winning_symbols": "XAUUSD:495.20",
+      "major_losing_symbols": "USDJPY:-193.77; EURUSD:-177.83; AUDJPY:-59.48",
+      "score_detail_rows": 61576,
+      "entry_score_ok_rows": 564,
+      "best_candidate_rows": 30696,
+      "new_bar_scans": 30696,
+      "same_bar_skips": 143,
+      "avg_scan_elapsed_ms": 16.95,
+      "max_scan_elapsed_ms": 20469,
+      "structure_evaluations": 214872,
+      "structure_detail_rows": 70008,
+      "structure_pass_rate": 10.29,
+      "structure_top_fail_reason": "no_trend_up"
+    },
+    {
+      "run": "2026E",
+      "year": "2026YTD",
+      "scenario": "XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar",
+      "from": "2026.01.01",
+      "to": "2026.06.02",
+      "elapsed_seconds": 496.9,
+      "trades": 162,
+      "wins": 68,
+      "losses": 94,
+      "win_rate": 41.98,
+      "net_profit": 381.21,
+      "profit_factor": 1.086,
+      "expected_payoff": 2.35,
+      "gross_profit": 4813.1,
+      "gross_loss": -4431.89,
+      "avg_win": 70.78,
+      "avg_loss": -47.15,
+      "max_balance_dd": 701.49,
+      "max_balance_dd_pct": 6.43,
+      "max_balance_dd_time": "2026.02.27 18:24:08",
+      "max_consecutive_losses": 8,
+      "max_consecutive_losses_amount": -385.3,
+      "xauusd_trades": 162,
+      "xauusd_trade_share_pct": 100.0,
+      "xauusd_net_profit": 381.21,
+      "major_winning_symbols": "XAUUSD:381.21",
+      "major_losing_symbols": "",
+      "score_detail_rows": 61554,
+      "entry_score_ok_rows": 486,
+      "best_candidate_rows": 30696,
+      "new_bar_scans": 30696,
+      "same_bar_skips": 143,
+      "avg_scan_elapsed_ms": 14.53,
+      "max_scan_elapsed_ms": 1281,
+      "structure_evaluations": 30696,
+      "structure_detail_rows": 61554,
+      "structure_pass_rate": 10.96,
+      "structure_top_fail_reason": "no_trend_up"
+    }
+  ],
+  "scan_summaries": {
+    "2024D": {
+      "events": {
+        "scan_executed_new_execution_bar": 74279,
+        "scan_skipped_same_execution_bar": 353
+      },
+      "new_bar_scans": 74279,
+      "same_bar_skips": 353,
+      "avg_scan_elapsed_ms": 17.5,
+      "max_scan_elapsed_ms": 40531
+    },
+    "2024E": {
+      "events": {
+        "scan_executed_new_execution_bar": 74279,
+        "scan_skipped_same_execution_bar": 353
+      },
+      "new_bar_scans": 74279,
+      "same_bar_skips": 353,
+      "avg_scan_elapsed_ms": 15.08,
+      "max_scan_elapsed_ms": 1250
+    },
+    "2026D": {
+      "events": {
+        "scan_executed_new_execution_bar": 30696,
+        "scan_skipped_same_execution_bar": 143
+      },
+      "new_bar_scans": 30696,
+      "same_bar_skips": 143,
+      "avg_scan_elapsed_ms": 16.95,
+      "max_scan_elapsed_ms": 20469
+    },
+    "2026E": {
+      "events": {
+        "scan_executed_new_execution_bar": 30696,
+        "scan_skipped_same_execution_bar": 143
+      },
+      "new_bar_scans": 30696,
+      "same_bar_skips": 143,
+      "avg_scan_elapsed_ms": 14.53,
+      "max_scan_elapsed_ms": 1281
+    }
+  },
+  "structure_summaries": {
+    "2024D": {
+      "evaluations": 519953,
+      "detail_rows": 169844,
+      "pass": 53947,
+      "fail": 466006,
+      "pass_rate": 10.38,
+      "top_fail_reason": "no_trend_up",
+      "top_fail_reason_rows": 353262
+    },
+    "2024E": {
+      "evaluations": 74279,
+      "detail_rows": 148928,
+      "pass": 8171,
+      "fail": 66108,
+      "pass_rate": 11.0,
+      "top_fail_reason": "no_trend_up",
+      "top_fail_reason_rows": 50698
+    },
+    "2026D": {
+      "evaluations": 214872,
+      "detail_rows": 70008,
+      "pass": 22104,
+      "fail": 192768,
+      "pass_rate": 10.29,
+      "top_fail_reason": "no_trend_up",
+      "top_fail_reason_rows": 145873
+    },
+    "2026E": {
+      "evaluations": 30696,
+      "detail_rows": 61554,
+      "pass": 3363,
+      "fail": 27333,
+      "pass_rate": 10.96,
+      "top_fail_reason": "no_trend_up",
+      "top_fail_reason_rows": 21015
+    }
+  },
+  "score_summaries": {
+    "2024D": {
+      "rows": 149121,
+      "unique_times": 74279,
+      "flags": {
+        "best_candidate": 74279,
+        "below_threshold": 147478,
+        "entry_score_ok": 1643,
+        "max_positions_reached": 20428,
+        "not_best": 40
+      },
+      "entry_by_symbol": {
+        "USDJPY": 212,
+        "GBPJPY": 144,
+        "EURJPY": 91,
+        "XAUUSD": 1093,
+        "GBPUSD": 55,
+        "EURUSD": 34,
+        "AUDJPY": 14
+      },
+      "entry_by_direction": {
+        "LONG": 1643
+      },
+      "best_by_symbol": {
+        "USDJPY": 13638,
+        "GBPUSD": 5554,
+        "EURUSD": 4796,
+        "GBPJPY": 6834,
+        "XAUUSD": 30713,
+        "EURJPY": 6845,
+        "AUDJPY": 5899
+      },
+      "best_by_direction": {
+        "LONG": 74279
+      }
+    },
+    "2024E": {
+      "rows": 148928,
+      "unique_times": 74279,
+      "flags": {
+        "best_candidate": 74279,
+        "below_threshold": 147818,
+        "entry_score_ok": 1110,
+        "max_positions_reached": 14720
+      },
+      "entry_by_symbol": {
+        "XAUUSD": 1110
+      },
+      "entry_by_direction": {
+        "LONG": 1110
+      },
+      "best_by_symbol": {
+        "XAUUSD": 74279
+      },
+      "best_by_direction": {
+        "LONG": 74279
+      }
+    },
+    "2026D": {
+      "rows": 61576,
+      "unique_times": 30696,
+      "flags": {
+        "best_candidate": 30696,
+        "below_threshold": 61012,
+        "entry_score_ok": 564,
+        "max_positions_reached": 6202,
+        "not_best": 3
+      },
+      "entry_by_symbol": {
+        "XAUUSD": 482,
+        "USDJPY": 43,
+        "GBPUSD": 10,
+        "AUDJPY": 7,
+        "EURUSD": 22
+      },
+      "entry_by_direction": {
+        "LONG": 564
+      },
+      "best_by_symbol": {
+        "XAUUSD": 14717,
+        "EURJPY": 2463,
+        "USDJPY": 5897,
+        "GBPJPY": 2025,
+        "GBPUSD": 1406,
+        "EURUSD": 1663,
+        "AUDJPY": 2525
+      },
+      "best_by_direction": {
+        "LONG": 30696
+      }
+    },
+    "2026E": {
+      "rows": 61554,
+      "unique_times": 30696,
+      "flags": {
+        "best_candidate": 30696,
+        "below_threshold": 61068,
+        "entry_score_ok": 486,
+        "max_positions_reached": 5270
+      },
+      "entry_by_symbol": {
+        "XAUUSD": 486
+      },
+      "entry_by_direction": {
+        "LONG": 486
+      },
+      "best_by_symbol": {
+        "XAUUSD": 30696
+      },
+      "best_by_direction": {
+        "LONG": 30696
+      }
+    }
+  },
+  "baseline_2025": [
+    {
+      "run": "D",
+      "scenario": "LONG_ONLY_DowFractal_5m_new_bar",
+      "elapsed_seconds": "1334.0",
+      "trades": "675",
+      "wins": "298",
+      "losses": "377",
+      "win_rate": "44.15",
+      "net_profit": "3349.91",
+      "profit_factor": "1.159",
+      "expected_payoff": "4.96",
+      "gross_profit": "24357.02",
+      "gross_loss": "-21007.11",
+      "avg_win": "81.73",
+      "avg_loss": "-55.72",
+      "max_balance_dd": "905.85",
+      "max_balance_dd_pct": "6.64",
+      "max_balance_dd_time": "2025.12.18 03:18:27",
+      "max_consecutive_losses": "9",
+      "max_consecutive_losses_amount": "-466.9",
+      "long_trades": "675",
+      "long_net_profit": "3349.91",
+      "short_trades": "0",
+      "short_net_profit": "0",
+      "xauusd_trades": "534",
+      "xauusd_trade_share_pct": "79.11",
+      "xauusd_net_profit": "2874.71",
+      "usdjpy_short_trades": "0",
+      "usdjpy_short_net_profit": "0",
+      "score_detail_rows": "148021",
+      "score_rows": "148021",
+      "entry_score_ok_rows": "2189",
+      "best_candidate_rows": "73648",
+      "new_bar_scans": "73648",
+      "same_bar_skips": "534",
+      "avg_scan_elapsed_ms": "16.78",
+      "max_scan_elapsed_ms": "7047",
+      "structure_evaluations": "515536",
+      "structure_detail_rows": "168274",
+      "structure_rows": "515536",
+      "structure_pass_rate": "10.54",
+      "structure_top_fail_reason": "no_trend_up"
+    },
+    {
+      "run": "E",
+      "scenario": "XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar",
+      "elapsed_seconds": "3777.6",
+      "trades": "549",
+      "wins": "244",
+      "losses": "305",
+      "win_rate": "44.44",
+      "net_profit": "2880.52",
+      "profit_factor": "1.171",
+      "expected_payoff": "5.25",
+      "gross_profit": "19731.29",
+      "gross_loss": "-16850.77",
+      "avg_win": "80.87",
+      "avg_loss": "-55.25",
+      "max_balance_dd": "934.98",
+      "max_balance_dd_pct": "7.0",
+      "max_balance_dd_time": "2025.12.22 03:14:01",
+      "max_consecutive_losses": "8",
+      "max_consecutive_losses_amount": "-408.84",
+      "long_trades": "549",
+      "long_net_profit": "2880.52",
+      "short_trades": "0",
+      "short_net_profit": "0",
+      "xauusd_trades": "549",
+      "xauusd_trade_share_pct": "100.0",
+      "xauusd_net_profit": "2880.52",
+      "usdjpy_short_trades": "0",
+      "usdjpy_short_net_profit": "0",
+      "score_detail_rows": "515536",
+      "score_rows": "515536",
+      "entry_score_ok_rows": "575",
+      "best_candidate_rows": "73648",
+      "new_bar_scans": "73648",
+      "same_bar_skips": "534",
+      "avg_scan_elapsed_ms": "50.17",
+      "max_scan_elapsed_ms": "1312",
+      "structure_evaluations": "73648",
+      "structure_detail_rows": "73648",
+      "structure_rows": "73648",
+      "structure_pass_rate": "12.66",
+      "structure_top_fail_reason": "no_trend_up"
+    }
+  ]
+}

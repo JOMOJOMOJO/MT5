@@ -1,0 +1,2 @@
+﻿time,structure_evaluations,structure_detail_rows,structure_pass,structure_fail,structure_pass_rate,no_context_swings,no_trend_up,no_trend_down,pullback_too_deep,pullback_not_valid,no_fractal_low,no_fractal_high,not_enough_fractals,no_reclaim,unknown,structure_top_fail_reason,structure_top_fail_reason_rows
+2024.12.30 23:57:59,519953,169844,53947,466006,10.38,0,353262,0,13412,4310,0,0,0,95022,0,no_trend_up,353262

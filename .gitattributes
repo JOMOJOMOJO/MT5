@@ -3,3 +3,5 @@ reports/backtest/ExpectedValue_MultiCurrency_ScoreScanner_2025_no_stops_scores.c
 reports/backtest/ExpectedValue_MultiCurrency_ScoreScanner_2025_phase2_*_scores.csv filter=lfs diff=lfs merge=lfs -text
 reports/backtest/ExpectedValue_MultiCurrency_ScoreScanner_2025_phase2_*_structure_diagnostics.csv filter=lfs diff=lfs merge=lfs -text
 reports/backtest/ExpectedValue_MultiCurrency_ScoreScanner_2025_phase2_structure_filter_diagnostics.csv filter=lfs diff=lfs merge=lfs -text
+reports/backtest/ExpectedValue_MultiCurrency_ScoreScanner_*_oos_*_scores.csv filter=lfs diff=lfs merge=lfs -text
+reports/backtest/ExpectedValue_MultiCurrency_ScoreScanner_*_oos_*_structure_diagnostics.csv filter=lfs diff=lfs merge=lfs -text
