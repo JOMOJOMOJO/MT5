@@ -1,0 +1,4 @@
+﻿run,scenario,prefix,elapsed_seconds
+A,ThirdWave_BOTH,ExpectedValue_MultiCurrency_ScoreScanner_2025_thirdwave_diag_A_both,1353.1
+B,ThirdWave_LONG_ONLY,ExpectedValue_MultiCurrency_ScoreScanner_2025_thirdwave_diag_B_long_only,921.7
+C,ThirdWave_SHORT_ONLY,ExpectedValue_MultiCurrency_ScoreScanner_2025_thirdwave_diag_C_short_only,931.5

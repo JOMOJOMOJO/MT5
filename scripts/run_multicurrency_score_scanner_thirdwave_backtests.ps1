@@ -1,7 +1,11 @@
 param(
     [string]$TerminalPath = "C:\Users\windows\AppData\Local\CodexMT5BucketLab\terminal64.exe",
     [int]$TimeoutSeconds = 14400,
-    [string[]]$RunIds = @("A", "B", "C")
+    [string[]]$RunIds = @("A", "B", "C"),
+    [string]$SeriesName = "2025_thirdwave",
+    [string]$FromDate = "2025.01.01",
+    [string]$ToDate = "2025.12.31",
+    [int]$BaseMagicNumber = 2026060310
 )
 
 $ErrorActionPreference = "Stop"
@@ -14,7 +18,8 @@ $resolvedTerminalPath = (Resolve-Path $TerminalPath).Path
 $commonFilesRoot = Join-Path $env:APPDATA "MetaQuotes\Terminal\Common\Files"
 $resolvedCommonFilesRoot = (Resolve-Path $commonFilesRoot).Path
 $templatePreset = Join-Path $presetDir "ExpectedValue_MultiCurrency_ScoreScanner_2025_phase2_A_both_5m.set"
-$elapsedPath = Join-Path $backtestDir "ExpectedValue_MultiCurrency_ScoreScanner_2025_thirdwave_elapsed.csv"
+$seriesPrefix = "ExpectedValue_MultiCurrency_ScoreScanner_$SeriesName"
+$elapsedPath = Join-Path $backtestDir "${seriesPrefix}_elapsed.csv"
 $requestedRunIds = @(
     foreach ($runId in $RunIds) {
         foreach ($part in ($runId -split ",")) {
@@ -34,7 +39,7 @@ function New-Run {
         [int]$MagicNumber
     )
 
-    $prefix = "ExpectedValue_MultiCurrency_ScoreScanner_2025_thirdwave_$Name"
+    $prefix = "${seriesPrefix}_$Name"
     [pscustomobject]@{
         Id = $Id
         Name = $Name
@@ -45,14 +50,14 @@ function New-Run {
         PresetPath = Join-Path $presetDir "$prefix.set"
         PresetName = "$prefix.set"
         ReportStem = "${prefix}_report"
-        LogFolder = "multicurrency_score_scanner_2025_thirdwave_$Name"
+        LogFolder = "multicurrency_score_scanner_${SeriesName}_$Name"
     }
 }
 
 $runs = @(
-    New-Run -Id "A" -Name "A_both" -DirectionMode 0 -MagicNumber 2026060311
-    New-Run -Id "B" -Name "B_long_only" -DirectionMode 1 -MagicNumber 2026060312
-    New-Run -Id "C" -Name "C_short_only" -DirectionMode 2 -MagicNumber 2026060313
+    New-Run -Id "A" -Name "A_both" -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 1)
+    New-Run -Id "B" -Name "B_long_only" -DirectionMode 1 -MagicNumber ($BaseMagicNumber + 2)
+    New-Run -Id "C" -Name "C_short_only" -DirectionMode 2 -MagicNumber ($BaseMagicNumber + 3)
 )
 
 function Sync-EaToPortable {
@@ -129,8 +134,8 @@ function Write-ThirdWaveIni {
     param([object]$Run)
 
     $lines = @(
-        "; MT5 Strategy Tester config for DowFractal ThirdWave initial validation.",
-        "; $($Run.Id): ThirdWave research branch, 2025 full year, hard stops disabled.",
+        "; MT5 Strategy Tester config for DowFractal ThirdWave diagnostics.",
+        "; $($Run.Id): ThirdWave research branch, $SeriesName, hard stops disabled.",
         "",
         "[Experts]",
         "Enabled=1",
@@ -149,8 +154,8 @@ function Write-ThirdWaveIni {
         "ExecutionMode=0",
         "Optimization=0",
         "OptimizationCriterion=6",
-        "FromDate=2025.01.01",
-        "ToDate=2025.12.31",
+        "FromDate=$FromDate",
+        "ToDate=$ToDate",
         "ForwardMode=0",
         "Deposit=10000",
         "Currency=USD",
@@ -327,9 +332,9 @@ function Copy-LogsToRepo {
     $summaryFiles = @(Get-ChildItem -Path $logDir -File -Filter "thirdwave_summary_*.csv")
 
     Join-CsvFiles -Files $scanFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_scan_diagnostics.csv") -EmptyHeader @("time", "event", "last_scan_bar_time", "scan_elapsed_ms", "reason")
-    Join-CsvFiles -Files $signalFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_signal_diagnostics.csv") -EmptyHeader @("time", "symbol", "direction", "higher_tf_trend", "mid_tf_pullback_status", "lower_tf_reversal_status", "setup_pass", "entry_pass", "skip_reason", "entry_price", "sl", "tp", "risk_r", "rr", "swing_high", "swing_low", "structure_sl_source", "strategy_name")
-    Join-CsvFiles -Files $tradeFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_trade_diagnostics.csv") -EmptyHeader @("time", "symbol", "direction", "event", "order_retcode", "order_comment", "entry_price", "sl", "tp", "volume", "risk_r", "rr", "skip_reason", "strategy_name")
-    Join-CsvFiles -Files $summaryFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_summary.csv") -EmptyHeader @("time", "strategy_name", "evaluations", "long_evaluations", "short_evaluations", "setup_pass", "entry_pass", "orders_sent", "orders_failed", "no_higher_tf_trend", "trend_broken", "no_mid_pullback", "pullback_too_shallow", "pullback_too_deep", "no_lower_reversal", "sl_too_close", "sl_too_wide", "rr_too_low", "existing_position", "market_closed", "spread_guard", "data_unavailable", "atr_unavailable", "research_excluded", "unknown", "top_skip_reason", "top_skip_reason_rows")
+    Join-CsvFiles -Files $signalFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_signal_diagnostics.csv") -EmptyHeader @("time", "symbol", "direction", "higher_tf_trend", "mid_tf_pullback_status", "lower_tf_reversal_status", "setup_pass", "entry_pass", "final_entry_pass", "skip_reason", "structure_stage_fail_reason", "execution_block_reason", "higher_tf_trend_pass", "mid_tf_pullback_pass", "lower_tf_reversal_pass", "structure_sl_pass", "rr_pass", "spread_atr", "max_spread_atr", "spread_guard_pass", "spread_guard_blocked", "spread_points", "atr_value", "entry_price", "sl", "tp", "risk_r", "rr", "swing_high", "swing_low", "structure_sl_source", "strategy_name")
+    Join-CsvFiles -Files $tradeFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_trade_diagnostics.csv") -EmptyHeader @("time", "symbol", "direction", "event", "order_retcode", "order_comment", "entry_price", "sl", "tp", "volume", "risk_r", "rr", "skip_reason", "structure_stage_fail_reason", "execution_block_reason", "spread_atr", "max_spread_atr", "spread_guard_pass", "spread_guard_blocked", "spread_points", "atr_value", "strategy_name")
+    Join-CsvFiles -Files $summaryFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_summary.csv") -EmptyHeader @("time", "strategy_name", "evaluations", "long_evaluations", "short_evaluations", "setup_pass", "entry_pass", "orders_sent", "orders_failed", "higher_tf_trend_pass", "mid_tf_pullback_pass", "lower_tf_reversal_pass", "structure_sl_pass", "rr_pass", "spread_guard_pass", "spread_guard_blocked", "final_entry_pass", "long_higher_tf_trend_pass", "long_mid_tf_pullback_pass", "long_lower_tf_reversal_pass", "long_structure_sl_pass", "long_rr_pass", "long_spread_guard_pass", "long_spread_guard_blocked", "long_final_entry_pass", "short_higher_tf_trend_pass", "short_mid_tf_pullback_pass", "short_lower_tf_reversal_pass", "short_structure_sl_pass", "short_rr_pass", "short_spread_guard_pass", "short_spread_guard_blocked", "short_final_entry_pass", "no_higher_tf_trend", "trend_broken", "no_mid_pullback", "pullback_too_shallow", "pullback_too_deep", "no_lower_reversal", "sl_too_close", "sl_too_wide", "rr_too_low", "existing_position", "market_closed", "spread_guard", "data_unavailable", "atr_unavailable", "research_excluded", "unknown", "execution_spread_guard", "execution_trading_disabled", "execution_no_entry_signal", "execution_position_limit", "execution_risk_stop", "execution_risk_limit", "execution_invalid", "execution_order_failed", "execution_unknown", "top_structure_stage_fail_reason", "top_structure_stage_fail_reason_rows", "top_execution_block_reason", "top_execution_block_reason_rows", "top_skip_reason", "top_skip_reason_rows")
 }
 
 function Append-Elapsed {

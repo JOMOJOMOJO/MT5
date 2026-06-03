@@ -133,10 +133,20 @@ struct ThirdWaveSetup
    string            midTfPullbackStatus;
    string            lowerTfReversalStatus;
    string            skipReason;
+   string            structureStageFailReason;
+   string            executionBlockReason;
    string            structureSlSource;
    bool              dataReady;
+   bool              higherTfTrendPass;
+   bool              midTfPullbackPass;
+   bool              lowerTfReversalPass;
+   bool              structureSlPass;
+   bool              rrPass;
+   bool              spreadGuardPass;
+   bool              spreadGuardBlocked;
    bool              setupPass;
    bool              entryPass;
+   bool              finalEntryPass;
    double            entryPrice;
    double            stopLoss;
    double            takeProfit;
@@ -146,7 +156,10 @@ struct ThirdWaveSetup
    double            swingHigh;
    double            swingLow;
    double            atr;
+   double            atrValue;
    double            spreadATR;
+   double            maxSpreadATR;
+   double            spreadPoints;
    double            retraceRatio;
    double            qualityScore;
   };
@@ -184,6 +197,30 @@ long     g_structureUnknownFailCount = 0;
 long     g_thirdWaveEvaluations = 0;
 long     g_thirdWaveLongEvaluations = 0;
 long     g_thirdWaveShortEvaluations = 0;
+long     g_thirdWaveHigherTrendPassCount = 0;
+long     g_thirdWaveMidPullbackPassCount = 0;
+long     g_thirdWaveLowerReversalPassCount = 0;
+long     g_thirdWaveStructureSlPassCount = 0;
+long     g_thirdWaveRrPassCount = 0;
+long     g_thirdWaveSpreadGuardPassCount = 0;
+long     g_thirdWaveSpreadGuardBlockedCount = 0;
+long     g_thirdWaveFinalEntryPassCount = 0;
+long     g_thirdWaveLongHigherTrendPassCount = 0;
+long     g_thirdWaveLongMidPullbackPassCount = 0;
+long     g_thirdWaveLongLowerReversalPassCount = 0;
+long     g_thirdWaveLongStructureSlPassCount = 0;
+long     g_thirdWaveLongRrPassCount = 0;
+long     g_thirdWaveLongSpreadGuardPassCount = 0;
+long     g_thirdWaveLongSpreadGuardBlockedCount = 0;
+long     g_thirdWaveLongFinalEntryPassCount = 0;
+long     g_thirdWaveShortHigherTrendPassCount = 0;
+long     g_thirdWaveShortMidPullbackPassCount = 0;
+long     g_thirdWaveShortLowerReversalPassCount = 0;
+long     g_thirdWaveShortStructureSlPassCount = 0;
+long     g_thirdWaveShortRrPassCount = 0;
+long     g_thirdWaveShortSpreadGuardPassCount = 0;
+long     g_thirdWaveShortSpreadGuardBlockedCount = 0;
+long     g_thirdWaveShortFinalEntryPassCount = 0;
 long     g_thirdWaveSetupPassCount = 0;
 long     g_thirdWaveEntryPassCount = 0;
 long     g_thirdWaveOrderSentCount = 0;
@@ -204,6 +241,15 @@ long     g_thirdWaveDataUnavailableCount = 0;
 long     g_thirdWaveAtrUnavailableCount = 0;
 long     g_thirdWaveResearchExcludedCount = 0;
 long     g_thirdWaveUnknownSkipCount = 0;
+long     g_thirdWaveExecutionSpreadGuardCount = 0;
+long     g_thirdWaveExecutionTradingDisabledCount = 0;
+long     g_thirdWaveExecutionNoEntrySignalCount = 0;
+long     g_thirdWaveExecutionPositionLimitCount = 0;
+long     g_thirdWaveExecutionRiskStopCount = 0;
+long     g_thirdWaveExecutionRiskLimitCount = 0;
+long     g_thirdWaveExecutionInvalidCount = 0;
+long     g_thirdWaveExecutionOrderFailedCount = 0;
+long     g_thirdWaveExecutionUnknownCount = 0;
 
 //+------------------------------------------------------------------+
 //| Generic helpers                                                   |
@@ -224,6 +270,18 @@ void AppendReason(string &reason, const string token)
       reason = token;
    else
       reason += "|" + token;
+  }
+
+void AppendCsvField(string &line, const string value)
+  {
+   if(line != "")
+      line += ",";
+   line += value;
+  }
+
+void AppendCsvLong(string &line, const long value)
+  {
+   AppendCsvField(line, IntegerToString(value));
   }
 
 double ClampDouble(const double value, const double low, const double high)
@@ -579,10 +637,20 @@ void InitThirdWaveSetup(ThirdWaveSetup &setup, const string symbol, const int di
    setup.midTfPullbackStatus = "not_checked";
    setup.lowerTfReversalStatus = "not_checked";
    setup.skipReason = "";
+   setup.structureStageFailReason = "";
+   setup.executionBlockReason = "";
    setup.structureSlSource = "";
    setup.dataReady = false;
+   setup.higherTfTrendPass = false;
+   setup.midTfPullbackPass = false;
+   setup.lowerTfReversalPass = false;
+   setup.structureSlPass = false;
+   setup.rrPass = false;
+   setup.spreadGuardPass = false;
+   setup.spreadGuardBlocked = false;
    setup.setupPass = false;
    setup.entryPass = false;
+   setup.finalEntryPass = false;
    setup.entryPrice = 0.0;
    setup.stopLoss = 0.0;
    setup.takeProfit = 0.0;
@@ -592,7 +660,10 @@ void InitThirdWaveSetup(ThirdWaveSetup &setup, const string symbol, const int di
    setup.swingHigh = 0.0;
    setup.swingLow = 0.0;
    setup.atr = 0.0;
+   setup.atrValue = 0.0;
    setup.spreadATR = 0.0;
+   setup.maxSpreadATR = InpMaxSpreadATR;
+   setup.spreadPoints = 0.0;
    setup.retraceRatio = 0.0;
    setup.qualityScore = 0.0;
   }
@@ -1212,11 +1283,13 @@ bool BuildThirdWaveSetup(const string symbol,
    if(!IsSymbolAllowedByResearchMode(symbol, researchReason))
      {
       setup.skipReason = researchReason;
+      setup.structureStageFailReason = researchReason;
       return false;
      }
    if(!IsDirectionAllowedByResearchMode(symbol, direction, researchReason))
      {
       setup.skipReason = researchReason;
+      setup.structureStageFailReason = researchReason;
       return false;
      }
 
@@ -1226,10 +1299,11 @@ bool BuildThirdWaveSetup(const string symbol,
    string reason = "";
    int barsNeeded = RequiredBars();
    if(!LoadRates(symbol, InpContextTF, barsNeeded, contextRates, reason) ||
-      !LoadRates(symbol, InpPatternTF, barsNeeded, patternRates, reason) ||
+     !LoadRates(symbol, InpPatternTF, barsNeeded, patternRates, reason) ||
       !LoadRates(symbol, InpExecutionTF, barsNeeded, executionRates, reason))
      {
       setup.skipReason = reason;
+      setup.structureStageFailReason = reason;
       return false;
      }
 
@@ -1238,48 +1312,73 @@ bool BuildThirdWaveSetup(const string symbol,
    if(setup.atr <= 0.0 || executionATR <= 0.0)
      {
       setup.skipReason = "atr_unavailable";
+      setup.structureStageFailReason = "atr_unavailable";
       return false;
      }
-   setup.spreadATR = SpreadPrice(symbol) / executionATR;
-   if(setup.spreadATR > InpMaxSpreadATR)
+   double point = SymbolInfoDouble(symbol, SYMBOL_POINT);
+   double spread = SpreadPrice(symbol);
+   setup.atrValue = executionATR;
+   setup.maxSpreadATR = InpMaxSpreadATR;
+   setup.spreadATR = spread / executionATR;
+   setup.spreadPoints = (point > 0.0 ? spread / point : 0.0);
+   setup.spreadGuardPass = (setup.spreadATR <= setup.maxSpreadATR);
+   setup.spreadGuardBlocked = !setup.spreadGuardPass;
+
+   setup.dataReady = true;
+   if(!DetectHigherTimeframeDowTrend(contextRates, direction, setup))
      {
+      setup.structureStageFailReason = setup.skipReason;
+      return false;
+     }
+   setup.higherTfTrendPass = true;
+
+   if(!DetectMidTimeframePullback(patternRates, direction, setup))
+     {
+      setup.structureStageFailReason = setup.skipReason;
+      return false;
+     }
+   setup.midTfPullbackPass = true;
+
+   setup.setupPass = true;
+   if(!DetectLowerTimeframeReversal(executionRates, direction, setup))
+     {
+      setup.structureStageFailReason = setup.skipReason;
+      return false;
+     }
+   setup.lowerTfReversalPass = true;
+
+   if(!CalculateStructureStopLoss(symbol, direction, setup))
+     {
+      if(setup.skipReason == "market_closed")
+         setup.executionBlockReason = setup.skipReason;
+      else
+         setup.structureStageFailReason = setup.skipReason;
+      return false;
+     }
+   setup.structureSlPass = true;
+
+   if(!CalculateThirdWaveTakeProfit(symbol, direction, setup))
+     {
+      setup.structureStageFailReason = setup.skipReason;
+      return false;
+     }
+   setup.rrPass = true;
+
+   if(setup.spreadGuardBlocked)
+     {
+      setup.executionBlockReason = "spread_guard";
       setup.skipReason = "spread_guard";
       return false;
      }
 
-   setup.dataReady = true;
-   if(!DetectHigherTimeframeDowTrend(contextRates, direction, setup))
-      return false;
-   if(!DetectMidTimeframePullback(patternRates, direction, setup))
-      return false;
-
-   setup.setupPass = true;
-   if(!DetectLowerTimeframeReversal(executionRates, direction, setup))
-      return false;
-   if(!CalculateStructureStopLoss(symbol, direction, setup))
-      return false;
-   if(!CalculateThirdWaveTakeProfit(symbol, direction, setup))
-      return false;
-
    setup.entryPass = true;
+   setup.finalEntryPass = true;
    setup.skipReason = "";
    return true;
   }
 
-void RecordThirdWaveEvaluation(const ThirdWaveSetup &setup)
+void RecordThirdWaveStructureFailReason(const string reason)
   {
-   ++g_thirdWaveEvaluations;
-   if(setup.direction == "LONG")
-      ++g_thirdWaveLongEvaluations;
-   else if(setup.direction == "SHORT")
-      ++g_thirdWaveShortEvaluations;
-
-   if(setup.setupPass)
-      ++g_thirdWaveSetupPassCount;
-   if(setup.entryPass)
-      ++g_thirdWaveEntryPassCount;
-
-   string reason = setup.skipReason;
    if(reason == "")
       return;
 
@@ -1301,12 +1400,6 @@ void RecordThirdWaveEvaluation(const ThirdWaveSetup &setup)
       ++g_thirdWaveSlTooWideCount;
    else if(reason == "rr_too_low")
       ++g_thirdWaveRrTooLowCount;
-   else if(reason == "existing_position")
-      ++g_thirdWaveExistingPositionCount;
-   else if(reason == "market_closed")
-      ++g_thirdWaveMarketClosedCount;
-   else if(reason == "spread_guard")
-      ++g_thirdWaveSpreadGuardCount;
    else if(StringFind(reason, "data_insufficient_") == 0)
       ++g_thirdWaveDataUnavailableCount;
    else if(reason == "atr_unavailable")
@@ -1320,9 +1413,132 @@ void RecordThirdWaveEvaluation(const ThirdWaveSetup &setup)
       ++g_thirdWaveUnknownSkipCount;
   }
 
+void RecordThirdWaveExecutionBlockReason(const string reason)
+  {
+   if(reason == "")
+      return;
+
+   if(reason == "spread_guard")
+      ++g_thirdWaveExecutionSpreadGuardCount;
+   else if(reason == "trading_disabled")
+      ++g_thirdWaveExecutionTradingDisabledCount;
+   else if(reason == "no_entry_signal" || reason == "direction_none")
+      ++g_thirdWaveExecutionNoEntrySignalCount;
+   else if(reason == "max_positions" ||
+           reason == "existing_position" ||
+           reason == "same_currency_group_limit")
+      ++g_thirdWaveExecutionPositionLimitCount;
+   else if(reason == "daily_loss_stop" ||
+           reason == "weekly_loss_stop" ||
+           reason == "max_drawdown_stop")
+      ++g_thirdWaveExecutionRiskStopCount;
+   else if(reason == "symbol_risk_limit" || reason == "total_risk_limit")
+      ++g_thirdWaveExecutionRiskLimitCount;
+   else if(reason == "trade_levels_invalid" || reason == "market_closed")
+      ++g_thirdWaveExecutionInvalidCount;
+   else if(reason == "order_failed")
+      ++g_thirdWaveExecutionOrderFailedCount;
+   else
+      ++g_thirdWaveExecutionUnknownCount;
+  }
+
+void RecordThirdWaveStagePasses(const ThirdWaveSetup &setup)
+  {
+   bool isLong = (setup.direction == "LONG");
+   bool isShort = (setup.direction == "SHORT");
+
+   if(setup.higherTfTrendPass)
+     {
+      ++g_thirdWaveHigherTrendPassCount;
+      if(isLong)
+         ++g_thirdWaveLongHigherTrendPassCount;
+      else if(isShort)
+         ++g_thirdWaveShortHigherTrendPassCount;
+     }
+   if(setup.midTfPullbackPass)
+     {
+      ++g_thirdWaveMidPullbackPassCount;
+      if(isLong)
+         ++g_thirdWaveLongMidPullbackPassCount;
+      else if(isShort)
+         ++g_thirdWaveShortMidPullbackPassCount;
+     }
+   if(setup.lowerTfReversalPass)
+     {
+      ++g_thirdWaveLowerReversalPassCount;
+      if(isLong)
+         ++g_thirdWaveLongLowerReversalPassCount;
+      else if(isShort)
+         ++g_thirdWaveShortLowerReversalPassCount;
+     }
+   if(setup.structureSlPass)
+     {
+      ++g_thirdWaveStructureSlPassCount;
+      if(isLong)
+         ++g_thirdWaveLongStructureSlPassCount;
+      else if(isShort)
+         ++g_thirdWaveShortStructureSlPassCount;
+     }
+   if(setup.rrPass)
+     {
+      ++g_thirdWaveRrPassCount;
+      if(isLong)
+         ++g_thirdWaveLongRrPassCount;
+      else if(isShort)
+         ++g_thirdWaveShortRrPassCount;
+     }
+   if(setup.spreadGuardPass)
+     {
+      ++g_thirdWaveSpreadGuardPassCount;
+      if(isLong)
+         ++g_thirdWaveLongSpreadGuardPassCount;
+      else if(isShort)
+         ++g_thirdWaveShortSpreadGuardPassCount;
+     }
+   if(setup.spreadGuardBlocked)
+     {
+      ++g_thirdWaveSpreadGuardBlockedCount;
+      if(isLong)
+         ++g_thirdWaveLongSpreadGuardBlockedCount;
+      else if(isShort)
+         ++g_thirdWaveShortSpreadGuardBlockedCount;
+     }
+   if(setup.finalEntryPass)
+     {
+      ++g_thirdWaveFinalEntryPassCount;
+      if(isLong)
+         ++g_thirdWaveLongFinalEntryPassCount;
+      else if(isShort)
+         ++g_thirdWaveShortFinalEntryPassCount;
+     }
+  }
+
+void RecordThirdWaveEvaluation(const ThirdWaveSetup &setup)
+  {
+   ++g_thirdWaveEvaluations;
+   if(setup.direction == "LONG")
+      ++g_thirdWaveLongEvaluations;
+   else if(setup.direction == "SHORT")
+      ++g_thirdWaveShortEvaluations;
+
+   RecordThirdWaveStagePasses(setup);
+
+   if(setup.setupPass)
+      ++g_thirdWaveSetupPassCount;
+   if(setup.entryPass)
+      ++g_thirdWaveEntryPassCount;
+
+   RecordThirdWaveStructureFailReason(setup.structureStageFailReason);
+   RecordThirdWaveExecutionBlockReason(setup.executionBlockReason);
+  }
+
 bool ShouldWriteThirdWaveSignalDiagnostic(const ThirdWaveSetup &setup)
   {
-   return (setup.setupPass || setup.entryPass);
+   return (setup.lowerTfReversalPass ||
+           setup.structureSlPass ||
+           setup.rrPass ||
+           setup.entryPass ||
+           setup.executionBlockReason != "");
   }
 
 //+------------------------------------------------------------------+
@@ -2254,7 +2470,21 @@ void WriteThirdWaveSignalRow(const ThirdWaveSetup &setup)
                 "lower_tf_reversal_status",
                 "setup_pass",
                 "entry_pass",
+                "final_entry_pass",
                 "skip_reason",
+                "structure_stage_fail_reason",
+                "execution_block_reason",
+                "higher_tf_trend_pass",
+                "mid_tf_pullback_pass",
+                "lower_tf_reversal_pass",
+                "structure_sl_pass",
+                "rr_pass",
+                "spread_atr",
+                "max_spread_atr",
+                "spread_guard_pass",
+                "spread_guard_blocked",
+                "spread_points",
+                "atr_value",
                 "entry_price",
                 "sl",
                 "tp",
@@ -2275,7 +2505,21 @@ void WriteThirdWaveSignalRow(const ThirdWaveSetup &setup)
              setup.lowerTfReversalStatus,
              BoolText(setup.setupPass),
              BoolText(setup.entryPass),
+             BoolText(setup.finalEntryPass),
              setup.skipReason,
+             setup.structureStageFailReason,
+             setup.executionBlockReason,
+             BoolText(setup.higherTfTrendPass),
+             BoolText(setup.midTfPullbackPass),
+             BoolText(setup.lowerTfReversalPass),
+             BoolText(setup.structureSlPass),
+             BoolText(setup.rrPass),
+             DoubleToString(setup.spreadATR, 4),
+             DoubleToString(setup.maxSpreadATR, 4),
+             BoolText(setup.spreadGuardPass),
+             BoolText(setup.spreadGuardBlocked),
+             DoubleToString(setup.spreadPoints, 1),
+             DoubleToString(setup.atrValue, digits),
              DoubleToString(setup.entryPrice, digits),
              DoubleToString(setup.stopLoss, digits),
              DoubleToString(setup.takeProfit, digits),
@@ -2325,6 +2569,14 @@ void WriteThirdWaveTradeRow(const ThirdWaveSetup &setup,
                 "risk_r",
                 "rr",
                 "skip_reason",
+                "structure_stage_fail_reason",
+                "execution_block_reason",
+                "spread_atr",
+                "max_spread_atr",
+                "spread_guard_pass",
+                "spread_guard_blocked",
+                "spread_points",
+                "atr_value",
                 "strategy_name");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
@@ -2342,6 +2594,14 @@ void WriteThirdWaveTradeRow(const ThirdWaveSetup &setup,
              DoubleToString(setup.riskR, digits),
              DoubleToString(setup.rr, 2),
              setup.skipReason,
+             setup.structureStageFailReason,
+             setup.executionBlockReason,
+             DoubleToString(setup.spreadATR, 4),
+             DoubleToString(setup.maxSpreadATR, 4),
+             BoolText(setup.spreadGuardPass),
+             BoolText(setup.spreadGuardBlocked),
+             DoubleToString(setup.spreadPoints, 1),
+             DoubleToString(setup.atrValue, digits),
              "DowFractal_ThirdWave");
 
    FileClose(handle);
@@ -2397,21 +2657,6 @@ string TopThirdWaveSkipReason(long &count)
       reason = "rr_too_low";
       count = g_thirdWaveRrTooLowCount;
      }
-   if(g_thirdWaveExistingPositionCount > count)
-     {
-      reason = "existing_position";
-      count = g_thirdWaveExistingPositionCount;
-     }
-   if(g_thirdWaveMarketClosedCount > count)
-     {
-      reason = "market_closed";
-      count = g_thirdWaveMarketClosedCount;
-     }
-   if(g_thirdWaveSpreadGuardCount > count)
-     {
-      reason = "spread_guard";
-      count = g_thirdWaveSpreadGuardCount;
-     }
    if(g_thirdWaveDataUnavailableCount > count)
      {
       reason = "data_unavailable";
@@ -2431,6 +2676,60 @@ string TopThirdWaveSkipReason(long &count)
      {
       reason = "unknown";
       count = g_thirdWaveUnknownSkipCount;
+     }
+
+   return reason;
+  }
+
+string TopThirdWaveExecutionBlockReason(long &count)
+  {
+   string reason = "";
+   count = 0;
+
+   if(g_thirdWaveExecutionSpreadGuardCount > count)
+     {
+      reason = "spread_guard";
+      count = g_thirdWaveExecutionSpreadGuardCount;
+     }
+   if(g_thirdWaveExecutionTradingDisabledCount > count)
+     {
+      reason = "trading_disabled";
+      count = g_thirdWaveExecutionTradingDisabledCount;
+     }
+   if(g_thirdWaveExecutionNoEntrySignalCount > count)
+     {
+      reason = "no_entry_signal";
+      count = g_thirdWaveExecutionNoEntrySignalCount;
+     }
+   if(g_thirdWaveExecutionPositionLimitCount > count)
+     {
+      reason = "position_limit";
+      count = g_thirdWaveExecutionPositionLimitCount;
+     }
+   if(g_thirdWaveExecutionRiskStopCount > count)
+     {
+      reason = "risk_stop";
+      count = g_thirdWaveExecutionRiskStopCount;
+     }
+   if(g_thirdWaveExecutionRiskLimitCount > count)
+     {
+      reason = "risk_limit";
+      count = g_thirdWaveExecutionRiskLimitCount;
+     }
+   if(g_thirdWaveExecutionInvalidCount > count)
+     {
+      reason = "invalid_trade_context";
+      count = g_thirdWaveExecutionInvalidCount;
+     }
+   if(g_thirdWaveExecutionOrderFailedCount > count)
+     {
+      reason = "order_failed";
+      count = g_thirdWaveExecutionOrderFailedCount;
+     }
+   if(g_thirdWaveExecutionUnknownCount > count)
+     {
+      reason = "unknown";
+      count = g_thirdWaveExecutionUnknownCount;
      }
 
    return reason;
@@ -2459,66 +2758,86 @@ void WriteThirdWaveSummaryRow()
    bool needsHeader = (FileSize(handle) == 0);
    FileSeek(handle, 0, SEEK_END);
    if(needsHeader)
-      FileWrite(handle,
-                "time",
-                "strategy_name",
-                "evaluations",
-                "long_evaluations",
-                "short_evaluations",
-                "setup_pass",
-                "entry_pass",
-                "orders_sent",
-                "orders_failed",
-                "no_higher_tf_trend",
-                "trend_broken",
-                "no_mid_pullback",
-                "pullback_too_shallow",
-                "pullback_too_deep",
-                "no_lower_reversal",
-                "sl_too_close",
-                "sl_too_wide",
-                "rr_too_low",
-                "existing_position",
-                "market_closed",
-                "spread_guard",
-                "data_unavailable",
-                "atr_unavailable",
-                "research_excluded",
-                "unknown",
-                "top_skip_reason",
-                "top_skip_reason_rows");
+      FileWriteString(handle,
+                      "time,strategy_name,evaluations,long_evaluations,short_evaluations,setup_pass,entry_pass,orders_sent,orders_failed,"
+                      "higher_tf_trend_pass,mid_tf_pullback_pass,lower_tf_reversal_pass,structure_sl_pass,rr_pass,spread_guard_pass,spread_guard_blocked,final_entry_pass,"
+                      "long_higher_tf_trend_pass,long_mid_tf_pullback_pass,long_lower_tf_reversal_pass,long_structure_sl_pass,long_rr_pass,long_spread_guard_pass,long_spread_guard_blocked,long_final_entry_pass,"
+                      "short_higher_tf_trend_pass,short_mid_tf_pullback_pass,short_lower_tf_reversal_pass,short_structure_sl_pass,short_rr_pass,short_spread_guard_pass,short_spread_guard_blocked,short_final_entry_pass,"
+                      "no_higher_tf_trend,trend_broken,no_mid_pullback,pullback_too_shallow,pullback_too_deep,no_lower_reversal,sl_too_close,sl_too_wide,rr_too_low,existing_position,market_closed,spread_guard,data_unavailable,atr_unavailable,research_excluded,unknown,"
+                      "execution_spread_guard,execution_trading_disabled,execution_no_entry_signal,execution_position_limit,execution_risk_stop,execution_risk_limit,execution_invalid,execution_order_failed,execution_unknown,"
+                      "top_structure_stage_fail_reason,top_structure_stage_fail_reason_rows,top_execution_block_reason,top_execution_block_reason_rows,top_skip_reason,top_skip_reason_rows\r\n");
 
    long topSkipCount = 0;
    string topSkipReason = TopThirdWaveSkipReason(topSkipCount);
+   long topExecutionBlockCount = 0;
+   string topExecutionBlockReason = TopThirdWaveExecutionBlockReason(topExecutionBlockCount);
 
-   FileWrite(handle,
-             TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
-             "DowFractal_ThirdWave",
-             g_thirdWaveEvaluations,
-             g_thirdWaveLongEvaluations,
-             g_thirdWaveShortEvaluations,
-             g_thirdWaveSetupPassCount,
-             g_thirdWaveEntryPassCount,
-             g_thirdWaveOrderSentCount,
-             g_thirdWaveOrderFailedCount,
-             g_thirdWaveNoHigherTrendCount,
-             g_thirdWaveTrendBrokenCount,
-             g_thirdWaveNoMidPullbackCount,
-             g_thirdWavePullbackTooShallowCount,
-             g_thirdWavePullbackTooDeepCount,
-             g_thirdWaveNoLowerReversalCount,
-             g_thirdWaveSlTooCloseCount,
-             g_thirdWaveSlTooWideCount,
-             g_thirdWaveRrTooLowCount,
-             g_thirdWaveExistingPositionCount,
-             g_thirdWaveMarketClosedCount,
-             g_thirdWaveSpreadGuardCount,
-             g_thirdWaveDataUnavailableCount,
-             g_thirdWaveAtrUnavailableCount,
-             g_thirdWaveResearchExcludedCount,
-             g_thirdWaveUnknownSkipCount,
-             topSkipReason,
-             topSkipCount);
+   string row = "";
+   AppendCsvField(row, TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS));
+   AppendCsvField(row, "DowFractal_ThirdWave");
+   AppendCsvLong(row, g_thirdWaveEvaluations);
+   AppendCsvLong(row, g_thirdWaveLongEvaluations);
+   AppendCsvLong(row, g_thirdWaveShortEvaluations);
+   AppendCsvLong(row, g_thirdWaveSetupPassCount);
+   AppendCsvLong(row, g_thirdWaveEntryPassCount);
+   AppendCsvLong(row, g_thirdWaveOrderSentCount);
+   AppendCsvLong(row, g_thirdWaveOrderFailedCount);
+   AppendCsvLong(row, g_thirdWaveHigherTrendPassCount);
+   AppendCsvLong(row, g_thirdWaveMidPullbackPassCount);
+   AppendCsvLong(row, g_thirdWaveLowerReversalPassCount);
+   AppendCsvLong(row, g_thirdWaveStructureSlPassCount);
+   AppendCsvLong(row, g_thirdWaveRrPassCount);
+   AppendCsvLong(row, g_thirdWaveSpreadGuardPassCount);
+   AppendCsvLong(row, g_thirdWaveSpreadGuardBlockedCount);
+   AppendCsvLong(row, g_thirdWaveFinalEntryPassCount);
+   AppendCsvLong(row, g_thirdWaveLongHigherTrendPassCount);
+   AppendCsvLong(row, g_thirdWaveLongMidPullbackPassCount);
+   AppendCsvLong(row, g_thirdWaveLongLowerReversalPassCount);
+   AppendCsvLong(row, g_thirdWaveLongStructureSlPassCount);
+   AppendCsvLong(row, g_thirdWaveLongRrPassCount);
+   AppendCsvLong(row, g_thirdWaveLongSpreadGuardPassCount);
+   AppendCsvLong(row, g_thirdWaveLongSpreadGuardBlockedCount);
+   AppendCsvLong(row, g_thirdWaveLongFinalEntryPassCount);
+   AppendCsvLong(row, g_thirdWaveShortHigherTrendPassCount);
+   AppendCsvLong(row, g_thirdWaveShortMidPullbackPassCount);
+   AppendCsvLong(row, g_thirdWaveShortLowerReversalPassCount);
+   AppendCsvLong(row, g_thirdWaveShortStructureSlPassCount);
+   AppendCsvLong(row, g_thirdWaveShortRrPassCount);
+   AppendCsvLong(row, g_thirdWaveShortSpreadGuardPassCount);
+   AppendCsvLong(row, g_thirdWaveShortSpreadGuardBlockedCount);
+   AppendCsvLong(row, g_thirdWaveShortFinalEntryPassCount);
+   AppendCsvLong(row, g_thirdWaveNoHigherTrendCount);
+   AppendCsvLong(row, g_thirdWaveTrendBrokenCount);
+   AppendCsvLong(row, g_thirdWaveNoMidPullbackCount);
+   AppendCsvLong(row, g_thirdWavePullbackTooShallowCount);
+   AppendCsvLong(row, g_thirdWavePullbackTooDeepCount);
+   AppendCsvLong(row, g_thirdWaveNoLowerReversalCount);
+   AppendCsvLong(row, g_thirdWaveSlTooCloseCount);
+   AppendCsvLong(row, g_thirdWaveSlTooWideCount);
+   AppendCsvLong(row, g_thirdWaveRrTooLowCount);
+   AppendCsvLong(row, g_thirdWaveExistingPositionCount);
+   AppendCsvLong(row, g_thirdWaveMarketClosedCount);
+   AppendCsvLong(row, g_thirdWaveSpreadGuardBlockedCount);
+   AppendCsvLong(row, g_thirdWaveDataUnavailableCount);
+   AppendCsvLong(row, g_thirdWaveAtrUnavailableCount);
+   AppendCsvLong(row, g_thirdWaveResearchExcludedCount);
+   AppendCsvLong(row, g_thirdWaveUnknownSkipCount);
+   AppendCsvLong(row, g_thirdWaveExecutionSpreadGuardCount);
+   AppendCsvLong(row, g_thirdWaveExecutionTradingDisabledCount);
+   AppendCsvLong(row, g_thirdWaveExecutionNoEntrySignalCount);
+   AppendCsvLong(row, g_thirdWaveExecutionPositionLimitCount);
+   AppendCsvLong(row, g_thirdWaveExecutionRiskStopCount);
+   AppendCsvLong(row, g_thirdWaveExecutionRiskLimitCount);
+   AppendCsvLong(row, g_thirdWaveExecutionInvalidCount);
+   AppendCsvLong(row, g_thirdWaveExecutionOrderFailedCount);
+   AppendCsvLong(row, g_thirdWaveExecutionUnknownCount);
+   AppendCsvField(row, topSkipReason);
+   AppendCsvLong(row, topSkipCount);
+   AppendCsvField(row, topExecutionBlockReason);
+   AppendCsvLong(row, topExecutionBlockCount);
+   AppendCsvField(row, topSkipReason);
+   AppendCsvLong(row, topSkipCount);
+   FileWriteString(handle, row + "\r\n");
 
    FileClose(handle);
   }
@@ -2758,6 +3077,10 @@ void TryThirdWaveEntry(ThirdWaveSetup &setup)
      {
       if(blockReason == "existing_position")
          ++g_thirdWaveExistingPositionCount;
+      if(blockReason == "market_closed")
+         ++g_thirdWaveMarketClosedCount;
+      setup.executionBlockReason = blockReason;
+      RecordThirdWaveExecutionBlockReason(blockReason);
       setup.skipReason = blockReason;
       WriteThirdWaveTradeRow(setup, "order_blocked", blockReason, 0);
       WriteThirdWaveSignalRow(setup);
@@ -2780,6 +3103,8 @@ void TryThirdWaveEntry(ThirdWaveSetup &setup)
    if(!ok)
      {
       ++g_thirdWaveOrderFailedCount;
+      ++g_thirdWaveExecutionOrderFailedCount;
+      setup.executionBlockReason = "order_failed";
       setup.skipReason = "order_failed";
       WriteThirdWaveTradeRow(setup, "order_failed", "retcode_" + IntegerToString((int)trade.ResultRetcode()), (long)trade.ResultRetcode());
       WriteThirdWaveSignalRow(setup);
