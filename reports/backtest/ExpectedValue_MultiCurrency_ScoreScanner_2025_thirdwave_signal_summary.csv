@@ -1,0 +1,4 @@
+run,scenario,evaluations,long_evaluations,short_evaluations,setup_pass,entry_pass,orders_sent,orders_failed,no_higher_tf_trend,trend_broken,no_mid_pullback,pullback_too_shallow,pullback_too_deep,no_lower_reversal,sl_too_close,sl_too_wide,rr_too_low,existing_position,market_closed,spread_guard,data_unavailable,atr_unavailable,research_excluded,unknown,top_skip_reason,top_skip_reason_rows
+A,ThirdWave_BOTH,1031072,515536,515536,30164,1340,451,13,139895,8987,0,8048,12634,26053,144,2627,0,0,0,831344,0,0,0,0,spread_guard,831344
+B,ThirdWave_LONG_ONLY,515536,515536,0,16675,748,271,0,66916,4212,0,5730,6331,14248,64,1615,0,0,0,415672,0,0,0,0,spread_guard,415672
+C,ThirdWave_SHORT_ONLY,515536,0,515536,13489,592,208,13,72979,4775,0,2318,6303,11805,80,1012,0,0,0,415672,0,0,0,0,spread_guard,415672

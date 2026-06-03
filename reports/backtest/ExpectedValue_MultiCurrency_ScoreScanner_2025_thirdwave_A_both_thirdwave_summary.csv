@@ -1,0 +1,2 @@
+﻿time,strategy_name,evaluations,long_evaluations,short_evaluations,setup_pass,entry_pass,orders_sent,orders_failed,no_higher_tf_trend,trend_broken,no_mid_pullback,pullback_too_shallow,pullback_too_deep,no_lower_reversal,sl_too_close,sl_too_wide,rr_too_low,existing_position,market_closed,spread_guard,data_unavailable,atr_unavailable,research_excluded,unknown,top_skip_reason,top_skip_reason_rows
+2025.12.30 23:57:59,DowFractal_ThirdWave,1031072,515536,515536,30164,1340,451,13,139895,8987,0,8048,12634,26053,144,2627,0,0,0,831344,0,0,0,0,spread_guard,831344

@@ -1,0 +1,5 @@
+run,scenario,group,trades,wins,losses,win_rate,net_profit,gross_profit,gross_loss,profit_factor,expected_payoff,avg_win,avg_loss
+A,ThirdWave_BOTH,LONG,262,99,163,37.79,-1051.26,6496.46,-7547.72,0.861,-4.01,65.62,-46.31
+A,ThirdWave_BOTH,SHORT,189,80,109,42.33,586.85,5504.14,-4917.29,1.119,3.11,68.8,-45.11
+B,ThirdWave_LONG_ONLY,LONG,271,101,170,37.27,-1364.56,6256.96,-7621.52,0.821,-5.04,61.95,-44.83
+C,ThirdWave_SHORT_ONLY,SHORT,208,85,123,40.87,246.7,6027.99,-5781.29,1.043,1.19,70.92,-47.0

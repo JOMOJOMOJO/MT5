@@ -1,0 +1,396 @@
+param(
+    [string]$TerminalPath = "C:\Users\windows\AppData\Local\CodexMT5BucketLab\terminal64.exe",
+    [int]$TimeoutSeconds = 14400,
+    [string[]]$RunIds = @("A", "B", "C")
+)
+
+$ErrorActionPreference = "Stop"
+
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+$backtestDir = Join-Path $repoRoot "reports\backtest"
+$presetDir = Join-Path $repoRoot "reports\presets"
+$portableRoot = Split-Path -Parent (Resolve-Path $TerminalPath).Path
+$resolvedTerminalPath = (Resolve-Path $TerminalPath).Path
+$commonFilesRoot = Join-Path $env:APPDATA "MetaQuotes\Terminal\Common\Files"
+$resolvedCommonFilesRoot = (Resolve-Path $commonFilesRoot).Path
+$templatePreset = Join-Path $presetDir "ExpectedValue_MultiCurrency_ScoreScanner_2025_phase2_A_both_5m.set"
+$elapsedPath = Join-Path $backtestDir "ExpectedValue_MultiCurrency_ScoreScanner_2025_thirdwave_elapsed.csv"
+$requestedRunIds = @(
+    foreach ($runId in $RunIds) {
+        foreach ($part in ($runId -split ",")) {
+            $trimmed = $part.Trim()
+            if ($trimmed) {
+                $trimmed
+            }
+        }
+    }
+)
+
+function New-Run {
+    param(
+        [string]$Id,
+        [string]$Name,
+        [int]$DirectionMode,
+        [int]$MagicNumber
+    )
+
+    $prefix = "ExpectedValue_MultiCurrency_ScoreScanner_2025_thirdwave_$Name"
+    [pscustomobject]@{
+        Id = $Id
+        Name = $Name
+        Prefix = $prefix
+        DirectionMode = $DirectionMode
+        MagicNumber = $MagicNumber
+        IniPath = Join-Path $backtestDir "$prefix.ini"
+        PresetPath = Join-Path $presetDir "$prefix.set"
+        PresetName = "$prefix.set"
+        ReportStem = "${prefix}_report"
+        LogFolder = "multicurrency_score_scanner_2025_thirdwave_$Name"
+    }
+}
+
+$runs = @(
+    New-Run -Id "A" -Name "A_both" -DirectionMode 0 -MagicNumber 2026060311
+    New-Run -Id "B" -Name "B_long_only" -DirectionMode 1 -MagicNumber 2026060312
+    New-Run -Id "C" -Name "C_short_only" -DirectionMode 2 -MagicNumber 2026060313
+)
+
+function Sync-EaToPortable {
+    $targetDir = Join-Path $portableRoot "MQL5\Experts\dev\mql\Experts"
+    New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+    Copy-Item -LiteralPath (Join-Path $repoRoot "mql\Experts\ExpectedValue_MultiCurrency_ScoreScanner.mq5") -Destination $targetDir -Force
+    Copy-Item -LiteralPath (Join-Path $repoRoot "mql\Experts\ExpectedValue_MultiCurrency_ScoreScanner.ex5") -Destination $targetDir -Force
+}
+
+function Stop-MatchingPortableTerminal {
+    $running = @(Get-Process terminal64 -ErrorAction SilentlyContinue | Where-Object {
+        try {
+            $_.Path -eq $resolvedTerminalPath
+        } catch {
+            $false
+        }
+    })
+
+    foreach ($process in $running) {
+        Stop-Process -Id $process.Id -Force
+        try {
+            Wait-Process -Id $process.Id -Timeout 15 -ErrorAction SilentlyContinue
+        } catch {
+        }
+    }
+}
+
+function Write-ThirdWavePreset {
+    param([object]$Run)
+
+    $lines = Get-Content -Path $templatePreset
+    $out = New-Object System.Collections.Generic.List[string]
+    $insertedStrategyMode = $false
+    foreach ($line in $lines) {
+        if ($line -match '^InpResearchStrategyMode=') {
+            $out.Add("InpResearchStrategyMode=1||1||0||1||N")
+            $insertedStrategyMode = $true
+            continue
+        }
+        if ($line -match '^InpTradeDirectionMode=') {
+            $out.Add("InpTradeDirectionMode=$($Run.DirectionMode)||$($Run.DirectionMode)||0||2||N")
+            continue
+        }
+        if ($line -match '^InpSymbolResearchMode=') {
+            $out.Add("InpSymbolResearchMode=0||0||0||2||N")
+            continue
+        }
+        if ($line -match '^InpDisableUsdJpyShort=') {
+            $out.Add("InpDisableUsdJpyShort=false||false||0||true||N")
+            continue
+        }
+        if ($line -match '^InpUseDowFractalStructureFilter=') {
+            $out.Add("InpUseDowFractalStructureFilter=false||false||0||true||N")
+            continue
+        }
+        if ($line -match '^InpMagicNumber=') {
+            $out.Add("InpMagicNumber=$($Run.MagicNumber)||$($Run.MagicNumber)||1||999999999||N")
+            continue
+        }
+        if ($line -match '^InpLogFolder=') {
+            $out.Add("InpLogFolder=$($Run.LogFolder)")
+            continue
+        }
+        $out.Add($line)
+        if (-not $insertedStrategyMode -and $line -match '^InpExecutionTF=') {
+            $out.Add("InpResearchStrategyMode=1||1||0||1||N")
+            $insertedStrategyMode = $true
+        }
+    }
+    Set-Content -Path $Run.PresetPath -Value $out -Encoding ASCII
+}
+
+function Write-ThirdWaveIni {
+    param([object]$Run)
+
+    $lines = @(
+        "; MT5 Strategy Tester config for DowFractal ThirdWave initial validation.",
+        "; $($Run.Id): ThirdWave research branch, 2025 full year, hard stops disabled.",
+        "",
+        "[Experts]",
+        "Enabled=1",
+        "AllowLiveTrading=1",
+        "AllowDllImport=0",
+        "Account=0",
+        "Profile=0",
+        "",
+        "[Tester]",
+        "Expert=dev\mql\Experts\ExpectedValue_MultiCurrency_ScoreScanner.ex5",
+        "PresetSource=reports\presets\$($Run.PresetName)",
+        "PresetName=$($Run.PresetName)",
+        "Symbol=USDJPY",
+        "Period=M5",
+        "Model=4",
+        "ExecutionMode=0",
+        "Optimization=0",
+        "OptimizationCriterion=6",
+        "FromDate=2025.01.01",
+        "ToDate=2025.12.31",
+        "ForwardMode=0",
+        "Deposit=10000",
+        "Currency=USD",
+        "Leverage=1:100",
+        "UseLocal=1",
+        "UseRemote=0",
+        "UseCloud=0",
+        "Visual=0",
+        "ReplaceReport=1",
+        "ShutdownTerminal=1",
+        "Report=$($Run.ReportStem).html"
+    )
+    Set-Content -Path $Run.IniPath -Value $lines -Encoding ASCII
+}
+
+function Ensure-Inputs {
+    foreach ($run in $runs) {
+        Write-ThirdWavePreset -Run $run
+        Write-ThirdWaveIni -Run $run
+    }
+}
+
+function Copy-PresetToPortable {
+    param([object]$Run)
+
+    $targets = @(
+        (Join-Path $portableRoot "MQL5\Profiles\Tester"),
+        (Join-Path $portableRoot "Profiles\Tester")
+    ) | Select-Object -Unique
+
+    foreach ($target in $targets) {
+        New-Item -ItemType Directory -Path $target -Force | Out-Null
+        Copy-Item -LiteralPath $Run.PresetPath -Destination (Join-Path $target $Run.PresetName) -Force
+    }
+}
+
+function Clear-RunLogFolder {
+    param([object]$Run)
+
+    $target = Join-Path $resolvedCommonFilesRoot $Run.LogFolder
+    if (-not (Test-Path $target)) {
+        return
+    }
+
+    $resolvedTarget = (Resolve-Path $target).Path
+    if (-not $resolvedTarget.StartsWith($resolvedCommonFilesRoot, [System.StringComparison]::OrdinalIgnoreCase)) {
+        throw "Refusing to delete log folder outside Common Files: $resolvedTarget"
+    }
+    if ([System.IO.Path]::GetFileName($resolvedTarget) -ne $Run.LogFolder) {
+        throw "Refusing to delete unexpected log folder: $resolvedTarget"
+    }
+
+    Remove-Item -LiteralPath $resolvedTarget -Recurse -Force
+}
+
+function New-PortableConfig {
+    param([object]$Run)
+
+    $lines = Get-Content -Path $Run.IniPath
+    $out = New-Object System.Collections.Generic.List[string]
+    $hasExpertParameters = $false
+    foreach ($line in $lines) {
+        if ($line -match '^\s*PresetSource=' -or $line -match '^\s*PresetName=') {
+            continue
+        }
+        if ($line -match '^\s*ExpertParameters=') {
+            $out.Add("ExpertParameters=$($Run.PresetName)")
+            $hasExpertParameters = $true
+            continue
+        }
+        if ($line -match '^\s*Report=') {
+            $out.Add("Report=$($Run.ReportStem)")
+            continue
+        }
+        $out.Add($line)
+    }
+    if (-not $hasExpertParameters) {
+        $testerIndex = $out.IndexOf("[Tester]")
+        if ($testerIndex -ge 0) {
+            $out.Insert($testerIndex + 1, "ExpertParameters=$($Run.PresetName)")
+        } else {
+            $out.Add("ExpertParameters=$($Run.PresetName)")
+        }
+    }
+
+    $configPath = Join-Path ([System.IO.Path]::GetTempPath()) "$($Run.Prefix).portable.ini"
+    Set-Content -Path $configPath -Value $out -Encoding ASCII
+    return $configPath
+}
+
+function Find-ReportPath {
+    param([object]$Run)
+
+    $candidates = @(
+        (Join-Path $portableRoot "$($Run.ReportStem).htm"),
+        (Join-Path $portableRoot "$($Run.ReportStem).html")
+    )
+    foreach ($candidate in $candidates) {
+        if (Test-Path $candidate) {
+            return $candidate
+        }
+    }
+    return $null
+}
+
+function Clear-PortableReportFiles {
+    param([object]$Run)
+
+    Get-ChildItem -Path $portableRoot -File -Filter "$($Run.ReportStem)*" -ErrorAction SilentlyContinue |
+        Remove-Item -Force
+}
+
+function Copy-ReportsToRepo {
+    param([object]$Run)
+
+    $reportPath = Find-ReportPath -Run $Run
+    if (-not $reportPath) {
+        throw "Report file was not found for $($Run.Id) under $portableRoot"
+    }
+
+    Copy-Item -LiteralPath $reportPath -Destination (Join-Path $backtestDir "$($Run.ReportStem).html") -Force
+    foreach ($suffix in @(".png", "-hst.png", "-mfemae.png", "-holding.png")) {
+        $source = Join-Path $portableRoot "$($Run.ReportStem)$suffix"
+        if (Test-Path $source) {
+            Copy-Item -LiteralPath $source -Destination (Join-Path $backtestDir "$($Run.ReportStem)$suffix") -Force
+        }
+    }
+}
+
+function Join-CsvFiles {
+    param(
+        [System.IO.FileInfo[]]$Files,
+        [string]$OutputPath,
+        [string[]]$EmptyHeader
+    )
+
+    if (Test-Path $OutputPath) {
+        Remove-Item -LiteralPath $OutputPath -Force
+    }
+
+    if (-not $Files -or $Files.Count -eq 0) {
+        if ($EmptyHeader -and $EmptyHeader.Count -gt 0) {
+            Set-Content -Path $OutputPath -Value ($EmptyHeader -join ",") -Encoding UTF8
+        }
+        return
+    }
+
+    $first = $true
+    foreach ($file in ($Files | Sort-Object Name)) {
+        $lines = Get-Content -Path $file.FullName
+        if ($lines.Count -eq 0) {
+            continue
+        }
+        if ($first) {
+            Add-Content -Path $OutputPath -Value $lines -Encoding UTF8
+            $first = $false
+        } else {
+            Add-Content -Path $OutputPath -Value ($lines | Select-Object -Skip 1) -Encoding UTF8
+        }
+    }
+}
+
+function Copy-LogsToRepo {
+    param([object]$Run)
+
+    $logDir = Join-Path $resolvedCommonFilesRoot $Run.LogFolder
+    if (-not (Test-Path $logDir)) {
+        throw "Common Files log folder was not found: $logDir"
+    }
+
+    $scanFiles = @(Get-ChildItem -Path $logDir -File -Filter "multicurrency_score_scan_*.csv")
+    $signalFiles = @(Get-ChildItem -Path $logDir -File -Filter "thirdwave_signal_diagnostics_*.csv")
+    $tradeFiles = @(Get-ChildItem -Path $logDir -File -Filter "thirdwave_trade_diagnostics_*.csv")
+    $summaryFiles = @(Get-ChildItem -Path $logDir -File -Filter "thirdwave_summary_*.csv")
+
+    Join-CsvFiles -Files $scanFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_scan_diagnostics.csv") -EmptyHeader @("time", "event", "last_scan_bar_time", "scan_elapsed_ms", "reason")
+    Join-CsvFiles -Files $signalFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_signal_diagnostics.csv") -EmptyHeader @("time", "symbol", "direction", "higher_tf_trend", "mid_tf_pullback_status", "lower_tf_reversal_status", "setup_pass", "entry_pass", "skip_reason", "entry_price", "sl", "tp", "risk_r", "rr", "swing_high", "swing_low", "structure_sl_source", "strategy_name")
+    Join-CsvFiles -Files $tradeFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_trade_diagnostics.csv") -EmptyHeader @("time", "symbol", "direction", "event", "order_retcode", "order_comment", "entry_price", "sl", "tp", "volume", "risk_r", "rr", "skip_reason", "strategy_name")
+    Join-CsvFiles -Files $summaryFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_summary.csv") -EmptyHeader @("time", "strategy_name", "evaluations", "long_evaluations", "short_evaluations", "setup_pass", "entry_pass", "orders_sent", "orders_failed", "no_higher_tf_trend", "trend_broken", "no_mid_pullback", "pullback_too_shallow", "pullback_too_deep", "no_lower_reversal", "sl_too_close", "sl_too_wide", "rr_too_low", "existing_position", "market_closed", "spread_guard", "data_unavailable", "atr_unavailable", "research_excluded", "unknown", "top_skip_reason", "top_skip_reason_rows")
+}
+
+function Append-Elapsed {
+    param(
+        [object]$Run,
+        [double]$ElapsedSeconds
+    )
+
+    if (-not (Test-Path $elapsedPath)) {
+        Set-Content -Path $elapsedPath -Value "run,scenario,prefix,elapsed_seconds" -Encoding UTF8
+    }
+    $scenario = switch ($Run.Id) {
+        "A" { "ThirdWave_BOTH" }
+        "B" { "ThirdWave_LONG_ONLY" }
+        "C" { "ThirdWave_SHORT_ONLY" }
+        default { $Run.Name }
+    }
+    Add-Content -Path $elapsedPath -Value "$($Run.Id),$scenario,$($Run.Prefix),$([math]::Round($ElapsedSeconds, 1))" -Encoding UTF8
+}
+
+function Run-Backtest {
+    param([object]$Run)
+
+    Copy-PresetToPortable -Run $Run
+    Clear-RunLogFolder -Run $Run
+    Clear-PortableReportFiles -Run $Run
+    Stop-MatchingPortableTerminal
+
+    $configPath = New-PortableConfig -Run $Run
+    $startedAt = Get-Date
+    Write-Host "[$($Run.Id)] starting $($Run.Prefix)"
+    $process = Start-Process -FilePath $TerminalPath -ArgumentList @("/portable", "/config:$configPath") -PassThru -WindowStyle Hidden
+
+    $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
+    while (-not $process.HasExited -and (Get-Date) -lt $deadline) {
+        Start-Sleep -Seconds 10
+    }
+
+    if (-not $process.HasExited) {
+        Stop-Process -Id $process.Id -Force
+        throw "[$($Run.Id)] timed out after $TimeoutSeconds seconds"
+    }
+
+    Start-Sleep -Seconds 2
+    Copy-ReportsToRepo -Run $Run
+    Copy-LogsToRepo -Run $Run
+    $elapsed = (Get-Date) - $startedAt
+    Append-Elapsed -Run $Run -ElapsedSeconds $elapsed.TotalSeconds
+    Write-Host "[$($Run.Id)] completed in $([math]::Round($elapsed.TotalSeconds, 1)) seconds"
+}
+
+Ensure-Inputs
+Sync-EaToPortable
+
+if (Test-Path $elapsedPath) {
+    Remove-Item -LiteralPath $elapsedPath -Force
+}
+
+foreach ($run in $runs) {
+    if ($requestedRunIds -notcontains $run.Id) {
+        continue
+    }
+    Run-Backtest -Run $run
+}

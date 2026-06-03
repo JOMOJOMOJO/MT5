@@ -1,0 +1,4 @@
+run,scenario,rr,trade_log_rows,orders_sent,orders_failed
+A,ThirdWave_BOTH,1.50,1787,451,13
+B,ThirdWave_LONG_ONLY,1.50,1010,271,0
+C,ThirdWave_SHORT_ONLY,1.50,811,208,13
