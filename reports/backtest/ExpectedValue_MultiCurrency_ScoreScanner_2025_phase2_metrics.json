@@ -1,0 +1,760 @@
+{
+  "runs": {
+    "A": {
+      "trades": 1690,
+      "wins": 676,
+      "losses": 1014,
+      "win_rate": 40.0,
+      "net_profit": -750.9100000000027,
+      "gross_profit": 40931.40000000001,
+      "gross_loss": -41682.30999999997,
+      "profit_factor": 0.981984923580292,
+      "expected_payoff": -0.44432544378698385,
+      "avg_win": 60.549408284023684,
+      "avg_loss": -41.106814595660715,
+      "max_balance_dd": 3818.2699999999986,
+      "max_balance_dd_pct": 36.064726789814536,
+      "max_balance_dd_time": "2025.09.18 05:07:18",
+      "max_consecutive_wins": {
+        "count": 7,
+        "amount": 372.77,
+        "start": "2025.10.07 05:20:00",
+        "end": "2025.10.08 08:34:51"
+      },
+      "max_consecutive_losses": {
+        "count": 10,
+        "amount": -468.8299999999999,
+        "start": "2025.02.21 21:35:00",
+        "end": "2025.02.26 03:46:44"
+      }
+    },
+    "B": {
+      "trades": 1184,
+      "wins": 505,
+      "losses": 679,
+      "win_rate": 42.65202702702703,
+      "net_profit": 3777.819999999996,
+      "gross_profit": 38445.38999999998,
+      "gross_loss": -34667.56999999998,
+      "profit_factor": 1.1089727373450173,
+      "expected_payoff": 3.190726351351348,
+      "avg_win": 76.1294851485148,
+      "avg_loss": -51.05680412371131,
+      "max_balance_dd": 2123.329999999989,
+      "max_balance_dd_pct": 19.261884631713325,
+      "max_balance_dd_time": "2025.09.03 12:40:05",
+      "max_consecutive_wins": {
+        "count": 7,
+        "amount": 526.43,
+        "start": "2025.10.07 05:20:00",
+        "end": "2025.10.08 08:34:51"
+      },
+      "max_consecutive_losses": {
+        "count": 15,
+        "amount": -734.58,
+        "start": "2025.02.20 10:20:00",
+        "end": "2025.02.28 20:14:08"
+      }
+    },
+    "C": {
+      "trades": 757,
+      "wins": 271,
+      "losses": 486,
+      "win_rate": 35.79920739762219,
+      "net_profit": -3428.369999999998,
+      "gross_profit": 15346.959999999994,
+      "gross_loss": -18775.329999999984,
+      "profit_factor": 0.8174002800483404,
+      "expected_payoff": -4.528890356671067,
+      "avg_win": 56.630848708487065,
+      "avg_loss": -38.632366255144,
+      "max_balance_dd": 3804.0899999999874,
+      "max_balance_dd_pct": 37.30374077847641,
+      "max_balance_dd_time": "2025.12.24 05:38:24",
+      "max_consecutive_wins": {
+        "count": 6,
+        "amount": 226.94,
+        "start": "2025.12.29 15:20:00",
+        "end": "2025.12.29 17:22:03"
+      },
+      "max_consecutive_losses": {
+        "count": 13,
+        "amount": -558.1600000000001,
+        "start": "2025.03.10 13:35:00",
+        "end": "2025.03.21 14:45:01"
+      }
+    },
+    "D": {
+      "trades": 675,
+      "wins": 298,
+      "losses": 377,
+      "win_rate": 44.148148148148145,
+      "net_profit": 3349.9099999999994,
+      "gross_profit": 24357.02,
+      "gross_loss": -21007.109999999975,
+      "profit_factor": 1.1594655333360957,
+      "expected_payoff": 4.962829629629629,
+      "avg_win": 81.73496644295302,
+      "avg_loss": -55.72177718832884,
+      "max_balance_dd": 905.8499999999967,
+      "max_balance_dd_pct": 6.638929035246354,
+      "max_balance_dd_time": "2025.12.18 03:18:27",
+      "max_consecutive_wins": {
+        "count": 5,
+        "amount": 375.46,
+        "start": "2025.03.04 04:50:00",
+        "end": "2025.03.04 15:09:05"
+      },
+      "max_consecutive_losses": {
+        "count": 9,
+        "amount": -466.90000000000003,
+        "start": "2025.02.12 18:30:00",
+        "end": "2025.02.19 17:57:44"
+      }
+    },
+    "E": {
+      "trades": 549,
+      "wins": 244,
+      "losses": 305,
+      "win_rate": 44.44444444444444,
+      "net_profit": 2880.519999999999,
+      "gross_profit": 19731.29000000001,
+      "gross_loss": -16850.769999999993,
+      "profit_factor": 1.1709429302043777,
+      "expected_payoff": 5.246848816029142,
+      "avg_win": 80.86594262295087,
+      "avg_loss": -55.248426229508176,
+      "max_balance_dd": 934.9799999999996,
+      "max_balance_dd_pct": 7.000480684998578,
+      "max_balance_dd_time": "2025.12.22 03:14:01",
+      "max_consecutive_wins": {
+        "count": 5,
+        "amount": 375.46,
+        "start": "2025.03.04 04:50:00",
+        "end": "2025.03.04 15:09:05"
+      },
+      "max_consecutive_losses": {
+        "count": 8,
+        "amount": -408.84,
+        "start": "2025.02.11 04:05:00",
+        "end": "2025.02.19 17:57:44"
+      }
+    },
+    "F": {
+      "trades": 1566,
+      "wins": 649,
+      "losses": 917,
+      "win_rate": 41.44316730523627,
+      "net_profit": 2237.560000000001,
+      "gross_profit": 43767.54,
+      "gross_loss": -41529.98,
+      "profit_factor": 1.0538781863126347,
+      "expected_payoff": 1.4288378033205624,
+      "avg_win": 67.43842835130971,
+      "avg_loss": -45.28896401308615,
+      "max_balance_dd": 2588.1599999999835,
+      "max_balance_dd_pct": 24.6026321668083,
+      "max_balance_dd_time": "2025.09.03 12:40:05",
+      "max_consecutive_wins": {
+        "count": 7,
+        "amount": 452.84999999999997,
+        "start": "2025.10.07 05:20:00",
+        "end": "2025.10.08 08:34:51"
+      },
+      "max_consecutive_losses": {
+        "count": 10,
+        "amount": -409.08,
+        "start": "2025.08.12 15:20:00",
+        "end": "2025.08.15 06:30:50"
+      }
+    }
+  },
+  "comparison_rows": [
+    {
+      "run": "A",
+      "scenario": "BOTH_5m_new_bar",
+      "elapsed_seconds": 1160.2,
+      "trades": 1690,
+      "wins": 676,
+      "losses": 1014,
+      "win_rate": 40.0,
+      "net_profit": -750.91,
+      "profit_factor": 0.982,
+      "expected_payoff": -0.44,
+      "gross_profit": 40931.4,
+      "gross_loss": -41682.31,
+      "avg_win": 60.55,
+      "avg_loss": -41.11,
+      "max_balance_dd": 3818.27,
+      "max_balance_dd_pct": 36.06,
+      "max_balance_dd_time": "2025.09.18 05:07:18",
+      "max_consecutive_losses": 10,
+      "max_consecutive_losses_amount": -468.83,
+      "long_trades": 1066,
+      "long_net_profit": 2641.86,
+      "short_trades": 624,
+      "short_net_profit": -3392.77,
+      "xauusd_trades": 1221,
+      "xauusd_trade_share_pct": 72.25,
+      "xauusd_net_profit": 2049.33,
+      "usdjpy_short_trades": 206,
+      "usdjpy_short_net_profit": -2297.25,
+      "score_detail_rows": 149194,
+      "score_rows": 149194,
+      "entry_score_ok_rows": 5458,
+      "best_candidate_rows": 73648,
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 14.11,
+      "max_scan_elapsed_ms": 9313,
+      "structure_evaluations": 0,
+      "structure_detail_rows": 0,
+      "structure_rows": 0,
+      "structure_pass_rate": 0.0,
+      "structure_top_fail_reason": ""
+    },
+    {
+      "run": "B",
+      "scenario": "LONG_ONLY_5m_new_bar",
+      "elapsed_seconds": 1159.9,
+      "trades": 1184,
+      "wins": 505,
+      "losses": 679,
+      "win_rate": 42.65,
+      "net_profit": 3777.82,
+      "profit_factor": 1.109,
+      "expected_payoff": 3.19,
+      "gross_profit": 38445.39,
+      "gross_loss": -34667.57,
+      "avg_win": 76.13,
+      "avg_loss": -51.06,
+      "max_balance_dd": 2123.33,
+      "max_balance_dd_pct": 19.26,
+      "max_balance_dd_time": "2025.09.03 12:40:05",
+      "max_consecutive_losses": 15,
+      "max_consecutive_losses_amount": -734.58,
+      "long_trades": 1184,
+      "long_net_profit": 3777.82,
+      "short_trades": 0,
+      "short_net_profit": 0,
+      "xauusd_trades": 915,
+      "xauusd_trade_share_pct": 77.28,
+      "xauusd_net_profit": 4053.39,
+      "usdjpy_short_trades": 0,
+      "usdjpy_short_net_profit": 0,
+      "score_detail_rows": 148565,
+      "score_rows": 148565,
+      "entry_score_ok_rows": 3781,
+      "best_candidate_rows": 73648,
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 14.28,
+      "max_scan_elapsed_ms": 7219,
+      "structure_evaluations": 0,
+      "structure_detail_rows": 0,
+      "structure_rows": 0,
+      "structure_pass_rate": 0.0,
+      "structure_top_fail_reason": ""
+    },
+    {
+      "run": "C",
+      "scenario": "SHORT_ONLY_5m_new_bar",
+      "elapsed_seconds": 3784.1,
+      "trades": 757,
+      "wins": 271,
+      "losses": 486,
+      "win_rate": 35.8,
+      "net_profit": -3428.37,
+      "profit_factor": 0.817,
+      "expected_payoff": -4.53,
+      "gross_profit": 15346.96,
+      "gross_loss": -18775.33,
+      "avg_win": 56.63,
+      "avg_loss": -38.63,
+      "max_balance_dd": 3804.09,
+      "max_balance_dd_pct": 37.3,
+      "max_balance_dd_time": "2025.12.24 05:38:24",
+      "max_consecutive_losses": 13,
+      "max_consecutive_losses_amount": -558.16,
+      "long_trades": 0,
+      "long_net_profit": 0,
+      "short_trades": 757,
+      "short_net_profit": -3428.37,
+      "xauusd_trades": 385,
+      "xauusd_trade_share_pct": 50.86,
+      "xauusd_net_profit": -731.6,
+      "usdjpy_short_trades": 296,
+      "usdjpy_short_net_profit": -2173.97,
+      "score_detail_rows": 515536,
+      "score_rows": 515536,
+      "entry_score_ok_rows": 846,
+      "best_candidate_rows": 73648,
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 49.71,
+      "max_scan_elapsed_ms": 8843,
+      "structure_evaluations": 0,
+      "structure_detail_rows": 0,
+      "structure_rows": 0,
+      "structure_pass_rate": 0.0,
+      "structure_top_fail_reason": ""
+    },
+    {
+      "run": "D",
+      "scenario": "LONG_ONLY_DowFractal_5m_new_bar",
+      "elapsed_seconds": 1334.0,
+      "trades": 675,
+      "wins": 298,
+      "losses": 377,
+      "win_rate": 44.15,
+      "net_profit": 3349.91,
+      "profit_factor": 1.159,
+      "expected_payoff": 4.96,
+      "gross_profit": 24357.02,
+      "gross_loss": -21007.11,
+      "avg_win": 81.73,
+      "avg_loss": -55.72,
+      "max_balance_dd": 905.85,
+      "max_balance_dd_pct": 6.64,
+      "max_balance_dd_time": "2025.12.18 03:18:27",
+      "max_consecutive_losses": 9,
+      "max_consecutive_losses_amount": -466.9,
+      "long_trades": 675,
+      "long_net_profit": 3349.91,
+      "short_trades": 0,
+      "short_net_profit": 0,
+      "xauusd_trades": 534,
+      "xauusd_trade_share_pct": 79.11,
+      "xauusd_net_profit": 2874.71,
+      "usdjpy_short_trades": 0,
+      "usdjpy_short_net_profit": 0,
+      "score_detail_rows": 148021,
+      "score_rows": 148021,
+      "entry_score_ok_rows": 2189,
+      "best_candidate_rows": 73648,
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 16.78,
+      "max_scan_elapsed_ms": 7047,
+      "structure_evaluations": 515536,
+      "structure_detail_rows": 168274,
+      "structure_rows": 515536,
+      "structure_pass_rate": 10.54,
+      "structure_top_fail_reason": "no_trend_up"
+    },
+    {
+      "run": "E",
+      "scenario": "XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar",
+      "elapsed_seconds": 3777.6,
+      "trades": 549,
+      "wins": 244,
+      "losses": 305,
+      "win_rate": 44.44,
+      "net_profit": 2880.52,
+      "profit_factor": 1.171,
+      "expected_payoff": 5.25,
+      "gross_profit": 19731.29,
+      "gross_loss": -16850.77,
+      "avg_win": 80.87,
+      "avg_loss": -55.25,
+      "max_balance_dd": 934.98,
+      "max_balance_dd_pct": 7.0,
+      "max_balance_dd_time": "2025.12.22 03:14:01",
+      "max_consecutive_losses": 8,
+      "max_consecutive_losses_amount": -408.84,
+      "long_trades": 549,
+      "long_net_profit": 2880.52,
+      "short_trades": 0,
+      "short_net_profit": 0,
+      "xauusd_trades": 549,
+      "xauusd_trade_share_pct": 100.0,
+      "xauusd_net_profit": 2880.52,
+      "usdjpy_short_trades": 0,
+      "usdjpy_short_net_profit": 0,
+      "score_detail_rows": 515536,
+      "score_rows": 515536,
+      "entry_score_ok_rows": 575,
+      "best_candidate_rows": 73648,
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 50.17,
+      "max_scan_elapsed_ms": 1312,
+      "structure_evaluations": 73648,
+      "structure_detail_rows": 73648,
+      "structure_rows": 73648,
+      "structure_pass_rate": 12.66,
+      "structure_top_fail_reason": "no_trend_up"
+    },
+    {
+      "run": "F",
+      "scenario": "BOTH_disable_USDJPY_SHORT_5m_new_bar",
+      "elapsed_seconds": 3784.2,
+      "trades": 1566,
+      "wins": 649,
+      "losses": 917,
+      "win_rate": 41.44,
+      "net_profit": 2237.56,
+      "profit_factor": 1.054,
+      "expected_payoff": 1.43,
+      "gross_profit": 43767.54,
+      "gross_loss": -41529.98,
+      "avg_win": 67.44,
+      "avg_loss": -45.29,
+      "max_balance_dd": 2588.16,
+      "max_balance_dd_pct": 24.6,
+      "max_balance_dd_time": "2025.09.03 12:40:05",
+      "max_consecutive_losses": 10,
+      "max_consecutive_losses_amount": -409.08,
+      "long_trades": 1130,
+      "long_net_profit": 3648.58,
+      "short_trades": 436,
+      "short_net_profit": -1411.02,
+      "xauusd_trades": 1280,
+      "xauusd_trade_share_pct": 81.74,
+      "xauusd_net_profit": 3115.43,
+      "usdjpy_short_trades": 0,
+      "usdjpy_short_net_profit": 0,
+      "score_detail_rows": 515536,
+      "score_rows": 515536,
+      "entry_score_ok_rows": 1771,
+      "best_candidate_rows": 73648,
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 49.6,
+      "max_scan_elapsed_ms": 7407,
+      "structure_evaluations": 0,
+      "structure_detail_rows": 0,
+      "structure_rows": 0,
+      "structure_pass_rate": 0.0,
+      "structure_top_fail_reason": ""
+    }
+  ],
+  "scan_summaries": {
+    "A": {
+      "events": {
+        "scan_executed_new_execution_bar": 73648,
+        "scan_skipped_same_execution_bar": 534
+      },
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 14.11,
+      "max_scan_elapsed_ms": 9313
+    },
+    "B": {
+      "events": {
+        "scan_executed_new_execution_bar": 73648,
+        "scan_skipped_same_execution_bar": 534
+      },
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 14.28,
+      "max_scan_elapsed_ms": 7219
+    },
+    "C": {
+      "events": {
+        "scan_executed_new_execution_bar": 73648,
+        "scan_skipped_same_execution_bar": 534
+      },
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 49.71,
+      "max_scan_elapsed_ms": 8843
+    },
+    "D": {
+      "events": {
+        "scan_executed_new_execution_bar": 73648,
+        "scan_skipped_same_execution_bar": 534
+      },
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 16.78,
+      "max_scan_elapsed_ms": 7047
+    },
+    "E": {
+      "events": {
+        "scan_executed_new_execution_bar": 73648,
+        "scan_skipped_same_execution_bar": 534
+      },
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 50.17,
+      "max_scan_elapsed_ms": 1312
+    },
+    "F": {
+      "events": {
+        "scan_executed_new_execution_bar": 73648,
+        "scan_skipped_same_execution_bar": 534
+      },
+      "new_bar_scans": 73648,
+      "same_bar_skips": 534,
+      "avg_scan_elapsed_ms": 49.6,
+      "max_scan_elapsed_ms": 7407
+    }
+  },
+  "structure_summaries": {
+    "A": {
+      "rows": 0,
+      "evaluations": 0,
+      "detail_rows": 0,
+      "pass": 0,
+      "fail": 0,
+      "pass_rate": 0.0,
+      "top_fail_reason": "",
+      "top_fail_reason_rows": 0
+    },
+    "B": {
+      "rows": 0,
+      "evaluations": 0,
+      "detail_rows": 0,
+      "pass": 0,
+      "fail": 0,
+      "pass_rate": 0.0,
+      "top_fail_reason": "",
+      "top_fail_reason_rows": 0
+    },
+    "C": {
+      "rows": 0,
+      "pass": 0,
+      "fail": 0,
+      "pass_rate": 0.0,
+      "top_fail_reason": "",
+      "top_fail_reason_rows": 0,
+      "evaluations": 0,
+      "detail_rows": 0
+    },
+    "D": {
+      "rows": 515536,
+      "evaluations": 515536,
+      "detail_rows": 168274,
+      "pass": 54334,
+      "fail": 461202,
+      "pass_rate": 10.54,
+      "top_fail_reason": "no_trend_up",
+      "top_fail_reason_rows": 349872
+    },
+    "E": {
+      "rows": 73648,
+      "pass": 9322,
+      "fail": 64326,
+      "pass_rate": 12.66,
+      "top_fail_reason": "no_trend_up",
+      "top_fail_reason_rows": 48130,
+      "evaluations": 73648,
+      "detail_rows": 73648
+    },
+    "F": {
+      "rows": 0,
+      "pass": 0,
+      "fail": 0,
+      "pass_rate": 0.0,
+      "top_fail_reason": "",
+      "top_fail_reason_rows": 0,
+      "evaluations": 0,
+      "detail_rows": 0
+    }
+  },
+  "score_summaries": {
+    "A": {
+      "rows": 149194,
+      "unique_times": 73648,
+      "flags": {
+        "best_candidate": 73648,
+        "below_threshold": 143736,
+        "entry_score_ok": 5458,
+        "max_positions_reached": 59208,
+        "not_best": 170
+      },
+      "entry_by_symbol": {
+        "XAUUSD": 3804,
+        "USDJPY": 1159,
+        "EURJPY": 92,
+        "GBPJPY": 103,
+        "EURUSD": 138,
+        "GBPUSD": 124,
+        "AUDJPY": 38
+      },
+      "entry_by_direction": {
+        "LONG": 3449,
+        "SHORT": 2009
+      },
+      "best_by_symbol": {
+        "XAUUSD": 38311,
+        "GBPUSD": 2058,
+        "EURUSD": 2015,
+        "EURJPY": 5442,
+        "USDJPY": 17601,
+        "GBPJPY": 4286,
+        "AUDJPY": 3935
+      },
+      "best_by_direction": {
+        "LONG": 41197,
+        "SHORT": 32451
+      }
+    },
+    "B": {
+      "rows": 148565,
+      "unique_times": 73648,
+      "flags": {
+        "best_candidate": 73648,
+        "below_threshold": 144784,
+        "entry_score_ok": 3781,
+        "max_positions_reached": 43028,
+        "not_best": 47
+      },
+      "entry_by_symbol": {
+        "XAUUSD": 2863,
+        "USDJPY": 614,
+        "EURJPY": 52,
+        "GBPJPY": 28,
+        "GBPUSD": 59,
+        "EURUSD": 156,
+        "AUDJPY": 9
+      },
+      "entry_by_direction": {
+        "LONG": 3781
+      },
+      "best_by_symbol": {
+        "XAUUSD": 40390,
+        "GBPJPY": 3455,
+        "USDJPY": 15322,
+        "AUDJPY": 3756,
+        "EURJPY": 5307,
+        "GBPUSD": 2541,
+        "EURUSD": 2877
+      },
+      "best_by_direction": {
+        "LONG": 73648
+      }
+    },
+    "C": {
+      "rows": 515536,
+      "unique_times": 73648,
+      "flags": {
+        "below_threshold": 514690,
+        "not_best": 441888,
+        "best_candidate": 73648,
+        "entry_score_ok": 846,
+        "max_positions_reached": 91728
+      },
+      "entry_by_symbol": {
+        "EURJPY": 31,
+        "GBPJPY": 42,
+        "EURUSD": 28,
+        "XAUUSD": 389,
+        "GBPUSD": 35,
+        "USDJPY": 309,
+        "AUDJPY": 12
+      },
+      "entry_by_direction": {
+        "SHORT": 846
+      },
+      "best_by_symbol": {
+        "GBPUSD": 3642,
+        "EURUSD": 3635,
+        "EURJPY": 3243,
+        "XAUUSD": 42262,
+        "USDJPY": 15160,
+        "GBPJPY": 2816,
+        "AUDJPY": 2890
+      },
+      "best_by_direction": {
+        "SHORT": 73648
+      }
+    },
+    "D": {
+      "rows": 148021,
+      "unique_times": 73648,
+      "flags": {
+        "best_candidate": 73648,
+        "below_threshold": 145832,
+        "entry_score_ok": 2189,
+        "max_positions_reached": 25004,
+        "not_best": 24
+      },
+      "entry_by_symbol": {
+        "XAUUSD": 1683,
+        "EURJPY": 28,
+        "GBPJPY": 27,
+        "USDJPY": 311,
+        "AUDJPY": 9,
+        "GBPUSD": 34,
+        "EURUSD": 97
+      },
+      "entry_by_direction": {
+        "LONG": 2189
+      },
+      "best_by_symbol": {
+        "XAUUSD": 33670,
+        "AUDJPY": 5175,
+        "USDJPY": 13122,
+        "GBPJPY": 4882,
+        "EURJPY": 5806,
+        "GBPUSD": 5171,
+        "EURUSD": 5822
+      },
+      "best_by_direction": {
+        "LONG": 73648
+      }
+    },
+    "E": {
+      "rows": 515536,
+      "unique_times": 73648,
+      "flags": {
+        "not_best": 441888,
+        "best_candidate": 73648,
+        "below_threshold": 73073,
+        "entry_score_ok": 575,
+        "max_positions_reached": 10036
+      },
+      "entry_by_symbol": {
+        "XAUUSD": 575
+      },
+      "entry_by_direction": {
+        "LONG": 575
+      },
+      "best_by_symbol": {
+        "XAUUSD": 73648
+      },
+      "best_by_direction": {
+        "LONG": 73648
+      }
+    },
+    "F": {
+      "rows": 515536,
+      "unique_times": 73648,
+      "flags": {
+        "below_threshold": 513765,
+        "not_best": 441888,
+        "best_candidate": 73648,
+        "entry_score_ok": 1771,
+        "max_positions_reached": 194418
+      },
+      "entry_by_symbol": {
+        "XAUUSD": 1333,
+        "USDJPY": 183,
+        "EURJPY": 47,
+        "GBPJPY": 51,
+        "EURUSD": 80,
+        "GBPUSD": 54,
+        "AUDJPY": 23
+      },
+      "entry_by_direction": {
+        "LONG": 1261,
+        "SHORT": 510
+      },
+      "best_by_symbol": {
+        "XAUUSD": 39011,
+        "GBPUSD": 2269,
+        "EURUSD": 2137,
+        "EURJPY": 8188,
+        "USDJPY": 9562,
+        "GBPJPY": 6649,
+        "AUDJPY": 5832
+      },
+      "best_by_direction": {
+        "LONG": 44662,
+        "SHORT": 28986
+      }
+    }
+  }
+}

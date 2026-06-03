@@ -11,12 +11,33 @@ CTrade trade;
 
 static const string STRATEGY_NAME = "ExpectedValue_MultiCurrency_ScoreScanner";
 
+enum ENUM_TRADE_DIRECTION_MODE
+  {
+   TRADE_DIRECTION_BOTH = 0,
+   TRADE_DIRECTION_LONG_ONLY = 1,
+   TRADE_DIRECTION_SHORT_ONLY = 2
+  };
+
+enum ENUM_SYMBOL_RESEARCH_MODE
+  {
+   SYMBOL_RESEARCH_ALL = 0,
+   SYMBOL_RESEARCH_XAUUSD_ONLY = 1,
+   SYMBOL_RESEARCH_FX_ONLY = 2
+  };
+
 input string          InpSymbols                       = "USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD,XAUUSD";
-input int             InpScanSeconds                   = 30;
+input int             InpScanSeconds                   = 300;
+input bool            InpScanOnlyOnNewExecutionBar     = true;
 input double          InpEntryScoreThreshold           = 60.0;
 input ENUM_TIMEFRAMES InpContextTF                     = PERIOD_H1;
 input ENUM_TIMEFRAMES InpPatternTF                     = PERIOD_M15;
 input ENUM_TIMEFRAMES InpExecutionTF                   = PERIOD_M5;
+input ENUM_TRADE_DIRECTION_MODE InpTradeDirectionMode  = TRADE_DIRECTION_BOTH;
+input bool            InpDisableUsdJpyShort            = false;
+input ENUM_SYMBOL_RESEARCH_MODE InpSymbolResearchMode  = SYMBOL_RESEARCH_ALL;
+input bool            InpUseDowFractalStructureFilter  = false;
+input int             InpStructureSwingSpan            = 2;
+input int             InpStructureScanBars             = 80;
 input bool            InpEnableTrading                 = false;
 input int             InpMaxPositions                  = 1;
 input int             InpMaxSameCurrencyGroupPositions = 1;
@@ -50,6 +71,31 @@ input bool            InpUseCommonFiles                = false;
 input string          InpLogFolder                     = "logs";
 input string          InpLogPrefix                     = "multicurrency_score";
 
+struct PivotPoint
+  {
+   bool              valid;
+   int               shift;
+   double            price;
+   datetime          time;
+  };
+
+struct StructureFilterState
+  {
+   bool              trendUp;
+   bool              trendDown;
+   bool              higherHigh;
+   bool              higherLow;
+   bool              lowerHigh;
+   bool              lowerLow;
+   bool              pullbackValid;
+   bool              pullbackTooDeep;
+   bool              fractalConfirmed;
+   bool              reclaimConfirmed;
+   bool              pass;
+   double            structureStopReference;
+   string            failReason;
+  };
+
 struct SymbolScore
   {
    string            symbol;
@@ -67,8 +113,13 @@ struct SymbolScore
    double            takeProfit;
    double            volume;
    bool              dataReady;
+   bool              structureEvaluated;
+   StructureFilterState structureState;
    string            reason;
   };
+
+void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
+void WriteStructureSummaryRow();
 
 string   g_symbols[];
 double   g_initialEquity = 0.0;
@@ -81,6 +132,21 @@ bool     g_dailyStopped = false;
 bool     g_weeklyStopped = false;
 bool     g_drawdownStopped = false;
 string   g_riskStopReason = "";
+datetime g_lastScanExecutionBarTime = 0;
+datetime g_lastLoggedSkippedExecutionBarTime = 0;
+long     g_structureEvaluations = 0;
+long     g_structureDetailRows = 0;
+long     g_structurePassCount = 0;
+long     g_structureFailCount = 0;
+long     g_structureNoContextSwingsCount = 0;
+long     g_structureNoTrendUpCount = 0;
+long     g_structureNoTrendDownCount = 0;
+long     g_structurePullbackTooDeepCount = 0;
+long     g_structurePullbackNotValidCount = 0;
+long     g_structureNoFractalLowCount = 0;
+long     g_structureNoFractalHighCount = 0;
+long     g_structureNoReclaimCount = 0;
+long     g_structureUnknownFailCount = 0;
 
 //+------------------------------------------------------------------+
 //| Generic helpers                                                   |
@@ -124,6 +190,35 @@ string DirectionToString(const int direction)
    if(direction < 0)
       return "SHORT";
    return "NONE";
+  }
+
+string UpperSymbol(const string symbol)
+  {
+   string upper = symbol;
+   StringToUpper(upper);
+   return upper;
+  }
+
+bool IsXauSymbol(const string symbol)
+  {
+   return (StringFind(UpperSymbol(symbol), "XAU") >= 0);
+  }
+
+bool IsUsdJpySymbol(const string symbol)
+  {
+   return (StringFind(UpperSymbol(symbol), "USDJPY") == 0);
+  }
+
+string BoolText(const bool value)
+  {
+   return (value ? "true" : "false");
+  }
+
+string DateTimeText(const datetime value)
+  {
+   if(value <= 0)
+      return "";
+   return TimeToString(value, TIME_DATE | TIME_MINUTES | TIME_SECONDS);
   }
 
 int DateKey(const datetime now)
@@ -176,6 +271,48 @@ bool ParseSymbols()
      }
 
    return ArraySize(g_symbols) > 0;
+  }
+
+bool IsSymbolAllowedByResearchMode(const string symbol, string &reason)
+  {
+   reason = "";
+   if(InpSymbolResearchMode == SYMBOL_RESEARCH_XAUUSD_ONLY && !IsXauSymbol(symbol))
+     {
+      reason = "symbol_research_xauusd_only_excluded";
+      return false;
+     }
+
+   if(InpSymbolResearchMode == SYMBOL_RESEARCH_FX_ONLY && IsXauSymbol(symbol))
+     {
+      reason = "symbol_research_fx_only_excluded";
+      return false;
+     }
+
+   return true;
+  }
+
+bool IsDirectionAllowedByResearchMode(const string symbol, const int direction, string &reason)
+  {
+   reason = "";
+   if(direction > 0 && InpTradeDirectionMode == TRADE_DIRECTION_SHORT_ONLY)
+     {
+      reason = "direction_mode_short_only";
+      return false;
+     }
+
+   if(direction < 0 && InpTradeDirectionMode == TRADE_DIRECTION_LONG_ONLY)
+     {
+      reason = "direction_mode_long_only";
+      return false;
+     }
+
+   if(direction < 0 && InpDisableUsdJpyShort && IsUsdJpySymbol(symbol))
+     {
+      reason = "disabled_usdjpy_short";
+      return false;
+     }
+
+   return true;
   }
 
 //+------------------------------------------------------------------+
@@ -273,7 +410,108 @@ int RequiredBars()
   {
    int need = InpSlowMAPeriod + InpSlopeLookbackBars + InpATRAveragePeriod + InpATRPeriod + 10;
    need = MathMax(need, InpSetupLookbackBars + 10);
+   need = MathMax(need, InpStructureScanBars + InpStructureSwingSpan * 2 + 10);
    return MathMax(need, 90);
+  }
+
+void ResetPivot(PivotPoint &pivot)
+  {
+   pivot.valid = false;
+   pivot.shift = -1;
+   pivot.price = 0.0;
+   pivot.time = 0;
+  }
+
+void SetPivot(PivotPoint &pivot, const int shift, const double price, const datetime time)
+  {
+   pivot.valid = true;
+   pivot.shift = shift;
+   pivot.price = price;
+   pivot.time = time;
+  }
+
+bool IsPivotHigh(const MqlRates &rates[], const int shift, const int span)
+  {
+   int size = ArraySize(rates);
+   if(span < 1 || shift - span < 1 || shift + span >= size)
+      return false;
+
+   double price = rates[shift].high;
+   for(int offset = 1; offset <= span; ++offset)
+     {
+      if(rates[shift - offset].high >= price)
+         return false;
+      if(rates[shift + offset].high >= price)
+         return false;
+     }
+   return true;
+  }
+
+bool IsPivotLow(const MqlRates &rates[], const int shift, const int span)
+  {
+   int size = ArraySize(rates);
+   if(span < 1 || shift - span < 1 || shift + span >= size)
+      return false;
+
+   double price = rates[shift].low;
+   for(int offset = 1; offset <= span; ++offset)
+     {
+      if(rates[shift - offset].low <= price)
+         return false;
+      if(rates[shift + offset].low <= price)
+         return false;
+     }
+   return true;
+  }
+
+bool FindRecentPivots(const MqlRates &rates[],
+                      const bool highPivot,
+                      const int span,
+                      const int scanBars,
+                      PivotPoint &latest,
+                      PivotPoint &previous)
+  {
+   ResetPivot(latest);
+   ResetPivot(previous);
+
+   int size = ArraySize(rates);
+   int maxShift = size - span - 1;
+   if(maxShift > scanBars)
+      maxShift = scanBars;
+   for(int shift = span + 1; shift <= maxShift; ++shift)
+     {
+      bool found = (highPivot ? IsPivotHigh(rates, shift, span) : IsPivotLow(rates, shift, span));
+      if(!found)
+         continue;
+
+      if(!latest.valid)
+        {
+         SetPivot(latest, shift, (highPivot ? rates[shift].high : rates[shift].low), rates[shift].time);
+         continue;
+        }
+
+      SetPivot(previous, shift, (highPivot ? rates[shift].high : rates[shift].low), rates[shift].time);
+      return true;
+     }
+
+   return (latest.valid && previous.valid);
+  }
+
+void ResetStructureFilterState(StructureFilterState &state)
+  {
+   state.trendUp = false;
+   state.trendDown = false;
+   state.higherHigh = false;
+   state.higherLow = false;
+   state.lowerHigh = false;
+   state.lowerLow = false;
+   state.pullbackValid = false;
+   state.pullbackTooDeep = false;
+   state.fractalConfirmed = false;
+   state.reclaimConfirmed = false;
+   state.pass = false;
+   state.structureStopReference = 0.0;
+   state.failReason = "";
   }
 
 //+------------------------------------------------------------------+
@@ -712,6 +950,296 @@ double CostPenalty(const string symbol, const double executionATR, double &sprea
    return ClampDouble(spreadATR / MathMax(InpMaxSpreadATR, 0.0001) * 8.0, 0.0, 8.0);
   }
 
+void EvaluateDowFractalStructure(const string symbol,
+                                 const MqlRates &contextRates[],
+                                 const MqlRates &patternRates[],
+                                 const MqlRates &executionRates[],
+                                 const int direction,
+                                 StructureFilterState &state)
+  {
+   ResetStructureFilterState(state);
+
+   int span = InpStructureSwingSpan;
+   if(span < 1)
+      span = 1;
+
+   int scanBars = InpStructureScanBars;
+   if(scanBars < span * 4 + 10)
+      scanBars = span * 4 + 10;
+
+   PivotPoint contextHighLatest;
+   PivotPoint contextHighPrevious;
+   PivotPoint contextLowLatest;
+   PivotPoint contextLowPrevious;
+   PivotPoint patternHighLatest;
+   PivotPoint patternHighPrevious;
+   PivotPoint patternLowLatest;
+   PivotPoint patternLowPrevious;
+
+   bool hasContextHighs = FindRecentPivots(contextRates, true, span, scanBars, contextHighLatest, contextHighPrevious);
+   bool hasContextLows = FindRecentPivots(contextRates, false, span, scanBars, contextLowLatest, contextLowPrevious);
+   bool hasPatternHighs = FindRecentPivots(patternRates, true, span, scanBars, patternHighLatest, patternHighPrevious);
+   bool hasPatternLows = FindRecentPivots(patternRates, false, span, scanBars, patternLowLatest, patternLowPrevious);
+
+   if(hasContextHighs)
+     {
+      state.higherHigh = (contextHighLatest.price > contextHighPrevious.price);
+      state.lowerHigh = (contextHighLatest.price < contextHighPrevious.price);
+     }
+   if(hasContextLows)
+     {
+      state.higherLow = (contextLowLatest.price > contextLowPrevious.price);
+      state.lowerLow = (contextLowLatest.price < contextLowPrevious.price);
+     }
+
+   state.trendUp = (state.higherHigh && state.higherLow);
+   state.trendDown = (state.lowerHigh && state.lowerLow);
+
+   double point = SymbolInfoDouble(symbol, SYMBOL_POINT);
+   if(point <= 0.0)
+      point = 0.0;
+
+   if(direction > 0)
+     {
+      state.pullbackTooDeep = (hasContextLows && patternRates[1].low <= contextLowPrevious.price);
+      state.pullbackValid = (hasContextLows &&
+                             hasPatternLows &&
+                             !state.pullbackTooDeep &&
+                             patternLowLatest.price > contextLowPrevious.price &&
+                             patternRates[1].low > contextLowPrevious.price);
+      state.fractalConfirmed = hasPatternLows;
+
+      bool m5Rebound = (executionRates[1].close > executionRates[1].open &&
+                        executionRates[1].close > executionRates[2].high);
+      bool fractalReclaim = false;
+      if(hasPatternLows)
+        {
+         int reclaimBars = patternLowLatest.shift - 2;
+         if(reclaimBars > 12)
+            reclaimBars = 12;
+         if(reclaimBars > 0)
+           {
+            double reclaimHigh = HighestHigh(patternRates, 2, reclaimBars);
+            fractalReclaim = (reclaimHigh > 0.0 && patternRates[1].close > reclaimHigh);
+           }
+         state.structureStopReference = patternLowLatest.price - point * 2.0;
+        }
+
+      state.reclaimConfirmed = (state.fractalConfirmed && (fractalReclaim || m5Rebound));
+      state.pass = (state.trendUp && state.pullbackValid && state.fractalConfirmed && state.reclaimConfirmed);
+
+      if(!hasContextHighs || !hasContextLows)
+         state.failReason = "no_context_swings";
+      else if(!state.trendUp)
+         state.failReason = "no_trend_up";
+      else if(state.pullbackTooDeep)
+         state.failReason = "pullback_too_deep";
+      else if(!state.pullbackValid)
+         state.failReason = "pullback_not_valid";
+      else if(!state.fractalConfirmed)
+         state.failReason = "no_fractal_low";
+      else if(!state.reclaimConfirmed)
+         state.failReason = "no_reclaim";
+     }
+   else
+     {
+      state.pullbackTooDeep = (hasContextHighs && patternRates[1].high >= contextHighPrevious.price);
+      state.pullbackValid = (hasContextHighs &&
+                             hasPatternHighs &&
+                             !state.pullbackTooDeep &&
+                             patternHighLatest.price < contextHighPrevious.price &&
+                             patternRates[1].high < contextHighPrevious.price);
+      state.fractalConfirmed = hasPatternHighs;
+
+      bool m5Reject = (executionRates[1].close < executionRates[1].open &&
+                       executionRates[1].close < executionRates[2].low);
+      bool fractalBreak = false;
+      if(hasPatternHighs)
+        {
+         int reclaimBars = patternHighLatest.shift - 2;
+         if(reclaimBars > 12)
+            reclaimBars = 12;
+         if(reclaimBars > 0)
+           {
+            double reclaimLow = LowestLow(patternRates, 2, reclaimBars);
+            fractalBreak = (reclaimLow > 0.0 && patternRates[1].close < reclaimLow);
+           }
+         state.structureStopReference = patternHighLatest.price + point * 2.0;
+        }
+
+      state.reclaimConfirmed = (state.fractalConfirmed && (fractalBreak || m5Reject));
+      state.pass = (state.trendDown && state.pullbackValid && state.fractalConfirmed && state.reclaimConfirmed);
+
+      if(!hasContextHighs || !hasContextLows)
+         state.failReason = "no_context_swings";
+      else if(!state.trendDown)
+         state.failReason = "no_trend_down";
+      else if(state.pullbackTooDeep)
+         state.failReason = "pullback_too_deep";
+      else if(!state.pullbackValid)
+         state.failReason = "pullback_not_valid";
+      else if(!state.fractalConfirmed)
+         state.failReason = "no_fractal_high";
+      else if(!state.reclaimConfirmed)
+         state.failReason = "no_reclaim";
+     }
+
+   if(state.pass)
+      state.failReason = "";
+   if(!state.pass && state.failReason == "")
+      state.failReason = "unknown";
+  }
+
+string StructureReasonTokens(const string symbol, const StructureFilterState &state)
+  {
+   string reason = "";
+   if(state.trendUp)
+      AppendReason(reason, "trend_up");
+   if(state.trendDown)
+      AppendReason(reason, "trend_down");
+   if(state.higherHigh)
+      AppendReason(reason, "higher_high");
+   if(state.higherLow)
+      AppendReason(reason, "higher_low");
+   if(state.lowerHigh)
+      AppendReason(reason, "lower_high");
+   if(state.lowerLow)
+      AppendReason(reason, "lower_low");
+   if(state.pullbackValid)
+      AppendReason(reason, "pullback_valid");
+   if(state.pullbackTooDeep)
+      AppendReason(reason, "pullback_too_deep");
+   if(state.fractalConfirmed)
+      AppendReason(reason, "fractal_confirmed");
+   if(state.reclaimConfirmed)
+      AppendReason(reason, "reclaim_confirmed");
+
+   if(state.pass)
+      AppendReason(reason, "structure_filter_pass");
+   else
+     {
+      AppendReason(reason, "structure_filter_fail_reason");
+      AppendReason(reason, "structure_filter_fail_reason_" + state.failReason);
+     }
+
+   if(state.structureStopReference > 0.0)
+     {
+      int digits = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
+      AppendReason(reason, "structure_stop_reference_" + DoubleToString(state.structureStopReference, digits));
+     }
+
+   return reason;
+  }
+
+void RecordStructureEvaluation(const StructureFilterState &state)
+  {
+   ++g_structureEvaluations;
+   if(state.pass)
+     {
+      ++g_structurePassCount;
+      return;
+     }
+
+   ++g_structureFailCount;
+   if(state.failReason == "no_context_swings")
+      ++g_structureNoContextSwingsCount;
+   else if(state.failReason == "no_trend_up")
+      ++g_structureNoTrendUpCount;
+   else if(state.failReason == "no_trend_down")
+      ++g_structureNoTrendDownCount;
+   else if(state.failReason == "pullback_too_deep")
+      ++g_structurePullbackTooDeepCount;
+   else if(state.failReason == "pullback_not_valid")
+      ++g_structurePullbackNotValidCount;
+   else if(state.failReason == "no_fractal_low")
+      ++g_structureNoFractalLowCount;
+   else if(state.failReason == "no_fractal_high")
+      ++g_structureNoFractalHighCount;
+   else if(state.failReason == "no_reclaim")
+      ++g_structureNoReclaimCount;
+   else
+      ++g_structureUnknownFailCount;
+  }
+
+string TopStructureFailReason(long &count)
+  {
+   string reason = "";
+   count = 0;
+
+   if(g_structureNoContextSwingsCount > count)
+     {
+      reason = "no_context_swings";
+      count = g_structureNoContextSwingsCount;
+     }
+   if(g_structureNoTrendUpCount > count)
+     {
+      reason = "no_trend_up";
+      count = g_structureNoTrendUpCount;
+     }
+   if(g_structureNoTrendDownCount > count)
+     {
+      reason = "no_trend_down";
+      count = g_structureNoTrendDownCount;
+     }
+   if(g_structurePullbackTooDeepCount > count)
+     {
+      reason = "pullback_too_deep";
+      count = g_structurePullbackTooDeepCount;
+     }
+   if(g_structurePullbackNotValidCount > count)
+     {
+      reason = "pullback_not_valid";
+      count = g_structurePullbackNotValidCount;
+     }
+   if(g_structureNoFractalLowCount > count)
+     {
+      reason = "no_fractal_low";
+      count = g_structureNoFractalLowCount;
+     }
+   if(g_structureNoFractalHighCount > count)
+     {
+      reason = "no_fractal_high";
+      count = g_structureNoFractalHighCount;
+     }
+   if(g_structureNoReclaimCount > count)
+     {
+      reason = "no_reclaim";
+      count = g_structureNoReclaimCount;
+     }
+   if(g_structureUnknownFailCount > count)
+     {
+      reason = "unknown";
+      count = g_structureUnknownFailCount;
+     }
+
+   return reason;
+  }
+
+double StructureFilterPenalty(const string symbol,
+                              const MqlRates &contextRates[],
+                              const MqlRates &patternRates[],
+                              const MqlRates &executionRates[],
+                              const int direction,
+                              string &reason,
+                              StructureFilterState &state,
+                              bool &structureEvaluated)
+  {
+   structureEvaluated = false;
+   ResetStructureFilterState(state);
+
+   if(!InpUseDowFractalStructureFilter)
+      return 0.0;
+
+   EvaluateDowFractalStructure(symbol, contextRates, patternRates, executionRates, direction, state);
+   structureEvaluated = true;
+   RecordStructureEvaluation(state);
+   AppendReason(reason, StructureReasonTokens(symbol, state));
+
+   if(!state.pass)
+      return 100.0;
+   return 0.0;
+  }
+
 void ComputeTradeLevels(SymbolScore &score, const int direction)
   {
    score.stopDistance = ClampDouble(score.atr * InpStopATRMultiplier,
@@ -756,6 +1284,9 @@ void ScoreSide(const string symbol,
    double spreadATR = 0.0;
    double cost = CostPenalty(symbol, executionATR, spreadATR, reason);
    double risk = RiskPenalty(symbol, reason);
+   StructureFilterState structureState;
+   bool structureEvaluated = false;
+   risk += StructureFilterPenalty(symbol, contextRates, patternRates, executionRates, direction, reason, structureState, structureEvaluated);
 
    score.symbol = symbol;
    score.direction = DirectionToString(direction);
@@ -768,6 +1299,8 @@ void ScoreSide(const string symbol,
    score.atr = patternATR;
    score.spreadATR = spreadATR;
    score.dataReady = true;
+   score.structureEvaluated = structureEvaluated;
+   score.structureState = structureState;
    score.reason = reason;
    ComputeTradeLevels(score, direction);
   }
@@ -789,12 +1322,21 @@ void InitScore(SymbolScore &score, const string symbol)
    score.takeProfit = 0.0;
    score.volume = 0.0;
    score.dataReady = false;
+   score.structureEvaluated = false;
+   ResetStructureFilterState(score.structureState);
    score.reason = "";
   }
 
 bool EvaluateSymbol(const string symbol, SymbolScore &bestScore)
   {
    InitScore(bestScore, symbol);
+
+   string researchReason = "";
+   if(!IsSymbolAllowedByResearchMode(symbol, researchReason))
+     {
+      bestScore.reason = researchReason;
+      return false;
+     }
 
    MqlRates contextRates[];
    MqlRates patternRates[];
@@ -835,10 +1377,33 @@ bool EvaluateSymbol(const string symbol, SymbolScore &bestScore)
    InitScore(longScore, symbol);
    InitScore(shortScore, symbol);
 
-   ScoreSide(symbol, contextRates, patternRates, executionRates, patternATR, averagePatternATR, executionATR, 1, longScore);
-   ScoreSide(symbol, contextRates, patternRates, executionRates, patternATR, averagePatternATR, executionATR, -1, shortScore);
+   string longBlockReason = "";
+   string shortBlockReason = "";
+   bool allowLong = IsDirectionAllowedByResearchMode(symbol, 1, longBlockReason);
+   bool allowShort = IsDirectionAllowedByResearchMode(symbol, -1, shortBlockReason);
 
-   bestScore = (longScore.totalScore >= shortScore.totalScore ? longScore : shortScore);
+   if(!allowLong && !allowShort)
+     {
+      AppendReason(bestScore.reason, longBlockReason);
+      AppendReason(bestScore.reason, shortBlockReason);
+      return false;
+     }
+
+   if(allowLong)
+      ScoreSide(symbol, contextRates, patternRates, executionRates, patternATR, averagePatternATR, executionATR, 1, longScore);
+   if(allowShort)
+      ScoreSide(symbol, contextRates, patternRates, executionRates, patternATR, averagePatternATR, executionATR, -1, shortScore);
+
+   if(allowLong && allowShort)
+      bestScore = (longScore.totalScore >= shortScore.totalScore ? longScore : shortScore);
+   else if(allowLong)
+      bestScore = longScore;
+   else
+      bestScore = shortScore;
+
+   AppendReason(bestScore.reason, longBlockReason);
+   AppendReason(bestScore.reason, shortBlockReason);
+
    if(bestScore.totalScore < InpEntryScoreThreshold)
       AppendReason(bestScore.reason, "below_threshold");
    else
@@ -862,12 +1427,216 @@ string DailyLogFileName()
                        tm.day);
   }
 
+string DailyScanLogFileName()
+  {
+   MqlDateTime tm;
+   TimeToStruct(TimeCurrent(), tm);
+   return StringFormat("%s\\%s_scan_%04d%02d%02d.csv",
+                       InpLogFolder,
+                       InpLogPrefix,
+                       tm.year,
+                       tm.mon,
+                       tm.day);
+  }
+
+string DailyStructureLogFileName()
+  {
+   MqlDateTime tm;
+   TimeToStruct(TimeCurrent(), tm);
+   return StringFormat("%s\\%s_structure_%04d%02d%02d.csv",
+                       InpLogFolder,
+                       InpLogPrefix,
+                       tm.year,
+                       tm.mon,
+                       tm.day);
+  }
+
+string DailyStructureSummaryLogFileName()
+  {
+   MqlDateTime tm;
+   TimeToStruct(TimeCurrent(), tm);
+   return StringFormat("%s\\%s_structure_summary_%04d%02d%02d.csv",
+                       InpLogFolder,
+                       InpLogPrefix,
+                       tm.year,
+                       tm.mon,
+                       tm.day);
+  }
+
 void EnsureLogFolder()
   {
    int flags = 0;
    if(InpUseCommonFiles)
       flags |= FILE_COMMON;
    FolderCreate(InpLogFolder, flags);
+  }
+
+void WriteScanDiagnosticRow(const string eventName,
+                            const datetime lastScanBarTime,
+                            const uint elapsedMs,
+                            const string reason)
+  {
+   EnsureLogFolder();
+
+   int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
+   if(InpUseCommonFiles)
+      flags |= FILE_COMMON;
+
+   string fileName = DailyScanLogFileName();
+   int handle = FileOpen(fileName, flags, ',');
+   if(handle == INVALID_HANDLE)
+     {
+      PrintFormat("%s: FileOpen failed: %s err=%d", STRATEGY_NAME, fileName, GetLastError());
+      return;
+     }
+
+   bool needsHeader = (FileSize(handle) == 0);
+   FileSeek(handle, 0, SEEK_END);
+   if(needsHeader)
+      FileWrite(handle,
+                "time",
+                "event",
+                "last_scan_bar_time",
+                "scan_elapsed_ms",
+                "reason");
+
+   FileWrite(handle,
+             TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
+             eventName,
+             DateTimeText(lastScanBarTime),
+             IntegerToString((int)elapsedMs),
+             reason);
+
+   FileClose(handle);
+  }
+
+void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state)
+  {
+   ++g_structureDetailRows;
+   EnsureLogFolder();
+
+   int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
+   if(InpUseCommonFiles)
+      flags |= FILE_COMMON;
+
+   string fileName = DailyStructureLogFileName();
+   int handle = FileOpen(fileName, flags, ',');
+   if(handle == INVALID_HANDLE)
+     {
+      PrintFormat("%s: FileOpen failed: %s err=%d", STRATEGY_NAME, fileName, GetLastError());
+      return;
+     }
+
+   bool needsHeader = (FileSize(handle) == 0);
+   FileSeek(handle, 0, SEEK_END);
+   if(needsHeader)
+      FileWrite(handle,
+                "time",
+                "symbol",
+                "direction",
+                "trend_up",
+                "trend_down",
+                "higher_high",
+                "higher_low",
+                "lower_high",
+                "lower_low",
+                "pullback_valid",
+                "pullback_too_deep",
+                "fractal_confirmed",
+                "reclaim_confirmed",
+                "structure_filter_pass",
+                "structure_filter_fail_reason",
+                "structure_stop_reference");
+
+   int digits = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
+   FileWrite(handle,
+             TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
+             symbol,
+             direction,
+             BoolText(state.trendUp),
+             BoolText(state.trendDown),
+             BoolText(state.higherHigh),
+             BoolText(state.higherLow),
+             BoolText(state.lowerHigh),
+             BoolText(state.lowerLow),
+             BoolText(state.pullbackValid),
+             BoolText(state.pullbackTooDeep),
+             BoolText(state.fractalConfirmed),
+             BoolText(state.reclaimConfirmed),
+             BoolText(state.pass),
+             state.failReason,
+             DoubleToString(state.structureStopReference, digits));
+
+   FileClose(handle);
+  }
+
+void WriteStructureSummaryRow()
+  {
+   EnsureLogFolder();
+
+   int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
+   if(InpUseCommonFiles)
+      flags |= FILE_COMMON;
+
+   string fileName = DailyStructureSummaryLogFileName();
+   int handle = FileOpen(fileName, flags, ',');
+   if(handle == INVALID_HANDLE)
+     {
+      PrintFormat("%s: FileOpen failed: %s err=%d", STRATEGY_NAME, fileName, GetLastError());
+      return;
+     }
+
+   bool needsHeader = (FileSize(handle) == 0);
+   FileSeek(handle, 0, SEEK_END);
+   if(needsHeader)
+      FileWrite(handle,
+                "time",
+                "structure_evaluations",
+                "structure_detail_rows",
+                "structure_pass",
+                "structure_fail",
+                "structure_pass_rate",
+                "no_context_swings",
+                "no_trend_up",
+                "no_trend_down",
+                "pullback_too_deep",
+                "pullback_not_valid",
+                "no_fractal_low",
+                "no_fractal_high",
+                "not_enough_fractals",
+                "no_reclaim",
+                "unknown",
+                "structure_top_fail_reason",
+                "structure_top_fail_reason_rows");
+
+   long topFailCount = 0;
+   string topFailReason = TopStructureFailReason(topFailCount);
+   long notEnoughFractals = g_structureNoContextSwingsCount + g_structureNoFractalLowCount + g_structureNoFractalHighCount;
+   double passRate = 0.0;
+   if(g_structureEvaluations > 0)
+      passRate = (double)g_structurePassCount / (double)g_structureEvaluations * 100.0;
+
+   FileWrite(handle,
+             TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
+             g_structureEvaluations,
+             g_structureDetailRows,
+             g_structurePassCount,
+             g_structureFailCount,
+             DoubleToString(passRate, 2),
+             g_structureNoContextSwingsCount,
+             g_structureNoTrendUpCount,
+             g_structureNoTrendDownCount,
+             g_structurePullbackTooDeepCount,
+             g_structurePullbackNotValidCount,
+             g_structureNoFractalLowCount,
+             g_structureNoFractalHighCount,
+             notEnoughFractals,
+             g_structureNoReclaimCount,
+             g_structureUnknownFailCount,
+             topFailReason,
+             topFailCount);
+
+   FileClose(handle);
   }
 
 void WriteScoreRow(const SymbolScore &score, const string reason)
@@ -914,6 +1683,35 @@ void WriteScoreRow(const SymbolScore &score, const string reason)
              reason);
 
    FileClose(handle);
+  }
+
+bool IsEntryScoreCandidate(const SymbolScore &score)
+  {
+   return (score.dataReady && score.totalScore >= InpEntryScoreThreshold);
+  }
+
+bool ShouldWriteScoreDiagnostic(const SymbolScore &score, const bool isBest)
+  {
+   if(!score.dataReady)
+      return false;
+   if(isBest)
+      return true;
+   if(IsEntryScoreCandidate(score))
+      return true;
+   return false;
+  }
+
+bool ShouldWriteStructureDiagnostic(const SymbolScore &score, const bool isBest)
+  {
+   if(!score.structureEvaluated)
+      return false;
+   if(isBest)
+      return true;
+   if(IsEntryScoreCandidate(score))
+      return true;
+   if(score.structureState.pass)
+      return true;
+   return false;
   }
 
 //+------------------------------------------------------------------+
@@ -990,6 +1788,15 @@ void TryTradeBestCandidate(const SymbolScore &score)
    if(!CanTradeCandidate(score, blockReason))
      {
       if(InpEnableTrading)
+        {
+         string rowReason = score.reason;
+         AppendReason(rowReason, "order_blocked");
+         AppendReason(rowReason, blockReason);
+         WriteScoreRow(score, rowReason);
+         if(score.structureEvaluated)
+            WriteStructureFilterRow(score.symbol, score.direction, score.structureState);
+        }
+      if(InpEnableTrading)
          PrintFormat("%s: trade blocked %s %s score=%.2f reason=%s",
                      STRATEGY_NAME,
                      score.symbol,
@@ -1003,6 +1810,12 @@ void TryTradeBestCandidate(const SymbolScore &score)
    trade.SetDeviationInPoints(InpSlippagePoints);
 
    string comment = STRATEGY_NAME + "_score_" + DoubleToString(score.totalScore, 1);
+   string attemptReason = score.reason;
+   AppendReason(attemptReason, "order_attempt");
+   WriteScoreRow(score, attemptReason);
+   if(score.structureEvaluated)
+      WriteStructureFilterRow(score.symbol, score.direction, score.structureState);
+
    bool ok = false;
    if(score.direction == "LONG")
       ok = trade.Buy(score.volume, score.symbol, 0.0, score.stopLoss, score.takeProfit, comment);
@@ -1010,19 +1823,34 @@ void TryTradeBestCandidate(const SymbolScore &score)
       ok = trade.Sell(score.volume, score.symbol, 0.0, score.stopLoss, score.takeProfit, comment);
 
    if(!ok)
+     {
+      string resultReason = score.reason;
+      AppendReason(resultReason, "order_failed");
+      AppendReason(resultReason, "retcode_" + IntegerToString((int)trade.ResultRetcode()));
+      WriteScoreRow(score, resultReason);
+      if(score.structureEvaluated)
+         WriteStructureFilterRow(score.symbol, score.direction, score.structureState);
       PrintFormat("%s: order failed %s %s lot=%.2f retcode=%d",
                   STRATEGY_NAME,
                   score.symbol,
                   score.direction,
                   score.volume,
                   trade.ResultRetcode());
+     }
    else
+     {
+      string resultReason = score.reason;
+      AppendReason(resultReason, "order_sent");
+      WriteScoreRow(score, resultReason);
+      if(score.structureEvaluated)
+         WriteStructureFilterRow(score.symbol, score.direction, score.structureState);
       PrintFormat("%s: order sent %s %s lot=%.2f score=%.2f",
                   STRATEGY_NAME,
                   score.symbol,
                   score.direction,
                   score.volume,
                   score.totalScore);
+     }
   }
 
 //+------------------------------------------------------------------+
@@ -1066,11 +1894,15 @@ void ScanAllSymbols()
    for(int i = 0; i < count; ++i)
      {
       string rowReason = scores[i].reason;
+      bool isBest = (bestIndex == i);
       if(bestIndex == i)
          AppendReason(rowReason, "best_candidate");
       else
          AppendReason(rowReason, "not_best");
-      WriteScoreRow(scores[i], rowReason);
+      if(ShouldWriteScoreDiagnostic(scores[i], isBest))
+         WriteScoreRow(scores[i], rowReason);
+      if(ShouldWriteStructureDiagnostic(scores[i], isBest))
+         WriteStructureFilterRow(scores[i].symbol, scores[i].direction, scores[i].structureState);
      }
 
    if(bestIndex >= 0)
@@ -1093,6 +1925,73 @@ void ScanAllSymbols()
       PrintFormat("%s: no data-ready symbol in scan", STRATEGY_NAME);
   }
 
+bool LatestClosedExecutionBarTime(datetime &barTime, string &reason)
+  {
+   barTime = 0;
+   reason = "";
+
+   MqlRates rates[];
+   ArraySetAsSeries(rates, true);
+   int copied = CopyRates(_Symbol, InpExecutionTF, 1, 1, rates);
+   if(copied < 1)
+     {
+      reason = "execution_bar_time_unavailable_" + EnumToString(InpExecutionTF);
+      return false;
+     }
+
+   barTime = rates[0].time;
+   return (barTime > 0);
+  }
+
+void RunTimerScan()
+  {
+   uint started = GetTickCount();
+   ScanAllSymbols();
+   uint elapsed = GetTickCount() - started;
+   WriteScanDiagnosticRow("scan_executed_timer", 0, elapsed, "scan_only_on_new_execution_bar_false");
+   PrintFormat("%s: scan_executed_timer scan_elapsed_ms=%u",
+               STRATEGY_NAME,
+               elapsed);
+  }
+
+void RunNewExecutionBarScan()
+  {
+   datetime barTime = 0;
+   string reason = "";
+   if(!LatestClosedExecutionBarTime(barTime, reason))
+     {
+      WriteScanDiagnosticRow("scan_skipped_execution_bar_unavailable", g_lastScanExecutionBarTime, 0, reason);
+      PrintFormat("%s: scan_skipped_execution_bar_unavailable last_scan_bar_time=%s reason=%s",
+                  STRATEGY_NAME,
+                  DateTimeText(g_lastScanExecutionBarTime),
+                  reason);
+      return;
+     }
+
+   if(barTime <= g_lastScanExecutionBarTime)
+     {
+      if(g_lastLoggedSkippedExecutionBarTime != g_lastScanExecutionBarTime)
+        {
+         g_lastLoggedSkippedExecutionBarTime = g_lastScanExecutionBarTime;
+         WriteScanDiagnosticRow("scan_skipped_same_execution_bar", g_lastScanExecutionBarTime, 0, "");
+         PrintFormat("%s: scan_skipped_same_execution_bar last_scan_bar_time=%s",
+                     STRATEGY_NAME,
+                     DateTimeText(g_lastScanExecutionBarTime));
+        }
+      return;
+     }
+
+   g_lastScanExecutionBarTime = barTime;
+   uint started = GetTickCount();
+   ScanAllSymbols();
+   uint elapsed = GetTickCount() - started;
+   WriteScanDiagnosticRow("scan_executed_new_execution_bar", g_lastScanExecutionBarTime, elapsed, "");
+   PrintFormat("%s: scan_executed_new_execution_bar last_scan_bar_time=%s scan_elapsed_ms=%u",
+               STRATEGY_NAME,
+               DateTimeText(g_lastScanExecutionBarTime),
+               elapsed);
+  }
+
 //+------------------------------------------------------------------+
 //| Expert lifecycle                                                  |
 //+------------------------------------------------------------------+
@@ -1108,6 +2007,8 @@ int OnInit()
       InpATRAveragePeriod < InpATRPeriod ||
       InpSlopeLookbackBars < 1 ||
       InpSetupLookbackBars < 3 ||
+      InpStructureSwingSpan < 1 ||
+      InpStructureScanBars < InpStructureSwingSpan * 4 + 10 ||
       InpRiskPerTradePercent <= 0.0 ||
       InpMaxRiskPerSymbolPercent <= 0.0 ||
       InpMaxTotalOpenRiskPercent <= 0.0 ||
@@ -1143,16 +2044,21 @@ int OnInit()
    EventSetTimer(InpScanSeconds);
    EnsureLogFolder();
 
-   PrintFormat("%s initialized symbols=%d trading=%s scan_seconds=%d",
+   PrintFormat("%s initialized symbols=%d trading=%s scan_seconds=%d scan_only_new_execution_bar=%s direction_mode=%d symbol_research_mode=%d dow_fractal_filter=%s",
                STRATEGY_NAME,
                ArraySize(g_symbols),
                (InpEnableTrading ? "true" : "false"),
-               InpScanSeconds);
+               InpScanSeconds,
+               BoolText(InpScanOnlyOnNewExecutionBar),
+               (int)InpTradeDirectionMode,
+               (int)InpSymbolResearchMode,
+               BoolText(InpUseDowFractalStructureFilter));
    return INIT_SUCCEEDED;
   }
 
 void OnDeinit(const int reason)
   {
+   WriteStructureSummaryRow();
    EventKillTimer();
   }
 
@@ -1162,5 +2068,8 @@ void OnTick()
 
 void OnTimer()
   {
-   ScanAllSymbols();
+   if(InpScanOnlyOnNewExecutionBar)
+      RunNewExecutionBarScan();
+   else
+      RunTimerScan();
   }

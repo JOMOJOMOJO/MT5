@@ -1,0 +1,7 @@
+run,scenario,events,new_bar_scans,same_bar_skips,avg_scan_elapsed_ms,max_scan_elapsed_ms
+A,BOTH_5m_new_bar,"{'scan_executed_new_execution_bar': 73648, 'scan_skipped_same_execution_bar': 534}",73648,534,14.11,9313
+B,LONG_ONLY_5m_new_bar,"{'scan_executed_new_execution_bar': 73648, 'scan_skipped_same_execution_bar': 534}",73648,534,14.28,7219
+C,SHORT_ONLY_5m_new_bar,"{'scan_executed_new_execution_bar': 73648, 'scan_skipped_same_execution_bar': 534}",73648,534,49.71,8843
+D,LONG_ONLY_DowFractal_5m_new_bar,"{'scan_executed_new_execution_bar': 73648, 'scan_skipped_same_execution_bar': 534}",73648,534,16.78,7047
+E,XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar,"{'scan_executed_new_execution_bar': 73648, 'scan_skipped_same_execution_bar': 534}",73648,534,50.17,1312
+F,BOTH_disable_USDJPY_SHORT_5m_new_bar,"{'scan_executed_new_execution_bar': 73648, 'scan_skipped_same_execution_bar': 534}",73648,534,49.6,7407

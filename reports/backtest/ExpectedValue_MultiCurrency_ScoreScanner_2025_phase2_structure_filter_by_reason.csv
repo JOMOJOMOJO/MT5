@@ -1,0 +1,9 @@
+run,scenario,reason,rows
+D,LONG_ONLY_DowFractal_5m_new_bar,no_trend_up,349872
+D,LONG_ONLY_DowFractal_5m_new_bar,pullback_too_deep,12925
+D,LONG_ONLY_DowFractal_5m_new_bar,pullback_not_valid,3629
+D,LONG_ONLY_DowFractal_5m_new_bar,no_reclaim,94776
+E,XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar,no_reclaim,14634
+E,XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar,no_trend_up,48130
+E,XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar,pullback_not_valid,386
+E,XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar,pullback_too_deep,1176

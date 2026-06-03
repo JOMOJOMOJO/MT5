@@ -1,0 +1,7 @@
+run,scenario,rows,evaluations,detail_rows,pass,fail,pass_rate,top_fail_reason,top_fail_reason_rows
+A,BOTH_5m_new_bar,0,0,0,0,0,0.0,,0
+B,LONG_ONLY_5m_new_bar,0,0,0,0,0,0.0,,0
+C,SHORT_ONLY_5m_new_bar,0,0,0,0,0,0.0,,0
+D,LONG_ONLY_DowFractal_5m_new_bar,515536,515536,168274,54334,461202,10.54,no_trend_up,349872
+E,XAUUSD_ONLY_LONG_ONLY_DowFractal_5m_new_bar,73648,73648,73648,9322,64326,12.66,no_trend_up,48130
+F,BOTH_disable_USDJPY_SHORT_5m_new_bar,0,0,0,0,0,0.0,,0
