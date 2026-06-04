@@ -1,0 +1,4 @@
+session,trades,wins,losses,win_rate,net_profit,profit_factor,expected_payoff,avg_R,max_drawdown,max_drawdown_pct
+server_00_07,28,17,11,60.71,918.34,2.94,32.8,0.519,127.57,1.19
+server_08_15,40,15,25,37.5,-104.72,0.912,-2.62,-0.067,288.95,2.84
+server_16_23,41,21,20,51.22,475.34,1.498,11.59,0.306,161.62,1.54

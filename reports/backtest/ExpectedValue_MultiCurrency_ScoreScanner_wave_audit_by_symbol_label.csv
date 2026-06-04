@@ -1,0 +1,12 @@
+symbol_label,trades,wins,losses,win_rate,net_profit,profit_factor,expected_payoff,avg_R,max_drawdown,max_drawdown_pct
+EURJPY:third_wave_middle,1,1,0,100.0,75.07,,75.07,1.502,0.0,0.0
+EURUSD:chasing_entry,2,1,1,50.0,23.52,1.456,11.76,0.253,51.62,0.51
+EURUSD:late_entry,1,1,0,100.0,86.7,,86.7,1.63,0.0,0.0
+GBPUSD:chasing_entry,3,1,2,33.33,-21.29,0.783,-7.1,-0.168,98.09,0.97
+USDJPY:chasing_entry,10,4,6,40.0,1.11,1.004,0.11,-0.005,123.25,1.22
+USDJPY:third_wave_middle,1,1,0,100.0,76.22,,76.22,1.556,0.0,0.0
+XAUUSD:chasing_entry,85,42,43,49.41,1104.03,1.558,12.99,0.244,262.24,2.52
+XAUUSD:late_entry,1,1,0,100.0,70.14,,70.14,1.51,0.0,0.0
+XAUUSD:third_wave_initial,1,0,1,0.0,-46.62,0.0,-46.62,-1.001,46.62,0.47
+XAUUSD:third_wave_middle,3,1,2,33.33,-30.31,0.698,-10.1,-0.162,100.51,1.01
+XAUUSD:unclear,1,0,1,0.0,-49.61,0.0,-49.61,-1.007,49.61,0.5

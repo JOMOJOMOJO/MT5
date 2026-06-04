@@ -1,0 +1,6 @@
+symbol,trades,wins,losses,win_rate,net_profit,profit_factor,expected_payoff,avg_R,max_drawdown,max_drawdown_pct
+EURJPY,1,1,0,100.0,75.07,,75.07,1.502,0.0,0.0
+EURUSD,3,2,1,66.67,110.22,3.135,36.74,0.712,51.62,0.51
+GBPUSD,3,1,2,33.33,-21.29,0.783,-7.1,-0.168,98.09,0.97
+USDJPY,11,5,6,45.45,77.33,1.259,7.03,0.137,123.25,1.21
+XAUUSD,91,44,47,48.35,1047.63,1.481,11.51,0.217,311.85,3.0

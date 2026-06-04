@@ -1,0 +1,132 @@
+{
+  "runs": {
+    "2025-02": {
+      "stats": {
+        "trades": 16,
+        "wins": 10,
+        "losses": 6,
+        "win_rate": 62.5,
+        "net_profit": 373.68000000000006,
+        "gross_profit": 662.6999999999999,
+        "gross_loss": -289.02,
+        "profit_factor": 2.292920905127673,
+        "expected_payoff": 23.355000000000004,
+        "avg_win": 66.27,
+        "avg_loss": -48.169999999999995,
+        "max_balance_dd": 102.45999999999913,
+        "max_balance_dd_pct": 0.988285451099346,
+        "max_balance_dd_time": "2025.02.20 15:45:23",
+        "max_consecutive_wins": {
+          "count": 3,
+          "amount": 204.42,
+          "start": "2025.02.10 06:00:00",
+          "end": "2025.02.11 08:06:32"
+        },
+        "max_consecutive_losses": {
+          "count": 2,
+          "amount": -96.12,
+          "start": "2025.02.05 19:10:00",
+          "end": "2025.02.07 19:16:47"
+        }
+      },
+      "elapsed_seconds": 62.9,
+      "raw_wave_audit_rows": 247
+    },
+    "2025-08": {
+      "stats": {
+        "trades": 13,
+        "wins": 5,
+        "losses": 8,
+        "win_rate": 38.46153846153847,
+        "net_profit": -40.11,
+        "gross_profit": 358.23,
+        "gross_loss": -398.34,
+        "profit_factor": 0.8993071245669529,
+        "expected_payoff": -3.085384615384615,
+        "avg_win": 71.646,
+        "avg_loss": -49.7925,
+        "max_balance_dd": 247.8099999999995,
+        "max_balance_dd_pct": 2.4459407707462235,
+        "max_balance_dd_time": "2025.08.26 12:35:03",
+        "max_consecutive_wins": {
+          "count": 2,
+          "amount": 146.5,
+          "start": "2025.08.01 02:15:00",
+          "end": "2025.08.04 15:05:10"
+        },
+        "max_consecutive_losses": {
+          "count": 5,
+          "amount": -247.81,
+          "start": "2025.08.13 08:50:00",
+          "end": "2025.08.26 12:35:03"
+        }
+      },
+      "elapsed_seconds": 73.0,
+      "raw_wave_audit_rows": 187
+    },
+    "2025-10": {
+      "stats": {
+        "trades": 20,
+        "wins": 11,
+        "losses": 9,
+        "win_rate": 55.00000000000001,
+        "net_profit": 345.17999999999995,
+        "gross_profit": 764.4699999999999,
+        "gross_loss": -419.28999999999996,
+        "profit_factor": 1.823248825395311,
+        "expected_payoff": 17.258999999999997,
+        "avg_win": 69.49727272727272,
+        "avg_loss": -46.587777777777774,
+        "max_balance_dd": 176.76000000000022,
+        "max_balance_dd_pct": 1.7487554116836983,
+        "max_balance_dd_time": "2025.10.13 10:28:42",
+        "max_consecutive_wins": {
+          "count": 4,
+          "amount": 274.03,
+          "start": "2025.10.21 21:55:00",
+          "end": "2025.10.27 22:29:46"
+        },
+        "max_consecutive_losses": {
+          "count": 3,
+          "amount": -148.92,
+          "start": "2025.10.08 15:05:00",
+          "end": "2025.10.09 04:36:55"
+        }
+      },
+      "elapsed_seconds": 73.1,
+      "raw_wave_audit_rows": 278
+    },
+    "2026-Q1": {
+      "stats": {
+        "trades": 60,
+        "wins": 27,
+        "losses": 33,
+        "win_rate": 45.0,
+        "net_profit": 610.21,
+        "gross_profit": 2128.3300000000004,
+        "gross_loss": -1518.1200000000001,
+        "profit_factor": 1.4019510974099545,
+        "expected_payoff": 10.170166666666667,
+        "avg_win": 78.82703703703704,
+        "avg_loss": -46.00363636363637,
+        "max_balance_dd": 278.5000000000018,
+        "max_balance_dd_pct": 2.6520728067786585,
+        "max_balance_dd_time": "2026.03.04 02:43:29",
+        "max_consecutive_wins": {
+          "count": 4,
+          "amount": 248.33999999999997,
+          "start": "2026.03.11 02:15:00",
+          "end": "2026.03.19 09:33:22"
+        },
+        "max_consecutive_losses": {
+          "count": 6,
+          "amount": -277.88,
+          "start": "2026.01.26 11:50:00",
+          "end": "2026.01.29 10:43:46"
+        }
+      },
+      "elapsed_seconds": 174.9,
+      "raw_wave_audit_rows": 852
+    }
+  }
+}

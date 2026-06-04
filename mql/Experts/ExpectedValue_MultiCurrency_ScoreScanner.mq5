@@ -200,11 +200,35 @@ struct ThirdWaveSetup
    double            lowerReversalQuality;
    double            pullbackDepthATR;
    double            slATR;
+   double            higherSwingLow1;
+   double            higherSwingHigh1;
+   double            higherSwingLow2;
+   double            higherSwingHigh2;
+   int               higherTrendAgeBars;
+   double            higherAtr;
+   double            impulseStartPrice;
+   double            impulseEndPrice;
+   double            pullbackExtremePrice;
+   double            pullbackDepthPct;
+   int               pullbackBars;
+   bool              pullbackBrokeOrigin;
+   double            pullbackStructureLevel;
+   double            distancePullbackExtremeToEntryATR;
+   double            distancePullbackExtremeToEntryPct;
+   double            minorReversalLevel;
+   double            reclaimOrBreakdownPrice;
+   int               barsSinceReclaimOrBreakdown;
+   double            entryDistanceFromReclaimATR;
+   double            entryDistanceFromReclaimPoints;
+   string            lowerReversalQualityLabel;
+   string            waveAuditLabel;
+   string            waveAuditReason;
   };
 
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
 void WriteStructureSummaryRow();
 void WriteThirdWaveSummaryRow();
+void WriteThirdWaveWaveAuditRow(const ThirdWaveSetup &setup, const string eventName);
 
 string   g_symbols[];
 double   g_initialEquity = 0.0;
@@ -438,6 +462,138 @@ string RegimeToString(const ENUM_THIRD_WAVE_REGIME regime)
    if(regime == REGIME_EXHAUSTION)
       return "REGIME_EXHAUSTION";
    return "REGIME_UNKNOWN";
+  }
+
+string TimeframeText(const ENUM_TIMEFRAMES timeframe)
+  {
+   return EnumToString(timeframe);
+  }
+
+string WaveAuditStructureState(const ThirdWaveSetup &setup)
+  {
+   if(setup.higherTfSwingState == "HH_HL")
+      return "HH_HL";
+   if(setup.higherTfSwingState == "LL_LH")
+      return "LL_LH";
+   if(setup.higherTfSwingState == "")
+      return "mixed";
+   return setup.higherTfSwingState;
+  }
+
+void UpdateThirdWaveEntryDistanceAudit(ThirdWaveSetup &setup)
+  {
+   double atr = setup.atrValue;
+   if(atr <= 0.0)
+      atr = setup.atr;
+
+   double impulse = MathAbs(setup.impulseEndPrice - setup.impulseStartPrice);
+   if(setup.entryPrice > 0.0 && setup.pullbackExtremePrice > 0.0)
+     {
+      double distance = MathAbs(setup.entryPrice - setup.pullbackExtremePrice);
+      setup.distancePullbackExtremeToEntryATR = (atr > 0.0 ? distance / atr : 0.0);
+      setup.distancePullbackExtremeToEntryPct = (impulse > 0.0 ? distance / impulse * 100.0 : 0.0);
+     }
+
+   if(setup.entryPrice > 0.0 && setup.reclaimOrBreakdownPrice > 0.0)
+     {
+      double distance = MathAbs(setup.entryPrice - setup.reclaimOrBreakdownPrice);
+      setup.entryDistanceFromReclaimATR = (atr > 0.0 ? distance / atr : 0.0);
+      double point = SymbolInfoDouble(setup.symbol, SYMBOL_POINT);
+      setup.entryDistanceFromReclaimPoints = (point > 0.0 ? distance / point : 0.0);
+     }
+  }
+
+string ClassifyLowerReversalQualityLabel(const ThirdWaveSetup &setup)
+  {
+   if(!setup.lowerTfReversalPass)
+      return "unclear";
+   if(setup.barsSinceReclaimOrBreakdown > 3 || setup.entryDistanceFromReclaimATR > 0.90)
+      return "late";
+   if(setup.entryDistanceFromReclaimATR <= 0.25 && setup.barsSinceReclaimOrBreakdown <= 1)
+      return "early";
+   if(setup.entryDistanceFromReclaimATR <= 0.60 && setup.barsSinceReclaimOrBreakdown <= 2)
+      return "acceptable";
+   return "unclear";
+  }
+
+void ClassifyThirdWaveAuditLabel(ThirdWaveSetup &setup)
+  {
+   UpdateThirdWaveEntryDistanceAudit(setup);
+   setup.lowerReversalQualityLabel = ClassifyLowerReversalQualityLabel(setup);
+
+   if(!setup.higherTfTrendPass || !setup.midTfPullbackPass || !setup.lowerTfReversalPass)
+     {
+      setup.waveAuditLabel = "invalid_structure";
+      setup.waveAuditReason = "stage_not_passed";
+      return;
+     }
+
+   if(setup.pullbackBrokeOrigin ||
+      setup.higherTfSwingState == "mixed" ||
+      setup.higherTfSwingState == "compressed" ||
+      setup.higherTfSwingState == "HH_no_HL" ||
+      setup.higherTfSwingState == "LL_no_LH")
+     {
+      setup.waveAuditLabel = "invalid_structure";
+      setup.waveAuditReason = "higher_or_pullback_structure_invalid";
+      return;
+     }
+
+   if(setup.regime == RegimeToString(REGIME_RANGE) ||
+      setup.regime == RegimeToString(REGIME_TRANSITION) ||
+      setup.regime == RegimeToString(REGIME_UNKNOWN))
+     {
+      setup.waveAuditLabel = "range_noise";
+      setup.waveAuditReason = "regime_not_directional";
+      return;
+     }
+
+   bool reclaimLate = (setup.barsSinceReclaimOrBreakdown > 2 ||
+                       setup.entryDistanceFromReclaimATR > 0.60);
+   bool farFromPullback = (setup.distancePullbackExtremeToEntryATR > 2.20 ||
+                           setup.distancePullbackExtremeToEntryPct > 65.0);
+   bool stretched = (setup.slATR > 1.80 ||
+                     setup.distancePullbackExtremeToEntryATR > 3.00 ||
+                     setup.entryDistanceFromReclaimATR > 0.90);
+
+   if(stretched)
+     {
+      setup.waveAuditLabel = "chasing_entry";
+      setup.waveAuditReason = "entry_or_sl_stretched";
+      return;
+     }
+
+   if(reclaimLate || farFromPullback)
+     {
+      setup.waveAuditLabel = "late_entry";
+      setup.waveAuditReason = "entry_far_from_reclaim_or_pullback";
+      return;
+     }
+
+   bool healthyRetrace = (setup.retraceRatio >= 0.25 && setup.retraceRatio <= 0.70);
+   bool closeToReclaim = (setup.entryDistanceFromReclaimATR <= 0.35 &&
+                          setup.barsSinceReclaimOrBreakdown <= 1);
+   bool notTooFarFromPullback = (setup.distancePullbackExtremeToEntryATR <= 1.75 &&
+                                 setup.distancePullbackExtremeToEntryPct <= 50.0);
+   if(healthyRetrace && closeToReclaim && notTooFarFromPullback)
+     {
+      setup.waveAuditLabel = "third_wave_initial";
+      setup.waveAuditReason = "clean_pullback_and_near_reclaim";
+      return;
+     }
+
+   if(setup.distancePullbackExtremeToEntryATR <= 2.50 &&
+      setup.distancePullbackExtremeToEntryPct <= 65.0 &&
+      setup.retraceRatio >= 0.18 &&
+      setup.retraceRatio <= 0.80)
+     {
+      setup.waveAuditLabel = "third_wave_middle";
+      setup.waveAuditReason = "valid_but_not_initial";
+      return;
+     }
+
+   setup.waveAuditLabel = "unclear";
+   setup.waveAuditReason = "mixed_audit_conditions";
   }
 
 string DateTimeText(const datetime value)
@@ -788,6 +944,29 @@ void InitThirdWaveSetup(ThirdWaveSetup &setup, const string symbol, const int di
    setup.lowerReversalQuality = 0.0;
    setup.pullbackDepthATR = 0.0;
    setup.slATR = 0.0;
+   setup.higherSwingLow1 = 0.0;
+   setup.higherSwingHigh1 = 0.0;
+   setup.higherSwingLow2 = 0.0;
+   setup.higherSwingHigh2 = 0.0;
+   setup.higherTrendAgeBars = 0;
+   setup.higherAtr = 0.0;
+   setup.impulseStartPrice = 0.0;
+   setup.impulseEndPrice = 0.0;
+   setup.pullbackExtremePrice = 0.0;
+   setup.pullbackDepthPct = 0.0;
+   setup.pullbackBars = 0;
+   setup.pullbackBrokeOrigin = false;
+   setup.pullbackStructureLevel = 0.0;
+   setup.distancePullbackExtremeToEntryATR = 0.0;
+   setup.distancePullbackExtremeToEntryPct = 0.0;
+   setup.minorReversalLevel = 0.0;
+   setup.reclaimOrBreakdownPrice = 0.0;
+   setup.barsSinceReclaimOrBreakdown = 0;
+   setup.entryDistanceFromReclaimATR = 0.0;
+   setup.entryDistanceFromReclaimPoints = 0.0;
+   setup.lowerReversalQualityLabel = "unclear";
+   setup.waveAuditLabel = "unclear";
+   setup.waveAuditReason = "";
   }
 
 //+------------------------------------------------------------------+
@@ -1377,6 +1556,13 @@ bool DetectHigherTimeframeDowTrend(const MqlRates &contextRates[],
    bool lowerHigh = (highLatest.price < highPrevious.price);
    bool lowerLow = (lowLatest.price < lowPrevious.price);
 
+   setup.higherSwingHigh1 = highLatest.price;
+   setup.higherSwingHigh2 = highPrevious.price;
+   setup.higherSwingLow1 = lowLatest.price;
+   setup.higherSwingLow2 = lowPrevious.price;
+   setup.higherTrendAgeBars = MathMax(highLatest.shift, lowLatest.shift);
+   setup.higherAtr = AverageATR(contextRates, 1, InpATRPeriod);
+   setup.higherTfSwingState = ThirdWaveSwingState(higherHigh, higherLow, lowerHigh, lowerLow);
    setup.swingHigh = highLatest.price;
    setup.swingLow = lowLatest.price;
 
@@ -1446,8 +1632,17 @@ bool DetectMidTimeframePullback(const MqlRates &patternRates[],
          return false;
         }
 
+      double impulseStart = setup.swingLow;
+      double impulseEnd = setup.swingHigh;
       setup.retraceRatio = (setup.swingHigh - lowLatest.price) / trendRange;
       setup.pullbackDepthATR = (setup.atr > 0.0 ? MathAbs(setup.swingHigh - lowLatest.price) / setup.atr : 0.0);
+      setup.pullbackDepthPct = setup.retraceRatio * 100.0;
+      setup.impulseStartPrice = impulseStart;
+      setup.impulseEndPrice = impulseEnd;
+      setup.pullbackExtremePrice = lowLatest.price;
+      setup.pullbackBars = lowLatest.shift;
+      setup.pullbackBrokeOrigin = (lowLatest.price <= impulseStart);
+      setup.pullbackStructureLevel = lowLatest.price;
       if(lowLatest.price <= setup.swingLow || setup.retraceRatio > 0.90)
         {
          setup.skipReason = "pullback_too_deep";
@@ -1478,8 +1673,17 @@ bool DetectMidTimeframePullback(const MqlRates &patternRates[],
       return false;
      }
 
+   double impulseStart = setup.swingHigh;
+   double impulseEnd = setup.swingLow;
    setup.retraceRatio = (highLatest.price - setup.swingLow) / trendRange;
    setup.pullbackDepthATR = (setup.atr > 0.0 ? MathAbs(highLatest.price - setup.swingLow) / setup.atr : 0.0);
+   setup.pullbackDepthPct = setup.retraceRatio * 100.0;
+   setup.impulseStartPrice = impulseStart;
+   setup.impulseEndPrice = impulseEnd;
+   setup.pullbackExtremePrice = highLatest.price;
+   setup.pullbackBars = highLatest.shift;
+   setup.pullbackBrokeOrigin = (highLatest.price >= impulseStart);
+   setup.pullbackStructureLevel = highLatest.price;
    if(highLatest.price >= setup.swingHigh || setup.retraceRatio > 0.90)
      {
       setup.skipReason = "pullback_too_deep";
@@ -1532,6 +1736,9 @@ bool DetectLowerTimeframeReversal(const MqlRates &executionRates[],
         }
       bool bullishBreak = (executionRates[1].close > highLatest.price &&
                            executionRates[1].close > executionRates[1].open);
+      setup.minorReversalLevel = highLatest.price;
+      setup.reclaimOrBreakdownPrice = executionRates[1].close;
+      setup.barsSinceReclaimOrBreakdown = 1;
       if(!bullishBreak)
         {
          setup.skipReason = "no_lower_reversal";
@@ -1584,6 +1791,9 @@ bool DetectLowerTimeframeReversal(const MqlRates &executionRates[],
      }
    bool bearishBreak = (executionRates[1].close < lowLatest.price &&
                         executionRates[1].close < executionRates[1].open);
+   setup.minorReversalLevel = lowLatest.price;
+   setup.reclaimOrBreakdownPrice = executionRates[1].close;
+   setup.barsSinceReclaimOrBreakdown = 1;
    if(!bearishBreak)
      {
       setup.skipReason = "no_lower_reversal";
@@ -1809,6 +2019,7 @@ bool BuildThirdWaveSetup(const string symbol,
       return false;
      }
    setup.rrPass = true;
+   ClassifyThirdWaveAuditLabel(setup);
 
    if(setup.spreadGuardBlocked)
      {
@@ -2720,6 +2931,17 @@ string DailyThirdWaveTradeLogFileName()
                        tm.day);
   }
 
+string DailyThirdWaveWaveAuditLogFileName()
+  {
+   MqlDateTime tm;
+   TimeToStruct(TimeCurrent(), tm);
+   return StringFormat("%s\\thirdwave_wave_audit_%04d%02d%02d.csv",
+                       InpLogFolder,
+                       tm.year,
+                       tm.mon,
+                       tm.day);
+  }
+
 string DailyThirdWaveSummaryLogFileName()
   {
    MqlDateTime tm;
@@ -3172,6 +3394,146 @@ void WriteThirdWaveTradeRow(const ThirdWaveSetup &setup,
              BoolText(setup.spreadGuardBlocked),
              DoubleToString(setup.spreadPoints, 1),
              DoubleToString(setup.atrValue, digits),
+             ThirdWaveStrategyName());
+
+   FileClose(handle);
+  }
+
+void WriteThirdWaveWaveAuditRow(const ThirdWaveSetup &setup, const string eventName)
+  {
+   if(!DiagnosticsEntryDetailEnabled())
+      return;
+   if(!IsThirdWaveStrategyMode())
+      return;
+
+   EnsureLogFolder();
+
+   int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
+   if(InpUseCommonFiles)
+      flags |= FILE_COMMON;
+
+   string fileName = DailyThirdWaveWaveAuditLogFileName();
+   int handle = FileOpen(fileName, flags, ',');
+   if(handle == INVALID_HANDLE)
+     {
+      PrintFormat("%s: FileOpen failed: %s err=%d", STRATEGY_NAME, fileName, GetLastError());
+      return;
+     }
+
+   bool needsHeader = (FileSize(handle) == 0);
+   FileSeek(handle, 0, SEEK_END);
+   if(needsHeader)
+      FileWrite(handle,
+                "time",
+                "event",
+                "symbol",
+                "direction",
+                "entry_price",
+                "sl",
+                "tp",
+                "result_R",
+                "profit",
+                "regime",
+                "session",
+                "scan_interval",
+                "entry_selection_mode",
+                "higher_tf",
+                "higher_swing_low_1",
+                "higher_swing_high_1",
+                "higher_swing_low_2",
+                "higher_swing_high_2",
+                "higher_structure_state",
+                "higher_trend_age_bars",
+                "higher_ema_slope",
+                "higher_atr",
+                "mid_tf",
+                "impulse_start_price",
+                "impulse_end_price",
+                "pullback_extreme_price",
+                "pullback_depth_pct",
+                "pullback_depth_atr",
+                "pullback_bars",
+                "pullback_broke_origin",
+                "pullback_structure_low_or_high",
+                "distance_from_pullback_extreme_to_entry_atr",
+                "distance_from_pullback_extreme_to_entry_pct_of_impulse",
+                "lower_tf",
+                "minor_reversal_level",
+                "reclaim_or_breakdown_price",
+                "bars_since_reclaim_or_breakdown",
+                "entry_distance_from_reclaim_atr",
+                "entry_distance_from_reclaim_points",
+                "lower_reversal_quality",
+                "lower_reversal_quality_score",
+                "sl_atr",
+                "risk_r",
+                "rr",
+                "spread_atr",
+                "structure_stage_fail_reason",
+                "execution_block_reason",
+                "wave_audit_label",
+                "wave_audit_reason",
+                "strategy_name");
+
+   int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
+   MqlDateTime tm;
+   TimeToStruct(TimeCurrent(), tm);
+   string session = "server_16_23";
+   if(tm.hour < 8)
+      session = "server_00_07";
+   else if(tm.hour < 16)
+      session = "server_08_15";
+
+   FileWrite(handle,
+             TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
+             eventName,
+             setup.symbol,
+             setup.direction,
+             DoubleToString(setup.entryPrice, digits),
+             DoubleToString(setup.stopLoss, digits),
+             DoubleToString(setup.takeProfit, digits),
+             "",
+             "",
+             setup.regime,
+             session,
+             IntegerToString(InpScanSeconds),
+             EntrySelectionModeName(),
+             TimeframeText(InpContextTF),
+             DoubleToString(setup.higherSwingLow1, digits),
+             DoubleToString(setup.higherSwingHigh1, digits),
+             DoubleToString(setup.higherSwingLow2, digits),
+             DoubleToString(setup.higherSwingHigh2, digits),
+             WaveAuditStructureState(setup),
+             IntegerToString(setup.higherTrendAgeBars),
+             DoubleToString(setup.emaSlope, digits),
+             DoubleToString(setup.higherAtr, digits),
+             TimeframeText(InpPatternTF),
+             DoubleToString(setup.impulseStartPrice, digits),
+             DoubleToString(setup.impulseEndPrice, digits),
+             DoubleToString(setup.pullbackExtremePrice, digits),
+             DoubleToString(setup.pullbackDepthPct, 2),
+             DoubleToString(setup.pullbackDepthATR, 2),
+             IntegerToString(setup.pullbackBars),
+             BoolText(setup.pullbackBrokeOrigin),
+             DoubleToString(setup.pullbackStructureLevel, digits),
+             DoubleToString(setup.distancePullbackExtremeToEntryATR, 2),
+             DoubleToString(setup.distancePullbackExtremeToEntryPct, 2),
+             TimeframeText(InpExecutionTF),
+             DoubleToString(setup.minorReversalLevel, digits),
+             DoubleToString(setup.reclaimOrBreakdownPrice, digits),
+             IntegerToString(setup.barsSinceReclaimOrBreakdown),
+             DoubleToString(setup.entryDistanceFromReclaimATR, 2),
+             DoubleToString(setup.entryDistanceFromReclaimPoints, 1),
+             setup.lowerReversalQualityLabel,
+             DoubleToString(setup.lowerReversalQuality, 2),
+             DoubleToString(setup.slATR, 2),
+             DoubleToString(setup.riskR, digits),
+             DoubleToString(setup.rr, 2),
+             DoubleToString(setup.spreadATR, 4),
+             setup.structureStageFailReason,
+             setup.executionBlockReason,
+             setup.waveAuditLabel,
+             setup.waveAuditReason,
              ThirdWaveStrategyName());
 
    FileClose(handle);
@@ -3715,6 +4077,7 @@ void TryThirdWaveEntry(ThirdWaveSetup &setup)
       RecordThirdWaveExecutionBlockReason(blockReason);
       setup.skipReason = blockReason;
       WriteThirdWaveTradeRow(setup, "order_blocked", blockReason, 0);
+      WriteThirdWaveWaveAuditRow(setup, "order_blocked");
       WriteThirdWaveSignalRow(setup);
       PrintFormat("%s: thirdwave trade blocked %s %s reason=%s",
                   STRATEGY_NAME,
@@ -3726,6 +4089,7 @@ void TryThirdWaveEntry(ThirdWaveSetup &setup)
 
    string comment = ThirdWaveStrategyName();
    WriteThirdWaveTradeRow(setup, "order_attempt", "", 0);
+   WriteThirdWaveWaveAuditRow(setup, "order_attempt");
    bool ok = false;
    if(setup.direction == "LONG")
       ok = trade.Buy(setup.volume, setup.symbol, 0.0, setup.stopLoss, setup.takeProfit, comment);
@@ -3739,6 +4103,7 @@ void TryThirdWaveEntry(ThirdWaveSetup &setup)
       setup.executionBlockReason = "order_failed";
       setup.skipReason = "order_failed";
       WriteThirdWaveTradeRow(setup, "order_failed", "retcode_" + IntegerToString((int)trade.ResultRetcode()), (long)trade.ResultRetcode());
+      WriteThirdWaveWaveAuditRow(setup, "order_failed");
       WriteThirdWaveSignalRow(setup);
       PrintFormat("%s: thirdwave order failed %s %s lot=%.2f retcode=%d",
                   STRATEGY_NAME,
@@ -3751,6 +4116,7 @@ void TryThirdWaveEntry(ThirdWaveSetup &setup)
      {
       ++g_thirdWaveOrderSentCount;
       WriteThirdWaveTradeRow(setup, "order_sent", "order_sent", (long)trade.ResultRetcode());
+      WriteThirdWaveWaveAuditRow(setup, "order_sent");
       WriteThirdWaveSignalRow(setup);
       MarkEntryOnCurrentScanBar(ThirdWaveStrategyName(), setup.symbol, setup.direction);
       PrintFormat("%s: thirdwave order sent %s %s lot=%.2f rr=%.2f",
@@ -3937,6 +4303,10 @@ void ScanThirdWaveSymbols()
 
          if(ShouldWriteThirdWaveSignalDiagnostic(setup))
             WriteThirdWaveSignalRow(setup);
+         if(setup.entryPass)
+            WriteThirdWaveWaveAuditRow(setup, "final_entry_candidate");
+         else if(setup.rrPass && setup.executionBlockReason != "")
+            WriteThirdWaveWaveAuditRow(setup, "execution_block_candidate");
         }
      }
 
