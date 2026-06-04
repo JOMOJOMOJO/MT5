@@ -32,6 +32,20 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME = 2
   };
 
+enum ENUM_ENTRY_SELECTION_MODE
+  {
+   ENTRY_SELECTION_BEST_ONLY = 0,
+   ENTRY_SELECTION_ALL_SCORE_PASSING = 1
+  };
+
+enum ENUM_DIAGNOSTICS_LEVEL
+  {
+   DIAG_OFF = 0,
+   DIAG_SUMMARY_ONLY = 1,
+   DIAG_ENTRY_ONLY = 2,
+   DIAG_VERBOSE = 3
+  };
+
 enum ENUM_THIRD_WAVE_REGIME
   {
    REGIME_UNKNOWN = 0,
@@ -50,6 +64,8 @@ input ENUM_TIMEFRAMES InpContextTF                     = PERIOD_H1;
 input ENUM_TIMEFRAMES InpPatternTF                     = PERIOD_M15;
 input ENUM_TIMEFRAMES InpExecutionTF                   = PERIOD_M5;
 input ENUM_RESEARCH_STRATEGY_MODE InpResearchStrategyMode = RESEARCH_STRATEGY_SCORE_SCANNER;
+input ENUM_ENTRY_SELECTION_MODE InpEntrySelectionMode  = ENTRY_SELECTION_BEST_ONLY;
+input ENUM_DIAGNOSTICS_LEVEL InpDiagnosticsLevel       = DIAG_ENTRY_ONLY;
 input ENUM_TRADE_DIRECTION_MODE InpTradeDirectionMode  = TRADE_DIRECTION_BOTH;
 input bool            InpDisableUsdJpyShort            = false;
 input ENUM_SYMBOL_RESEARCH_MODE InpSymbolResearchMode  = SYMBOL_RESEARCH_ALL;
@@ -203,6 +219,8 @@ bool     g_drawdownStopped = false;
 string   g_riskStopReason = "";
 datetime g_lastScanExecutionBarTime = 0;
 datetime g_lastLoggedSkippedExecutionBarTime = 0;
+string   g_lastEntryBarKeys[];
+datetime g_lastEntryBarTimes[];
 long     g_structureEvaluations = 0;
 long     g_structureDetailRows = 0;
 long     g_structurePassCount = 0;
@@ -371,6 +389,33 @@ bool IsThirdWaveStrategyMode()
 bool IsRegimeAwareThirdWaveMode()
   {
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME);
+  }
+
+bool IsAllCandidatesEntryMode()
+  {
+   return (InpEntrySelectionMode == ENTRY_SELECTION_ALL_SCORE_PASSING);
+  }
+
+bool DiagnosticsSummaryEnabled()
+  {
+   return (InpDiagnosticsLevel >= DIAG_SUMMARY_ONLY);
+  }
+
+bool DiagnosticsEntryDetailEnabled()
+  {
+   return (InpDiagnosticsLevel >= DIAG_ENTRY_ONLY);
+  }
+
+bool DiagnosticsVerboseEnabled()
+  {
+   return (InpDiagnosticsLevel >= DIAG_VERBOSE);
+  }
+
+string EntrySelectionModeName()
+  {
+   if(IsAllCandidatesEntryMode())
+      return "all_score_passing";
+   return "best_only";
   }
 
 string ThirdWaveStrategyName()
@@ -831,6 +876,30 @@ int CountManagedPositionsForSymbol(const string symbol)
    return count;
   }
 
+int CountManagedPositionsForSymbolDirection(const string symbol, const string direction)
+  {
+   int count = 0;
+   int total = PositionsTotal();
+   ENUM_POSITION_TYPE desiredType = POSITION_TYPE_BUY;
+   if(direction == "SHORT")
+      desiredType = POSITION_TYPE_SELL;
+
+   for(int i = 0; i < total; ++i)
+     {
+      ulong ticket = PositionGetTicket(i);
+      if(ticket == 0)
+         continue;
+      if(PositionGetString(POSITION_SYMBOL) != symbol)
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      if((ENUM_POSITION_TYPE)PositionGetInteger(POSITION_TYPE) != desiredType)
+         continue;
+      count++;
+     }
+   return count;
+  }
+
 int CountManagedPositionsForGroup(const string group)
   {
    int count = 0;
@@ -846,6 +915,57 @@ int CountManagedPositionsForGroup(const string group)
          count++;
      }
    return count;
+  }
+
+datetime ActiveEntryBarTime()
+  {
+   if(g_lastScanExecutionBarTime > 0)
+      return g_lastScanExecutionBarTime;
+
+   datetime barTime = 0;
+   string reason = "";
+   if(LatestClosedExecutionBarTime(barTime, reason))
+      return barTime;
+
+   return TimeCurrent();
+  }
+
+string EntryBarKey(const string strategyName, const string symbol, const string direction)
+  {
+   return strategyName + "|" + symbol + "|" + direction;
+  }
+
+bool HasEntryOnCurrentScanBar(const string strategyName, const string symbol, const string direction)
+  {
+   datetime barTime = ActiveEntryBarTime();
+   string key = EntryBarKey(strategyName, symbol, direction);
+   int size = ArraySize(g_lastEntryBarKeys);
+   for(int i = 0; i < size; ++i)
+     {
+      if(g_lastEntryBarKeys[i] == key && g_lastEntryBarTimes[i] == barTime)
+         return true;
+     }
+   return false;
+  }
+
+void MarkEntryOnCurrentScanBar(const string strategyName, const string symbol, const string direction)
+  {
+   datetime barTime = ActiveEntryBarTime();
+   string key = EntryBarKey(strategyName, symbol, direction);
+   int size = ArraySize(g_lastEntryBarKeys);
+   for(int i = 0; i < size; ++i)
+     {
+      if(g_lastEntryBarKeys[i] == key)
+        {
+         g_lastEntryBarTimes[i] = barTime;
+         return;
+        }
+     }
+
+   ArrayResize(g_lastEntryBarKeys, size + 1);
+   ArrayResize(g_lastEntryBarTimes, size + 1);
+   g_lastEntryBarKeys[size] = key;
+   g_lastEntryBarTimes[size] = barTime;
   }
 
 double CurrentTotalOpenRiskPercent()
@@ -1891,6 +2011,8 @@ void RecordThirdWaveEvaluation(const ThirdWaveSetup &setup)
 
 bool ShouldWriteThirdWaveSignalDiagnostic(const ThirdWaveSetup &setup)
   {
+   if(!DiagnosticsVerboseEnabled())
+      return false;
    return (setup.lowerTfReversalPass ||
            setup.structureSlPass ||
            setup.rrPass ||
@@ -2408,14 +2530,23 @@ void InitScore(SymbolScore &score, const string symbol)
    score.reason = "";
   }
 
-bool EvaluateSymbol(const string symbol, SymbolScore &bestScore)
+bool EvaluateSymbolDirectionalScores(const string symbol,
+                                     SymbolScore &longScore,
+                                     bool &longReady,
+                                     SymbolScore &shortScore,
+                                     bool &shortReady,
+                                     string &failureReason)
   {
-   InitScore(bestScore, symbol);
+   InitScore(longScore, symbol);
+   InitScore(shortScore, symbol);
+   longReady = false;
+   shortReady = false;
+   failureReason = "";
 
    string researchReason = "";
    if(!IsSymbolAllowedByResearchMode(symbol, researchReason))
      {
-      bestScore.reason = researchReason;
+      failureReason = researchReason;
       return false;
      }
 
@@ -2427,19 +2558,19 @@ bool EvaluateSymbol(const string symbol, SymbolScore &bestScore)
 
    if(!LoadRates(symbol, InpContextTF, barsNeeded, contextRates, reason))
      {
-      bestScore.reason = reason;
+      failureReason = reason;
       PrintFormat("%s: %s skipped: %s", STRATEGY_NAME, symbol, reason);
       return false;
      }
    if(!LoadRates(symbol, InpPatternTF, barsNeeded, patternRates, reason))
      {
-      bestScore.reason = reason;
+      failureReason = reason;
       PrintFormat("%s: %s skipped: %s", STRATEGY_NAME, symbol, reason);
       return false;
      }
    if(!LoadRates(symbol, InpExecutionTF, barsNeeded, executionRates, reason))
      {
-      bestScore.reason = reason;
+      failureReason = reason;
       PrintFormat("%s: %s skipped: %s", STRATEGY_NAME, symbol, reason);
       return false;
      }
@@ -2449,14 +2580,9 @@ bool EvaluateSymbol(const string symbol, SymbolScore &bestScore)
    double executionATR = AverageATR(executionRates, 1, InpATRPeriod);
    if(patternATR <= 0.0 || averagePatternATR <= 0.0 || executionATR <= 0.0)
      {
-      bestScore.reason = "atr_unavailable";
+      failureReason = "atr_unavailable";
       return false;
      }
-
-   SymbolScore longScore;
-   SymbolScore shortScore;
-   InitScore(longScore, symbol);
-   InitScore(shortScore, symbol);
 
    string longBlockReason = "";
    string shortBlockReason = "";
@@ -2465,30 +2591,58 @@ bool EvaluateSymbol(const string symbol, SymbolScore &bestScore)
 
    if(!allowLong && !allowShort)
      {
-      AppendReason(bestScore.reason, longBlockReason);
-      AppendReason(bestScore.reason, shortBlockReason);
+      AppendReason(failureReason, longBlockReason);
+      AppendReason(failureReason, shortBlockReason);
       return false;
      }
 
    if(allowLong)
+     {
       ScoreSide(symbol, contextRates, patternRates, executionRates, patternATR, averagePatternATR, executionATR, 1, longScore);
-   if(allowShort)
-      ScoreSide(symbol, contextRates, patternRates, executionRates, patternATR, averagePatternATR, executionATR, -1, shortScore);
+      AppendReason(longScore.reason, shortBlockReason);
+      if(longScore.totalScore < InpEntryScoreThreshold)
+         AppendReason(longScore.reason, "below_threshold");
+      else
+         AppendReason(longScore.reason, "entry_score_ok");
+      longReady = true;
+     }
 
-   if(allowLong && allowShort)
+   if(allowShort)
+     {
+      ScoreSide(symbol, contextRates, patternRates, executionRates, patternATR, averagePatternATR, executionATR, -1, shortScore);
+      AppendReason(shortScore.reason, longBlockReason);
+      if(shortScore.totalScore < InpEntryScoreThreshold)
+         AppendReason(shortScore.reason, "below_threshold");
+      else
+         AppendReason(shortScore.reason, "entry_score_ok");
+      shortReady = true;
+     }
+
+   return (longReady || shortReady);
+  }
+
+bool EvaluateSymbol(const string symbol, SymbolScore &bestScore)
+  {
+   InitScore(bestScore, symbol);
+
+   SymbolScore longScore;
+   SymbolScore shortScore;
+   bool longReady = false;
+   bool shortReady = false;
+   string failureReason = "";
+
+   if(!EvaluateSymbolDirectionalScores(symbol, longScore, longReady, shortScore, shortReady, failureReason))
+     {
+      bestScore.reason = failureReason;
+      return false;
+     }
+
+   if(longReady && shortReady)
       bestScore = (longScore.totalScore >= shortScore.totalScore ? longScore : shortScore);
-   else if(allowLong)
+   else if(longReady)
       bestScore = longScore;
    else
       bestScore = shortScore;
-
-   AppendReason(bestScore.reason, longBlockReason);
-   AppendReason(bestScore.reason, shortBlockReason);
-
-   if(bestScore.totalScore < InpEntryScoreThreshold)
-      AppendReason(bestScore.reason, "below_threshold");
-   else
-      AppendReason(bestScore.reason, "entry_score_ok");
 
    return true;
   }
@@ -2626,6 +2780,9 @@ void WriteScanDiagnosticRow(const string eventName,
 
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state)
   {
+   if(!DiagnosticsEntryDetailEnabled())
+      return;
+
    ++g_structureDetailRows;
    EnsureLogFolder();
 
@@ -2686,6 +2843,9 @@ void WriteStructureFilterRow(const string symbol, const string direction, const 
 
 void WriteStructureSummaryRow()
   {
+   if(!DiagnosticsSummaryEnabled())
+      return;
+
    EnsureLogFolder();
 
    int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
@@ -2755,6 +2915,9 @@ void WriteStructureSummaryRow()
 
 void WriteScoreRow(const SymbolScore &score, const string reason)
   {
+   if(!DiagnosticsEntryDetailEnabled())
+      return;
+
    EnsureLogFolder();
 
    int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
@@ -2801,6 +2964,9 @@ void WriteScoreRow(const SymbolScore &score, const string reason)
 
 void WriteThirdWaveSignalRow(const ThirdWaveSetup &setup)
   {
+   if(!DiagnosticsEntryDetailEnabled())
+      return;
+
    EnsureLogFolder();
 
    int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
@@ -2917,6 +3083,9 @@ void WriteThirdWaveTradeRow(const ThirdWaveSetup &setup,
                             const string resultReason,
                             const long retcode)
   {
+   if(!DiagnosticsEntryDetailEnabled())
+      return;
+
    EnsureLogFolder();
 
    int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
@@ -3153,6 +3322,9 @@ string TopThirdWaveExecutionBlockReason(long &count)
 
 void WriteThirdWaveSummaryRow()
   {
+   if(!DiagnosticsSummaryEnabled())
+      return;
+
    if(!IsThirdWaveStrategyMode() &&
       g_thirdWaveEvaluations <= 0)
       return;
@@ -3279,6 +3451,8 @@ bool IsEntryScoreCandidate(const SymbolScore &score)
 
 bool ShouldWriteScoreDiagnostic(const SymbolScore &score, const bool isBest)
   {
+   if(!DiagnosticsVerboseEnabled())
+      return false;
    if(!score.dataReady)
       return false;
    if(isBest)
@@ -3290,6 +3464,8 @@ bool ShouldWriteScoreDiagnostic(const SymbolScore &score, const bool isBest)
 
 bool ShouldWriteStructureDiagnostic(const SymbolScore &score, const bool isBest)
   {
+   if(!DiagnosticsVerboseEnabled())
+      return false;
    if(!score.structureEvaluated)
       return false;
    if(isBest)
@@ -3342,6 +3518,18 @@ bool CanTradeCandidate(const SymbolScore &score, string &blockReason)
    if(IsHardRiskStopped(riskStop))
      {
       blockReason = riskStop;
+      return false;
+     }
+   if(IsAllCandidatesEntryMode() &&
+      CountManagedPositionsForSymbolDirection(score.symbol, score.direction) > 0)
+     {
+      blockReason = "existing_position";
+      return false;
+     }
+   if(IsAllCandidatesEntryMode() &&
+      HasEntryOnCurrentScanBar("ScoreScanner", score.symbol, score.direction))
+     {
+      blockReason = "same_scan_bar_reentry";
       return false;
      }
    if(InpMaxPositions > 0 && CountManagedPositions() >= InpMaxPositions)
@@ -3431,6 +3619,7 @@ void TryTradeBestCandidate(const SymbolScore &score)
       WriteScoreRow(score, resultReason);
       if(score.structureEvaluated)
          WriteStructureFilterRow(score.symbol, score.direction, score.structureState);
+      MarkEntryOnCurrentScanBar("ScoreScanner", score.symbol, score.direction);
       PrintFormat("%s: order sent %s %s lot=%.2f score=%.2f",
                   STRATEGY_NAME,
                   score.symbol,
@@ -3475,9 +3664,22 @@ bool CanTradeThirdWaveCandidate(const ThirdWaveSetup &setup, string &blockReason
       blockReason = "max_positions";
       return false;
      }
-   if(CountManagedPositionsForSymbol(setup.symbol) > 0)
+   if(IsAllCandidatesEntryMode() &&
+      CountManagedPositionsForSymbolDirection(setup.symbol, setup.direction) > 0)
      {
       blockReason = "existing_position";
+      return false;
+     }
+   if(!IsAllCandidatesEntryMode() &&
+      CountManagedPositionsForSymbol(setup.symbol) > 0)
+     {
+      blockReason = "existing_position";
+      return false;
+     }
+   if(IsAllCandidatesEntryMode() &&
+      HasEntryOnCurrentScanBar(ThirdWaveStrategyName(), setup.symbol, setup.direction))
+     {
+      blockReason = "same_scan_bar_reentry";
       return false;
      }
    if(InpMaxSameCurrencyGroupPositions > 0 &&
@@ -3550,6 +3752,7 @@ void TryThirdWaveEntry(ThirdWaveSetup &setup)
       ++g_thirdWaveOrderSentCount;
       WriteThirdWaveTradeRow(setup, "order_sent", "order_sent", (long)trade.ResultRetcode());
       WriteThirdWaveSignalRow(setup);
+      MarkEntryOnCurrentScanBar(ThirdWaveStrategyName(), setup.symbol, setup.direction);
       PrintFormat("%s: thirdwave order sent %s %s lot=%.2f rr=%.2f",
                   STRATEGY_NAME,
                   setup.symbol,
@@ -3591,13 +3794,45 @@ void ScanAllSymbols()
       return;
 
    SymbolScore scores[];
-   ArrayResize(scores, count);
+   ArrayResize(scores, 0);
 
    for(int i = 0; i < count; ++i)
-      EvaluateSymbol(g_symbols[i], scores[i]);
+     {
+      if(IsAllCandidatesEntryMode())
+        {
+         SymbolScore longScore;
+         SymbolScore shortScore;
+         bool longReady = false;
+         bool shortReady = false;
+         string failureReason = "";
+         EvaluateSymbolDirectionalScores(g_symbols[i], longScore, longReady, shortScore, shortReady, failureReason);
+
+         int size = ArraySize(scores);
+         if(longReady)
+           {
+            ArrayResize(scores, size + 1);
+            scores[size] = longScore;
+            size++;
+           }
+         if(shortReady)
+           {
+            ArrayResize(scores, size + 1);
+            scores[size] = shortScore;
+           }
+        }
+      else
+        {
+         SymbolScore score;
+         EvaluateSymbol(g_symbols[i], score);
+         int size = ArraySize(scores);
+         ArrayResize(scores, size + 1);
+         scores[size] = score;
+        }
+     }
 
    int bestIndex = FindBestCandidate(scores);
-   for(int i = 0; i < count; ++i)
+   int scoreCount = ArraySize(scores);
+   for(int i = 0; i < scoreCount; ++i)
      {
       string rowReason = scores[i].reason;
       bool isBest = (bestIndex == i);
@@ -3611,9 +3846,31 @@ void ScanAllSymbols()
          WriteStructureFilterRow(scores[i].symbol, scores[i].direction, scores[i].structureState);
      }
 
+   if(IsAllCandidatesEntryMode())
+     {
+      bool attempted = false;
+      for(int i = 0; i < scoreCount; ++i)
+        {
+         if(!IsEntryScoreCandidate(scores[i]))
+            continue;
+
+         SymbolScore candidate = scores[i];
+         AppendReason(candidate.reason, "all_score_passing_candidate");
+         if(bestIndex == i)
+            AppendReason(candidate.reason, "best_candidate");
+         attempted = true;
+         TryTradeBestCandidate(candidate);
+        }
+
+      if(!attempted)
+         PrintFormat("%s: no score-passing candidate in scan", STRATEGY_NAME);
+      return;
+     }
+
    if(bestIndex >= 0)
      {
       SymbolScore best = scores[bestIndex];
+      AppendReason(best.reason, "best_candidate");
       PrintFormat("%s: best=%s %s total=%.2f trend=%.2f setup=%.2f vol=%.2f cost=%.2f risk=%.2f reason=%s",
                   STRATEGY_NAME,
                   best.symbol,
@@ -3684,6 +3941,25 @@ void ScanThirdWaveSymbols()
      }
 
    int bestIndex = FindBestThirdWaveCandidate(setups);
+   if(IsAllCandidatesEntryMode())
+     {
+      bool attempted = false;
+      int setupCount = ArraySize(setups);
+      for(int i = 0; i < setupCount; ++i)
+        {
+         if(!setups[i].entryPass)
+            continue;
+         attempted = true;
+         ThirdWaveSetup candidate = setups[i];
+         candidate.skipReason = "all_score_passing_candidate";
+         TryThirdWaveEntry(candidate);
+        }
+
+      if(!attempted)
+         PrintFormat("%s: thirdwave no all-candidates entry candidate in scan", STRATEGY_NAME);
+      return;
+     }
+
    if(bestIndex >= 0)
      {
       ThirdWaveSetup best = setups[bestIndex];
@@ -3828,13 +4104,15 @@ int OnInit()
    EventSetTimer(InpScanSeconds);
    EnsureLogFolder();
 
-   PrintFormat("%s initialized symbols=%d trading=%s scan_seconds=%d scan_only_new_execution_bar=%s strategy_mode=%d direction_mode=%d symbol_research_mode=%d dow_fractal_filter=%s",
+   PrintFormat("%s initialized symbols=%d trading=%s scan_seconds=%d scan_only_new_execution_bar=%s strategy_mode=%d entry_selection=%s diagnostics_level=%d direction_mode=%d symbol_research_mode=%d dow_fractal_filter=%s",
                STRATEGY_NAME,
                ArraySize(g_symbols),
                (InpEnableTrading ? "true" : "false"),
                InpScanSeconds,
                BoolText(InpScanOnlyOnNewExecutionBar),
                (int)InpResearchStrategyMode,
+               EntrySelectionModeName(),
+               (int)InpDiagnosticsLevel,
                (int)InpTradeDirectionMode,
                (int)InpSymbolResearchMode,
                BoolText(InpUseDowFractalStructureFilter));

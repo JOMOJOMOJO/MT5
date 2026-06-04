@@ -6,7 +6,7 @@ param(
     [string]$FromDate = "2025.01.01",
     [string]$ToDate = "2025.12.31",
     [int]$BaseMagicNumber = 2026060310,
-    [ValidateSet("Original", "RegimeComparison")]
+    [ValidateSet("Original", "RegimeComparison", "ScanIntervalComparison")]
     [string]$ScenarioSet = "Original"
 )
 
@@ -40,7 +40,14 @@ function New-Run {
         [int]$StrategyMode,
         [int]$DirectionMode,
         [int]$MagicNumber,
-        [string]$Scenario
+        [string]$Scenario,
+        [int]$EntrySelectionMode = 0,
+        [int]$DiagnosticsLevel = 2,
+        [int]$ScanSeconds = 300,
+        [int]$MaxPositions = 1,
+        [int]$MaxSameCurrencyGroupPositions = 1,
+        [double]$MaxRiskPerSymbolPercent = 1.0,
+        [double]$MaxTotalOpenRiskPercent = 3.0
     )
 
     $prefix = "${seriesPrefix}_$Name"
@@ -50,6 +57,13 @@ function New-Run {
         Prefix = $prefix
         StrategyMode = $StrategyMode
         DirectionMode = $DirectionMode
+        EntrySelectionMode = $EntrySelectionMode
+        DiagnosticsLevel = $DiagnosticsLevel
+        ScanSeconds = $ScanSeconds
+        MaxPositions = $MaxPositions
+        MaxSameCurrencyGroupPositions = $MaxSameCurrencyGroupPositions
+        MaxRiskPerSymbolPercent = $MaxRiskPerSymbolPercent
+        MaxTotalOpenRiskPercent = $MaxTotalOpenRiskPercent
         MagicNumber = $MagicNumber
         Scenario = $Scenario
         IniPath = Join-Path $backtestDir "$prefix.ini"
@@ -60,7 +74,16 @@ function New-Run {
     }
 }
 
-if ($ScenarioSet -eq "RegimeComparison") {
+if ($ScenarioSet -eq "ScanIntervalComparison") {
+    $runs = @(
+        New-Run -Id "A" -Name "A_regime_best_5m" -StrategyMode 2 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 1) -Scenario "ThirdWave_regime_BOTH_best_5m" -EntrySelectionMode 0 -DiagnosticsLevel 2 -ScanSeconds 300
+        New-Run -Id "B" -Name "B_regime_best_10m" -StrategyMode 2 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 2) -Scenario "ThirdWave_regime_BOTH_best_10m" -EntrySelectionMode 0 -DiagnosticsLevel 2 -ScanSeconds 600
+        New-Run -Id "C" -Name "C_regime_best_15m" -StrategyMode 2 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 3) -Scenario "ThirdWave_regime_BOTH_best_15m" -EntrySelectionMode 0 -DiagnosticsLevel 2 -ScanSeconds 900
+        New-Run -Id "D" -Name "D_regime_all_5m" -StrategyMode 2 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 4) -Scenario "ThirdWave_regime_BOTH_all_5m" -EntrySelectionMode 1 -DiagnosticsLevel 2 -ScanSeconds 300 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "E" -Name "E_regime_all_10m" -StrategyMode 2 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 5) -Scenario "ThirdWave_regime_BOTH_all_10m" -EntrySelectionMode 1 -DiagnosticsLevel 2 -ScanSeconds 600 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "F" -Name "F_regime_all_15m" -StrategyMode 2 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 6) -Scenario "ThirdWave_regime_BOTH_all_15m" -EntrySelectionMode 1 -DiagnosticsLevel 2 -ScanSeconds 900 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+    )
+} elseif ($ScenarioSet -eq "RegimeComparison") {
     $runs = @(
         New-Run -Id "A" -Name "A_original_both" -StrategyMode 1 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 1) -Scenario "ThirdWave_original_BOTH"
         New-Run -Id "B" -Name "B_regime_both" -StrategyMode 2 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 2) -Scenario "ThirdWave_regime_BOTH"
@@ -106,10 +129,26 @@ function Write-ThirdWavePreset {
     $lines = Get-Content -Path $templatePreset
     $out = New-Object System.Collections.Generic.List[string]
     $insertedStrategyMode = $false
+    $insertedEntrySelectionMode = $false
+    $insertedDiagnosticsLevel = $false
     foreach ($line in $lines) {
+        if ($line -match '^InpScanSeconds=') {
+            $out.Add("InpScanSeconds=$($Run.ScanSeconds)||$($Run.ScanSeconds)||60||3600||N")
+            continue
+        }
         if ($line -match '^InpResearchStrategyMode=') {
             $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||2||N")
             $insertedStrategyMode = $true
+            continue
+        }
+        if ($line -match '^InpEntrySelectionMode=') {
+            $out.Add("InpEntrySelectionMode=$($Run.EntrySelectionMode)||$($Run.EntrySelectionMode)||0||1||N")
+            $insertedEntrySelectionMode = $true
+            continue
+        }
+        if ($line -match '^InpDiagnosticsLevel=') {
+            $out.Add("InpDiagnosticsLevel=$($Run.DiagnosticsLevel)||$($Run.DiagnosticsLevel)||0||3||N")
+            $insertedDiagnosticsLevel = $true
             continue
         }
         if ($line -match '^InpTradeDirectionMode=') {
@@ -132,6 +171,22 @@ function Write-ThirdWavePreset {
             $out.Add("InpMagicNumber=$($Run.MagicNumber)||$($Run.MagicNumber)||1||999999999||N")
             continue
         }
+        if ($line -match '^InpMaxPositions=') {
+            $out.Add("InpMaxPositions=$($Run.MaxPositions)||$($Run.MaxPositions)||1||100||N")
+            continue
+        }
+        if ($line -match '^InpMaxSameCurrencyGroupPositions=') {
+            $out.Add("InpMaxSameCurrencyGroupPositions=$($Run.MaxSameCurrencyGroupPositions)||$($Run.MaxSameCurrencyGroupPositions)||1||100||N")
+            continue
+        }
+        if ($line -match '^InpMaxRiskPerSymbolPercent=') {
+            $out.Add("InpMaxRiskPerSymbolPercent=$($Run.MaxRiskPerSymbolPercent.ToString('0.00', [System.Globalization.CultureInfo]::InvariantCulture))||$($Run.MaxRiskPerSymbolPercent.ToString('0.00', [System.Globalization.CultureInfo]::InvariantCulture))||0.10||100000.00||N")
+            continue
+        }
+        if ($line -match '^InpMaxTotalOpenRiskPercent=') {
+            $out.Add("InpMaxTotalOpenRiskPercent=$($Run.MaxTotalOpenRiskPercent.ToString('0.00', [System.Globalization.CultureInfo]::InvariantCulture))||$($Run.MaxTotalOpenRiskPercent.ToString('0.00', [System.Globalization.CultureInfo]::InvariantCulture))||0.10||100000.00||N")
+            continue
+        }
         if ($line -match '^InpLogFolder=') {
             $out.Add("InpLogFolder=$($Run.LogFolder)")
             continue
@@ -141,6 +196,28 @@ function Write-ThirdWavePreset {
             $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||2||N")
             $insertedStrategyMode = $true
         }
+        if (-not $insertedEntrySelectionMode -and $line -match '^InpResearchStrategyMode=') {
+            $out.Add("InpEntrySelectionMode=$($Run.EntrySelectionMode)||$($Run.EntrySelectionMode)||0||1||N")
+            $insertedEntrySelectionMode = $true
+        }
+        if (-not $insertedDiagnosticsLevel -and $line -match '^InpEntrySelectionMode=') {
+            $out.Add("InpDiagnosticsLevel=$($Run.DiagnosticsLevel)||$($Run.DiagnosticsLevel)||0||3||N")
+            $insertedDiagnosticsLevel = $true
+        }
+        if (-not $insertedEntrySelectionMode -and $insertedStrategyMode -and $line -match '^InpExecutionTF=') {
+            $out.Add("InpEntrySelectionMode=$($Run.EntrySelectionMode)||$($Run.EntrySelectionMode)||0||1||N")
+            $insertedEntrySelectionMode = $true
+        }
+        if (-not $insertedDiagnosticsLevel -and $insertedEntrySelectionMode -and $line -match '^InpExecutionTF=') {
+            $out.Add("InpDiagnosticsLevel=$($Run.DiagnosticsLevel)||$($Run.DiagnosticsLevel)||0||3||N")
+            $insertedDiagnosticsLevel = $true
+        }
+    }
+    if (-not $insertedEntrySelectionMode) {
+        $out.Add("InpEntrySelectionMode=$($Run.EntrySelectionMode)||$($Run.EntrySelectionMode)||0||1||N")
+    }
+    if (-not $insertedDiagnosticsLevel) {
+        $out.Add("InpDiagnosticsLevel=$($Run.DiagnosticsLevel)||$($Run.DiagnosticsLevel)||0||3||N")
     }
     Set-Content -Path $Run.PresetPath -Value $out -Encoding ASCII
 }
