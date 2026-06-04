@@ -28,7 +28,18 @@ enum ENUM_SYMBOL_RESEARCH_MODE
 enum ENUM_RESEARCH_STRATEGY_MODE
   {
    RESEARCH_STRATEGY_SCORE_SCANNER = 0,
-   RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE = 1
+   RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE = 1,
+   RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME = 2
+  };
+
+enum ENUM_THIRD_WAVE_REGIME
+  {
+   REGIME_UNKNOWN = 0,
+   REGIME_TREND_UP = 1,
+   REGIME_TREND_DOWN = 2,
+   REGIME_RANGE = 3,
+   REGIME_TRANSITION = 4,
+   REGIME_EXHAUSTION = 5
   };
 
 input string          InpSymbols                       = "USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD,XAUUSD";
@@ -136,7 +147,13 @@ struct ThirdWaveSetup
    string            structureStageFailReason;
    string            executionBlockReason;
    string            structureSlSource;
+   string            regime;
+   string            regimeReason;
+   string            higherTfSwingState;
+   string            volatilityState;
+   string            blockedByRegimeReason;
    bool              dataReady;
+   bool              entryAllowedByRegime;
    bool              higherTfTrendPass;
    bool              midTfPullbackPass;
    bool              lowerTfReversalPass;
@@ -162,6 +179,11 @@ struct ThirdWaveSetup
    double            spreadPoints;
    double            retraceRatio;
    double            qualityScore;
+   double            emaSlope;
+   double            trendStrength;
+   double            lowerReversalQuality;
+   double            pullbackDepthATR;
+   double            slATR;
   };
 
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
@@ -250,6 +272,17 @@ long     g_thirdWaveExecutionRiskLimitCount = 0;
 long     g_thirdWaveExecutionInvalidCount = 0;
 long     g_thirdWaveExecutionOrderFailedCount = 0;
 long     g_thirdWaveExecutionUnknownCount = 0;
+long     g_thirdWaveRegimeTrendUpCount = 0;
+long     g_thirdWaveRegimeTrendDownCount = 0;
+long     g_thirdWaveRegimeRangeCount = 0;
+long     g_thirdWaveRegimeTransitionCount = 0;
+long     g_thirdWaveRegimeExhaustionCount = 0;
+long     g_thirdWaveRegimeUnknownCount = 0;
+long     g_thirdWaveRegimeAllowedCount = 0;
+long     g_thirdWaveRegimeBlockedCount = 0;
+long     g_thirdWaveRegimeBlockLongRequiresTrendUpCount = 0;
+long     g_thirdWaveRegimeBlockShortRequiresTrendDownCount = 0;
+long     g_thirdWaveLowerReversalQualityLowCount = 0;
 
 //+------------------------------------------------------------------+
 //| Generic helpers                                                   |
@@ -327,6 +360,39 @@ bool IsUsdJpySymbol(const string symbol)
 string BoolText(const bool value)
   {
    return (value ? "true" : "false");
+  }
+
+bool IsThirdWaveStrategyMode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME);
+  }
+
+bool IsRegimeAwareThirdWaveMode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME);
+  }
+
+string ThirdWaveStrategyName()
+  {
+   if(IsRegimeAwareThirdWaveMode())
+      return "DowFractal_ThirdWave_Regime";
+   return "DowFractal_ThirdWave";
+  }
+
+string RegimeToString(const ENUM_THIRD_WAVE_REGIME regime)
+  {
+   if(regime == REGIME_TREND_UP)
+      return "REGIME_TREND_UP";
+   if(regime == REGIME_TREND_DOWN)
+      return "REGIME_TREND_DOWN";
+   if(regime == REGIME_RANGE)
+      return "REGIME_RANGE";
+   if(regime == REGIME_TRANSITION)
+      return "REGIME_TRANSITION";
+   if(regime == REGIME_EXHAUSTION)
+      return "REGIME_EXHAUSTION";
+   return "REGIME_UNKNOWN";
   }
 
 string DateTimeText(const datetime value)
@@ -640,7 +706,13 @@ void InitThirdWaveSetup(ThirdWaveSetup &setup, const string symbol, const int di
    setup.structureStageFailReason = "";
    setup.executionBlockReason = "";
    setup.structureSlSource = "";
+   setup.regime = (IsRegimeAwareThirdWaveMode() ? "REGIME_UNKNOWN" : "not_used");
+   setup.regimeReason = "";
+   setup.higherTfSwingState = "";
+   setup.volatilityState = "";
+   setup.blockedByRegimeReason = "";
    setup.dataReady = false;
+   setup.entryAllowedByRegime = !IsRegimeAwareThirdWaveMode();
    setup.higherTfTrendPass = false;
    setup.midTfPullbackPass = false;
    setup.lowerTfReversalPass = false;
@@ -666,6 +738,11 @@ void InitThirdWaveSetup(ThirdWaveSetup &setup, const string symbol, const int di
    setup.spreadPoints = 0.0;
    setup.retraceRatio = 0.0;
    setup.qualityScore = 0.0;
+   setup.emaSlope = 0.0;
+   setup.trendStrength = 0.0;
+   setup.lowerReversalQuality = 0.0;
+   setup.pullbackDepthATR = 0.0;
+   setup.slATR = 0.0;
   }
 
 //+------------------------------------------------------------------+
@@ -974,6 +1051,181 @@ double CalculatePositionSize(const string symbol, const double stopDistance)
 //+------------------------------------------------------------------+
 //| Dow/fractal third wave research branch                           |
 //+------------------------------------------------------------------+
+string ThirdWaveSwingState(const bool higherHigh,
+                            const bool higherLow,
+                            const bool lowerHigh,
+                            const bool lowerLow)
+  {
+   if(higherHigh && higherLow)
+      return "HH_HL";
+   if(lowerHigh && lowerLow)
+      return "LL_LH";
+   if(higherHigh && !higherLow)
+      return "HH_no_HL";
+   if(lowerLow && !lowerHigh)
+      return "LL_no_LH";
+   if(higherLow && lowerHigh)
+      return "compressed";
+   return "mixed";
+  }
+
+void ClassifyThirdWaveRegime(const MqlRates &contextRates[],
+                             ThirdWaveSetup &setup)
+  {
+   setup.regime = RegimeToString(REGIME_UNKNOWN);
+   setup.regimeReason = "not_enough_context";
+   setup.higherTfSwingState = "unknown";
+   setup.volatilityState = "unknown";
+   setup.entryAllowedByRegime = false;
+   setup.blockedByRegimeReason = "";
+
+   int span = InpStructureSwingSpan;
+   if(span < 1)
+      span = 1;
+
+   int scanBars = InpStructureScanBars;
+   if(scanBars < span * 4 + 10)
+      scanBars = span * 4 + 10;
+
+   PivotPoint highLatest;
+   PivotPoint highPrevious;
+   PivotPoint lowLatest;
+   PivotPoint lowPrevious;
+   bool hasHighs = FindRecentPivots(contextRates, true, span, scanBars, highLatest, highPrevious);
+   bool hasLows = FindRecentPivots(contextRates, false, span, scanBars, lowLatest, lowPrevious);
+
+   double fast = AverageClose(contextRates, 1, InpFastMAPeriod);
+   double slow = AverageClose(contextRates, 1, InpSlowMAPeriod);
+   double slowPast = AverageClose(contextRates, 1 + InpSlopeLookbackBars, InpSlowMAPeriod);
+   double contextATR = AverageATR(contextRates, 1, InpATRPeriod);
+   double averageATR = AverageATR(contextRates, 1, InpATRAveragePeriod);
+
+   setup.emaSlope = slow - slowPast;
+   setup.trendStrength = (contextATR > 0.0 ? MathAbs(setup.emaSlope) / contextATR : 0.0);
+
+   double atrRatio = (averageATR > 0.0 ? contextATR / averageATR : 0.0);
+   if(atrRatio > 0.0 && atrRatio < 0.75)
+      setup.volatilityState = "low";
+   else if(atrRatio > 1.35)
+      setup.volatilityState = "high";
+   else if(atrRatio > 0.0)
+      setup.volatilityState = "normal";
+
+   if(!hasHighs || !hasLows || contextATR <= 0.0 || fast <= 0.0 || slow <= 0.0 || slowPast <= 0.0)
+     {
+      setup.regime = RegimeToString(REGIME_UNKNOWN);
+      setup.regimeReason = "insufficient_swings_or_indicators";
+      return;
+     }
+
+   bool higherHigh = (highLatest.price > highPrevious.price);
+   bool higherLow = (lowLatest.price > lowPrevious.price);
+   bool lowerHigh = (highLatest.price < highPrevious.price);
+   bool lowerLow = (lowLatest.price < lowPrevious.price);
+   setup.higherTfSwingState = ThirdWaveSwingState(higherHigh, higherLow, lowerHigh, lowerLow);
+
+   int rangeBars = MathMin(scanBars, 48);
+   double rangeHigh = HighestHigh(contextRates, 1, rangeBars);
+   double rangeLow = LowestLow(contextRates, 1, rangeBars);
+   double rangeATR = (contextATR > 0.0 ? (rangeHigh - rangeLow) / contextATR : 0.0);
+   double upSwingMomentum = (highLatest.price - highPrevious.price) / contextATR;
+   double downSwingMomentum = (lowPrevious.price - lowLatest.price) / contextATR;
+   double emaDistanceATR = MathAbs(contextRates[1].close - slow) / contextATR;
+
+   bool emaUp = (fast > slow && setup.emaSlope > 0.0);
+   bool emaDown = (fast < slow && setup.emaSlope < 0.0);
+   bool structureUp = (higherHigh && higherLow);
+   bool structureDown = (lowerHigh && lowerLow);
+   bool mixedStructure = (!structureUp && !structureDown);
+   bool lowVolatilityRange = (rangeATR > 0.0 && rangeATR < 2.20 && setup.trendStrength < 0.08);
+   bool weakMixedRange = (mixedStructure && setup.trendStrength < 0.12);
+   bool upExhaustion = (structureUp && emaUp && emaDistanceATR > 2.50 &&
+                        contextRates[1].close < contextRates[2].close &&
+                        contextRates[2].close < contextRates[3].close);
+   bool downExhaustion = (structureDown && emaDown && emaDistanceATR > 2.50 &&
+                          contextRates[1].close > contextRates[2].close &&
+                          contextRates[2].close > contextRates[3].close);
+
+   if(upExhaustion || downExhaustion)
+     {
+      setup.regime = RegimeToString(REGIME_EXHAUSTION);
+      setup.regimeReason = StringFormat("exhaustion swing=%s strength=%.3f range_atr=%.2f vol=%s",
+                                        setup.higherTfSwingState,
+                                        setup.trendStrength,
+                                        rangeATR,
+                                        setup.volatilityState);
+      return;
+     }
+
+   if(structureUp && emaUp && atrRatio >= 0.65 && upSwingMomentum > 0.10)
+     {
+      setup.regime = RegimeToString(REGIME_TREND_UP);
+      setup.regimeReason = StringFormat("trend_up swing=%s strength=%.3f range_atr=%.2f vol=%s",
+                                        setup.higherTfSwingState,
+                                        setup.trendStrength,
+                                        rangeATR,
+                                        setup.volatilityState);
+      return;
+     }
+
+   if(structureDown && emaDown && atrRatio >= 0.65 && downSwingMomentum > 0.10)
+     {
+      setup.regime = RegimeToString(REGIME_TREND_DOWN);
+      setup.regimeReason = StringFormat("trend_down swing=%s strength=%.3f range_atr=%.2f vol=%s",
+                                        setup.higherTfSwingState,
+                                        setup.trendStrength,
+                                        rangeATR,
+                                        setup.volatilityState);
+      return;
+     }
+
+   if(lowVolatilityRange || weakMixedRange)
+     {
+      setup.regime = RegimeToString(REGIME_RANGE);
+      setup.regimeReason = StringFormat("range swing=%s strength=%.3f range_atr=%.2f vol=%s",
+                                        setup.higherTfSwingState,
+                                        setup.trendStrength,
+                                        rangeATR,
+                                        setup.volatilityState);
+      return;
+     }
+
+   setup.regime = RegimeToString(REGIME_TRANSITION);
+   setup.regimeReason = StringFormat("transition swing=%s strength=%.3f range_atr=%.2f vol=%s",
+                                     setup.higherTfSwingState,
+                                     setup.trendStrength,
+                                     rangeATR,
+                                     setup.volatilityState);
+  }
+
+bool ApplyThirdWaveRegimeGate(const int direction,
+                              ThirdWaveSetup &setup)
+  {
+   if(!IsRegimeAwareThirdWaveMode())
+      return true;
+
+   setup.entryAllowedByRegime = false;
+   setup.blockedByRegimeReason = "";
+   if(direction > 0 && setup.regime != RegimeToString(REGIME_TREND_UP))
+     {
+      setup.blockedByRegimeReason = "regime_requires_trend_up";
+      setup.skipReason = setup.blockedByRegimeReason;
+      setup.structureStageFailReason = setup.blockedByRegimeReason;
+      return false;
+     }
+
+   if(direction < 0 && setup.regime != RegimeToString(REGIME_TREND_DOWN))
+     {
+      setup.blockedByRegimeReason = "regime_requires_trend_down";
+      setup.skipReason = setup.blockedByRegimeReason;
+      setup.structureStageFailReason = setup.blockedByRegimeReason;
+      return false;
+     }
+
+   setup.entryAllowedByRegime = true;
+   return true;
+  }
+
 bool DetectHigherTimeframeDowTrend(const MqlRates &contextRates[],
                                     const int direction,
                                     ThirdWaveSetup &setup)
@@ -1075,6 +1327,7 @@ bool DetectMidTimeframePullback(const MqlRates &patternRates[],
         }
 
       setup.retraceRatio = (setup.swingHigh - lowLatest.price) / trendRange;
+      setup.pullbackDepthATR = (setup.atr > 0.0 ? MathAbs(setup.swingHigh - lowLatest.price) / setup.atr : 0.0);
       if(lowLatest.price <= setup.swingLow || setup.retraceRatio > 0.90)
         {
          setup.skipReason = "pullback_too_deep";
@@ -1106,6 +1359,7 @@ bool DetectMidTimeframePullback(const MqlRates &patternRates[],
      }
 
    setup.retraceRatio = (highLatest.price - setup.swingLow) / trendRange;
+   setup.pullbackDepthATR = (setup.atr > 0.0 ? MathAbs(highLatest.price - setup.swingLow) / setup.atr : 0.0);
    if(highLatest.price >= setup.swingHigh || setup.retraceRatio > 0.90)
      {
       setup.skipReason = "pullback_too_deep";
@@ -1165,8 +1419,40 @@ bool DetectLowerTimeframeReversal(const MqlRates &executionRates[],
          return false;
         }
 
-      setup.lowerTfReversalStatus = "minor_high_reclaimed";
+      setup.lowerReversalQuality = 100.0;
+      if(IsRegimeAwareThirdWaveMode())
+        {
+         double barRange = executionRates[1].high - executionRates[1].low;
+         double closeLocation = (barRange > 0.0 ? (executionRates[1].close - executionRates[1].low) / barRange : 0.5);
+         bool pullbackLowHeld = (setup.swingLow <= 0.0 ||
+                                 (executionRates[1].low > setup.swingLow &&
+                                  executionRates[2].low > setup.swingLow));
+         bool noImmediateStall = (closeLocation >= 0.55 &&
+                                  executionRates[1].close >= executionRates[2].close);
+         bool minorHigherLow = (!hasLows ||
+                                !lowPrevious.valid ||
+                                lowLatest.price >= lowPrevious.price ||
+                                executionRates[1].low > lowLatest.price);
+         double quality = 35.0;
+         if(pullbackLowHeld)
+            quality += 25.0;
+         if(noImmediateStall)
+            quality += 25.0;
+         if(minorHigherLow)
+            quality += 15.0;
+         setup.lowerReversalQuality = quality;
+         if(quality < 75.0)
+           {
+            setup.skipReason = "lower_reversal_quality_low";
+            setup.lowerTfReversalStatus = "minor_high_reclaimed_quality_low";
+            return false;
+           }
+        }
+
+      setup.lowerTfReversalStatus = (IsRegimeAwareThirdWaveMode() ? "minor_high_reclaimed_quality_ok" : "minor_high_reclaimed");
       setup.qualityScore = 100.0 + setup.retraceRatio * 20.0 - setup.spreadATR * 10.0;
+      if(IsRegimeAwareThirdWaveMode())
+         setup.qualityScore += setup.lowerReversalQuality * 0.10;
       return true;
      }
 
@@ -1185,8 +1471,40 @@ bool DetectLowerTimeframeReversal(const MqlRates &executionRates[],
       return false;
      }
 
-   setup.lowerTfReversalStatus = "minor_low_broken";
+   setup.lowerReversalQuality = 100.0;
+   if(IsRegimeAwareThirdWaveMode())
+     {
+      double barRange = executionRates[1].high - executionRates[1].low;
+      double closeLocation = (barRange > 0.0 ? (executionRates[1].close - executionRates[1].low) / barRange : 0.5);
+      bool pullbackHighHeld = (setup.swingHigh <= 0.0 ||
+                               (executionRates[1].high < setup.swingHigh &&
+                                executionRates[2].high < setup.swingHigh));
+      bool noImmediateReturn = (closeLocation <= 0.45 &&
+                                executionRates[1].close <= executionRates[2].close);
+      bool minorLowerHigh = (!hasHighs ||
+                             !highPrevious.valid ||
+                             highLatest.price <= highPrevious.price ||
+                             executionRates[1].high < highLatest.price);
+      double quality = 35.0;
+      if(pullbackHighHeld)
+         quality += 25.0;
+      if(noImmediateReturn)
+         quality += 25.0;
+      if(minorLowerHigh)
+         quality += 15.0;
+      setup.lowerReversalQuality = quality;
+      if(quality < 75.0)
+        {
+         setup.skipReason = "lower_reversal_quality_low";
+         setup.lowerTfReversalStatus = "minor_low_broken_quality_low";
+         return false;
+        }
+     }
+
+   setup.lowerTfReversalStatus = (IsRegimeAwareThirdWaveMode() ? "minor_low_broken_quality_ok" : "minor_low_broken");
    setup.qualityScore = 100.0 + setup.retraceRatio * 20.0 - setup.spreadATR * 10.0;
+   if(IsRegimeAwareThirdWaveMode())
+      setup.qualityScore += setup.lowerReversalQuality * 0.10;
    return true;
   }
 
@@ -1222,6 +1540,7 @@ bool CalculateStructureStopLoss(const string symbol,
       setup.stopLoss = NormalizeDouble(setup.swingHigh + buffer, digits);
       setup.riskR = setup.stopLoss - setup.entryPrice;
      }
+   setup.slATR = (setup.atrValue > 0.0 ? setup.riskR / setup.atrValue : 0.0);
 
    double brokerStop = (double)SymbolInfoInteger(symbol, SYMBOL_TRADE_STOPS_LEVEL) * point + spread;
    double minDistance = MathMax(brokerStop, setup.atr * InpMinSL_ATR);
@@ -1325,6 +1644,13 @@ bool BuildThirdWaveSetup(const string symbol,
    setup.spreadGuardBlocked = !setup.spreadGuardPass;
 
    setup.dataReady = true;
+   if(IsRegimeAwareThirdWaveMode())
+     {
+      ClassifyThirdWaveRegime(contextRates, setup);
+      if(!ApplyThirdWaveRegimeGate(direction, setup))
+         return false;
+     }
+
    if(!DetectHigherTimeframeDowTrend(contextRates, direction, setup))
      {
       setup.structureStageFailReason = setup.skipReason;
@@ -1394,6 +1720,8 @@ void RecordThirdWaveStructureFailReason(const string reason)
       ++g_thirdWavePullbackTooDeepCount;
    else if(reason == "no_lower_reversal")
       ++g_thirdWaveNoLowerReversalCount;
+   else if(reason == "lower_reversal_quality_low")
+      ++g_thirdWaveLowerReversalQualityLowCount;
    else if(reason == "sl_too_close")
       ++g_thirdWaveSlTooCloseCount;
    else if(reason == "sl_too_wide")
@@ -1409,8 +1737,36 @@ void RecordThirdWaveStructureFailReason(const string reason)
            reason == "direction_mode_long_only" ||
            reason == "direction_mode_short_only")
       ++g_thirdWaveResearchExcludedCount;
+   else if(reason == "regime_requires_trend_up")
+      ++g_thirdWaveRegimeBlockLongRequiresTrendUpCount;
+   else if(reason == "regime_requires_trend_down")
+      ++g_thirdWaveRegimeBlockShortRequiresTrendDownCount;
    else
       ++g_thirdWaveUnknownSkipCount;
+  }
+
+void RecordThirdWaveRegimeState(const ThirdWaveSetup &setup)
+  {
+   if(!IsRegimeAwareThirdWaveMode())
+      return;
+
+   if(setup.regime == RegimeToString(REGIME_TREND_UP))
+      ++g_thirdWaveRegimeTrendUpCount;
+   else if(setup.regime == RegimeToString(REGIME_TREND_DOWN))
+      ++g_thirdWaveRegimeTrendDownCount;
+   else if(setup.regime == RegimeToString(REGIME_RANGE))
+      ++g_thirdWaveRegimeRangeCount;
+   else if(setup.regime == RegimeToString(REGIME_TRANSITION))
+      ++g_thirdWaveRegimeTransitionCount;
+   else if(setup.regime == RegimeToString(REGIME_EXHAUSTION))
+      ++g_thirdWaveRegimeExhaustionCount;
+   else
+      ++g_thirdWaveRegimeUnknownCount;
+
+   if(setup.entryAllowedByRegime)
+      ++g_thirdWaveRegimeAllowedCount;
+   else if(setup.blockedByRegimeReason != "")
+      ++g_thirdWaveRegimeBlockedCount;
   }
 
 void RecordThirdWaveExecutionBlockReason(const string reason)
@@ -1522,6 +1878,7 @@ void RecordThirdWaveEvaluation(const ThirdWaveSetup &setup)
       ++g_thirdWaveShortEvaluations;
 
    RecordThirdWaveStagePasses(setup);
+   RecordThirdWaveRegimeState(setup);
 
    if(setup.setupPass)
       ++g_thirdWaveSetupPassCount;
@@ -2468,6 +2825,17 @@ void WriteThirdWaveSignalRow(const ThirdWaveSetup &setup)
                 "higher_tf_trend",
                 "mid_tf_pullback_status",
                 "lower_tf_reversal_status",
+                "regime",
+                "regime_reason",
+                "higher_tf_swing_state",
+                "ema_slope",
+                "trend_strength",
+                "volatility_state",
+                "entry_allowed_by_regime",
+                "blocked_by_regime_reason",
+                "lower_reversal_quality",
+                "pullback_depth_atr",
+                "sl_atr",
                 "setup_pass",
                 "entry_pass",
                 "final_entry_pass",
@@ -2503,6 +2871,17 @@ void WriteThirdWaveSignalRow(const ThirdWaveSetup &setup)
              setup.higherTfTrend,
              setup.midTfPullbackStatus,
              setup.lowerTfReversalStatus,
+             setup.regime,
+             setup.regimeReason,
+             setup.higherTfSwingState,
+             DoubleToString(setup.emaSlope, digits),
+             DoubleToString(setup.trendStrength, 4),
+             setup.volatilityState,
+             BoolText(setup.entryAllowedByRegime),
+             setup.blockedByRegimeReason,
+             DoubleToString(setup.lowerReversalQuality, 2),
+             DoubleToString(setup.pullbackDepthATR, 2),
+             DoubleToString(setup.slATR, 2),
              BoolText(setup.setupPass),
              BoolText(setup.entryPass),
              BoolText(setup.finalEntryPass),
@@ -2528,7 +2907,7 @@ void WriteThirdWaveSignalRow(const ThirdWaveSetup &setup)
              DoubleToString(setup.swingHigh, digits),
              DoubleToString(setup.swingLow, digits),
              setup.structureSlSource,
-             "DowFractal_ThirdWave");
+             ThirdWaveStrategyName());
 
    FileClose(handle);
   }
@@ -2560,6 +2939,17 @@ void WriteThirdWaveTradeRow(const ThirdWaveSetup &setup,
                 "symbol",
                 "direction",
                 "event",
+                "regime",
+                "regime_reason",
+                "higher_tf_swing_state",
+                "ema_slope",
+                "trend_strength",
+                "volatility_state",
+                "entry_allowed_by_regime",
+                "blocked_by_regime_reason",
+                "lower_reversal_quality",
+                "pullback_depth_atr",
+                "sl_atr",
                 "order_retcode",
                 "order_comment",
                 "entry_price",
@@ -2585,6 +2975,17 @@ void WriteThirdWaveTradeRow(const ThirdWaveSetup &setup,
              setup.symbol,
              setup.direction,
              eventName,
+             setup.regime,
+             setup.regimeReason,
+             setup.higherTfSwingState,
+             DoubleToString(setup.emaSlope, digits),
+             DoubleToString(setup.trendStrength, 4),
+             setup.volatilityState,
+             BoolText(setup.entryAllowedByRegime),
+             setup.blockedByRegimeReason,
+             DoubleToString(setup.lowerReversalQuality, 2),
+             DoubleToString(setup.pullbackDepthATR, 2),
+             DoubleToString(setup.slATR, 2),
              IntegerToString((int)retcode),
              resultReason,
              DoubleToString(setup.entryPrice, digits),
@@ -2602,7 +3003,7 @@ void WriteThirdWaveTradeRow(const ThirdWaveSetup &setup,
              BoolText(setup.spreadGuardBlocked),
              DoubleToString(setup.spreadPoints, 1),
              DoubleToString(setup.atrValue, digits),
-             "DowFractal_ThirdWave");
+             ThirdWaveStrategyName());
 
    FileClose(handle);
   }
@@ -2642,6 +3043,11 @@ string TopThirdWaveSkipReason(long &count)
       reason = "no_lower_reversal";
       count = g_thirdWaveNoLowerReversalCount;
      }
+   if(g_thirdWaveLowerReversalQualityLowCount > count)
+     {
+      reason = "lower_reversal_quality_low";
+      count = g_thirdWaveLowerReversalQualityLowCount;
+     }
    if(g_thirdWaveSlTooCloseCount > count)
      {
       reason = "sl_too_close";
@@ -2671,6 +3077,16 @@ string TopThirdWaveSkipReason(long &count)
      {
       reason = "research_excluded";
       count = g_thirdWaveResearchExcludedCount;
+     }
+   if(g_thirdWaveRegimeBlockLongRequiresTrendUpCount > count)
+     {
+      reason = "regime_requires_trend_up";
+      count = g_thirdWaveRegimeBlockLongRequiresTrendUpCount;
+     }
+   if(g_thirdWaveRegimeBlockShortRequiresTrendDownCount > count)
+     {
+      reason = "regime_requires_trend_down";
+      count = g_thirdWaveRegimeBlockShortRequiresTrendDownCount;
      }
    if(g_thirdWaveUnknownSkipCount > count)
      {
@@ -2737,7 +3153,7 @@ string TopThirdWaveExecutionBlockReason(long &count)
 
 void WriteThirdWaveSummaryRow()
   {
-   if(InpResearchStrategyMode != RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE &&
+   if(!IsThirdWaveStrategyMode() &&
       g_thirdWaveEvaluations <= 0)
       return;
 
@@ -2761,9 +3177,10 @@ void WriteThirdWaveSummaryRow()
       FileWriteString(handle,
                       "time,strategy_name,evaluations,long_evaluations,short_evaluations,setup_pass,entry_pass,orders_sent,orders_failed,"
                       "higher_tf_trend_pass,mid_tf_pullback_pass,lower_tf_reversal_pass,structure_sl_pass,rr_pass,spread_guard_pass,spread_guard_blocked,final_entry_pass,"
+                      "regime_trend_up,regime_trend_down,regime_range,regime_transition,regime_exhaustion,regime_unknown,regime_allowed,regime_blocked,regime_block_long_requires_trend_up,regime_block_short_requires_trend_down,"
                       "long_higher_tf_trend_pass,long_mid_tf_pullback_pass,long_lower_tf_reversal_pass,long_structure_sl_pass,long_rr_pass,long_spread_guard_pass,long_spread_guard_blocked,long_final_entry_pass,"
                       "short_higher_tf_trend_pass,short_mid_tf_pullback_pass,short_lower_tf_reversal_pass,short_structure_sl_pass,short_rr_pass,short_spread_guard_pass,short_spread_guard_blocked,short_final_entry_pass,"
-                      "no_higher_tf_trend,trend_broken,no_mid_pullback,pullback_too_shallow,pullback_too_deep,no_lower_reversal,sl_too_close,sl_too_wide,rr_too_low,existing_position,market_closed,spread_guard,data_unavailable,atr_unavailable,research_excluded,unknown,"
+                      "no_higher_tf_trend,trend_broken,no_mid_pullback,pullback_too_shallow,pullback_too_deep,no_lower_reversal,lower_reversal_quality_low,sl_too_close,sl_too_wide,rr_too_low,existing_position,market_closed,spread_guard,data_unavailable,atr_unavailable,research_excluded,regime_requires_trend_up,regime_requires_trend_down,unknown,"
                       "execution_spread_guard,execution_trading_disabled,execution_no_entry_signal,execution_position_limit,execution_risk_stop,execution_risk_limit,execution_invalid,execution_order_failed,execution_unknown,"
                       "top_structure_stage_fail_reason,top_structure_stage_fail_reason_rows,top_execution_block_reason,top_execution_block_reason_rows,top_skip_reason,top_skip_reason_rows\r\n");
 
@@ -2774,7 +3191,7 @@ void WriteThirdWaveSummaryRow()
 
    string row = "";
    AppendCsvField(row, TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS));
-   AppendCsvField(row, "DowFractal_ThirdWave");
+   AppendCsvField(row, ThirdWaveStrategyName());
    AppendCsvLong(row, g_thirdWaveEvaluations);
    AppendCsvLong(row, g_thirdWaveLongEvaluations);
    AppendCsvLong(row, g_thirdWaveShortEvaluations);
@@ -2790,6 +3207,16 @@ void WriteThirdWaveSummaryRow()
    AppendCsvLong(row, g_thirdWaveSpreadGuardPassCount);
    AppendCsvLong(row, g_thirdWaveSpreadGuardBlockedCount);
    AppendCsvLong(row, g_thirdWaveFinalEntryPassCount);
+   AppendCsvLong(row, g_thirdWaveRegimeTrendUpCount);
+   AppendCsvLong(row, g_thirdWaveRegimeTrendDownCount);
+   AppendCsvLong(row, g_thirdWaveRegimeRangeCount);
+   AppendCsvLong(row, g_thirdWaveRegimeTransitionCount);
+   AppendCsvLong(row, g_thirdWaveRegimeExhaustionCount);
+   AppendCsvLong(row, g_thirdWaveRegimeUnknownCount);
+   AppendCsvLong(row, g_thirdWaveRegimeAllowedCount);
+   AppendCsvLong(row, g_thirdWaveRegimeBlockedCount);
+   AppendCsvLong(row, g_thirdWaveRegimeBlockLongRequiresTrendUpCount);
+   AppendCsvLong(row, g_thirdWaveRegimeBlockShortRequiresTrendDownCount);
    AppendCsvLong(row, g_thirdWaveLongHigherTrendPassCount);
    AppendCsvLong(row, g_thirdWaveLongMidPullbackPassCount);
    AppendCsvLong(row, g_thirdWaveLongLowerReversalPassCount);
@@ -2812,6 +3239,7 @@ void WriteThirdWaveSummaryRow()
    AppendCsvLong(row, g_thirdWavePullbackTooShallowCount);
    AppendCsvLong(row, g_thirdWavePullbackTooDeepCount);
    AppendCsvLong(row, g_thirdWaveNoLowerReversalCount);
+   AppendCsvLong(row, g_thirdWaveLowerReversalQualityLowCount);
    AppendCsvLong(row, g_thirdWaveSlTooCloseCount);
    AppendCsvLong(row, g_thirdWaveSlTooWideCount);
    AppendCsvLong(row, g_thirdWaveRrTooLowCount);
@@ -2821,6 +3249,8 @@ void WriteThirdWaveSummaryRow()
    AppendCsvLong(row, g_thirdWaveDataUnavailableCount);
    AppendCsvLong(row, g_thirdWaveAtrUnavailableCount);
    AppendCsvLong(row, g_thirdWaveResearchExcludedCount);
+   AppendCsvLong(row, g_thirdWaveRegimeBlockLongRequiresTrendUpCount);
+   AppendCsvLong(row, g_thirdWaveRegimeBlockShortRequiresTrendDownCount);
    AppendCsvLong(row, g_thirdWaveUnknownSkipCount);
    AppendCsvLong(row, g_thirdWaveExecutionSpreadGuardCount);
    AppendCsvLong(row, g_thirdWaveExecutionTradingDisabledCount);
@@ -3092,7 +3522,7 @@ void TryThirdWaveEntry(ThirdWaveSetup &setup)
       return;
      }
 
-   string comment = "DowFractal_ThirdWave";
+   string comment = ThirdWaveStrategyName();
    WriteThirdWaveTradeRow(setup, "order_attempt", "", 0);
    bool ok = false;
    if(setup.direction == "LONG")
@@ -3273,7 +3703,7 @@ void ScanThirdWaveSymbols()
 
 void RunActiveStrategyScan()
   {
-   if(InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE)
+   if(IsThirdWaveStrategyMode())
       ScanThirdWaveSymbols();
    else
       ScanAllSymbols();

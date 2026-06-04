@@ -5,7 +5,9 @@ param(
     [string]$SeriesName = "2025_thirdwave",
     [string]$FromDate = "2025.01.01",
     [string]$ToDate = "2025.12.31",
-    [int]$BaseMagicNumber = 2026060310
+    [int]$BaseMagicNumber = 2026060310,
+    [ValidateSet("Original", "RegimeComparison")]
+    [string]$ScenarioSet = "Original"
 )
 
 $ErrorActionPreference = "Stop"
@@ -35,8 +37,10 @@ function New-Run {
     param(
         [string]$Id,
         [string]$Name,
+        [int]$StrategyMode,
         [int]$DirectionMode,
-        [int]$MagicNumber
+        [int]$MagicNumber,
+        [string]$Scenario
     )
 
     $prefix = "${seriesPrefix}_$Name"
@@ -44,8 +48,10 @@ function New-Run {
         Id = $Id
         Name = $Name
         Prefix = $prefix
+        StrategyMode = $StrategyMode
         DirectionMode = $DirectionMode
         MagicNumber = $MagicNumber
+        Scenario = $Scenario
         IniPath = Join-Path $backtestDir "$prefix.ini"
         PresetPath = Join-Path $presetDir "$prefix.set"
         PresetName = "$prefix.set"
@@ -54,11 +60,20 @@ function New-Run {
     }
 }
 
-$runs = @(
-    New-Run -Id "A" -Name "A_both" -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 1)
-    New-Run -Id "B" -Name "B_long_only" -DirectionMode 1 -MagicNumber ($BaseMagicNumber + 2)
-    New-Run -Id "C" -Name "C_short_only" -DirectionMode 2 -MagicNumber ($BaseMagicNumber + 3)
-)
+if ($ScenarioSet -eq "RegimeComparison") {
+    $runs = @(
+        New-Run -Id "A" -Name "A_original_both" -StrategyMode 1 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 1) -Scenario "ThirdWave_original_BOTH"
+        New-Run -Id "B" -Name "B_regime_both" -StrategyMode 2 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 2) -Scenario "ThirdWave_regime_BOTH"
+        New-Run -Id "C" -Name "C_regime_long_only" -StrategyMode 2 -DirectionMode 1 -MagicNumber ($BaseMagicNumber + 3) -Scenario "ThirdWave_regime_LONG_ONLY"
+        New-Run -Id "D" -Name "D_regime_short_only" -StrategyMode 2 -DirectionMode 2 -MagicNumber ($BaseMagicNumber + 4) -Scenario "ThirdWave_regime_SHORT_ONLY"
+    )
+} else {
+    $runs = @(
+        New-Run -Id "A" -Name "A_both" -StrategyMode 1 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 1) -Scenario "ThirdWave_BOTH"
+        New-Run -Id "B" -Name "B_long_only" -StrategyMode 1 -DirectionMode 1 -MagicNumber ($BaseMagicNumber + 2) -Scenario "ThirdWave_LONG_ONLY"
+        New-Run -Id "C" -Name "C_short_only" -StrategyMode 1 -DirectionMode 2 -MagicNumber ($BaseMagicNumber + 3) -Scenario "ThirdWave_SHORT_ONLY"
+    )
+}
 
 function Sync-EaToPortable {
     $targetDir = Join-Path $portableRoot "MQL5\Experts\dev\mql\Experts"
@@ -93,7 +108,7 @@ function Write-ThirdWavePreset {
     $insertedStrategyMode = $false
     foreach ($line in $lines) {
         if ($line -match '^InpResearchStrategyMode=') {
-            $out.Add("InpResearchStrategyMode=1||1||0||1||N")
+            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||2||N")
             $insertedStrategyMode = $true
             continue
         }
@@ -123,7 +138,7 @@ function Write-ThirdWavePreset {
         }
         $out.Add($line)
         if (-not $insertedStrategyMode -and $line -match '^InpExecutionTF=') {
-            $out.Add("InpResearchStrategyMode=1||1||0||1||N")
+            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||2||N")
             $insertedStrategyMode = $true
         }
     }
@@ -332,9 +347,9 @@ function Copy-LogsToRepo {
     $summaryFiles = @(Get-ChildItem -Path $logDir -File -Filter "thirdwave_summary_*.csv")
 
     Join-CsvFiles -Files $scanFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_scan_diagnostics.csv") -EmptyHeader @("time", "event", "last_scan_bar_time", "scan_elapsed_ms", "reason")
-    Join-CsvFiles -Files $signalFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_signal_diagnostics.csv") -EmptyHeader @("time", "symbol", "direction", "higher_tf_trend", "mid_tf_pullback_status", "lower_tf_reversal_status", "setup_pass", "entry_pass", "final_entry_pass", "skip_reason", "structure_stage_fail_reason", "execution_block_reason", "higher_tf_trend_pass", "mid_tf_pullback_pass", "lower_tf_reversal_pass", "structure_sl_pass", "rr_pass", "spread_atr", "max_spread_atr", "spread_guard_pass", "spread_guard_blocked", "spread_points", "atr_value", "entry_price", "sl", "tp", "risk_r", "rr", "swing_high", "swing_low", "structure_sl_source", "strategy_name")
-    Join-CsvFiles -Files $tradeFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_trade_diagnostics.csv") -EmptyHeader @("time", "symbol", "direction", "event", "order_retcode", "order_comment", "entry_price", "sl", "tp", "volume", "risk_r", "rr", "skip_reason", "structure_stage_fail_reason", "execution_block_reason", "spread_atr", "max_spread_atr", "spread_guard_pass", "spread_guard_blocked", "spread_points", "atr_value", "strategy_name")
-    Join-CsvFiles -Files $summaryFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_summary.csv") -EmptyHeader @("time", "strategy_name", "evaluations", "long_evaluations", "short_evaluations", "setup_pass", "entry_pass", "orders_sent", "orders_failed", "higher_tf_trend_pass", "mid_tf_pullback_pass", "lower_tf_reversal_pass", "structure_sl_pass", "rr_pass", "spread_guard_pass", "spread_guard_blocked", "final_entry_pass", "long_higher_tf_trend_pass", "long_mid_tf_pullback_pass", "long_lower_tf_reversal_pass", "long_structure_sl_pass", "long_rr_pass", "long_spread_guard_pass", "long_spread_guard_blocked", "long_final_entry_pass", "short_higher_tf_trend_pass", "short_mid_tf_pullback_pass", "short_lower_tf_reversal_pass", "short_structure_sl_pass", "short_rr_pass", "short_spread_guard_pass", "short_spread_guard_blocked", "short_final_entry_pass", "no_higher_tf_trend", "trend_broken", "no_mid_pullback", "pullback_too_shallow", "pullback_too_deep", "no_lower_reversal", "sl_too_close", "sl_too_wide", "rr_too_low", "existing_position", "market_closed", "spread_guard", "data_unavailable", "atr_unavailable", "research_excluded", "unknown", "execution_spread_guard", "execution_trading_disabled", "execution_no_entry_signal", "execution_position_limit", "execution_risk_stop", "execution_risk_limit", "execution_invalid", "execution_order_failed", "execution_unknown", "top_structure_stage_fail_reason", "top_structure_stage_fail_reason_rows", "top_execution_block_reason", "top_execution_block_reason_rows", "top_skip_reason", "top_skip_reason_rows")
+    Join-CsvFiles -Files $signalFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_signal_diagnostics.csv") -EmptyHeader @("time", "symbol", "direction", "higher_tf_trend", "mid_tf_pullback_status", "lower_tf_reversal_status", "regime", "regime_reason", "higher_tf_swing_state", "ema_slope", "trend_strength", "volatility_state", "entry_allowed_by_regime", "blocked_by_regime_reason", "lower_reversal_quality", "pullback_depth_atr", "sl_atr", "setup_pass", "entry_pass", "final_entry_pass", "skip_reason", "structure_stage_fail_reason", "execution_block_reason", "higher_tf_trend_pass", "mid_tf_pullback_pass", "lower_tf_reversal_pass", "structure_sl_pass", "rr_pass", "spread_atr", "max_spread_atr", "spread_guard_pass", "spread_guard_blocked", "spread_points", "atr_value", "entry_price", "sl", "tp", "risk_r", "rr", "swing_high", "swing_low", "structure_sl_source", "strategy_name")
+    Join-CsvFiles -Files $tradeFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_trade_diagnostics.csv") -EmptyHeader @("time", "symbol", "direction", "event", "regime", "regime_reason", "higher_tf_swing_state", "ema_slope", "trend_strength", "volatility_state", "entry_allowed_by_regime", "blocked_by_regime_reason", "lower_reversal_quality", "pullback_depth_atr", "sl_atr", "order_retcode", "order_comment", "entry_price", "sl", "tp", "volume", "risk_r", "rr", "skip_reason", "structure_stage_fail_reason", "execution_block_reason", "spread_atr", "max_spread_atr", "spread_guard_pass", "spread_guard_blocked", "spread_points", "atr_value", "strategy_name")
+    Join-CsvFiles -Files $summaryFiles -OutputPath (Join-Path $backtestDir "$($Run.Prefix)_thirdwave_summary.csv") -EmptyHeader @("time", "strategy_name", "evaluations", "long_evaluations", "short_evaluations", "setup_pass", "entry_pass", "orders_sent", "orders_failed", "higher_tf_trend_pass", "mid_tf_pullback_pass", "lower_tf_reversal_pass", "structure_sl_pass", "rr_pass", "spread_guard_pass", "spread_guard_blocked", "final_entry_pass", "regime_trend_up", "regime_trend_down", "regime_range", "regime_transition", "regime_exhaustion", "regime_unknown", "regime_allowed", "regime_blocked", "regime_block_long_requires_trend_up", "regime_block_short_requires_trend_down", "long_higher_tf_trend_pass", "long_mid_tf_pullback_pass", "long_lower_tf_reversal_pass", "long_structure_sl_pass", "long_rr_pass", "long_spread_guard_pass", "long_spread_guard_blocked", "long_final_entry_pass", "short_higher_tf_trend_pass", "short_mid_tf_pullback_pass", "short_lower_tf_reversal_pass", "short_structure_sl_pass", "short_rr_pass", "short_spread_guard_pass", "short_spread_guard_blocked", "short_final_entry_pass", "no_higher_tf_trend", "trend_broken", "no_mid_pullback", "pullback_too_shallow", "pullback_too_deep", "no_lower_reversal", "lower_reversal_quality_low", "sl_too_close", "sl_too_wide", "rr_too_low", "existing_position", "market_closed", "spread_guard", "data_unavailable", "atr_unavailable", "research_excluded", "regime_requires_trend_up", "regime_requires_trend_down", "unknown", "execution_spread_guard", "execution_trading_disabled", "execution_no_entry_signal", "execution_position_limit", "execution_risk_stop", "execution_risk_limit", "execution_invalid", "execution_order_failed", "execution_unknown", "top_structure_stage_fail_reason", "top_structure_stage_fail_reason_rows", "top_execution_block_reason", "top_execution_block_reason_rows", "top_skip_reason", "top_skip_reason_rows")
 }
 
 function Append-Elapsed {
@@ -346,12 +361,7 @@ function Append-Elapsed {
     if (-not (Test-Path $elapsedPath)) {
         Set-Content -Path $elapsedPath -Value "run,scenario,prefix,elapsed_seconds" -Encoding UTF8
     }
-    $scenario = switch ($Run.Id) {
-        "A" { "ThirdWave_BOTH" }
-        "B" { "ThirdWave_LONG_ONLY" }
-        "C" { "ThirdWave_SHORT_ONLY" }
-        default { $Run.Name }
-    }
+    $scenario = $Run.Scenario
     Add-Content -Path $elapsedPath -Value "$($Run.Id),$scenario,$($Run.Prefix),$([math]::Round($ElapsedSeconds, 1))" -Encoding UTF8
 }
 
