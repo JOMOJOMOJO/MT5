@@ -1,0 +1,7 @@
+variant,session,trades,wins,losses,win_rate,net_profit,profit_factor,expected_payoff,avg_R,max_drawdown,max_drawdown_pct,xauusd_trade_share_pct,xauusd_net_profit
+current,server_00_07,28,17,11,60.71,918.34,2.94,32.8,0.519,127.57,1.19,92.86,1018.89
+current,server_08_15,40,15,25,37.5,-104.72,0.912,-2.62,-0.067,288.95,2.84,85.0,-180.03
+current,server_16_23,41,21,20,51.22,475.34,1.498,11.59,0.306,161.62,1.54,75.61,208.77
+v2_audit_filtered,server_00_07,14,8,6,57.14,388.93,2.425,27.78,0.429,99.89,1.0,92.86,437.82
+v2_audit_filtered,server_08_15,22,9,13,40.91,64.41,1.107,2.93,0.021,292.81,2.83,86.36,-35.48
+v2_audit_filtered,server_16_23,22,15,7,68.18,746.92,3.335,33.95,0.794,86.63,0.83,77.27,488.72

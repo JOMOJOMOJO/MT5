@@ -1,0 +1,9 @@
+period,variant,v2_filter_evaluations,v2_filter_pass,v2_filter_fail,v2_filter_deep_pullback,v2_filter_trend_too_old,v2_filter_reclaim_chase_too_far,top_v2_filter_fail_reason,top_v2_filter_fail_reason_rows
+2025-02,current,0,0,0,0,0,0,,0
+2025-02,v2_audit_filtered,199,84,115,56,54,5,v2_pullback_too_deep_audit,56
+2025-08,current,0,0,0,0,0,0,,0
+2025-08,v2_audit_filtered,148,81,67,34,26,7,v2_pullback_too_deep_audit,34
+2025-10,current,0,0,0,0,0,0,,0
+2025-10,v2_audit_filtered,215,122,93,40,46,7,v2_trend_too_old,46
+2026-Q1,current,0,0,0,0,0,0,,0
+2026-Q1,v2_audit_filtered,641,369,272,125,136,11,v2_trend_too_old,136

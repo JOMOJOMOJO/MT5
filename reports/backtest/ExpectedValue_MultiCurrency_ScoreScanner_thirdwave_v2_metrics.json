@@ -1,0 +1,268 @@
+{
+  "runs": {
+    "2025-02:current": {
+      "stats": {
+        "trades": 16,
+        "wins": 10,
+        "losses": 6,
+        "win_rate": 62.5,
+        "net_profit": 373.68000000000006,
+        "gross_profit": 662.6999999999999,
+        "gross_loss": -289.02,
+        "profit_factor": 2.292920905127673,
+        "expected_payoff": 23.355000000000004,
+        "avg_win": 66.27,
+        "avg_loss": -48.169999999999995,
+        "max_balance_dd": 102.45999999999913,
+        "max_balance_dd_pct": 0.988285451099346,
+        "max_balance_dd_time": "2025.02.20 15:45:23",
+        "max_consecutive_wins": {
+          "count": 3,
+          "amount": 204.42,
+          "start": "2025.02.10 06:00:00",
+          "end": "2025.02.11 08:06:32"
+        },
+        "max_consecutive_losses": {
+          "count": 2,
+          "amount": -96.12,
+          "start": "2025.02.05 19:10:00",
+          "end": "2025.02.07 19:16:47"
+        }
+      },
+      "elapsed_seconds": 62.9,
+      "raw_wave_audit_rows": 247,
+      "csv_bytes": 557459
+    },
+    "2025-02:v2_audit_filtered": {
+      "stats": {
+        "trades": 3,
+        "wins": 3,
+        "losses": 0,
+        "win_rate": 100.0,
+        "net_profit": 214.60000000000002,
+        "gross_profit": 214.60000000000002,
+        "gross_loss": 0,
+        "profit_factor": null,
+        "expected_payoff": 71.53333333333335,
+        "avg_win": 71.53333333333335,
+        "avg_loss": 0.0,
+        "max_balance_dd": 0.0,
+        "max_balance_dd_pct": 0.0,
+        "max_balance_dd_time": null,
+        "max_consecutive_wins": {
+          "count": 3,
+          "amount": 214.60000000000002,
+          "start": "2025.02.05 10:50:00",
+          "end": "2025.02.12 17:00:08"
+        },
+        "max_consecutive_losses": {
+          "count": 0,
+          "amount": 0.0,
+          "start": null,
+          "end": null
+        }
+      },
+      "elapsed_seconds": 62.6,
+      "raw_wave_audit_rows": 91,
+      "csv_bytes": 464648
+    },
+    "2025-08:current": {
+      "stats": {
+        "trades": 13,
+        "wins": 5,
+        "losses": 8,
+        "win_rate": 38.46153846153847,
+        "net_profit": -40.11,
+        "gross_profit": 358.23,
+        "gross_loss": -398.34,
+        "profit_factor": 0.8993071245669529,
+        "expected_payoff": -3.085384615384615,
+        "avg_win": 71.646,
+        "avg_loss": -49.7925,
+        "max_balance_dd": 247.8099999999995,
+        "max_balance_dd_pct": 2.4459407707462235,
+        "max_balance_dd_time": "2025.08.26 12:35:03",
+        "max_consecutive_wins": {
+          "count": 2,
+          "amount": 146.5,
+          "start": "2025.08.01 02:15:00",
+          "end": "2025.08.04 15:05:10"
+        },
+        "max_consecutive_losses": {
+          "count": 5,
+          "amount": -247.81,
+          "start": "2025.08.13 08:50:00",
+          "end": "2025.08.26 12:35:03"
+        }
+      },
+      "elapsed_seconds": 73.0,
+      "raw_wave_audit_rows": 187,
+      "csv_bytes": 570109
+    },
+    "2025-08:v2_audit_filtered": {
+      "stats": {
+        "trades": 7,
+        "wins": 3,
+        "losses": 4,
+        "win_rate": 42.857142857142854,
+        "net_profit": 23.640000000000008,
+        "gross_profit": 223.67000000000002,
+        "gross_loss": -200.03,
+        "profit_factor": 1.1181822726591013,
+        "expected_payoff": 3.377142857142858,
+        "avg_win": 74.55666666666667,
+        "avg_loss": -50.0075,
+        "max_balance_dd": 150.75,
+        "max_balance_dd_pct": 1.4929851979059585,
+        "max_balance_dd_time": "2025.08.25 15:56:43",
+        "max_consecutive_wins": {
+          "count": 2,
+          "amount": 146.5,
+          "start": "2025.08.01 02:15:00",
+          "end": "2025.08.04 15:05:10"
+        },
+        "max_consecutive_losses": {
+          "count": 3,
+          "amount": -150.75,
+          "start": "2025.08.04 19:20:00",
+          "end": "2025.08.25 15:56:43"
+        }
+      },
+      "elapsed_seconds": 72.7,
+      "raw_wave_audit_rows": 101,
+      "csv_bytes": 522286
+    },
+    "2025-10:current": {
+      "stats": {
+        "trades": 20,
+        "wins": 11,
+        "losses": 9,
+        "win_rate": 55.00000000000001,
+        "net_profit": 345.17999999999995,
+        "gross_profit": 764.4699999999999,
+        "gross_loss": -419.28999999999996,
+        "profit_factor": 1.823248825395311,
+        "expected_payoff": 17.258999999999997,
+        "avg_win": 69.49727272727272,
+        "avg_loss": -46.587777777777774,
+        "max_balance_dd": 176.76000000000022,
+        "max_balance_dd_pct": 1.7487554116836983,
+        "max_balance_dd_time": "2025.10.13 10:28:42",
+        "max_consecutive_wins": {
+          "count": 4,
+          "amount": 274.03,
+          "start": "2025.10.21 21:55:00",
+          "end": "2025.10.27 22:29:46"
+        },
+        "max_consecutive_losses": {
+          "count": 3,
+          "amount": -148.92,
+          "start": "2025.10.08 15:05:00",
+          "end": "2025.10.09 04:36:55"
+        }
+      },
+      "elapsed_seconds": 73.0,
+      "raw_wave_audit_rows": 278,
+      "csv_bytes": 645801
+    },
+    "2025-10:v2_audit_filtered": {
+      "stats": {
+        "trades": 15,
+        "wins": 10,
+        "losses": 5,
+        "win_rate": 66.66666666666666,
+        "net_profit": 478.4,
+        "gross_profit": 712.62,
+        "gross_loss": -234.22,
+        "profit_factor": 3.042524122619759,
+        "expected_payoff": 31.89333333333333,
+        "avg_win": 71.262,
+        "avg_loss": -46.844,
+        "max_balance_dd": 98.93999999999869,
+        "max_balance_dd_pct": 0.9825828402543026,
+        "max_balance_dd_time": "2025.10.07 10:10:29",
+        "max_consecutive_wins": {
+          "count": 6,
+          "amount": 437.34,
+          "start": "2025.10.13 07:45:00",
+          "end": "2025.10.27 22:29:46"
+        },
+        "max_consecutive_losses": {
+          "count": 2,
+          "amount": -98.94,
+          "start": "2025.10.06 13:45:00",
+          "end": "2025.10.07 10:10:29"
+        }
+      },
+      "elapsed_seconds": 72.9,
+      "raw_wave_audit_rows": 170,
+      "csv_bytes": 591776
+    },
+    "2026-Q1:current": {
+      "stats": {
+        "trades": 60,
+        "wins": 27,
+        "losses": 33,
+        "win_rate": 45.0,
+        "net_profit": 610.21,
+        "gross_profit": 2128.3300000000004,
+        "gross_loss": -1518.1200000000001,
+        "profit_factor": 1.4019510974099545,
+        "expected_payoff": 10.170166666666667,
+        "avg_win": 78.82703703703704,
+        "avg_loss": -46.00363636363637,
+        "max_balance_dd": 278.5000000000018,
+        "max_balance_dd_pct": 2.6520728067786585,
+        "max_balance_dd_time": "2026.03.04 02:43:29",
+        "max_consecutive_wins": {
+          "count": 4,
+          "amount": 248.33999999999997,
+          "start": "2026.03.11 02:15:00",
+          "end": "2026.03.19 09:33:22"
+        },
+        "max_consecutive_losses": {
+          "count": 6,
+          "amount": -277.88,
+          "start": "2026.01.26 11:50:00",
+          "end": "2026.01.29 10:43:46"
+        }
+      },
+      "elapsed_seconds": 174.9,
+      "raw_wave_audit_rows": 852,
+      "csv_bytes": 1870279
+    },
+    "2026-Q1:v2_audit_filtered": {
+      "stats": {
+        "trades": 33,
+        "wins": 16,
+        "losses": 17,
+        "win_rate": 48.484848484848484,
+        "net_profit": 483.62000000000006,
+        "gross_profit": 1241.94,
+        "gross_loss": -758.3199999999999,
+        "profit_factor": 1.6377518725603968,
+        "expected_payoff": 14.655151515151516,
+        "avg_win": 77.62125,
+        "avg_loss": -44.60705882352941,
+        "max_balance_dd": 197.67000000000007,
+        "max_balance_dd_pct": 1.928508501066841,
+        "max_balance_dd_time": "2026.01.29 10:43:46",
+        "max_consecutive_wins": {
+          "count": 4,
+          "amount": 336.61,
+          "start": "2026.03.11 02:15:00",
+          "end": "2026.03.23 09:43:34"
+        },
+        "max_consecutive_losses": {
+          "count": 4,
+          "amount": -197.67000000000002,
+          "start": "2026.01.26 11:50:00",
+          "end": "2026.01.29 10:43:46"
+        }
+      },
+      "elapsed_seconds": 174.4,
+      "raw_wave_audit_rows": 475,
+      "csv_bytes": 1643466
+    }
+  }
+}
