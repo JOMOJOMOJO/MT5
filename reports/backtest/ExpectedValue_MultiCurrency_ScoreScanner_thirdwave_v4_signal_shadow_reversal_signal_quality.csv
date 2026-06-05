@@ -1,0 +1,15 @@
+variant,reversal_signal_type,trades,valid_trades,wins,losses,win_rate,net_profit,profit_factor,expected_payoff,avg_R,max_drawdown,max_drawdown_pct,tp_hit_rate_pct,sl_hit_rate_pct,same_bar_ambiguous,invalid_stops,sl_too_tight,sl_too_wide,avg_mae_R,avg_mfe_R,avg_sl_atr,avg_tp_atr,avg_hypothetical_lot_size
+current_thirdwave,unclear,109,109,53,56,48.62,1288.96,1.491,11.83,0.224,278.5,2.49,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_all_signals,candle_reversal,80,80,36,44,45.0,905.1,1.422,11.31,0.137,413.87,3.68,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_all_signals,confirmed_fractal_reclaim,3,3,1,2,33.33,-16.37,0.808,-5.46,-0.163,85.07,0.84,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_all_signals,early_higher_low,49,49,19,30,38.78,-44.57,0.968,-0.91,-0.024,509.94,4.87,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_all_signals,early_lower_high,41,41,18,23,43.9,231.44,1.194,5.64,0.107,203.55,1.97,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_all_signals,micro_break,20,20,13,7,65.0,569.45,2.589,28.47,0.625,103.65,1.03,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_all_signals,momentum_turn,1,1,0,1,0.0,-44.68,0.0,-44.68,-1.002,44.68,0.45,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_candle_reversal_only,candle_reversal,123,123,56,67,45.53,1255.69,1.384,10.21,0.144,454.55,3.91,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_micro_break_only,micro_break,68,68,28,40,41.18,53.9,1.028,0.79,0.027,319.97,3.08,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_micro_or_candle,candle_reversal,104,104,47,57,45.19,1127.13,1.41,10.84,0.138,556.93,4.8,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_micro_or_candle,micro_break,38,38,20,18,52.63,516.15,1.555,13.58,0.316,188.64,1.81,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_without_weak_signals,candle_reversal,94,94,42,52,44.68,970.35,1.385,10.32,0.127,449.91,3.97,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_without_weak_signals,early_lower_high,41,41,18,23,43.9,214.53,1.175,5.23,0.107,221.82,2.14,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0
+v4_without_weak_signals,micro_break,31,31,18,13,58.06,640.95,1.992,20.68,0.452,137.53,1.31,0.0,0.0,0,0,0,0,0.0,0.0,0.0,0.0,0.0

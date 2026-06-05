@@ -1,0 +1,6 @@
+variant,gate_pass,trades,pf,avg_R,fx_net,xauusd_trade_share_pct,largest_direction_share_pct,chasing_entry_ratio_pct,reason
+v4_all_signals,False,194,1.306,0.13,145.16,74.23,51.03,87.63,no_pf_or_avgR_improvement;fx_net_worse_than_current
+v4_candle_reversal_only,False,123,1.384,0.144,137.29,78.05,52.03,87.8,no_pf_or_avgR_improvement;fx_net_worse_than_current
+v4_micro_break_only,False,68,1.028,0.027,46.88,79.41,52.94,85.29,no_pf_or_avgR_improvement;fx_net_worse_than_current
+v4_micro_or_candle,False,142,1.447,0.185,136.48,77.46,50.0,85.92,no_pf_or_avgR_improvement;fx_net_worse_than_current
+v4_without_weak_signals,False,166,1.415,0.182,26.76,74.7,57.23,86.75,no_pf_or_avgR_improvement;fx_net_worse_than_current
