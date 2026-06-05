@@ -1,0 +1,7 @@
+variant,regime,trades,wins,losses,win_rate,net_profit,profit_factor,expected_payoff,avg_R,max_drawdown,max_drawdown_pct,xauusd_trade_share_pct,xauusd_net_profit
+current,REGIME_TREND_DOWN,49,25,24,51.02,798.24,1.704,16.29,0.258,198.96,1.87,73.47,683.6
+current,REGIME_TREND_UP,60,28,32,46.67,490.72,1.329,8.18,0.197,323.43,3.01,91.67,364.03
+v2_audit_filtered,REGIME_TREND_DOWN,21,12,9,57.14,562.92,2.431,26.81,0.432,81.59,0.79,71.43,485.04
+v2_audit_filtered,REGIME_TREND_UP,37,20,17,54.05,637.34,1.797,17.23,0.402,209.03,1.95,91.89,406.02
+v3_entry_timing,REGIME_TREND_DOWN,1,0,1,0.0,-51.0,0.0,-51.0,-1.027,51.0,0.51,100.0,-51.0
+v3_entry_timing,REGIME_TREND_UP,3,2,1,66.67,97.35,3.088,32.45,0.676,46.62,0.46,66.67,23.58

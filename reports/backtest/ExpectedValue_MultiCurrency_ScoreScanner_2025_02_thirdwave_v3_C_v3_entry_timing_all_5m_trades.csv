@@ -1,0 +1,2 @@
+open_time,close_time,symbol,direction,volume,open_price,close_price,open_deal,close_deal,commission,swap,profit,net_profit,close_balance,close_comment,holding_minutes,open_bar_m5,close_bar_m5
+2025.02.12 16:05:00,2025.02.12 17:00:08,EURJPY,LONG,0.32,159.483,159.839,2,3,0.0,0.0,73.77,73.77,10073.77,tp 159.839,55.13,2025.02.12 16:05:00,2025.02.12 17:00:00

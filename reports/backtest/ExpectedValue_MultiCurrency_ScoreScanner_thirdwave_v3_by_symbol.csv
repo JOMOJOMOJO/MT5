@@ -1,0 +1,12 @@
+variant,symbol,trades,wins,losses,win_rate,net_profit,profit_factor,expected_payoff,avg_R,max_drawdown,max_drawdown_pct,xauusd_trade_share_pct,xauusd_net_profit
+current,EURJPY,1,1,0,100.0,75.07,,75.07,1.502,0.0,0.0,0.0,0
+current,EURUSD,3,2,1,66.67,110.22,3.135,36.74,0.712,51.62,0.51,0.0,0
+current,GBPUSD,3,1,2,33.33,-21.29,0.783,-7.1,-0.168,98.09,0.97,0.0,0
+current,USDJPY,11,5,6,45.45,77.33,1.259,7.03,0.137,123.25,1.21,0.0,0
+current,XAUUSD,91,44,47,48.35,1047.63,1.481,11.51,0.217,311.85,3.0,100.0,1047.63
+v2_audit_filtered,EURJPY,1,1,0,100.0,74.7,,74.7,1.502,0.0,0.0,0.0,0
+v2_audit_filtered,GBPUSD,2,1,1,50.0,24.25,1.485,12.12,0.249,49.99,0.5,0.0,0
+v2_audit_filtered,USDJPY,6,4,2,66.67,210.25,3.135,35.04,0.678,49.59,0.48,0.0,0
+v2_audit_filtered,XAUUSD,49,26,23,53.06,891.06,1.853,18.18,0.365,180.31,1.77,100.0,891.06
+v3_entry_timing,EURJPY,1,1,0,100.0,73.77,,73.77,1.502,0.0,0.0,0.0,0
+v3_entry_timing,XAUUSD,3,1,2,33.33,-27.42,0.719,-9.14,-0.168,97.62,0.98,100.0,-27.42

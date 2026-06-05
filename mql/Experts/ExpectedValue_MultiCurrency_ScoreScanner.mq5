@@ -30,7 +30,8 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_SCORE_SCANNER = 0,
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE = 1,
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME = 2,
-   RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V2_AUDIT_FILTERED = 3
+   RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V2_AUDIT_FILTERED = 3,
+   RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V3_ENTRY_TIMING = 4
   };
 
 enum ENUM_ENTRY_SELECTION_MODE
@@ -182,6 +183,8 @@ struct ThirdWaveSetup
    bool              entryPass;
    bool              finalEntryPass;
    bool              v2FilterPass;
+   bool              v3FilterPass;
+   bool              v3MomentumExhausted;
    double            entryPrice;
    double            stopLoss;
    double            takeProfit;
@@ -226,6 +229,11 @@ struct ThirdWaveSetup
    string            waveAuditLabel;
    string            waveAuditReason;
    string            v2FilterFailReason;
+   string            v3FilterFailReason;
+   double            v3MomentumExhaustionScore;
+   double            v3RecentMoveATR;
+   double            v3CloseToRecentExtremeATR;
+   int               v3ConsecutiveDirectionalBars;
   };
 
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
@@ -334,6 +342,15 @@ long     g_thirdWaveV2FilterFailCount = 0;
 long     g_thirdWaveV2FilterDeepPullbackCount = 0;
 long     g_thirdWaveV2FilterTrendTooOldCount = 0;
 long     g_thirdWaveV2FilterReclaimChaseCount = 0;
+long     g_thirdWaveV3FilterEvaluations = 0;
+long     g_thirdWaveV3FilterPassCount = 0;
+long     g_thirdWaveV3FilterFailCount = 0;
+long     g_thirdWaveV3FilterInvalidPositionCount = 0;
+long     g_thirdWaveV3FilterLateEntryCount = 0;
+long     g_thirdWaveV3FilterChasingEntryCount = 0;
+long     g_thirdWaveV3FilterReclaimChaseCount = 0;
+long     g_thirdWaveV3FilterPullbackChaseCount = 0;
+long     g_thirdWaveV3FilterMomentumExhaustedCount = 0;
 
 //+------------------------------------------------------------------+
 //| Generic helpers                                                   |
@@ -417,7 +434,8 @@ bool IsThirdWaveStrategyMode()
   {
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME ||
-           InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V2_AUDIT_FILTERED);
+           InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V2_AUDIT_FILTERED ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V3_ENTRY_TIMING);
   }
 
 bool IsAuditFilteredThirdWaveV2Mode()
@@ -425,10 +443,16 @@ bool IsAuditFilteredThirdWaveV2Mode()
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V2_AUDIT_FILTERED);
   }
 
+bool IsEntryTimingThirdWaveV3Mode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V3_ENTRY_TIMING);
+  }
+
 bool IsRegimeAwareThirdWaveMode()
   {
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME ||
-           IsAuditFilteredThirdWaveV2Mode());
+           IsAuditFilteredThirdWaveV2Mode() ||
+           IsEntryTimingThirdWaveV3Mode());
   }
 
 bool IsAllCandidatesEntryMode()
@@ -460,6 +484,8 @@ string EntrySelectionModeName()
 
 string ThirdWaveStrategyName()
   {
+   if(IsEntryTimingThirdWaveV3Mode())
+      return "DowFractal_ThirdWave_V3_EntryTiming";
    if(IsAuditFilteredThirdWaveV2Mode())
       return "DowFractal_ThirdWave_V2_AuditFiltered";
    if(IsRegimeAwareThirdWaveMode())
@@ -943,6 +969,8 @@ void InitThirdWaveSetup(ThirdWaveSetup &setup, const string symbol, const int di
    setup.entryPass = false;
    setup.finalEntryPass = false;
    setup.v2FilterPass = !IsAuditFilteredThirdWaveV2Mode();
+   setup.v3FilterPass = !IsEntryTimingThirdWaveV3Mode();
+   setup.v3MomentumExhausted = false;
    setup.entryPrice = 0.0;
    setup.stopLoss = 0.0;
    setup.takeProfit = 0.0;
@@ -987,6 +1015,11 @@ void InitThirdWaveSetup(ThirdWaveSetup &setup, const string symbol, const int di
    setup.waveAuditLabel = "unclear";
    setup.waveAuditReason = "";
    setup.v2FilterFailReason = "";
+   setup.v3FilterFailReason = "";
+   setup.v3MomentumExhaustionScore = 0.0;
+   setup.v3RecentMoveATR = 0.0;
+   setup.v3CloseToRecentExtremeATR = 0.0;
+   setup.v3ConsecutiveDirectionalBars = 0;
   }
 
 //+------------------------------------------------------------------+
@@ -1980,6 +2013,133 @@ bool ApplyThirdWaveV2AuditFilters(ThirdWaveSetup &setup)
    return true;
   }
 
+void UpdateThirdWaveV3MomentumAudit(const MqlRates &executionRates[],
+                                    const int direction,
+                                    ThirdWaveSetup &setup)
+  {
+   setup.v3ConsecutiveDirectionalBars = 0;
+   setup.v3RecentMoveATR = 0.0;
+   setup.v3CloseToRecentExtremeATR = 0.0;
+   setup.v3MomentumExhaustionScore = 0.0;
+   setup.v3MomentumExhausted = false;
+
+   double atr = setup.atrValue;
+   if(atr <= 0.0)
+      atr = setup.atr;
+   if(atr <= 0.0)
+      return;
+
+   int size = ArraySize(executionRates);
+   int maxShift = MathMin(size - 1, 6);
+   for(int shift = 1; shift <= maxShift; ++shift)
+     {
+      bool directional = (direction > 0 ?
+                          executionRates[shift].close > executionRates[shift].open :
+                          executionRates[shift].close < executionRates[shift].open);
+      if(!directional)
+         break;
+      ++setup.v3ConsecutiveDirectionalBars;
+     }
+
+   if(size > 4)
+     {
+      double move = (direction > 0 ?
+                     executionRates[1].close - executionRates[4].close :
+                     executionRates[4].close - executionRates[1].close);
+      setup.v3RecentMoveATR = (move > 0.0 ? move / atr : 0.0);
+     }
+
+   int lookback = MathMin(size - 1, 8);
+   if(lookback >= 1 && setup.entryPrice > 0.0)
+     {
+      double recentHigh = executionRates[1].high;
+      double recentLow = executionRates[1].low;
+      for(int shift = 2; shift <= lookback; ++shift)
+        {
+         recentHigh = MathMax(recentHigh, executionRates[shift].high);
+         recentLow = MathMin(recentLow, executionRates[shift].low);
+        }
+      double distanceToExtreme = (direction > 0 ?
+                                  MathAbs(recentHigh - setup.entryPrice) :
+                                  MathAbs(setup.entryPrice - recentLow));
+      setup.v3CloseToRecentExtremeATR = distanceToExtreme / atr;
+     }
+
+   if(setup.v3ConsecutiveDirectionalBars >= 3)
+      setup.v3MomentumExhaustionScore += 35.0;
+   if(setup.v3RecentMoveATR > 1.20)
+      setup.v3MomentumExhaustionScore += 35.0;
+   if(setup.v3CloseToRecentExtremeATR > 0.0 &&
+      setup.v3CloseToRecentExtremeATR <= 0.25)
+      setup.v3MomentumExhaustionScore += 20.0;
+   if(setup.entryDistanceFromReclaimATR > 0.60)
+      setup.v3MomentumExhaustionScore += 10.0;
+   if(setup.distancePullbackExtremeToEntryATR > 2.50)
+      setup.v3MomentumExhaustionScore += 10.0;
+
+   setup.v3MomentumExhausted = (setup.v3MomentumExhaustionScore >= 60.0);
+  }
+
+void SetThirdWaveV3FilterFail(ThirdWaveSetup &setup, const string reason)
+  {
+   setup.v3FilterPass = false;
+   setup.v3FilterFailReason = reason;
+   setup.skipReason = reason;
+   setup.structureStageFailReason = reason;
+  }
+
+bool ApplyThirdWaveV3EntryTimingFilters(ThirdWaveSetup &setup)
+  {
+   if(!IsEntryTimingThirdWaveV3Mode())
+      return true;
+
+   setup.v3FilterPass = false;
+   setup.v3FilterFailReason = "";
+
+   if(setup.waveAuditLabel == "invalid_structure" ||
+      setup.waveAuditLabel == "range_noise" ||
+      setup.waveAuditLabel == "unclear")
+     {
+      SetThirdWaveV3FilterFail(setup, "v3_wave_position_invalid");
+      return false;
+     }
+
+   if(setup.barsSinceReclaimOrBreakdown > 2 ||
+      setup.entryDistanceFromReclaimATR > 0.60)
+     {
+      SetThirdWaveV3FilterFail(setup, "v3_reclaim_chase_too_far");
+      return false;
+     }
+
+   if(setup.distancePullbackExtremeToEntryATR > 2.50 ||
+      setup.distancePullbackExtremeToEntryPct > 65.0)
+     {
+      SetThirdWaveV3FilterFail(setup, "v3_pullback_entry_too_far");
+      return false;
+     }
+
+   if(setup.v3MomentumExhausted)
+     {
+      SetThirdWaveV3FilterFail(setup, "v3_momentum_exhausted");
+      return false;
+     }
+
+   if(setup.waveAuditLabel == "late_entry")
+     {
+      SetThirdWaveV3FilterFail(setup, "v3_late_entry");
+      return false;
+     }
+
+   if(setup.waveAuditLabel == "chasing_entry")
+     {
+      SetThirdWaveV3FilterFail(setup, "v3_chasing_entry");
+      return false;
+     }
+
+   setup.v3FilterPass = true;
+   return true;
+  }
+
 bool BuildThirdWaveSetup(const string symbol,
                          const int direction,
                          ThirdWaveSetup &setup)
@@ -2077,9 +2237,13 @@ bool BuildThirdWaveSetup(const string symbol,
       return false;
      }
    setup.rrPass = true;
+   UpdateThirdWaveV3MomentumAudit(executionRates, direction, setup);
    ClassifyThirdWaveAuditLabel(setup);
 
    if(!ApplyThirdWaveV2AuditFilters(setup))
+      return false;
+
+   if(!ApplyThirdWaveV3EntryTimingFilters(setup))
       return false;
 
    if(setup.spreadGuardBlocked)
@@ -2287,6 +2451,37 @@ void RecordThirdWaveV2Filter(const ThirdWaveSetup &setup)
       ++g_thirdWaveV2FilterReclaimChaseCount;
   }
 
+void RecordThirdWaveV3Filter(const ThirdWaveSetup &setup)
+  {
+   if(!IsEntryTimingThirdWaveV3Mode())
+      return;
+
+   if(setup.structureSlPass && setup.rrPass)
+      ++g_thirdWaveV3FilterEvaluations;
+   else
+      return;
+
+   if(setup.v3FilterPass)
+     {
+      ++g_thirdWaveV3FilterPassCount;
+      return;
+     }
+
+   ++g_thirdWaveV3FilterFailCount;
+   if(setup.v3FilterFailReason == "v3_wave_position_invalid")
+      ++g_thirdWaveV3FilterInvalidPositionCount;
+   else if(setup.v3FilterFailReason == "v3_late_entry")
+      ++g_thirdWaveV3FilterLateEntryCount;
+   else if(setup.v3FilterFailReason == "v3_chasing_entry")
+      ++g_thirdWaveV3FilterChasingEntryCount;
+   else if(setup.v3FilterFailReason == "v3_reclaim_chase_too_far")
+      ++g_thirdWaveV3FilterReclaimChaseCount;
+   else if(setup.v3FilterFailReason == "v3_pullback_entry_too_far")
+      ++g_thirdWaveV3FilterPullbackChaseCount;
+   else if(setup.v3FilterFailReason == "v3_momentum_exhausted")
+      ++g_thirdWaveV3FilterMomentumExhaustedCount;
+  }
+
 void RecordThirdWaveEvaluation(const ThirdWaveSetup &setup)
   {
    ++g_thirdWaveEvaluations;
@@ -2298,6 +2493,7 @@ void RecordThirdWaveEvaluation(const ThirdWaveSetup &setup)
    RecordThirdWaveStagePasses(setup);
    RecordThirdWaveRegimeState(setup);
    RecordThirdWaveV2Filter(setup);
+   RecordThirdWaveV3Filter(setup);
 
    if(setup.setupPass)
       ++g_thirdWaveSetupPassCount;
@@ -3325,6 +3521,13 @@ void WriteThirdWaveSignalRow(const ThirdWaveSetup &setup)
                 "rr_pass",
                 "v2_filter_pass",
                 "v2_filter_fail_reason",
+                "v3_filter_pass",
+                "v3_filter_fail_reason",
+                "v3_momentum_exhaustion_score",
+                "v3_momentum_exhausted",
+                "v3_recent_move_atr",
+                "v3_consecutive_directional_bars",
+                "v3_close_to_recent_extreme_atr",
                 "spread_atr",
                 "max_spread_atr",
                 "spread_guard_pass",
@@ -3373,6 +3576,13 @@ void WriteThirdWaveSignalRow(const ThirdWaveSetup &setup)
              BoolText(setup.rrPass),
              BoolText(setup.v2FilterPass),
              setup.v2FilterFailReason,
+             BoolText(setup.v3FilterPass),
+             setup.v3FilterFailReason,
+             DoubleToString(setup.v3MomentumExhaustionScore, 2),
+             BoolText(setup.v3MomentumExhausted),
+             DoubleToString(setup.v3RecentMoveATR, 2),
+             IntegerToString(setup.v3ConsecutiveDirectionalBars),
+             DoubleToString(setup.v3CloseToRecentExtremeATR, 2),
              DoubleToString(setup.spreadATR, 4),
              DoubleToString(setup.maxSpreadATR, 4),
              BoolText(setup.spreadGuardPass),
@@ -3446,6 +3656,13 @@ void WriteThirdWaveTradeRow(const ThirdWaveSetup &setup,
                 "execution_block_reason",
                 "v2_filter_pass",
                 "v2_filter_fail_reason",
+                "v3_filter_pass",
+                "v3_filter_fail_reason",
+                "v3_momentum_exhaustion_score",
+                "v3_momentum_exhausted",
+                "v3_recent_move_atr",
+                "v3_consecutive_directional_bars",
+                "v3_close_to_recent_extreme_atr",
                 "spread_atr",
                 "max_spread_atr",
                 "spread_guard_pass",
@@ -3484,6 +3701,13 @@ void WriteThirdWaveTradeRow(const ThirdWaveSetup &setup,
              setup.executionBlockReason,
              BoolText(setup.v2FilterPass),
              setup.v2FilterFailReason,
+             BoolText(setup.v3FilterPass),
+             setup.v3FilterFailReason,
+             DoubleToString(setup.v3MomentumExhaustionScore, 2),
+             BoolText(setup.v3MomentumExhausted),
+             DoubleToString(setup.v3RecentMoveATR, 2),
+             IntegerToString(setup.v3ConsecutiveDirectionalBars),
+             DoubleToString(setup.v3CloseToRecentExtremeATR, 2),
              DoubleToString(setup.spreadATR, 4),
              DoubleToString(setup.maxSpreadATR, 4),
              BoolText(setup.spreadGuardPass),
@@ -3569,6 +3793,13 @@ void WriteThirdWaveWaveAuditRow(const ThirdWaveSetup &setup, const string eventN
                 "execution_block_reason",
                 "v2_filter_pass",
                 "v2_filter_fail_reason",
+                "v3_filter_pass",
+                "v3_filter_fail_reason",
+                "v3_momentum_exhaustion_score",
+                "v3_momentum_exhausted",
+                "v3_recent_move_atr",
+                "v3_consecutive_directional_bars",
+                "v3_close_to_recent_extreme_atr",
                 "wave_audit_label",
                 "wave_audit_reason",
                 "strategy_name");
@@ -3632,6 +3863,13 @@ void WriteThirdWaveWaveAuditRow(const ThirdWaveSetup &setup, const string eventN
              setup.executionBlockReason,
              BoolText(setup.v2FilterPass),
              setup.v2FilterFailReason,
+             BoolText(setup.v3FilterPass),
+             setup.v3FilterFailReason,
+             DoubleToString(setup.v3MomentumExhaustionScore, 2),
+             BoolText(setup.v3MomentumExhausted),
+             DoubleToString(setup.v3RecentMoveATR, 2),
+             IntegerToString(setup.v3ConsecutiveDirectionalBars),
+             DoubleToString(setup.v3CloseToRecentExtremeATR, 2),
              setup.waveAuditLabel,
              setup.waveAuditReason,
              ThirdWaveStrategyName());
@@ -3806,6 +4044,45 @@ string TopThirdWaveV2FilterFailReason(long &count)
    return reason;
   }
 
+string TopThirdWaveV3FilterFailReason(long &count)
+  {
+   string reason = "";
+   count = 0;
+
+   if(g_thirdWaveV3FilterInvalidPositionCount > count)
+     {
+      count = g_thirdWaveV3FilterInvalidPositionCount;
+      reason = "v3_wave_position_invalid";
+     }
+   if(g_thirdWaveV3FilterLateEntryCount > count)
+     {
+      count = g_thirdWaveV3FilterLateEntryCount;
+      reason = "v3_late_entry";
+     }
+   if(g_thirdWaveV3FilterChasingEntryCount > count)
+     {
+      count = g_thirdWaveV3FilterChasingEntryCount;
+      reason = "v3_chasing_entry";
+     }
+   if(g_thirdWaveV3FilterReclaimChaseCount > count)
+     {
+      count = g_thirdWaveV3FilterReclaimChaseCount;
+      reason = "v3_reclaim_chase_too_far";
+     }
+   if(g_thirdWaveV3FilterPullbackChaseCount > count)
+     {
+      count = g_thirdWaveV3FilterPullbackChaseCount;
+      reason = "v3_pullback_entry_too_far";
+     }
+   if(g_thirdWaveV3FilterMomentumExhaustedCount > count)
+     {
+      count = g_thirdWaveV3FilterMomentumExhaustedCount;
+      reason = "v3_momentum_exhausted";
+     }
+
+   return reason;
+  }
+
 void WriteThirdWaveSummaryRow()
   {
    if(!DiagnosticsSummaryEnabled())
@@ -3836,12 +4113,13 @@ void WriteThirdWaveSummaryRow()
                       "time,strategy_name,evaluations,long_evaluations,short_evaluations,setup_pass,entry_pass,orders_sent,orders_failed,"
                       "higher_tf_trend_pass,mid_tf_pullback_pass,lower_tf_reversal_pass,structure_sl_pass,rr_pass,spread_guard_pass,spread_guard_blocked,final_entry_pass,"
                       "v2_filter_evaluations,v2_filter_pass,v2_filter_fail,v2_filter_deep_pullback,v2_filter_trend_too_old,v2_filter_reclaim_chase_too_far,"
+                      "v3_filter_evaluations,v3_filter_pass,v3_filter_fail,v3_filter_invalid_position,v3_filter_late_entry,v3_filter_chasing_entry,v3_filter_reclaim_chase,v3_filter_pullback_chase,v3_filter_momentum_exhausted,"
                       "regime_trend_up,regime_trend_down,regime_range,regime_transition,regime_exhaustion,regime_unknown,regime_allowed,regime_blocked,regime_block_long_requires_trend_up,regime_block_short_requires_trend_down,"
                       "long_higher_tf_trend_pass,long_mid_tf_pullback_pass,long_lower_tf_reversal_pass,long_structure_sl_pass,long_rr_pass,long_spread_guard_pass,long_spread_guard_blocked,long_final_entry_pass,"
                       "short_higher_tf_trend_pass,short_mid_tf_pullback_pass,short_lower_tf_reversal_pass,short_structure_sl_pass,short_rr_pass,short_spread_guard_pass,short_spread_guard_blocked,short_final_entry_pass,"
                       "no_higher_tf_trend,trend_broken,no_mid_pullback,pullback_too_shallow,pullback_too_deep,no_lower_reversal,lower_reversal_quality_low,sl_too_close,sl_too_wide,rr_too_low,existing_position,market_closed,spread_guard,data_unavailable,atr_unavailable,research_excluded,regime_requires_trend_up,regime_requires_trend_down,unknown,"
                       "execution_spread_guard,execution_trading_disabled,execution_no_entry_signal,execution_position_limit,execution_risk_stop,execution_risk_limit,execution_invalid,execution_order_failed,execution_unknown,"
-                      "top_structure_stage_fail_reason,top_structure_stage_fail_reason_rows,top_execution_block_reason,top_execution_block_reason_rows,top_skip_reason,top_skip_reason_rows,top_v2_filter_fail_reason,top_v2_filter_fail_reason_rows\r\n");
+                      "top_structure_stage_fail_reason,top_structure_stage_fail_reason_rows,top_execution_block_reason,top_execution_block_reason_rows,top_skip_reason,top_skip_reason_rows,top_v2_filter_fail_reason,top_v2_filter_fail_reason_rows,top_v3_filter_fail_reason,top_v3_filter_fail_reason_rows\r\n");
 
    long topSkipCount = 0;
    string topSkipReason = TopThirdWaveSkipReason(topSkipCount);
@@ -3849,6 +4127,8 @@ void WriteThirdWaveSummaryRow()
    string topExecutionBlockReason = TopThirdWaveExecutionBlockReason(topExecutionBlockCount);
    long topV2FilterCount = 0;
    string topV2FilterReason = TopThirdWaveV2FilterFailReason(topV2FilterCount);
+   long topV3FilterCount = 0;
+   string topV3FilterReason = TopThirdWaveV3FilterFailReason(topV3FilterCount);
 
    string row = "";
    AppendCsvField(row, TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS));
@@ -3874,6 +4154,15 @@ void WriteThirdWaveSummaryRow()
    AppendCsvLong(row, g_thirdWaveV2FilterDeepPullbackCount);
    AppendCsvLong(row, g_thirdWaveV2FilterTrendTooOldCount);
    AppendCsvLong(row, g_thirdWaveV2FilterReclaimChaseCount);
+   AppendCsvLong(row, g_thirdWaveV3FilterEvaluations);
+   AppendCsvLong(row, g_thirdWaveV3FilterPassCount);
+   AppendCsvLong(row, g_thirdWaveV3FilterFailCount);
+   AppendCsvLong(row, g_thirdWaveV3FilterInvalidPositionCount);
+   AppendCsvLong(row, g_thirdWaveV3FilterLateEntryCount);
+   AppendCsvLong(row, g_thirdWaveV3FilterChasingEntryCount);
+   AppendCsvLong(row, g_thirdWaveV3FilterReclaimChaseCount);
+   AppendCsvLong(row, g_thirdWaveV3FilterPullbackChaseCount);
+   AppendCsvLong(row, g_thirdWaveV3FilterMomentumExhaustedCount);
    AppendCsvLong(row, g_thirdWaveRegimeTrendUpCount);
    AppendCsvLong(row, g_thirdWaveRegimeTrendDownCount);
    AppendCsvLong(row, g_thirdWaveRegimeRangeCount);
@@ -3936,6 +4225,8 @@ void WriteThirdWaveSummaryRow()
    AppendCsvLong(row, topSkipCount);
    AppendCsvField(row, topV2FilterReason);
    AppendCsvLong(row, topV2FilterCount);
+   AppendCsvField(row, topV3FilterReason);
+   AppendCsvLong(row, topV3FilterCount);
    FileWriteString(handle, row + "\r\n");
 
    FileClose(handle);
@@ -4440,6 +4731,8 @@ void ScanThirdWaveSymbols()
             WriteThirdWaveSignalRow(setup);
          if(setup.entryPass)
             WriteThirdWaveWaveAuditRow(setup, "final_entry_candidate");
+         else if(setup.rrPass && setup.v3FilterFailReason != "")
+            WriteThirdWaveWaveAuditRow(setup, "v3_blocked_candidate");
          else if(setup.rrPass && setup.executionBlockReason != "")
             WriteThirdWaveWaveAuditRow(setup, "execution_block_candidate");
         }
