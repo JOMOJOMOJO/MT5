@@ -1,0 +1,17 @@
+period,variant,v2_filter_evaluations,v2_filter_pass,v2_filter_fail,v2_filter_deep_pullback,v2_filter_trend_too_old,v2_filter_reclaim_chase_too_far,top_v2_filter_fail_reason,top_v2_filter_fail_reason_rows,v3_filter_evaluations,v3_filter_pass,v3_filter_fail,v3_filter_invalid_position,v3_filter_late_entry,v3_filter_chasing_entry,v3_filter_reclaim_chase,v3_filter_pullback_chase,v3_filter_momentum_exhausted,top_v3_filter_fail_reason,top_v3_filter_fail_reason_rows,v4_reversal_evaluations,v4_reversal_pass,v4_reversal_fail,v4_confirmed_fractal,v4_early_higher_low,v4_early_lower_high,v4_momentum_turn,v4_candle_reversal,v4_micro_break,v4_unclear,v4_impulse_consumed_blocked,top_v4_reversal_signal,top_v4_reversal_signal_rows
+2025-02,current,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,,0
+2025-02,v2_audit_filtered,199,84,115,56,54,5,v2_pullback_too_deep_audit,56,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,,0
+2025-02,v3_entry_timing,0,0,0,0,0,0,,0,199,5,194,0,0,19,69,99,7,v3_pullback_entry_too_far,99,0,0,0,0,0,0,0,0,0,0,0,,0
+2025-02,v4_early_reversal,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,,0,6020,1484,4536,46,224,341,32,416,425,4536,146,unclear,4536
+2025-08,current,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,,0
+2025-08,v2_audit_filtered,148,81,67,34,26,7,v2_pullback_too_deep_audit,34,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,,0
+2025-08,v3_entry_timing,0,0,0,0,0,0,,0,148,3,145,6,0,15,53,60,11,v3_pullback_entry_too_far,60,0,0,0,0,0,0,0,0,0,0,0,,0
+2025-08,v4_early_reversal,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,,0,6458,1451,5007,38,348,170,29,453,413,5007,69,unclear,5007
+2025-10,current,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,,0
+2025-10,v2_audit_filtered,215,122,93,40,46,7,v2_trend_too_old,46,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,,0
+2025-10,v3_entry_timing,0,0,0,0,0,0,,0,215,5,210,3,0,36,76,83,12,v3_pullback_entry_too_far,83,0,0,0,0,0,0,0,0,0,0,0,,0
+2025-10,v4_early_reversal,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,,0,7723,1951,5772,64,388,304,41,538,616,5772,110,unclear,5772
+2026-Q1,current,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,,0
+2026-Q1,v2_audit_filtered,641,369,272,125,136,11,v2_trend_too_old,136,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,,0
+2026-Q1,v3_entry_timing,0,0,0,0,0,0,,0,641,6,635,3,0,69,245,287,31,v3_pullback_entry_too_far,287,0,0,0,0,0,0,0,0,0,0,0,,0
+2026-Q1,v4_early_reversal,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,,0,20572,5255,15317,238,1129,783,81,1419,1605,15317,339,unclear,15317

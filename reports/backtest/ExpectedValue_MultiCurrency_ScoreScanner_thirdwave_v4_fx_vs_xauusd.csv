@@ -1,0 +1,9 @@
+variant,asset_class,trades,wins,losses,win_rate,net_profit,profit_factor,expected_payoff,avg_R,max_drawdown,max_drawdown_pct,xauusd_trade_share_pct,xauusd_net_profit
+current,FX,18,9,9,50.0,241.33,1.538,13.41,0.258,123.25,1.2,0.0,0
+current,XAUUSD,91,44,47,48.35,1047.63,1.481,11.51,0.217,311.85,3.0,100.0,1047.63
+v2_audit_filtered,FX,9,6,3,66.67,309.2,3.083,34.36,0.674,49.99,0.48,0.0,0
+v2_audit_filtered,XAUUSD,49,26,23,53.06,891.06,1.853,18.18,0.365,180.31,1.77,100.0,891.06
+v3_entry_timing,FX,1,1,0,100.0,73.77,,73.77,1.502,0.0,0.0,0.0,0
+v3_entry_timing,XAUUSD,3,1,2,33.33,-27.42,0.719,-9.14,-0.168,97.62,0.98,100.0,-27.42
+v4_early_reversal,FX,50,21,29,42.0,145.16,1.099,2.9,0.063,414.05,4.03,0.0,0
+v4_early_reversal,XAUUSD,144,66,78,45.83,1455.21,1.387,10.11,0.153,404.61,3.42,100.0,1455.21

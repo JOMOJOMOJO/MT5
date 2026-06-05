@@ -31,7 +31,8 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE = 1,
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME = 2,
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V2_AUDIT_FILTERED = 3,
-   RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V3_ENTRY_TIMING = 4
+   RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V3_ENTRY_TIMING = 4,
+   RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V4_EARLY_REVERSAL = 5
   };
 
 enum ENUM_ENTRY_SELECTION_MODE
@@ -230,10 +231,19 @@ struct ThirdWaveSetup
    string            waveAuditReason;
    string            v2FilterFailReason;
    string            v3FilterFailReason;
+   string            reversalSignalType;
+   string            v4BlockReason;
    double            v3MomentumExhaustionScore;
    double            v3RecentMoveATR;
    double            v3CloseToRecentExtremeATR;
    int               v3ConsecutiveDirectionalBars;
+   int               barsSincePullbackExtreme;
+   int               barsSinceReversalSignal;
+   double            distanceReversalSignalToEntryATR;
+   double            impulseConsumedPct;
+   double            preEntryMomentumScore;
+   double            reversalStrengthScore;
+   bool              v4ImpulseConsumedBlocked;
   };
 
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
@@ -351,6 +361,17 @@ long     g_thirdWaveV3FilterChasingEntryCount = 0;
 long     g_thirdWaveV3FilterReclaimChaseCount = 0;
 long     g_thirdWaveV3FilterPullbackChaseCount = 0;
 long     g_thirdWaveV3FilterMomentumExhaustedCount = 0;
+long     g_thirdWaveV4ReversalEvaluations = 0;
+long     g_thirdWaveV4ReversalPassCount = 0;
+long     g_thirdWaveV4ReversalFailCount = 0;
+long     g_thirdWaveV4ConfirmedFractalCount = 0;
+long     g_thirdWaveV4EarlyHigherLowCount = 0;
+long     g_thirdWaveV4EarlyLowerHighCount = 0;
+long     g_thirdWaveV4MomentumTurnCount = 0;
+long     g_thirdWaveV4CandleReversalCount = 0;
+long     g_thirdWaveV4MicroBreakCount = 0;
+long     g_thirdWaveV4UnclearCount = 0;
+long     g_thirdWaveV4ImpulseConsumedBlockedCount = 0;
 
 //+------------------------------------------------------------------+
 //| Generic helpers                                                   |
@@ -435,7 +456,8 @@ bool IsThirdWaveStrategyMode()
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V2_AUDIT_FILTERED ||
-           InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V3_ENTRY_TIMING);
+           InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V3_ENTRY_TIMING ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V4_EARLY_REVERSAL);
   }
 
 bool IsAuditFilteredThirdWaveV2Mode()
@@ -448,11 +470,17 @@ bool IsEntryTimingThirdWaveV3Mode()
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V3_ENTRY_TIMING);
   }
 
+bool IsEarlyReversalThirdWaveV4Mode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V4_EARLY_REVERSAL);
+  }
+
 bool IsRegimeAwareThirdWaveMode()
   {
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME ||
            IsAuditFilteredThirdWaveV2Mode() ||
-           IsEntryTimingThirdWaveV3Mode());
+           IsEntryTimingThirdWaveV3Mode() ||
+           IsEarlyReversalThirdWaveV4Mode());
   }
 
 bool IsAllCandidatesEntryMode()
@@ -484,6 +512,8 @@ string EntrySelectionModeName()
 
 string ThirdWaveStrategyName()
   {
+   if(IsEarlyReversalThirdWaveV4Mode())
+      return "DowFractal_ThirdWave_V4_EarlyReversal";
    if(IsEntryTimingThirdWaveV3Mode())
       return "DowFractal_ThirdWave_V3_EntryTiming";
    if(IsAuditFilteredThirdWaveV2Mode())
@@ -544,7 +574,10 @@ void UpdateThirdWaveEntryDistanceAudit(ThirdWaveSetup &setup)
       setup.entryDistanceFromReclaimATR = (atr > 0.0 ? distance / atr : 0.0);
       double point = SymbolInfoDouble(setup.symbol, SYMBOL_POINT);
       setup.entryDistanceFromReclaimPoints = (point > 0.0 ? distance / point : 0.0);
+      setup.distanceReversalSignalToEntryATR = setup.entryDistanceFromReclaimATR;
      }
+   setup.barsSinceReversalSignal = setup.barsSinceReclaimOrBreakdown;
+   setup.impulseConsumedPct = setup.distancePullbackExtremeToEntryPct;
   }
 
 string ClassifyLowerReversalQualityLabel(const ThirdWaveSetup &setup)
@@ -1016,10 +1049,19 @@ void InitThirdWaveSetup(ThirdWaveSetup &setup, const string symbol, const int di
    setup.waveAuditReason = "";
    setup.v2FilterFailReason = "";
    setup.v3FilterFailReason = "";
+   setup.reversalSignalType = "unclear";
+   setup.v4BlockReason = "";
    setup.v3MomentumExhaustionScore = 0.0;
    setup.v3RecentMoveATR = 0.0;
    setup.v3CloseToRecentExtremeATR = 0.0;
    setup.v3ConsecutiveDirectionalBars = 0;
+   setup.barsSincePullbackExtreme = 0;
+   setup.barsSinceReversalSignal = 0;
+   setup.distanceReversalSignalToEntryATR = 0.0;
+   setup.impulseConsumedPct = 0.0;
+   setup.preEntryMomentumScore = 0.0;
+   setup.reversalStrengthScore = 0.0;
+   setup.v4ImpulseConsumedBlocked = false;
   }
 
 //+------------------------------------------------------------------+
@@ -1891,6 +1933,297 @@ bool DetectLowerTimeframeReversal(const MqlRates &executionRates[],
    return true;
   }
 
+int RecentExecutionExtremeShift(const MqlRates &rates[],
+                                const bool highExtreme,
+                                const int lookback)
+  {
+   int size = ArraySize(rates);
+   int maxShift = MathMin(size - 1, lookback);
+   if(maxShift < 1)
+      return 0;
+
+   int bestShift = 1;
+   double bestValue = (highExtreme ? rates[1].high : rates[1].low);
+   for(int shift = 2; shift <= maxShift; ++shift)
+     {
+      double value = (highExtreme ? rates[shift].high : rates[shift].low);
+      if((highExtreme && value > bestValue) ||
+         (!highExtreme && value < bestValue))
+        {
+         bestValue = value;
+         bestShift = shift;
+        }
+     }
+   return bestShift;
+  }
+
+int CountDirectionalCandles(const MqlRates &rates[],
+                            const int direction,
+                            const int startShift,
+                            const int maxBars)
+  {
+   int size = ArraySize(rates);
+   int count = 0;
+   for(int shift = startShift; shift < startShift + maxBars && shift < size; ++shift)
+     {
+      bool directional = (direction > 0 ?
+                          rates[shift].close > rates[shift].open :
+                          rates[shift].close < rates[shift].open);
+      if(!directional)
+         break;
+      ++count;
+     }
+   return count;
+  }
+
+void UpdateThirdWaveV4EntryMomentumAudit(const MqlRates &executionRates[],
+                                         const int direction,
+                                         ThirdWaveSetup &setup)
+  {
+   setup.preEntryMomentumScore = 0.0;
+   double atr = setup.atrValue;
+   if(atr <= 0.0)
+      atr = setup.atr;
+   if(atr <= 0.0 || ArraySize(executionRates) < 8)
+      return;
+
+   int entryDirectionCandles = CountDirectionalCandles(executionRates, direction, 1, 4);
+   double recentMove = (direction > 0 ?
+                        executionRates[1].close - executionRates[4].close :
+                        executionRates[4].close - executionRates[1].close);
+   double recentMoveATR = (recentMove > 0.0 ? recentMove / atr : 0.0);
+
+   int extremeShift = RecentExecutionExtremeShift(executionRates, direction > 0, 8);
+   double recentExtreme = (direction > 0 ? executionRates[extremeShift].high : executionRates[extremeShift].low);
+   double distanceToExtreme = MathAbs(executionRates[1].close - recentExtreme) / atr;
+
+   setup.preEntryMomentumScore = entryDirectionCandles * 18.0;
+   if(recentMoveATR > 0.90)
+      setup.preEntryMomentumScore += 28.0;
+   if(recentMoveATR > 1.40)
+      setup.preEntryMomentumScore += 18.0;
+   if(distanceToExtreme <= 0.25)
+      setup.preEntryMomentumScore += 18.0;
+  }
+
+bool DetectEarlyLowerTimeframeReversal(const MqlRates &executionRates[],
+                                       const int direction,
+                                       ThirdWaveSetup &setup)
+  {
+   int size = ArraySize(executionRates);
+   if(size < 12)
+     {
+      setup.skipReason = "no_lower_reversal";
+      setup.lowerTfReversalStatus = "early_data_insufficient";
+      setup.reversalSignalType = "unclear";
+      return false;
+     }
+
+   double atr = setup.atrValue;
+   if(atr <= 0.0)
+      atr = setup.atr;
+   if(atr <= 0.0)
+     {
+      setup.skipReason = "atr_unavailable";
+      setup.lowerTfReversalStatus = "early_atr_unavailable";
+      setup.reversalSignalType = "unclear";
+      return false;
+     }
+
+   int span = InpStructureSwingSpan;
+   if(span < 1)
+      span = 1;
+
+   int scanBars = MathMin(InpStructureScanBars, 48);
+   if(scanBars < span * 4 + 10)
+      scanBars = span * 4 + 10;
+
+   PivotPoint highLatest;
+   PivotPoint highPrevious;
+   PivotPoint lowLatest;
+   PivotPoint lowPrevious;
+   bool hasHighs = FindRecentPivots(executionRates, true, span, scanBars, highLatest, highPrevious);
+   bool hasLows = FindRecentPivots(executionRates, false, span, scanBars, lowLatest, lowPrevious);
+
+   setup.barsSincePullbackExtreme = RecentExecutionExtremeShift(executionRates, direction < 0, 24);
+   setup.barsSinceReclaimOrBreakdown = 1;
+   setup.barsSinceReversalSignal = 1;
+   setup.reversalSignalType = "unclear";
+   setup.reversalStrengthScore = 0.0;
+   UpdateThirdWaveV4EntryMomentumAudit(executionRates, direction, setup);
+
+   double barRange = executionRates[1].high - executionRates[1].low;
+   double body = MathAbs(executionRates[1].close - executionRates[1].open);
+   double bodyATR = body / atr;
+   double closeLocation = (barRange > 0.0 ? (executionRates[1].close - executionRates[1].low) / barRange : 0.5);
+
+   if(direction > 0)
+     {
+      double microHigh = HighestHigh(executionRates, 2, 3);
+      bool pullbackLowHeld = (setup.swingLow <= 0.0 ||
+                              (executionRates[1].low > setup.swingLow &&
+                               executionRates[2].low > setup.swingLow));
+      bool confirmedFractal = (hasHighs &&
+                               executionRates[1].close > highLatest.price &&
+                               executionRates[1].close > executionRates[1].open);
+      bool microBreak = (microHigh > 0.0 &&
+                         executionRates[1].close > microHigh &&
+                         executionRates[1].close > executionRates[1].open);
+      bool strongBull = (executionRates[1].close > executionRates[1].open &&
+                         (bodyATR >= 0.28 || closeLocation >= 0.68));
+      bool bullishEngulf = (executionRates[2].close < executionRates[2].open &&
+                            executionRates[1].close > executionRates[2].open &&
+                            executionRates[1].open <= executionRates[2].close);
+      int bearishStreak = CountDirectionalCandles(executionRates, -1, 2, 4);
+      bool candleReversal = (bullishEngulf || (bearishStreak >= 2 && strongBull));
+      bool earlyHigherLow = (executionRates[1].low > executionRates[2].low &&
+                             executionRates[2].low <= executionRates[3].low &&
+                             pullbackLowHeld);
+      bool momentumTurn = (executionRates[1].close > executionRates[2].close &&
+                           executionRates[2].close <= executionRates[3].close &&
+                           executionRates[1].close > executionRates[1].open &&
+                           pullbackLowHeld);
+
+      double strength = 20.0;
+      if(pullbackLowHeld)
+         strength += 15.0;
+      if(earlyHigherLow)
+         strength += 25.0;
+      if(microBreak)
+         strength += 25.0;
+      if(candleReversal)
+         strength += 20.0;
+      if(momentumTurn)
+         strength += 15.0;
+      if(confirmedFractal)
+         strength += 15.0;
+      if(setup.preEntryMomentumScore >= 85.0)
+         strength -= 15.0;
+
+      if(earlyHigherLow && (microBreak || candleReversal || momentumTurn))
+         setup.reversalSignalType = "early_higher_low";
+      else if(candleReversal && (microBreak || momentumTurn))
+         setup.reversalSignalType = "candle_reversal";
+      else if(microBreak && strongBull)
+         setup.reversalSignalType = "micro_break";
+      else if(momentumTurn && strongBull)
+         setup.reversalSignalType = "momentum_turn";
+      else if(confirmedFractal)
+         setup.reversalSignalType = "confirmed_fractal_reclaim";
+
+      setup.reversalStrengthScore = strength;
+      if(setup.reversalSignalType == "unclear" || strength < 60.0)
+        {
+         setup.skipReason = "no_lower_reversal";
+         setup.lowerTfReversalStatus = "early_reversal_not_confirmed";
+         return false;
+        }
+
+      setup.minorReversalLevel = (setup.reversalSignalType == "confirmed_fractal_reclaim" ? highLatest.price : microHigh);
+      if(setup.minorReversalLevel <= 0.0)
+         setup.minorReversalLevel = executionRates[1].close;
+      setup.reclaimOrBreakdownPrice = setup.minorReversalLevel;
+      setup.lowerTfReversalStatus = setup.reversalSignalType;
+      setup.lowerReversalQuality = setup.reversalStrengthScore;
+      setup.qualityScore = 100.0 + setup.retraceRatio * 20.0 - setup.spreadATR * 10.0 + setup.reversalStrengthScore * 0.10;
+      return true;
+     }
+
+   double microLow = LowestLow(executionRates, 2, 3);
+   bool pullbackHighHeld = (setup.swingHigh <= 0.0 ||
+                            (executionRates[1].high < setup.swingHigh &&
+                             executionRates[2].high < setup.swingHigh));
+   bool confirmedBreakdown = (hasLows &&
+                              executionRates[1].close < lowLatest.price &&
+                              executionRates[1].close < executionRates[1].open);
+   bool microBreak = (microLow > 0.0 &&
+                      executionRates[1].close < microLow &&
+                      executionRates[1].close < executionRates[1].open);
+   bool strongBear = (executionRates[1].close < executionRates[1].open &&
+                      (bodyATR >= 0.28 || closeLocation <= 0.32));
+   bool bearishEngulf = (executionRates[2].close > executionRates[2].open &&
+                         executionRates[1].close < executionRates[2].open &&
+                         executionRates[1].open >= executionRates[2].close);
+   int bullishStreak = CountDirectionalCandles(executionRates, 1, 2, 4);
+   bool candleReversal = (bearishEngulf || (bullishStreak >= 2 && strongBear));
+   bool earlyLowerHigh = (executionRates[1].high < executionRates[2].high &&
+                          executionRates[2].high >= executionRates[3].high &&
+                          pullbackHighHeld);
+   bool momentumTurn = (executionRates[1].close < executionRates[2].close &&
+                        executionRates[2].close >= executionRates[3].close &&
+                        executionRates[1].close < executionRates[1].open &&
+                        pullbackHighHeld);
+
+   double strength = 20.0;
+   if(pullbackHighHeld)
+      strength += 15.0;
+   if(earlyLowerHigh)
+      strength += 25.0;
+   if(microBreak)
+      strength += 25.0;
+   if(candleReversal)
+      strength += 20.0;
+   if(momentumTurn)
+      strength += 15.0;
+   if(confirmedBreakdown)
+      strength += 15.0;
+   if(setup.preEntryMomentumScore >= 85.0)
+      strength -= 15.0;
+
+   if(earlyLowerHigh && (microBreak || candleReversal || momentumTurn))
+      setup.reversalSignalType = "early_lower_high";
+   else if(candleReversal && (microBreak || momentumTurn))
+      setup.reversalSignalType = "candle_reversal";
+   else if(microBreak && strongBear)
+      setup.reversalSignalType = "micro_break";
+   else if(momentumTurn && strongBear)
+      setup.reversalSignalType = "momentum_turn";
+   else if(confirmedBreakdown)
+      setup.reversalSignalType = "confirmed_fractal_breakdown";
+
+   setup.reversalStrengthScore = strength;
+   if(setup.reversalSignalType == "unclear" || strength < 60.0)
+     {
+      setup.skipReason = "no_lower_reversal";
+      setup.lowerTfReversalStatus = "early_reversal_not_confirmed";
+      return false;
+     }
+
+   setup.minorReversalLevel = (setup.reversalSignalType == "confirmed_fractal_breakdown" ? lowLatest.price : microLow);
+   if(setup.minorReversalLevel <= 0.0)
+      setup.minorReversalLevel = executionRates[1].close;
+   setup.reclaimOrBreakdownPrice = setup.minorReversalLevel;
+   setup.lowerTfReversalStatus = setup.reversalSignalType;
+   setup.lowerReversalQuality = setup.reversalStrengthScore;
+   setup.qualityScore = 100.0 + setup.retraceRatio * 20.0 - setup.spreadATR * 10.0 + setup.reversalStrengthScore * 0.10;
+   return true;
+  }
+
+void SetThirdWaveV4Block(ThirdWaveSetup &setup, const string reason)
+  {
+   setup.v4BlockReason = reason;
+   setup.v4ImpulseConsumedBlocked = true;
+   setup.skipReason = reason;
+   setup.structureStageFailReason = reason;
+  }
+
+bool ApplyThirdWaveV4ImpulseGate(ThirdWaveSetup &setup)
+  {
+   if(!IsEarlyReversalThirdWaveV4Mode())
+      return true;
+
+   setup.v4BlockReason = "";
+   setup.v4ImpulseConsumedBlocked = false;
+   if(setup.distancePullbackExtremeToEntryPct > 90.0 ||
+      setup.distancePullbackExtremeToEntryATR > 4.00 ||
+      setup.preEntryMomentumScore >= 95.0)
+     {
+      SetThirdWaveV4Block(setup, "v4_impulse_consumed");
+      return false;
+     }
+   return true;
+  }
+
 bool CalculateStructureStopLoss(const string symbol,
                                 const int direction,
                                 ThirdWaveSetup &setup)
@@ -2214,7 +2547,10 @@ bool BuildThirdWaveSetup(const string symbol,
    setup.midTfPullbackPass = true;
 
    setup.setupPass = true;
-   if(!DetectLowerTimeframeReversal(executionRates, direction, setup))
+   bool lowerReversalOk = (IsEarlyReversalThirdWaveV4Mode() ?
+                           DetectEarlyLowerTimeframeReversal(executionRates, direction, setup) :
+                           DetectLowerTimeframeReversal(executionRates, direction, setup));
+   if(!lowerReversalOk)
      {
       setup.structureStageFailReason = setup.skipReason;
       return false;
@@ -2244,6 +2580,9 @@ bool BuildThirdWaveSetup(const string symbol,
       return false;
 
    if(!ApplyThirdWaveV3EntryTimingFilters(setup))
+      return false;
+
+   if(!ApplyThirdWaveV4ImpulseGate(setup))
       return false;
 
    if(setup.spreadGuardBlocked)
@@ -2482,6 +2821,42 @@ void RecordThirdWaveV3Filter(const ThirdWaveSetup &setup)
       ++g_thirdWaveV3FilterMomentumExhaustedCount;
   }
 
+void RecordThirdWaveV4Reversal(const ThirdWaveSetup &setup)
+  {
+   if(!IsEarlyReversalThirdWaveV4Mode())
+      return;
+   if(!setup.setupPass)
+      return;
+
+   ++g_thirdWaveV4ReversalEvaluations;
+   if(!setup.lowerTfReversalPass)
+     {
+      ++g_thirdWaveV4ReversalFailCount;
+      ++g_thirdWaveV4UnclearCount;
+      return;
+     }
+
+   ++g_thirdWaveV4ReversalPassCount;
+   if(setup.reversalSignalType == "confirmed_fractal_reclaim" ||
+      setup.reversalSignalType == "confirmed_fractal_breakdown")
+      ++g_thirdWaveV4ConfirmedFractalCount;
+   else if(setup.reversalSignalType == "early_higher_low")
+      ++g_thirdWaveV4EarlyHigherLowCount;
+   else if(setup.reversalSignalType == "early_lower_high")
+      ++g_thirdWaveV4EarlyLowerHighCount;
+   else if(setup.reversalSignalType == "momentum_turn")
+      ++g_thirdWaveV4MomentumTurnCount;
+   else if(setup.reversalSignalType == "candle_reversal")
+      ++g_thirdWaveV4CandleReversalCount;
+   else if(setup.reversalSignalType == "micro_break")
+      ++g_thirdWaveV4MicroBreakCount;
+   else
+      ++g_thirdWaveV4UnclearCount;
+
+   if(setup.v4ImpulseConsumedBlocked)
+      ++g_thirdWaveV4ImpulseConsumedBlockedCount;
+  }
+
 void RecordThirdWaveEvaluation(const ThirdWaveSetup &setup)
   {
    ++g_thirdWaveEvaluations;
@@ -2494,6 +2869,7 @@ void RecordThirdWaveEvaluation(const ThirdWaveSetup &setup)
    RecordThirdWaveRegimeState(setup);
    RecordThirdWaveV2Filter(setup);
    RecordThirdWaveV3Filter(setup);
+   RecordThirdWaveV4Reversal(setup);
 
    if(setup.setupPass)
       ++g_thirdWaveSetupPassCount;
@@ -3528,6 +3904,14 @@ void WriteThirdWaveSignalRow(const ThirdWaveSetup &setup)
                 "v3_recent_move_atr",
                 "v3_consecutive_directional_bars",
                 "v3_close_to_recent_extreme_atr",
+                "reversal_signal_type",
+                "v4_block_reason",
+                "bars_since_pullback_extreme",
+                "bars_since_reversal_signal",
+                "distance_from_reversal_signal_to_entry_atr",
+                "impulse_consumed_pct",
+                "pre_entry_momentum_score",
+                "reversal_strength_score",
                 "spread_atr",
                 "max_spread_atr",
                 "spread_guard_pass",
@@ -3583,6 +3967,14 @@ void WriteThirdWaveSignalRow(const ThirdWaveSetup &setup)
              DoubleToString(setup.v3RecentMoveATR, 2),
              IntegerToString(setup.v3ConsecutiveDirectionalBars),
              DoubleToString(setup.v3CloseToRecentExtremeATR, 2),
+             setup.reversalSignalType,
+             setup.v4BlockReason,
+             IntegerToString(setup.barsSincePullbackExtreme),
+             IntegerToString(setup.barsSinceReversalSignal),
+             DoubleToString(setup.distanceReversalSignalToEntryATR, 2),
+             DoubleToString(setup.impulseConsumedPct, 2),
+             DoubleToString(setup.preEntryMomentumScore, 2),
+             DoubleToString(setup.reversalStrengthScore, 2),
              DoubleToString(setup.spreadATR, 4),
              DoubleToString(setup.maxSpreadATR, 4),
              BoolText(setup.spreadGuardPass),
@@ -3663,6 +4055,14 @@ void WriteThirdWaveTradeRow(const ThirdWaveSetup &setup,
                 "v3_recent_move_atr",
                 "v3_consecutive_directional_bars",
                 "v3_close_to_recent_extreme_atr",
+                "reversal_signal_type",
+                "v4_block_reason",
+                "bars_since_pullback_extreme",
+                "bars_since_reversal_signal",
+                "distance_from_reversal_signal_to_entry_atr",
+                "impulse_consumed_pct",
+                "pre_entry_momentum_score",
+                "reversal_strength_score",
                 "spread_atr",
                 "max_spread_atr",
                 "spread_guard_pass",
@@ -3708,6 +4108,14 @@ void WriteThirdWaveTradeRow(const ThirdWaveSetup &setup,
              DoubleToString(setup.v3RecentMoveATR, 2),
              IntegerToString(setup.v3ConsecutiveDirectionalBars),
              DoubleToString(setup.v3CloseToRecentExtremeATR, 2),
+             setup.reversalSignalType,
+             setup.v4BlockReason,
+             IntegerToString(setup.barsSincePullbackExtreme),
+             IntegerToString(setup.barsSinceReversalSignal),
+             DoubleToString(setup.distanceReversalSignalToEntryATR, 2),
+             DoubleToString(setup.impulseConsumedPct, 2),
+             DoubleToString(setup.preEntryMomentumScore, 2),
+             DoubleToString(setup.reversalStrengthScore, 2),
              DoubleToString(setup.spreadATR, 4),
              DoubleToString(setup.maxSpreadATR, 4),
              BoolText(setup.spreadGuardPass),
@@ -3743,66 +4151,16 @@ void WriteThirdWaveWaveAuditRow(const ThirdWaveSetup &setup, const string eventN
    bool needsHeader = (FileSize(handle) == 0);
    FileSeek(handle, 0, SEEK_END);
    if(needsHeader)
-      FileWrite(handle,
-                "time",
-                "event",
-                "symbol",
-                "direction",
-                "entry_price",
-                "sl",
-                "tp",
-                "result_R",
-                "profit",
-                "regime",
-                "session",
-                "scan_interval",
-                "entry_selection_mode",
-                "higher_tf",
-                "higher_swing_low_1",
-                "higher_swing_high_1",
-                "higher_swing_low_2",
-                "higher_swing_high_2",
-                "higher_structure_state",
-                "higher_trend_age_bars",
-                "higher_ema_slope",
-                "higher_atr",
-                "mid_tf",
-                "impulse_start_price",
-                "impulse_end_price",
-                "pullback_extreme_price",
-                "pullback_depth_pct",
-                "pullback_depth_atr",
-                "pullback_bars",
-                "pullback_broke_origin",
-                "pullback_structure_low_or_high",
-                "distance_from_pullback_extreme_to_entry_atr",
-                "distance_from_pullback_extreme_to_entry_pct_of_impulse",
-                "lower_tf",
-                "minor_reversal_level",
-                "reclaim_or_breakdown_price",
-                "bars_since_reclaim_or_breakdown",
-                "entry_distance_from_reclaim_atr",
-                "entry_distance_from_reclaim_points",
-                "lower_reversal_quality",
-                "lower_reversal_quality_score",
-                "sl_atr",
-                "risk_r",
-                "rr",
-                "spread_atr",
-                "structure_stage_fail_reason",
-                "execution_block_reason",
-                "v2_filter_pass",
-                "v2_filter_fail_reason",
-                "v3_filter_pass",
-                "v3_filter_fail_reason",
-                "v3_momentum_exhaustion_score",
-                "v3_momentum_exhausted",
-                "v3_recent_move_atr",
-                "v3_consecutive_directional_bars",
-                "v3_close_to_recent_extreme_atr",
-                "wave_audit_label",
-                "wave_audit_reason",
-                "strategy_name");
+      FileWriteString(handle,
+                      "time,event,symbol,direction,entry_price,sl,tp,result_R,profit,regime,session,scan_interval,entry_selection_mode,"
+                      "higher_tf,higher_swing_low_1,higher_swing_high_1,higher_swing_low_2,higher_swing_high_2,higher_structure_state,higher_trend_age_bars,higher_ema_slope,higher_atr,"
+                      "mid_tf,impulse_start_price,impulse_end_price,pullback_extreme_price,pullback_depth_pct,pullback_depth_atr,pullback_bars,pullback_broke_origin,pullback_structure_low_or_high,"
+                      "distance_from_pullback_extreme_to_entry_atr,distance_from_pullback_extreme_to_entry_pct_of_impulse,"
+                      "lower_tf,minor_reversal_level,reclaim_or_breakdown_price,bars_since_reclaim_or_breakdown,entry_distance_from_reclaim_atr,entry_distance_from_reclaim_points,"
+                      "lower_reversal_quality,lower_reversal_quality_score,sl_atr,risk_r,rr,spread_atr,structure_stage_fail_reason,execution_block_reason,"
+                      "v2_filter_pass,v2_filter_fail_reason,v3_filter_pass,v3_filter_fail_reason,v3_momentum_exhaustion_score,v3_momentum_exhausted,v3_recent_move_atr,v3_consecutive_directional_bars,v3_close_to_recent_extreme_atr,"
+                      "reversal_signal_type,v4_block_reason,bars_since_pullback_extreme,bars_since_reversal_signal,distance_from_reversal_signal_to_entry_atr,impulse_consumed_pct,pre_entry_momentum_score,reversal_strength_score,"
+                      "wave_audit_label,wave_audit_reason,strategy_name\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    MqlDateTime tm;
@@ -3813,66 +4171,75 @@ void WriteThirdWaveWaveAuditRow(const ThirdWaveSetup &setup, const string eventN
    else if(tm.hour < 16)
       session = "server_08_15";
 
-   FileWrite(handle,
-             TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
-             eventName,
-             setup.symbol,
-             setup.direction,
-             DoubleToString(setup.entryPrice, digits),
-             DoubleToString(setup.stopLoss, digits),
-             DoubleToString(setup.takeProfit, digits),
-             "",
-             "",
-             setup.regime,
-             session,
-             IntegerToString(InpScanSeconds),
-             EntrySelectionModeName(),
-             TimeframeText(InpContextTF),
-             DoubleToString(setup.higherSwingLow1, digits),
-             DoubleToString(setup.higherSwingHigh1, digits),
-             DoubleToString(setup.higherSwingLow2, digits),
-             DoubleToString(setup.higherSwingHigh2, digits),
-             WaveAuditStructureState(setup),
-             IntegerToString(setup.higherTrendAgeBars),
-             DoubleToString(setup.emaSlope, digits),
-             DoubleToString(setup.higherAtr, digits),
-             TimeframeText(InpPatternTF),
-             DoubleToString(setup.impulseStartPrice, digits),
-             DoubleToString(setup.impulseEndPrice, digits),
-             DoubleToString(setup.pullbackExtremePrice, digits),
-             DoubleToString(setup.pullbackDepthPct, 2),
-             DoubleToString(setup.pullbackDepthATR, 2),
-             IntegerToString(setup.pullbackBars),
-             BoolText(setup.pullbackBrokeOrigin),
-             DoubleToString(setup.pullbackStructureLevel, digits),
-             DoubleToString(setup.distancePullbackExtremeToEntryATR, 2),
-             DoubleToString(setup.distancePullbackExtremeToEntryPct, 2),
-             TimeframeText(InpExecutionTF),
-             DoubleToString(setup.minorReversalLevel, digits),
-             DoubleToString(setup.reclaimOrBreakdownPrice, digits),
-             IntegerToString(setup.barsSinceReclaimOrBreakdown),
-             DoubleToString(setup.entryDistanceFromReclaimATR, 2),
-             DoubleToString(setup.entryDistanceFromReclaimPoints, 1),
-             setup.lowerReversalQualityLabel,
-             DoubleToString(setup.lowerReversalQuality, 2),
-             DoubleToString(setup.slATR, 2),
-             DoubleToString(setup.riskR, digits),
-             DoubleToString(setup.rr, 2),
-             DoubleToString(setup.spreadATR, 4),
-             setup.structureStageFailReason,
-             setup.executionBlockReason,
-             BoolText(setup.v2FilterPass),
-             setup.v2FilterFailReason,
-             BoolText(setup.v3FilterPass),
-             setup.v3FilterFailReason,
-             DoubleToString(setup.v3MomentumExhaustionScore, 2),
-             BoolText(setup.v3MomentumExhausted),
-             DoubleToString(setup.v3RecentMoveATR, 2),
-             IntegerToString(setup.v3ConsecutiveDirectionalBars),
-             DoubleToString(setup.v3CloseToRecentExtremeATR, 2),
-             setup.waveAuditLabel,
-             setup.waveAuditReason,
-             ThirdWaveStrategyName());
+   string row = "";
+   AppendCsvField(row, TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS));
+   AppendCsvField(row, eventName);
+   AppendCsvField(row, setup.symbol);
+   AppendCsvField(row, setup.direction);
+   AppendCsvField(row, DoubleToString(setup.entryPrice, digits));
+   AppendCsvField(row, DoubleToString(setup.stopLoss, digits));
+   AppendCsvField(row, DoubleToString(setup.takeProfit, digits));
+   AppendCsvField(row, "");
+   AppendCsvField(row, "");
+   AppendCsvField(row, setup.regime);
+   AppendCsvField(row, session);
+   AppendCsvField(row, IntegerToString(InpScanSeconds));
+   AppendCsvField(row, EntrySelectionModeName());
+   AppendCsvField(row, TimeframeText(InpContextTF));
+   AppendCsvField(row, DoubleToString(setup.higherSwingLow1, digits));
+   AppendCsvField(row, DoubleToString(setup.higherSwingHigh1, digits));
+   AppendCsvField(row, DoubleToString(setup.higherSwingLow2, digits));
+   AppendCsvField(row, DoubleToString(setup.higherSwingHigh2, digits));
+   AppendCsvField(row, WaveAuditStructureState(setup));
+   AppendCsvField(row, IntegerToString(setup.higherTrendAgeBars));
+   AppendCsvField(row, DoubleToString(setup.emaSlope, digits));
+   AppendCsvField(row, DoubleToString(setup.higherAtr, digits));
+   AppendCsvField(row, TimeframeText(InpPatternTF));
+   AppendCsvField(row, DoubleToString(setup.impulseStartPrice, digits));
+   AppendCsvField(row, DoubleToString(setup.impulseEndPrice, digits));
+   AppendCsvField(row, DoubleToString(setup.pullbackExtremePrice, digits));
+   AppendCsvField(row, DoubleToString(setup.pullbackDepthPct, 2));
+   AppendCsvField(row, DoubleToString(setup.pullbackDepthATR, 2));
+   AppendCsvField(row, IntegerToString(setup.pullbackBars));
+   AppendCsvField(row, BoolText(setup.pullbackBrokeOrigin));
+   AppendCsvField(row, DoubleToString(setup.pullbackStructureLevel, digits));
+   AppendCsvField(row, DoubleToString(setup.distancePullbackExtremeToEntryATR, 2));
+   AppendCsvField(row, DoubleToString(setup.distancePullbackExtremeToEntryPct, 2));
+   AppendCsvField(row, TimeframeText(InpExecutionTF));
+   AppendCsvField(row, DoubleToString(setup.minorReversalLevel, digits));
+   AppendCsvField(row, DoubleToString(setup.reclaimOrBreakdownPrice, digits));
+   AppendCsvField(row, IntegerToString(setup.barsSinceReclaimOrBreakdown));
+   AppendCsvField(row, DoubleToString(setup.entryDistanceFromReclaimATR, 2));
+   AppendCsvField(row, DoubleToString(setup.entryDistanceFromReclaimPoints, 1));
+   AppendCsvField(row, setup.lowerReversalQualityLabel);
+   AppendCsvField(row, DoubleToString(setup.lowerReversalQuality, 2));
+   AppendCsvField(row, DoubleToString(setup.slATR, 2));
+   AppendCsvField(row, DoubleToString(setup.riskR, digits));
+   AppendCsvField(row, DoubleToString(setup.rr, 2));
+   AppendCsvField(row, DoubleToString(setup.spreadATR, 4));
+   AppendCsvField(row, setup.structureStageFailReason);
+   AppendCsvField(row, setup.executionBlockReason);
+   AppendCsvField(row, BoolText(setup.v2FilterPass));
+   AppendCsvField(row, setup.v2FilterFailReason);
+   AppendCsvField(row, BoolText(setup.v3FilterPass));
+   AppendCsvField(row, setup.v3FilterFailReason);
+   AppendCsvField(row, DoubleToString(setup.v3MomentumExhaustionScore, 2));
+   AppendCsvField(row, BoolText(setup.v3MomentumExhausted));
+   AppendCsvField(row, DoubleToString(setup.v3RecentMoveATR, 2));
+   AppendCsvField(row, IntegerToString(setup.v3ConsecutiveDirectionalBars));
+   AppendCsvField(row, DoubleToString(setup.v3CloseToRecentExtremeATR, 2));
+   AppendCsvField(row, setup.reversalSignalType);
+   AppendCsvField(row, setup.v4BlockReason);
+   AppendCsvField(row, IntegerToString(setup.barsSincePullbackExtreme));
+   AppendCsvField(row, IntegerToString(setup.barsSinceReversalSignal));
+   AppendCsvField(row, DoubleToString(setup.distanceReversalSignalToEntryATR, 2));
+   AppendCsvField(row, DoubleToString(setup.impulseConsumedPct, 2));
+   AppendCsvField(row, DoubleToString(setup.preEntryMomentumScore, 2));
+   AppendCsvField(row, DoubleToString(setup.reversalStrengthScore, 2));
+   AppendCsvField(row, setup.waveAuditLabel);
+   AppendCsvField(row, setup.waveAuditReason);
+   AppendCsvField(row, ThirdWaveStrategyName());
+   FileWriteString(handle, row + "\r\n");
 
    FileClose(handle);
   }
@@ -4083,6 +4450,50 @@ string TopThirdWaveV3FilterFailReason(long &count)
    return reason;
   }
 
+string TopThirdWaveV4ReversalSignal(long &count)
+  {
+   string reason = "";
+   count = 0;
+
+   if(g_thirdWaveV4ConfirmedFractalCount > count)
+     {
+      count = g_thirdWaveV4ConfirmedFractalCount;
+      reason = "confirmed_fractal";
+     }
+   if(g_thirdWaveV4EarlyHigherLowCount > count)
+     {
+      count = g_thirdWaveV4EarlyHigherLowCount;
+      reason = "early_higher_low";
+     }
+   if(g_thirdWaveV4EarlyLowerHighCount > count)
+     {
+      count = g_thirdWaveV4EarlyLowerHighCount;
+      reason = "early_lower_high";
+     }
+   if(g_thirdWaveV4MomentumTurnCount > count)
+     {
+      count = g_thirdWaveV4MomentumTurnCount;
+      reason = "momentum_turn";
+     }
+   if(g_thirdWaveV4CandleReversalCount > count)
+     {
+      count = g_thirdWaveV4CandleReversalCount;
+      reason = "candle_reversal";
+     }
+   if(g_thirdWaveV4MicroBreakCount > count)
+     {
+      count = g_thirdWaveV4MicroBreakCount;
+      reason = "micro_break";
+     }
+   if(g_thirdWaveV4UnclearCount > count)
+     {
+      count = g_thirdWaveV4UnclearCount;
+      reason = "unclear";
+     }
+
+   return reason;
+  }
+
 void WriteThirdWaveSummaryRow()
   {
    if(!DiagnosticsSummaryEnabled())
@@ -4114,12 +4525,13 @@ void WriteThirdWaveSummaryRow()
                       "higher_tf_trend_pass,mid_tf_pullback_pass,lower_tf_reversal_pass,structure_sl_pass,rr_pass,spread_guard_pass,spread_guard_blocked,final_entry_pass,"
                       "v2_filter_evaluations,v2_filter_pass,v2_filter_fail,v2_filter_deep_pullback,v2_filter_trend_too_old,v2_filter_reclaim_chase_too_far,"
                       "v3_filter_evaluations,v3_filter_pass,v3_filter_fail,v3_filter_invalid_position,v3_filter_late_entry,v3_filter_chasing_entry,v3_filter_reclaim_chase,v3_filter_pullback_chase,v3_filter_momentum_exhausted,"
+                      "v4_reversal_evaluations,v4_reversal_pass,v4_reversal_fail,v4_confirmed_fractal,v4_early_higher_low,v4_early_lower_high,v4_momentum_turn,v4_candle_reversal,v4_micro_break,v4_unclear,v4_impulse_consumed_blocked,"
                       "regime_trend_up,regime_trend_down,regime_range,regime_transition,regime_exhaustion,regime_unknown,regime_allowed,regime_blocked,regime_block_long_requires_trend_up,regime_block_short_requires_trend_down,"
                       "long_higher_tf_trend_pass,long_mid_tf_pullback_pass,long_lower_tf_reversal_pass,long_structure_sl_pass,long_rr_pass,long_spread_guard_pass,long_spread_guard_blocked,long_final_entry_pass,"
                       "short_higher_tf_trend_pass,short_mid_tf_pullback_pass,short_lower_tf_reversal_pass,short_structure_sl_pass,short_rr_pass,short_spread_guard_pass,short_spread_guard_blocked,short_final_entry_pass,"
                       "no_higher_tf_trend,trend_broken,no_mid_pullback,pullback_too_shallow,pullback_too_deep,no_lower_reversal,lower_reversal_quality_low,sl_too_close,sl_too_wide,rr_too_low,existing_position,market_closed,spread_guard,data_unavailable,atr_unavailable,research_excluded,regime_requires_trend_up,regime_requires_trend_down,unknown,"
                       "execution_spread_guard,execution_trading_disabled,execution_no_entry_signal,execution_position_limit,execution_risk_stop,execution_risk_limit,execution_invalid,execution_order_failed,execution_unknown,"
-                      "top_structure_stage_fail_reason,top_structure_stage_fail_reason_rows,top_execution_block_reason,top_execution_block_reason_rows,top_skip_reason,top_skip_reason_rows,top_v2_filter_fail_reason,top_v2_filter_fail_reason_rows,top_v3_filter_fail_reason,top_v3_filter_fail_reason_rows\r\n");
+                      "top_structure_stage_fail_reason,top_structure_stage_fail_reason_rows,top_execution_block_reason,top_execution_block_reason_rows,top_skip_reason,top_skip_reason_rows,top_v2_filter_fail_reason,top_v2_filter_fail_reason_rows,top_v3_filter_fail_reason,top_v3_filter_fail_reason_rows,top_v4_reversal_signal,top_v4_reversal_signal_rows\r\n");
 
    long topSkipCount = 0;
    string topSkipReason = TopThirdWaveSkipReason(topSkipCount);
@@ -4129,6 +4541,8 @@ void WriteThirdWaveSummaryRow()
    string topV2FilterReason = TopThirdWaveV2FilterFailReason(topV2FilterCount);
    long topV3FilterCount = 0;
    string topV3FilterReason = TopThirdWaveV3FilterFailReason(topV3FilterCount);
+   long topV4SignalCount = 0;
+   string topV4SignalReason = TopThirdWaveV4ReversalSignal(topV4SignalCount);
 
    string row = "";
    AppendCsvField(row, TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS));
@@ -4163,6 +4577,17 @@ void WriteThirdWaveSummaryRow()
    AppendCsvLong(row, g_thirdWaveV3FilterReclaimChaseCount);
    AppendCsvLong(row, g_thirdWaveV3FilterPullbackChaseCount);
    AppendCsvLong(row, g_thirdWaveV3FilterMomentumExhaustedCount);
+   AppendCsvLong(row, g_thirdWaveV4ReversalEvaluations);
+   AppendCsvLong(row, g_thirdWaveV4ReversalPassCount);
+   AppendCsvLong(row, g_thirdWaveV4ReversalFailCount);
+   AppendCsvLong(row, g_thirdWaveV4ConfirmedFractalCount);
+   AppendCsvLong(row, g_thirdWaveV4EarlyHigherLowCount);
+   AppendCsvLong(row, g_thirdWaveV4EarlyLowerHighCount);
+   AppendCsvLong(row, g_thirdWaveV4MomentumTurnCount);
+   AppendCsvLong(row, g_thirdWaveV4CandleReversalCount);
+   AppendCsvLong(row, g_thirdWaveV4MicroBreakCount);
+   AppendCsvLong(row, g_thirdWaveV4UnclearCount);
+   AppendCsvLong(row, g_thirdWaveV4ImpulseConsumedBlockedCount);
    AppendCsvLong(row, g_thirdWaveRegimeTrendUpCount);
    AppendCsvLong(row, g_thirdWaveRegimeTrendDownCount);
    AppendCsvLong(row, g_thirdWaveRegimeRangeCount);
@@ -4227,6 +4652,8 @@ void WriteThirdWaveSummaryRow()
    AppendCsvLong(row, topV2FilterCount);
    AppendCsvField(row, topV3FilterReason);
    AppendCsvLong(row, topV3FilterCount);
+   AppendCsvField(row, topV4SignalReason);
+   AppendCsvLong(row, topV4SignalCount);
    FileWriteString(handle, row + "\r\n");
 
    FileClose(handle);
@@ -4733,6 +5160,8 @@ void ScanThirdWaveSymbols()
             WriteThirdWaveWaveAuditRow(setup, "final_entry_candidate");
          else if(setup.rrPass && setup.v3FilterFailReason != "")
             WriteThirdWaveWaveAuditRow(setup, "v3_blocked_candidate");
+         else if(setup.rrPass && setup.v4BlockReason != "")
+            WriteThirdWaveWaveAuditRow(setup, "v4_blocked_candidate");
          else if(setup.rrPass && setup.executionBlockReason != "")
             WriteThirdWaveWaveAuditRow(setup, "execution_block_candidate");
         }
