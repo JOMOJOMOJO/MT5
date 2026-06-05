@@ -1,0 +1,1282 @@
+{
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2502_A_cur15": {
+    "stats": {
+      "trades": 16,
+      "wins": 10,
+      "losses": 6,
+      "win_rate": 62.5,
+      "net_profit": 373.68000000000006,
+      "gross_profit": 662.6999999999999,
+      "gross_loss": -289.02,
+      "profit_factor": 2.292920905127673,
+      "expected_payoff": 23.355000000000004,
+      "avg_win": 66.27,
+      "avg_loss": -48.169999999999995,
+      "max_balance_dd": 102.45999999999913,
+      "max_balance_dd_pct": 0.988285451099346,
+      "max_balance_dd_time": "2025.02.20 15:45:23",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 204.42,
+        "start": "2025.02.10 06:00:00",
+        "end": "2025.02.11 08:06:32"
+      },
+      "max_consecutive_losses": {
+        "count": 2,
+        "amount": -96.12,
+        "start": "2025.02.05 19:10:00",
+        "end": "2025.02.07 19:16:47"
+      }
+    },
+    "elapsed_seconds": 72.9,
+    "csv_bytes": 609118
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2502_B_mc_cur15": {
+    "stats": {
+      "trades": 18,
+      "wins": 9,
+      "losses": 9,
+      "win_rate": 50.0,
+      "net_profit": 190.76999999999998,
+      "gross_profit": 637.9399999999999,
+      "gross_loss": -447.1700000000001,
+      "profit_factor": 1.4266162756893348,
+      "expected_payoff": 10.598333333333333,
+      "avg_win": 70.88222222222221,
+      "avg_loss": -49.68555555555557,
+      "max_balance_dd": 167.38999999999942,
+      "max_balance_dd_pct": 1.6446854523106014,
+      "max_balance_dd_time": "2025.02.20 15:45:23",
+      "max_consecutive_wins": {
+        "count": 2,
+        "amount": 148.26999999999998,
+        "start": "2025.02.05 11:00:00",
+        "end": "2025.02.05 16:52:39"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -147.48,
+        "start": "2025.02.19 16:15:00",
+        "end": "2025.02.20 15:45:23"
+      }
+    },
+    "elapsed_seconds": 62.9,
+    "csv_bytes": 682690
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2502_C_mc_l12": {
+    "stats": {
+      "trades": 15,
+      "wins": 10,
+      "losses": 5,
+      "win_rate": 66.66666666666666,
+      "net_profit": 312.15000000000003,
+      "gross_profit": 563.63,
+      "gross_loss": -251.48000000000002,
+      "profit_factor": 2.241251789406712,
+      "expected_payoff": 20.810000000000002,
+      "avg_win": 56.363,
+      "avg_loss": -50.29600000000001,
+      "max_balance_dd": 149.29999999999927,
+      "max_balance_dd_pct": 1.4453637030740774,
+      "max_balance_dd_time": "2025.02.20 15:45:23",
+      "max_consecutive_wins": {
+        "count": 6,
+        "amount": 329.58000000000004,
+        "start": "2025.02.07 20:40:00",
+        "end": "2025.02.19 10:37:42"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -149.3,
+        "start": "2025.02.19 16:15:00",
+        "end": "2025.02.20 15:45:23"
+      }
+    },
+    "elapsed_seconds": 62.8,
+    "csv_bytes": 660163
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2502_D_mc_l13": {
+    "stats": {
+      "trades": 15,
+      "wins": 8,
+      "losses": 7,
+      "win_rate": 53.333333333333336,
+      "net_profit": 126.54999999999998,
+      "gross_profit": 478.45,
+      "gross_loss": -351.90000000000003,
+      "profit_factor": 1.3596192100028415,
+      "expected_payoff": 8.436666666666666,
+      "avg_win": 59.80625,
+      "avg_loss": -50.27142857142858,
+      "max_balance_dd": 149.29999999999927,
+      "max_balance_dd_pct": 1.474693159122644,
+      "max_balance_dd_time": "2025.02.20 15:45:23",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 165.64,
+        "start": "2025.02.10 06:00:00",
+        "end": "2025.02.11 08:07:06"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -149.3,
+        "start": "2025.02.19 16:15:00",
+        "end": "2025.02.20 15:45:23"
+      }
+    },
+    "elapsed_seconds": 62.8,
+    "csv_bytes": 660166
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2502_E_mc_l15": {
+    "stats": {
+      "trades": 15,
+      "wins": 7,
+      "losses": 8,
+      "win_rate": 46.666666666666664,
+      "net_profit": 104.19,
+      "gross_profit": 486.74,
+      "gross_loss": -382.55,
+      "profit_factor": 1.272356554698732,
+      "expected_payoff": 6.946,
+      "avg_win": 69.53428571428572,
+      "avg_loss": -47.81875,
+      "max_balance_dd": 160.53999999999905,
+      "max_balance_dd_pct": 1.5929052512095037,
+      "max_balance_dd_time": "2025.02.20 15:45:23",
+      "max_consecutive_wins": {
+        "count": 2,
+        "amount": 130.78,
+        "start": "2025.02.10 06:00:00",
+        "end": "2025.02.11 01:02:31"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -144.09,
+        "start": "2025.02.19 16:15:00",
+        "end": "2025.02.20 15:45:23"
+      }
+    },
+    "elapsed_seconds": 62.8,
+    "csv_bytes": 660232
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2502_F_nw_l12": {
+    "stats": {
+      "trades": 18,
+      "wins": 11,
+      "losses": 7,
+      "win_rate": 61.111111111111114,
+      "net_profit": 273.25,
+      "gross_profit": 625.12,
+      "gross_loss": -351.87000000000006,
+      "profit_factor": 1.7765652087418646,
+      "expected_payoff": 15.180555555555555,
+      "avg_win": 56.82909090909091,
+      "avg_loss": -50.267142857142865,
+      "max_balance_dd": 149.29999999999927,
+      "max_balance_dd_pct": 1.450969758991292,
+      "max_balance_dd_time": "2025.02.20 15:45:23",
+      "max_consecutive_wins": {
+        "count": 4,
+        "amount": 210.89,
+        "start": "2025.02.07 20:15:00",
+        "end": "2025.02.11 08:06:19"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -149.3,
+        "start": "2025.02.19 16:15:00",
+        "end": "2025.02.20 15:45:23"
+      }
+    },
+    "elapsed_seconds": 62.8,
+    "csv_bytes": 754612
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2502_G_nw_l13": {
+    "stats": {
+      "trades": 18,
+      "wins": 10,
+      "losses": 8,
+      "win_rate": 55.55555555555556,
+      "net_profit": 226.43000000000004,
+      "gross_profit": 630.38,
+      "gross_loss": -403.95000000000005,
+      "profit_factor": 1.5605396707513304,
+      "expected_payoff": 12.579444444444446,
+      "avg_win": 63.038,
+      "avg_loss": -50.493750000000006,
+      "max_balance_dd": 189.21999999999935,
+      "max_balance_dd_pct": 1.8430046761787535,
+      "max_balance_dd_time": "2025.02.20 15:45:23",
+      "max_consecutive_wins": {
+        "count": 4,
+        "amount": 246.74,
+        "start": "2025.02.07 20:15:00",
+        "end": "2025.02.11 08:07:06"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -149.3,
+        "start": "2025.02.19 16:15:00",
+        "end": "2025.02.20 15:45:23"
+      }
+    },
+    "elapsed_seconds": 62.8,
+    "csv_bytes": 754602
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2508_A_cur15": {
+    "stats": {
+      "trades": 13,
+      "wins": 5,
+      "losses": 8,
+      "win_rate": 38.46153846153847,
+      "net_profit": -40.11,
+      "gross_profit": 358.23,
+      "gross_loss": -398.34,
+      "profit_factor": 0.8993071245669529,
+      "expected_payoff": -3.085384615384615,
+      "avg_win": 71.646,
+      "avg_loss": -49.7925,
+      "max_balance_dd": 247.8099999999995,
+      "max_balance_dd_pct": 2.4459407707462235,
+      "max_balance_dd_time": "2025.08.26 12:35:03",
+      "max_consecutive_wins": {
+        "count": 2,
+        "amount": 146.5,
+        "start": "2025.08.01 02:15:00",
+        "end": "2025.08.04 15:05:10"
+      },
+      "max_consecutive_losses": {
+        "count": 5,
+        "amount": -247.81,
+        "start": "2025.08.13 08:50:00",
+        "end": "2025.08.26 12:35:03"
+      }
+    },
+    "elapsed_seconds": 73.0,
+    "csv_bytes": 610658
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2508_B_mc_cur15": {
+    "stats": {
+      "trades": 26,
+      "wins": 11,
+      "losses": 15,
+      "win_rate": 42.30769230769231,
+      "net_profit": 66.49999999999996,
+      "gross_profit": 807.83,
+      "gross_loss": -741.3299999999999,
+      "profit_factor": 1.0897036407537806,
+      "expected_payoff": 2.557692307692306,
+      "avg_win": 73.43909090909091,
+      "avg_loss": -49.422,
+      "max_balance_dd": 266.47999999999956,
+      "max_balance_dd_pct": 2.605363834835885,
+      "max_balance_dd_time": "2025.08.21 06:53:25",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 218.26,
+        "start": "2025.08.01 20:05:00",
+        "end": "2025.08.04 21:22:47"
+      },
+      "max_consecutive_losses": {
+        "count": 4,
+        "amount": -201.37,
+        "start": "2025.08.15 03:10:00",
+        "end": "2025.08.21 06:53:25"
+      }
+    },
+    "elapsed_seconds": 73.1,
+    "csv_bytes": 752126
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2508_C_mc_l12": {
+    "stats": {
+      "trades": 25,
+      "wins": 13,
+      "losses": 12,
+      "win_rate": 52.0,
+      "net_profit": 166.35000000000008,
+      "gross_profit": 764.3799999999998,
+      "gross_loss": -598.03,
+      "profit_factor": 1.2781633028443387,
+      "expected_payoff": 6.6540000000000035,
+      "avg_win": 58.798461538461524,
+      "avg_loss": -49.83583333333333,
+      "max_balance_dd": 152.5699999999997,
+      "max_balance_dd_pct": 1.4930821278353075,
+      "max_balance_dd_time": "2025.08.21 06:53:25",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 170.24,
+        "start": "2025.08.01 20:05:00",
+        "end": "2025.08.04 21:21:11"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -152.57,
+        "start": "2025.08.15 04:25:00",
+        "end": "2025.08.21 06:53:25"
+      }
+    },
+    "elapsed_seconds": 73.0,
+    "csv_bytes": 735344
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2508_D_mc_l13": {
+    "stats": {
+      "trades": 24,
+      "wins": 12,
+      "losses": 12,
+      "win_rate": 50.0,
+      "net_profit": 169.31,
+      "gross_profit": 766.8300000000002,
+      "gross_loss": -597.52,
+      "profit_factor": 1.2833545320658726,
+      "expected_payoff": 7.054583333333333,
+      "avg_win": 63.90250000000001,
+      "avg_loss": -49.79333333333333,
+      "max_balance_dd": 152.5699999999997,
+      "max_balance_dd_pct": 1.4878781377386798,
+      "max_balance_dd_time": "2025.08.21 06:53:25",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 185.66,
+        "start": "2025.08.01 20:05:00",
+        "end": "2025.08.04 21:21:23"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -152.57,
+        "start": "2025.08.15 04:25:00",
+        "end": "2025.08.21 06:53:25"
+      }
+    },
+    "elapsed_seconds": 73.0,
+    "csv_bytes": 733656
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2508_E_mc_l15": {
+    "stats": {
+      "trades": 23,
+      "wins": 10,
+      "losses": 13,
+      "win_rate": 43.47826086956522,
+      "net_profit": 75.21,
+      "gross_profit": 717.16,
+      "gross_loss": -641.95,
+      "profit_factor": 1.117158657216294,
+      "expected_payoff": 3.2699999999999996,
+      "avg_win": 71.716,
+      "avg_loss": -49.38076923076923,
+      "max_balance_dd": 295.1700000000001,
+      "max_balance_dd_pct": 2.8874230749290066,
+      "max_balance_dd_time": "2025.08.21 06:53:25",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 214.98000000000002,
+        "start": "2025.08.01 20:05:00",
+        "end": "2025.08.04 21:22:47"
+      },
+      "max_consecutive_losses": {
+        "count": 6,
+        "amount": -295.17,
+        "start": "2025.08.12 20:55:00",
+        "end": "2025.08.21 06:53:25"
+      }
+    },
+    "elapsed_seconds": 72.9,
+    "csv_bytes": 731943
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2508_F_nw_l12": {
+    "stats": {
+      "trades": 28,
+      "wins": 16,
+      "losses": 12,
+      "win_rate": 57.14285714285714,
+      "net_profit": 368.05,
+      "gross_profit": 974.89,
+      "gross_loss": -606.84,
+      "profit_factor": 1.6065025377364708,
+      "expected_payoff": 13.144642857142857,
+      "avg_win": 60.930625,
+      "avg_loss": -50.57,
+      "max_balance_dd": 152.54000000000087,
+      "max_balance_dd_pct": 1.4643174614145624,
+      "max_balance_dd_time": "2025.08.21 06:53:25",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 170.24,
+        "start": "2025.08.01 20:05:00",
+        "end": "2025.08.04 21:21:11"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -152.54,
+        "start": "2025.08.15 04:25:00",
+        "end": "2025.08.21 06:53:25"
+      }
+    },
+    "elapsed_seconds": 73.0,
+    "csv_bytes": 815168
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2508_G_nw_l13": {
+    "stats": {
+      "trades": 26,
+      "wins": 14,
+      "losses": 12,
+      "win_rate": 53.84615384615385,
+      "net_profit": 304.45000000000005,
+      "gross_profit": 909.79,
+      "gross_loss": -605.34,
+      "profit_factor": 1.5029404962500412,
+      "expected_payoff": 11.709615384615386,
+      "avg_win": 64.985,
+      "avg_loss": -50.445,
+      "max_balance_dd": 152.54000000000087,
+      "max_balance_dd_pct": 1.4687234315017865,
+      "max_balance_dd_time": "2025.08.21 06:53:25",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 185.66,
+        "start": "2025.08.01 20:05:00",
+        "end": "2025.08.04 21:21:23"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -152.54,
+        "start": "2025.08.15 04:25:00",
+        "end": "2025.08.21 06:53:25"
+      }
+    },
+    "elapsed_seconds": 73.0,
+    "csv_bytes": 811789
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2510_A_cur15": {
+    "stats": {
+      "trades": 20,
+      "wins": 11,
+      "losses": 9,
+      "win_rate": 55.00000000000001,
+      "net_profit": 345.17999999999995,
+      "gross_profit": 764.4699999999999,
+      "gross_loss": -419.28999999999996,
+      "profit_factor": 1.823248825395311,
+      "expected_payoff": 17.258999999999997,
+      "avg_win": 69.49727272727272,
+      "avg_loss": -46.587777777777774,
+      "max_balance_dd": 176.76000000000022,
+      "max_balance_dd_pct": 1.7487554116836983,
+      "max_balance_dd_time": "2025.10.13 10:28:42",
+      "max_consecutive_wins": {
+        "count": 4,
+        "amount": 274.03,
+        "start": "2025.10.21 21:55:00",
+        "end": "2025.10.27 22:29:46"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -148.92,
+        "start": "2025.10.08 15:05:00",
+        "end": "2025.10.09 04:36:55"
+      }
+    },
+    "elapsed_seconds": 83.0,
+    "csv_bytes": 705746
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2510_B_mc_cur15": {
+    "stats": {
+      "trades": 25,
+      "wins": 12,
+      "losses": 13,
+      "win_rate": 48.0,
+      "net_profit": 229.64999999999998,
+      "gross_profit": 824.25,
+      "gross_loss": -594.6,
+      "profit_factor": 1.3862260343087789,
+      "expected_payoff": 9.186,
+      "avg_win": 68.6875,
+      "avg_loss": -45.73846153846154,
+      "max_balance_dd": 139.1800000000003,
+      "max_balance_dd_pct": 1.3891231596713165,
+      "max_balance_dd_time": "2025.10.07 04:05:02",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 196.57999999999998,
+        "start": "2025.10.14 23:20:00",
+        "end": "2025.10.16 16:24:38"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -139.18,
+        "start": "2025.10.06 12:35:00",
+        "end": "2025.10.07 04:05:02"
+      }
+    },
+    "elapsed_seconds": 73.1,
+    "csv_bytes": 851154
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2510_C_mc_l12": {
+    "stats": {
+      "trades": 23,
+      "wins": 12,
+      "losses": 11,
+      "win_rate": 52.17391304347826,
+      "net_profit": 190.05,
+      "gross_profit": 666.6499999999999,
+      "gross_loss": -476.59999999999997,
+      "profit_factor": 1.3987620646244228,
+      "expected_payoff": 8.26304347826087,
+      "avg_win": 55.55416666666665,
+      "avg_loss": -43.32727272727272,
+      "max_balance_dd": 151.8099999999995,
+      "max_balance_dd_pct": 1.5007750527905805,
+      "max_balance_dd_time": "2025.10.08 16:36:04",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 153.83,
+        "start": "2025.10.14 23:20:00",
+        "end": "2025.10.16 15:35:43"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -135.84,
+        "start": "2025.10.06 12:35:00",
+        "end": "2025.10.07 04:05:02"
+      }
+    },
+    "elapsed_seconds": 73.1,
+    "csv_bytes": 823567
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2510_D_mc_l13": {
+    "stats": {
+      "trades": 23,
+      "wins": 12,
+      "losses": 11,
+      "win_rate": 52.17391304347826,
+      "net_profit": 248.06000000000006,
+      "gross_profit": 724.65,
+      "gross_loss": -476.59,
+      "profit_factor": 1.5204893094693552,
+      "expected_payoff": 10.78521739130435,
+      "avg_win": 60.387499999999996,
+      "avg_loss": -43.32636363636363,
+      "max_balance_dd": 141.95000000000073,
+      "max_balance_dd_pct": 1.4021276385582704,
+      "max_balance_dd_time": "2025.10.08 16:36:04",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 169.96,
+        "start": "2025.10.14 23:20:00",
+        "end": "2025.10.16 15:37:16"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -135.84,
+        "start": "2025.10.06 12:35:00",
+        "end": "2025.10.07 04:05:02"
+      }
+    },
+    "elapsed_seconds": 73.0,
+    "csv_bytes": 823652
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2510_E_mc_l15": {
+    "stats": {
+      "trades": 23,
+      "wins": 11,
+      "losses": 12,
+      "win_rate": 47.82608695652174,
+      "net_profit": 254.64999999999998,
+      "gross_profit": 777.8499999999999,
+      "gross_loss": -523.2,
+      "profit_factor": 1.4867163608562688,
+      "expected_payoff": 11.071739130434782,
+      "avg_win": 70.71363636363635,
+      "avg_loss": -43.6,
+      "max_balance_dd": 148.00999999999658,
+      "max_balance_dd_pct": 1.4590661030582777,
+      "max_balance_dd_time": "2025.10.10 19:23:23",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 196.57999999999998,
+        "start": "2025.10.14 23:20:00",
+        "end": "2025.10.16 16:24:38"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -135.84,
+        "start": "2025.10.06 12:35:00",
+        "end": "2025.10.07 04:05:02"
+      }
+    },
+    "elapsed_seconds": 73.1,
+    "csv_bytes": 823554
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2510_F_nw_l12": {
+    "stats": {
+      "trades": 27,
+      "wins": 14,
+      "losses": 13,
+      "win_rate": 51.85185185185185,
+      "net_profit": 210.46,
+      "gross_profit": 788.2999999999998,
+      "gross_loss": -577.8399999999999,
+      "profit_factor": 1.3642184687802852,
+      "expected_payoff": 7.794814814814815,
+      "avg_win": 56.30714285714284,
+      "avg_loss": -44.449230769230766,
+      "max_balance_dd": 151.8099999999995,
+      "max_balance_dd_pct": 1.5007750527905805,
+      "max_balance_dd_time": "2025.10.08 16:36:04",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 175.73,
+        "start": "2025.10.21 18:05:00",
+        "end": "2025.10.27 22:29:27"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -135.84,
+        "start": "2025.10.06 12:35:00",
+        "end": "2025.10.07 04:05:02"
+      }
+    },
+    "elapsed_seconds": 73.0,
+    "csv_bytes": 931633
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2510_G_nw_l13": {
+    "stats": {
+      "trades": 27,
+      "wins": 14,
+      "losses": 13,
+      "win_rate": 51.85185185185185,
+      "net_profit": 270.94000000000005,
+      "gross_profit": 848.77,
+      "gross_loss": -577.8299999999999,
+      "profit_factor": 1.4688922347403217,
+      "expected_payoff": 10.034814814814817,
+      "avg_win": 60.62642857142857,
+      "avg_loss": -44.44846153846153,
+      "max_balance_dd": 141.95000000000073,
+      "max_balance_dd_pct": 1.4021276385582704,
+      "max_balance_dd_time": "2025.10.08 16:36:04",
+      "max_consecutive_wins": {
+        "count": 3,
+        "amount": 188.87,
+        "start": "2025.10.21 18:05:00",
+        "end": "2025.10.27 22:29:29"
+      },
+      "max_consecutive_losses": {
+        "count": 3,
+        "amount": -135.84,
+        "start": "2025.10.06 12:35:00",
+        "end": "2025.10.07 04:05:02"
+      }
+    },
+    "elapsed_seconds": 73.0,
+    "csv_bytes": 931687
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_26q1_A_cur15": {
+    "stats": {
+      "trades": 60,
+      "wins": 27,
+      "losses": 33,
+      "win_rate": 45.0,
+      "net_profit": 610.21,
+      "gross_profit": 2128.3300000000004,
+      "gross_loss": -1518.1200000000001,
+      "profit_factor": 1.4019510974099545,
+      "expected_payoff": 10.170166666666667,
+      "avg_win": 78.82703703703704,
+      "avg_loss": -46.00363636363637,
+      "max_balance_dd": 278.5000000000018,
+      "max_balance_dd_pct": 2.6520728067786585,
+      "max_balance_dd_time": "2026.03.04 02:43:29",
+      "max_consecutive_wins": {
+        "count": 4,
+        "amount": 248.33999999999997,
+        "start": "2026.03.11 02:15:00",
+        "end": "2026.03.19 09:33:22"
+      },
+      "max_consecutive_losses": {
+        "count": 6,
+        "amount": -277.88,
+        "start": "2026.01.26 11:50:00",
+        "end": "2026.01.29 10:43:46"
+      }
+    },
+    "elapsed_seconds": 195.1,
+    "csv_bytes": 2050024
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_26q1_B_mc_cur15": {
+    "stats": {
+      "trades": 73,
+      "wins": 35,
+      "losses": 38,
+      "win_rate": 47.94520547945205,
+      "net_profit": 1156.36,
+      "gross_profit": 3051.3199999999997,
+      "gross_loss": -1894.9600000000005,
+      "profit_factor": 1.6102292396673274,
+      "expected_payoff": 15.840547945205477,
+      "avg_win": 87.18057142857143,
+      "avg_loss": -49.867368421052646,
+      "max_balance_dd": 483.8400000000074,
+      "max_balance_dd_pct": 4.186843426039767,
+      "max_balance_dd_time": "2026.03.24 09:22:07",
+      "max_consecutive_wins": {
+        "count": 6,
+        "amount": 838.9899999999999,
+        "start": "2026.01.30 11:00:00",
+        "end": "2026.02.02 07:53:03"
+      },
+      "max_consecutive_losses": {
+        "count": 10,
+        "amount": -465.79999999999995,
+        "start": "2026.02.17 11:35:00",
+        "end": "2026.02.27 02:36:14"
+      }
+    },
+    "elapsed_seconds": 184.9,
+    "csv_bytes": 2366035
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_26q1_C_mc_l12": {
+    "stats": {
+      "trades": 68,
+      "wins": 41,
+      "losses": 27,
+      "win_rate": 60.29411764705882,
+      "net_profit": 1297.9200000000003,
+      "gross_profit": 2624.649999999999,
+      "gross_loss": -1326.73,
+      "profit_factor": 1.9782849562458067,
+      "expected_payoff": 19.087058823529418,
+      "avg_win": 64.01585365853657,
+      "avg_loss": -49.13814814814815,
+      "max_balance_dd": 367.6299999999992,
+      "max_balance_dd_pct": 3.224957520178457,
+      "max_balance_dd_time": "2026.02.27 02:36:14",
+      "max_consecutive_wins": {
+        "count": 10,
+        "amount": 802.0699999999999,
+        "start": "2026.01.30 11:00:00",
+        "end": "2026.02.05 17:34:21"
+      },
+      "max_consecutive_losses": {
+        "count": 5,
+        "amount": -232.90999999999997,
+        "start": "2026.02.20 17:50:00",
+        "end": "2026.02.27 02:36:14"
+      }
+    },
+    "elapsed_seconds": 174.8,
+    "csv_bytes": 2263191
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_26q1_D_mc_l13": {
+    "stats": {
+      "trades": 67,
+      "wins": 39,
+      "losses": 28,
+      "win_rate": 58.2089552238806,
+      "net_profit": 1324.7400000000002,
+      "gross_profit": 2702.0000000000005,
+      "gross_loss": -1377.26,
+      "profit_factor": 1.9618663142761719,
+      "expected_payoff": 19.772238805970154,
+      "avg_win": 69.2820512820513,
+      "avg_loss": -49.18785714285714,
+      "max_balance_dd": 377.8200000000015,
+      "max_balance_dd_pct": 3.2693968463845695,
+      "max_balance_dd_time": "2026.02.27 02:36:14",
+      "max_consecutive_wins": {
+        "count": 10,
+        "amount": 862.79,
+        "start": "2026.01.30 11:00:00",
+        "end": "2026.02.05 17:46:00"
+      },
+      "max_consecutive_losses": {
+        "count": 5,
+        "amount": -247.04,
+        "start": "2026.02.20 17:50:00",
+        "end": "2026.02.27 02:36:14"
+      }
+    },
+    "elapsed_seconds": 174.8,
+    "csv_bytes": 2261524
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_26q1_E_mc_l15": {
+    "stats": {
+      "trades": 66,
+      "wins": 32,
+      "losses": 34,
+      "win_rate": 48.484848484848484,
+      "net_profit": 840.3500000000001,
+      "gross_profit": 2461.2699999999995,
+      "gross_loss": -1620.9199999999998,
+      "profit_factor": 1.518440145102781,
+      "expected_payoff": 12.73257575757576,
+      "avg_win": 76.91468749999999,
+      "avg_loss": -47.67411764705882,
+      "max_balance_dd": 410.1500000000051,
+      "max_balance_dd_pct": 3.6721191122094052,
+      "max_balance_dd_time": "2026.03.24 09:10:58",
+      "max_consecutive_wins": {
+        "count": 7,
+        "amount": 749.7500000000001,
+        "start": "2026.01.30 11:00:00",
+        "end": "2026.02.02 17:53:20"
+      },
+      "max_consecutive_losses": {
+        "count": 6,
+        "amount": -313.98,
+        "start": "2026.01.26 10:10:00",
+        "end": "2026.01.30 09:55:38"
+      }
+    },
+    "elapsed_seconds": 174.8,
+    "csv_bytes": 2259895
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_26q1_F_nw_l12": {
+    "stats": {
+      "trades": 85,
+      "wins": 47,
+      "losses": 38,
+      "win_rate": 55.294117647058826,
+      "net_profit": 1175.7300000000005,
+      "gross_profit": 3003.1499999999996,
+      "gross_loss": -1827.4199999999998,
+      "profit_factor": 1.6433824736513774,
+      "expected_payoff": 13.83211764705883,
+      "avg_win": 63.89680851063829,
+      "avg_loss": -48.089999999999996,
+      "max_balance_dd": 413.369999999999,
+      "max_balance_dd_pct": 3.6425591760556966,
+      "max_balance_dd_time": "2026.03.06 01:18:21",
+      "max_consecutive_wins": {
+        "count": 10,
+        "amount": 807.5500000000001,
+        "start": "2026.01.30 10:10:00",
+        "end": "2026.02.02 20:19:15"
+      },
+      "max_consecutive_losses": {
+        "count": 5,
+        "amount": -232.90999999999997,
+        "start": "2026.02.20 17:50:00",
+        "end": "2026.02.27 02:36:14"
+      }
+    },
+    "elapsed_seconds": 184.8,
+    "csv_bytes": 2606525
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_26q1_G_nw_l13": {
+    "stats": {
+      "trades": 83,
+      "wins": 45,
+      "losses": 38,
+      "win_rate": 54.21686746987952,
+      "net_profit": 1200.1100000000006,
+      "gross_profit": 3033.4200000000005,
+      "gross_loss": -1833.3099999999997,
+      "profit_factor": 1.6546137859936405,
+      "expected_payoff": 14.459156626506031,
+      "avg_win": 67.40933333333335,
+      "avg_loss": -48.24499999999999,
+      "max_balance_dd": 398.7300000000032,
+      "max_balance_dd_pct": 3.5114927344782325,
+      "max_balance_dd_time": "2026.03.06 01:18:21",
+      "max_consecutive_wins": {
+        "count": 9,
+        "amount": 730.38,
+        "start": "2026.01.30 10:10:00",
+        "end": "2026.02.02 20:19:23"
+      },
+      "max_consecutive_losses": {
+        "count": 5,
+        "amount": -232.93,
+        "start": "2026.02.20 17:50:00",
+        "end": "2026.02.27 02:36:14"
+      }
+    },
+    "elapsed_seconds": 185.0,
+    "csv_bytes": 2603128
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2024_A_cur15": {
+    "stats": {
+      "trades": 178,
+      "wins": 78,
+      "losses": 100,
+      "win_rate": 43.82022471910113,
+      "net_profit": 714.25,
+      "gross_profit": 5858.9400000000005,
+      "gross_loss": -5144.690000000001,
+      "profit_factor": 1.1388324660961104,
+      "expected_payoff": 4.012640449438202,
+      "avg_win": 75.11461538461539,
+      "avg_loss": -51.446900000000014,
+      "max_balance_dd": 676.3899999999976,
+      "max_balance_dd_pct": 6.230580961443309,
+      "max_balance_dd_time": "2024.11.05 08:34:11",
+      "max_consecutive_wins": {
+        "count": 6,
+        "amount": 399.94,
+        "start": "2024.11.20 23:25:00",
+        "end": "2024.11.27 01:59:51"
+      },
+      "max_consecutive_losses": {
+        "count": 9,
+        "amount": -457.0,
+        "start": "2024.01.19 10:30:00",
+        "end": "2024.01.30 11:42:07"
+      }
+    },
+    "elapsed_seconds": 752.6,
+    "csv_bytes": 8006883
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2024_C_mc_l12": {
+    "stats": {
+      "trades": 240,
+      "wins": 109,
+      "losses": 131,
+      "win_rate": 45.416666666666664,
+      "net_profit": -422.3499999999998,
+      "gross_profit": 5922.720000000002,
+      "gross_loss": -6345.07,
+      "profit_factor": 0.9334365105507114,
+      "expected_payoff": -1.7597916666666658,
+      "avg_win": 54.33688073394497,
+      "avg_loss": -48.43564885496183,
+      "max_balance_dd": 1177.9600000000046,
+      "max_balance_dd_pct": 11.496397738119219,
+      "max_balance_dd_time": "2024.09.04 01:43:24",
+      "max_consecutive_wins": {
+        "count": 6,
+        "amount": 309.42,
+        "start": "2024.10.17 13:10:00",
+        "end": "2024.10.23 06:45:45"
+      },
+      "max_consecutive_losses": {
+        "count": 9,
+        "amount": -437.96,
+        "start": "2024.05.06 18:45:00",
+        "end": "2024.05.31 09:47:36"
+      }
+    },
+    "elapsed_seconds": 712.9,
+    "csv_bytes": 8827733
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2024_D_mc_l13": {
+    "stats": {
+      "trades": 238,
+      "wins": 104,
+      "losses": 134,
+      "win_rate": 43.69747899159664,
+      "net_profit": -367.04999999999956,
+      "gross_profit": 6114.859999999998,
+      "gross_loss": -6481.91,
+      "profit_factor": 0.9433731724136863,
+      "expected_payoff": -1.5422268907563006,
+      "avg_win": 58.79673076923075,
+      "avg_loss": -48.37246268656716,
+      "max_balance_dd": 1101.0599999999959,
+      "max_balance_dd_pct": 10.816986754088525,
+      "max_balance_dd_time": "2024.09.04 01:43:24",
+      "max_consecutive_wins": {
+        "count": 6,
+        "amount": 337.46,
+        "start": "2024.10.17 13:10:00",
+        "end": "2024.10.23 06:49:13"
+      },
+      "max_consecutive_losses": {
+        "count": 9,
+        "amount": -435.57,
+        "start": "2024.05.06 18:45:00",
+        "end": "2024.05.31 09:47:36"
+      }
+    },
+    "elapsed_seconds": 712.8,
+    "csv_bytes": 8824354
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2024_G_nw_l13": {
+    "stats": {
+      "trades": 285,
+      "wins": 119,
+      "losses": 166,
+      "win_rate": 41.75438596491228,
+      "net_profit": -911.8800000000009,
+      "gross_profit": 6895.2300000000005,
+      "gross_loss": -7807.109999999999,
+      "profit_factor": 0.883198776499883,
+      "expected_payoff": -3.1995789473684244,
+      "avg_win": 57.943109243697485,
+      "avg_loss": -47.03078313253011,
+      "max_balance_dd": 1280.8899999999958,
+      "max_balance_dd_pct": 12.710028686844991,
+      "max_balance_dd_time": "2024.07.18 11:34:02",
+      "max_consecutive_wins": {
+        "count": 6,
+        "amount": 337.46,
+        "start": "2024.10.17 13:10:00",
+        "end": "2024.10.23 06:49:13"
+      },
+      "max_consecutive_losses": {
+        "count": 10,
+        "amount": -465.26000000000005,
+        "start": "2024.05.06 18:45:00",
+        "end": "2024.05.31 09:47:36"
+      }
+    },
+    "elapsed_seconds": 713.3,
+    "csv_bytes": 9925149
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2025_A_cur15": {
+    "stats": {
+      "trades": 269,
+      "wins": 106,
+      "losses": 163,
+      "win_rate": 39.405204460966544,
+      "net_profit": -431.98000000000013,
+      "gross_profit": 7302.849999999999,
+      "gross_loss": -7734.829999999998,
+      "profit_factor": 0.944151325885637,
+      "expected_payoff": -1.605873605947956,
+      "avg_win": 68.89481132075471,
+      "avg_loss": -47.45294478527606,
+      "max_balance_dd": 1178.660000000009,
+      "max_balance_dd_pct": 11.109152755798734,
+      "max_balance_dd_time": "2025.09.26 22:30:42",
+      "max_consecutive_wins": {
+        "count": 4,
+        "amount": 279.81,
+        "start": "2025.06.19 06:25:00",
+        "end": "2025.06.24 15:13:56"
+      },
+      "max_consecutive_losses": {
+        "count": 9,
+        "amount": -451.53,
+        "start": "2025.03.07 16:45:00",
+        "end": "2025.03.13 16:00:03"
+      }
+    },
+    "elapsed_seconds": 693.2,
+    "csv_bytes": 8643339
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2025_C_mc_l12": {
+    "stats": {
+      "trades": 337,
+      "wins": 163,
+      "losses": 174,
+      "win_rate": 48.367952522255194,
+      "net_profit": 843.6099999999998,
+      "gross_profit": 9436.700000000004,
+      "gross_loss": -8593.089999999997,
+      "profit_factor": 1.098173066964271,
+      "expected_payoff": 2.5032937685459933,
+      "avg_win": 57.893865030674874,
+      "avg_loss": -49.38557471264366,
+      "max_balance_dd": 631.0800000000036,
+      "max_balance_dd_pct": 6.070983990410828,
+      "max_balance_dd_time": "2025.04.09 14:01:20",
+      "max_consecutive_wins": {
+        "count": 6,
+        "amount": 328.89000000000004,
+        "start": "2025.02.07 20:40:00",
+        "end": "2025.02.19 10:37:42"
+      },
+      "max_consecutive_losses": {
+        "count": 9,
+        "amount": -440.65999999999997,
+        "start": "2025.04.07 02:15:00",
+        "end": "2025.04.09 14:01:20"
+      }
+    },
+    "elapsed_seconds": 684.1,
+    "csv_bytes": 9604405
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2025_D_mc_l13": {
+    "stats": {
+      "trades": 335,
+      "wins": 154,
+      "losses": 181,
+      "win_rate": 45.97014925373134,
+      "net_profit": 724.8499999999996,
+      "gross_profit": 9522.760000000002,
+      "gross_loss": -8797.909999999996,
+      "profit_factor": 1.082388885542135,
+      "expected_payoff": 2.163731343283581,
+      "avg_win": 61.83610389610391,
+      "avg_loss": -48.60723756906075,
+      "max_balance_dd": 698.390000000003,
+      "max_balance_dd_pct": 6.782994486310018,
+      "max_balance_dd_time": "2025.07.28 04:05:14",
+      "max_consecutive_wins": {
+        "count": 6,
+        "amount": 378.49,
+        "start": "2025.04.10 04:55:00",
+        "end": "2025.04.11 03:02:04"
+      },
+      "max_consecutive_losses": {
+        "count": 9,
+        "amount": -438.05999999999995,
+        "start": "2025.04.07 02:15:00",
+        "end": "2025.04.09 14:01:20"
+      }
+    },
+    "elapsed_seconds": 674.3,
+    "csv_bytes": 9600904
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2025_G_nw_l13": {
+    "stats": {
+      "trades": 388,
+      "wins": 179,
+      "losses": 209,
+      "win_rate": 46.134020618556704,
+      "net_profit": 1118.35,
+      "gross_profit": 11327.029999999992,
+      "gross_loss": -10208.67999999999,
+      "profit_factor": 1.1095489328688923,
+      "expected_payoff": 2.882345360824742,
+      "avg_win": 63.279497206703866,
+      "avg_loss": -48.84535885167459,
+      "max_balance_dd": 935.1400000000049,
+      "max_balance_dd_pct": 9.054625591609454,
+      "max_balance_dd_time": "2025.04.09 14:01:20",
+      "max_consecutive_wins": {
+        "count": 8,
+        "amount": 472.26,
+        "start": "2025.04.10 04:55:00",
+        "end": "2025.04.11 03:02:04"
+      },
+      "max_consecutive_losses": {
+        "count": 14,
+        "amount": -671.58,
+        "start": "2025.04.07 01:50:00",
+        "end": "2025.04.09 14:01:20"
+      }
+    },
+    "elapsed_seconds": 673.9,
+    "csv_bytes": 10985037
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2026ytd_A_cur15": {
+    "stats": {
+      "trades": 95,
+      "wins": 44,
+      "losses": 51,
+      "win_rate": 46.31578947368421,
+      "net_profit": 865.7499999999997,
+      "gross_profit": 3319.0600000000004,
+      "gross_loss": -2453.31,
+      "profit_factor": 1.3528905845571904,
+      "expected_payoff": 9.113157894736839,
+      "avg_win": 75.43318181818182,
+      "avg_loss": -48.10411764705882,
+      "max_balance_dd": 278.5000000000018,
+      "max_balance_dd_pct": 2.6520728067786585,
+      "max_balance_dd_time": "2026.03.04 02:43:29",
+      "max_consecutive_wins": {
+        "count": 4,
+        "amount": 248.33999999999997,
+        "start": "2026.03.11 02:15:00",
+        "end": "2026.03.19 09:33:22"
+      },
+      "max_consecutive_losses": {
+        "count": 6,
+        "amount": -277.88,
+        "start": "2026.01.26 11:50:00",
+        "end": "2026.01.29 10:43:46"
+      }
+    },
+    "elapsed_seconds": 317.3,
+    "csv_bytes": 3528847
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2026ytd_C_mc_l12": {
+    "stats": {
+      "trades": 122,
+      "wins": 63,
+      "losses": 59,
+      "win_rate": 51.63934426229508,
+      "net_profit": 921.6600000000007,
+      "gross_profit": 3967.7999999999984,
+      "gross_loss": -3046.139999999999,
+      "profit_factor": 1.3025665268175461,
+      "expected_payoff": 7.5545901639344315,
+      "avg_win": 62.98095238095235,
+      "avg_loss": -51.62949152542371,
+      "max_balance_dd": 633.9300000000021,
+      "max_balance_dd_pct": 5.5176165442328635,
+      "max_balance_dd_time": "2026.05.28 15:46:16",
+      "max_consecutive_wins": {
+        "count": 10,
+        "amount": 802.0699999999999,
+        "start": "2026.01.30 11:00:00",
+        "end": "2026.02.05 17:34:21"
+      },
+      "max_consecutive_losses": {
+        "count": 6,
+        "amount": -318.66999999999996,
+        "start": "2026.04.08 10:50:00",
+        "end": "2026.04.17 22:55:16"
+      }
+    },
+    "elapsed_seconds": 306.8,
+    "csv_bytes": 3915167
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2026ytd_D_mc_l13": {
+    "stats": {
+      "trades": 122,
+      "wins": 59,
+      "losses": 63,
+      "win_rate": 48.36065573770492,
+      "net_profit": 784.8400000000005,
+      "gross_profit": 3998.680000000001,
+      "gross_loss": -3213.8399999999997,
+      "profit_factor": 1.2442063077191152,
+      "expected_payoff": 6.433114754098365,
+      "avg_win": 67.77423728813561,
+      "avg_loss": -51.01333333333333,
+      "max_balance_dd": 851.6400000000103,
+      "max_balance_dd_pct": 7.369512281655226,
+      "max_balance_dd_time": "2026.05.28 15:46:16",
+      "max_consecutive_wins": {
+        "count": 10,
+        "amount": 862.79,
+        "start": "2026.01.30 11:00:00",
+        "end": "2026.02.05 17:46:00"
+      },
+      "max_consecutive_losses": {
+        "count": 7,
+        "amount": -324.3,
+        "start": "2026.04.29 22:10:00",
+        "end": "2026.05.05 03:13:33"
+      }
+    },
+    "elapsed_seconds": 306.9,
+    "csv_bytes": 3915220
+  },
+  "ExpectedValue_MultiCurrency_ScoreScanner_ltfsl_2026ytd_G_nw_l13": {
+    "stats": {
+      "trades": 147,
+      "wins": 69,
+      "losses": 78,
+      "win_rate": 46.93877551020408,
+      "net_profit": 674.8900000000006,
+      "gross_profit": 4553.620000000002,
+      "gross_loss": -3878.729999999999,
+      "profit_factor": 1.17399767449655,
+      "expected_payoff": 4.591088435374154,
+      "avg_win": 65.99449275362322,
+      "avg_loss": -49.72730769230768,
+      "max_balance_dd": 814.3100000000031,
+      "max_balance_dd_pct": 7.143652947126424,
+      "max_balance_dd_time": "2026.05.28 15:46:16",
+      "max_consecutive_wins": {
+        "count": 9,
+        "amount": 730.38,
+        "start": "2026.01.30 10:10:00",
+        "end": "2026.02.02 20:19:23"
+      },
+      "max_consecutive_losses": {
+        "count": 6,
+        "amount": -319.89,
+        "start": "2026.04.08 10:50:00",
+        "end": "2026.04.17 22:55:16"
+      }
+    },
+    "elapsed_seconds": 306.9,
+    "csv_bytes": 4554886
+  }
+}

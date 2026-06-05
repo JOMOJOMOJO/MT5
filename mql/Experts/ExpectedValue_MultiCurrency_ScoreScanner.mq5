@@ -68,6 +68,12 @@ enum ENUM_V4_REVERSAL_SIGNAL_MODE
    V4_SIGNAL_WITHOUT_WEAK_SIGNALS = 4
   };
 
+enum ENUM_THIRD_WAVE_SL_MODE
+  {
+   THIRD_WAVE_SL_CURRENT = 0,
+   THIRD_WAVE_SL_LOWER_TF_REVERSAL = 1
+  };
+
 input string          InpSymbols                       = "USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD,XAUUSD";
 input int             InpScanSeconds                   = 300;
 input bool            InpScanOnlyOnNewExecutionBar     = true;
@@ -79,6 +85,7 @@ input ENUM_RESEARCH_STRATEGY_MODE InpResearchStrategyMode = RESEARCH_STRATEGY_SC
 input ENUM_ENTRY_SELECTION_MODE InpEntrySelectionMode  = ENTRY_SELECTION_BEST_ONLY;
 input ENUM_DIAGNOSTICS_LEVEL InpDiagnosticsLevel       = DIAG_ENTRY_ONLY;
 input ENUM_V4_REVERSAL_SIGNAL_MODE InpV4ReversalSignalMode = V4_SIGNAL_ALL;
+input ENUM_THIRD_WAVE_SL_MODE InpThirdWaveSLMode       = THIRD_WAVE_SL_CURRENT;
 input ENUM_TRADE_DIRECTION_MODE InpTradeDirectionMode  = TRADE_DIRECTION_BOTH;
 input bool            InpDisableUsdJpyShort            = false;
 input ENUM_SYMBOL_RESEARCH_MODE InpSymbolResearchMode  = SYMBOL_RESEARCH_ALL;
@@ -335,7 +342,9 @@ long     g_thirdWavePullbackTooShallowCount = 0;
 long     g_thirdWavePullbackTooDeepCount = 0;
 long     g_thirdWaveNoLowerReversalCount = 0;
 long     g_thirdWaveSlTooCloseCount = 0;
+long     g_thirdWaveSlTooTightCount = 0;
 long     g_thirdWaveSlTooWideCount = 0;
+long     g_thirdWaveInvalidStopsCount = 0;
 long     g_thirdWaveRrTooLowCount = 0;
 long     g_thirdWaveExistingPositionCount = 0;
 long     g_thirdWaveMarketClosedCount = 0;
@@ -504,6 +513,13 @@ string V4ReversalSignalModeName()
    if(InpV4ReversalSignalMode == V4_SIGNAL_WITHOUT_WEAK_SIGNALS)
       return "V4_SIGNAL_WITHOUT_WEAK_SIGNALS";
    return "V4_SIGNAL_ALL";
+  }
+
+string ThirdWaveSLModeName()
+  {
+   if(InpThirdWaveSLMode == THIRD_WAVE_SL_LOWER_TF_REVERSAL)
+      return "THIRD_WAVE_SL_LOWER_TF_REVERSAL";
+   return "THIRD_WAVE_SL_CURRENT";
   }
 
 bool IsRegimeAwareThirdWaveMode()
@@ -2366,6 +2382,42 @@ void CalculateThirdWaveShadowStopLevels(const string symbol,
       setup.lowerTfReversalSLStatus = "valid";
   }
 
+bool ApplyThirdWaveActualStopMode(const string symbol,
+                                  ThirdWaveSetup &setup)
+  {
+   if(InpThirdWaveSLMode == THIRD_WAVE_SL_CURRENT)
+      return true;
+
+   if(InpThirdWaveSLMode != THIRD_WAVE_SL_LOWER_TF_REVERSAL)
+      return true;
+
+   if(setup.lowerTfReversalSLStatus != "valid")
+     {
+      setup.skipReason = (setup.lowerTfReversalSLStatus == "" ? "invalid_stops" : setup.lowerTfReversalSLStatus);
+      return false;
+     }
+
+   double risk = MathAbs(setup.entryPrice - setup.lowerTfReversalSL);
+   if(risk <= 0.0)
+     {
+      setup.skipReason = "invalid_stops";
+      return false;
+     }
+
+   setup.stopLoss = setup.lowerTfReversalSL;
+   setup.riskR = risk;
+   setup.slATR = (setup.atrValue > 0.0 ? setup.riskR / setup.atrValue : 0.0);
+   setup.structureSlSource = "lower_tf_reversal";
+   setup.volume = CalculatePositionSize(symbol, setup.riskR);
+   if(setup.volume <= 0.0)
+     {
+      setup.skipReason = "sl_too_tight";
+      return false;
+     }
+
+   return true;
+  }
+
 bool CalculateStructureStopLoss(const string symbol,
                                 const int direction,
                                 ThirdWaveSetup &setup)
@@ -2398,6 +2450,7 @@ bool CalculateStructureStopLoss(const string symbol,
       setup.stopLoss = NormalizeDouble(setup.swingHigh + buffer, digits);
       setup.riskR = setup.stopLoss - setup.entryPrice;
      }
+   setup.structureSlSource = "mid_tf_structure";
    setup.slATR = (setup.atrValue > 0.0 ? setup.riskR / setup.atrValue : 0.0);
 
    double brokerStop = (double)SymbolInfoInteger(symbol, SYMBOL_TRADE_STOPS_LEVEL) * point + spread;
@@ -2710,8 +2763,13 @@ bool BuildThirdWaveSetup(const string symbol,
          setup.structureStageFailReason = setup.skipReason;
       return false;
      }
-   setup.structureSlPass = true;
    CalculateThirdWaveShadowStopLevels(symbol, direction, executionRates, setup);
+   if(!ApplyThirdWaveActualStopMode(symbol, setup))
+     {
+      setup.structureStageFailReason = setup.skipReason;
+      return false;
+     }
+   setup.structureSlPass = true;
 
    if(!CalculateThirdWaveTakeProfit(symbol, direction, setup))
      {
@@ -2765,8 +2823,12 @@ void RecordThirdWaveStructureFailReason(const string reason)
       ++g_thirdWaveLowerReversalQualityLowCount;
    else if(reason == "sl_too_close")
       ++g_thirdWaveSlTooCloseCount;
+   else if(reason == "sl_too_tight")
+      ++g_thirdWaveSlTooTightCount;
    else if(reason == "sl_too_wide")
       ++g_thirdWaveSlTooWideCount;
+   else if(reason == "invalid_stops")
+      ++g_thirdWaveInvalidStopsCount;
    else if(reason == "rr_too_low")
       ++g_thirdWaveRrTooLowCount;
    else if(StringFind(reason, "data_insufficient_") == 0)
@@ -4298,7 +4360,7 @@ void WriteThirdWaveWaveAuditRow(const ThirdWaveSetup &setup, const string eventN
    FileSeek(handle, 0, SEEK_END);
    if(needsHeader)
       FileWriteString(handle,
-                      "time,event,symbol,direction,entry_price,sl,tp,mid_tf_structure_sl,lower_tf_reversal_sl,mid_tf_structure_sl_atr,lower_tf_reversal_sl_atr,lower_tf_reversal_sl_status,result_R,profit,regime,session,scan_interval,entry_selection_mode,v4_signal_mode,v4_signal_mode_pass,v4_signal_mode_blocked,"
+                      "time,event,symbol,direction,entry_price,sl,tp,mid_tf_structure_sl,lower_tf_reversal_sl,mid_tf_structure_sl_atr,lower_tf_reversal_sl_atr,lower_tf_reversal_sl_status,result_R,profit,regime,session,scan_interval,entry_selection_mode,v4_signal_mode,thirdwave_sl_mode,v4_signal_mode_pass,v4_signal_mode_blocked,"
                       "higher_tf,higher_swing_low_1,higher_swing_high_1,higher_swing_low_2,higher_swing_high_2,higher_structure_state,higher_trend_age_bars,higher_ema_slope,higher_atr,"
                       "mid_tf,impulse_start_price,impulse_end_price,pullback_extreme_price,pullback_depth_pct,pullback_depth_atr,pullback_bars,pullback_broke_origin,pullback_structure_low_or_high,"
                       "distance_from_pullback_extreme_to_entry_atr,distance_from_pullback_extreme_to_entry_pct_of_impulse,"
@@ -4337,6 +4399,7 @@ void WriteThirdWaveWaveAuditRow(const ThirdWaveSetup &setup, const string eventN
    AppendCsvField(row, IntegerToString(InpScanSeconds));
    AppendCsvField(row, EntrySelectionModeName());
    AppendCsvField(row, setup.v4SignalModeName);
+   AppendCsvField(row, ThirdWaveSLModeName());
    AppendCsvField(row, BoolText(setup.v4SignalModePass));
    AppendCsvField(row, BoolText(setup.v4SignalModeBlocked));
    AppendCsvField(row, TimeframeText(InpContextTF));
@@ -4443,10 +4506,20 @@ string TopThirdWaveSkipReason(long &count)
       reason = "sl_too_close";
       count = g_thirdWaveSlTooCloseCount;
      }
+   if(g_thirdWaveSlTooTightCount > count)
+     {
+      reason = "sl_too_tight";
+      count = g_thirdWaveSlTooTightCount;
+     }
    if(g_thirdWaveSlTooWideCount > count)
      {
       reason = "sl_too_wide";
       count = g_thirdWaveSlTooWideCount;
+     }
+   if(g_thirdWaveInvalidStopsCount > count)
+     {
+      reason = "invalid_stops";
+      count = g_thirdWaveInvalidStopsCount;
      }
    if(g_thirdWaveRrTooLowCount > count)
      {
@@ -4675,7 +4748,7 @@ void WriteThirdWaveSummaryRow()
    FileSeek(handle, 0, SEEK_END);
    if(needsHeader)
       FileWriteString(handle,
-                      "time,strategy_name,v4_signal_mode,evaluations,long_evaluations,short_evaluations,setup_pass,entry_pass,orders_sent,orders_failed,"
+                      "time,strategy_name,v4_signal_mode,thirdwave_sl_mode,evaluations,long_evaluations,short_evaluations,setup_pass,entry_pass,orders_sent,orders_failed,"
                       "higher_tf_trend_pass,mid_tf_pullback_pass,lower_tf_reversal_pass,structure_sl_pass,rr_pass,spread_guard_pass,spread_guard_blocked,final_entry_pass,"
                       "v2_filter_evaluations,v2_filter_pass,v2_filter_fail,v2_filter_deep_pullback,v2_filter_trend_too_old,v2_filter_reclaim_chase_too_far,"
                       "v3_filter_evaluations,v3_filter_pass,v3_filter_fail,v3_filter_invalid_position,v3_filter_late_entry,v3_filter_chasing_entry,v3_filter_reclaim_chase,v3_filter_pullback_chase,v3_filter_momentum_exhausted,"
@@ -4683,7 +4756,7 @@ void WriteThirdWaveSummaryRow()
                       "regime_trend_up,regime_trend_down,regime_range,regime_transition,regime_exhaustion,regime_unknown,regime_allowed,regime_blocked,regime_block_long_requires_trend_up,regime_block_short_requires_trend_down,"
                       "long_higher_tf_trend_pass,long_mid_tf_pullback_pass,long_lower_tf_reversal_pass,long_structure_sl_pass,long_rr_pass,long_spread_guard_pass,long_spread_guard_blocked,long_final_entry_pass,"
                       "short_higher_tf_trend_pass,short_mid_tf_pullback_pass,short_lower_tf_reversal_pass,short_structure_sl_pass,short_rr_pass,short_spread_guard_pass,short_spread_guard_blocked,short_final_entry_pass,"
-                      "no_higher_tf_trend,trend_broken,no_mid_pullback,pullback_too_shallow,pullback_too_deep,no_lower_reversal,lower_reversal_quality_low,sl_too_close,sl_too_wide,rr_too_low,existing_position,market_closed,spread_guard,data_unavailable,atr_unavailable,research_excluded,regime_requires_trend_up,regime_requires_trend_down,unknown,"
+                      "no_higher_tf_trend,trend_broken,no_mid_pullback,pullback_too_shallow,pullback_too_deep,no_lower_reversal,lower_reversal_quality_low,sl_too_close,sl_too_tight,sl_too_wide,invalid_stops,rr_too_low,existing_position,market_closed,spread_guard,data_unavailable,atr_unavailable,research_excluded,regime_requires_trend_up,regime_requires_trend_down,unknown,"
                       "execution_spread_guard,execution_trading_disabled,execution_no_entry_signal,execution_position_limit,execution_risk_stop,execution_risk_limit,execution_invalid,execution_order_failed,execution_unknown,"
                       "top_structure_stage_fail_reason,top_structure_stage_fail_reason_rows,top_execution_block_reason,top_execution_block_reason_rows,top_skip_reason,top_skip_reason_rows,top_v2_filter_fail_reason,top_v2_filter_fail_reason_rows,top_v3_filter_fail_reason,top_v3_filter_fail_reason_rows,top_v4_reversal_signal,top_v4_reversal_signal_rows\r\n");
 
@@ -4702,6 +4775,7 @@ void WriteThirdWaveSummaryRow()
    AppendCsvField(row, TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS));
    AppendCsvField(row, ThirdWaveStrategyName());
    AppendCsvField(row, V4ReversalSignalModeName());
+   AppendCsvField(row, ThirdWaveSLModeName());
    AppendCsvLong(row, g_thirdWaveEvaluations);
    AppendCsvLong(row, g_thirdWaveLongEvaluations);
    AppendCsvLong(row, g_thirdWaveShortEvaluations);
@@ -4777,7 +4851,9 @@ void WriteThirdWaveSummaryRow()
    AppendCsvLong(row, g_thirdWaveNoLowerReversalCount);
    AppendCsvLong(row, g_thirdWaveLowerReversalQualityLowCount);
    AppendCsvLong(row, g_thirdWaveSlTooCloseCount);
+   AppendCsvLong(row, g_thirdWaveSlTooTightCount);
    AppendCsvLong(row, g_thirdWaveSlTooWideCount);
+   AppendCsvLong(row, g_thirdWaveInvalidStopsCount);
    AppendCsvLong(row, g_thirdWaveRrTooLowCount);
    AppendCsvLong(row, g_thirdWaveExistingPositionCount);
    AppendCsvLong(row, g_thirdWaveMarketClosedCount);
@@ -5461,6 +5537,8 @@ int OnInit()
       InpStopATRMultiplier <= 0.0 ||
       InpMinSL_ATR <= 0.0 ||
       InpMaxSL_ATR < InpMinSL_ATR ||
+      InpThirdWaveSLMode < THIRD_WAVE_SL_CURRENT ||
+      InpThirdWaveSLMode > THIRD_WAVE_SL_LOWER_TF_REVERSAL ||
       InpRewardR <= 0.0 ||
       InpFixedLotFallback <= 0.0 ||
       InpMaxLotCap <= 0.0)
@@ -5486,7 +5564,7 @@ int OnInit()
    EventSetTimer(InpScanSeconds);
    EnsureLogFolder();
 
-   PrintFormat("%s initialized symbols=%d trading=%s scan_seconds=%d scan_only_new_execution_bar=%s strategy_mode=%d entry_selection=%s diagnostics_level=%d direction_mode=%d symbol_research_mode=%d dow_fractal_filter=%s",
+   PrintFormat("%s initialized symbols=%d trading=%s scan_seconds=%d scan_only_new_execution_bar=%s strategy_mode=%d entry_selection=%s diagnostics_level=%d v4_signal_mode=%s thirdwave_sl_mode=%s reward_r=%.2f direction_mode=%d symbol_research_mode=%d dow_fractal_filter=%s",
                STRATEGY_NAME,
                ArraySize(g_symbols),
                (InpEnableTrading ? "true" : "false"),
@@ -5495,6 +5573,9 @@ int OnInit()
                (int)InpResearchStrategyMode,
                EntrySelectionModeName(),
                (int)InpDiagnosticsLevel,
+               V4ReversalSignalModeName(),
+               ThirdWaveSLModeName(),
+               InpRewardR,
                (int)InpTradeDirectionMode,
                (int)InpSymbolResearchMode,
                BoolText(InpUseDowFractalStructureFilter));
