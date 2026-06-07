@@ -1,0 +1,20 @@
+{
+  "rows": 90,
+  "outputs": {
+    "summary": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_failure_decomposition_summary.md",
+    "decomposition": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_failure_decomposition.csv",
+    "neckline_quality": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_neckline_quality.csv",
+    "by_failure_type": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_by_failure_type.csv",
+    "by_winning_type": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_by_winning_type.csv",
+    "by_label_recheck": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_by_label_recheck.csv",
+    "mfe_mae": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_mfe_mae_r_reach.csv",
+    "by_setup_layer": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_by_setup_layer.csv",
+    "gate_candidates": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_v2_gate_candidates.md"
+  },
+  "q1_failure_types": {
+    "target_too_far": 10,
+    "false_breakout": 30,
+    "no_follow_through": 2,
+    "late_breakout": 3
+  }
+}
