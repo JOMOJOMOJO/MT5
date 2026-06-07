@@ -32,7 +32,8 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_REGIME = 2,
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V2_AUDIT_FILTERED = 3,
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V3_ENTRY_TIMING = 4,
-   RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V4_EARLY_REVERSAL = 5
+   RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V4_EARLY_REVERSAL = 5,
+   RESEARCH_STRATEGY_NESTED_NWAVE_NECKLINE_BREAK = 6
   };
 
 enum ENUM_ENTRY_SELECTION_MODE
@@ -271,10 +272,68 @@ struct ThirdWaveSetup
    bool              v4ImpulseConsumedBlocked;
   };
 
+struct NestedNWaveSetup
+  {
+   string            symbol;
+   string            direction;
+   string            label;
+   string            failReason;
+   string            executionBlockReason;
+   string            fibZone;
+   string            h4TrendState;
+   string            h1CounterTrendState;
+   string            necklineBreakLabel;
+   bool              dataReady;
+   bool              h4ImpulsePass;
+   bool              h4PullbackZonePass;
+   bool              h1CounterTrendPass;
+   bool              necklinePass;
+   bool              structureSlPass;
+   bool              rrPass;
+   bool              spreadGuardPass;
+   bool              spreadGuardBlocked;
+   bool              setupPass;
+   bool              entryPass;
+   bool              finalEntryPass;
+   double            h4ImpulseHigh;
+   double            h4ImpulseLow;
+   double            h4FibRetracementPct;
+   double            h4Atr;
+   double            h1Atr;
+   double            m15Atr;
+   double            spreadATR;
+   double            spreadPoints;
+   double            necklinePrice;
+   double            necklineBreakClosePrice;
+   double            rightSideLevel;
+   double            entryPrice;
+   double            stopLoss;
+   double            takeProfit;
+   double            volume;
+   double            riskR;
+   double            rr;
+   double            slPoints;
+   double            slATR;
+   double            tpPoints;
+   double            tpATR;
+   double            distanceNecklineToEntry;
+   double            distanceNecklineToEntryATR;
+   double            distanceRightSideToEntry;
+   double            distanceRightSideToEntryATR;
+   int               barsSinceRightSide;
+   double            qualityScore;
+  };
+
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
 void WriteStructureSummaryRow();
 void WriteThirdWaveSummaryRow();
 void WriteThirdWaveWaveAuditRow(const ThirdWaveSetup &setup, const string eventName);
+void WriteNestedNWaveSummaryRow();
+void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string eventName);
+void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
+                              const string eventName,
+                              const string resultReason,
+                              const long retcode);
 
 string   g_symbols[];
 double   g_initialEquity = 0.0;
@@ -399,6 +458,40 @@ long     g_thirdWaveV4CandleReversalCount = 0;
 long     g_thirdWaveV4MicroBreakCount = 0;
 long     g_thirdWaveV4UnclearCount = 0;
 long     g_thirdWaveV4ImpulseConsumedBlockedCount = 0;
+long     g_nestedNWaveEvaluations = 0;
+long     g_nestedNWaveLongEvaluations = 0;
+long     g_nestedNWaveShortEvaluations = 0;
+long     g_nestedNWaveH4ImpulsePassCount = 0;
+long     g_nestedNWavePullbackZonePassCount = 0;
+long     g_nestedNWaveH1CounterTrendPassCount = 0;
+long     g_nestedNWaveNecklinePassCount = 0;
+long     g_nestedNWaveStructureSlPassCount = 0;
+long     g_nestedNWaveRrPassCount = 0;
+long     g_nestedNWaveSpreadGuardPassCount = 0;
+long     g_nestedNWaveSpreadGuardBlockedCount = 0;
+long     g_nestedNWaveFinalEntryPassCount = 0;
+long     g_nestedNWaveOrderSentCount = 0;
+long     g_nestedNWaveOrderFailedCount = 0;
+long     g_nestedNWaveDataUnavailableCount = 0;
+long     g_nestedNWaveAtrUnavailableCount = 0;
+long     g_nestedNWaveResearchExcludedCount = 0;
+long     g_nestedNWaveNoH4NWaveCount = 0;
+long     g_nestedNWaveTooShallowPullbackCount = 0;
+long     g_nestedNWaveTooDeepPullbackCount = 0;
+long     g_nestedNWaveNoH1CounterTrendCount = 0;
+long     g_nestedNWaveNoClearNecklineCount = 0;
+long     g_nestedNWaveNoNecklineBreakCount = 0;
+long     g_nestedNWaveSlTooTightCount = 0;
+long     g_nestedNWaveSlTooWideCount = 0;
+long     g_nestedNWaveInvalidStructureCount = 0;
+long     g_nestedNWaveSpreadGuardCount = 0;
+long     g_nestedNWaveExistingPositionCount = 0;
+long     g_nestedNWaveExecutionBlockedCount = 0;
+long     g_nestedNWaveCleanEntryCount = 0;
+long     g_nestedNWaveInitialBreakCount = 0;
+long     g_nestedNWaveLateBreakCount = 0;
+long     g_nestedNWaveChasingBreakCount = 0;
+long     g_nestedNWaveUnknownFailCount = 0;
 
 //+------------------------------------------------------------------+
 //| Generic helpers                                                   |
@@ -502,6 +595,11 @@ bool IsEarlyReversalThirdWaveV4Mode()
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V4_EARLY_REVERSAL);
   }
 
+bool IsNestedNWaveStrategyMode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_NECKLINE_BREAK);
+  }
+
 string V4ReversalSignalModeName()
   {
    if(InpV4ReversalSignalMode == V4_SIGNAL_MICRO_BREAK_ONLY)
@@ -570,6 +668,11 @@ string ThirdWaveStrategyName()
    return "DowFractal_ThirdWave";
   }
 
+string NestedNWaveStrategyName()
+  {
+   return "Nested_NWave_NecklineBreak";
+  }
+
 string RegimeToString(const ENUM_THIRD_WAVE_REGIME regime)
   {
    if(regime == REGIME_TREND_UP)
@@ -583,6 +686,17 @@ string RegimeToString(const ENUM_THIRD_WAVE_REGIME regime)
    if(regime == REGIME_EXHAUSTION)
       return "REGIME_EXHAUSTION";
    return "REGIME_UNKNOWN";
+  }
+
+string ServerSessionLabel()
+  {
+   MqlDateTime tm;
+   TimeToStruct(TimeCurrent(), tm);
+   if(tm.hour < 8)
+      return "server_00_07";
+   if(tm.hour < 16)
+      return "server_08_15";
+   return "server_16_23";
   }
 
 string TimeframeText(const ENUM_TIMEFRAMES timeframe)
@@ -1117,6 +1231,58 @@ void InitThirdWaveSetup(ThirdWaveSetup &setup, const string symbol, const int di
    setup.preEntryMomentumScore = 0.0;
    setup.reversalStrengthScore = 0.0;
    setup.v4ImpulseConsumedBlocked = false;
+  }
+
+void InitNestedNWaveSetup(NestedNWaveSetup &setup, const string symbol, const int direction)
+  {
+   setup.symbol = symbol;
+   setup.direction = DirectionToString(direction);
+   setup.label = "unclear";
+   setup.failReason = "";
+   setup.executionBlockReason = "";
+   setup.fibZone = "unknown";
+   setup.h4TrendState = "none";
+   setup.h1CounterTrendState = "none";
+   setup.necklineBreakLabel = "none";
+   setup.dataReady = false;
+   setup.h4ImpulsePass = false;
+   setup.h4PullbackZonePass = false;
+   setup.h1CounterTrendPass = false;
+   setup.necklinePass = false;
+   setup.structureSlPass = false;
+   setup.rrPass = false;
+   setup.spreadGuardPass = false;
+   setup.spreadGuardBlocked = false;
+   setup.setupPass = false;
+   setup.entryPass = false;
+   setup.finalEntryPass = false;
+   setup.h4ImpulseHigh = 0.0;
+   setup.h4ImpulseLow = 0.0;
+   setup.h4FibRetracementPct = 0.0;
+   setup.h4Atr = 0.0;
+   setup.h1Atr = 0.0;
+   setup.m15Atr = 0.0;
+   setup.spreadATR = 0.0;
+   setup.spreadPoints = 0.0;
+   setup.necklinePrice = 0.0;
+   setup.necklineBreakClosePrice = 0.0;
+   setup.rightSideLevel = 0.0;
+   setup.entryPrice = 0.0;
+   setup.stopLoss = 0.0;
+   setup.takeProfit = 0.0;
+   setup.volume = 0.0;
+   setup.riskR = 0.0;
+   setup.rr = 0.0;
+   setup.slPoints = 0.0;
+   setup.slATR = 0.0;
+   setup.tpPoints = 0.0;
+   setup.tpATR = 0.0;
+   setup.distanceNecklineToEntry = 0.0;
+   setup.distanceNecklineToEntryATR = 0.0;
+   setup.distanceRightSideToEntry = 0.0;
+   setup.distanceRightSideToEntryATR = 0.0;
+   setup.barsSinceRightSide = 0;
+   setup.qualityScore = 0.0;
   }
 
 //+------------------------------------------------------------------+
@@ -2503,6 +2669,466 @@ bool CalculateThirdWaveTakeProfit(const string symbol,
    return true;
   }
 
+string NestedFibZoneLabel(const double retracementPct)
+  {
+   if(retracementPct < 38.2)
+      return "too_shallow_pullback";
+   if(retracementPct <= 61.8)
+      return "valid_h4_pullback_zone";
+   return "too_deep_pullback";
+  }
+
+bool PivotRangeHigh(const MqlRates &rates[],
+                    const int newerShift,
+                    const int olderShift,
+                    double &value)
+  {
+   value = 0.0;
+   if(olderShift <= newerShift + 1)
+      return false;
+   int start = newerShift + 1;
+   int bars = olderShift - newerShift - 1;
+   value = HighestHigh(rates, start, bars);
+   return (value > 0.0);
+  }
+
+bool PivotRangeLow(const MqlRates &rates[],
+                   const int newerShift,
+                   const int olderShift,
+                   double &value)
+  {
+   value = 0.0;
+   if(olderShift <= newerShift + 1)
+      return false;
+   int start = newerShift + 1;
+   int bars = olderShift - newerShift - 1;
+   value = LowestLow(rates, start, bars);
+   return (value > 0.0);
+  }
+
+bool DetectNestedH4ImpulseAndPullback(const MqlRates &h4Rates[],
+                                      const int direction,
+                                      NestedNWaveSetup &setup)
+  {
+   int span = InpStructureSwingSpan;
+   if(span < 1)
+      span = 1;
+   int scanBars = InpStructureScanBars;
+   if(scanBars < span * 4 + 10)
+      scanBars = span * 4 + 10;
+
+   PivotPoint highLatest;
+   PivotPoint highPrevious;
+   PivotPoint lowLatest;
+   PivotPoint lowPrevious;
+   bool hasHighs = FindRecentPivots(h4Rates, true, span, scanBars, highLatest, highPrevious);
+   bool hasLows = FindRecentPivots(h4Rates, false, span, scanBars, lowLatest, lowPrevious);
+   if(!hasHighs || !hasLows)
+     {
+      setup.failReason = "invalid_structure";
+      return false;
+     }
+
+   double currentClose = h4Rates[1].close;
+   double impulseRange = 0.0;
+   if(direction > 0)
+     {
+      bool higherHigh = (highLatest.price > highPrevious.price);
+      bool higherLow = (lowLatest.price > lowPrevious.price);
+      if(!higherHigh || !higherLow)
+        {
+         setup.failReason = "no_h4_nwave";
+         setup.h4TrendState = "no_bullish_nwave";
+         return false;
+        }
+
+      double impulseLow = (lowLatest.shift > highLatest.shift ? lowLatest.price : lowPrevious.price);
+      double impulseHigh = highLatest.price;
+      impulseRange = impulseHigh - impulseLow;
+      if(impulseRange <= 0.0 || currentClose <= impulseLow)
+        {
+         setup.failReason = "invalid_structure";
+         setup.h4TrendState = "bullish_nwave_broken";
+         return false;
+        }
+
+      setup.h4TrendState = "bullish_nwave";
+      setup.h4ImpulseLow = impulseLow;
+      setup.h4ImpulseHigh = impulseHigh;
+      setup.h4FibRetracementPct = (impulseHigh - currentClose) / impulseRange * 100.0;
+     }
+   else
+     {
+      bool lowerHigh = (highLatest.price < highPrevious.price);
+      bool lowerLow = (lowLatest.price < lowPrevious.price);
+      if(!lowerHigh || !lowerLow)
+        {
+         setup.failReason = "no_h4_nwave";
+         setup.h4TrendState = "no_bearish_nwave";
+         return false;
+        }
+
+      double impulseHigh = (highLatest.shift > lowLatest.shift ? highLatest.price : highPrevious.price);
+      double impulseLow = lowLatest.price;
+      impulseRange = impulseHigh - impulseLow;
+      if(impulseRange <= 0.0 || currentClose >= impulseHigh)
+        {
+         setup.failReason = "invalid_structure";
+         setup.h4TrendState = "bearish_nwave_broken";
+         return false;
+        }
+
+      setup.h4TrendState = "bearish_nwave";
+      setup.h4ImpulseLow = impulseLow;
+      setup.h4ImpulseHigh = impulseHigh;
+      setup.h4FibRetracementPct = (currentClose - impulseLow) / impulseRange * 100.0;
+     }
+
+   setup.h4ImpulsePass = true;
+   setup.fibZone = NestedFibZoneLabel(setup.h4FibRetracementPct);
+   if(setup.fibZone == "too_shallow_pullback")
+     {
+      setup.failReason = "too_shallow_pullback";
+      return false;
+     }
+   if(setup.fibZone == "too_deep_pullback")
+     {
+      setup.failReason = "too_deep_pullback";
+      return false;
+     }
+
+   setup.h4PullbackZonePass = true;
+   setup.label = "valid_h4_pullback_zone";
+   return true;
+  }
+
+bool DetectNestedH1CounterTrendNWave(const MqlRates &h1Rates[],
+                                     const int direction,
+                                     NestedNWaveSetup &setup)
+  {
+   int span = InpStructureSwingSpan;
+   if(span < 1)
+      span = 1;
+   int scanBars = InpStructureScanBars;
+   if(scanBars < span * 4 + 10)
+      scanBars = span * 4 + 10;
+
+   PivotPoint highLatest;
+   PivotPoint highPrevious;
+   PivotPoint lowLatest;
+   PivotPoint lowPrevious;
+   bool hasHighs = FindRecentPivots(h1Rates, true, span, scanBars, highLatest, highPrevious);
+   bool hasLows = FindRecentPivots(h1Rates, false, span, scanBars, lowLatest, lowPrevious);
+   if(!hasHighs || !hasLows)
+     {
+      setup.failReason = "no_h1_counter_trend_nwave";
+      setup.h1CounterTrendState = "missing_swings";
+      return false;
+     }
+
+   if(direction > 0)
+     {
+      bool counterDown = (highLatest.price < highPrevious.price && lowLatest.price < lowPrevious.price);
+      if(!counterDown)
+        {
+         setup.failReason = "no_h1_counter_trend_nwave";
+         setup.h1CounterTrendState = "no_bearish_counter_nwave";
+         return false;
+        }
+      setup.h1CounterTrendState = "bearish_counter_nwave";
+     }
+   else
+     {
+      bool counterUp = (highLatest.price > highPrevious.price && lowLatest.price > lowPrevious.price);
+      if(!counterUp)
+        {
+         setup.failReason = "no_h1_counter_trend_nwave";
+         setup.h1CounterTrendState = "no_bullish_counter_nwave";
+         return false;
+        }
+      setup.h1CounterTrendState = "bullish_counter_nwave";
+     }
+
+   setup.h1CounterTrendPass = true;
+   setup.label = "h1_counter_trend_nwave";
+   return true;
+  }
+
+string ClassifyNestedNecklineBreakLabel(const NestedNWaveSetup &setup, const bool freshBreak, const bool doublePattern)
+  {
+   if(!setup.necklinePass)
+      return "no_clear_neckline";
+   if(setup.distanceNecklineToEntryATR > 1.20 ||
+      setup.distanceRightSideToEntryATR > 3.20 ||
+      setup.barsSinceRightSide > 18)
+      return "chasing_after_break";
+   if(doublePattern && freshBreak &&
+      setup.distanceNecklineToEntryATR <= 0.35 &&
+      setup.distanceRightSideToEntryATR <= 2.40 &&
+      setup.barsSinceRightSide <= 10)
+      return "clean_nested_nwave_entry";
+   if(freshBreak && setup.distanceNecklineToEntryATR <= 0.65 && setup.barsSinceRightSide <= 12)
+      return "neckline_break_initial";
+   return "neckline_break_late";
+  }
+
+bool DetectNestedM15NecklineBreak(const MqlRates &m15Rates[],
+                                  const int direction,
+                                  NestedNWaveSetup &setup)
+  {
+   int span = InpStructureSwingSpan;
+   if(span < 1)
+      span = 1;
+   int scanBars = InpStructureScanBars;
+   if(scanBars < span * 4 + 10)
+      scanBars = span * 4 + 10;
+
+   PivotPoint highLatest;
+   PivotPoint highPrevious;
+   PivotPoint lowLatest;
+   PivotPoint lowPrevious;
+   bool hasHighs = FindRecentPivots(m15Rates, true, span, scanBars, highLatest, highPrevious);
+   bool hasLows = FindRecentPivots(m15Rates, false, span, scanBars, lowLatest, lowPrevious);
+   if(!hasHighs || !hasLows)
+     {
+      setup.failReason = "no_clear_neckline";
+      return false;
+     }
+
+   double point = SymbolInfoDouble(setup.symbol, SYMBOL_POINT);
+   double entryPrice = (direction > 0 ? SymbolInfoDouble(setup.symbol, SYMBOL_ASK) : SymbolInfoDouble(setup.symbol, SYMBOL_BID));
+   if(entryPrice <= 0.0)
+     {
+      setup.failReason = "market_closed";
+      setup.executionBlockReason = "market_closed";
+      return false;
+     }
+   setup.entryPrice = entryPrice;
+
+   double neckline = 0.0;
+   bool doublePattern = false;
+   bool freshBreak = false;
+   if(direction > 0)
+     {
+      doublePattern = (MathAbs(lowLatest.price - lowPrevious.price) <= setup.m15Atr * 0.75);
+      if(!PivotRangeHigh(m15Rates, lowLatest.shift, lowPrevious.shift, neckline))
+         neckline = highLatest.price;
+      if(neckline <= 0.0 || m15Rates[1].close <= neckline)
+        {
+         setup.failReason = "no_neckline_break";
+         return false;
+        }
+      freshBreak = (m15Rates[2].close <= neckline);
+      setup.rightSideLevel = lowLatest.price;
+      setup.barsSinceRightSide = lowLatest.shift;
+      setup.necklinePrice = neckline;
+      setup.necklineBreakClosePrice = m15Rates[1].close;
+      setup.distanceNecklineToEntry = MathAbs(setup.entryPrice - neckline);
+      setup.distanceRightSideToEntry = MathAbs(setup.entryPrice - setup.rightSideLevel);
+     }
+   else
+     {
+      doublePattern = (MathAbs(highLatest.price - highPrevious.price) <= setup.m15Atr * 0.75);
+      if(!PivotRangeLow(m15Rates, highLatest.shift, highPrevious.shift, neckline))
+         neckline = lowLatest.price;
+      if(neckline <= 0.0 || m15Rates[1].close >= neckline)
+        {
+         setup.failReason = "no_neckline_break";
+         return false;
+        }
+      freshBreak = (m15Rates[2].close >= neckline);
+      setup.rightSideLevel = highLatest.price;
+      setup.barsSinceRightSide = highLatest.shift;
+      setup.necklinePrice = neckline;
+      setup.necklineBreakClosePrice = m15Rates[1].close;
+      setup.distanceNecklineToEntry = MathAbs(setup.entryPrice - neckline);
+      setup.distanceRightSideToEntry = MathAbs(setup.entryPrice - setup.rightSideLevel);
+     }
+
+   setup.distanceNecklineToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceNecklineToEntry / setup.m15Atr : 0.0);
+   setup.distanceRightSideToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceRightSideToEntry / setup.m15Atr : 0.0);
+   setup.necklinePass = true;
+   setup.necklineBreakLabel = ClassifyNestedNecklineBreakLabel(setup, freshBreak, doublePattern);
+   setup.label = setup.necklineBreakLabel;
+   if(setup.necklineBreakLabel == "clean_nested_nwave_entry")
+      setup.qualityScore = 130.0;
+   else if(setup.necklineBreakLabel == "neckline_break_initial")
+      setup.qualityScore = 110.0;
+   else if(setup.necklineBreakLabel == "neckline_break_late")
+      setup.qualityScore = 80.0;
+   else
+      setup.qualityScore = 45.0;
+
+   setup.qualityScore -= MathAbs(setup.h4FibRetracementPct - 50.0) * 0.60;
+   setup.qualityScore -= setup.distanceNecklineToEntryATR * 12.0;
+   setup.qualityScore -= MathMax(0, setup.barsSinceRightSide - 5) * 2.0;
+   if(point > 0.0)
+      setup.distanceNecklineToEntry = NormalizeDouble(setup.distanceNecklineToEntry, (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS));
+   return true;
+  }
+
+bool CalculateNestedStopLoss(const string symbol,
+                             const int direction,
+                             NestedNWaveSetup &setup)
+  {
+   int digits = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
+   double point = SymbolInfoDouble(symbol, SYMBOL_POINT);
+   double spread = SpreadPrice(symbol);
+   double buffer = MathMax(spread, setup.m15Atr * 0.05);
+   buffer = MathMax(buffer, point * 5.0);
+   if(point <= 0.0 || setup.entryPrice <= 0.0 || setup.rightSideLevel <= 0.0)
+     {
+      setup.failReason = "invalid_structure";
+      return false;
+     }
+
+   if(direction > 0)
+     {
+      setup.stopLoss = NormalizeDouble(setup.rightSideLevel - buffer, digits);
+      setup.riskR = setup.entryPrice - setup.stopLoss;
+     }
+   else
+     {
+      setup.stopLoss = NormalizeDouble(setup.rightSideLevel + buffer, digits);
+      setup.riskR = setup.stopLoss - setup.entryPrice;
+     }
+
+   setup.slPoints = setup.riskR / point;
+   setup.slATR = (setup.m15Atr > 0.0 ? setup.riskR / setup.m15Atr : 0.0);
+   double brokerStop = (double)SymbolInfoInteger(symbol, SYMBOL_TRADE_STOPS_LEVEL) * point + spread;
+   double minDistance = MathMax(brokerStop, setup.m15Atr * InpMinSL_ATR);
+   double maxDistance = setup.m15Atr * InpMaxSL_ATR;
+   if(setup.riskR <= brokerStop || setup.riskR <= minDistance)
+     {
+      setup.failReason = "sl_too_tight";
+      setup.label = "sl_too_tight";
+      return false;
+     }
+   if(maxDistance > 0.0 && setup.riskR > maxDistance)
+     {
+      setup.failReason = "sl_too_wide";
+      setup.label = "sl_too_wide";
+      return false;
+     }
+
+   setup.volume = CalculatePositionSize(symbol, setup.riskR);
+   if(setup.volume <= 0.0)
+     {
+      setup.failReason = "sl_too_tight";
+      setup.label = "sl_too_tight";
+      return false;
+     }
+
+   setup.structureSlPass = true;
+   return true;
+  }
+
+bool CalculateNestedTakeProfit(const string symbol,
+                               const int direction,
+                               NestedNWaveSetup &setup)
+  {
+   int digits = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
+   setup.rr = InpRewardR;
+   if(setup.rr <= 0.0 || setup.riskR <= 0.0)
+     {
+      setup.failReason = "rr_too_low";
+      return false;
+     }
+
+   if(direction > 0)
+      setup.takeProfit = NormalizeDouble(setup.entryPrice + setup.riskR * setup.rr, digits);
+   else
+      setup.takeProfit = NormalizeDouble(setup.entryPrice - setup.riskR * setup.rr, digits);
+
+   if(setup.takeProfit <= 0.0)
+     {
+      setup.failReason = "rr_too_low";
+      return false;
+     }
+
+   setup.tpPoints = MathAbs(setup.takeProfit - setup.entryPrice) / SymbolInfoDouble(symbol, SYMBOL_POINT);
+   setup.tpATR = (setup.m15Atr > 0.0 ? MathAbs(setup.takeProfit - setup.entryPrice) / setup.m15Atr : 0.0);
+   setup.rrPass = true;
+   return true;
+  }
+
+bool BuildNestedNWaveSetup(const string symbol,
+                           const int direction,
+                           NestedNWaveSetup &setup)
+  {
+   InitNestedNWaveSetup(setup, symbol, direction);
+
+   string researchReason = "";
+   if(!IsSymbolAllowedByResearchMode(symbol, researchReason))
+     {
+      setup.failReason = researchReason;
+      return false;
+     }
+   if(!IsDirectionAllowedByResearchMode(symbol, direction, researchReason))
+     {
+      setup.failReason = researchReason;
+      return false;
+     }
+
+   MqlRates h4Rates[];
+   MqlRates h1Rates[];
+   MqlRates m15Rates[];
+   string reason = "";
+   int barsNeeded = RequiredBars();
+   if(!LoadRates(symbol, InpContextTF, barsNeeded, h4Rates, reason) ||
+      !LoadRates(symbol, InpPatternTF, barsNeeded, h1Rates, reason) ||
+      !LoadRates(symbol, InpExecutionTF, barsNeeded, m15Rates, reason))
+     {
+      setup.failReason = reason;
+      return false;
+     }
+
+   setup.h4Atr = AverageATR(h4Rates, 1, InpATRPeriod);
+   setup.h1Atr = AverageATR(h1Rates, 1, InpATRPeriod);
+   setup.m15Atr = AverageATR(m15Rates, 1, InpATRPeriod);
+   if(setup.h4Atr <= 0.0 || setup.h1Atr <= 0.0 || setup.m15Atr <= 0.0)
+     {
+      setup.failReason = "atr_unavailable";
+      return false;
+     }
+
+   double spread = SpreadPrice(symbol);
+   double point = SymbolInfoDouble(symbol, SYMBOL_POINT);
+   setup.spreadATR = spread / setup.m15Atr;
+   setup.spreadPoints = (point > 0.0 ? spread / point : 0.0);
+   setup.spreadGuardPass = (setup.spreadATR <= InpMaxSpreadATR);
+   setup.spreadGuardBlocked = !setup.spreadGuardPass;
+   setup.dataReady = true;
+
+   if(!DetectNestedH4ImpulseAndPullback(h4Rates, direction, setup))
+      return false;
+
+   if(!DetectNestedH1CounterTrendNWave(h1Rates, direction, setup))
+      return false;
+
+   setup.setupPass = true;
+   if(!DetectNestedM15NecklineBreak(m15Rates, direction, setup))
+      return false;
+
+   if(!CalculateNestedStopLoss(symbol, direction, setup))
+      return false;
+
+   if(!CalculateNestedTakeProfit(symbol, direction, setup))
+      return false;
+
+   if(setup.spreadGuardBlocked)
+     {
+      setup.executionBlockReason = "spread_guard";
+      setup.failReason = "spread_guard";
+      return false;
+     }
+
+   setup.entryPass = true;
+   setup.finalEntryPass = true;
+   setup.failReason = "";
+   return true;
+  }
+
 void SetThirdWaveV2FilterFail(ThirdWaveSetup &setup, const string reason)
   {
    setup.v2FilterPass = false;
@@ -3097,6 +3723,93 @@ bool ShouldWriteThirdWaveSignalDiagnostic(const ThirdWaveSetup &setup)
            setup.rrPass ||
            setup.entryPass ||
            setup.executionBlockReason != "");
+  }
+
+void RecordNestedNWaveFailReason(const string reason)
+  {
+   if(reason == "")
+      return;
+
+   if(StringFind(reason, "data_insufficient_") == 0)
+      ++g_nestedNWaveDataUnavailableCount;
+   else if(reason == "atr_unavailable")
+      ++g_nestedNWaveAtrUnavailableCount;
+   else if(StringFind(reason, "symbol_research_") == 0 ||
+           reason == "disabled_usdjpy_short" ||
+           reason == "direction_mode_long_only" ||
+           reason == "direction_mode_short_only")
+      ++g_nestedNWaveResearchExcludedCount;
+   else if(reason == "no_h4_nwave")
+      ++g_nestedNWaveNoH4NWaveCount;
+   else if(reason == "too_shallow_pullback")
+      ++g_nestedNWaveTooShallowPullbackCount;
+   else if(reason == "too_deep_pullback")
+      ++g_nestedNWaveTooDeepPullbackCount;
+   else if(reason == "no_h1_counter_trend_nwave")
+      ++g_nestedNWaveNoH1CounterTrendCount;
+   else if(reason == "no_clear_neckline")
+      ++g_nestedNWaveNoClearNecklineCount;
+   else if(reason == "no_neckline_break")
+      ++g_nestedNWaveNoNecklineBreakCount;
+   else if(reason == "sl_too_tight")
+      ++g_nestedNWaveSlTooTightCount;
+   else if(reason == "sl_too_wide")
+      ++g_nestedNWaveSlTooWideCount;
+   else if(reason == "invalid_structure")
+      ++g_nestedNWaveInvalidStructureCount;
+   else if(reason == "spread_guard")
+      ++g_nestedNWaveSpreadGuardCount;
+   else
+      ++g_nestedNWaveUnknownFailCount;
+  }
+
+void RecordNestedNWaveEvaluation(const NestedNWaveSetup &setup)
+  {
+   ++g_nestedNWaveEvaluations;
+   if(setup.direction == "LONG")
+      ++g_nestedNWaveLongEvaluations;
+   else if(setup.direction == "SHORT")
+      ++g_nestedNWaveShortEvaluations;
+
+   if(setup.h4ImpulsePass)
+      ++g_nestedNWaveH4ImpulsePassCount;
+   if(setup.h4PullbackZonePass)
+      ++g_nestedNWavePullbackZonePassCount;
+   if(setup.h1CounterTrendPass)
+      ++g_nestedNWaveH1CounterTrendPassCount;
+   if(setup.necklinePass)
+      ++g_nestedNWaveNecklinePassCount;
+   if(setup.structureSlPass)
+      ++g_nestedNWaveStructureSlPassCount;
+   if(setup.rrPass)
+      ++g_nestedNWaveRrPassCount;
+   if(setup.spreadGuardPass)
+      ++g_nestedNWaveSpreadGuardPassCount;
+   if(setup.spreadGuardBlocked)
+      ++g_nestedNWaveSpreadGuardBlockedCount;
+   if(setup.finalEntryPass)
+      ++g_nestedNWaveFinalEntryPassCount;
+
+   if(setup.label == "clean_nested_nwave_entry")
+      ++g_nestedNWaveCleanEntryCount;
+   else if(setup.label == "neckline_break_initial")
+      ++g_nestedNWaveInitialBreakCount;
+   else if(setup.label == "neckline_break_late")
+      ++g_nestedNWaveLateBreakCount;
+   else if(setup.label == "chasing_after_break")
+      ++g_nestedNWaveChasingBreakCount;
+
+   RecordNestedNWaveFailReason(setup.failReason);
+  }
+
+bool ShouldWriteNestedNWaveSignalDiagnostic(const NestedNWaveSetup &setup)
+  {
+   if(!DiagnosticsEntryDetailEnabled())
+      return false;
+   return (setup.entryPass ||
+           setup.finalEntryPass ||
+           setup.executionBlockReason != "" ||
+           (setup.structureSlPass && setup.rrPass));
   }
 
 //+------------------------------------------------------------------+
@@ -3821,6 +4534,39 @@ string DailyThirdWaveSummaryLogFileName()
                        tm.day);
   }
 
+string DailyNestedNWaveSignalLogFileName()
+  {
+   MqlDateTime tm;
+   TimeToStruct(TimeCurrent(), tm);
+   return StringFormat("%s\\nested_nwave_signal_diagnostics_%04d%02d%02d.csv",
+                       InpLogFolder,
+                       tm.year,
+                       tm.mon,
+                       tm.day);
+  }
+
+string DailyNestedNWaveTradeLogFileName()
+  {
+   MqlDateTime tm;
+   TimeToStruct(TimeCurrent(), tm);
+   return StringFormat("%s\\nested_nwave_trade_diagnostics_%04d%02d%02d.csv",
+                       InpLogFolder,
+                       tm.year,
+                       tm.mon,
+                       tm.day);
+  }
+
+string DailyNestedNWaveSummaryLogFileName()
+  {
+   MqlDateTime tm;
+   TimeToStruct(TimeCurrent(), tm);
+   return StringFormat("%s\\nested_nwave_summary_%04d%02d%02d.csv",
+                       InpLogFolder,
+                       tm.year,
+                       tm.mon,
+                       tm.day);
+  }
+
 void EnsureLogFolder()
   {
    int flags = 0;
@@ -4458,6 +5204,333 @@ void WriteThirdWaveWaveAuditRow(const ThirdWaveSetup &setup, const string eventN
    AppendCsvField(row, ThirdWaveStrategyName());
    FileWriteString(handle, row + "\r\n");
 
+   FileClose(handle);
+  }
+
+void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string eventName)
+  {
+   if(!DiagnosticsEntryDetailEnabled())
+      return;
+   if(!IsNestedNWaveStrategyMode())
+      return;
+
+   EnsureLogFolder();
+
+   int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
+   if(InpUseCommonFiles)
+      flags |= FILE_COMMON;
+
+   string fileName = DailyNestedNWaveSignalLogFileName();
+   int handle = FileOpen(fileName, flags, ',');
+   if(handle == INVALID_HANDLE)
+     {
+      PrintFormat("%s: FileOpen failed: %s err=%d", STRATEGY_NAME, fileName, GetLastError());
+      return;
+     }
+
+   bool needsHeader = (FileSize(handle) == 0);
+   FileSeek(handle, 0, SEEK_END);
+   if(needsHeader)
+      FileWriteString(handle,
+                      "time,event,symbol,direction,session,entry_selection_mode,scan_interval,strategy_name,"
+                      "label,fail_reason,execution_block_reason,fib_zone,h4_trend_state,h1_counter_trend_state,neckline_break_label,"
+                      "h4_impulse_pass,h4_pullback_zone_pass,h1_counter_trend_pass,neckline_pass,structure_sl_pass,rr_pass,spread_guard_pass,spread_guard_blocked,setup_pass,entry_pass,final_entry_pass,"
+                      "h4_impulse_high,h4_impulse_low,h4_fib_retracement_pct,h4_atr,h1_atr,m15_atr,spread_atr,spread_points,"
+                      "neckline_price,neckline_break_close_price,right_side_level,entry_price,sl,tp,volume,risk_r,rr,"
+                      "bars_since_right_side,distance_neckline_to_entry,distance_neckline_to_entry_atr,distance_right_side_to_entry,distance_right_side_to_entry_atr,"
+                      "sl_points,sl_atr,tp_points,tp_atr,quality_score\r\n");
+
+   int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
+   string row = "";
+   AppendCsvField(row, TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS));
+   AppendCsvField(row, eventName);
+   AppendCsvField(row, setup.symbol);
+   AppendCsvField(row, setup.direction);
+   AppendCsvField(row, ServerSessionLabel());
+   AppendCsvField(row, EntrySelectionModeName());
+   AppendCsvField(row, IntegerToString(InpScanSeconds));
+   AppendCsvField(row, NestedNWaveStrategyName());
+   AppendCsvField(row, setup.label);
+   AppendCsvField(row, setup.failReason);
+   AppendCsvField(row, setup.executionBlockReason);
+   AppendCsvField(row, setup.fibZone);
+   AppendCsvField(row, setup.h4TrendState);
+   AppendCsvField(row, setup.h1CounterTrendState);
+   AppendCsvField(row, setup.necklineBreakLabel);
+   AppendCsvField(row, BoolText(setup.h4ImpulsePass));
+   AppendCsvField(row, BoolText(setup.h4PullbackZonePass));
+   AppendCsvField(row, BoolText(setup.h1CounterTrendPass));
+   AppendCsvField(row, BoolText(setup.necklinePass));
+   AppendCsvField(row, BoolText(setup.structureSlPass));
+   AppendCsvField(row, BoolText(setup.rrPass));
+   AppendCsvField(row, BoolText(setup.spreadGuardPass));
+   AppendCsvField(row, BoolText(setup.spreadGuardBlocked));
+   AppendCsvField(row, BoolText(setup.setupPass));
+   AppendCsvField(row, BoolText(setup.entryPass));
+   AppendCsvField(row, BoolText(setup.finalEntryPass));
+   AppendCsvField(row, DoubleToString(setup.h4ImpulseHigh, digits));
+   AppendCsvField(row, DoubleToString(setup.h4ImpulseLow, digits));
+   AppendCsvField(row, DoubleToString(setup.h4FibRetracementPct, 2));
+   AppendCsvField(row, DoubleToString(setup.h4Atr, digits));
+   AppendCsvField(row, DoubleToString(setup.h1Atr, digits));
+   AppendCsvField(row, DoubleToString(setup.m15Atr, digits));
+   AppendCsvField(row, DoubleToString(setup.spreadATR, 4));
+   AppendCsvField(row, DoubleToString(setup.spreadPoints, 1));
+   AppendCsvField(row, DoubleToString(setup.necklinePrice, digits));
+   AppendCsvField(row, DoubleToString(setup.necklineBreakClosePrice, digits));
+   AppendCsvField(row, DoubleToString(setup.rightSideLevel, digits));
+   AppendCsvField(row, DoubleToString(setup.entryPrice, digits));
+   AppendCsvField(row, DoubleToString(setup.stopLoss, digits));
+   AppendCsvField(row, DoubleToString(setup.takeProfit, digits));
+   AppendCsvField(row, DoubleToString(setup.volume, 2));
+   AppendCsvField(row, DoubleToString(setup.riskR, digits));
+   AppendCsvField(row, DoubleToString(setup.rr, 2));
+   AppendCsvField(row, IntegerToString(setup.barsSinceRightSide));
+   AppendCsvField(row, DoubleToString(setup.distanceNecklineToEntry, digits));
+   AppendCsvField(row, DoubleToString(setup.distanceNecklineToEntryATR, 2));
+   AppendCsvField(row, DoubleToString(setup.distanceRightSideToEntry, digits));
+   AppendCsvField(row, DoubleToString(setup.distanceRightSideToEntryATR, 2));
+   AppendCsvField(row, DoubleToString(setup.slPoints, 1));
+   AppendCsvField(row, DoubleToString(setup.slATR, 2));
+   AppendCsvField(row, DoubleToString(setup.tpPoints, 1));
+   AppendCsvField(row, DoubleToString(setup.tpATR, 2));
+   AppendCsvField(row, DoubleToString(setup.qualityScore, 2));
+   FileWriteString(handle, row + "\r\n");
+   FileClose(handle);
+  }
+
+void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
+                              const string eventName,
+                              const string resultReason,
+                              const long retcode)
+  {
+   if(!DiagnosticsEntryDetailEnabled())
+      return;
+   if(!IsNestedNWaveStrategyMode())
+      return;
+
+   EnsureLogFolder();
+
+   int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
+   if(InpUseCommonFiles)
+      flags |= FILE_COMMON;
+
+   string fileName = DailyNestedNWaveTradeLogFileName();
+   int handle = FileOpen(fileName, flags, ',');
+   if(handle == INVALID_HANDLE)
+     {
+      PrintFormat("%s: FileOpen failed: %s err=%d", STRATEGY_NAME, fileName, GetLastError());
+      return;
+     }
+
+   bool needsHeader = (FileSize(handle) == 0);
+   FileSeek(handle, 0, SEEK_END);
+   if(needsHeader)
+      FileWriteString(handle,
+                      "time,event,symbol,direction,session,order_retcode,order_comment,strategy_name,"
+                      "label,fail_reason,execution_block_reason,fib_zone,h4_trend_state,h1_counter_trend_state,neckline_break_label,"
+                      "entry_price,sl,tp,volume,risk_r,rr,sl_points,sl_atr,tp_points,tp_atr,"
+                      "neckline_price,neckline_break_close_price,right_side_level,bars_since_right_side,"
+                      "distance_neckline_to_entry_atr,distance_right_side_to_entry_atr,spread_atr,spread_points,quality_score\r\n");
+
+   int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
+   string row = "";
+   AppendCsvField(row, TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS));
+   AppendCsvField(row, eventName);
+   AppendCsvField(row, setup.symbol);
+   AppendCsvField(row, setup.direction);
+   AppendCsvField(row, ServerSessionLabel());
+   AppendCsvField(row, IntegerToString((int)retcode));
+   AppendCsvField(row, resultReason);
+   AppendCsvField(row, NestedNWaveStrategyName());
+   AppendCsvField(row, setup.label);
+   AppendCsvField(row, setup.failReason);
+   AppendCsvField(row, setup.executionBlockReason);
+   AppendCsvField(row, setup.fibZone);
+   AppendCsvField(row, setup.h4TrendState);
+   AppendCsvField(row, setup.h1CounterTrendState);
+   AppendCsvField(row, setup.necklineBreakLabel);
+   AppendCsvField(row, DoubleToString(setup.entryPrice, digits));
+   AppendCsvField(row, DoubleToString(setup.stopLoss, digits));
+   AppendCsvField(row, DoubleToString(setup.takeProfit, digits));
+   AppendCsvField(row, DoubleToString(setup.volume, 2));
+   AppendCsvField(row, DoubleToString(setup.riskR, digits));
+   AppendCsvField(row, DoubleToString(setup.rr, 2));
+   AppendCsvField(row, DoubleToString(setup.slPoints, 1));
+   AppendCsvField(row, DoubleToString(setup.slATR, 2));
+   AppendCsvField(row, DoubleToString(setup.tpPoints, 1));
+   AppendCsvField(row, DoubleToString(setup.tpATR, 2));
+   AppendCsvField(row, DoubleToString(setup.necklinePrice, digits));
+   AppendCsvField(row, DoubleToString(setup.necklineBreakClosePrice, digits));
+   AppendCsvField(row, DoubleToString(setup.rightSideLevel, digits));
+   AppendCsvField(row, IntegerToString(setup.barsSinceRightSide));
+   AppendCsvField(row, DoubleToString(setup.distanceNecklineToEntryATR, 2));
+   AppendCsvField(row, DoubleToString(setup.distanceRightSideToEntryATR, 2));
+   AppendCsvField(row, DoubleToString(setup.spreadATR, 4));
+   AppendCsvField(row, DoubleToString(setup.spreadPoints, 1));
+   AppendCsvField(row, DoubleToString(setup.qualityScore, 2));
+   FileWriteString(handle, row + "\r\n");
+   FileClose(handle);
+  }
+
+string TopNestedNWaveFailReason(long &count)
+  {
+   string reason = "";
+   count = 0;
+
+   if(g_nestedNWaveDataUnavailableCount > count)
+     {
+      reason = "data_unavailable";
+      count = g_nestedNWaveDataUnavailableCount;
+     }
+   if(g_nestedNWaveAtrUnavailableCount > count)
+     {
+      reason = "atr_unavailable";
+      count = g_nestedNWaveAtrUnavailableCount;
+     }
+   if(g_nestedNWaveResearchExcludedCount > count)
+     {
+      reason = "research_excluded";
+      count = g_nestedNWaveResearchExcludedCount;
+     }
+   if(g_nestedNWaveNoH4NWaveCount > count)
+     {
+      reason = "no_h4_nwave";
+      count = g_nestedNWaveNoH4NWaveCount;
+     }
+   if(g_nestedNWaveTooShallowPullbackCount > count)
+     {
+      reason = "too_shallow_pullback";
+      count = g_nestedNWaveTooShallowPullbackCount;
+     }
+   if(g_nestedNWaveTooDeepPullbackCount > count)
+     {
+      reason = "too_deep_pullback";
+      count = g_nestedNWaveTooDeepPullbackCount;
+     }
+   if(g_nestedNWaveNoH1CounterTrendCount > count)
+     {
+      reason = "no_h1_counter_trend_nwave";
+      count = g_nestedNWaveNoH1CounterTrendCount;
+     }
+   if(g_nestedNWaveNoClearNecklineCount > count)
+     {
+      reason = "no_clear_neckline";
+      count = g_nestedNWaveNoClearNecklineCount;
+     }
+   if(g_nestedNWaveNoNecklineBreakCount > count)
+     {
+      reason = "no_neckline_break";
+      count = g_nestedNWaveNoNecklineBreakCount;
+     }
+   if(g_nestedNWaveSlTooTightCount > count)
+     {
+      reason = "sl_too_tight";
+      count = g_nestedNWaveSlTooTightCount;
+     }
+   if(g_nestedNWaveSlTooWideCount > count)
+     {
+      reason = "sl_too_wide";
+      count = g_nestedNWaveSlTooWideCount;
+     }
+   if(g_nestedNWaveInvalidStructureCount > count)
+     {
+      reason = "invalid_structure";
+      count = g_nestedNWaveInvalidStructureCount;
+     }
+   if(g_nestedNWaveSpreadGuardCount > count)
+     {
+      reason = "spread_guard";
+      count = g_nestedNWaveSpreadGuardCount;
+     }
+   if(g_nestedNWaveUnknownFailCount > count)
+     {
+      reason = "unknown";
+      count = g_nestedNWaveUnknownFailCount;
+     }
+
+   return reason;
+  }
+
+void WriteNestedNWaveSummaryRow()
+  {
+   if(!DiagnosticsSummaryEnabled())
+      return;
+   if(!IsNestedNWaveStrategyMode() &&
+      g_nestedNWaveEvaluations <= 0)
+      return;
+
+   EnsureLogFolder();
+
+   int flags = FILE_CSV | FILE_READ | FILE_WRITE | FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_ANSI;
+   if(InpUseCommonFiles)
+      flags |= FILE_COMMON;
+
+   string fileName = DailyNestedNWaveSummaryLogFileName();
+   int handle = FileOpen(fileName, flags, ',');
+   if(handle == INVALID_HANDLE)
+     {
+      PrintFormat("%s: FileOpen failed: %s err=%d", STRATEGY_NAME, fileName, GetLastError());
+      return;
+     }
+
+   bool needsHeader = (FileSize(handle) == 0);
+   FileSeek(handle, 0, SEEK_END);
+   if(needsHeader)
+      FileWriteString(handle,
+                      "time,strategy_name,entry_selection_mode,context_tf,pattern_tf,execution_tf,reward_r,"
+                      "evaluations,long_evaluations,short_evaluations,h4_impulse_pass,pullback_zone_pass,h1_counter_trend_pass,neckline_pass,structure_sl_pass,rr_pass,spread_guard_pass,spread_guard_blocked,final_entry_pass,orders_sent,orders_failed,"
+                      "data_unavailable,atr_unavailable,research_excluded,no_h4_nwave,too_shallow_pullback,too_deep_pullback,no_h1_counter_trend_nwave,no_clear_neckline,no_neckline_break,sl_too_tight,sl_too_wide,invalid_structure,spread_guard,existing_position,execution_blocked,clean_nested_nwave_entry,neckline_break_initial,neckline_break_late,chasing_after_break,unknown,"
+                      "top_fail_reason,top_fail_reason_rows\r\n");
+
+   long topFailCount = 0;
+   string topFailReason = TopNestedNWaveFailReason(topFailCount);
+
+   string row = "";
+   AppendCsvField(row, TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS));
+   AppendCsvField(row, NestedNWaveStrategyName());
+   AppendCsvField(row, EntrySelectionModeName());
+   AppendCsvField(row, TimeframeText(InpContextTF));
+   AppendCsvField(row, TimeframeText(InpPatternTF));
+   AppendCsvField(row, TimeframeText(InpExecutionTF));
+   AppendCsvField(row, DoubleToString(InpRewardR, 2));
+   AppendCsvLong(row, g_nestedNWaveEvaluations);
+   AppendCsvLong(row, g_nestedNWaveLongEvaluations);
+   AppendCsvLong(row, g_nestedNWaveShortEvaluations);
+   AppendCsvLong(row, g_nestedNWaveH4ImpulsePassCount);
+   AppendCsvLong(row, g_nestedNWavePullbackZonePassCount);
+   AppendCsvLong(row, g_nestedNWaveH1CounterTrendPassCount);
+   AppendCsvLong(row, g_nestedNWaveNecklinePassCount);
+   AppendCsvLong(row, g_nestedNWaveStructureSlPassCount);
+   AppendCsvLong(row, g_nestedNWaveRrPassCount);
+   AppendCsvLong(row, g_nestedNWaveSpreadGuardPassCount);
+   AppendCsvLong(row, g_nestedNWaveSpreadGuardBlockedCount);
+   AppendCsvLong(row, g_nestedNWaveFinalEntryPassCount);
+   AppendCsvLong(row, g_nestedNWaveOrderSentCount);
+   AppendCsvLong(row, g_nestedNWaveOrderFailedCount);
+   AppendCsvLong(row, g_nestedNWaveDataUnavailableCount);
+   AppendCsvLong(row, g_nestedNWaveAtrUnavailableCount);
+   AppendCsvLong(row, g_nestedNWaveResearchExcludedCount);
+   AppendCsvLong(row, g_nestedNWaveNoH4NWaveCount);
+   AppendCsvLong(row, g_nestedNWaveTooShallowPullbackCount);
+   AppendCsvLong(row, g_nestedNWaveTooDeepPullbackCount);
+   AppendCsvLong(row, g_nestedNWaveNoH1CounterTrendCount);
+   AppendCsvLong(row, g_nestedNWaveNoClearNecklineCount);
+   AppendCsvLong(row, g_nestedNWaveNoNecklineBreakCount);
+   AppendCsvLong(row, g_nestedNWaveSlTooTightCount);
+   AppendCsvLong(row, g_nestedNWaveSlTooWideCount);
+   AppendCsvLong(row, g_nestedNWaveInvalidStructureCount);
+   AppendCsvLong(row, g_nestedNWaveSpreadGuardCount);
+   AppendCsvLong(row, g_nestedNWaveExistingPositionCount);
+   AppendCsvLong(row, g_nestedNWaveExecutionBlockedCount);
+   AppendCsvLong(row, g_nestedNWaveCleanEntryCount);
+   AppendCsvLong(row, g_nestedNWaveInitialBreakCount);
+   AppendCsvLong(row, g_nestedNWaveLateBreakCount);
+   AppendCsvLong(row, g_nestedNWaveChasingBreakCount);
+   AppendCsvLong(row, g_nestedNWaveUnknownFailCount);
+   AppendCsvField(row, topFailReason);
+   AppendCsvLong(row, topFailCount);
+   FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }
 
@@ -5203,11 +6276,145 @@ void TryThirdWaveEntry(ThirdWaveSetup &setup)
       WriteThirdWaveWaveAuditRow(setup, "order_sent");
       WriteThirdWaveSignalRow(setup);
       MarkEntryOnCurrentScanBar(ThirdWaveStrategyName(), setup.symbol, setup.direction);
-      PrintFormat("%s: thirdwave order sent %s %s lot=%.2f rr=%.2f",
+     PrintFormat("%s: thirdwave order sent %s %s lot=%.2f rr=%.2f",
                   STRATEGY_NAME,
                   setup.symbol,
                   setup.direction,
                   setup.volume,
+                  setup.rr);
+     }
+  }
+
+bool CanTradeNestedNWaveCandidate(const NestedNWaveSetup &setup, string &blockReason)
+  {
+   blockReason = "";
+   if(!InpEnableTrading)
+     {
+      blockReason = "trading_disabled";
+      return false;
+     }
+   if(!setup.dataReady || !setup.entryPass)
+     {
+      blockReason = "no_entry_signal";
+      return false;
+     }
+   if(setup.direction != "LONG" && setup.direction != "SHORT")
+     {
+      blockReason = "direction_none";
+      return false;
+     }
+   if(setup.stopLoss <= 0.0 || setup.takeProfit <= 0.0 || setup.volume <= 0.0)
+     {
+      blockReason = "trade_levels_invalid";
+      return false;
+     }
+
+   string riskStop = "";
+   if(IsHardRiskStopped(riskStop))
+     {
+      blockReason = riskStop;
+      return false;
+     }
+   if(InpMaxPositions > 0 && CountManagedPositions() >= InpMaxPositions)
+     {
+      blockReason = "max_positions";
+      return false;
+     }
+   if(IsAllCandidatesEntryMode() &&
+      CountManagedPositionsForSymbolDirection(setup.symbol, setup.direction) > 0)
+     {
+      blockReason = "existing_position";
+      return false;
+     }
+   if(!IsAllCandidatesEntryMode() &&
+      CountManagedPositionsForSymbol(setup.symbol) > 0)
+     {
+      blockReason = "existing_position";
+      return false;
+     }
+   if(IsAllCandidatesEntryMode() &&
+      HasEntryOnCurrentScanBar(NestedNWaveStrategyName(), setup.symbol, setup.direction))
+     {
+      blockReason = "same_scan_bar_reentry";
+      return false;
+     }
+   if(InpMaxSameCurrencyGroupPositions > 0 &&
+      CountManagedPositionsForGroup(CurrencyGroup(setup.symbol)) >= InpMaxSameCurrencyGroupPositions)
+     {
+      blockReason = "same_currency_group_limit";
+      return false;
+     }
+   if(CurrentSymbolOpenRiskPercent(setup.symbol) + InpRiskPerTradePercent > InpMaxRiskPerSymbolPercent)
+     {
+      blockReason = "symbol_risk_limit";
+      return false;
+     }
+   if(CurrentTotalOpenRiskPercent() + InpRiskPerTradePercent > InpMaxTotalOpenRiskPercent)
+     {
+      blockReason = "total_risk_limit";
+      return false;
+     }
+
+   return true;
+  }
+
+void TryNestedNWaveEntry(NestedNWaveSetup &setup)
+  {
+   string blockReason = "";
+   if(!CanTradeNestedNWaveCandidate(setup, blockReason))
+     {
+      ++g_nestedNWaveExecutionBlockedCount;
+      if(blockReason == "existing_position")
+         ++g_nestedNWaveExistingPositionCount;
+      setup.executionBlockReason = blockReason;
+      setup.failReason = blockReason;
+      WriteNestedNWaveTradeRow(setup, "order_blocked", blockReason, 0);
+      WriteNestedNWaveSignalRow(setup, "order_blocked");
+      PrintFormat("%s: nested nwave trade blocked %s %s reason=%s",
+                  STRATEGY_NAME,
+                  setup.symbol,
+                  setup.direction,
+                  blockReason);
+      return;
+     }
+
+   trade.SetExpertMagicNumber(InpMagicNumber);
+   trade.SetDeviationInPoints(InpSlippagePoints);
+
+   string comment = NestedNWaveStrategyName();
+   WriteNestedNWaveTradeRow(setup, "order_attempt", "", 0);
+   bool ok = false;
+   if(setup.direction == "LONG")
+      ok = trade.Buy(setup.volume, setup.symbol, 0.0, setup.stopLoss, setup.takeProfit, comment);
+   else if(setup.direction == "SHORT")
+      ok = trade.Sell(setup.volume, setup.symbol, 0.0, setup.stopLoss, setup.takeProfit, comment);
+
+   if(!ok)
+     {
+      ++g_nestedNWaveOrderFailedCount;
+      setup.executionBlockReason = "order_failed";
+      setup.failReason = "order_failed";
+      WriteNestedNWaveTradeRow(setup, "order_failed", "retcode_" + IntegerToString((int)trade.ResultRetcode()), (long)trade.ResultRetcode());
+      WriteNestedNWaveSignalRow(setup, "order_failed");
+      PrintFormat("%s: nested nwave order failed %s %s lot=%.2f retcode=%d",
+                  STRATEGY_NAME,
+                  setup.symbol,
+                  setup.direction,
+                  setup.volume,
+                  trade.ResultRetcode());
+     }
+   else
+     {
+      ++g_nestedNWaveOrderSentCount;
+      WriteNestedNWaveTradeRow(setup, "order_sent", "order_sent", (long)trade.ResultRetcode());
+      WriteNestedNWaveSignalRow(setup, "order_sent");
+      MarkEntryOnCurrentScanBar(NestedNWaveStrategyName(), setup.symbol, setup.direction);
+      PrintFormat("%s: nested nwave order sent %s %s lot=%.2f label=%s rr=%.2f",
+                  STRATEGY_NAME,
+                  setup.symbol,
+                  setup.direction,
+                  setup.volume,
+                  setup.label,
                   setup.rr);
      }
   }
@@ -5435,9 +6642,99 @@ void ScanThirdWaveSymbols()
       PrintFormat("%s: thirdwave no entry candidate in scan", STRATEGY_NAME);
   }
 
+int FindBestNestedNWaveCandidate(const NestedNWaveSetup &setups[])
+  {
+   int bestIndex = -1;
+   double bestQuality = -DBL_MAX;
+   int size = ArraySize(setups);
+
+   for(int i = 0; i < size; ++i)
+     {
+      if(!setups[i].entryPass)
+         continue;
+      if(setups[i].qualityScore > bestQuality)
+        {
+         bestQuality = setups[i].qualityScore;
+         bestIndex = i;
+        }
+     }
+
+   return bestIndex;
+  }
+
+void ScanNestedNWaveSymbols()
+  {
+   UpdateRiskAnchors();
+
+   int symbolCount = ArraySize(g_symbols);
+   if(symbolCount <= 0)
+      return;
+
+   NestedNWaveSetup setups[];
+   ArrayResize(setups, 0);
+
+   for(int i = 0; i < symbolCount; ++i)
+     {
+      for(int direction = 1; direction >= -1; direction -= 2)
+        {
+         string directionReason = "";
+         if(!IsDirectionAllowedByResearchMode(g_symbols[i], direction, directionReason))
+            continue;
+
+         NestedNWaveSetup setup;
+         BuildNestedNWaveSetup(g_symbols[i], direction, setup);
+         RecordNestedNWaveEvaluation(setup);
+
+         int size = ArraySize(setups);
+         ArrayResize(setups, size + 1);
+         setups[size] = setup;
+
+         if(ShouldWriteNestedNWaveSignalDiagnostic(setup))
+            WriteNestedNWaveSignalRow(setup, setup.entryPass ? "final_entry_candidate" : "blocked_candidate");
+        }
+     }
+
+   int bestIndex = FindBestNestedNWaveCandidate(setups);
+   if(IsAllCandidatesEntryMode())
+     {
+      bool attempted = false;
+      int setupCount = ArraySize(setups);
+      for(int i = 0; i < setupCount; ++i)
+        {
+         if(!setups[i].entryPass)
+            continue;
+         attempted = true;
+         NestedNWaveSetup candidate = setups[i];
+         TryNestedNWaveEntry(candidate);
+        }
+
+      if(!attempted)
+         PrintFormat("%s: nested nwave no all-candidates entry candidate in scan", STRATEGY_NAME);
+      return;
+     }
+
+   if(bestIndex >= 0)
+     {
+      NestedNWaveSetup best = setups[bestIndex];
+      PrintFormat("%s: nested nwave best=%s %s label=%s fib=%.2f quality=%.2f rr=%.2f",
+                  STRATEGY_NAME,
+                  best.symbol,
+                  best.direction,
+                  best.label,
+                  best.h4FibRetracementPct,
+                  best.qualityScore,
+                  best.rr);
+      TryNestedNWaveEntry(best);
+     }
+   else
+      PrintFormat("%s: nested nwave no entry candidate in scan", STRATEGY_NAME);
+  }
+
 void RunActiveStrategyScan()
   {
-   if(IsThirdWaveStrategyMode())
+   if(IsNestedNWaveStrategyMode())
+      ScanNestedNWaveSymbols();
+   else if(IsThirdWaveStrategyMode())
       ScanThirdWaveSymbols();
    else
       ScanAllSymbols();
@@ -5586,6 +6883,7 @@ void OnDeinit(const int reason)
   {
    WriteStructureSummaryRow();
    WriteThirdWaveSummaryRow();
+   WriteNestedNWaveSummaryRow();
    EventKillTimer();
   }
 
