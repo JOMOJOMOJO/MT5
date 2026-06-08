@@ -33,7 +33,8 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V2_AUDIT_FILTERED = 3,
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V3_ENTRY_TIMING = 4,
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V4_EARLY_REVERSAL = 5,
-   RESEARCH_STRATEGY_NESTED_NWAVE_NECKLINE_BREAK = 6
+   RESEARCH_STRATEGY_NESTED_NWAVE_NECKLINE_BREAK = 6,
+   RESEARCH_STRATEGY_NESTED_NWAVE_RETEST_CONFIRMATION = 7
   };
 
 enum ENUM_ENTRY_SELECTION_MODE
@@ -322,6 +323,23 @@ struct NestedNWaveSetup
    double            distanceRightSideToEntryATR;
    int               barsSinceRightSide;
    double            qualityScore;
+   bool              retestConfirmationMode;
+   bool              retestDetected;
+   bool              retestHeld;
+   bool              retestTriggerPass;
+   bool              retestFailed;
+   datetime          originalNecklineBreakTime;
+   datetime          retestDetectedTime;
+   datetime          retestTriggerTime;
+   int               retestBarsAfterBreakout;
+   int               entryDelayBars;
+   double            retestDepthATR;
+   double            retestZoneATR;
+   double            retestReclaimPrice;
+   double            retestDistanceFromNecklineATR;
+   bool              falseBreakReturnInsideNeckline;
+   string            retestQuality;
+   string            retestFailureReason;
   };
 
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
@@ -491,6 +509,13 @@ long     g_nestedNWaveCleanEntryCount = 0;
 long     g_nestedNWaveInitialBreakCount = 0;
 long     g_nestedNWaveLateBreakCount = 0;
 long     g_nestedNWaveChasingBreakCount = 0;
+long     g_nestedNWaveRetestDetectedCount = 0;
+long     g_nestedNWaveRetestHeldCount = 0;
+long     g_nestedNWaveRetestTriggerPassCount = 0;
+long     g_nestedNWaveNoRetestBreakCount = 0;
+long     g_nestedNWaveNoRetestDetectedCount = 0;
+long     g_nestedNWaveRetestInvalidatedCount = 0;
+long     g_nestedNWaveNoRetestTriggerCount = 0;
 long     g_nestedNWaveUnknownFailCount = 0;
 
 //+------------------------------------------------------------------+
@@ -597,7 +622,13 @@ bool IsEarlyReversalThirdWaveV4Mode()
 
 bool IsNestedNWaveStrategyMode()
   {
-   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_NECKLINE_BREAK);
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_NECKLINE_BREAK ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_RETEST_CONFIRMATION);
+  }
+
+bool IsNestedNWaveRetestConfirmationMode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_RETEST_CONFIRMATION);
   }
 
 string V4ReversalSignalModeName()
@@ -670,6 +701,8 @@ string ThirdWaveStrategyName()
 
 string NestedNWaveStrategyName()
   {
+   if(IsNestedNWaveRetestConfirmationMode())
+      return "Nested_NWave_RetestConfirmation";
    return "Nested_NWave_NecklineBreak";
   }
 
@@ -1283,6 +1316,23 @@ void InitNestedNWaveSetup(NestedNWaveSetup &setup, const string symbol, const in
    setup.distanceRightSideToEntryATR = 0.0;
    setup.barsSinceRightSide = 0;
    setup.qualityScore = 0.0;
+   setup.retestConfirmationMode = IsNestedNWaveRetestConfirmationMode();
+   setup.retestDetected = false;
+   setup.retestHeld = false;
+   setup.retestTriggerPass = false;
+   setup.retestFailed = false;
+   setup.originalNecklineBreakTime = 0;
+   setup.retestDetectedTime = 0;
+   setup.retestTriggerTime = 0;
+   setup.retestBarsAfterBreakout = 0;
+   setup.entryDelayBars = 0;
+   setup.retestDepthATR = 0.0;
+   setup.retestZoneATR = 0.0;
+   setup.retestReclaimPrice = 0.0;
+   setup.retestDistanceFromNecklineATR = 0.0;
+   setup.falseBreakReturnInsideNeckline = false;
+   setup.retestQuality = "not_applicable";
+   setup.retestFailureReason = "";
   }
 
 //+------------------------------------------------------------------+
@@ -2967,6 +3017,222 @@ bool DetectNestedM15NecklineBreak(const MqlRates &m15Rates[],
    return true;
   }
 
+bool DetectNestedM15RetestConfirmation(const MqlRates &m15Rates[],
+                                        const int direction,
+                                        NestedNWaveSetup &setup)
+  {
+   int span = InpStructureSwingSpan;
+   if(span < 1)
+      span = 1;
+   int scanBars = InpStructureScanBars;
+   if(scanBars < span * 4 + 10)
+      scanBars = span * 4 + 10;
+
+   PivotPoint highLatest;
+   PivotPoint highPrevious;
+   PivotPoint lowLatest;
+   PivotPoint lowPrevious;
+   bool hasHighs = FindRecentPivots(m15Rates, true, span, scanBars, highLatest, highPrevious);
+   bool hasLows = FindRecentPivots(m15Rates, false, span, scanBars, lowLatest, lowPrevious);
+   if(!hasHighs || !hasLows)
+     {
+      setup.failReason = "no_clear_neckline";
+      return false;
+     }
+
+   double entryPrice = (direction > 0 ? SymbolInfoDouble(setup.symbol, SYMBOL_ASK) : SymbolInfoDouble(setup.symbol, SYMBOL_BID));
+   if(entryPrice <= 0.0)
+     {
+      setup.failReason = "market_closed";
+      setup.executionBlockReason = "market_closed";
+      return false;
+     }
+   setup.entryPrice = entryPrice;
+
+   double neckline = 0.0;
+   bool doublePattern = false;
+   if(direction > 0)
+     {
+      doublePattern = (MathAbs(lowLatest.price - lowPrevious.price) <= setup.m15Atr * 0.75);
+      if(!PivotRangeHigh(m15Rates, lowLatest.shift, lowPrevious.shift, neckline))
+         neckline = highLatest.price;
+      setup.rightSideLevel = lowLatest.price;
+      setup.barsSinceRightSide = lowLatest.shift;
+     }
+   else
+     {
+      doublePattern = (MathAbs(highLatest.price - highPrevious.price) <= setup.m15Atr * 0.75);
+      if(!PivotRangeLow(m15Rates, highLatest.shift, highPrevious.shift, neckline))
+         neckline = lowLatest.price;
+      setup.rightSideLevel = highLatest.price;
+      setup.barsSinceRightSide = highLatest.shift;
+     }
+
+   if(neckline <= 0.0)
+     {
+      setup.failReason = "no_clear_neckline";
+      return false;
+     }
+
+   int size = ArraySize(m15Rates);
+   int maxWaitBars = 8;
+   int breakoutShift = -1;
+   for(int shift = 2; shift <= maxWaitBars + 1 && shift + 1 < size; ++shift)
+     {
+      if(direction > 0)
+        {
+         if(m15Rates[shift].close > neckline && m15Rates[shift + 1].close <= neckline)
+           {
+            breakoutShift = shift;
+            break;
+           }
+        }
+      else
+        {
+         if(m15Rates[shift].close < neckline && m15Rates[shift + 1].close >= neckline)
+           {
+            breakoutShift = shift;
+            break;
+           }
+        }
+     }
+
+   setup.necklinePrice = neckline;
+   setup.necklineBreakLabel = "retest_confirmation_wait";
+   if(breakoutShift < 0)
+     {
+      setup.failReason = "no_retest_confirmation_break";
+      setup.retestFailureReason = setup.failReason;
+      return false;
+     }
+
+   setup.originalNecklineBreakTime = m15Rates[breakoutShift].time;
+   setup.necklineBreakClosePrice = m15Rates[breakoutShift].close;
+   setup.entryDelayBars = breakoutShift - 1;
+   setup.retestZoneATR = 0.50;
+
+   bool invalidated = false;
+   bool returnedInside = false;
+   bool retestFound = false;
+   int retestShift = -1;
+   double zone = setup.m15Atr * setup.retestZoneATR;
+   double bestDepth = DBL_MAX;
+
+   for(int shift = breakoutShift - 1; shift >= 1; --shift)
+     {
+      if(direction > 0)
+        {
+         if(m15Rates[shift].close < setup.rightSideLevel)
+            invalidated = true;
+         if(m15Rates[shift].close <= neckline)
+            returnedInside = true;
+         if(m15Rates[shift].low <= neckline + zone && m15Rates[shift].close >= setup.rightSideLevel)
+           {
+            double depth = MathAbs(m15Rates[shift].low - neckline);
+            if(depth < bestDepth)
+              {
+               bestDepth = depth;
+               retestShift = shift;
+               retestFound = true;
+              }
+           }
+        }
+      else
+        {
+         if(m15Rates[shift].close > setup.rightSideLevel)
+            invalidated = true;
+         if(m15Rates[shift].close >= neckline)
+            returnedInside = true;
+         if(m15Rates[shift].high >= neckline - zone && m15Rates[shift].close <= setup.rightSideLevel)
+           {
+            double depth = MathAbs(m15Rates[shift].high - neckline);
+            if(depth < bestDepth)
+              {
+               bestDepth = depth;
+               retestShift = shift;
+               retestFound = true;
+              }
+           }
+        }
+     }
+
+   setup.falseBreakReturnInsideNeckline = returnedInside;
+   if(invalidated)
+     {
+      setup.retestFailed = true;
+      setup.failReason = "retest_invalidated";
+      setup.retestFailureReason = setup.failReason;
+      setup.retestQuality = "return_inside_and_fail";
+      return false;
+     }
+   if(!retestFound)
+     {
+      setup.failReason = "no_retest_detected";
+      setup.retestFailureReason = setup.failReason;
+      setup.retestQuality = "no_retest_break_and_go";
+      return false;
+     }
+
+   setup.retestDetected = true;
+   setup.retestHeld = true;
+   setup.retestDetectedTime = m15Rates[retestShift].time;
+   setup.retestBarsAfterBreakout = breakoutShift - retestShift;
+   setup.retestDepthATR = (setup.m15Atr > 0.0 ? bestDepth / setup.m15Atr : 0.0);
+   setup.retestDistanceFromNecklineATR = setup.retestDepthATR;
+
+   double recentHigh = 0.0;
+   double recentLow = 0.0;
+   int lookbackBars = MathMin(3, MathMax(1, breakoutShift - 2));
+   if(lookbackBars > 0 && 2 + lookbackBars <= size)
+     {
+      recentHigh = HighestHigh(m15Rates, 2, lookbackBars);
+      recentLow = LowestLow(m15Rates, 2, lookbackBars);
+     }
+
+   bool candleTrigger = false;
+   bool minorBreakTrigger = false;
+   if(direction > 0)
+     {
+      candleTrigger = (m15Rates[1].close > m15Rates[1].open && m15Rates[1].close > neckline);
+      minorBreakTrigger = (recentHigh > 0.0 && m15Rates[1].close > recentHigh);
+      setup.retestReclaimPrice = (minorBreakTrigger ? recentHigh : neckline);
+      setup.distanceNecklineToEntry = MathAbs(setup.entryPrice - neckline);
+      setup.distanceRightSideToEntry = MathAbs(setup.entryPrice - setup.rightSideLevel);
+     }
+   else
+     {
+      candleTrigger = (m15Rates[1].close < m15Rates[1].open && m15Rates[1].close < neckline);
+      minorBreakTrigger = (recentLow > 0.0 && m15Rates[1].close < recentLow);
+      setup.retestReclaimPrice = (minorBreakTrigger ? recentLow : neckline);
+      setup.distanceNecklineToEntry = MathAbs(setup.entryPrice - neckline);
+      setup.distanceRightSideToEntry = MathAbs(setup.entryPrice - setup.rightSideLevel);
+     }
+
+   if(!candleTrigger && !minorBreakTrigger)
+     {
+      setup.failReason = "no_retest_trigger";
+      setup.retestFailureReason = setup.failReason;
+      setup.retestQuality = (returnedInside ? "deep_retest_but_reclaim_missing" : "shallow_retest_no_trigger");
+      return false;
+     }
+
+   setup.retestTriggerPass = true;
+   setup.retestTriggerTime = m15Rates[1].time;
+   setup.retestQuality = (returnedInside ? "deep_retest_but_reclaim" : "shallow_retest_then_go");
+   setup.distanceNecklineToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceNecklineToEntry / setup.m15Atr : 0.0);
+   setup.distanceRightSideToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceRightSideToEntry / setup.m15Atr : 0.0);
+   setup.necklinePass = true;
+   setup.necklineBreakLabel = "retest_confirmed";
+   setup.label = (setup.falseBreakReturnInsideNeckline ? "retest_then_go_after_return_inside" : "retest_confirmation_entry");
+   setup.qualityScore = 125.0;
+   if(doublePattern)
+      setup.qualityScore += 10.0;
+   setup.qualityScore -= setup.retestDepthATR * 10.0;
+   setup.qualityScore -= setup.distanceNecklineToEntryATR * 8.0;
+   setup.qualityScore -= MathMax(0, setup.entryDelayBars - 4) * 2.0;
+   return true;
+  }
+
 bool CalculateNestedStopLoss(const string symbol,
                              const int direction,
                              NestedNWaveSetup &setup)
@@ -3107,8 +3373,16 @@ bool BuildNestedNWaveSetup(const string symbol,
       return false;
 
    setup.setupPass = true;
-   if(!DetectNestedM15NecklineBreak(m15Rates, direction, setup))
-      return false;
+   if(IsNestedNWaveRetestConfirmationMode())
+     {
+      if(!DetectNestedM15RetestConfirmation(m15Rates, direction, setup))
+         return false;
+     }
+   else
+     {
+      if(!DetectNestedM15NecklineBreak(m15Rates, direction, setup))
+         return false;
+     }
 
    if(!CalculateNestedStopLoss(symbol, direction, setup))
       return false;
@@ -3759,6 +4033,14 @@ void RecordNestedNWaveFailReason(const string reason)
       ++g_nestedNWaveInvalidStructureCount;
    else if(reason == "spread_guard")
       ++g_nestedNWaveSpreadGuardCount;
+   else if(reason == "no_retest_confirmation_break")
+      ++g_nestedNWaveNoRetestBreakCount;
+   else if(reason == "no_retest_detected")
+      ++g_nestedNWaveNoRetestDetectedCount;
+   else if(reason == "retest_invalidated")
+      ++g_nestedNWaveRetestInvalidatedCount;
+   else if(reason == "no_retest_trigger")
+      ++g_nestedNWaveNoRetestTriggerCount;
    else
       ++g_nestedNWaveUnknownFailCount;
   }
@@ -3789,6 +4071,12 @@ void RecordNestedNWaveEvaluation(const NestedNWaveSetup &setup)
       ++g_nestedNWaveSpreadGuardBlockedCount;
    if(setup.finalEntryPass)
       ++g_nestedNWaveFinalEntryPassCount;
+   if(setup.retestDetected)
+      ++g_nestedNWaveRetestDetectedCount;
+   if(setup.retestHeld)
+      ++g_nestedNWaveRetestHeldCount;
+   if(setup.retestTriggerPass)
+      ++g_nestedNWaveRetestTriggerPassCount;
 
    if(setup.label == "clean_nested_nwave_entry")
       ++g_nestedNWaveCleanEntryCount;
@@ -3809,6 +4097,7 @@ bool ShouldWriteNestedNWaveSignalDiagnostic(const NestedNWaveSetup &setup)
    return (setup.entryPass ||
            setup.finalEntryPass ||
            setup.executionBlockReason != "" ||
+           (setup.retestConfirmationMode && setup.setupPass && setup.h1CounterTrendPass && setup.failReason != "") ||
            (setup.structureSlPass && setup.rrPass));
   }
 
@@ -5238,7 +5527,10 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
                       "h4_impulse_high,h4_impulse_low,h4_fib_retracement_pct,h4_atr,h1_atr,m15_atr,spread_atr,spread_points,"
                       "neckline_price,neckline_break_close_price,right_side_level,entry_price,sl,tp,volume,risk_r,rr,"
                       "bars_since_right_side,distance_neckline_to_entry,distance_neckline_to_entry_atr,distance_right_side_to_entry,distance_right_side_to_entry_atr,"
-                      "sl_points,sl_atr,tp_points,tp_atr,quality_score\r\n");
+                      "sl_points,sl_atr,tp_points,tp_atr,quality_score,"
+                      "retest_confirmation_mode,retest_detected,retest_held,retest_trigger_pass,retest_failed,"
+                      "original_neckline_break_time,retest_detected_time,retest_trigger_time,retest_bars_after_breakout,entry_delay_bars,"
+                      "retest_depth_atr,retest_zone_atr,retest_reclaim_price,retest_distance_from_neckline_atr,false_break_return_inside_neckline,retest_quality,retest_failure_reason\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -5295,6 +5587,23 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
    AppendCsvField(row, DoubleToString(setup.tpPoints, 1));
    AppendCsvField(row, DoubleToString(setup.tpATR, 2));
    AppendCsvField(row, DoubleToString(setup.qualityScore, 2));
+   AppendCsvField(row, BoolText(setup.retestConfirmationMode));
+   AppendCsvField(row, BoolText(setup.retestDetected));
+   AppendCsvField(row, BoolText(setup.retestHeld));
+   AppendCsvField(row, BoolText(setup.retestTriggerPass));
+   AppendCsvField(row, BoolText(setup.retestFailed));
+   AppendCsvField(row, DateTimeText(setup.originalNecklineBreakTime));
+   AppendCsvField(row, DateTimeText(setup.retestDetectedTime));
+   AppendCsvField(row, DateTimeText(setup.retestTriggerTime));
+   AppendCsvField(row, IntegerToString(setup.retestBarsAfterBreakout));
+   AppendCsvField(row, IntegerToString(setup.entryDelayBars));
+   AppendCsvField(row, DoubleToString(setup.retestDepthATR, 2));
+   AppendCsvField(row, DoubleToString(setup.retestZoneATR, 2));
+   AppendCsvField(row, DoubleToString(setup.retestReclaimPrice, digits));
+   AppendCsvField(row, DoubleToString(setup.retestDistanceFromNecklineATR, 2));
+   AppendCsvField(row, BoolText(setup.falseBreakReturnInsideNeckline));
+   AppendCsvField(row, setup.retestQuality);
+   AppendCsvField(row, setup.retestFailureReason);
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }
@@ -5331,7 +5640,10 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
                       "label,fail_reason,execution_block_reason,fib_zone,h4_trend_state,h1_counter_trend_state,neckline_break_label,"
                       "entry_price,sl,tp,volume,risk_r,rr,sl_points,sl_atr,tp_points,tp_atr,"
                       "neckline_price,neckline_break_close_price,right_side_level,bars_since_right_side,"
-                      "distance_neckline_to_entry_atr,distance_right_side_to_entry_atr,spread_atr,spread_points,quality_score\r\n");
+                      "distance_neckline_to_entry_atr,distance_right_side_to_entry_atr,spread_atr,spread_points,quality_score,"
+                      "retest_confirmation_mode,retest_detected,retest_held,retest_trigger_pass,retest_failed,"
+                      "original_neckline_break_time,retest_detected_time,retest_trigger_time,retest_bars_after_breakout,entry_delay_bars,"
+                      "retest_depth_atr,retest_zone_atr,retest_reclaim_price,retest_distance_from_neckline_atr,false_break_return_inside_neckline,retest_quality,retest_failure_reason\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -5369,6 +5681,23 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
    AppendCsvField(row, DoubleToString(setup.spreadATR, 4));
    AppendCsvField(row, DoubleToString(setup.spreadPoints, 1));
    AppendCsvField(row, DoubleToString(setup.qualityScore, 2));
+   AppendCsvField(row, BoolText(setup.retestConfirmationMode));
+   AppendCsvField(row, BoolText(setup.retestDetected));
+   AppendCsvField(row, BoolText(setup.retestHeld));
+   AppendCsvField(row, BoolText(setup.retestTriggerPass));
+   AppendCsvField(row, BoolText(setup.retestFailed));
+   AppendCsvField(row, DateTimeText(setup.originalNecklineBreakTime));
+   AppendCsvField(row, DateTimeText(setup.retestDetectedTime));
+   AppendCsvField(row, DateTimeText(setup.retestTriggerTime));
+   AppendCsvField(row, IntegerToString(setup.retestBarsAfterBreakout));
+   AppendCsvField(row, IntegerToString(setup.entryDelayBars));
+   AppendCsvField(row, DoubleToString(setup.retestDepthATR, 2));
+   AppendCsvField(row, DoubleToString(setup.retestZoneATR, 2));
+   AppendCsvField(row, DoubleToString(setup.retestReclaimPrice, digits));
+   AppendCsvField(row, DoubleToString(setup.retestDistanceFromNecklineATR, 2));
+   AppendCsvField(row, BoolText(setup.falseBreakReturnInsideNeckline));
+   AppendCsvField(row, setup.retestQuality);
+   AppendCsvField(row, setup.retestFailureReason);
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }
@@ -5443,6 +5772,26 @@ string TopNestedNWaveFailReason(long &count)
       reason = "spread_guard";
       count = g_nestedNWaveSpreadGuardCount;
      }
+   if(g_nestedNWaveNoRetestBreakCount > count)
+     {
+      reason = "no_retest_confirmation_break";
+      count = g_nestedNWaveNoRetestBreakCount;
+     }
+   if(g_nestedNWaveNoRetestDetectedCount > count)
+     {
+      reason = "no_retest_detected";
+      count = g_nestedNWaveNoRetestDetectedCount;
+     }
+   if(g_nestedNWaveRetestInvalidatedCount > count)
+     {
+      reason = "retest_invalidated";
+      count = g_nestedNWaveRetestInvalidatedCount;
+     }
+   if(g_nestedNWaveNoRetestTriggerCount > count)
+     {
+      reason = "no_retest_trigger";
+      count = g_nestedNWaveNoRetestTriggerCount;
+     }
    if(g_nestedNWaveUnknownFailCount > count)
      {
       reason = "unknown";
@@ -5480,7 +5829,7 @@ void WriteNestedNWaveSummaryRow()
       FileWriteString(handle,
                       "time,strategy_name,entry_selection_mode,context_tf,pattern_tf,execution_tf,reward_r,"
                       "evaluations,long_evaluations,short_evaluations,h4_impulse_pass,pullback_zone_pass,h1_counter_trend_pass,neckline_pass,structure_sl_pass,rr_pass,spread_guard_pass,spread_guard_blocked,final_entry_pass,orders_sent,orders_failed,"
-                      "data_unavailable,atr_unavailable,research_excluded,no_h4_nwave,too_shallow_pullback,too_deep_pullback,no_h1_counter_trend_nwave,no_clear_neckline,no_neckline_break,sl_too_tight,sl_too_wide,invalid_structure,spread_guard,existing_position,execution_blocked,clean_nested_nwave_entry,neckline_break_initial,neckline_break_late,chasing_after_break,unknown,"
+                      "data_unavailable,atr_unavailable,research_excluded,no_h4_nwave,too_shallow_pullback,too_deep_pullback,no_h1_counter_trend_nwave,no_clear_neckline,no_neckline_break,sl_too_tight,sl_too_wide,invalid_structure,spread_guard,existing_position,execution_blocked,clean_nested_nwave_entry,neckline_break_initial,neckline_break_late,chasing_after_break,retest_detected,retest_held,retest_trigger_pass,no_retest_confirmation_break,no_retest_detected,retest_invalidated,no_retest_trigger,unknown,"
                       "top_fail_reason,top_fail_reason_rows\r\n");
 
    long topFailCount = 0;
@@ -5527,6 +5876,13 @@ void WriteNestedNWaveSummaryRow()
    AppendCsvLong(row, g_nestedNWaveInitialBreakCount);
    AppendCsvLong(row, g_nestedNWaveLateBreakCount);
    AppendCsvLong(row, g_nestedNWaveChasingBreakCount);
+   AppendCsvLong(row, g_nestedNWaveRetestDetectedCount);
+   AppendCsvLong(row, g_nestedNWaveRetestHeldCount);
+   AppendCsvLong(row, g_nestedNWaveRetestTriggerPassCount);
+   AppendCsvLong(row, g_nestedNWaveNoRetestBreakCount);
+   AppendCsvLong(row, g_nestedNWaveNoRetestDetectedCount);
+   AppendCsvLong(row, g_nestedNWaveRetestInvalidatedCount);
+   AppendCsvLong(row, g_nestedNWaveNoRetestTriggerCount);
    AppendCsvLong(row, g_nestedNWaveUnknownFailCount);
    AppendCsvField(row, topFailReason);
    AppendCsvLong(row, topFailCount);
