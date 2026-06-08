@@ -6,7 +6,7 @@ param(
     [string]$FromDate = "2025.01.01",
     [string]$ToDate = "2025.12.31",
     [int]$BaseMagicNumber = 2026060310,
-    [ValidateSet("Original", "RegimeComparison", "ScanIntervalComparison", "WaveAudit", "V2Comparison", "V3Comparison", "V4Comparison", "V4SignalQuality", "LowerTFSLFeasibility", "NestedNWave", "NestedRetestConfirmation")]
+    [ValidateSet("Original", "RegimeComparison", "ScanIntervalComparison", "WaveAudit", "V2Comparison", "V3Comparison", "V4Comparison", "V4SignalQuality", "LowerTFSLFeasibility", "NestedNWave", "NestedRetestConfirmation", "NestedBreakoutQualityRouter")]
     [string]$ScenarioSet = "Original"
 )
 
@@ -150,6 +150,15 @@ if ($ScenarioSet -eq "ScanIntervalComparison") {
         New-Run -Id "E" -Name "E_retest_best" -StrategyMode 7 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 5) -Scenario "Nested_NWave_RetestConfirmation_BOTH_best_H4_H1_M15_2R" -EntrySelectionMode 0 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 1 -MaxSameCurrencyGroupPositions 1 -MaxRiskPerSymbolPercent 1.0 -MaxTotalOpenRiskPercent 3.0
         New-Run -Id "F" -Name "F_retest_all" -StrategyMode 7 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 6) -Scenario "Nested_NWave_RetestConfirmation_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
     )
+} elseif ($ScenarioSet -eq "NestedBreakoutQualityRouter") {
+    $runs = @(
+        New-Run -Id "C" -Name "C_nested_best" -StrategyMode 6 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 3) -Scenario "Nested_NWave_NecklineBreak_BOTH_best_H4_H1_M15_2R" -EntrySelectionMode 0 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 1 -MaxSameCurrencyGroupPositions 1 -MaxRiskPerSymbolPercent 1.0 -MaxTotalOpenRiskPercent 3.0
+        New-Run -Id "D" -Name "D_nested_all" -StrategyMode 6 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 4) -Scenario "Nested_NWave_NecklineBreak_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "E" -Name "E_retest_best" -StrategyMode 7 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 5) -Scenario "Nested_NWave_RetestConfirmation_BOTH_best_H4_H1_M15_2R" -EntrySelectionMode 0 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 1 -MaxSameCurrencyGroupPositions 1 -MaxRiskPerSymbolPercent 1.0 -MaxTotalOpenRiskPercent 3.0
+        New-Run -Id "F" -Name "F_retest_all" -StrategyMode 7 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 6) -Scenario "Nested_NWave_RetestConfirmation_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "G" -Name "G_router_best" -StrategyMode 8 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 7) -Scenario "Nested_NWave_BreakoutQualityRouter_BOTH_best_H4_H1_M15_2R" -EntrySelectionMode 0 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 1 -MaxSameCurrencyGroupPositions 1 -MaxRiskPerSymbolPercent 1.0 -MaxTotalOpenRiskPercent 3.0
+        New-Run -Id "H" -Name "H_router_all" -StrategyMode 8 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 8) -Scenario "Nested_NWave_BreakoutQualityRouter_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+    )
 } elseif ($ScenarioSet -eq "RegimeComparison") {
     $runs = @(
         New-Run -Id "A" -Name "A_original_both" -StrategyMode 1 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 1) -Scenario "ThirdWave_original_BOTH"
@@ -207,7 +216,7 @@ function Write-ThirdWavePreset {
             continue
         }
         if ($line -match '^InpResearchStrategyMode=') {
-            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||7||N")
+            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||8||N")
             $insertedStrategyMode = $true
             continue
         }
@@ -291,7 +300,7 @@ function Write-ThirdWavePreset {
         }
         $out.Add($line)
         if (-not $insertedStrategyMode -and $line -match '^InpExecutionTF=') {
-            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||7||N")
+            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||8||N")
             $insertedStrategyMode = $true
         }
         if (-not $insertedEntrySelectionMode -and $line -match '^InpResearchStrategyMode=') {
@@ -328,7 +337,7 @@ function Write-ThirdWavePreset {
         }
     }
     if (-not $insertedStrategyMode) {
-        $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||7||N")
+        $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||8||N")
     }
     if (-not $insertedEntrySelectionMode) {
         $out.Add("InpEntrySelectionMode=$($Run.EntrySelectionMode)||$($Run.EntrySelectionMode)||0||1||N")

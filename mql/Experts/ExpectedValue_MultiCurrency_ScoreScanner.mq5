@@ -34,7 +34,8 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V3_ENTRY_TIMING = 4,
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V4_EARLY_REVERSAL = 5,
    RESEARCH_STRATEGY_NESTED_NWAVE_NECKLINE_BREAK = 6,
-   RESEARCH_STRATEGY_NESTED_NWAVE_RETEST_CONFIRMATION = 7
+   RESEARCH_STRATEGY_NESTED_NWAVE_RETEST_CONFIRMATION = 7,
+   RESEARCH_STRATEGY_NESTED_NWAVE_BREAKOUT_QUALITY_ROUTER = 8
   };
 
 enum ENUM_ENTRY_SELECTION_MODE
@@ -340,6 +341,22 @@ struct NestedNWaveSetup
    bool              falseBreakReturnInsideNeckline;
    string            retestQuality;
    string            retestFailureReason;
+   bool              breakoutQualityRouterMode;
+   string            breakoutQualityLabel;
+   string            breakoutQualityReason;
+   bool              breakoutQualityPass;
+   bool              breakoutStrong;
+   bool              breakoutWeak;
+   bool              breakoutDirty;
+   double            breakoutCloseDistanceFromNeckline;
+   double            breakoutCloseDistanceFromNecklineATR;
+   double            breakoutCloseDistanceFromNecklinePoints;
+   double            breakoutBodyRatio;
+   double            breakoutBodyATR;
+   double            breakoutRangeATR;
+   double            breakoutDirectionalWickRatio;
+   double            breakoutClosePositionDirectional;
+   int               necklineTouchCount;
   };
 
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
@@ -516,6 +533,14 @@ long     g_nestedNWaveNoRetestBreakCount = 0;
 long     g_nestedNWaveNoRetestDetectedCount = 0;
 long     g_nestedNWaveRetestInvalidatedCount = 0;
 long     g_nestedNWaveNoRetestTriggerCount = 0;
+long     g_nestedNWaveStrongBreakoutCount = 0;
+long     g_nestedNWaveWeakBreakoutCount = 0;
+long     g_nestedNWaveDirtyBreakoutCount = 0;
+long     g_nestedNWaveUnclearBreakoutCount = 0;
+long     g_nestedNWaveDirtyBreakoutFailCount = 0;
+long     g_nestedNWaveUnclearBreakoutFailCount = 0;
+long     g_nestedNWaveWeakBreakoutWaitingRetestCount = 0;
+long     g_nestedNWaveRouterRetestRequiresWeakCount = 0;
 long     g_nestedNWaveUnknownFailCount = 0;
 
 //+------------------------------------------------------------------+
@@ -623,12 +648,18 @@ bool IsEarlyReversalThirdWaveV4Mode()
 bool IsNestedNWaveStrategyMode()
   {
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_NECKLINE_BREAK ||
-           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_RETEST_CONFIRMATION);
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_RETEST_CONFIRMATION ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_BREAKOUT_QUALITY_ROUTER);
   }
 
 bool IsNestedNWaveRetestConfirmationMode()
   {
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_RETEST_CONFIRMATION);
+  }
+
+bool IsNestedNWaveBreakoutQualityRouterMode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_BREAKOUT_QUALITY_ROUTER);
   }
 
 string V4ReversalSignalModeName()
@@ -701,6 +732,8 @@ string ThirdWaveStrategyName()
 
 string NestedNWaveStrategyName()
   {
+   if(IsNestedNWaveBreakoutQualityRouterMode())
+      return "Nested_NWave_BreakoutQualityRouter";
    if(IsNestedNWaveRetestConfirmationMode())
       return "Nested_NWave_RetestConfirmation";
    return "Nested_NWave_NecklineBreak";
@@ -1333,6 +1366,22 @@ void InitNestedNWaveSetup(NestedNWaveSetup &setup, const string symbol, const in
    setup.falseBreakReturnInsideNeckline = false;
    setup.retestQuality = "not_applicable";
    setup.retestFailureReason = "";
+   setup.breakoutQualityRouterMode = IsNestedNWaveBreakoutQualityRouterMode();
+   setup.breakoutQualityLabel = "unclassified";
+   setup.breakoutQualityReason = "";
+   setup.breakoutQualityPass = false;
+   setup.breakoutStrong = false;
+   setup.breakoutWeak = false;
+   setup.breakoutDirty = false;
+   setup.breakoutCloseDistanceFromNeckline = 0.0;
+   setup.breakoutCloseDistanceFromNecklineATR = 0.0;
+   setup.breakoutCloseDistanceFromNecklinePoints = 0.0;
+   setup.breakoutBodyRatio = 0.0;
+   setup.breakoutBodyATR = 0.0;
+   setup.breakoutRangeATR = 0.0;
+   setup.breakoutDirectionalWickRatio = 0.0;
+   setup.breakoutClosePositionDirectional = 0.0;
+   setup.necklineTouchCount = 0;
   }
 
 //+------------------------------------------------------------------+
@@ -2922,6 +2971,115 @@ string ClassifyNestedNecklineBreakLabel(const NestedNWaveSetup &setup, const boo
    return "neckline_break_late";
   }
 
+void UpdateNestedBreakoutQualityMetrics(const MqlRates &m15Rates[],
+                                        const int breakoutShift,
+                                        const int direction,
+                                        NestedNWaveSetup &setup)
+  {
+   int size = ArraySize(m15Rates);
+   if(breakoutShift < 1 || breakoutShift >= size || setup.necklinePrice <= 0.0)
+      return;
+
+   double point = SymbolInfoDouble(setup.symbol, SYMBOL_POINT);
+   double range = m15Rates[breakoutShift].high - m15Rates[breakoutShift].low;
+   double body = MathAbs(m15Rates[breakoutShift].close - m15Rates[breakoutShift].open);
+   double upperWick = m15Rates[breakoutShift].high - MathMax(m15Rates[breakoutShift].open, m15Rates[breakoutShift].close);
+   double lowerWick = MathMin(m15Rates[breakoutShift].open, m15Rates[breakoutShift].close) - m15Rates[breakoutShift].low;
+   if(range <= 0.0)
+      return;
+
+   double closeDistance = 0.0;
+   if(direction > 0)
+     {
+      closeDistance = m15Rates[breakoutShift].close - setup.necklinePrice;
+      setup.breakoutClosePositionDirectional = (m15Rates[breakoutShift].close - m15Rates[breakoutShift].low) / range;
+      setup.breakoutDirectionalWickRatio = upperWick / range;
+     }
+   else
+     {
+      closeDistance = setup.necklinePrice - m15Rates[breakoutShift].close;
+      setup.breakoutClosePositionDirectional = (m15Rates[breakoutShift].high - m15Rates[breakoutShift].close) / range;
+      setup.breakoutDirectionalWickRatio = lowerWick / range;
+     }
+
+   setup.breakoutCloseDistanceFromNeckline = MathMax(0.0, closeDistance);
+   setup.breakoutCloseDistanceFromNecklineATR = (setup.m15Atr > 0.0 ? setup.breakoutCloseDistanceFromNeckline / setup.m15Atr : 0.0);
+   setup.breakoutCloseDistanceFromNecklinePoints = (point > 0.0 ? setup.breakoutCloseDistanceFromNeckline / point : 0.0);
+   setup.breakoutBodyRatio = body / range;
+   setup.breakoutBodyATR = (setup.m15Atr > 0.0 ? body / setup.m15Atr : 0.0);
+   setup.breakoutRangeATR = (setup.m15Atr > 0.0 ? range / setup.m15Atr : 0.0);
+
+   int touches = 0;
+   int maxBars = MathMin(size - 1, MathMax(12, InpStructureSwingSpan * 12));
+   double touchZone = MathMax(setup.m15Atr * 0.15, point * 10.0);
+   for(int shift = breakoutShift + 1; shift <= maxBars; ++shift)
+     {
+      if(m15Rates[shift].high >= setup.necklinePrice - touchZone &&
+         m15Rates[shift].low <= setup.necklinePrice + touchZone)
+         ++touches;
+     }
+   setup.necklineTouchCount = touches;
+  }
+
+string ClassifyNestedBreakoutQuality(NestedNWaveSetup &setup)
+  {
+   setup.breakoutQualityLabel = "unclear";
+   setup.breakoutQualityReason = "";
+   setup.breakoutQualityPass = false;
+   setup.breakoutStrong = false;
+   setup.breakoutWeak = false;
+   setup.breakoutDirty = false;
+
+   if(!setup.necklinePass)
+     {
+      setup.breakoutQualityReason = "no_neckline_break";
+      return setup.breakoutQualityLabel;
+     }
+
+   string reason = "";
+   if(setup.breakoutCloseDistanceFromNecklineATR < 0.10)
+      AppendReason(reason, "shallow_close_distance");
+   if(setup.breakoutClosePositionDirectional < 0.45)
+      AppendReason(reason, "weak_directional_close");
+   if(setup.breakoutDirectionalWickRatio > 0.45)
+      AppendReason(reason, "large_directional_wick");
+   if(setup.slATR > 2.0)
+      AppendReason(reason, "sl_too_wide_for_router");
+   if(setup.distanceNecklineToEntryATR > 1.20)
+      AppendReason(reason, "entry_far_from_neckline");
+   if(setup.breakoutRangeATR > 2.80)
+      AppendReason(reason, "breakout_bar_overextended");
+
+   if(reason != "")
+     {
+      setup.breakoutQualityLabel = "dirty_breakout";
+      setup.breakoutQualityReason = reason;
+      setup.breakoutDirty = true;
+      return setup.breakoutQualityLabel;
+     }
+
+   bool strong = (setup.breakoutCloseDistanceFromNecklineATR >= 0.25 &&
+                  setup.breakoutBodyRatio >= 0.55 &&
+                  setup.breakoutClosePositionDirectional >= 0.65 &&
+                  setup.breakoutDirectionalWickRatio <= 0.30 &&
+                  setup.breakoutRangeATR <= 2.20 &&
+                  setup.slATR <= 1.80);
+   if(strong)
+     {
+      setup.breakoutQualityLabel = "strong_breakout";
+      setup.breakoutQualityReason = "instant_entry_quality";
+      setup.breakoutQualityPass = true;
+      setup.breakoutStrong = true;
+      return setup.breakoutQualityLabel;
+     }
+
+   setup.breakoutQualityLabel = "weak_breakout";
+   setup.breakoutQualityReason = "route_to_retest_confirmation";
+   setup.breakoutQualityPass = true;
+   setup.breakoutWeak = true;
+   return setup.breakoutQualityLabel;
+  }
+
 bool DetectNestedM15NecklineBreak(const MqlRates &m15Rates[],
                                   const int direction,
                                   NestedNWaveSetup &setup)
@@ -2998,6 +3156,7 @@ bool DetectNestedM15NecklineBreak(const MqlRates &m15Rates[],
    setup.distanceNecklineToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceNecklineToEntry / setup.m15Atr : 0.0);
    setup.distanceRightSideToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceRightSideToEntry / setup.m15Atr : 0.0);
    setup.necklinePass = true;
+   UpdateNestedBreakoutQualityMetrics(m15Rates, 1, direction, setup);
    setup.necklineBreakLabel = ClassifyNestedNecklineBreakLabel(setup, freshBreak, doublePattern);
    setup.label = setup.necklineBreakLabel;
    if(setup.necklineBreakLabel == "clean_nested_nwave_entry")
@@ -3110,6 +3269,7 @@ bool DetectNestedM15RetestConfirmation(const MqlRates &m15Rates[],
    setup.necklineBreakClosePrice = m15Rates[breakoutShift].close;
    setup.entryDelayBars = breakoutShift - 1;
    setup.retestZoneATR = 0.50;
+   UpdateNestedBreakoutQualityMetrics(m15Rates, breakoutShift, direction, setup);
 
    bool invalidated = false;
    bool returnedInside = false;
@@ -3373,22 +3533,79 @@ bool BuildNestedNWaveSetup(const string symbol,
       return false;
 
    setup.setupPass = true;
-   if(IsNestedNWaveRetestConfirmationMode())
+   if(IsNestedNWaveBreakoutQualityRouterMode())
+     {
+      bool currentBreakDetected = DetectNestedM15NecklineBreak(m15Rates, direction, setup);
+      if(currentBreakDetected)
+        {
+         if(!CalculateNestedStopLoss(symbol, direction, setup))
+            return false;
+         if(!CalculateNestedTakeProfit(symbol, direction, setup))
+            return false;
+
+         string quality = ClassifyNestedBreakoutQuality(setup);
+         if(quality == "strong_breakout")
+           {
+            setup.necklineBreakLabel = "router_strong_instant";
+            setup.label = "strong_breakout";
+           }
+         else if(quality == "weak_breakout")
+           {
+            setup.failReason = "weak_breakout_waiting_retest";
+            setup.label = "weak_breakout";
+            return false;
+           }
+         else
+           {
+            setup.failReason = (quality == "dirty_breakout" ? "dirty_breakout" : "unclear_breakout_quality");
+            setup.label = setup.failReason;
+            return false;
+           }
+        }
+      else
+        {
+         setup.failReason = "";
+         setup.label = "h1_counter_trend_nwave";
+         setup.necklinePass = false;
+         setup.retestConfirmationMode = true;
+         if(!DetectNestedM15RetestConfirmation(m15Rates, direction, setup))
+            return false;
+         if(!CalculateNestedStopLoss(symbol, direction, setup))
+            return false;
+         if(!CalculateNestedTakeProfit(symbol, direction, setup))
+            return false;
+
+         string quality = ClassifyNestedBreakoutQuality(setup);
+         if(quality != "weak_breakout")
+           {
+            setup.failReason = "router_retest_requires_weak_breakout";
+            setup.label = setup.breakoutQualityLabel;
+            return false;
+           }
+         setup.necklineBreakLabel = "router_weak_retest_confirmed";
+         setup.label = "weak_breakout_retest_confirmed";
+        }
+     }
+   else if(IsNestedNWaveRetestConfirmationMode())
      {
       if(!DetectNestedM15RetestConfirmation(m15Rates, direction, setup))
+         return false;
+      if(!CalculateNestedStopLoss(symbol, direction, setup))
+         return false;
+
+      if(!CalculateNestedTakeProfit(symbol, direction, setup))
          return false;
      }
    else
      {
       if(!DetectNestedM15NecklineBreak(m15Rates, direction, setup))
          return false;
+      if(!CalculateNestedStopLoss(symbol, direction, setup))
+         return false;
+
+      if(!CalculateNestedTakeProfit(symbol, direction, setup))
+         return false;
      }
-
-   if(!CalculateNestedStopLoss(symbol, direction, setup))
-      return false;
-
-   if(!CalculateNestedTakeProfit(symbol, direction, setup))
-      return false;
 
    if(setup.spreadGuardBlocked)
      {
@@ -4041,6 +4258,14 @@ void RecordNestedNWaveFailReason(const string reason)
       ++g_nestedNWaveRetestInvalidatedCount;
    else if(reason == "no_retest_trigger")
       ++g_nestedNWaveNoRetestTriggerCount;
+   else if(reason == "dirty_breakout")
+      ++g_nestedNWaveDirtyBreakoutFailCount;
+   else if(reason == "unclear_breakout_quality")
+      ++g_nestedNWaveUnclearBreakoutFailCount;
+   else if(reason == "weak_breakout_waiting_retest")
+      ++g_nestedNWaveWeakBreakoutWaitingRetestCount;
+   else if(reason == "router_retest_requires_weak_breakout")
+      ++g_nestedNWaveRouterRetestRequiresWeakCount;
    else
       ++g_nestedNWaveUnknownFailCount;
   }
@@ -4077,6 +4302,14 @@ void RecordNestedNWaveEvaluation(const NestedNWaveSetup &setup)
       ++g_nestedNWaveRetestHeldCount;
    if(setup.retestTriggerPass)
       ++g_nestedNWaveRetestTriggerPassCount;
+   if(setup.breakoutQualityLabel == "strong_breakout")
+      ++g_nestedNWaveStrongBreakoutCount;
+   else if(setup.breakoutQualityLabel == "weak_breakout")
+      ++g_nestedNWaveWeakBreakoutCount;
+   else if(setup.breakoutQualityLabel == "dirty_breakout")
+      ++g_nestedNWaveDirtyBreakoutCount;
+   else if(setup.breakoutQualityLabel == "unclear")
+      ++g_nestedNWaveUnclearBreakoutCount;
 
    if(setup.label == "clean_nested_nwave_entry")
       ++g_nestedNWaveCleanEntryCount;
@@ -4098,6 +4331,7 @@ bool ShouldWriteNestedNWaveSignalDiagnostic(const NestedNWaveSetup &setup)
            setup.finalEntryPass ||
            setup.executionBlockReason != "" ||
            (setup.retestConfirmationMode && setup.setupPass && setup.h1CounterTrendPass && setup.failReason != "") ||
+           (setup.breakoutQualityRouterMode && setup.necklinePass && setup.failReason != "") ||
            (setup.structureSlPass && setup.rrPass));
   }
 
@@ -5530,7 +5764,10 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
                       "sl_points,sl_atr,tp_points,tp_atr,quality_score,"
                       "retest_confirmation_mode,retest_detected,retest_held,retest_trigger_pass,retest_failed,"
                       "original_neckline_break_time,retest_detected_time,retest_trigger_time,retest_bars_after_breakout,entry_delay_bars,"
-                      "retest_depth_atr,retest_zone_atr,retest_reclaim_price,retest_distance_from_neckline_atr,false_break_return_inside_neckline,retest_quality,retest_failure_reason\r\n");
+                      "retest_depth_atr,retest_zone_atr,retest_reclaim_price,retest_distance_from_neckline_atr,false_break_return_inside_neckline,retest_quality,retest_failure_reason,"
+                      "breakout_quality_router_mode,breakout_quality_label,breakout_quality_reason,breakout_quality_pass,breakout_strong,breakout_weak,breakout_dirty,"
+                      "breakout_close_distance_from_neckline_atr,breakout_close_distance_from_neckline_points,breakout_body_ratio,breakout_body_atr,breakout_range_atr,"
+                      "breakout_directional_wick_ratio,breakout_close_position_directional,neckline_touch_count\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -5604,6 +5841,21 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
    AppendCsvField(row, BoolText(setup.falseBreakReturnInsideNeckline));
    AppendCsvField(row, setup.retestQuality);
    AppendCsvField(row, setup.retestFailureReason);
+   AppendCsvField(row, BoolText(setup.breakoutQualityRouterMode));
+   AppendCsvField(row, setup.breakoutQualityLabel);
+   AppendCsvField(row, setup.breakoutQualityReason);
+   AppendCsvField(row, BoolText(setup.breakoutQualityPass));
+   AppendCsvField(row, BoolText(setup.breakoutStrong));
+   AppendCsvField(row, BoolText(setup.breakoutWeak));
+   AppendCsvField(row, BoolText(setup.breakoutDirty));
+   AppendCsvField(row, DoubleToString(setup.breakoutCloseDistanceFromNecklineATR, 2));
+   AppendCsvField(row, DoubleToString(setup.breakoutCloseDistanceFromNecklinePoints, 1));
+   AppendCsvField(row, DoubleToString(setup.breakoutBodyRatio, 2));
+   AppendCsvField(row, DoubleToString(setup.breakoutBodyATR, 2));
+   AppendCsvField(row, DoubleToString(setup.breakoutRangeATR, 2));
+   AppendCsvField(row, DoubleToString(setup.breakoutDirectionalWickRatio, 2));
+   AppendCsvField(row, DoubleToString(setup.breakoutClosePositionDirectional, 2));
+   AppendCsvField(row, IntegerToString(setup.necklineTouchCount));
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }
@@ -5643,7 +5895,10 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
                       "distance_neckline_to_entry_atr,distance_right_side_to_entry_atr,spread_atr,spread_points,quality_score,"
                       "retest_confirmation_mode,retest_detected,retest_held,retest_trigger_pass,retest_failed,"
                       "original_neckline_break_time,retest_detected_time,retest_trigger_time,retest_bars_after_breakout,entry_delay_bars,"
-                      "retest_depth_atr,retest_zone_atr,retest_reclaim_price,retest_distance_from_neckline_atr,false_break_return_inside_neckline,retest_quality,retest_failure_reason\r\n");
+                      "retest_depth_atr,retest_zone_atr,retest_reclaim_price,retest_distance_from_neckline_atr,false_break_return_inside_neckline,retest_quality,retest_failure_reason,"
+                      "breakout_quality_router_mode,breakout_quality_label,breakout_quality_reason,breakout_quality_pass,breakout_strong,breakout_weak,breakout_dirty,"
+                      "breakout_close_distance_from_neckline_atr,breakout_close_distance_from_neckline_points,breakout_body_ratio,breakout_body_atr,breakout_range_atr,"
+                      "breakout_directional_wick_ratio,breakout_close_position_directional,neckline_touch_count\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -5698,6 +5953,21 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
    AppendCsvField(row, BoolText(setup.falseBreakReturnInsideNeckline));
    AppendCsvField(row, setup.retestQuality);
    AppendCsvField(row, setup.retestFailureReason);
+   AppendCsvField(row, BoolText(setup.breakoutQualityRouterMode));
+   AppendCsvField(row, setup.breakoutQualityLabel);
+   AppendCsvField(row, setup.breakoutQualityReason);
+   AppendCsvField(row, BoolText(setup.breakoutQualityPass));
+   AppendCsvField(row, BoolText(setup.breakoutStrong));
+   AppendCsvField(row, BoolText(setup.breakoutWeak));
+   AppendCsvField(row, BoolText(setup.breakoutDirty));
+   AppendCsvField(row, DoubleToString(setup.breakoutCloseDistanceFromNecklineATR, 2));
+   AppendCsvField(row, DoubleToString(setup.breakoutCloseDistanceFromNecklinePoints, 1));
+   AppendCsvField(row, DoubleToString(setup.breakoutBodyRatio, 2));
+   AppendCsvField(row, DoubleToString(setup.breakoutBodyATR, 2));
+   AppendCsvField(row, DoubleToString(setup.breakoutRangeATR, 2));
+   AppendCsvField(row, DoubleToString(setup.breakoutDirectionalWickRatio, 2));
+   AppendCsvField(row, DoubleToString(setup.breakoutClosePositionDirectional, 2));
+   AppendCsvField(row, IntegerToString(setup.necklineTouchCount));
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }
@@ -5792,6 +6062,26 @@ string TopNestedNWaveFailReason(long &count)
       reason = "no_retest_trigger";
       count = g_nestedNWaveNoRetestTriggerCount;
      }
+   if(g_nestedNWaveDirtyBreakoutFailCount > count)
+     {
+      reason = "dirty_breakout";
+      count = g_nestedNWaveDirtyBreakoutFailCount;
+     }
+   if(g_nestedNWaveUnclearBreakoutFailCount > count)
+     {
+      reason = "unclear_breakout_quality";
+      count = g_nestedNWaveUnclearBreakoutFailCount;
+     }
+   if(g_nestedNWaveWeakBreakoutWaitingRetestCount > count)
+     {
+      reason = "weak_breakout_waiting_retest";
+      count = g_nestedNWaveWeakBreakoutWaitingRetestCount;
+     }
+   if(g_nestedNWaveRouterRetestRequiresWeakCount > count)
+     {
+      reason = "router_retest_requires_weak_breakout";
+      count = g_nestedNWaveRouterRetestRequiresWeakCount;
+     }
    if(g_nestedNWaveUnknownFailCount > count)
      {
       reason = "unknown";
@@ -5829,7 +6119,7 @@ void WriteNestedNWaveSummaryRow()
       FileWriteString(handle,
                       "time,strategy_name,entry_selection_mode,context_tf,pattern_tf,execution_tf,reward_r,"
                       "evaluations,long_evaluations,short_evaluations,h4_impulse_pass,pullback_zone_pass,h1_counter_trend_pass,neckline_pass,structure_sl_pass,rr_pass,spread_guard_pass,spread_guard_blocked,final_entry_pass,orders_sent,orders_failed,"
-                      "data_unavailable,atr_unavailable,research_excluded,no_h4_nwave,too_shallow_pullback,too_deep_pullback,no_h1_counter_trend_nwave,no_clear_neckline,no_neckline_break,sl_too_tight,sl_too_wide,invalid_structure,spread_guard,existing_position,execution_blocked,clean_nested_nwave_entry,neckline_break_initial,neckline_break_late,chasing_after_break,retest_detected,retest_held,retest_trigger_pass,no_retest_confirmation_break,no_retest_detected,retest_invalidated,no_retest_trigger,unknown,"
+                      "data_unavailable,atr_unavailable,research_excluded,no_h4_nwave,too_shallow_pullback,too_deep_pullback,no_h1_counter_trend_nwave,no_clear_neckline,no_neckline_break,sl_too_tight,sl_too_wide,invalid_structure,spread_guard,existing_position,execution_blocked,clean_nested_nwave_entry,neckline_break_initial,neckline_break_late,chasing_after_break,retest_detected,retest_held,retest_trigger_pass,no_retest_confirmation_break,no_retest_detected,retest_invalidated,no_retest_trigger,strong_breakout,weak_breakout,dirty_breakout,unclear_breakout,dirty_breakout_fail,unclear_breakout_quality,weak_breakout_waiting_retest,router_retest_requires_weak_breakout,unknown,"
                       "top_fail_reason,top_fail_reason_rows\r\n");
 
    long topFailCount = 0;
@@ -5883,6 +6173,14 @@ void WriteNestedNWaveSummaryRow()
    AppendCsvLong(row, g_nestedNWaveNoRetestDetectedCount);
    AppendCsvLong(row, g_nestedNWaveRetestInvalidatedCount);
    AppendCsvLong(row, g_nestedNWaveNoRetestTriggerCount);
+   AppendCsvLong(row, g_nestedNWaveStrongBreakoutCount);
+   AppendCsvLong(row, g_nestedNWaveWeakBreakoutCount);
+   AppendCsvLong(row, g_nestedNWaveDirtyBreakoutCount);
+   AppendCsvLong(row, g_nestedNWaveUnclearBreakoutCount);
+   AppendCsvLong(row, g_nestedNWaveDirtyBreakoutFailCount);
+   AppendCsvLong(row, g_nestedNWaveUnclearBreakoutFailCount);
+   AppendCsvLong(row, g_nestedNWaveWeakBreakoutWaitingRetestCount);
+   AppendCsvLong(row, g_nestedNWaveRouterRetestRequiresWeakCount);
    AppendCsvLong(row, g_nestedNWaveUnknownFailCount);
    AppendCsvField(row, topFailReason);
    AppendCsvLong(row, topFailCount);
