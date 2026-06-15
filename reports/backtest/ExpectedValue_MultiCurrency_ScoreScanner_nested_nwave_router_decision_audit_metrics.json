@@ -1,0 +1,23 @@
+{
+  "rows": 414,
+  "by_decision": {
+    "weak_routed_to_retest": 116,
+    "dirty_skipped": 266,
+    "strong_blocked_spread_guard": 14,
+    "strong_ordered": 16,
+    "strong_not_ordered": 1,
+    "strong_blocked_existing_position": 1
+  },
+  "outputs": {
+    "summary": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_router_decision_audit_summary.md",
+    "audit": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_router_decision_audit.csv",
+    "by_decision": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_router_decision_audit_by_decision.csv",
+    "by_period": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_router_decision_audit_by_period.csv",
+    "by_quality_label": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_router_decision_audit_by_quality_label.csv",
+    "by_quality_reason": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_router_decision_audit_by_quality_reason.csv",
+    "removed_winners_2025_10": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_router_decision_audit_2025_10_removed_winners.csv",
+    "avoided_losers_2026_q1": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_router_decision_audit_2026_q1_avoided_losers.csv",
+    "context_seed": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_router_decision_audit_context_quality_seed.md",
+    "metrics": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_router_decision_audit_metrics.json"
+  }
+}
