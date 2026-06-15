@@ -1,0 +1,25 @@
+{
+  "rows": 191,
+  "cohorts": {
+    "2025-02_other_dirty_weak": 38,
+    "2025-08_other_dirty_weak": 19,
+    "2025_10_removed_winner_dirty_weak": 11,
+    "2025_10_removed_loser_dirty_weak": 12,
+    "2026_q1_avoided_loser_dirty_weak": 82,
+    "2026_q1_removed_winner_dirty_weak": 29
+  },
+  "context_quality_v0": {
+    "clean_context_v0": 38,
+    "mixed_context_v0": 40,
+    "poor_context_v0": 113
+  },
+  "outputs": {
+    "summary": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_context_quality_diagnostic_summary.md",
+    "comparison": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_context_quality_diagnostic_comparison.csv",
+    "bucket_matrix": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_context_quality_diagnostic_bucket_matrix.csv",
+    "cohort_diff": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_context_quality_diagnostic_cohort_diff.csv",
+    "candidate_rows": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_context_quality_diagnostic_candidate_rows.csv",
+    "next_router_notes": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_context_quality_diagnostic_next_router_notes.md",
+    "metrics": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_nested_nwave_context_quality_diagnostic_metrics.json"
+  }
+}
