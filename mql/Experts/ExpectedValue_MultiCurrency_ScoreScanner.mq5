@@ -21,8 +21,8 @@ enum ENUM_TRADE_DIRECTION_MODE
 enum ENUM_SYMBOL_RESEARCH_MODE
   {
    SYMBOL_RESEARCH_ALL = 0,
-   SYMBOL_RESEARCH_XAUUSD_ONLY = 1,
-   SYMBOL_RESEARCH_FX_ONLY = 2
+   SYMBOL_RESEARCH_XAUUSD_ONLY = 1, // Research-only diagnostic branch, not a mainline promotion filter.
+   SYMBOL_RESEARCH_FX_ONLY = 2      // Research-only diagnostic branch, not a mainline promotion filter.
   };
 
 enum ENUM_RESEARCH_STRATEGY_MODE
@@ -35,7 +35,10 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_DOW_FRACTAL_THIRD_WAVE_V4_EARLY_REVERSAL = 5,
    RESEARCH_STRATEGY_NESTED_NWAVE_NECKLINE_BREAK = 6,
    RESEARCH_STRATEGY_NESTED_NWAVE_RETEST_CONFIRMATION = 7,
-   RESEARCH_STRATEGY_NESTED_NWAVE_BREAKOUT_QUALITY_ROUTER = 8
+   RESEARCH_STRATEGY_NESTED_NWAVE_BREAKOUT_QUALITY_ROUTER = 8,
+   RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER = 9,
+   RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V2 = 10,
+   RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V3 = 11 // Deprecated research alias; no weekday/time edge logic.
   };
 
 enum ENUM_ENTRY_SELECTION_MODE
@@ -90,8 +93,8 @@ input ENUM_DIAGNOSTICS_LEVEL InpDiagnosticsLevel       = DIAG_ENTRY_ONLY;
 input ENUM_V4_REVERSAL_SIGNAL_MODE InpV4ReversalSignalMode = V4_SIGNAL_ALL;
 input ENUM_THIRD_WAVE_SL_MODE InpThirdWaveSLMode       = THIRD_WAVE_SL_CURRENT;
 input ENUM_TRADE_DIRECTION_MODE InpTradeDirectionMode  = TRADE_DIRECTION_BOTH;
-input bool            InpDisableUsdJpyShort            = false;
-input ENUM_SYMBOL_RESEARCH_MODE InpSymbolResearchMode  = SYMBOL_RESEARCH_ALL;
+input bool            InpDisableUsdJpyShort            = false; // Research-only diagnostic switch; keep false for universal tests.
+input ENUM_SYMBOL_RESEARCH_MODE InpSymbolResearchMode  = SYMBOL_RESEARCH_ALL; // Keep ALL for mainline multi-currency research.
 input bool            InpUseDowFractalStructureFilter  = false;
 input int             InpStructureSwingSpan            = 2;
 input int             InpStructureScanBars             = 80;
@@ -357,6 +360,13 @@ struct NestedNWaveSetup
    double            breakoutDirectionalWickRatio;
    double            breakoutClosePositionDirectional;
    int               necklineTouchCount;
+   bool              contextQualityRouterMode;
+   string            contextQualityLabel;
+   string            contextQualityReason;
+   double            contextQualityScore;
+   bool              contextClean;
+   bool              contextMixed;
+   bool              contextPoor;
   };
 
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
@@ -649,7 +659,10 @@ bool IsNestedNWaveStrategyMode()
   {
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_NECKLINE_BREAK ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_RETEST_CONFIRMATION ||
-           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_BREAKOUT_QUALITY_ROUTER);
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_BREAKOUT_QUALITY_ROUTER ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V2 ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V3);
   }
 
 bool IsNestedNWaveRetestConfirmationMode()
@@ -660,6 +673,26 @@ bool IsNestedNWaveRetestConfirmationMode()
 bool IsNestedNWaveBreakoutQualityRouterMode()
   {
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_BREAKOUT_QUALITY_ROUTER);
+  }
+
+bool IsNestedNWaveContextQualityRouterMode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V2 ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V3);
+  }
+
+bool IsNestedNWaveContextQualityRouterV2Mode()
+  {
+   // V3 is intentionally a deprecated compatibility alias for V2. It must not add
+   // weekday, symbol, or direction-specific expectancy rules.
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V2 ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V3);
+  }
+
+bool IsNestedNWaveContextQualityRouterV3Mode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V3);
   }
 
 string V4ReversalSignalModeName()
@@ -732,6 +765,14 @@ string ThirdWaveStrategyName()
 
 string NestedNWaveStrategyName()
   {
+   if(IsNestedNWaveContextQualityRouterMode())
+     {
+      if(IsNestedNWaveContextQualityRouterV3Mode())
+         return "Nested_NWave_ContextQualityRouterV3_Deprecated_V2Alias";
+      if(IsNestedNWaveContextQualityRouterV2Mode())
+         return "Nested_NWave_ContextQualityRouterV2";
+      return "Nested_NWave_ContextQualityRouter";
+     }
    if(IsNestedNWaveBreakoutQualityRouterMode())
       return "Nested_NWave_BreakoutQualityRouter";
    if(IsNestedNWaveRetestConfirmationMode())
@@ -1366,7 +1407,7 @@ void InitNestedNWaveSetup(NestedNWaveSetup &setup, const string symbol, const in
    setup.falseBreakReturnInsideNeckline = false;
    setup.retestQuality = "not_applicable";
    setup.retestFailureReason = "";
-   setup.breakoutQualityRouterMode = IsNestedNWaveBreakoutQualityRouterMode();
+   setup.breakoutQualityRouterMode = (IsNestedNWaveBreakoutQualityRouterMode() || IsNestedNWaveContextQualityRouterMode());
    setup.breakoutQualityLabel = "unclassified";
    setup.breakoutQualityReason = "";
    setup.breakoutQualityPass = false;
@@ -1382,6 +1423,13 @@ void InitNestedNWaveSetup(NestedNWaveSetup &setup, const string symbol, const in
    setup.breakoutDirectionalWickRatio = 0.0;
    setup.breakoutClosePositionDirectional = 0.0;
    setup.necklineTouchCount = 0;
+   setup.contextQualityRouterMode = IsNestedNWaveContextQualityRouterMode();
+   setup.contextQualityLabel = "not_evaluated";
+   setup.contextQualityReason = "";
+   setup.contextQualityScore = 0.0;
+   setup.contextClean = false;
+   setup.contextMixed = false;
+   setup.contextPoor = false;
   }
 
 //+------------------------------------------------------------------+
@@ -3080,6 +3128,149 @@ string ClassifyNestedBreakoutQuality(NestedNWaveSetup &setup)
    return setup.breakoutQualityLabel;
   }
 
+string ClassifyNestedContextQuality(NestedNWaveSetup &setup)
+  {
+   setup.contextQualityLabel = "mixed_context";
+   setup.contextQualityReason = "";
+   setup.contextQualityScore = 0.0;
+   setup.contextClean = false;
+   setup.contextMixed = false;
+   setup.contextPoor = false;
+
+   int positive = 0;
+   int negative = 0;
+   string reason = "";
+
+   if(setup.h4FibRetracementPct >= 42.0 && setup.h4FibRetracementPct <= 58.0)
+     {
+      ++positive;
+      AppendReason(reason, "h4_mid_pullback");
+     }
+   else
+     {
+      ++negative;
+      AppendReason(reason, "h4_edge_pullback");
+     }
+
+   if(setup.necklineTouchCount >= 5 && setup.necklineTouchCount <= 14)
+     {
+      ++positive;
+      AppendReason(reason, "neckline_tested_not_extreme");
+     }
+   else if(setup.necklineTouchCount < 3 || setup.necklineTouchCount > 18)
+     {
+      ++negative;
+      AppendReason(reason, "neckline_touch_extreme");
+     }
+   else
+      AppendReason(reason, "neckline_touch_neutral");
+
+   if(setup.slATR > 0.0 && setup.slATR <= 1.70)
+     {
+      ++positive;
+      AppendReason(reason, "sl_atr_compact");
+     }
+   else if(setup.slATR > 2.00)
+     {
+      ++negative;
+      AppendReason(reason, "sl_atr_wide");
+     }
+   else
+      AppendReason(reason, "sl_atr_neutral");
+
+   if(setup.distanceNecklineToEntryATR >= 0.10 && setup.distanceNecklineToEntryATR <= 0.80)
+     {
+      ++positive;
+      AppendReason(reason, "entry_distance_usable");
+     }
+   else if(setup.distanceNecklineToEntryATR > 1.20)
+     {
+      ++negative;
+      AppendReason(reason, "entry_distance_far");
+     }
+   else
+      AppendReason(reason, "entry_distance_neutral");
+
+   if(setup.breakoutClosePositionDirectional >= 0.55)
+     {
+      ++positive;
+      AppendReason(reason, "directional_close_ok");
+     }
+   else if(setup.breakoutClosePositionDirectional < 0.35)
+     {
+      ++negative;
+      AppendReason(reason, "directional_close_weak");
+     }
+   else
+      AppendReason(reason, "directional_close_neutral");
+
+   if(setup.breakoutBodyATR >= 0.20 && setup.breakoutBodyATR <= 1.00)
+     {
+      ++positive;
+      AppendReason(reason, "body_atr_usable");
+     }
+   else if(setup.breakoutBodyATR > 1.20)
+     {
+      ++negative;
+      AppendReason(reason, "body_atr_overextended");
+     }
+   else
+      AppendReason(reason, "body_atr_neutral");
+
+   if(setup.breakoutDirectionalWickRatio <= 0.45)
+     {
+      ++positive;
+      AppendReason(reason, "wick_ok");
+     }
+   else if(setup.breakoutDirectionalWickRatio > 0.60)
+     {
+      ++negative;
+      AppendReason(reason, "wick_large");
+     }
+   else
+      AppendReason(reason, "wick_neutral");
+
+   if(setup.distanceRightSideToEntryATR > 0.0 && setup.distanceRightSideToEntryATR <= 2.80)
+     {
+      ++positive;
+      AppendReason(reason, "right_side_room_ok");
+     }
+   else if(setup.distanceRightSideToEntryATR > 3.30)
+     {
+      ++negative;
+      AppendReason(reason, "right_side_distance_far");
+     }
+   else
+      AppendReason(reason, "right_side_distance_neutral");
+
+   if(setup.necklineBreakLabel == "chasing_after_break")
+     {
+      ++negative;
+      AppendReason(reason, "late_break_label");
+     }
+
+   setup.contextQualityScore = positive - negative;
+   setup.contextQualityReason = reason;
+
+   if(positive >= 6 && negative <= 1)
+     {
+      setup.contextQualityLabel = "clean_context";
+      setup.contextClean = true;
+     }
+   else if(negative >= 3 || positive <= 3)
+     {
+      setup.contextQualityLabel = "poor_context";
+      setup.contextPoor = true;
+     }
+   else
+     {
+      setup.contextQualityLabel = "mixed_context";
+      setup.contextMixed = true;
+     }
+
+   return setup.contextQualityLabel;
+  }
+
 bool DetectNestedM15NecklineBreak(const MqlRates &m15Rates[],
                                   const int direction,
                                   NestedNWaveSetup &setup)
@@ -3533,7 +3724,8 @@ bool BuildNestedNWaveSetup(const string symbol,
       return false;
 
    setup.setupPass = true;
-   if(IsNestedNWaveBreakoutQualityRouterMode())
+
+   if(IsNestedNWaveBreakoutQualityRouterMode() || IsNestedNWaveContextQualityRouterMode())
      {
       bool currentBreakDetected = DetectNestedM15NecklineBreak(m15Rates, direction, setup);
       if(currentBreakDetected)
@@ -3544,7 +3736,60 @@ bool BuildNestedNWaveSetup(const string symbol,
             return false;
 
          string quality = ClassifyNestedBreakoutQuality(setup);
-         if(quality == "strong_breakout")
+         string context = ClassifyNestedContextQuality(setup);
+         if(IsNestedNWaveContextQualityRouterMode())
+           {
+            if(quality == "strong_breakout")
+              {
+               if(context == "poor_context")
+                 {
+                  setup.failReason = "context_router_strong_poor_context_wait_retest";
+                  setup.label = "strong_breakout_poor_context";
+                  return false;
+                 }
+               setup.necklineBreakLabel = "context_router_strong_instant";
+               setup.label = "strong_breakout_" + context;
+              }
+            else if(quality == "weak_breakout")
+              {
+               if(context == "clean_context")
+                 {
+                  if(IsNestedNWaveContextQualityRouterV2Mode() && setup.breakoutBodyATR < 0.20)
+                    {
+                     setup.failReason = "context_router_v2_weak_body_too_small";
+                     setup.label = "weak_breakout_clean_context_body_too_small";
+                     return false;
+                    }
+                  setup.necklineBreakLabel = "context_router_weak_clean_instant";
+                  setup.label = "weak_breakout_clean_context";
+               }
+               else
+                 {
+                  setup.failReason = "context_router_weak_wait_retest";
+                  setup.label = "weak_breakout_" + context;
+                  return false;
+                 }
+              }
+            else if(quality == "dirty_breakout")
+              {
+               if(context == "poor_context")
+                 {
+                  setup.failReason = "context_router_dirty_poor_context";
+                  setup.label = "dirty_breakout_poor_context";
+                  return false;
+                 }
+               setup.failReason = "context_router_dirty_wait_retest";
+               setup.label = "dirty_breakout_" + context;
+               return false;
+              }
+            else
+              {
+               setup.failReason = "context_router_unclear_breakout";
+               setup.label = setup.breakoutQualityLabel;
+               return false;
+              }
+           }
+         else if(quality == "strong_breakout")
            {
             setup.necklineBreakLabel = "router_strong_instant";
             setup.label = "strong_breakout";
@@ -3576,14 +3821,37 @@ bool BuildNestedNWaveSetup(const string symbol,
             return false;
 
          string quality = ClassifyNestedBreakoutQuality(setup);
-         if(quality != "weak_breakout")
+         string context = ClassifyNestedContextQuality(setup);
+         if(IsNestedNWaveContextQualityRouterMode())
+           {
+            bool allowRetest = false;
+            if(quality == "weak_breakout" && context != "poor_context")
+               allowRetest = true;
+            else if(quality == "dirty_breakout" && context == "clean_context")
+               allowRetest = true;
+            else if(quality == "strong_breakout" && context != "poor_context")
+               allowRetest = true;
+
+            if(!allowRetest)
+              {
+               setup.failReason = "context_router_retest_context_block";
+               setup.label = setup.breakoutQualityLabel + "_" + context;
+               return false;
+              }
+            setup.necklineBreakLabel = "context_router_retest_confirmed";
+            setup.label = setup.breakoutQualityLabel + "_" + context + "_retest_confirmed";
+           }
+         else if(quality != "weak_breakout")
            {
             setup.failReason = "router_retest_requires_weak_breakout";
             setup.label = setup.breakoutQualityLabel;
             return false;
            }
-         setup.necklineBreakLabel = "router_weak_retest_confirmed";
-         setup.label = "weak_breakout_retest_confirmed";
+         else
+           {
+            setup.necklineBreakLabel = "router_weak_retest_confirmed";
+            setup.label = "weak_breakout_retest_confirmed";
+           }
         }
      }
    else if(IsNestedNWaveRetestConfirmationMode())
@@ -4265,6 +4533,17 @@ void RecordNestedNWaveFailReason(const string reason)
    else if(reason == "weak_breakout_waiting_retest")
       ++g_nestedNWaveWeakBreakoutWaitingRetestCount;
    else if(reason == "router_retest_requires_weak_breakout")
+      ++g_nestedNWaveRouterRetestRequiresWeakCount;
+   else if(reason == "context_router_weak_wait_retest" ||
+           reason == "context_router_dirty_wait_retest" ||
+           reason == "context_router_strong_poor_context_wait_retest" ||
+           reason == "context_router_v2_weak_body_too_small")
+      ++g_nestedNWaveWeakBreakoutWaitingRetestCount;
+   else if(reason == "context_router_dirty_poor_context")
+      ++g_nestedNWaveDirtyBreakoutFailCount;
+   else if(reason == "context_router_unclear_breakout")
+      ++g_nestedNWaveUnclearBreakoutFailCount;
+   else if(reason == "context_router_retest_context_block")
       ++g_nestedNWaveRouterRetestRequiresWeakCount;
    else
       ++g_nestedNWaveUnknownFailCount;
@@ -5123,6 +5402,7 @@ void WriteScanDiagnosticRow(const string eventName,
       FileWrite(handle,
                 "time",
                 "event",
+                "scan_driver_symbol",
                 "last_scan_bar_time",
                 "scan_elapsed_ms",
                 "reason");
@@ -5130,6 +5410,7 @@ void WriteScanDiagnosticRow(const string eventName,
    FileWrite(handle,
              TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
              eventName,
+             _Symbol,
              DateTimeText(lastScanBarTime),
              IntegerToString((int)elapsedMs),
              reason);
@@ -5767,7 +6048,8 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
                       "retest_depth_atr,retest_zone_atr,retest_reclaim_price,retest_distance_from_neckline_atr,false_break_return_inside_neckline,retest_quality,retest_failure_reason,"
                       "breakout_quality_router_mode,breakout_quality_label,breakout_quality_reason,breakout_quality_pass,breakout_strong,breakout_weak,breakout_dirty,"
                       "breakout_close_distance_from_neckline_atr,breakout_close_distance_from_neckline_points,breakout_body_ratio,breakout_body_atr,breakout_range_atr,"
-                      "breakout_directional_wick_ratio,breakout_close_position_directional,neckline_touch_count\r\n");
+                      "breakout_directional_wick_ratio,breakout_close_position_directional,neckline_touch_count,"
+                      "context_quality_router_mode,context_quality_label,context_quality_reason,context_quality_score,context_clean,context_mixed,context_poor\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -5856,6 +6138,13 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
    AppendCsvField(row, DoubleToString(setup.breakoutDirectionalWickRatio, 2));
    AppendCsvField(row, DoubleToString(setup.breakoutClosePositionDirectional, 2));
    AppendCsvField(row, IntegerToString(setup.necklineTouchCount));
+   AppendCsvField(row, BoolText(setup.contextQualityRouterMode));
+   AppendCsvField(row, setup.contextQualityLabel);
+   AppendCsvField(row, setup.contextQualityReason);
+   AppendCsvField(row, DoubleToString(setup.contextQualityScore, 2));
+   AppendCsvField(row, BoolText(setup.contextClean));
+   AppendCsvField(row, BoolText(setup.contextMixed));
+   AppendCsvField(row, BoolText(setup.contextPoor));
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }
@@ -5898,7 +6187,8 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
                       "retest_depth_atr,retest_zone_atr,retest_reclaim_price,retest_distance_from_neckline_atr,false_break_return_inside_neckline,retest_quality,retest_failure_reason,"
                       "breakout_quality_router_mode,breakout_quality_label,breakout_quality_reason,breakout_quality_pass,breakout_strong,breakout_weak,breakout_dirty,"
                       "breakout_close_distance_from_neckline_atr,breakout_close_distance_from_neckline_points,breakout_body_ratio,breakout_body_atr,breakout_range_atr,"
-                      "breakout_directional_wick_ratio,breakout_close_position_directional,neckline_touch_count\r\n");
+                      "breakout_directional_wick_ratio,breakout_close_position_directional,neckline_touch_count,"
+                      "context_quality_router_mode,context_quality_label,context_quality_reason,context_quality_score,context_clean,context_mixed,context_poor\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -5968,6 +6258,13 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
    AppendCsvField(row, DoubleToString(setup.breakoutDirectionalWickRatio, 2));
    AppendCsvField(row, DoubleToString(setup.breakoutClosePositionDirectional, 2));
    AppendCsvField(row, IntegerToString(setup.necklineTouchCount));
+   AppendCsvField(row, BoolText(setup.contextQualityRouterMode));
+   AppendCsvField(row, setup.contextQualityLabel);
+   AppendCsvField(row, setup.contextQualityReason);
+   AppendCsvField(row, DoubleToString(setup.contextQualityScore, 2));
+   AppendCsvField(row, BoolText(setup.contextClean));
+   AppendCsvField(row, BoolText(setup.contextMixed));
+   AppendCsvField(row, BoolText(setup.contextPoor));
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }
