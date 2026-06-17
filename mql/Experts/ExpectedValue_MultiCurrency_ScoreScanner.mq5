@@ -46,7 +46,8 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_NESTED_FIXED_H4MA_ROOM2R = 16,
    RESEARCH_STRATEGY_NESTED_FIXED_H4MA_M15CLOSE_ROOM2R = 17,
    RESEARCH_STRATEGY_NESTED_FIXED_H4FIB_ROOM2R = 18,
-   RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R = 19
+   RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R = 19,
+   RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R_LOWER_TF = 20
   };
 
 enum ENUM_ENTRY_SELECTION_MODE
@@ -718,7 +719,8 @@ bool IsNestedNWaveStrategyMode()
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_ROOM2R ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_M15CLOSE_ROOM2R ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4FIB_ROOM2R ||
-           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R);
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R_LOWER_TF);
   }
 
 bool IsNestedNWaveRetestConfirmationMode()
@@ -773,7 +775,8 @@ bool IsNestedFixedConditionMode()
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_ROOM2R ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_M15CLOSE_ROOM2R ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4FIB_ROOM2R ||
-           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R);
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R_LOWER_TF);
   }
 
 bool IsNestedConditionCandidateBaseMode()
@@ -877,6 +880,8 @@ string NestedNWaveStrategyName()
       return "Nested_Fixed_H4Fib_Room2R";
    if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R)
       return "Nested_Fixed_H4MA_H4Fib_M15Close_Room2R";
+   if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R_LOWER_TF)
+      return "Nested_Fixed_Room2R_LowerTF";
    if(IsNestedNWaveStructuralBosMode())
       return "Nested_NWave_StructuralBOS";
    return "Nested_NWave_NecklineBreak";
@@ -4108,9 +4113,10 @@ bool ApplyNestedFixedConditionGate(NestedNWaveSetup &setup)
       return false;
      }
 
-   if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R)
+   if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R ||
+      InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R_LOWER_TF)
      {
-      setup.label = "fixed_room2r";
+      setup.label = (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R_LOWER_TF ? "fixed_room2r_lower_tf" : "fixed_room2r");
       return true;
      }
 
