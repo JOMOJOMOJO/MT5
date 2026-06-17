@@ -41,7 +41,12 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V3 = 11, // Deprecated research alias; no weekday/time edge logic.
    RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS = 12,
    RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS_V2 = 13,
-   RESEARCH_STRATEGY_NESTED_CONDITION_FACTORIAL_CANDIDATES = 14
+   RESEARCH_STRATEGY_NESTED_CONDITION_FACTORIAL_CANDIDATES = 14,
+   RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R = 15,
+   RESEARCH_STRATEGY_NESTED_FIXED_H4MA_ROOM2R = 16,
+   RESEARCH_STRATEGY_NESTED_FIXED_H4MA_M15CLOSE_ROOM2R = 17,
+   RESEARCH_STRATEGY_NESTED_FIXED_H4FIB_ROOM2R = 18,
+   RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R = 19
   };
 
 enum ENUM_ENTRY_SELECTION_MODE
@@ -708,7 +713,12 @@ bool IsNestedNWaveStrategyMode()
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V3 ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS_V2 ||
-           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_CONDITION_FACTORIAL_CANDIDATES);
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_CONDITION_FACTORIAL_CANDIDATES ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_ROOM2R ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_M15CLOSE_ROOM2R ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4FIB_ROOM2R ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R);
   }
 
 bool IsNestedNWaveRetestConfirmationMode()
@@ -755,6 +765,20 @@ bool IsNestedNWaveStructuralBosV2Mode()
 bool IsNestedConditionFactorialMode()
   {
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_CONDITION_FACTORIAL_CANDIDATES);
+  }
+
+bool IsNestedFixedConditionMode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_ROOM2R ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_M15CLOSE_ROOM2R ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4FIB_ROOM2R ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R);
+  }
+
+bool IsNestedConditionCandidateBaseMode()
+  {
+   return (IsNestedConditionFactorialMode() || IsNestedFixedConditionMode());
   }
 
 string V4ReversalSignalModeName()
@@ -843,6 +867,16 @@ string NestedNWaveStrategyName()
       return "Nested_NWave_StructuralBOS_V2";
    if(IsNestedConditionFactorialMode())
       return "Nested_ConditionFactorial_Candidates";
+   if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R)
+      return "Nested_Fixed_Room2R";
+   if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_ROOM2R)
+      return "Nested_Fixed_H4MA_Room2R";
+   if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_M15CLOSE_ROOM2R)
+      return "Nested_Fixed_H4MA_M15Close_Room2R";
+   if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4FIB_ROOM2R)
+      return "Nested_Fixed_H4Fib_Room2R";
+   if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R)
+      return "Nested_Fixed_H4MA_H4Fib_M15Close_Room2R";
    if(IsNestedNWaveStructuralBosMode())
       return "Nested_NWave_StructuralBOS";
    return "Nested_NWave_NecklineBreak";
@@ -4062,6 +4096,65 @@ void ApplyNestedConditionFactorialPostRiskConditions(NestedNWaveSetup &setup, co
    setup.roomToTargetLabel = (setup.condRoomTo2R ? "room_to_2r_ok" : (setup.condRoomTo1R ? "room_to_1r_only" : "insufficient_room_to_1r"));
   }
 
+bool ApplyNestedFixedConditionGate(NestedNWaveSetup &setup)
+  {
+   if(!IsNestedFixedConditionMode())
+      return true;
+
+   if(!setup.condRoomTo2R)
+     {
+      setup.failReason = "fixed_condition_room_to_2r_fail";
+      setup.label = setup.failReason;
+      return false;
+     }
+
+   if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R)
+     {
+      setup.label = "fixed_room2r";
+      return true;
+     }
+
+   if((InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_ROOM2R ||
+       InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_M15CLOSE_ROOM2R ||
+       InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R) &&
+      !setup.condH4BiasMA)
+     {
+      setup.failReason = "fixed_condition_h4_ma_fail";
+      setup.label = setup.failReason;
+      return false;
+     }
+
+   if((InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_M15CLOSE_ROOM2R ||
+       InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R) &&
+      !setup.condM15CloseBos)
+     {
+      setup.failReason = "fixed_condition_m15_close_bos_fail";
+      setup.label = setup.failReason;
+      return false;
+     }
+
+   if((InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4FIB_ROOM2R ||
+       InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R) &&
+      !setup.condH4Fib382618)
+     {
+      setup.failReason = "fixed_condition_h4_fib_fail";
+      setup.label = setup.failReason;
+      return false;
+     }
+
+   if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_ROOM2R)
+      setup.label = "fixed_h4ma_room2r";
+   else if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_M15CLOSE_ROOM2R)
+      setup.label = "fixed_h4ma_m15close_room2r";
+   else if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4FIB_ROOM2R)
+      setup.label = "fixed_h4fib_room2r";
+   else if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R)
+      setup.label = "fixed_h4ma_h4fib_m15close_room2r";
+
+   setup.necklineBreakLabel = setup.label;
+   return true;
+  }
+
 string ClassifyNestedNecklineBreakLabel(const NestedNWaveSetup &setup, const bool freshBreak, const bool doublePattern)
   {
    if(!setup.necklinePass)
@@ -4778,7 +4871,7 @@ bool BuildNestedNWaveSetup(const string symbol,
    setup.spreadGuardBlocked = !setup.spreadGuardPass;
    setup.dataReady = true;
 
-   if(IsNestedConditionFactorialMode())
+   if(IsNestedConditionCandidateBaseMode())
      {
       if(!DetectNestedConditionFactorialCandidate(h4Rates, h1Rates, m15Rates, direction, setup))
          return false;
@@ -4800,13 +4893,15 @@ bool BuildNestedNWaveSetup(const string symbol,
 
    setup.setupPass = true;
 
-   if(IsNestedConditionFactorialMode())
+   if(IsNestedConditionCandidateBaseMode())
      {
       if(!CalculateNestedStopLoss(symbol, direction, setup))
          return false;
       if(!CalculateNestedTakeProfit(symbol, direction, setup))
          return false;
       ApplyNestedConditionFactorialPostRiskConditions(setup, direction);
+      if(!ApplyNestedFixedConditionGate(setup))
+         return false;
      }
    else if(IsNestedNWaveStructuralBosV2Mode())
      {

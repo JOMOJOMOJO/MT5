@@ -1,0 +1,2 @@
+open_time,close_time,symbol,direction,volume,open_price,close_price,open_deal,close_deal,commission,swap,profit,net_profit,close_balance,close_comment,holding_minutes,open_bar_m5,close_bar_m5
+2025.02.24 16:50:00,2025.02.24 17:06:13,USDJPY,SHORT,0.9,149.423,149.257,2,3,0.0,0.0,100.1,100.1,10100.1,tp 149.257,16.22,2025.02.24 16:50:00,2025.02.24 17:05:00

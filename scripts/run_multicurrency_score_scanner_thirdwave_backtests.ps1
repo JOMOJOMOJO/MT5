@@ -6,7 +6,7 @@ param(
     [string]$FromDate = "2025.01.01",
     [string]$ToDate = "2025.12.31",
     [int]$BaseMagicNumber = 2026060310,
-    [ValidateSet("Original", "RegimeComparison", "ScanIntervalComparison", "WaveAudit", "V2Comparison", "V3Comparison", "V4Comparison", "V4SignalQuality", "LowerTFSLFeasibility", "NestedNWave", "NestedRetestConfirmation", "NestedBreakoutQualityRouter", "NestedContextQualityRouterR12", "NestedStructuralBOS", "ConditionFactorial")]
+    [ValidateSet("Original", "RegimeComparison", "ScanIntervalComparison", "WaveAudit", "V2Comparison", "V3Comparison", "V4Comparison", "V4SignalQuality", "LowerTFSLFeasibility", "NestedNWave", "NestedRetestConfirmation", "NestedBreakoutQualityRouter", "NestedContextQualityRouterR12", "NestedStructuralBOS", "ConditionFactorial", "FixedConditionBT")]
     [string]$ScenarioSet = "Original"
 )
 
@@ -181,6 +181,14 @@ if ($ScenarioSet -eq "ScanIntervalComparison") {
     $runs = @(
         New-Run -Id "A" -Name "A_condition_factorial_candidates" -StrategyMode 14 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 1) -Scenario "Nested_ConditionFactorial_Candidates_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
     )
+} elseif ($ScenarioSet -eq "FixedConditionBT") {
+    $runs = @(
+        New-Run -Id "B" -Name "B_fixed_room2r" -StrategyMode 15 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 2) -Scenario "Nested_Fixed_Room2R_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "C" -Name "C_fixed_h4ma_room2r" -StrategyMode 16 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 3) -Scenario "Nested_Fixed_H4MA_Room2R_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "D" -Name "D_fixed_h4ma_m15close_room2r" -StrategyMode 17 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 4) -Scenario "Nested_Fixed_H4MA_M15Close_Room2R_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "E" -Name "E_fixed_h4fib_room2r" -StrategyMode 18 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 5) -Scenario "Nested_Fixed_H4Fib_Room2R_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "F" -Name "F_fixed_h4ma_h4fib_m15close_room2r" -StrategyMode 19 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 6) -Scenario "Nested_Fixed_H4MA_H4Fib_M15Close_Room2R_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+    )
 } elseif ($ScenarioSet -eq "RegimeComparison") {
     $runs = @(
         New-Run -Id "A" -Name "A_original_both" -StrategyMode 1 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 1) -Scenario "ThirdWave_original_BOTH"
@@ -238,7 +246,7 @@ function Write-ThirdWavePreset {
             continue
         }
         if ($line -match '^InpResearchStrategyMode=') {
-            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||14||N")
+            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||19||N")
             $insertedStrategyMode = $true
             continue
         }

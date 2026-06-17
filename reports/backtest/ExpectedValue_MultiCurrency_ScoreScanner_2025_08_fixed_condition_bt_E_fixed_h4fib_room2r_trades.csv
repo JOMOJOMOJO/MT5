@@ -1,0 +1,2 @@
+open_time,close_time,symbol,direction,volume,open_price,close_price,open_deal,close_deal,commission,swap,profit,net_profit,close_balance,close_comment,holding_minutes,open_bar_m5,close_bar_m5
+2025.08.21 02:50:00,2025.08.21 07:28:20,XAUUSD,SHORT,0.13,3346.58,3339.0,2,3,0.0,0.0,98.54,98.54,10098.54,tp 3339.00,278.33,2025.08.21 02:50:00,2025.08.21 07:25:00
