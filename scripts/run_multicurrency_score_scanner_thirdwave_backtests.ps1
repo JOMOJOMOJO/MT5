@@ -7,7 +7,8 @@ param(
     [string]$ToDate = "2025.12.31",
     [int]$BaseMagicNumber = 2026060310,
     [ValidateSet("Original", "RegimeComparison", "ScanIntervalComparison", "WaveAudit", "V2Comparison", "V3Comparison", "V4Comparison", "V4SignalQuality", "LowerTFSLFeasibility", "NestedNWave", "NestedRetestConfirmation", "NestedBreakoutQualityRouter", "NestedContextQualityRouterR12", "NestedStructuralBOS", "ConditionFactorial", "FixedConditionBT", "FixedRoom2RLowerTF")]
-    [string]$ScenarioSet = "Original"
+    [string]$ScenarioSet = "Original",
+    [string]$SymbolsOverride = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -244,7 +245,13 @@ function Write-ThirdWavePreset {
     $insertedV4SignalMode = $false
     $insertedThirdWaveSLMode = $false
     $insertedRewardR = $false
+    $insertedSymbols = $false
     foreach ($line in $lines) {
+        if ($line -match '^InpSymbols=' -and $SymbolsOverride.Trim()) {
+            $out.Add("InpSymbols=$($SymbolsOverride.Trim())")
+            $insertedSymbols = $true
+            continue
+        }
         if ($line -match '^InpScanSeconds=') {
             $out.Add("InpScanSeconds=$($Run.ScanSeconds)||$($Run.ScanSeconds)||60||3600||N")
             continue
@@ -388,6 +395,9 @@ function Write-ThirdWavePreset {
     if (-not $insertedRewardR) {
         $rewardText = $Run.RewardR.ToString('0.00', [System.Globalization.CultureInfo]::InvariantCulture)
         $out.Add("InpRewardR=$rewardText||$rewardText||1.00||3.00||N")
+    }
+    if (-not $insertedSymbols -and $SymbolsOverride.Trim()) {
+        $out.Add("InpSymbols=$($SymbolsOverride.Trim())")
     }
     Set-Content -Path $Run.PresetPath -Value $out -Encoding ASCII
 }

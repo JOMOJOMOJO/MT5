@@ -1,0 +1,4 @@
+failure_type,trades,net,avg_R,avg_MFE_R,avg_MAE_R,reached_0_5R_pct,reached_1R_pct,reached_2R_pct,symbol_distribution,month_distribution,session_distribution
+target_blocked,13,-644.29,-1.007,0.528,1.294,30.77,15.38,0.0,AUDJPY:1;EURJPY:1;EURUSD:1;GBPUSD:2;USDJPY:8,2025-02:1;2025-04:1;2025-06:2;2025-08:4;2025-09:1;2025-10:2;2025-11:1;2025-12:1,server_00_07:2;server_08_15:4;server_16_23:7
+chasing_entry,5,-242.41,-1.006,1.14,1.284,100.0,80.0,0.0,EURUSD:1;GBPJPY:1;GBPUSD:1;USDJPY:2,2025-03:1;2025-07:1;2025-09:1;2025-10:1;2025-11:1,server_00_07:1;server_08_15:1;server_16_23:3
+other,2,-101.56,-1.006,0.266,1.288,0.0,0.0,0.0,EURUSD:1;USDJPY:1,2025-07:1;2025-08:1,server_00_07:1;server_16_23:1

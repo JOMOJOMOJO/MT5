@@ -1,0 +1,3 @@
+group,trades,net,PF,avg_R,reached_1R_pct,reached_2R_pct,avg_MFE_R,avg_MAE_R
+LONG,28,-192.2,0.806,-0.138,50.0,28.57,1.181,1.072
+SHORT,35,-411.47,0.684,-0.231,48.57,25.71,1.198,1.102
