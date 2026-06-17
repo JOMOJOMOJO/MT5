@@ -23,7 +23,7 @@ from analyze_multicurrency_score_scanner_2025 import (
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_BASE = "ExpectedValue_MultiCurrency_ScoreScanner"
-OUT_PREFIX = f"{OUT_BASE}_nested_structural_bos"
+OUT_PREFIX = f"{OUT_BASE}_nested_structural_bos_v2"
 MT5_RATE_TIME_OFFSET = timedelta(hours=9)
 
 PERIODS = [
@@ -39,6 +39,7 @@ RUNS = [
     ("C", "C_breakout_router_all", "Nested_NWave_BreakoutQualityRouter_BOTH_all_H4_H1_M15_2R"),
     ("D", "D_context_router_v2_all", "Nested_NWave_ContextQualityRouterV2_BOTH_all_H4_H1_M15_2R"),
     ("E", "E_structural_bos_all", "Nested_NWave_StructuralBOS_BOTH_all_H4_H1_M15_2R"),
+    ("F", "F_structural_bos_v2_all", "Nested_NWave_StructuralBOS_V2_BOTH_all_H4_H1_M15_2R"),
 ]
 
 OUTPUTS = {
@@ -147,9 +148,15 @@ def load_order_sent_rows(pfx: str) -> list[dict[str, object]]:
             "tp_atr",
             "volume",
             "h1_bos_level",
+            "true_bos_level",
             "distance_bos_to_entry_atr",
             "distance_neckline_to_entry_atr",
             "distance_right_side_to_entry_atr",
+            "h4_impulse_atr",
+            "h1_counter_wave_atr",
+            "h4_correction_depth",
+            "room_to_1r",
+            "room_to_2r",
             "breakout_close_distance_from_neckline_atr",
             "breakout_body_ratio",
             "breakout_body_atr",
@@ -368,9 +375,19 @@ def main() -> None:
                     "structural_bos_state": diag.get("structural_bos_state", "") if diag else "",
                     "m15_confirmation_type": diag.get("m15_confirmation_type", "") if diag else "",
                     "h1_bos_level": round(as_float(diag.get("h1_bos_level")), 5) if diag else 0.0,
+                    "true_bos_level": round(as_float(diag.get("true_bos_level")), 5) if diag else 0.0,
+                    "bos_level_source_pivot": diag.get("bos_level_source_pivot", "") if diag else "",
                     "distance_bos_to_entry_atr": round(as_float(diag.get("distance_bos_to_entry_atr")), 3) if diag else 0.0,
                     "bars_since_bos": int(as_float(diag.get("bars_since_bos"))) if diag else 0,
                     "sl_atr": round(as_float(diag.get("sl_atr")), 3) if diag else 0.0,
+                    "h4_pivot_sequence": diag.get("h4_pivot_sequence", "") if diag else "",
+                    "h1_pivot_sequence": diag.get("h1_pivot_sequence", "") if diag else "",
+                    "h4_impulse_atr": round(as_float(diag.get("h4_impulse_atr")), 3) if diag else 0.0,
+                    "h1_counter_wave_atr": round(as_float(diag.get("h1_counter_wave_atr")), 3) if diag else 0.0,
+                    "h4_correction_depth": round(as_float(diag.get("h4_correction_depth")), 2) if diag else 0.0,
+                    "room_to_1r": round(as_float(diag.get("room_to_1r")), 3) if diag else 0.0,
+                    "room_to_2r": round(as_float(diag.get("room_to_2r")), 3) if diag else 0.0,
+                    "room_to_target_label": diag.get("room_to_target_label", "") if diag else "",
                     "breakout_quality_label": diag.get("breakout_quality_label", "") if diag else "",
                     "context_quality_label": diag.get("context_quality_label", "") if diag else "",
                     "scan_driver_symbol": read_scan_driver_symbols(pfx),
@@ -403,22 +420,25 @@ def main() -> None:
     write_union_rows(OUTPUTS["block_summary"], blocks)
 
     aggregate = group_rows(all_rows, ["scenario"])
-    structural = next((row for row in aggregate if row["scenario"].startswith("Nested_NWave_StructuralBOS")), None)
-    best_baseline = max((row for row in aggregate if not row["scenario"].startswith("Nested_NWave_StructuralBOS")), key=lambda row: as_float(row["avg_R"]), default=None)
-    clean_rows = [row for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS") and row["label"] == "clean_structural_bos"]
-    chasing_rows = [row for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS") and row["label"] == "chasing_entry"]
+    structural = next((row for row in aggregate if row["scenario"].startswith("Nested_NWave_StructuralBOS_V2")), None)
+    v0_structural = next((row for row in aggregate if row["scenario"] == "Nested_NWave_StructuralBOS_BOTH_all_H4_H1_M15_2R"), None)
+    best_baseline = max((row for row in aggregate if not row["scenario"].startswith("Nested_NWave_StructuralBOS_V2")), key=lambda row: as_float(row["avg_R"]), default=None)
+    clean_rows = [row for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS_V2") and row["label"] == "clean_structural_bos_v2"]
+    chasing_rows = [row for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS_V2") and row["label"] == "chasing_entry"]
 
     proceed_annual = False
     gate_reasons: list[str] = []
     if structural and best_baseline:
         if structural["trades"] < 10:
             gate_reasons.append("trade count too low")
+        if v0_structural and as_float(structural["avg_R"]) <= as_float(v0_structural["avg_R"]) and as_float(structural["profit_factor"]) <= as_float(v0_structural["profit_factor"]):
+            gate_reasons.append("v2 PF/avg_R did not beat v0")
         if as_float(structural["avg_R"]) <= as_float(best_baseline["avg_R"]) and as_float(structural["profit_factor"]) <= as_float(best_baseline["profit_factor"]):
-            gate_reasons.append("PF/avg_R did not beat the best baseline")
-        fx_net = sum(as_float(row["net_profit"]) for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS") and row["fx_vs_xauusd"] == "FX")
-        xau_net = sum(as_float(row["net_profit"]) for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS") and row["fx_vs_xauusd"] == "XAUUSD")
-        long_net = sum(as_float(row["net_profit"]) for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS") and row["direction"] == "LONG")
-        short_net = sum(as_float(row["net_profit"]) for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS") and row["direction"] == "SHORT")
+            gate_reasons.append("v2 PF/avg_R did not beat the best comparison branch")
+        fx_net = sum(as_float(row["net_profit"]) for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS_V2") and row["fx_vs_xauusd"] == "FX")
+        xau_net = sum(as_float(row["net_profit"]) for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS_V2") and row["fx_vs_xauusd"] == "XAUUSD")
+        long_net = sum(as_float(row["net_profit"]) for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS_V2") and row["direction"] == "LONG")
+        short_net = sum(as_float(row["net_profit"]) for row in all_rows if row["scenario"].startswith("Nested_NWave_StructuralBOS_V2") and row["direction"] == "SHORT")
         if fx_net < -1e-6:
             gate_reasons.append("FX net is negative")
         if xau_net > 0 and fx_net <= 0:
@@ -453,12 +473,12 @@ def main() -> None:
 
     lines.extend([
         "",
-        "## Structural BOS Labels",
+        "## Structural BOS V2 Labels",
         "",
         "| label | trades | PF | avg_R | net |",
         "|---|---:|---:|---:|---:|",
     ])
-    for row in group_rows([item for item in all_rows if item["scenario"].startswith("Nested_NWave_StructuralBOS")], ["label"]):
+    for row in group_rows([item for item in all_rows if item["scenario"].startswith("Nested_NWave_StructuralBOS_V2")], ["label"]):
         lines.append(f"| {row['label']} | {row['trades']} | {row['profit_factor']} | {row['avg_R']} | {row['net_profit']} |")
 
     lines.extend([
@@ -479,7 +499,7 @@ def main() -> None:
         f"- MFE/MAE/R reach: {md_link('MFE/MAE/R reach', OUTPUTS['mfe_mae'], OUTPUTS['summary'].parent)}",
         f"- By label: {md_link('by label', OUTPUTS['by_label'], OUTPUTS['summary'].parent)}",
         f"- FX vs XAUUSD: {md_link('FX vs XAUUSD', OUTPUTS['fx_vs_xauusd'], OUTPUTS['summary'].parent)}",
-        f"- Compile log: {md_link('compile log', ROOT / 'reports' / 'compile' / 'ExpectedValue_MultiCurrency_ScoreScanner_structural_bos_compile.log', OUTPUTS['summary'].parent)}",
+        f"- Compile log: {md_link('compile log', ROOT / 'reports' / 'compile' / 'ExpectedValue_MultiCurrency_ScoreScanner_structural_bos_v2_compile.log', OUTPUTS['summary'].parent)}",
     ])
     OUTPUTS["summary"].write_text("\n".join(lines) + "\n", encoding="utf-8")
 

@@ -39,7 +39,8 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER = 9,
    RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V2 = 10,
    RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V3 = 11, // Deprecated research alias; no weekday/time edge logic.
-   RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS = 12
+   RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS = 12,
+   RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS_V2 = 13
   };
 
 enum ENUM_ENTRY_SELECTION_MODE
@@ -377,6 +378,16 @@ struct NestedNWaveSetup
    double            distanceBosToEntry;
    double            distanceBosToEntryATR;
    int               barsSinceBos;
+   string            h4PivotSequence;
+   string            h1PivotSequence;
+   double            h4ImpulseATR;
+   double            h1CounterWaveATR;
+   double            h4CorrectionDepth;
+   double            trueBosLevel;
+   string            bosLevelSourcePivot;
+   double            roomTo1R;
+   double            roomTo2R;
+   string            roomToTargetLabel;
   };
 
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
@@ -673,7 +684,8 @@ bool IsNestedNWaveStrategyMode()
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V2 ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V3 ||
-           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS);
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS_V2);
   }
 
 bool IsNestedNWaveRetestConfirmationMode()
@@ -708,7 +720,13 @@ bool IsNestedNWaveContextQualityRouterV3Mode()
 
 bool IsNestedNWaveStructuralBosMode()
   {
-   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS);
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS_V2);
+  }
+
+bool IsNestedNWaveStructuralBosV2Mode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS_V2);
   }
 
 string V4ReversalSignalModeName()
@@ -793,6 +811,8 @@ string NestedNWaveStrategyName()
       return "Nested_NWave_BreakoutQualityRouter";
    if(IsNestedNWaveRetestConfirmationMode())
       return "Nested_NWave_RetestConfirmation";
+   if(IsNestedNWaveStructuralBosV2Mode())
+      return "Nested_NWave_StructuralBOS_V2";
    if(IsNestedNWaveStructuralBosMode())
       return "Nested_NWave_StructuralBOS";
    return "Nested_NWave_NecklineBreak";
@@ -1242,6 +1262,96 @@ bool FindRecentPivots(const MqlRates &rates[],
    return (latest.valid && previous.valid);
   }
 
+bool FindRecentPivots3(const MqlRates &rates[],
+                       const bool highPivot,
+                       const int span,
+                       const int scanBars,
+                       PivotPoint &latest,
+                       PivotPoint &previous,
+                       PivotPoint &third)
+  {
+   ResetPivot(latest);
+   ResetPivot(previous);
+   ResetPivot(third);
+
+   int size = ArraySize(rates);
+   int maxShift = size - span - 1;
+   if(maxShift > scanBars)
+      maxShift = scanBars;
+   for(int shift = span + 1; shift <= maxShift; ++shift)
+     {
+      bool found = (highPivot ? IsPivotHigh(rates, shift, span) : IsPivotLow(rates, shift, span));
+      if(!found)
+         continue;
+
+      if(!latest.valid)
+        {
+         SetPivot(latest, shift, (highPivot ? rates[shift].high : rates[shift].low), rates[shift].time);
+         continue;
+        }
+      if(!previous.valid)
+        {
+         SetPivot(previous, shift, (highPivot ? rates[shift].high : rates[shift].low), rates[shift].time);
+         continue;
+        }
+
+      SetPivot(third, shift, (highPivot ? rates[shift].high : rates[shift].low), rates[shift].time);
+      return true;
+     }
+
+   return (latest.valid && previous.valid && third.valid);
+  }
+
+bool FindBestPivotBetween(const MqlRates &rates[],
+                          const bool highPivot,
+                          const int span,
+                          const int newerShift,
+                          const int olderShift,
+                          PivotPoint &best)
+  {
+   ResetPivot(best);
+   if(olderShift <= newerShift + 1)
+      return false;
+
+   for(int shift = newerShift + 1; shift < olderShift; ++shift)
+     {
+      bool found = (highPivot ? IsPivotHigh(rates, shift, span) : IsPivotLow(rates, shift, span));
+      if(!found)
+         continue;
+
+      double price = (highPivot ? rates[shift].high : rates[shift].low);
+      if(!best.valid ||
+         (highPivot && price > best.price) ||
+         (!highPivot && price < best.price))
+         SetPivot(best, shift, price, rates[shift].time);
+     }
+
+   return best.valid;
+  }
+
+string PivotTimeText(const PivotPoint &pivot)
+  {
+   if(!pivot.valid)
+      return "";
+   return TimeToString(pivot.time, TIME_DATE | TIME_MINUTES);
+  }
+
+string PivotSeq3Text(const string firstLabel,
+                     const PivotPoint &first,
+                     const string secondLabel,
+                     const PivotPoint &second,
+                     const string thirdLabel,
+                     const PivotPoint &third)
+  {
+   if(!first.valid || !second.valid || !third.valid)
+      return "";
+
+   string text = firstLabel + "@" + PivotTimeText(first) + "=" + DoubleToString(first.price, 5);
+   text += "|" + secondLabel + "@" + PivotTimeText(second) + "=" + DoubleToString(second.price, 5);
+   text += "|" + thirdLabel + "@" + PivotTimeText(third) + "=" + DoubleToString(third.price, 5);
+   return text;
+  }
+
 void ResetStructureFilterState(StructureFilterState &state)
   {
    state.trendUp = false;
@@ -1457,6 +1567,16 @@ void InitNestedNWaveSetup(NestedNWaveSetup &setup, const string symbol, const in
    setup.distanceBosToEntry = 0.0;
    setup.distanceBosToEntryATR = 0.0;
    setup.barsSinceBos = 0;
+   setup.h4PivotSequence = "";
+   setup.h1PivotSequence = "";
+   setup.h4ImpulseATR = 0.0;
+   setup.h1CounterWaveATR = 0.0;
+   setup.h4CorrectionDepth = 0.0;
+   setup.trueBosLevel = 0.0;
+   setup.bosLevelSourcePivot = "";
+   setup.roomTo1R = 0.0;
+   setup.roomTo2R = 0.0;
+   setup.roomToTargetLabel = "not_evaluated";
   }
 
 //+------------------------------------------------------------------+
@@ -3203,6 +3323,417 @@ bool DetectNestedStructuralBosConfirmation(const MqlRates &h1Rates[],
    return true;
   }
 
+bool DetectNestedStructuralBosV2H4Sequence(const MqlRates &h4Rates[],
+                                           const int direction,
+                                           NestedNWaveSetup &setup)
+  {
+   int span = InpStructureSwingSpan;
+   if(span < 1)
+      span = 1;
+   int scanBars = InpStructureScanBars;
+   if(scanBars < span * 5 + 12)
+      scanBars = span * 5 + 12;
+
+   PivotPoint highLatest;
+   PivotPoint highPrevious;
+   PivotPoint highThird;
+   PivotPoint lowLatest;
+   PivotPoint lowPrevious;
+   PivotPoint lowThird;
+   bool hasHighs = FindRecentPivots3(h4Rates, true, span, scanBars, highLatest, highPrevious, highThird);
+   bool hasLows = FindRecentPivots3(h4Rates, false, span, scanBars, lowLatest, lowPrevious, lowThird);
+   if(!hasHighs || !hasLows)
+     {
+      setup.failReason = "h4_sequence_range_noise";
+      setup.h4TrendState = "h4_sequence_range_noise";
+      setup.structuralBosState = "h4_sequence_range_noise";
+      return false;
+     }
+
+   double currentClose = h4Rates[1].close;
+   double impulseRange = 0.0;
+
+   if(direction > 0)
+     {
+      PivotPoint pivotA = lowPrevious;
+      PivotPoint pivotC = lowLatest;
+      PivotPoint pivotB;
+      if(!FindBestPivotBetween(h4Rates, true, span, pivotC.shift, pivotA.shift, pivotB))
+        {
+         setup.failReason = "h4_sequence_range_noise";
+         setup.h4TrendState = "missing_h4_impulse_high";
+         setup.structuralBosState = "h4_sequence_range_noise";
+         return false;
+        }
+
+      if(pivotC.price <= pivotA.price || currentClose <= pivotA.price)
+        {
+         setup.failReason = "h4_correction_invalid";
+         setup.h4TrendState = "bullish_sequence_broken";
+         setup.structuralBosState = "h4_correction_invalid";
+         return false;
+        }
+
+      impulseRange = pivotB.price - pivotA.price;
+      if(impulseRange <= 0.0)
+        {
+         setup.failReason = "h4_sequence_range_noise";
+         setup.structuralBosState = "h4_sequence_range_noise";
+         return false;
+        }
+      setup.h4PivotSequence = PivotSeq3Text("A_low", pivotA, "B_high", pivotB, "C_low", pivotC);
+      setup.h4ImpulseLow = pivotA.price;
+      setup.h4ImpulseHigh = pivotB.price;
+      setup.h4FibRetracementPct = (pivotB.price - currentClose) / impulseRange * 100.0;
+      setup.h4TrendState = "h4_sequence_valid_bullish";
+     }
+   else
+     {
+      PivotPoint pivotA = highPrevious;
+      PivotPoint pivotC = highLatest;
+      PivotPoint pivotB;
+      if(!FindBestPivotBetween(h4Rates, false, span, pivotC.shift, pivotA.shift, pivotB))
+        {
+         setup.failReason = "h4_sequence_range_noise";
+         setup.h4TrendState = "missing_h4_impulse_low";
+         setup.structuralBosState = "h4_sequence_range_noise";
+         return false;
+        }
+
+      if(pivotC.price >= pivotA.price || currentClose >= pivotA.price)
+        {
+         setup.failReason = "h4_correction_invalid";
+         setup.h4TrendState = "bearish_sequence_broken";
+         setup.structuralBosState = "h4_correction_invalid";
+         return false;
+        }
+
+      impulseRange = pivotA.price - pivotB.price;
+      if(impulseRange <= 0.0)
+        {
+         setup.failReason = "h4_sequence_range_noise";
+         setup.structuralBosState = "h4_sequence_range_noise";
+         return false;
+        }
+      setup.h4PivotSequence = PivotSeq3Text("A_high", pivotA, "B_low", pivotB, "C_high", pivotC);
+      setup.h4ImpulseLow = pivotB.price;
+      setup.h4ImpulseHigh = pivotA.price;
+      setup.h4FibRetracementPct = (currentClose - pivotB.price) / impulseRange * 100.0;
+      setup.h4TrendState = "h4_sequence_valid_bearish";
+     }
+
+   if(impulseRange <= 0.0)
+     {
+      setup.failReason = "h4_sequence_range_noise";
+      setup.structuralBosState = "h4_sequence_range_noise";
+      return false;
+     }
+
+   setup.h4ImpulseATR = (setup.h4Atr > 0.0 ? impulseRange / setup.h4Atr : 0.0);
+   if(setup.h4ImpulseATR < 1.50)
+     {
+      setup.failReason = "h4_impulse_too_small";
+      setup.label = "h4_impulse_too_small";
+      setup.structuralBosState = "h4_impulse_too_small";
+      return false;
+     }
+
+   setup.h4ImpulsePass = true;
+   setup.h4CorrectionDepth = setup.h4FibRetracementPct;
+   setup.fibZone = NestedFibZoneLabel(setup.h4FibRetracementPct);
+   if(setup.fibZone == "too_shallow_pullback")
+     {
+      setup.failReason = "too_shallow_pullback";
+      setup.label = "h4_correction_invalid";
+      setup.structuralBosState = "h4_correction_invalid";
+      return false;
+     }
+   if(setup.fibZone == "too_deep_pullback")
+     {
+      setup.failReason = "too_deep_pullback";
+      setup.label = "h4_correction_invalid";
+      setup.structuralBosState = "h4_correction_invalid";
+      return false;
+     }
+
+   setup.h4PullbackZonePass = true;
+   setup.label = "h4_sequence_valid";
+   return true;
+  }
+
+bool DetectNestedStructuralBosV2H1CounterNWave(const MqlRates &h1Rates[],
+                                               const int direction,
+                                               NestedNWaveSetup &setup)
+  {
+   int span = InpStructureSwingSpan;
+   if(span < 1)
+      span = 1;
+   int scanBars = InpStructureScanBars;
+   if(scanBars < span * 5 + 12)
+      scanBars = span * 5 + 12;
+
+   PivotPoint highLatest;
+   PivotPoint highPrevious;
+   PivotPoint highThird;
+   PivotPoint lowLatest;
+   PivotPoint lowPrevious;
+   PivotPoint lowThird;
+   bool hasHighs = FindRecentPivots3(h1Rates, true, span, scanBars, highLatest, highPrevious, highThird);
+   bool hasLows = FindRecentPivots3(h1Rates, false, span, scanBars, lowLatest, lowPrevious, lowThird);
+   if(!hasHighs || !hasLows)
+     {
+      setup.failReason = "h1_counter_range_noise";
+      setup.h1CounterTrendState = "missing_h1_sequence";
+      setup.structuralBosState = "h1_counter_range_noise";
+      return false;
+     }
+
+   double counterRange = 0.0;
+   if(direction > 0)
+     {
+      PivotPoint pivotA = highPrevious;
+      PivotPoint pivotC = highLatest;
+      PivotPoint pivotB;
+      if(!FindBestPivotBetween(h1Rates, false, span, pivotC.shift, pivotA.shift, pivotB))
+        {
+         setup.failReason = "h1_counter_range_noise";
+         setup.h1CounterTrendState = "missing_h1_counter_low";
+         setup.structuralBosState = "h1_counter_range_noise";
+         return false;
+        }
+
+      if(pivotC.price >= pivotA.price)
+        {
+         setup.failReason = "h1_counter_range_noise";
+         setup.h1CounterTrendState = "no_lower_high";
+         setup.structuralBosState = "h1_counter_range_noise";
+         return false;
+        }
+      if(pivotB.price <= setup.h4ImpulseLow)
+        {
+         setup.failReason = "h1_counter_too_deep";
+         setup.h1CounterTrendState = "counter_wave_broke_h4_origin";
+         setup.structuralBosState = "h1_counter_too_deep";
+         return false;
+        }
+
+      counterRange = pivotA.price - pivotB.price;
+      setup.h1PivotSequence = PivotSeq3Text("A_high", pivotA, "B_low", pivotB, "C_lower_high", pivotC);
+      setup.h1CounterNWaveHigh = pivotA.price;
+      setup.h1CounterNWaveLow = pivotB.price;
+      setup.h1BosLevel = pivotC.price;
+      setup.trueBosLevel = pivotC.price;
+      setup.bosLevelSourcePivot = "h1_last_lower_high";
+      setup.rightSideLevel = pivotB.price;
+      setup.h1CounterTrendState = "h1_counter_sequence_valid_bearish";
+     }
+   else
+     {
+      PivotPoint pivotA = lowPrevious;
+      PivotPoint pivotC = lowLatest;
+      PivotPoint pivotB;
+      if(!FindBestPivotBetween(h1Rates, true, span, pivotC.shift, pivotA.shift, pivotB))
+        {
+         setup.failReason = "h1_counter_range_noise";
+         setup.h1CounterTrendState = "missing_h1_counter_high";
+         setup.structuralBosState = "h1_counter_range_noise";
+         return false;
+        }
+
+      if(pivotC.price <= pivotA.price)
+        {
+         setup.failReason = "h1_counter_range_noise";
+         setup.h1CounterTrendState = "no_higher_low";
+         setup.structuralBosState = "h1_counter_range_noise";
+         return false;
+        }
+      if(pivotB.price >= setup.h4ImpulseHigh)
+        {
+         setup.failReason = "h1_counter_too_deep";
+         setup.h1CounterTrendState = "counter_wave_broke_h4_origin";
+         setup.structuralBosState = "h1_counter_too_deep";
+         return false;
+        }
+
+      counterRange = pivotB.price - pivotA.price;
+      setup.h1PivotSequence = PivotSeq3Text("A_low", pivotA, "B_high", pivotB, "C_higher_low", pivotC);
+      setup.h1CounterNWaveHigh = pivotB.price;
+      setup.h1CounterNWaveLow = pivotA.price;
+      setup.h1BosLevel = pivotC.price;
+      setup.trueBosLevel = pivotC.price;
+      setup.bosLevelSourcePivot = "h1_last_higher_low";
+      setup.rightSideLevel = pivotB.price;
+      setup.h1CounterTrendState = "h1_counter_sequence_valid_bullish";
+     }
+
+   if(counterRange <= 0.0)
+     {
+      setup.failReason = "h1_counter_range_noise";
+      setup.structuralBosState = "h1_counter_range_noise";
+      return false;
+     }
+
+   setup.h1CounterWaveATR = (setup.h1Atr > 0.0 ? counterRange / setup.h1Atr : 0.0);
+   if(setup.h1CounterWaveATR < 1.00)
+     {
+      setup.failReason = "h1_counter_too_small";
+      setup.label = "h1_counter_too_small";
+      setup.structuralBosState = "h1_counter_too_small";
+      return false;
+     }
+
+   setup.h1CounterTrendPass = true;
+   setup.label = "h1_counter_sequence_valid";
+   return true;
+  }
+
+bool DetectNestedStructuralBosV2Confirmation(const MqlRates &h1Rates[],
+                                             const MqlRates &m15Rates[],
+                                             const int direction,
+                                             NestedNWaveSetup &setup)
+  {
+   double entryPrice = (direction > 0 ? SymbolInfoDouble(setup.symbol, SYMBOL_ASK) : SymbolInfoDouble(setup.symbol, SYMBOL_BID));
+   if(entryPrice <= 0.0)
+     {
+      setup.failReason = "market_closed";
+      setup.executionBlockReason = "market_closed";
+      return false;
+     }
+   setup.entryPrice = entryPrice;
+
+   double bosLevel = setup.trueBosLevel;
+   if(bosLevel <= 0.0)
+     {
+      setup.failReason = "true_bos_level_unclear";
+      setup.structuralBosState = "true_bos_level_unclear";
+      return false;
+     }
+
+   bool h1BosConfirmed = (direction > 0 ? h1Rates[1].close > bosLevel : h1Rates[1].close < bosLevel);
+   bool m15BosConfirmed = (direction > 0 ? m15Rates[1].close > bosLevel : m15Rates[1].close < bosLevel);
+
+   int barsSinceBos = 0;
+   int size = ArraySize(m15Rates);
+   int maxBosLookback = MathMin(12, size - 2);
+   for(int shift = 1; shift <= maxBosLookback; ++shift)
+     {
+      if(direction > 0)
+        {
+         if(m15Rates[shift].close > bosLevel && m15Rates[shift + 1].close <= bosLevel)
+           {
+            barsSinceBos = shift;
+            break;
+           }
+        }
+      else
+        {
+         if(m15Rates[shift].close < bosLevel && m15Rates[shift + 1].close >= bosLevel)
+           {
+            barsSinceBos = shift;
+            break;
+           }
+        }
+     }
+
+   setup.necklinePrice = bosLevel;
+   setup.necklineBreakClosePrice = m15Rates[1].close;
+   setup.barsSinceBos = barsSinceBos;
+   setup.barsSinceRightSide = barsSinceBos;
+   setup.distanceBosToEntry = MathAbs(entryPrice - bosLevel);
+   setup.distanceBosToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceBosToEntry / setup.m15Atr : 0.0);
+   setup.distanceNecklineToEntry = setup.distanceBosToEntry;
+   setup.distanceNecklineToEntryATR = setup.distanceBosToEntryATR;
+   setup.distanceRightSideToEntry = MathAbs(entryPrice - setup.rightSideLevel);
+   setup.distanceRightSideToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceRightSideToEntry / setup.m15Atr : 0.0);
+
+   if(!h1BosConfirmed && !m15BosConfirmed)
+     {
+      setup.failReason = "no_h1_bos";
+      setup.structuralBosState = "true_bos_level_not_invalidated";
+      setup.label = "true_bos_level_valid";
+      return false;
+     }
+
+   if(!m15BosConfirmed)
+     {
+      setup.failReason = "no_m15_bos";
+      setup.structuralBosState = "h1_close_bos_without_m15_confirmation";
+      setup.label = "h1_close_bos_confirmed";
+      return false;
+     }
+
+   setup.necklinePass = true;
+   setup.structuralBosState = (h1BosConfirmed ? "h1_close_bos_confirmed" : "m15_bos_confirmed");
+   setup.m15ConfirmationType = "m15_bos_confirmed";
+   if(barsSinceBos > 1)
+      setup.m15ConfirmationType = "m15_retest_reclaim";
+
+   UpdateNestedBreakoutQualityMetrics(m15Rates, (barsSinceBos > 0 ? barsSinceBos : 1), direction, setup);
+   ClassifyNestedBreakoutQuality(setup);
+
+   if(setup.distanceBosToEntryATR > 1.80 || setup.distanceRightSideToEntryATR > 3.20)
+      setup.label = "chasing_entry";
+   else if(setup.distanceBosToEntryATR > 1.20 || barsSinceBos > 8)
+      setup.label = "late_entry";
+   else
+      setup.label = "clean_structural_bos_v2";
+
+   setup.necklineBreakLabel = setup.label;
+   setup.qualityScore = 150.0;
+   if(setup.label == "clean_structural_bos_v2")
+      setup.qualityScore += 25.0;
+   else if(setup.label == "late_entry")
+      setup.qualityScore -= 25.0;
+   else if(setup.label == "chasing_entry")
+      setup.qualityScore -= 45.0;
+
+   setup.qualityScore -= MathAbs(setup.h4FibRetracementPct - 50.0) * 0.45;
+   setup.qualityScore += MathMin(setup.h4ImpulseATR, 4.0) * 3.0;
+   setup.qualityScore += MathMin(setup.h1CounterWaveATR, 3.0) * 3.0;
+   setup.qualityScore -= setup.distanceBosToEntryATR * 14.0;
+   setup.qualityScore -= MathMax(0, barsSinceBos - 3) * 3.0;
+   return true;
+  }
+
+bool ApplyNestedStructuralBosV2RoomFilter(NestedNWaveSetup &setup, const int direction)
+  {
+   setup.roomToTargetLabel = "room_ok";
+   setup.roomTo1R = 0.0;
+   setup.roomTo2R = 0.0;
+   if(setup.riskR <= 0.0)
+      return true;
+
+   double room = 0.0;
+   if(direction > 0 && setup.h4ImpulseHigh > setup.entryPrice)
+      room = setup.h4ImpulseHigh - setup.entryPrice;
+   else if(direction < 0 && setup.h4ImpulseLow < setup.entryPrice)
+      room = setup.entryPrice - setup.h4ImpulseLow;
+
+   if(room <= 0.0)
+     {
+      setup.roomToTargetLabel = "target_beyond_known_h4_impulse";
+      return true;
+     }
+
+   setup.roomTo1R = room / setup.riskR;
+   setup.roomTo2R = room / (setup.riskR * 2.0);
+   if(setup.roomTo2R < 1.0)
+     {
+      setup.roomToTargetLabel = "insufficient_room_to_target";
+      setup.label = "insufficient_room_to_target";
+      setup.necklineBreakLabel = setup.label;
+     }
+
+   if(setup.roomTo1R < 1.0)
+     {
+      setup.failReason = "insufficient_room_to_target";
+      setup.label = "insufficient_room_to_target";
+      return false;
+     }
+
+   return true;
+  }
+
 string ClassifyNestedNecklineBreakLabel(const NestedNWaveSetup &setup, const bool freshBreak, const bool doublePattern)
   {
    if(!setup.necklinePass)
@@ -3919,15 +4450,35 @@ bool BuildNestedNWaveSetup(const string symbol,
    setup.spreadGuardBlocked = !setup.spreadGuardPass;
    setup.dataReady = true;
 
-   if(!DetectNestedH4ImpulseAndPullback(h4Rates, direction, setup))
-      return false;
-
-   if(!DetectNestedH1CounterTrendNWave(h1Rates, direction, setup))
-      return false;
+   if(IsNestedNWaveStructuralBosV2Mode())
+     {
+      if(!DetectNestedStructuralBosV2H4Sequence(h4Rates, direction, setup))
+         return false;
+      if(!DetectNestedStructuralBosV2H1CounterNWave(h1Rates, direction, setup))
+         return false;
+     }
+   else
+     {
+      if(!DetectNestedH4ImpulseAndPullback(h4Rates, direction, setup))
+         return false;
+      if(!DetectNestedH1CounterTrendNWave(h1Rates, direction, setup))
+         return false;
+     }
 
    setup.setupPass = true;
 
-   if(IsNestedNWaveStructuralBosMode())
+   if(IsNestedNWaveStructuralBosV2Mode())
+     {
+      if(!DetectNestedStructuralBosV2Confirmation(h1Rates, m15Rates, direction, setup))
+         return false;
+      if(!CalculateNestedStopLoss(symbol, direction, setup))
+         return false;
+      if(!CalculateNestedTakeProfit(symbol, direction, setup))
+         return false;
+      if(!ApplyNestedStructuralBosV2RoomFilter(setup, direction))
+         return false;
+     }
+   else if(IsNestedNWaveStructuralBosMode())
      {
       if(!DetectNestedStructuralBosConfirmation(h1Rates, m15Rates, direction, setup))
          return false;
@@ -4709,13 +5260,19 @@ void RecordNestedNWaveFailReason(const string reason)
            reason == "direction_mode_long_only" ||
            reason == "direction_mode_short_only")
       ++g_nestedNWaveResearchExcludedCount;
-   else if(reason == "no_h4_nwave")
+   else if(reason == "no_h4_nwave" ||
+           reason == "h4_sequence_range_noise" ||
+           reason == "h4_impulse_too_small" ||
+           reason == "h4_correction_invalid")
       ++g_nestedNWaveNoH4NWaveCount;
    else if(reason == "too_shallow_pullback")
       ++g_nestedNWaveTooShallowPullbackCount;
    else if(reason == "too_deep_pullback")
       ++g_nestedNWaveTooDeepPullbackCount;
-   else if(reason == "no_h1_counter_trend_nwave")
+   else if(reason == "no_h1_counter_trend_nwave" ||
+           reason == "h1_counter_range_noise" ||
+           reason == "h1_counter_too_small" ||
+           reason == "h1_counter_too_deep")
       ++g_nestedNWaveNoH1CounterTrendCount;
    else if(reason == "h1_counter_nwave_weak")
       ++g_nestedNWaveNoH1CounterTrendCount;
@@ -4724,13 +5281,15 @@ void RecordNestedNWaveFailReason(const string reason)
    else if(reason == "no_neckline_break")
       ++g_nestedNWaveNoNecklineBreakCount;
    else if(reason == "no_h1_bos" ||
-           reason == "no_m15_bos")
+           reason == "no_m15_bos" ||
+           reason == "true_bos_level_unclear")
       ++g_nestedNWaveNoNecklineBreakCount;
    else if(reason == "sl_too_tight")
       ++g_nestedNWaveSlTooTightCount;
    else if(reason == "sl_too_wide")
       ++g_nestedNWaveSlTooWideCount;
-   else if(reason == "invalid_structure")
+   else if(reason == "invalid_structure" ||
+           reason == "insufficient_room_to_target")
       ++g_nestedNWaveInvalidStructureCount;
    else if(reason == "spread_guard")
       ++g_nestedNWaveSpreadGuardCount;
@@ -4807,7 +5366,8 @@ void RecordNestedNWaveEvaluation(const NestedNWaveSetup &setup)
       ++g_nestedNWaveUnclearBreakoutCount;
 
    if(setup.label == "clean_nested_nwave_entry" ||
-      setup.label == "clean_structural_bos")
+      setup.label == "clean_structural_bos" ||
+      setup.label == "clean_structural_bos_v2")
       ++g_nestedNWaveCleanEntryCount;
    else if(setup.label == "neckline_break_initial" ||
            setup.label == "m15_bos_confirmed" ||
@@ -6272,7 +6832,9 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
                       "breakout_directional_wick_ratio,breakout_close_position_directional,neckline_touch_count,"
                       "context_quality_router_mode,context_quality_label,context_quality_reason,context_quality_score,context_clean,context_mixed,context_poor,"
                       "structural_bos_mode,structural_bos_state,m15_confirmation_type,h1_bos_level,h1_counter_nwave_high,h1_counter_nwave_low,"
-                      "distance_bos_to_entry,distance_bos_to_entry_atr,bars_since_bos\r\n");
+                      "distance_bos_to_entry,distance_bos_to_entry_atr,bars_since_bos,"
+                      "h4_pivot_sequence,h1_pivot_sequence,h4_impulse_atr,h1_counter_wave_atr,h4_correction_depth,true_bos_level,bos_level_source_pivot,"
+                      "room_to_1r,room_to_2r,room_to_target_label\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -6377,6 +6939,16 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
    AppendCsvField(row, DoubleToString(setup.distanceBosToEntry, digits));
    AppendCsvField(row, DoubleToString(setup.distanceBosToEntryATR, 2));
    AppendCsvField(row, IntegerToString(setup.barsSinceBos));
+   AppendCsvField(row, setup.h4PivotSequence);
+   AppendCsvField(row, setup.h1PivotSequence);
+   AppendCsvField(row, DoubleToString(setup.h4ImpulseATR, 2));
+   AppendCsvField(row, DoubleToString(setup.h1CounterWaveATR, 2));
+   AppendCsvField(row, DoubleToString(setup.h4CorrectionDepth, 2));
+   AppendCsvField(row, DoubleToString(setup.trueBosLevel, digits));
+   AppendCsvField(row, setup.bosLevelSourcePivot);
+   AppendCsvField(row, DoubleToString(setup.roomTo1R, 2));
+   AppendCsvField(row, DoubleToString(setup.roomTo2R, 2));
+   AppendCsvField(row, setup.roomToTargetLabel);
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }
@@ -6422,7 +6994,9 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
                       "breakout_directional_wick_ratio,breakout_close_position_directional,neckline_touch_count,"
                       "context_quality_router_mode,context_quality_label,context_quality_reason,context_quality_score,context_clean,context_mixed,context_poor,"
                       "structural_bos_mode,structural_bos_state,m15_confirmation_type,h1_bos_level,h1_counter_nwave_high,h1_counter_nwave_low,"
-                      "distance_bos_to_entry,distance_bos_to_entry_atr,bars_since_bos\r\n");
+                      "distance_bos_to_entry,distance_bos_to_entry_atr,bars_since_bos,"
+                      "h4_pivot_sequence,h1_pivot_sequence,h4_impulse_atr,h1_counter_wave_atr,h4_correction_depth,true_bos_level,bos_level_source_pivot,"
+                      "room_to_1r,room_to_2r,room_to_target_label\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -6508,6 +7082,16 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
    AppendCsvField(row, DoubleToString(setup.distanceBosToEntry, digits));
    AppendCsvField(row, DoubleToString(setup.distanceBosToEntryATR, 2));
    AppendCsvField(row, IntegerToString(setup.barsSinceBos));
+   AppendCsvField(row, setup.h4PivotSequence);
+   AppendCsvField(row, setup.h1PivotSequence);
+   AppendCsvField(row, DoubleToString(setup.h4ImpulseATR, 2));
+   AppendCsvField(row, DoubleToString(setup.h1CounterWaveATR, 2));
+   AppendCsvField(row, DoubleToString(setup.h4CorrectionDepth, 2));
+   AppendCsvField(row, DoubleToString(setup.trueBosLevel, digits));
+   AppendCsvField(row, setup.bosLevelSourcePivot);
+   AppendCsvField(row, DoubleToString(setup.roomTo1R, 2));
+   AppendCsvField(row, DoubleToString(setup.roomTo2R, 2));
+   AppendCsvField(row, setup.roomToTargetLabel);
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }

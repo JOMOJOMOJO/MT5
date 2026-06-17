@@ -175,6 +175,7 @@ if ($ScenarioSet -eq "ScanIntervalComparison") {
         New-Run -Id "C" -Name "C_breakout_router_all" -StrategyMode 8 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 3) -Scenario "Nested_NWave_BreakoutQualityRouter_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
         New-Run -Id "D" -Name "D_context_router_v2_all" -StrategyMode 10 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 4) -Scenario "Nested_NWave_ContextQualityRouterV2_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
         New-Run -Id "E" -Name "E_structural_bos_all" -StrategyMode 12 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 5) -Scenario "Nested_NWave_StructuralBOS_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "F" -Name "F_structural_bos_v2_all" -StrategyMode 13 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 6) -Scenario "Nested_NWave_StructuralBOS_V2_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
     )
 } elseif ($ScenarioSet -eq "RegimeComparison") {
     $runs = @(
@@ -233,7 +234,7 @@ function Write-ThirdWavePreset {
             continue
         }
         if ($line -match '^InpResearchStrategyMode=') {
-            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||12||N")
+            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||13||N")
             $insertedStrategyMode = $true
             continue
         }
@@ -317,7 +318,7 @@ function Write-ThirdWavePreset {
         }
         $out.Add($line)
         if (-not $insertedStrategyMode -and $line -match '^InpExecutionTF=') {
-            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||12||N")
+            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||13||N")
             $insertedStrategyMode = $true
         }
         if (-not $insertedEntrySelectionMode -and $line -match '^InpResearchStrategyMode=') {
@@ -354,7 +355,7 @@ function Write-ThirdWavePreset {
         }
     }
     if (-not $insertedStrategyMode) {
-        $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||12||N")
+        $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||13||N")
     }
     if (-not $insertedEntrySelectionMode) {
         $out.Add("InpEntrySelectionMode=$($Run.EntrySelectionMode)||$($Run.EntrySelectionMode)||0||1||N")
