@@ -1,0 +1,3 @@
+open_time,close_time,symbol,direction,volume,open_price,close_price,open_deal,close_deal,commission,swap,profit,net_profit,close_balance,close_comment,holding_minutes,open_bar_m5,close_bar_m5
+2025.02.21 06:20:00,2025.02.21 09:31:12,EURJPY,SHORT,0.21,157.77,158.113,2,3,0.0,0.0,-47.83,-47.83,9952.17,sl 158.112,191.2,2025.02.21 06:20:00,2025.02.21 09:30:00
+2025.02.24 01:05:00,2025.02.24 02:53:53,XAUUSD,SHORT,0.14,2939.54,2932.57,4,5,0.0,0.0,97.58,97.58,10049.75,tp 2932.60,108.88,2025.02.24 01:05:00,2025.02.24 02:50:00
