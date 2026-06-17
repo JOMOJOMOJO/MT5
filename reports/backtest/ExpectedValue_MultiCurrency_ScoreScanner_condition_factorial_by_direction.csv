@@ -1,0 +1,3 @@
+group,candidates,trades,win_rate,PF,avg_R,net,maxDD,maxDD_pct,avg_MFE_R,avg_MAE_R,reached_1R_pct,reached_2R_pct,FX net,XAUUSD net,LONG net,SHORT net,symbols_count,periods_count,period_distribution,symbol_distribution,direction_distribution
+LONG,20,20,25.0,0.528,-0.315,-356.41,494.83,4.95,0.813,1.12,30.0,20.0,-372.29,15.88,-356.41,0,6,4,2025-02:1;2025-08:5;2025-10:3;2026-Q1:11,AUDJPY:2;EURJPY:3;EURUSD:1;GBPUSD:4;USDJPY:8;XAUUSD:2,LONG:20
+SHORT,27,27,48.15,1.925,0.472,595.97,238.11,2.24,1.588,1.023,66.67,48.15,175.38,420.59,0,595.97,7,4,2025-02:4;2025-08:7;2025-10:2;2026-Q1:14,AUDJPY:1;EURJPY:1;EURUSD:4;GBPJPY:1;GBPUSD:2;USDJPY:9;XAUUSD:9,SHORT:27

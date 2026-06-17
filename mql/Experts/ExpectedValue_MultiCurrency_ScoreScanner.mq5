@@ -40,7 +40,8 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V2 = 10,
    RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V3 = 11, // Deprecated research alias; no weekday/time edge logic.
    RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS = 12,
-   RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS_V2 = 13
+   RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS_V2 = 13,
+   RESEARCH_STRATEGY_NESTED_CONDITION_FACTORIAL_CANDIDATES = 14
   };
 
 enum ENUM_ENTRY_SELECTION_MODE
@@ -388,6 +389,27 @@ struct NestedNWaveSetup
    double            roomTo1R;
    double            roomTo2R;
    string            roomToTargetLabel;
+   bool              condH4BiasMA;
+   bool              condH4DowBias;
+   bool              condH4Fib382618;
+   bool              condH1PrevExtremeBreak;
+   bool              condH1CounterNWave;
+   bool              condH1CounterWaveATR;
+   bool              condTrueBosLevel;
+   bool              condM15PrevExtremeBos;
+   bool              condM15CloseBos;
+   bool              condRoomTo1R;
+   bool              condRoomTo2R;
+   bool              condSlATRok;
+   string            h4MaState;
+   string            h4DowState;
+   string            h1PullbackType;
+   string            h1PrevExtremeBreakState;
+   string            h1CounterNWaveState;
+   string            bosLevelType;
+   string            m15TriggerType;
+   string            nearestObstacleType;
+   double            nearestObstaclePrice;
   };
 
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
@@ -685,7 +707,8 @@ bool IsNestedNWaveStrategyMode()
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V2 ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_CONTEXT_QUALITY_ROUTER_V3 ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS ||
-           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS_V2);
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS_V2 ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_CONDITION_FACTORIAL_CANDIDATES);
   }
 
 bool IsNestedNWaveRetestConfirmationMode()
@@ -727,6 +750,11 @@ bool IsNestedNWaveStructuralBosMode()
 bool IsNestedNWaveStructuralBosV2Mode()
   {
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_NWAVE_STRUCTURAL_BOS_V2);
+  }
+
+bool IsNestedConditionFactorialMode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_CONDITION_FACTORIAL_CANDIDATES);
   }
 
 string V4ReversalSignalModeName()
@@ -813,6 +841,8 @@ string NestedNWaveStrategyName()
       return "Nested_NWave_RetestConfirmation";
    if(IsNestedNWaveStructuralBosV2Mode())
       return "Nested_NWave_StructuralBOS_V2";
+   if(IsNestedConditionFactorialMode())
+      return "Nested_ConditionFactorial_Candidates";
    if(IsNestedNWaveStructuralBosMode())
       return "Nested_NWave_StructuralBOS";
    return "Nested_NWave_NecklineBreak";
@@ -1577,6 +1607,27 @@ void InitNestedNWaveSetup(NestedNWaveSetup &setup, const string symbol, const in
    setup.roomTo1R = 0.0;
    setup.roomTo2R = 0.0;
    setup.roomToTargetLabel = "not_evaluated";
+   setup.condH4BiasMA = false;
+   setup.condH4DowBias = false;
+   setup.condH4Fib382618 = false;
+   setup.condH1PrevExtremeBreak = false;
+   setup.condH1CounterNWave = false;
+   setup.condH1CounterWaveATR = false;
+   setup.condTrueBosLevel = false;
+   setup.condM15PrevExtremeBos = false;
+   setup.condM15CloseBos = false;
+   setup.condRoomTo1R = false;
+   setup.condRoomTo2R = false;
+   setup.condSlATRok = false;
+   setup.h4MaState = "not_evaluated";
+   setup.h4DowState = "not_evaluated";
+   setup.h1PullbackType = "not_evaluated";
+   setup.h1PrevExtremeBreakState = "not_evaluated";
+   setup.h1CounterNWaveState = "not_evaluated";
+   setup.bosLevelType = "not_evaluated";
+   setup.m15TriggerType = "not_evaluated";
+   setup.nearestObstacleType = "not_evaluated";
+   setup.nearestObstaclePrice = 0.0;
   }
 
 //+------------------------------------------------------------------+
@@ -3734,6 +3785,283 @@ bool ApplyNestedStructuralBosV2RoomFilter(NestedNWaveSetup &setup, const int dir
    return true;
   }
 
+bool DetectNestedConditionFactorialCandidate(const MqlRates &h4Rates[],
+                                             const MqlRates &h1Rates[],
+                                             const MqlRates &m15Rates[],
+                                             const int direction,
+                                             NestedNWaveSetup &setup)
+  {
+   int span = InpStructureSwingSpan;
+   if(span < 1)
+      span = 1;
+   int scanBars = InpStructureScanBars;
+   if(scanBars < span * 5 + 12)
+      scanBars = span * 5 + 12;
+
+   double h4Close = h4Rates[1].close;
+   double h4Ma = AverageClose(h4Rates, 1, InpSlowMAPeriod);
+   double h4MaPast = AverageClose(h4Rates, 1 + InpSlopeLookbackBars, InpSlowMAPeriod);
+   if(h4Ma > 0.0 && h4MaPast > 0.0)
+     {
+      setup.condH4BiasMA = (direction > 0 ? (h4Close > h4Ma && h4Ma >= h4MaPast)
+                                           : (h4Close < h4Ma && h4Ma <= h4MaPast));
+      setup.h4MaState = (setup.condH4BiasMA ? "ma_bias_pass" : "ma_bias_fail");
+     }
+
+   PivotPoint h4HighLatest, h4HighPrevious, h4HighThird;
+   PivotPoint h4LowLatest, h4LowPrevious, h4LowThird;
+   bool hasH4Highs = FindRecentPivots3(h4Rates, true, span, scanBars, h4HighLatest, h4HighPrevious, h4HighThird);
+   bool hasH4Lows = FindRecentPivots3(h4Rates, false, span, scanBars, h4LowLatest, h4LowPrevious, h4LowThird);
+   if(hasH4Highs && hasH4Lows)
+     {
+      setup.condH4DowBias = (direction > 0 ?
+                             (h4HighLatest.price > h4HighPrevious.price && h4LowLatest.price > h4LowPrevious.price) :
+                             (h4HighLatest.price < h4HighPrevious.price && h4LowLatest.price < h4LowPrevious.price));
+      setup.h4DowState = (setup.condH4DowBias ? "dow_bias_pass" : "dow_bias_fail");
+
+      PivotPoint pivotA;
+      PivotPoint pivotB;
+      PivotPoint pivotC;
+      double impulseRange = 0.0;
+      if(direction > 0)
+        {
+         pivotA = h4LowPrevious;
+         pivotC = h4LowLatest;
+         if(FindBestPivotBetween(h4Rates, true, span, pivotC.shift, pivotA.shift, pivotB))
+           {
+            impulseRange = pivotB.price - pivotA.price;
+            if(impulseRange > 0.0 && pivotC.price > pivotA.price)
+              {
+               setup.h4PivotSequence = PivotSeq3Text("A_low", pivotA, "B_high", pivotB, "C_low", pivotC);
+               setup.h4ImpulseLow = pivotA.price;
+               setup.h4ImpulseHigh = pivotB.price;
+               setup.h4FibRetracementPct = (pivotB.price - pivotC.price) / impulseRange * 100.0;
+              }
+           }
+        }
+      else
+        {
+         pivotA = h4HighPrevious;
+         pivotC = h4HighLatest;
+         if(FindBestPivotBetween(h4Rates, false, span, pivotC.shift, pivotA.shift, pivotB))
+           {
+            impulseRange = pivotA.price - pivotB.price;
+            if(impulseRange > 0.0 && pivotC.price < pivotA.price)
+              {
+               setup.h4PivotSequence = PivotSeq3Text("A_high", pivotA, "B_low", pivotB, "C_high", pivotC);
+               setup.h4ImpulseLow = pivotB.price;
+               setup.h4ImpulseHigh = pivotA.price;
+               setup.h4FibRetracementPct = (pivotC.price - pivotB.price) / impulseRange * 100.0;
+              }
+           }
+        }
+
+      if(setup.h4FibRetracementPct > 0.0)
+        {
+         setup.h4ImpulseATR = (setup.h4Atr > 0.0 && impulseRange > 0.0 ? impulseRange / setup.h4Atr : 0.0);
+         setup.h4CorrectionDepth = setup.h4FibRetracementPct;
+         setup.fibZone = NestedFibZoneLabel(setup.h4FibRetracementPct);
+         setup.condH4Fib382618 = (setup.h4FibRetracementPct >= 38.2 && setup.h4FibRetracementPct <= 61.8);
+        }
+     }
+
+   PivotPoint h1HighLatest, h1HighPrevious, h1HighThird;
+   PivotPoint h1LowLatest, h1LowPrevious, h1LowThird;
+   bool hasH1Highs = FindRecentPivots3(h1Rates, true, span, scanBars, h1HighLatest, h1HighPrevious, h1HighThird);
+   bool hasH1Lows = FindRecentPivots3(h1Rates, false, span, scanBars, h1LowLatest, h1LowPrevious, h1LowThird);
+   if(hasH1Highs && hasH1Lows)
+     {
+      setup.condH1PrevExtremeBreak = (direction > 0 ? h1LowLatest.price < h1LowPrevious.price
+                                                     : h1HighLatest.price > h1HighPrevious.price);
+      setup.h1PrevExtremeBreakState = (setup.condH1PrevExtremeBreak ? "prev_extreme_break" : "no_prev_extreme_break");
+      setup.h1PullbackType = (direction > 0 ? "pullback_down" : "pullback_up");
+
+      setup.condH1CounterNWave = (direction > 0 ?
+                                  (h1HighLatest.price < h1HighPrevious.price && h1LowLatest.price < h1LowPrevious.price) :
+                                  (h1HighLatest.price > h1HighPrevious.price && h1LowLatest.price > h1LowPrevious.price));
+      setup.h1CounterNWaveState = (setup.condH1CounterNWave ? "counter_nwave_pass" : "counter_nwave_fail");
+      setup.h1CounterTrendState = setup.h1CounterNWaveState;
+
+      double counterRange = 0.0;
+      if(direction > 0)
+        {
+         counterRange = h1HighPrevious.price - h1LowLatest.price;
+         setup.h1CounterNWaveHigh = MathMax(h1HighLatest.price, h1HighPrevious.price);
+         setup.h1CounterNWaveLow = MathMin(h1LowLatest.price, h1LowPrevious.price);
+         setup.trueBosLevel = h1HighLatest.price;
+         setup.h1BosLevel = setup.trueBosLevel;
+         setup.bosLevelSourcePivot = "h1_last_lower_high";
+         setup.bosLevelType = (setup.condH1CounterNWave ? "last_lower_high" : "weak_lower_high");
+         setup.rightSideLevel = h1LowLatest.price;
+        }
+      else
+        {
+         counterRange = h1HighLatest.price - h1LowPrevious.price;
+         setup.h1CounterNWaveHigh = MathMax(h1HighLatest.price, h1HighPrevious.price);
+         setup.h1CounterNWaveLow = MathMin(h1LowLatest.price, h1LowPrevious.price);
+         setup.trueBosLevel = h1LowLatest.price;
+         setup.h1BosLevel = setup.trueBosLevel;
+         setup.bosLevelSourcePivot = "h1_last_higher_low";
+         setup.bosLevelType = (setup.condH1CounterNWave ? "last_higher_low" : "weak_higher_low");
+         setup.rightSideLevel = h1HighLatest.price;
+        }
+
+      setup.h1CounterWaveATR = (setup.h1Atr > 0.0 && counterRange > 0.0 ? counterRange / setup.h1Atr : 0.0);
+      setup.condH1CounterWaveATR = (setup.h1CounterWaveATR >= 1.0);
+      setup.condTrueBosLevel = (setup.trueBosLevel > 0.0);
+      setup.h1PivotSequence = PivotSeq3Text("high_latest", h1HighLatest, "low_latest", h1LowLatest, "bos", (direction > 0 ? h1HighLatest : h1LowLatest));
+     }
+
+   double entryPrice = (direction > 0 ? SymbolInfoDouble(setup.symbol, SYMBOL_ASK) : SymbolInfoDouble(setup.symbol, SYMBOL_BID));
+   if(entryPrice <= 0.0)
+     {
+      setup.failReason = "market_closed";
+      setup.executionBlockReason = "market_closed";
+      return false;
+     }
+   setup.entryPrice = entryPrice;
+
+   int m15Lookback = MathMin(12, ArraySize(m15Rates) - 2);
+   if(m15Lookback < 3)
+     {
+      setup.failReason = "data_unavailable";
+      return false;
+     }
+   double recentHigh = HighestHigh(m15Rates, 2, m15Lookback);
+   double recentLow = LowestLow(m15Rates, 2, m15Lookback);
+   setup.condM15PrevExtremeBos = (direction > 0 ? (recentHigh > 0.0 && m15Rates[1].close > recentHigh)
+                                                : (recentLow > 0.0 && m15Rates[1].close < recentLow));
+   setup.condM15CloseBos = (setup.trueBosLevel > 0.0 &&
+                            (direction > 0 ? m15Rates[1].close > setup.trueBosLevel
+                                           : m15Rates[1].close < setup.trueBosLevel));
+   setup.m15TriggerType = (setup.condM15CloseBos ? "m15_true_bos_close" :
+                           (setup.condM15PrevExtremeBos ? "m15_prev_extreme_bos" : "no_m15_trigger"));
+
+   if(setup.necklinePrice <= 0.0)
+      setup.necklinePrice = (setup.trueBosLevel > 0.0 ? setup.trueBosLevel : (direction > 0 ? recentHigh : recentLow));
+   setup.necklineBreakClosePrice = m15Rates[1].close;
+   if(direction > 0)
+     {
+      if(setup.rightSideLevel <= 0.0 || setup.rightSideLevel >= entryPrice)
+         setup.rightSideLevel = recentLow;
+     }
+   else
+     {
+      if(setup.rightSideLevel <= 0.0 || setup.rightSideLevel <= entryPrice)
+         setup.rightSideLevel = recentHigh;
+     }
+
+   setup.distanceNecklineToEntry = MathAbs(entryPrice - setup.necklinePrice);
+   setup.distanceNecklineToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceNecklineToEntry / setup.m15Atr : 0.0);
+   setup.distanceRightSideToEntry = MathAbs(entryPrice - setup.rightSideLevel);
+   setup.distanceRightSideToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceRightSideToEntry / setup.m15Atr : 0.0);
+   setup.barsSinceRightSide = 1;
+   setup.barsSinceBos = 1;
+
+   if(!(setup.condH4BiasMA || setup.condH4DowBias))
+     {
+      setup.failReason = "no_h4_bias";
+      setup.label = "condition_factorial_no_h4_bias";
+      return false;
+     }
+   if(!(setup.condH1PrevExtremeBreak || setup.condH1CounterNWave))
+     {
+      setup.failReason = "no_h1_pullback";
+      setup.label = "condition_factorial_no_h1_pullback";
+      return false;
+     }
+   if(!(setup.condM15PrevExtremeBos || setup.condM15CloseBos))
+     {
+      setup.failReason = "no_m15_trigger";
+      setup.label = "condition_factorial_no_m15_trigger";
+      return false;
+     }
+
+   setup.h4ImpulsePass = true;
+   setup.h4PullbackZonePass = setup.condH4Fib382618;
+   setup.h1CounterTrendPass = (setup.condH1PrevExtremeBreak || setup.condH1CounterNWave);
+   setup.necklinePass = true;
+   setup.structuralBosState = "condition_factorial_candidate";
+   setup.necklineBreakLabel = "condition_factorial_candidate";
+   setup.label = "condition_factorial_candidate";
+   setup.qualityScore = 80.0;
+   setup.qualityScore += (setup.condH4BiasMA ? 8.0 : 0.0);
+   setup.qualityScore += (setup.condH4DowBias ? 8.0 : 0.0);
+   setup.qualityScore += (setup.condH4Fib382618 ? 8.0 : 0.0);
+   setup.qualityScore += (setup.condH1PrevExtremeBreak ? 8.0 : 0.0);
+   setup.qualityScore += (setup.condH1CounterNWave ? 8.0 : 0.0);
+   setup.qualityScore += (setup.condH1CounterWaveATR ? 8.0 : 0.0);
+   setup.qualityScore += (setup.condTrueBosLevel ? 8.0 : 0.0);
+   setup.qualityScore += (setup.condM15PrevExtremeBos ? 8.0 : 0.0);
+   setup.qualityScore += (setup.condM15CloseBos ? 8.0 : 0.0);
+   return true;
+  }
+
+void ApplyNestedConditionFactorialPostRiskConditions(NestedNWaveSetup &setup, const int direction)
+  {
+   setup.condSlATRok = (setup.slATR >= InpMinSL_ATR && setup.slATR <= InpMaxSL_ATR);
+   setup.nearestObstacleType = "no_known_obstacle";
+   setup.nearestObstaclePrice = 0.0;
+   setup.roomTo1R = 0.0;
+   setup.roomTo2R = 0.0;
+   if(setup.riskR <= 0.0)
+      return;
+
+   double obstacle = 0.0;
+   if(direction > 0)
+     {
+      if(setup.h1CounterNWaveHigh > setup.entryPrice)
+        {
+         obstacle = setup.h1CounterNWaveHigh;
+         setup.nearestObstacleType = "h1_counter_high";
+        }
+      if(setup.h4ImpulseHigh > setup.entryPrice && (obstacle <= 0.0 || setup.h4ImpulseHigh < obstacle))
+        {
+         obstacle = setup.h4ImpulseHigh;
+         setup.nearestObstacleType = "h4_impulse_high";
+        }
+      if(obstacle > 0.0)
+        {
+         setup.nearestObstaclePrice = obstacle;
+         double room = obstacle - setup.entryPrice;
+         setup.roomTo1R = room / setup.riskR;
+         setup.roomTo2R = room / (setup.riskR * 2.0);
+        }
+     }
+   else
+     {
+      if(setup.h1CounterNWaveLow > 0.0 && setup.h1CounterNWaveLow < setup.entryPrice)
+        {
+         obstacle = setup.h1CounterNWaveLow;
+         setup.nearestObstacleType = "h1_counter_low";
+        }
+      if(setup.h4ImpulseLow > 0.0 && setup.h4ImpulseLow < setup.entryPrice && (obstacle <= 0.0 || setup.h4ImpulseLow > obstacle))
+        {
+         obstacle = setup.h4ImpulseLow;
+         setup.nearestObstacleType = "h4_impulse_low";
+        }
+      if(obstacle > 0.0)
+        {
+         setup.nearestObstaclePrice = obstacle;
+         double room = setup.entryPrice - obstacle;
+         setup.roomTo1R = room / setup.riskR;
+         setup.roomTo2R = room / (setup.riskR * 2.0);
+        }
+     }
+
+   if(obstacle <= 0.0)
+     {
+      setup.condRoomTo1R = true;
+      setup.condRoomTo2R = true;
+      setup.roomToTargetLabel = "no_known_obstacle";
+      return;
+     }
+
+   setup.condRoomTo1R = (setup.roomTo1R >= 1.0);
+   setup.condRoomTo2R = (setup.roomTo2R >= 1.0);
+   setup.roomToTargetLabel = (setup.condRoomTo2R ? "room_to_2r_ok" : (setup.condRoomTo1R ? "room_to_1r_only" : "insufficient_room_to_1r"));
+  }
+
 string ClassifyNestedNecklineBreakLabel(const NestedNWaveSetup &setup, const bool freshBreak, const bool doublePattern)
   {
    if(!setup.necklinePass)
@@ -4450,7 +4778,12 @@ bool BuildNestedNWaveSetup(const string symbol,
    setup.spreadGuardBlocked = !setup.spreadGuardPass;
    setup.dataReady = true;
 
-   if(IsNestedNWaveStructuralBosV2Mode())
+   if(IsNestedConditionFactorialMode())
+     {
+      if(!DetectNestedConditionFactorialCandidate(h4Rates, h1Rates, m15Rates, direction, setup))
+         return false;
+     }
+   else if(IsNestedNWaveStructuralBosV2Mode())
      {
       if(!DetectNestedStructuralBosV2H4Sequence(h4Rates, direction, setup))
          return false;
@@ -4467,7 +4800,15 @@ bool BuildNestedNWaveSetup(const string symbol,
 
    setup.setupPass = true;
 
-   if(IsNestedNWaveStructuralBosV2Mode())
+   if(IsNestedConditionFactorialMode())
+     {
+      if(!CalculateNestedStopLoss(symbol, direction, setup))
+         return false;
+      if(!CalculateNestedTakeProfit(symbol, direction, setup))
+         return false;
+      ApplyNestedConditionFactorialPostRiskConditions(setup, direction);
+     }
+   else if(IsNestedNWaveStructuralBosV2Mode())
      {
       if(!DetectNestedStructuralBosV2Confirmation(h1Rates, m15Rates, direction, setup))
          return false;
@@ -6834,7 +7175,11 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
                       "structural_bos_mode,structural_bos_state,m15_confirmation_type,h1_bos_level,h1_counter_nwave_high,h1_counter_nwave_low,"
                       "distance_bos_to_entry,distance_bos_to_entry_atr,bars_since_bos,"
                       "h4_pivot_sequence,h1_pivot_sequence,h4_impulse_atr,h1_counter_wave_atr,h4_correction_depth,true_bos_level,bos_level_source_pivot,"
-                      "room_to_1r,room_to_2r,room_to_target_label\r\n");
+                      "room_to_1r,room_to_2r,room_to_target_label,"
+                      "h4_bias_state,h4_ma_state,h4_dow_state,h4_fib_zone,h1_pullback_type,h1_prev_extreme_break_state,h1_counter_nwave_state,"
+                      "bos_level_type,m15_trigger_type,nearest_obstacle_type,nearest_obstacle_price,"
+                      "cond_h4_bias_ma,cond_h4_dow_bias,cond_h4_fib_382_618,cond_h1_prev_extreme_break,cond_h1_counter_nwave,cond_h1_counter_wave_atr,"
+                      "cond_true_bos_level,cond_m15_prev_extreme_bos,cond_m15_close_bos,cond_room_to_1r,cond_room_to_2r,cond_sl_atr_ok\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -6949,6 +7294,29 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
    AppendCsvField(row, DoubleToString(setup.roomTo1R, 2));
    AppendCsvField(row, DoubleToString(setup.roomTo2R, 2));
    AppendCsvField(row, setup.roomToTargetLabel);
+   AppendCsvField(row, setup.h4TrendState);
+   AppendCsvField(row, setup.h4MaState);
+   AppendCsvField(row, setup.h4DowState);
+   AppendCsvField(row, setup.fibZone);
+   AppendCsvField(row, setup.h1PullbackType);
+   AppendCsvField(row, setup.h1PrevExtremeBreakState);
+   AppendCsvField(row, setup.h1CounterNWaveState);
+   AppendCsvField(row, setup.bosLevelType);
+   AppendCsvField(row, setup.m15TriggerType);
+   AppendCsvField(row, setup.nearestObstacleType);
+   AppendCsvField(row, DoubleToString(setup.nearestObstaclePrice, digits));
+   AppendCsvField(row, BoolText(setup.condH4BiasMA));
+   AppendCsvField(row, BoolText(setup.condH4DowBias));
+   AppendCsvField(row, BoolText(setup.condH4Fib382618));
+   AppendCsvField(row, BoolText(setup.condH1PrevExtremeBreak));
+   AppendCsvField(row, BoolText(setup.condH1CounterNWave));
+   AppendCsvField(row, BoolText(setup.condH1CounterWaveATR));
+   AppendCsvField(row, BoolText(setup.condTrueBosLevel));
+   AppendCsvField(row, BoolText(setup.condM15PrevExtremeBos));
+   AppendCsvField(row, BoolText(setup.condM15CloseBos));
+   AppendCsvField(row, BoolText(setup.condRoomTo1R));
+   AppendCsvField(row, BoolText(setup.condRoomTo2R));
+   AppendCsvField(row, BoolText(setup.condSlATRok));
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }
@@ -6996,7 +7364,11 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
                       "structural_bos_mode,structural_bos_state,m15_confirmation_type,h1_bos_level,h1_counter_nwave_high,h1_counter_nwave_low,"
                       "distance_bos_to_entry,distance_bos_to_entry_atr,bars_since_bos,"
                       "h4_pivot_sequence,h1_pivot_sequence,h4_impulse_atr,h1_counter_wave_atr,h4_correction_depth,true_bos_level,bos_level_source_pivot,"
-                      "room_to_1r,room_to_2r,room_to_target_label\r\n");
+                      "room_to_1r,room_to_2r,room_to_target_label,"
+                      "h4_bias_state,h4_ma_state,h4_dow_state,h4_fib_zone,h1_pullback_type,h1_prev_extreme_break_state,h1_counter_nwave_state,"
+                      "bos_level_type,m15_trigger_type,nearest_obstacle_type,nearest_obstacle_price,"
+                      "cond_h4_bias_ma,cond_h4_dow_bias,cond_h4_fib_382_618,cond_h1_prev_extreme_break,cond_h1_counter_nwave,cond_h1_counter_wave_atr,"
+                      "cond_true_bos_level,cond_m15_prev_extreme_bos,cond_m15_close_bos,cond_room_to_1r,cond_room_to_2r,cond_sl_atr_ok\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -7092,6 +7464,29 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
    AppendCsvField(row, DoubleToString(setup.roomTo1R, 2));
    AppendCsvField(row, DoubleToString(setup.roomTo2R, 2));
    AppendCsvField(row, setup.roomToTargetLabel);
+   AppendCsvField(row, setup.h4TrendState);
+   AppendCsvField(row, setup.h4MaState);
+   AppendCsvField(row, setup.h4DowState);
+   AppendCsvField(row, setup.fibZone);
+   AppendCsvField(row, setup.h1PullbackType);
+   AppendCsvField(row, setup.h1PrevExtremeBreakState);
+   AppendCsvField(row, setup.h1CounterNWaveState);
+   AppendCsvField(row, setup.bosLevelType);
+   AppendCsvField(row, setup.m15TriggerType);
+   AppendCsvField(row, setup.nearestObstacleType);
+   AppendCsvField(row, DoubleToString(setup.nearestObstaclePrice, digits));
+   AppendCsvField(row, BoolText(setup.condH4BiasMA));
+   AppendCsvField(row, BoolText(setup.condH4DowBias));
+   AppendCsvField(row, BoolText(setup.condH4Fib382618));
+   AppendCsvField(row, BoolText(setup.condH1PrevExtremeBreak));
+   AppendCsvField(row, BoolText(setup.condH1CounterNWave));
+   AppendCsvField(row, BoolText(setup.condH1CounterWaveATR));
+   AppendCsvField(row, BoolText(setup.condTrueBosLevel));
+   AppendCsvField(row, BoolText(setup.condM15PrevExtremeBos));
+   AppendCsvField(row, BoolText(setup.condM15CloseBos));
+   AppendCsvField(row, BoolText(setup.condRoomTo1R));
+   AppendCsvField(row, BoolText(setup.condRoomTo2R));
+   AppendCsvField(row, BoolText(setup.condSlATRok));
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }
