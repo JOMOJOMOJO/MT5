@@ -1,0 +1,7 @@
+period,label,trades,wins,losses,win_rate,net_profit,profit_factor,expected_payoff,avg_R,avg_MFE_R,avg_MAE_R
+2025-02,chasing_entry,3,1,2,33.33,0.36,1.004,0.12,-0.006,1.218,1.135
+2025-02,clean_structural_bos,2,0,2,0.0,-98.45,0.0,-49.22,-1.009,0.394,1.21
+2025-02,late_entry,1,0,1,0.0,-48.85,0.0,-48.85,-1.006,0.814,1.078
+2026-Q1,chasing_entry,1,0,1,0.0,-49.79,0.0,-49.79,-1.0,0.205,1.949
+2026-Q1,clean_structural_bos,5,1,4,20.0,-98.55,0.506,-19.71,-0.404,0.857,1.527
+2026-Q1,late_entry,1,0,1,0.0,-47.66,0.0,-47.66,-1.004,0.7,1.225

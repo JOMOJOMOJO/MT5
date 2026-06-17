@@ -1,0 +1,102 @@
+{
+  "aggregate": {
+    "trades": 13,
+    "wins": 2,
+    "losses": 11,
+    "win_rate": 15.384615384615385,
+    "net_profit": -342.93999999999994,
+    "gross_profit": 198.79000000000002,
+    "gross_loss": -541.73,
+    "profit_factor": 0.3669540176840862,
+    "expected_payoff": -26.379999999999995,
+    "avg_win": 99.39500000000001,
+    "avg_loss": -49.24818181818182,
+    "max_balance_dd": 342.9399999999987,
+    "max_balance_dd_pct": 3.4293999999999865,
+    "max_balance_dd_time": "2026.03.26 14:28:24",
+    "max_consecutive_wins": {
+      "count": 1,
+      "amount": 97.9,
+      "start": "2025.02.03 02:20:00",
+      "end": "2025.02.03 04:12:24"
+    },
+    "max_consecutive_losses": {
+      "count": 5,
+      "amount": -249.21999999999997,
+      "start": "2025.02.04 08:05:00",
+      "end": "2026.02.13 03:05:06"
+    }
+  },
+  "clean": {
+    "trades": 7,
+    "wins": 1,
+    "losses": 6,
+    "win_rate": 14.285714285714285,
+    "net_profit": -197.0,
+    "gross_profit": 100.89,
+    "gross_loss": -297.89,
+    "profit_factor": 0.33868206384907185,
+    "expected_payoff": -28.142857142857142,
+    "avg_win": 100.89,
+    "avg_loss": -49.64833333333333,
+    "max_balance_dd": 199.42999999999847,
+    "max_balance_dd_pct": 1.9942999999999846,
+    "max_balance_dd_time": "2026.02.13 03:05:06",
+    "max_consecutive_wins": {
+      "count": 1,
+      "amount": 100.89,
+      "start": "2026.02.12 19:20:00",
+      "end": "2026.02.17 13:56:10"
+    },
+    "max_consecutive_losses": {
+      "count": 4,
+      "amount": -199.43,
+      "start": "2025.02.04 08:05:00",
+      "end": "2026.02.13 03:05:06"
+    }
+  },
+  "chasing": {
+    "trades": 4,
+    "wins": 1,
+    "losses": 3,
+    "win_rate": 25.0,
+    "net_profit": -49.429999999999986,
+    "gross_profit": 97.9,
+    "gross_loss": -147.32999999999998,
+    "profit_factor": 0.6644946718251545,
+    "expected_payoff": -12.357499999999996,
+    "avg_win": 97.9,
+    "avg_loss": -49.10999999999999,
+    "max_balance_dd": 97.53999999999905,
+    "max_balance_dd_pct": 0.9753999999999905,
+    "max_balance_dd_time": "2025.02.03 02:08:16",
+    "max_consecutive_wins": {
+      "count": 1,
+      "amount": 97.9,
+      "start": "2025.02.03 02:20:00",
+      "end": "2025.02.03 04:12:24"
+    },
+    "max_consecutive_losses": {
+      "count": 2,
+      "amount": -97.53999999999999,
+      "start": "2025.02.03 01:50:00",
+      "end": "2025.02.03 02:08:16"
+    }
+  },
+  "h1_label_counts": {
+    "h1_bos_level_too_old": 5,
+    "h1_bos_level_valid": 8
+  },
+  "pivot_counts": {
+    "h1_counter_nwave_overextended": 4,
+    "h1_counter_nwave_valid": 9
+  },
+  "timing_counts": {
+    "chasing_entry": 4,
+    "late_entry": 2,
+    "false_bos_entry": 3,
+    "bad_context_entry": 3,
+    "good_timing": 1
+  },
+  "mt5_rates_available": true
+}

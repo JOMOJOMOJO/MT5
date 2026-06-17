@@ -1,0 +1,65 @@
+period,reason,rows,source,note
+2025-02,no_h4_impulse,17154,no_h4_nwave,
+2025-02,no_h4_correction,5709,too_shallow_pullback+too_deep_pullback,
+2025-02,h4_range_middle_noise,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-02,no_h1_counter_nwave,1123,no_h1_counter_trend_nwave,
+2025-02,h1_counter_nwave_weak,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-02,no_h1_bos,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-02,no_m15_bos,610,no_neckline_break,
+2025-02,m15_bos_late,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-02,sl_too_wide,74,sl_too_wide,
+2025-02,sl_too_tight,6,sl_too_tight,
+2025-02,spread_guard,7,spread_guard,
+2025-02,existing_position,6,existing_position,
+2025-02,insufficient_data,0,data_unavailable+atr_unavailable,
+2025-02,symbol_disabled_by_research_mode,0,research_excluded,
+2025-02,direction_disabled_by_research_mode,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-02,other,805,evaluations-minus-known-counters,includes pass-through evaluations and reasons not represented by dedicated summary counters
+2025-08,no_h4_impulse,19960,no_h4_nwave,
+2025-08,no_h4_correction,5676,too_shallow_pullback+too_deep_pullback,
+2025-08,h4_range_middle_noise,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-08,no_h1_counter_nwave,996,no_h1_counter_trend_nwave,
+2025-08,h1_counter_nwave_weak,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-08,no_h1_bos,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-08,no_m15_bos,438,no_neckline_break,
+2025-08,m15_bos_late,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-08,sl_too_wide,31,sl_too_wide,
+2025-08,sl_too_tight,0,sl_too_tight,
+2025-08,spread_guard,7,spread_guard,
+2025-08,existing_position,0,existing_position,
+2025-08,insufficient_data,0,data_unavailable+atr_unavailable,
+2025-08,symbol_disabled_by_research_mode,0,research_excluded,
+2025-08,direction_disabled_by_research_mode,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-08,other,1116,evaluations-minus-known-counters,includes pass-through evaluations and reasons not represented by dedicated summary counters
+2025-10,no_h4_impulse,20330,no_h4_nwave,
+2025-10,no_h4_correction,6816,too_shallow_pullback+too_deep_pullback,
+2025-10,h4_range_middle_noise,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-10,no_h1_counter_nwave,972,no_h1_counter_trend_nwave,
+2025-10,h1_counter_nwave_weak,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-10,no_h1_bos,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-10,no_m15_bos,431,no_neckline_break,
+2025-10,m15_bos_late,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-10,sl_too_wide,69,sl_too_wide,
+2025-10,sl_too_tight,1,sl_too_tight,
+2025-10,spread_guard,3,spread_guard,
+2025-10,existing_position,0,existing_position,
+2025-10,insufficient_data,0,data_unavailable+atr_unavailable,
+2025-10,symbol_disabled_by_research_mode,0,research_excluded,
+2025-10,direction_disabled_by_research_mode,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2025-10,other,848,evaluations-minus-known-counters,includes pass-through evaluations and reasons not represented by dedicated summary counters
+2026-Q1,no_h4_impulse,59588,no_h4_nwave,
+2026-Q1,no_h4_correction,15708,too_shallow_pullback+too_deep_pullback,
+2026-Q1,h4_range_middle_noise,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2026-Q1,no_h1_counter_nwave,3154,no_h1_counter_trend_nwave,
+2026-Q1,h1_counter_nwave_weak,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2026-Q1,no_h1_bos,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2026-Q1,no_m15_bos,1717,no_neckline_break,
+2026-Q1,m15_bos_late,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2026-Q1,sl_too_wide,128,sl_too_wide,
+2026-Q1,sl_too_tight,1,sl_too_tight,
+2026-Q1,spread_guard,43,spread_guard,
+2026-Q1,existing_position,4,existing_position,
+2026-Q1,insufficient_data,0,data_unavailable+atr_unavailable,
+2026-Q1,symbol_disabled_by_research_mode,0,research_excluded,
+2026-Q1,direction_disabled_by_research_mode,0,not_separately_logged,summary counter; h1 weak/no_h1_bos are not fully separable in current EA logs
+2026-Q1,other,2999,evaluations-minus-known-counters,includes pass-through evaluations and reasons not represented by dedicated summary counters
