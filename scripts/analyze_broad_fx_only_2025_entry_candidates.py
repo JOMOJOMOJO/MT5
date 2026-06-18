@@ -66,11 +66,14 @@ def load_new_rows() -> list[dict[str, object]]:
 
     used: set[int] = set()
     rows: list[dict[str, object]] = []
+    missing_diag = 0
     for idx, trade in enumerate(trades, start=1):
         symbol = str(trade["symbol"]).upper()
         if symbol not in FX_SYMBOLS:
             continue
         diag = match_diag(trade, sent, used)
+        if diag is None:
+            missing_diag += 1
         open_time = trade["open_time"]
         row: dict[str, object] = {
             "trade_index": idx,
@@ -120,12 +123,42 @@ def load_new_rows() -> list[dict[str, object]]:
                 row[key] = bool_text(bool_value(diag.get(key)))
         for key in ALL_OUTPUT_CONDITIONS:
             row.setdefault(key, "false")
+        derive_condition_flags(row)
         add_buckets(row)
+        derive_obstacle_clear(row)
         rows.append(row)
 
     if mt5_ready and mt5 is not None:
         mt5.shutdown()
+    if missing_diag:
+        raise RuntimeError(f"Matched diagnostics missing for {missing_diag} trades. Re-run the MT5 backtest before analysis.")
     return rows
+
+
+def derive_condition_flags(row: dict[str, object]) -> None:
+    row["cond_h4_bias_ma"] = bool_text(str(row.get("h4_ma_state", "")) == "ma_bias_pass")
+    fib = as_float(row.get("h4_fib_retracement_pct"))
+    fib_zone = str(row.get("h4_fib_zone", ""))
+    row["cond_h4_fib_382_618"] = bool_text(
+        fib_zone == "valid_h4_pullback_zone" or (fib > 0.0 and 38.2 <= fib <= 61.8)
+    )
+    row["cond_h1_counter_nwave"] = bool_text(str(row.get("h1_counter_nwave_state", "")) == "counter_nwave_pass")
+    row["cond_h1_counter_wave_atr"] = bool_text(as_float(row.get("h1_counter_wave_atr")) >= 1.0)
+    row["cond_true_bos_level"] = bool_text(as_float(row.get("true_bos_level")) > 0.0)
+    trigger = str(row.get("m15_trigger_type", ""))
+    row["cond_m15_close_bos"] = bool_text(trigger == "m15_true_bos_close")
+    row["cond_m15_prev_extreme_bos"] = bool_text(trigger == "m15_prev_extreme_bos")
+    row["cond_m15_micro_break"] = bool_text(trigger == "m15_micro_break")
+    row["cond_m15_short_ma_reversal"] = bool_text(trigger == "m15_short_ma_reversal")
+    row["cond_m15_candle_reversal"] = bool_text(trigger == "m15_reversal_candle")
+    row["cond_room_to_1r"] = bool_text(as_float(row.get("room_to_1r")) >= 1.0)
+    row["cond_room_to_2r"] = bool_text(as_float(row.get("room_to_2r")) >= 1.0)
+
+
+def derive_obstacle_clear(row: dict[str, object]) -> None:
+    row["cond_major_or_round_room_to_2r"] = bool_text(
+        bool_value(row.get("cond_room_to_2r")) and bool_value(row.get("round_number_room_to_2r"))
+    )
 
 
 def both_conditions(rows: list[dict[str, object]], *conditions: str) -> list[dict[str, object]]:

@@ -5,20 +5,20 @@ Scope: 2025 full-year FX-only nested entry candidates. XAUUSD is excluded. No Fr
 ## Scenario Comparison
 
 - A current Broad: `63` trades, PF `0.737`, avg_R `-0.19`, net `-603.67`.
-- B hard-gate reduced: `3999` trades, PF `0.826`, avg_R `0.0`, net `-9227.62`.
-- C B + room_to_2r: `0` trades, PF ``, avg_R `0.0`, net `0`.
-- D B + H4 MA bias: `0` trades, PF ``, avg_R `0.0`, net `0`.
-- E B + M15 close BOS: `0` trades, PF ``, avg_R `0.0`, net `0`.
-- F B + room_to_2r + H4 MA bias: `0` trades, PF ``, avg_R `0.0`, net `0`.
+- B hard-gate reduced: `3999` trades, PF `0.826`, avg_R `-0.096`, net `-9227.62`.
+- C B + room_to_2r: `3143` trades, PF `0.788`, avg_R `-0.112`, net `-9112.41`.
+- D B + H4 MA bias: `1431` trades, PF `0.903`, avg_R `-0.184`, net `-1804.76`.
+- E B + M15 close BOS: `88` trades, PF `0.622`, avg_R `0.107`, net `-394.44`.
+- F B + room_to_2r + H4 MA bias: `1052` trades, PF `0.84`, avg_R `-0.241`, net `-2286.72`.
 
 ## Required Checks
 
 1. Trade count versus current Broad: `3999` vs `63`.
-2. `room_to_2r` effect in the wider pool: B avg_R `0.0` to C avg_R `0.0`.
-3. H4 MA bias post-filter effect: B avg_R `0.0` to D avg_R `0.0`.
-4. M15 close BOS post-filter effect: B avg_R `0.0` to E avg_R `0.0`.
+2. `room_to_2r` effect in the wider pool: B avg_R `-0.096` to C avg_R `-0.112`.
+3. H4 MA bias post-filter effect: B avg_R `-0.096` to D avg_R `-0.184`.
+4. M15 close BOS post-filter effect: B avg_R `-0.096` to E avg_R `0.107`.
 5. LONG top failure in B: `bad_h4_bias`.
-6. Best scenario by avg_R: `B_broad_hard_gate_reduced` with `3999` trades.
+6. Best scenario by avg_R: `E_broad_reduced_m15_close_bos` with `88` trades.
 
 ## Judgment
 

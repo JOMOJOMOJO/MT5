@@ -1,0 +1,49 @@
+{
+  "source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_ScoreScanner_broad_fx_only_2025_entry_candidates_trades.csv",
+  "base_scenario": "B_broad_hard_gate_reduced",
+  "base_rows": 3999,
+  "condition_mapping": [
+    {
+      "name": "cond_h4_ma_bias",
+      "column": "cond_h4_bias_ma",
+      "label": "H4 MA bias"
+    },
+    {
+      "name": "cond_h4_fib_382_618",
+      "column": "cond_h4_fib_382_618",
+      "label": "H4 fib 38.2-61.8"
+    },
+    {
+      "name": "cond_h1_counter_nwave",
+      "column": "cond_h1_counter_nwave",
+      "label": "H1 counter N-wave"
+    },
+    {
+      "name": "cond_h1_counter_wave_atr",
+      "column": "cond_h1_counter_wave_atr",
+      "label": "H1 counter wave >= ATR"
+    },
+    {
+      "name": "cond_true_bos_level",
+      "column": "cond_true_bos_level",
+      "label": "true BOS level"
+    },
+    {
+      "name": "cond_m15_close_bos",
+      "column": "cond_m15_close_bos",
+      "label": "M15 close BOS"
+    },
+    {
+      "name": "cond_room_to_2r",
+      "column": "cond_room_to_2r",
+      "label": "room to 2R"
+    },
+    {
+      "name": "cond_round_or_major_obstacle_clear",
+      "column": "cond_major_or_round_room_to_2r",
+      "label": "round/major obstacle clear to 2R"
+    }
+  ],
+  "combination_count": 256,
+  "fixed_bt_candidates": []
+}

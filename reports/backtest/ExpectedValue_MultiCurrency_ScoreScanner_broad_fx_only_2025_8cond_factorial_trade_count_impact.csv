@@ -1,0 +1,9 @@
+condition,source_column,label,trades,removed_trades,reduction_pct,PF,avg_R,net,PF_delta,avg_R_delta,net_delta,LONG trades,SHORT trades,LONG net,SHORT net,LONG avg_R,SHORT avg_R,LONG PF,SHORT PF,symbols_count,months_count
+cond_m15_close_bos,cond_m15_close_bos,M15 close BOS,88,3911,97.8,0.622,0.107,-394.44,-0.204,0.203,8833.18,50,38,-299.76,-94.68,0.295,-0.141,0.55,0.75,6,12
+cond_h4_fib_382_618,cond_h4_fib_382_618,H4 fib 38.2-61.8,560,3439,86.0,0.895,-0.145,-734.82,0.069,-0.049,8492.8,273,287,-379.63,-355.19,-0.071,-0.214,0.886,0.904,6,12
+cond_h1_counter_nwave,cond_h1_counter_nwave,H1 counter N-wave,1345,2654,66.37,0.706,-0.109,-5551.83,-0.12,-0.013,3675.79,638,707,-1974.1,-3577.73,-0.05,-0.163,0.773,0.65,6,12
+cond_h4_ma_bias,cond_h4_bias_ma,H4 MA bias,1431,2568,64.22,0.903,-0.184,-1804.76,0.077,-0.088,7422.86,769,662,-1206.41,-598.35,-0.136,-0.239,0.857,0.941,6,12
+cond_round_or_major_obstacle_clear,cond_major_or_round_room_to_2r,round/major obstacle clear to 2R,1903,2096,52.41,0.775,-0.128,-5551.92,-0.051,-0.032,3675.7,917,986,-2180.86,-3371.06,-0.084,-0.168,0.815,0.738,6,12
+cond_room_to_2r,cond_room_to_2r,room to 2R,3143,856,21.41,0.788,-0.112,-9112.41,-0.038,-0.016,115.21,1575,1568,-5744.53,-3367.88,-0.084,-0.14,0.74,0.838,6,12
+cond_h1_counter_wave_atr,cond_h1_counter_wave_atr,H1 counter wave >= ATR,3506,493,12.33,0.782,-0.098,-10221.87,-0.044,-0.002,-994.25,1737,1769,-5611.83,-4610.04,-0.077,-0.119,0.763,0.802,6,12
+cond_true_bos_level,cond_true_bos_level,true BOS level,3999,0,0.0,0.826,-0.096,-9227.62,0.0,0.0,0.0,1994,2005,-5687.01,-3540.61,-0.063,-0.129,0.79,0.864,6,12
