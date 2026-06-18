@@ -49,7 +49,8 @@ enum ENUM_RESEARCH_STRATEGY_MODE
    RESEARCH_STRATEGY_NESTED_FIXED_H4MA_H4FIB_M15CLOSE_ROOM2R = 19,
    RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R_LOWER_TF = 20,
    RESEARCH_STRATEGY_NESTED_RELAXED_FX_ENTRY_CANDIDATES = 21,
-   RESEARCH_STRATEGY_NESTED_BROAD_FX_ENTRY_CANDIDATES = 22
+   RESEARCH_STRATEGY_NESTED_BROAD_FX_ENTRY_CANDIDATES = 22,
+   RESEARCH_STRATEGY_NESTED_SWEEP_RECLAIM_RETEST = 23
   };
 
 enum ENUM_ENTRY_SELECTION_MODE
@@ -91,6 +92,14 @@ enum ENUM_THIRD_WAVE_SL_MODE
    THIRD_WAVE_SL_LOWER_TF_REVERSAL = 1
   };
 
+enum ENUM_NESTED_SWEEP_TRIGGER_MODE
+  {
+   NESTED_SWEEP_TRIGGER_ALL = 0,
+   NESTED_SWEEP_TRIGGER_SWEEP_RECLAIM_ONLY = 1,
+   NESTED_SWEEP_TRIGGER_BOS_RETEST_ONLY = 2,
+   NESTED_SWEEP_TRIGGER_FIRST_PULLBACK_ONLY = 3
+  };
+
 input string          InpSymbols                       = "USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD,XAUUSD";
 input int             InpScanSeconds                   = 300;
 input bool            InpScanOnlyOnNewExecutionBar     = true;
@@ -103,6 +112,7 @@ input ENUM_ENTRY_SELECTION_MODE InpEntrySelectionMode  = ENTRY_SELECTION_BEST_ON
 input ENUM_DIAGNOSTICS_LEVEL InpDiagnosticsLevel       = DIAG_ENTRY_ONLY;
 input ENUM_V4_REVERSAL_SIGNAL_MODE InpV4ReversalSignalMode = V4_SIGNAL_ALL;
 input ENUM_THIRD_WAVE_SL_MODE InpThirdWaveSLMode       = THIRD_WAVE_SL_CURRENT;
+input ENUM_NESTED_SWEEP_TRIGGER_MODE InpNestedSweepTriggerMode = NESTED_SWEEP_TRIGGER_ALL;
 input ENUM_TRADE_DIRECTION_MODE InpTradeDirectionMode  = TRADE_DIRECTION_BOTH;
 input bool            InpDisableUsdJpyShort            = false; // Research-only diagnostic switch; keep false for universal tests.
 input ENUM_SYMBOL_RESEARCH_MODE InpSymbolResearchMode  = SYMBOL_RESEARCH_ALL; // Keep ALL for mainline multi-currency research.
@@ -421,6 +431,13 @@ struct NestedNWaveSetup
    string            m15TriggerType;
    string            nearestObstacleType;
    double            nearestObstaclePrice;
+   double            m15SweepLevel;
+   bool              m15ReclaimConfirmed;
+   double            m15BosLevel;
+   bool              m15RetestConfirmed;
+   bool              m15FirstPullbackConfirmed;
+   int               entryDelayBarsFromBos;
+   int               entryDelayBarsFromSweep;
   };
 
 void WriteStructureFilterRow(const string symbol, const string direction, const StructureFilterState &state);
@@ -722,6 +739,7 @@ bool IsNestedNWaveStrategyMode()
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_CONDITION_FACTORIAL_CANDIDATES ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_RELAXED_FX_ENTRY_CANDIDATES ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_BROAD_FX_ENTRY_CANDIDATES ||
+           InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_SWEEP_RECLAIM_RETEST ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_ROOM2R ||
            InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_H4MA_M15CLOSE_ROOM2R ||
@@ -786,6 +804,11 @@ bool IsNestedBroadFxEntryCandidateMode()
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_BROAD_FX_ENTRY_CANDIDATES);
   }
 
+bool IsNestedSweepReclaimRetestMode()
+  {
+   return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_SWEEP_RECLAIM_RETEST);
+  }
+
 bool IsNestedFixedConditionMode()
   {
    return (InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R ||
@@ -798,7 +821,7 @@ bool IsNestedFixedConditionMode()
 
 bool IsNestedConditionCandidateBaseMode()
   {
-   return (IsNestedConditionFactorialMode() || IsNestedRelaxedConditionFactorialMode() || IsNestedBroadFxEntryCandidateMode() || IsNestedFixedConditionMode());
+   return (IsNestedConditionFactorialMode() || IsNestedRelaxedConditionFactorialMode() || IsNestedBroadFxEntryCandidateMode() || IsNestedSweepReclaimRetestMode() || IsNestedFixedConditionMode());
   }
 
 string V4ReversalSignalModeName()
@@ -889,6 +912,8 @@ string NestedNWaveStrategyName()
       return "Nested_Relaxed_FX_Entry_Candidates";
    if(IsNestedBroadFxEntryCandidateMode())
       return "Nested_Broad_FX_Entry_Candidates";
+   if(IsNestedSweepReclaimRetestMode())
+      return "Nested_Sweep_Reclaim_Retest";
    if(IsNestedConditionFactorialMode())
       return "Nested_ConditionFactorial_Candidates";
    if(InpResearchStrategyMode == RESEARCH_STRATEGY_NESTED_FIXED_ROOM2R)
@@ -1691,6 +1716,13 @@ void InitNestedNWaveSetup(NestedNWaveSetup &setup, const string symbol, const in
    setup.m15TriggerType = "not_evaluated";
    setup.nearestObstacleType = "not_evaluated";
    setup.nearestObstaclePrice = 0.0;
+   setup.m15SweepLevel = 0.0;
+   setup.m15ReclaimConfirmed = false;
+   setup.m15BosLevel = 0.0;
+   setup.m15RetestConfirmed = false;
+   setup.m15FirstPullbackConfirmed = false;
+   setup.entryDelayBarsFromBos = 0;
+   setup.entryDelayBarsFromSweep = 0;
   }
 
 //+------------------------------------------------------------------+
@@ -3848,6 +3880,264 @@ bool ApplyNestedStructuralBosV2RoomFilter(NestedNWaveSetup &setup, const int dir
    return true;
   }
 
+bool NestedSweepTriggerModeAllows(const string triggerType)
+  {
+   if(InpNestedSweepTriggerMode == NESTED_SWEEP_TRIGGER_ALL)
+      return true;
+   if(InpNestedSweepTriggerMode == NESTED_SWEEP_TRIGGER_SWEEP_RECLAIM_ONLY)
+      return (triggerType == "sweep_reclaim");
+   if(InpNestedSweepTriggerMode == NESTED_SWEEP_TRIGGER_BOS_RETEST_ONLY)
+      return (triggerType == "bos_retest");
+   if(InpNestedSweepTriggerMode == NESTED_SWEEP_TRIGGER_FIRST_PULLBACK_ONLY)
+      return (triggerType == "first_pullback_after_reclaim");
+   return true;
+  }
+
+bool DetectNestedSweepReclaimRetestTrigger(const MqlRates &m15Rates[],
+                                           const int direction,
+                                           NestedNWaveSetup &setup)
+  {
+   int size = ArraySize(m15Rates);
+   if(size < 16)
+     {
+      setup.failReason = "data_unavailable";
+      return false;
+     }
+
+   int shortMAPeriod = InpFastMAPeriod;
+   if(shortMAPeriod > 8)
+      shortMAPeriod = 8;
+   if(shortMAPeriod < 3)
+      shortMAPeriod = 3;
+   double shortMA = AverageClose(m15Rates, 1, shortMAPeriod);
+   double shortMAPrev = AverageClose(m15Rates, 2, shortMAPeriod);
+   bool maRecovered = true;
+   if(shortMA > 0.0 && shortMAPrev > 0.0)
+      maRecovered = (direction > 0 ? (m15Rates[1].close > shortMA) : (m15Rates[1].close < shortMA));
+
+   double entryPrice = setup.entryPrice;
+   if(entryPrice <= 0.0)
+      entryPrice = (direction > 0 ? SymbolInfoDouble(setup.symbol, SYMBOL_ASK) : SymbolInfoDouble(setup.symbol, SYMBOL_BID));
+   if(entryPrice <= 0.0)
+     {
+      setup.failReason = "market_closed";
+      setup.executionBlockReason = "market_closed";
+      return false;
+     }
+   setup.entryPrice = entryPrice;
+
+   bool sweepPass = false;
+   double sweepLevel = 0.0;
+   int sweepShift = 0;
+   int sweepLookback = MathMin(10, size - 6);
+   if(sweepLookback >= 4)
+     {
+      if(direction > 0)
+        {
+         sweepLevel = LowestLow(m15Rates, 5, sweepLookback);
+         for(int shift = 2; shift <= 5 && shift < size; ++shift)
+           {
+            if(sweepLevel > 0.0 && m15Rates[shift].low < sweepLevel && m15Rates[1].close > sweepLevel)
+              {
+               sweepPass = true;
+               sweepShift = shift;
+               break;
+              }
+           }
+        }
+      else
+        {
+         sweepLevel = HighestHigh(m15Rates, 5, sweepLookback);
+         for(int shift = 2; shift <= 5 && shift < size; ++shift)
+           {
+            if(sweepLevel > 0.0 && m15Rates[shift].high > sweepLevel && m15Rates[1].close < sweepLevel)
+              {
+               sweepPass = true;
+               sweepShift = shift;
+               break;
+              }
+           }
+        }
+     }
+
+   if(sweepPass && maRecovered && setup.m15Atr > 0.0)
+     {
+      double distanceFromSweep = MathAbs(setup.entryPrice - sweepLevel) / setup.m15Atr;
+      if(distanceFromSweep <= 1.35 && NestedSweepTriggerModeAllows("sweep_reclaim"))
+        {
+         setup.m15SweepLevel = sweepLevel;
+         setup.m15ReclaimConfirmed = true;
+         setup.entryDelayBarsFromSweep = sweepShift - 1;
+         setup.necklinePrice = sweepLevel;
+         setup.necklineBreakClosePrice = m15Rates[1].close;
+         setup.rightSideLevel = (direction > 0 ? LowestLow(m15Rates, 1, MathMax(1, sweepShift)) : HighestHigh(m15Rates, 1, MathMax(1, sweepShift)));
+         setup.barsSinceRightSide = MathMax(1, sweepShift);
+         setup.distanceNecklineToEntry = MathAbs(setup.entryPrice - setup.necklinePrice);
+         setup.distanceNecklineToEntryATR = distanceFromSweep;
+         setup.distanceRightSideToEntry = MathAbs(setup.entryPrice - setup.rightSideLevel);
+         setup.distanceRightSideToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceRightSideToEntry / setup.m15Atr : 0.0);
+         setup.necklinePass = true;
+         setup.m15TriggerType = "sweep_reclaim";
+         setup.necklineBreakLabel = "sweep_reclaim";
+         setup.label = "sweep_reclaim";
+         setup.qualityScore = 100.0 - distanceFromSweep * 10.0 + (maRecovered ? 8.0 : 0.0);
+         return true;
+        }
+     }
+
+   double bosLevel = 0.0;
+   int bosShift = -1;
+   int bosLookback = MathMin(8, size - 10);
+   if(bosLookback >= 4)
+     {
+      if(direction > 0)
+        {
+         for(int shift = 3; shift <= 8 && shift + bosLookback < size; ++shift)
+           {
+            double level = HighestHigh(m15Rates, shift + 1, bosLookback);
+            if(level > 0.0 && m15Rates[shift].close > level && m15Rates[shift + 1].close <= level)
+              {
+               bosLevel = level;
+               bosShift = shift;
+               break;
+              }
+           }
+        }
+      else
+        {
+         for(int shift = 3; shift <= 8 && shift + bosLookback < size; ++shift)
+           {
+            double level = LowestLow(m15Rates, shift + 1, bosLookback);
+            if(level > 0.0 && m15Rates[shift].close < level && m15Rates[shift + 1].close >= level)
+              {
+               bosLevel = level;
+               bosShift = shift;
+               break;
+              }
+           }
+        }
+     }
+
+   if(bosShift > 1 && bosLevel > 0.0)
+     {
+      double zone = setup.m15Atr * 0.45;
+      bool retest = false;
+      bool trigger = false;
+      int retestShift = -1;
+      for(int shift = bosShift - 1; shift >= 1; --shift)
+        {
+         if(direction > 0)
+           {
+            if(m15Rates[shift].low <= bosLevel + zone && m15Rates[shift].close >= bosLevel - zone)
+              {
+               retest = true;
+               retestShift = shift;
+               break;
+              }
+           }
+         else
+           {
+            if(m15Rates[shift].high >= bosLevel - zone && m15Rates[shift].close <= bosLevel + zone)
+              {
+               retest = true;
+               retestShift = shift;
+               break;
+              }
+           }
+        }
+
+      trigger = (direction > 0 ? (m15Rates[1].close > m15Rates[1].open && m15Rates[1].close > bosLevel)
+                               : (m15Rates[1].close < m15Rates[1].open && m15Rates[1].close < bosLevel));
+      if(retest && trigger && NestedSweepTriggerModeAllows("bos_retest"))
+        {
+         setup.m15BosLevel = bosLevel;
+         setup.m15RetestConfirmed = true;
+         setup.originalNecklineBreakTime = m15Rates[bosShift].time;
+         setup.retestDetectedTime = (retestShift > 0 ? m15Rates[retestShift].time : 0);
+         setup.retestTriggerTime = m15Rates[1].time;
+         setup.entryDelayBarsFromBos = bosShift - 1;
+         setup.entryDelayBars = setup.entryDelayBarsFromBos;
+         setup.retestBarsAfterBreakout = (retestShift > 0 ? bosShift - retestShift : 0);
+         setup.retestDetected = true;
+         setup.retestHeld = true;
+         setup.retestTriggerPass = true;
+         setup.retestQuality = "sweep_branch_bos_retest";
+         setup.necklinePrice = bosLevel;
+         setup.necklineBreakClosePrice = m15Rates[bosShift].close;
+         setup.rightSideLevel = (direction > 0 ? LowestLow(m15Rates, 1, bosShift) : HighestHigh(m15Rates, 1, bosShift));
+         setup.barsSinceRightSide = MathMax(1, bosShift);
+         setup.distanceNecklineToEntry = MathAbs(setup.entryPrice - setup.necklinePrice);
+         setup.distanceNecklineToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceNecklineToEntry / setup.m15Atr : 0.0);
+         setup.distanceRightSideToEntry = MathAbs(setup.entryPrice - setup.rightSideLevel);
+         setup.distanceRightSideToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceRightSideToEntry / setup.m15Atr : 0.0);
+         setup.necklinePass = true;
+         setup.m15TriggerType = "bos_retest";
+         setup.necklineBreakLabel = "bos_retest";
+         setup.label = "bos_retest";
+         setup.qualityScore = 95.0 - setup.distanceNecklineToEntryATR * 8.0 - MathMax(0, setup.entryDelayBarsFromBos - 4) * 2.0;
+         return true;
+        }
+     }
+
+   bool firstPullbackPass = false;
+   double pullbackLevel = 0.0;
+   int pullbackShift = 0;
+   if(size > 8)
+     {
+      if(direction > 0)
+        {
+         bool priorReclaim = (m15Rates[3].close > m15Rates[3].open || m15Rates[4].close > m15Rates[4].open);
+         pullbackLevel = MathMax(m15Rates[2].high, m15Rates[3].high);
+         double pullbackLow = MathMin(m15Rates[2].low, m15Rates[3].low);
+         double priorLow = LowestLow(m15Rates, 4, 4);
+         firstPullbackPass = (priorReclaim &&
+                              m15Rates[1].close > pullbackLevel &&
+                              pullbackLow > priorLow - setup.m15Atr * 0.20 &&
+                              maRecovered);
+         pullbackShift = 2;
+         if(firstPullbackPass)
+            setup.rightSideLevel = pullbackLow;
+        }
+      else
+        {
+         bool priorReclaim = (m15Rates[3].close < m15Rates[3].open || m15Rates[4].close < m15Rates[4].open);
+         pullbackLevel = MathMin(m15Rates[2].low, m15Rates[3].low);
+         double pullbackHigh = MathMax(m15Rates[2].high, m15Rates[3].high);
+         double priorHigh = HighestHigh(m15Rates, 4, 4);
+         firstPullbackPass = (priorReclaim &&
+                              m15Rates[1].close < pullbackLevel &&
+                              pullbackHigh < priorHigh + setup.m15Atr * 0.20 &&
+                              maRecovered);
+         pullbackShift = 2;
+         if(firstPullbackPass)
+            setup.rightSideLevel = pullbackHigh;
+        }
+     }
+
+   if(firstPullbackPass && NestedSweepTriggerModeAllows("first_pullback_after_reclaim"))
+     {
+      setup.m15FirstPullbackConfirmed = true;
+      setup.m15BosLevel = pullbackLevel;
+      setup.necklinePrice = pullbackLevel;
+      setup.necklineBreakClosePrice = m15Rates[1].close;
+      setup.barsSinceRightSide = pullbackShift;
+      setup.distanceNecklineToEntry = MathAbs(setup.entryPrice - setup.necklinePrice);
+      setup.distanceNecklineToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceNecklineToEntry / setup.m15Atr : 0.0);
+      setup.distanceRightSideToEntry = MathAbs(setup.entryPrice - setup.rightSideLevel);
+      setup.distanceRightSideToEntryATR = (setup.m15Atr > 0.0 ? setup.distanceRightSideToEntry / setup.m15Atr : 0.0);
+      setup.necklinePass = true;
+      setup.m15TriggerType = "first_pullback_after_reclaim";
+      setup.necklineBreakLabel = "first_pullback_after_reclaim";
+      setup.label = "first_pullback_after_reclaim";
+      setup.qualityScore = 90.0 - setup.distanceNecklineToEntryATR * 8.0;
+      return true;
+     }
+
+   setup.failReason = "no_sweep_reclaim_retest_trigger";
+   setup.label = setup.failReason;
+   return false;
+  }
+
 bool DetectNestedConditionFactorialCandidate(const MqlRates &h4Rates[],
                                              const MqlRates &h1Rates[],
                                              const MqlRates &m15Rates[],
@@ -3856,6 +4146,7 @@ bool DetectNestedConditionFactorialCandidate(const MqlRates &h4Rates[],
   {
    bool relaxedEntryMode = IsNestedRelaxedConditionFactorialMode();
    bool broadFxEntryMode = IsNestedBroadFxEntryCandidateMode();
+   bool sweepReclaimRetestMode = IsNestedSweepReclaimRetestMode();
    int span = InpStructureSwingSpan;
    if(span < 1)
       span = 1;
@@ -4070,6 +4361,9 @@ bool DetectNestedConditionFactorialCandidate(const MqlRates &h4Rates[],
                                 setup.condM15MicroBreak ||
                                 setup.condM15ShortMAReversal ||
                                 setup.condM15CandleReversal);
+   bool sweepReclaimRetestCandidate = false;
+   if(sweepReclaimRetestMode)
+      sweepReclaimRetestCandidate = DetectNestedSweepReclaimRetestTrigger(m15Rates, direction, setup);
 
    if(relaxedEntryMode && !setup.condH4BiasMA)
      {
@@ -4077,10 +4371,24 @@ bool DetectNestedConditionFactorialCandidate(const MqlRates &h4Rates[],
       setup.label = "relaxed_condition_no_h4_ma_bias";
       return false;
      }
-   if(!relaxedEntryMode && !broadFxEntryMode && !(setup.condH4BiasMA || setup.condH4DowBias))
+   if(!relaxedEntryMode && !broadFxEntryMode && !sweepReclaimRetestMode && !(setup.condH4BiasMA || setup.condH4DowBias))
      {
       setup.failReason = "no_h4_bias";
       setup.label = "condition_factorial_no_h4_bias";
+      return false;
+     }
+   if(sweepReclaimRetestMode && !h1PullbackObserved)
+     {
+      setup.failReason = "sweep_reclaim_no_h1_pullback";
+      setup.label = "sweep_reclaim_no_h1_pullback";
+      return false;
+     }
+   if(sweepReclaimRetestMode && !sweepReclaimRetestCandidate)
+     {
+      if(setup.failReason == "")
+         setup.failReason = "no_sweep_reclaim_retest_trigger";
+      if(setup.label == "")
+         setup.label = setup.failReason;
       return false;
      }
    if(broadFxEntryMode && !h1PullbackObserved)
@@ -4095,7 +4403,7 @@ bool DetectNestedConditionFactorialCandidate(const MqlRates &h4Rates[],
       setup.label = "relaxed_condition_no_h1_pullback";
       return false;
      }
-   if(!relaxedEntryMode && !broadFxEntryMode && !(setup.condH1PrevExtremeBreak || setup.condH1CounterNWave))
+   if(!relaxedEntryMode && !broadFxEntryMode && !sweepReclaimRetestMode && !(setup.condH1PrevExtremeBreak || setup.condH1CounterNWave))
      {
       setup.failReason = "no_h1_pullback";
       setup.label = "condition_factorial_no_h1_pullback";
@@ -4113,7 +4421,7 @@ bool DetectNestedConditionFactorialCandidate(const MqlRates &h4Rates[],
       setup.label = "relaxed_condition_no_m15_prev_extreme_bos";
       return false;
      }
-   if(!relaxedEntryMode && !broadFxEntryMode && !(setup.condM15PrevExtremeBos || setup.condM15CloseBos))
+   if(!relaxedEntryMode && !broadFxEntryMode && !sweepReclaimRetestMode && !(setup.condM15PrevExtremeBos || setup.condM15CloseBos))
      {
       setup.failReason = "no_m15_trigger";
       setup.label = "condition_factorial_no_m15_trigger";
@@ -4122,12 +4430,22 @@ bool DetectNestedConditionFactorialCandidate(const MqlRates &h4Rates[],
 
    setup.h4ImpulsePass = true;
    setup.h4PullbackZonePass = setup.condH4Fib382618;
-   setup.h1CounterTrendPass = (broadFxEntryMode ? h1PullbackObserved : (setup.condH1PrevExtremeBreak || setup.condH1CounterNWave));
+   setup.h1CounterTrendPass = ((broadFxEntryMode || sweepReclaimRetestMode) ? h1PullbackObserved : (setup.condH1PrevExtremeBreak || setup.condH1CounterNWave));
    setup.necklinePass = true;
-   setup.structuralBosState = (broadFxEntryMode ? "broad_fx_entry_candidate" : (relaxedEntryMode ? "relaxed_condition_candidate" : "condition_factorial_candidate"));
-   setup.necklineBreakLabel = setup.structuralBosState;
-   setup.label = setup.structuralBosState;
-   setup.qualityScore = 80.0;
+   if(sweepReclaimRetestMode)
+     {
+      setup.structuralBosState = "sweep_reclaim_retest_candidate";
+      setup.necklineBreakLabel = setup.m15TriggerType;
+      setup.label = setup.m15TriggerType;
+      setup.qualityScore += 10.0;
+     }
+   else
+     {
+      setup.structuralBosState = (broadFxEntryMode ? "broad_fx_entry_candidate" : (relaxedEntryMode ? "relaxed_condition_candidate" : "condition_factorial_candidate"));
+      setup.necklineBreakLabel = setup.structuralBosState;
+      setup.label = setup.structuralBosState;
+      setup.qualityScore = 80.0;
+     }
    setup.qualityScore += (setup.condH4BiasMA ? 8.0 : 0.0);
    setup.qualityScore += (setup.condH4DowBias ? 8.0 : 0.0);
    setup.qualityScore += (setup.condH4Fib382618 ? 8.0 : 0.0);
@@ -7388,7 +7706,8 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
                       "bos_level_type,m15_trigger_type,nearest_obstacle_type,nearest_obstacle_price,"
                       "cond_h4_bias_ma,cond_h4_dow_bias,cond_h4_fib_382_618,cond_h1_prev_extreme_break,cond_h1_counter_nwave,cond_h1_counter_wave_atr,"
                       "cond_true_bos_level,cond_m15_prev_extreme_bos,cond_m15_close_bos,cond_m15_micro_break,cond_m15_short_ma_reversal,cond_m15_candle_reversal,"
-                      "cond_room_to_1r,cond_room_to_2r,cond_sl_atr_ok\r\n");
+                      "cond_room_to_1r,cond_room_to_2r,cond_sl_atr_ok,"
+                      "trigger_type,m15_sweep_level,m15_reclaim_confirmed,m15_bos_level,m15_retest_confirmed,m15_first_pullback_confirmed,entry_delay_bars_from_bos,entry_delay_bars_from_sweep\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -7529,6 +7848,14 @@ void WriteNestedNWaveSignalRow(const NestedNWaveSetup &setup, const string event
    AppendCsvField(row, BoolText(setup.condRoomTo1R));
    AppendCsvField(row, BoolText(setup.condRoomTo2R));
    AppendCsvField(row, BoolText(setup.condSlATRok));
+   AppendCsvField(row, setup.m15TriggerType);
+   AppendCsvField(row, DoubleToString(setup.m15SweepLevel, digits));
+   AppendCsvField(row, BoolText(setup.m15ReclaimConfirmed));
+   AppendCsvField(row, DoubleToString(setup.m15BosLevel, digits));
+   AppendCsvField(row, BoolText(setup.m15RetestConfirmed));
+   AppendCsvField(row, BoolText(setup.m15FirstPullbackConfirmed));
+   AppendCsvField(row, IntegerToString(setup.entryDelayBarsFromBos));
+   AppendCsvField(row, IntegerToString(setup.entryDelayBarsFromSweep));
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }
@@ -7581,7 +7908,8 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
                       "bos_level_type,m15_trigger_type,nearest_obstacle_type,nearest_obstacle_price,"
                       "cond_h4_bias_ma,cond_h4_dow_bias,cond_h4_fib_382_618,cond_h1_prev_extreme_break,cond_h1_counter_nwave,cond_h1_counter_wave_atr,"
                       "cond_true_bos_level,cond_m15_prev_extreme_bos,cond_m15_close_bos,cond_m15_micro_break,cond_m15_short_ma_reversal,cond_m15_candle_reversal,"
-                      "cond_room_to_1r,cond_room_to_2r,cond_sl_atr_ok\r\n");
+                      "cond_room_to_1r,cond_room_to_2r,cond_sl_atr_ok,"
+                      "trigger_type,m15_sweep_level,m15_reclaim_confirmed,m15_bos_level,m15_retest_confirmed,m15_first_pullback_confirmed,entry_delay_bars_from_bos,entry_delay_bars_from_sweep\r\n");
 
    int digits = (int)SymbolInfoInteger(setup.symbol, SYMBOL_DIGITS);
    string row = "";
@@ -7703,6 +8031,14 @@ void WriteNestedNWaveTradeRow(const NestedNWaveSetup &setup,
    AppendCsvField(row, BoolText(setup.condRoomTo1R));
    AppendCsvField(row, BoolText(setup.condRoomTo2R));
    AppendCsvField(row, BoolText(setup.condSlATRok));
+   AppendCsvField(row, setup.m15TriggerType);
+   AppendCsvField(row, DoubleToString(setup.m15SweepLevel, digits));
+   AppendCsvField(row, BoolText(setup.m15ReclaimConfirmed));
+   AppendCsvField(row, DoubleToString(setup.m15BosLevel, digits));
+   AppendCsvField(row, BoolText(setup.m15RetestConfirmed));
+   AppendCsvField(row, BoolText(setup.m15FirstPullbackConfirmed));
+   AppendCsvField(row, IntegerToString(setup.entryDelayBarsFromBos));
+   AppendCsvField(row, IntegerToString(setup.entryDelayBarsFromSweep));
    FileWriteString(handle, row + "\r\n");
    FileClose(handle);
   }

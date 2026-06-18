@@ -6,7 +6,7 @@ param(
     [string]$FromDate = "2025.01.01",
     [string]$ToDate = "2025.12.31",
     [int]$BaseMagicNumber = 2026060310,
-    [ValidateSet("Original", "RegimeComparison", "ScanIntervalComparison", "WaveAudit", "V2Comparison", "V3Comparison", "V4Comparison", "V4SignalQuality", "LowerTFSLFeasibility", "NestedNWave", "NestedRetestConfirmation", "NestedBreakoutQualityRouter", "NestedContextQualityRouterR12", "NestedStructuralBOS", "ConditionFactorial", "RelaxedConditionFactorial", "BroadFxEntryCandidates", "FixedConditionBT", "FixedRoom2RLowerTF")]
+    [ValidateSet("Original", "RegimeComparison", "ScanIntervalComparison", "WaveAudit", "V2Comparison", "V3Comparison", "V4Comparison", "V4SignalQuality", "LowerTFSLFeasibility", "NestedNWave", "NestedRetestConfirmation", "NestedBreakoutQualityRouter", "NestedContextQualityRouterR12", "NestedStructuralBOS", "ConditionFactorial", "RelaxedConditionFactorial", "BroadFxEntryCandidates", "SweepReclaimRetest", "FixedConditionBT", "FixedRoom2RLowerTF")]
     [string]$ScenarioSet = "Original",
     [string]$SymbolsOverride = ""
 )
@@ -46,6 +46,7 @@ function New-Run {
         [int]$DiagnosticsLevel = 2,
         [int]$V4SignalMode = 0,
         [int]$ThirdWaveSLMode = 0,
+        [int]$NestedSweepTriggerMode = 0,
         [double]$RewardR = 1.5,
         [int]$ScanSeconds = 300,
         [int]$ContextTF = 16385,
@@ -68,6 +69,7 @@ function New-Run {
         DiagnosticsLevel = $DiagnosticsLevel
         V4SignalMode = $V4SignalMode
         ThirdWaveSLMode = $ThirdWaveSLMode
+        NestedSweepTriggerMode = $NestedSweepTriggerMode
         RewardR = $RewardR
         ScanSeconds = $ScanSeconds
         ContextTF = $ContextTF
@@ -190,6 +192,13 @@ if ($ScenarioSet -eq "ScanIntervalComparison") {
     $runs = @(
         New-Run -Id "A" -Name "A_broad_fx_entry_candidates" -StrategyMode 22 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 1) -Scenario "Nested_Broad_FX_Entry_Candidates_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
     )
+} elseif ($ScenarioSet -eq "SweepReclaimRetest") {
+    $runs = @(
+        New-Run -Id "C" -Name "C_sweep_reclaim_only" -StrategyMode 23 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 3) -Scenario "Nested_SweepReclaimRetest_sweep_reclaim_only_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -NestedSweepTriggerMode 1 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "D" -Name "D_bos_retest_only" -StrategyMode 23 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 4) -Scenario "Nested_SweepReclaimRetest_bos_retest_only_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -NestedSweepTriggerMode 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "E" -Name "E_first_pullback" -StrategyMode 23 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 5) -Scenario "Nested_SweepReclaimRetest_first_pullback_after_reclaim_only_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -NestedSweepTriggerMode 3 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+        New-Run -Id "F" -Name "F_combined_new_triggers" -StrategyMode 23 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 6) -Scenario "Nested_SweepReclaimRetest_combined_new_triggers_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -NestedSweepTriggerMode 0 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
+    )
 } elseif ($ScenarioSet -eq "FixedConditionBT") {
     $runs = @(
         New-Run -Id "B" -Name "B_fixed_room2r" -StrategyMode 15 -DirectionMode 0 -MagicNumber ($BaseMagicNumber + 2) -Scenario "Nested_Fixed_Room2R_BOTH_all_H4_H1_M15_2R" -EntrySelectionMode 1 -DiagnosticsLevel 2 -RewardR 2.0 -ScanSeconds 300 -ContextTF 16388 -PatternTF 16385 -ExecutionTF 15 -MaxPositions 50 -MaxSameCurrencyGroupPositions 50 -MaxRiskPerSymbolPercent 100000.0 -MaxTotalOpenRiskPercent 100000.0
@@ -252,6 +261,7 @@ function Write-ThirdWavePreset {
     $insertedDiagnosticsLevel = $false
     $insertedV4SignalMode = $false
     $insertedThirdWaveSLMode = $false
+    $insertedNestedSweepTriggerMode = $false
     $insertedRewardR = $false
     $insertedSymbols = $false
     foreach ($line in $lines) {
@@ -265,7 +275,7 @@ function Write-ThirdWavePreset {
             continue
         }
         if ($line -match '^InpResearchStrategyMode=') {
-            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||22||N")
+            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||23||N")
             $insertedStrategyMode = $true
             continue
         }
@@ -287,6 +297,11 @@ function Write-ThirdWavePreset {
         if ($line -match '^InpThirdWaveSLMode=') {
             $out.Add("InpThirdWaveSLMode=$($Run.ThirdWaveSLMode)||$($Run.ThirdWaveSLMode)||0||1||N")
             $insertedThirdWaveSLMode = $true
+            continue
+        }
+        if ($line -match '^InpNestedSweepTriggerMode=') {
+            $out.Add("InpNestedSweepTriggerMode=$($Run.NestedSweepTriggerMode)||$($Run.NestedSweepTriggerMode)||0||3||N")
+            $insertedNestedSweepTriggerMode = $true
             continue
         }
         if ($line -match '^InpTradeDirectionMode=') {
@@ -349,7 +364,7 @@ function Write-ThirdWavePreset {
         }
         $out.Add($line)
         if (-not $insertedStrategyMode -and $line -match '^InpExecutionTF=') {
-            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||22||N")
+            $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||23||N")
             $insertedStrategyMode = $true
         }
         if (-not $insertedEntrySelectionMode -and $line -match '^InpResearchStrategyMode=') {
@@ -368,6 +383,10 @@ function Write-ThirdWavePreset {
             $out.Add("InpThirdWaveSLMode=$($Run.ThirdWaveSLMode)||$($Run.ThirdWaveSLMode)||0||1||N")
             $insertedThirdWaveSLMode = $true
         }
+        if (-not $insertedNestedSweepTriggerMode -and $line -match '^InpThirdWaveSLMode=') {
+            $out.Add("InpNestedSweepTriggerMode=$($Run.NestedSweepTriggerMode)||$($Run.NestedSweepTriggerMode)||0||3||N")
+            $insertedNestedSweepTriggerMode = $true
+        }
         if (-not $insertedEntrySelectionMode -and $insertedStrategyMode -and $line -match '^InpExecutionTF=') {
             $out.Add("InpEntrySelectionMode=$($Run.EntrySelectionMode)||$($Run.EntrySelectionMode)||0||1||N")
             $insertedEntrySelectionMode = $true
@@ -384,9 +403,13 @@ function Write-ThirdWavePreset {
             $out.Add("InpThirdWaveSLMode=$($Run.ThirdWaveSLMode)||$($Run.ThirdWaveSLMode)||0||1||N")
             $insertedThirdWaveSLMode = $true
         }
+        if (-not $insertedNestedSweepTriggerMode -and $insertedThirdWaveSLMode -and $line -match '^InpExecutionTF=') {
+            $out.Add("InpNestedSweepTriggerMode=$($Run.NestedSweepTriggerMode)||$($Run.NestedSweepTriggerMode)||0||3||N")
+            $insertedNestedSweepTriggerMode = $true
+        }
     }
     if (-not $insertedStrategyMode) {
-        $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||22||N")
+        $out.Add("InpResearchStrategyMode=$($Run.StrategyMode)||$($Run.StrategyMode)||0||23||N")
     }
     if (-not $insertedEntrySelectionMode) {
         $out.Add("InpEntrySelectionMode=$($Run.EntrySelectionMode)||$($Run.EntrySelectionMode)||0||1||N")
@@ -399,6 +422,9 @@ function Write-ThirdWavePreset {
     }
     if (-not $insertedThirdWaveSLMode) {
         $out.Add("InpThirdWaveSLMode=$($Run.ThirdWaveSLMode)||$($Run.ThirdWaveSLMode)||0||1||N")
+    }
+    if (-not $insertedNestedSweepTriggerMode) {
+        $out.Add("InpNestedSweepTriggerMode=$($Run.NestedSweepTriggerMode)||$($Run.NestedSweepTriggerMode)||0||3||N")
     }
     if (-not $insertedRewardR) {
         $rewardText = $Run.RewardR.ToString('0.00', [System.Globalization.CultureInfo]::InvariantCulture)
