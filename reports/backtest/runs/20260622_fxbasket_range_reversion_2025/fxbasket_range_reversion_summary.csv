@@ -1,0 +1,2 @@
+time,strategy,symbols,signals,orders_sent,orders_failed,blocked,closed_trades,initial_equity,final_equity,peak_equity,daily_stopped,drawdown_stopped
+2025.12.30 23:57:59,range_reversion,USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD,1047,494,0,553,494,10000.00,9176.16,10795.64,false,true

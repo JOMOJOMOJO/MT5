@@ -1,0 +1,4 @@
+﻿"mode","year","trades","win_rate","net_profit","profit_factor_from_trades","sum_r","avg_r","r_profit_factor"
+"context_pullback","2025","298","0.3591","-1441.07","0.6573","-63.185","-0.212","0.6651"
+"volatility_breakout","2025","175","0.3829","-611.06","0.7639","-26.4387","-0.1511","0.7609"
+"range_reversion","2025","494","0.4372","-823.84","0.8837","-31.7248","-0.0642","0.8895"

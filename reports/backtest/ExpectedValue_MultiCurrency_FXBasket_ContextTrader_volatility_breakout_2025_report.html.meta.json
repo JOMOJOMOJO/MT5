@@ -1,0 +1,57 @@
+﻿{
+    "generated_at":  "2026-06-22T23:35:10.6009408+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_FXBasket_ContextTrader_volatility_breakout_2025.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpC74B.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpC74B.ini"
+               },
+    "tester":  {
+                   "symbol":  "USDJPY",
+                   "period":  "M15",
+                   "from_date":  "2025.01.01",
+                   "to_date":  "2025.12.31",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_FXBasket_ContextTrader_volatility_breakout_2025_report.html"
+               },
+    "preset":  {
+                   "name":  "ExpectedValue_MultiCurrency_FXBasket_ContextTrader_volatility_breakout_2025.set",
+                   "source":  "reports\\presets\\ExpectedValue_MultiCurrency_FXBasket_ContextTrader_volatility_breakout_2025.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\ExpectedValue_MultiCurrency_FXBasket_ContextTrader_volatility_breakout_2025.set",
+                   "parameters":  {
+                                      "InpSymbols":  "USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD",
+                                      "InpStrategyMode":  "1",
+                                      "InpScanTF":  "15",
+                                      "InpContextTF":  "16385",
+                                      "InpFastMAPeriod":  "20",
+                                      "InpSlowMAPeriod":  "80",
+                                      "InpATRPeriod":  "14",
+                                      "InpRSIPeriod":  "14",
+                                      "InpBreakoutLookbackBars":  "16",
+                                      "InpMeanLookbackBars":  "32",
+                                      "InpPullbackATR":  "0.45",
+                                      "InpMaxEntryDistanceATR":  "0.85",
+                                      "InpCompressionMaxRatio":  "0.85",
+                                      "InpRangeMaxMASeparationATR":  "0.80",
+                                      "InpRangeZScore":  "1.15",
+                                      "InpRangeRSIExtreme":  "35.0",
+                                      "InpStopATRMultiplier":  "1.15",
+                                      "InpMinSL_ATR":  "0.60",
+                                      "InpMaxSL_ATR":  "2.20",
+                                      "InpRewardR":  "1.25",
+                                      "InpMaxHoldBars":  "18",
+                                      "InpRiskPerTradePercent":  "0.25",
+                                      "InpMaxTotalOpenRiskPercent":  "2.50",
+                                      "InpMaxRiskPerSymbolPercent":  "0.50",
+                                      "InpMaxPositions":  "6",
+                                      "InpDailyMaxLossPercent":  "3.00",
+                                      "InpMaxDrawdownPercent":  "15.00",
+                                      "InpMaxSpreadATR":  "0.18",
+                                      "InpFixedLotFallback":  "0.01",
+                                      "InpMaxLotCap":  "1.00",
+                                      "InpSlippagePoints":  "20",
+                                      "InpMagicNumber":  "2026062202",
+                                      "InpUseCommonFiles":  "true",
+                                      "InpLogFolder":  "fxbasket_context_trader_2025_volatility_breakout",
+                                      "InpLogPrefix":  "fxbasket"
+                                  }
+               }
+}

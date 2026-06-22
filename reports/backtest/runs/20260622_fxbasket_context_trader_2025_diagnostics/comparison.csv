@@ -1,0 +1,4 @@
+﻿"mode","closed_trades","mt5_total_trades","net_profit","gross_profit","gross_loss","profit_factor","expected_payoff","balance_max_dd","equity_max_dd","recovery_factor","avg_r","r_profit_factor","win_rate_from_trades","final_equity","peak_equity","drawdown_stopped","daily_stopped","passed_trade_count","passed_pf_floor","promoted_to_long_oos"
+"context_pullback","298","298","-1441.07","2764.18","-4205.25","0.66","-4.84","1485.75","1516.1","-0.95","-0.212","0.6651","0.3591","8558.93","10059.11","true","false","True","False","False"
+"volatility_breakout","175","175","-611.06","1976.97","-2588.03","0.76","-3.49","752.9","771.87","-0.79","-0.1511","0.7609","0.3829","9388.94","10076.03","false","false","False","False","False"
+"range_reversion","494","494","-823.84","6260.58","-7084.42","0.88","-1.67","1617.94","1618.78","-0.51","-0.0642","0.8895","0.4372","9176.16","10795.64","true","false","True","False","False"

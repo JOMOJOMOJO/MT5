@@ -1,0 +1,2 @@
+time,strategy,symbols,signals,orders_sent,orders_failed,blocked,closed_trades,initial_equity,final_equity,peak_equity,daily_stopped,drawdown_stopped
+2025.12.30 23:57:59,volatility_breakout,USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD,237,175,0,62,175,10000.00,9388.94,10076.03,false,false
