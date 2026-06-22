@@ -1,0 +1,5 @@
+﻿"mode","year","trades","win_rate","net_profit","profit_factor_from_trades","sum_r","avg_r","r_profit_factor"
+"new_range_boundary_reversion_fixedR","2025","500","0.44","-1252.03","0.7916","-52.8114","-0.1056","0.796"
+"new_range_boundary_reversion_to_mid","2025","298","0.4027","-1097.14","0.732","-44.8783","-0.1506","0.7422"
+"new_range_boundary_reversion_to_mid_with_trend_filter","2025","318","0.3805","-1056.77","0.757","-43.3302","-0.1363","0.7693"
+"new_range_boundary_reversion_to_mid_with_boundary_only","2025","203","0.3103","-1303.7","0.6206","-53.9393","-0.2657","0.6323"

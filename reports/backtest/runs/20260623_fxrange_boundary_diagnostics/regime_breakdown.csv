@@ -1,0 +1,8 @@
+﻿"mode","regime_type","trades","win_rate","net_profit","profit_factor_from_trades","sum_r","avg_r","r_profit_factor"
+"new_range_boundary_reversion_fixedR","range","408","0.4363","-1183.83","0.7622","-50.0031","-0.1226","0.7661"
+"new_range_boundary_reversion_fixedR","weak_trend","92","0.4565","-68.2","0.9337","-2.8083","-0.0305","0.9376"
+"new_range_boundary_reversion_to_mid","range","251","0.4223","-751.96","0.7775","-30.1299","-0.12","0.7892"
+"new_range_boundary_reversion_to_mid","weak_trend","47","0.2979","-345.18","0.5171","-14.7484","-0.3138","0.527"
+"new_range_boundary_reversion_to_mid_with_trend_filter","range","318","0.3805","-1056.77","0.757","-43.3302","-0.1363","0.7693"
+"new_range_boundary_reversion_to_mid_with_boundary_only","range","163","0.3252","-934.15","0.6611","-37.9004","-0.2325","0.6749"
+"new_range_boundary_reversion_to_mid_with_boundary_only","weak_trend","40","0.25","-369.55","0.4563","-16.0389","-0.401","0.467"
