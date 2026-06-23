@@ -1,0 +1,63 @@
+﻿{
+    "generated_at":  "2026-06-23T23:19:04.0152267+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_FXElliottWaveRoadmapTrader_wave4_continuation_2025.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpD40.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpD40.ini"
+               },
+    "tester":  {
+                   "symbol":  "USDJPY",
+                   "period":  "M15",
+                   "from_date":  "2025.01.01",
+                   "to_date":  "2025.12.31",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_FXElliottWaveRoadmapTrader_wave4_continuation_2025_report.html"
+               },
+    "preset":  {
+                   "name":  "ExpectedValue_MultiCurrency_FXElliottWaveRoadmapTrader_wave4_continuation_2025.set",
+                   "source":  "reports\\presets\\ExpectedValue_MultiCurrency_FXElliottWaveRoadmapTrader_wave4_continuation_2025.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\ExpectedValue_MultiCurrency_FXElliottWaveRoadmapTrader_wave4_continuation_2025.set",
+                   "parameters":  {
+                                      "InpSymbols":  "USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD",
+                                      "InpScenarioMode":  "1",
+                                      "InpScanTF":  "15",
+                                      "InpFastWaveTF":  "16385",
+                                      "InpSlowWaveTF":  "16388",
+                                      "InpSwingDepth":  "3",
+                                      "InpWaveScanBars":  "180",
+                                      "InpATRPeriod":  "14",
+                                      "InpMinSwingSizeATR":  "0.70",
+                                      "InpWave2MinRetrace":  "0.25",
+                                      "InpWave2MaxRetrace":  "0.92",
+                                      "InpWave4MaxRetrace":  "0.70",
+                                      "InpWave4MaxOverlapATR":  "0.20",
+                                      "InpWave3MinVsWave1":  "0.75",
+                                      "InpScanFastMAPeriod":  "10",
+                                      "InpScanSlowMAPeriod":  "30",
+                                      "InpMicroBosLookbackBars":  "8",
+                                      "InpCandleBodyATR":  "0.25",
+                                      "InpRSIPeriod":  "14",
+                                      "InpMACDFastPeriod":  "12",
+                                      "InpMACDSlowPeriod":  "26",
+                                      "InpObstacleLookbackBars":  "48",
+                                      "InpSLBufferATR":  "0.15",
+                                      "InpMinSL_ATR":  "0.35",
+                                      "InpMaxSL_ATR":  "4.00",
+                                      "InpRewardR":  "1.40",
+                                      "InpMaxHoldBars":  "32",
+                                      "InpRiskPerTradePercent":  "0.25",
+                                      "InpMaxTotalOpenRiskPercent":  "2.50",
+                                      "InpMaxRiskPerSymbolPercent":  "0.50",
+                                      "InpMaxPositions":  "6",
+                                      "InpDailyMaxLossPercent":  "3.00",
+                                      "InpMaxDrawdownPercent":  "15.00",
+                                      "InpMaxSpreadATR":  "0.20",
+                                      "InpFixedLotFallback":  "0.01",
+                                      "InpMaxLotCap":  "1.00",
+                                      "InpSlippagePoints":  "20",
+                                      "InpMagicNumber":  "2026062311",
+                                      "InpUseCommonFiles":  "true",
+                                      "InpLogFolder":  "fxelliott_wave4_continuation_2025",
+                                      "InpLogPrefix":  "fxelliott"
+                                  }
+               }
+}
