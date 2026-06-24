@@ -135,6 +135,24 @@ struct EntryPlan
    double    stop;
    double    target;
    double    partialTarget;
+   double    initialRiskPriceDistance;
+   double    targetRewardMultiple;
+   double    targetPrice;
+   double    nearestObstaclePrice;
+   string    nearestObstacleType;
+   double    nearestObstacleDistancePrice;
+   double    nearestObstacleDistanceR;
+   double    obstacleBufferR;
+   bool      hardObstaclePresentBeforeTarget;
+   bool      softObstaclePresentBeforeTarget;
+   bool      cleanPathToTarget;
+   bool      obstacleBlocked;
+   string    obstacleBlockReason;
+   int       obstacleCountBeforeTarget;
+   int       hardObstacleCountBeforeTarget;
+   int       softObstacleCountBeforeTarget;
+   double    blockingObstacleDistanceR;
+   string    blockingObstacleType;
    bool      usePartial;
    bool      runnerTargetEnabled;
    double    stopDistancePips;
@@ -171,6 +189,11 @@ input double              InpHybridPartialFraction    = 0.50;
 input int                 InpMaxHoldBars              = 24;
 input double              InpRiskPercent              = 0.35;
 input bool                InpOneTradePerSessionDay    = true;
+input double              InpTargetRewardMultiple     = 1.50;
+input double              InpObstacleBufferR          = 0.20;
+input bool                InpUseHardObstacleFilter    = true;
+input bool                InpUseSoftObstacleAsHardFilter = false;
+input double              InpRoundNumberStepPips      = 0.0;
 input int                 InpSessionStartHour         = 0;
 input int                 InpSessionEndHour           = 0;
 input double              InpMaxSpreadPips            = 2.0;
@@ -371,6 +394,24 @@ void ResetEntryPlan(EntryPlan &plan)
    plan.stop = 0.0;
    plan.target = 0.0;
    plan.partialTarget = 0.0;
+   plan.initialRiskPriceDistance = 0.0;
+   plan.targetRewardMultiple = 0.0;
+   plan.targetPrice = 0.0;
+   plan.nearestObstaclePrice = 0.0;
+   plan.nearestObstacleType = "none";
+   plan.nearestObstacleDistancePrice = 0.0;
+   plan.nearestObstacleDistanceR = 9999.0;
+   plan.obstacleBufferR = 0.0;
+   plan.hardObstaclePresentBeforeTarget = false;
+   plan.softObstaclePresentBeforeTarget = false;
+   plan.cleanPathToTarget = true;
+   plan.obstacleBlocked = false;
+   plan.obstacleBlockReason = "";
+   plan.obstacleCountBeforeTarget = 0;
+   plan.hardObstacleCountBeforeTarget = 0;
+   plan.softObstacleCountBeforeTarget = 0;
+   plan.blockingObstacleDistanceR = 9999.0;
+   plan.blockingObstacleType = "none";
    plan.usePartial = false;
    plan.runnerTargetEnabled = false;
    plan.stopDistancePips = 0.0;
@@ -762,6 +803,520 @@ double SelectFinalTarget(const BreakoutSetup &setup, double entry, double risk, 
    return (setup.direction > 0) ? (entry + risk * InpTargetRMultiple) : (entry - risk * InpTargetRMultiple);
   }
 
+double TargetPathPrice(int direction, double entry, double risk, double multiple)
+  {
+   if(direction > 0)
+      return NormalizePrice(entry + risk * multiple);
+   return NormalizePrice(entry - risk * multiple);
+  }
+
+bool PriceInForwardRange(int direction, double entry, double target, double price)
+  {
+   if(price <= 0.0)
+      return false;
+   if(direction > 0)
+      return (price > entry && price <= target);
+   return (price < entry && price >= target);
+  }
+
+string ObstacleBlockReason(string obstacleType, bool hard, bool beforeTarget)
+  {
+   if(!beforeTarget)
+      return "no_clean_path_to_target";
+   if(StringFind(obstacleType, "previous_day") == 0)
+      return "previous_day_level_blocked";
+   if(StringFind(obstacleType, "h1_swing") == 0 || StringFind(obstacleType, "h4_swing") == 0)
+      return "h1_h4_swing_blocked";
+   if(StringFind(obstacleType, "session_") == 0)
+      return "session_level_blocked";
+   if(StringFind(obstacleType, "opening_range") == 0)
+      return "opening_range_level_blocked";
+   if(StringFind(obstacleType, "pre_session") == 0)
+      return "pre_session_level_blocked";
+   if(StringFind(obstacleType, "round_number") == 0)
+      return "round_number_near_target";
+   if(StringFind(obstacleType, "consolidation") == 0 ||
+      StringFind(obstacleType, "price_congestion") == 0 ||
+      StringFind(obstacleType, "recent_rejection") == 0 ||
+      StringFind(obstacleType, "wick_cluster") == 0 ||
+      StringFind(obstacleType, "prior_breakout_failure") == 0 ||
+      StringFind(obstacleType, "failed_breakout") == 0 ||
+      StringFind(obstacleType, "recent_equal") == 0)
+      return "price_congestion_before_target";
+   if(hard)
+      return "hard_obstacle_before_target";
+   return "soft_obstacle_before_target";
+  }
+
+void RegisterObstacle(EntryPlan &plan, string obstacleType, double obstaclePrice, bool hard)
+  {
+   if(plan.initialRiskPriceDistance <= 0.0 || plan.targetRewardMultiple <= 0.0)
+      return;
+
+   double price = NormalizePrice(obstaclePrice);
+   double bufferedTarget = TargetPathPrice(plan.direction,
+                                           plan.entry,
+                                           plan.initialRiskPriceDistance,
+                                           plan.targetRewardMultiple + plan.obstacleBufferR);
+   bool beforeTarget = PriceInForwardRange(plan.direction, plan.entry, plan.targetPrice, price);
+   bool beforeBufferedTarget = PriceInForwardRange(plan.direction, plan.entry, bufferedTarget, price);
+
+   if(beforeTarget)
+     {
+      plan.obstacleCountBeforeTarget++;
+      if(hard)
+        {
+         plan.hardObstacleCountBeforeTarget++;
+         plan.hardObstaclePresentBeforeTarget = true;
+        }
+      else
+        {
+         plan.softObstacleCountBeforeTarget++;
+         plan.softObstaclePresentBeforeTarget = true;
+        }
+     }
+
+   if(!beforeBufferedTarget)
+      return;
+
+   double distancePrice = MathAbs(price - plan.entry);
+   double distanceR = distancePrice / plan.initialRiskPriceDistance;
+   if(plan.nearestObstacleType == "none" || distancePrice < plan.nearestObstacleDistancePrice)
+     {
+      plan.nearestObstaclePrice = price;
+      plan.nearestObstacleType = obstacleType;
+      plan.nearestObstacleDistancePrice = distancePrice;
+      plan.nearestObstacleDistanceR = distanceR;
+     }
+
+   bool gateObstacle = hard || InpUseSoftObstacleAsHardFilter;
+   if(gateObstacle && distanceR < plan.blockingObstacleDistanceR)
+     {
+      plan.cleanPathToTarget = false;
+      plan.blockingObstacleDistanceR = distanceR;
+      plan.blockingObstacleType = obstacleType;
+      if((hard && InpUseHardObstacleFilter) || (!hard && InpUseSoftObstacleAsHardFilter))
+        {
+         plan.obstacleBlocked = true;
+         plan.obstacleBlockReason = ObstacleBlockReason(obstacleType, hard, beforeTarget);
+        }
+     }
+  }
+
+bool CollectRangeByTime(ENUM_TIMEFRAMES tf,
+                        datetime fromTime,
+                        datetime toTime,
+                        int scanBars,
+                        double &rangeHigh,
+                        double &rangeLow,
+                        int &barCount)
+  {
+   rangeHigh = -DBL_MAX;
+   rangeLow = DBL_MAX;
+   barCount = 0;
+   int bars = Bars(runtimeSymbol, tf);
+   if(bars <= 2 || fromTime >= toTime)
+      return false;
+
+   int endShift = MathMin(bars - 1, scanBars);
+   for(int shift = 1; shift <= endShift; ++shift)
+     {
+      datetime barTime = iTime(runtimeSymbol, tf, shift);
+      if(barTime <= 0)
+         break;
+      if(barTime >= toTime)
+         continue;
+      if(barTime < fromTime)
+         break;
+
+      double highValue = iHigh(runtimeSymbol, tf, shift);
+      double lowValue = iLow(runtimeSymbol, tf, shift);
+      if(highValue <= 0.0 || lowValue <= 0.0)
+         continue;
+
+      if(highValue > rangeHigh)
+         rangeHigh = highValue;
+      if(lowValue < rangeLow)
+         rangeLow = lowValue;
+      barCount++;
+     }
+
+   return (barCount > 0 && rangeHigh > rangeLow);
+  }
+
+bool FindConfirmedSwingLevel(ENUM_TIMEFRAMES tf, int direction, int depth, int lookbackBars, double &level)
+  {
+   level = 0.0;
+   int bars = Bars(runtimeSymbol, tf);
+   if(bars <= depth * 2 + 3)
+      return false;
+
+   int endShift = MathMin(bars - depth - 1, lookbackBars);
+   for(int shift = depth + 1; shift <= endShift; ++shift)
+     {
+      double candidate = (direction > 0) ? iHigh(runtimeSymbol, tf, shift) : iLow(runtimeSymbol, tf, shift);
+      if(candidate <= 0.0)
+         continue;
+
+      bool confirmed = true;
+      for(int offset = 1; offset <= depth; ++offset)
+        {
+         double newer = (direction > 0) ? iHigh(runtimeSymbol, tf, shift - offset) : iLow(runtimeSymbol, tf, shift - offset);
+         double older = (direction > 0) ? iHigh(runtimeSymbol, tf, shift + offset) : iLow(runtimeSymbol, tf, shift + offset);
+         if(direction > 0)
+           {
+            if(candidate <= newer || candidate <= older)
+              {
+               confirmed = false;
+               break;
+              }
+           }
+         else
+           {
+            if(candidate >= newer || candidate >= older)
+              {
+               confirmed = false;
+               break;
+              }
+           }
+        }
+
+      if(confirmed)
+        {
+         level = candidate;
+         return true;
+        }
+     }
+   return false;
+  }
+
+double RoundNumberStepPips()
+  {
+   if(InpRoundNumberStepPips > 0.0)
+      return InpRoundNumberStepPips;
+   if(StringFind(runtimeSymbol, "JPY") >= 0)
+      return 50.0;
+   return 25.0;
+  }
+
+void AddRoundNumberObstacle(EntryPlan &plan)
+  {
+   double stepPrice = PipsToPrice(RoundNumberStepPips());
+   if(stepPrice <= 0.0)
+      return;
+
+   double bufferedTarget = TargetPathPrice(plan.direction,
+                                           plan.entry,
+                                           plan.initialRiskPriceDistance,
+                                           plan.targetRewardMultiple + plan.obstacleBufferR);
+   double level = 0.0;
+   if(plan.direction > 0)
+     {
+      level = MathCeil(plan.entry / stepPrice) * stepPrice;
+      if(level <= plan.entry)
+         level += stepPrice;
+      if(level <= bufferedTarget)
+         RegisterObstacle(plan, "round_number", level, false);
+     }
+   else
+     {
+      level = MathFloor(plan.entry / stepPrice) * stepPrice;
+      if(level >= plan.entry)
+         level -= stepPrice;
+      if(level >= bufferedTarget)
+         RegisterObstacle(plan, "round_number", level, false);
+     }
+  }
+
+bool FindRecentEqualLevel(int direction, double &level)
+  {
+   level = 0.0;
+   double atr = 0.0;
+   LoadSingleBuffer(executionAtrHandle, 1, atr);
+   double tolerance = MathMax(PipsToPrice(0.5), atr * 0.05);
+   int bars = MathMin(Bars(runtimeSymbol, InpExecutionTimeframe) - 1, InpExecutionScanBars);
+   if(bars < 6)
+      return false;
+
+   double nearestDistance = DBL_MAX;
+   for(int i = 1; i <= bars; ++i)
+     {
+      double first = (direction > 0) ? iHigh(runtimeSymbol, InpExecutionTimeframe, i) : iLow(runtimeSymbol, InpExecutionTimeframe, i);
+      if(first <= 0.0)
+         continue;
+      for(int j = i + 2; j <= bars; ++j)
+        {
+         double second = (direction > 0) ? iHigh(runtimeSymbol, InpExecutionTimeframe, j) : iLow(runtimeSymbol, InpExecutionTimeframe, j);
+         if(second <= 0.0 || MathAbs(first - second) > tolerance)
+            continue;
+         double candidate = (first + second) * 0.5;
+         double distance = MathAbs(candidate - iClose(runtimeSymbol, InpExecutionTimeframe, 1));
+         if(distance < nearestDistance)
+           {
+            nearestDistance = distance;
+            level = candidate;
+           }
+        }
+     }
+   return (level > 0.0);
+  }
+
+bool FindRecentRejectionLevel(int direction, double &level)
+  {
+   level = 0.0;
+   int bars = MathMin(Bars(runtimeSymbol, InpExecutionTimeframe) - 1, InpExecutionScanBars);
+   if(bars < 4)
+      return false;
+
+   double nearestDistance = DBL_MAX;
+   double reference = iClose(runtimeSymbol, InpExecutionTimeframe, 1);
+   for(int shift = 1; shift <= bars; ++shift)
+     {
+      double openValue = iOpen(runtimeSymbol, InpExecutionTimeframe, shift);
+      double closeValue = iClose(runtimeSymbol, InpExecutionTimeframe, shift);
+      double highValue = iHigh(runtimeSymbol, InpExecutionTimeframe, shift);
+      double lowValue = iLow(runtimeSymbol, InpExecutionTimeframe, shift);
+      double barRange = highValue - lowValue;
+      if(openValue <= 0.0 || closeValue <= 0.0 || barRange <= 0.0)
+         continue;
+
+      double candidate = 0.0;
+      if(direction > 0)
+        {
+         double upperWick = highValue - MathMax(openValue, closeValue);
+         if(upperWick / barRange < 0.45 || closeValue >= openValue)
+            continue;
+         candidate = highValue;
+        }
+      else
+        {
+         double lowerWick = MathMin(openValue, closeValue) - lowValue;
+         if(lowerWick / barRange < 0.45 || closeValue <= openValue)
+            continue;
+         candidate = lowValue;
+        }
+
+      double distance = MathAbs(candidate - reference);
+      if(distance < nearestDistance)
+        {
+         nearestDistance = distance;
+         level = candidate;
+        }
+     }
+   return (level > 0.0);
+  }
+
+bool FindWickClusterLevel(int direction, double &level)
+  {
+   level = 0.0;
+   double firstLevel = 0.0;
+   double atr = 0.0;
+   LoadSingleBuffer(executionAtrHandle, 1, atr);
+   double tolerance = MathMax(PipsToPrice(0.6), atr * 0.06);
+   int bars = MathMin(Bars(runtimeSymbol, InpExecutionTimeframe) - 1, InpExecutionScanBars);
+   int hits = 0;
+
+   for(int shift = 1; shift <= bars; ++shift)
+     {
+      double openValue = iOpen(runtimeSymbol, InpExecutionTimeframe, shift);
+      double closeValue = iClose(runtimeSymbol, InpExecutionTimeframe, shift);
+      double highValue = iHigh(runtimeSymbol, InpExecutionTimeframe, shift);
+      double lowValue = iLow(runtimeSymbol, InpExecutionTimeframe, shift);
+      double barRange = highValue - lowValue;
+      if(openValue <= 0.0 || closeValue <= 0.0 || barRange <= 0.0)
+         continue;
+
+      double candidate = 0.0;
+      if(direction > 0)
+        {
+         double upperWick = highValue - MathMax(openValue, closeValue);
+         if(upperWick / barRange < 0.35)
+            continue;
+         candidate = highValue;
+        }
+      else
+        {
+         double lowerWick = MathMin(openValue, closeValue) - lowValue;
+         if(lowerWick / barRange < 0.35)
+            continue;
+         candidate = lowValue;
+        }
+
+      if(firstLevel <= 0.0)
+        {
+         firstLevel = candidate;
+         hits = 1;
+         continue;
+        }
+      if(MathAbs(candidate - firstLevel) <= tolerance)
+        {
+         hits++;
+         level = (level <= 0.0) ? (firstLevel + candidate) * 0.5 : (level + candidate) * 0.5;
+        }
+      if(hits >= 2 && level > 0.0)
+         return true;
+     }
+   return false;
+  }
+
+bool FindConsolidationBoundary(int direction, int sampleBars, double maxAtrMultiple, double &level)
+  {
+   level = 0.0;
+   int bars = Bars(runtimeSymbol, InpExecutionTimeframe);
+   if(bars <= sampleBars + 1)
+      return false;
+
+   double rangeHigh = -DBL_MAX;
+   double rangeLow = DBL_MAX;
+   for(int shift = 1; shift <= sampleBars; ++shift)
+     {
+      double highValue = iHigh(runtimeSymbol, InpExecutionTimeframe, shift);
+      double lowValue = iLow(runtimeSymbol, InpExecutionTimeframe, shift);
+      if(highValue <= 0.0 || lowValue <= 0.0)
+         return false;
+      if(highValue > rangeHigh)
+         rangeHigh = highValue;
+      if(lowValue < rangeLow)
+         rangeLow = lowValue;
+     }
+
+   double atr = 0.0;
+   if(!LoadSingleBuffer(executionAtrHandle, 1, atr) || atr <= 0.0)
+      return false;
+   if((rangeHigh - rangeLow) > atr * maxAtrMultiple)
+      return false;
+
+   level = (direction > 0) ? rangeHigh : rangeLow;
+   return (level > 0.0);
+  }
+
+bool FindPriorBreakoutFailureLevel(const BreakoutSetup &setup, int direction, double &level)
+  {
+   level = 0.0;
+   double buffer = MathMax(PipsToPrice(InpMinBreakoutBufferPips), PipsToPrice(setup.rangeAtrPips * InpBreakoutBufferATR));
+   int bars = MathMin(Bars(runtimeSymbol, InpExecutionTimeframe) - 1, InpExecutionScanBars);
+   for(int shift = 1; shift <= bars; ++shift)
+     {
+      double highValue = iHigh(runtimeSymbol, InpExecutionTimeframe, shift);
+      double lowValue = iLow(runtimeSymbol, InpExecutionTimeframe, shift);
+      double closeValue = iClose(runtimeSymbol, InpExecutionTimeframe, shift);
+      if(highValue <= 0.0 || lowValue <= 0.0 || closeValue <= 0.0)
+         continue;
+
+      if(direction > 0)
+        {
+         if(highValue > setup.breakoutLevel + buffer && closeValue < setup.breakoutLevel)
+           {
+            level = highValue;
+            return true;
+           }
+        }
+      else
+        {
+         if(lowValue < setup.breakoutLevel - buffer && closeValue > setup.breakoutLevel)
+           {
+            level = lowValue;
+            return true;
+           }
+        }
+     }
+   return false;
+  }
+
+void EvaluateTargetPathObstacles(const BreakoutSetup &setup, EntryPlan &plan)
+  {
+   plan.initialRiskPriceDistance = MathAbs(plan.entry - plan.stop);
+   plan.targetRewardMultiple = InpTargetRewardMultiple;
+   plan.obstacleBufferR = InpObstacleBufferR;
+   plan.targetPrice = TargetPathPrice(plan.direction, plan.entry, plan.initialRiskPriceDistance, plan.targetRewardMultiple);
+   plan.cleanPathToTarget = true;
+
+   if(plan.initialRiskPriceDistance <= 0.0 || plan.targetRewardMultiple <= 0.0)
+      return;
+
+   if(plan.direction > 0)
+     {
+      RegisterObstacle(plan, "previous_day_high", iHigh(runtimeSymbol, PERIOD_D1, 1), true);
+      RegisterObstacle(plan, "current_day_high", iHigh(runtimeSymbol, PERIOD_D1, 0), false);
+      RegisterObstacle(plan, "session_high", setup.rangeHigh, true);
+     }
+   else
+     {
+      RegisterObstacle(plan, "previous_day_low", iLow(runtimeSymbol, PERIOD_D1, 1), true);
+      RegisterObstacle(plan, "current_day_low", iLow(runtimeSymbol, PERIOD_D1, 0), false);
+      RegisterObstacle(plan, "session_low", setup.rangeLow, true);
+     }
+
+   double swingLevel = 0.0;
+   if(FindConfirmedSwingLevel(PERIOD_H4, plan.direction, 2, 80, swingLevel))
+      RegisterObstacle(plan, (plan.direction > 0) ? "h4_swing_high" : "h4_swing_low", swingLevel, true);
+   if(FindConfirmedSwingLevel(PERIOD_H1, plan.direction, 2, 120, swingLevel))
+      RegisterObstacle(plan, (plan.direction > 0) ? "h1_swing_high" : "h1_swing_low", swingLevel, true);
+
+   datetime now = TimeCurrent();
+   datetime openingStart = BuildDateTime(now, InpBreakoutStartHour);
+   datetime openingEnd = openingStart + 3600;
+   if(now > openingStart)
+     {
+      double openingHigh = 0.0;
+      double openingLow = 0.0;
+      int openingBars = 0;
+      datetime effectiveOpeningEnd = (now < openingEnd) ? now : openingEnd;
+      if(CollectRangeByTime(InpExecutionTimeframe,
+                            openingStart,
+                            effectiveOpeningEnd,
+                            InpExecutionScanBars,
+                            openingHigh,
+                            openingLow,
+                            openingBars))
+        {
+         RegisterObstacle(plan, (plan.direction > 0) ? "opening_range_high" : "opening_range_low",
+                          (plan.direction > 0) ? openingHigh : openingLow,
+                          true);
+        }
+     }
+
+   datetime preSessionEnd = BuildDateTime(now, InpBreakoutStartHour);
+   datetime preSessionStart = preSessionEnd - 3600;
+   double preHigh = 0.0;
+   double preLow = 0.0;
+   int preBars = 0;
+   if(CollectRangeByTime(InpExecutionTimeframe,
+                         preSessionStart,
+                         preSessionEnd,
+                         InpExecutionScanBars,
+                         preHigh,
+                         preLow,
+                         preBars))
+     {
+      RegisterObstacle(plan, (plan.direction > 0) ? "pre_session_high" : "pre_session_low",
+                       (plan.direction > 0) ? preHigh : preLow,
+                       true);
+     }
+
+   AddRoundNumberObstacle(plan);
+
+   double softLevel = 0.0;
+   if(FindRecentEqualLevel(plan.direction, softLevel))
+      RegisterObstacle(plan, (plan.direction > 0) ? "recent_equal_highs" : "recent_equal_lows", softLevel, false);
+   if(FindRecentRejectionLevel(plan.direction, softLevel))
+      RegisterObstacle(plan, "recent_rejection_zone", softLevel, false);
+   if(FindWickClusterLevel(plan.direction, softLevel))
+      RegisterObstacle(plan, "wick_cluster_zone", softLevel, false);
+   if(FindConsolidationBoundary(plan.direction, 12, 1.15, softLevel))
+      RegisterObstacle(plan, "consolidation_zone", softLevel, false);
+   if(FindConsolidationBoundary(plan.direction, 18, 1.60, softLevel))
+      RegisterObstacle(plan, "price_congestion_zone", softLevel, false);
+   if(FindPriorBreakoutFailureLevel(setup, plan.direction, softLevel))
+     {
+      RegisterObstacle(plan, "prior_breakout_failure_zone", softLevel, false);
+      RegisterObstacle(plan, "failed_breakout_level", softLevel, false);
+     }
+
+   if(plan.obstacleBlocked && plan.obstacleBlockReason == "")
+      plan.obstacleBlockReason = "obstacle_before_target";
+  }
+
 bool BuildEntryPlan(const BreakoutSetup &setup, const ExecutionTrigger &trigger, EntryPlan &plan)
   {
    ResetEntryPlan(plan);
@@ -825,6 +1380,7 @@ bool BuildEntryPlan(const BreakoutSetup &setup, const ExecutionTrigger &trigger,
    plan.plannedRiskAmount = 0.0;
    plan.barsFromSetupToEntry = trigger.barsFromSetupToEntry;
    plan.reason = "session_box_" + setup.sideLabel + "_" + trigger.triggerLabel;
+   EvaluateTargetPathObstacles(setup, plan);
    return true;
   }
 
@@ -940,6 +1496,24 @@ bool OpenTelemetryFile()
                 "min_unrealized_r",
                 "event_r_multiple",
                 "price",
+                "entry_price",
+                "stop_loss_price",
+                "initial_risk_price_distance",
+                "target_reward_multiple",
+                "target_price",
+                "nearest_obstacle_price",
+                "nearest_obstacle_type",
+                "nearest_obstacle_distance_price",
+                "nearest_obstacle_distance_r",
+                "obstacle_buffer_r",
+                "hard_obstacle_present_before_target",
+                "soft_obstacle_present_before_target",
+                "clean_path_to_target",
+                "obstacle_blocked",
+                "obstacle_block_reason",
+                "obstacle_count_before_target",
+                "hard_obstacle_count_before_target",
+                "soft_obstacle_count_before_target",
                 "volume",
                 "net_profit",
                 "outcome",
@@ -1026,6 +1600,24 @@ void LogTelemetry(string eventType,
              activeMinUnrealizedR,
              eventRMultiple,
              price,
+             plan.entry,
+             plan.stop,
+             plan.initialRiskPriceDistance,
+             plan.targetRewardMultiple,
+             plan.targetPrice,
+             plan.nearestObstaclePrice,
+             plan.nearestObstacleType,
+             plan.nearestObstacleDistancePrice,
+             plan.nearestObstacleDistanceR,
+             plan.obstacleBufferR,
+             (int)plan.hardObstaclePresentBeforeTarget,
+             (int)plan.softObstaclePresentBeforeTarget,
+             (int)plan.cleanPathToTarget,
+             (int)plan.obstacleBlocked,
+             plan.obstacleBlockReason,
+             plan.obstacleCountBeforeTarget,
+             plan.hardObstacleCountBeforeTarget,
+             plan.softObstacleCountBeforeTarget,
              volume,
              netProfit,
              outcome,
@@ -1325,6 +1917,20 @@ bool SelectTriggeredPlan(const EntryPlan &longPlan, const EntryPlan &shortPlan, 
    if(!longPlan.valid && !shortPlan.valid)
       return false;
 
+   if(longPlan.valid && shortPlan.valid)
+     {
+      if(longPlan.obstacleBlocked && !shortPlan.obstacleBlocked)
+        {
+         selected = shortPlan;
+         return true;
+        }
+      if(shortPlan.obstacleBlocked && !longPlan.obstacleBlocked)
+        {
+         selected = longPlan;
+         return true;
+        }
+     }
+
    if(MathAbs(longPlan.setupToEntryPips) >= MathAbs(shortPlan.setupToEntryPips))
       selected = longPlan;
    else
@@ -1388,6 +1994,16 @@ void ProcessExecutionBar()
    EntryPlan selected;
    if(!SelectTriggeredPlan(longPlan, shortPlan, selected))
       return;
+
+   if(selected.obstacleBlocked)
+     {
+      LogTelemetry("obstacle_blocked", selected, 0, selected.entry, 0.0, 0.0, "", selected.obstacleBlockReason);
+      if(InpOneTradePerSessionDay)
+         lastTradeSessionDayId = selected.sessionDayId;
+      ResetPendingExecution(pendingLongExecution);
+      ResetPendingExecution(pendingShortExecution);
+      return;
+     }
 
    ExecuteEntry(selected);
   }
@@ -1490,6 +2106,8 @@ int OnInit()
       InpExecutionATRPeriod <= 0 ||
       InpRiskPercent <= 0.0 ||
       InpTargetRMultiple <= 0.0 ||
+      InpTargetRewardMultiple <= 0.0 ||
+      InpObstacleBufferR < 0.0 ||
       InpMinRangePips <= 0.0 ||
       InpMaxRangePips <= 0.0 ||
       InpBreakoutEndHour == InpBreakoutStartHour ||

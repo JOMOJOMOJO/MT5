@@ -1,0 +1,61 @@
+﻿{
+    "generated_at":  "2026-06-24T23:58:54.3260422+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260421_session_one_shot_target_1_2_clean_path_reference_2025.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp389E.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp389E.ini"
+               },
+    "tester":  {
+                   "symbol":  "USDJPY",
+                   "period":  "M5",
+                   "from_date":  "2025.01.01",
+                   "to_date":  "2025.12.31",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\usdjpy_20260421_session_one_shot_target_1_2_clean_path_reference_2025_report.html"
+               },
+    "preset":  {
+                   "name":  "usdjpy_20260421_session_one_shot_target_1_2_clean_path_reference_2025.set",
+                   "source":  "reports\\presets\\usdjpy_20260421_session_one_shot_target_1_2_clean_path_reference_2025.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\usdjpy_20260421_session_one_shot_target_1_2_clean_path_reference_2025.set",
+                   "parameters":  {
+                                      "InpSymbol":  "USDJPY",
+                                      "InpRangeTimeframe":  "15",
+                                      "InpExecutionTimeframe":  "5",
+                                      "InpRangeATRPeriod":  "14",
+                                      "InpExecutionATRPeriod":  "14",
+                                      "InpRangeStartHour":  "0",
+                                      "InpRangeEndHour":  "7",
+                                      "InpBreakoutStartHour":  "7",
+                                      "InpBreakoutEndHour":  "16",
+                                      "InpRangeScanBars":  "96",
+                                      "InpExecutionScanBars":  "64",
+                                      "InpMinRangePips":  "3.0",
+                                      "InpMaxRangePips":  "55.0",
+                                      "InpBreakoutBufferATR":  "0.03",
+                                      "InpMinBreakoutBufferPips":  "0.2",
+                                      "InpRetestTolerancePips":  "1.2",
+                                      "InpTradeBiasMode":  "2",
+                                      "InpBreakoutTriggerMode":  "0",
+                                      "InpPartialTargetLevel":  "382",
+                                      "InpFinalTargetMode":  "1",
+                                      "InpTargetRMultiple":  "1.20",
+                                      "InpMinStopBufferPips":  "1.0",
+                                      "InpStopBufferATR":  "0.08",
+                                      "InpAcceptanceExitBufferPips":  "0.5",
+                                      "InpHybridPartialFraction":  "0.50",
+                                      "InpMaxHoldBars":  "24",
+                                      "InpRiskPercent":  "0.35",
+                                      "InpOneTradePerSessionDay":  "true",
+                                      "InpTargetRewardMultiple":  "1.20",
+                                      "InpObstacleBufferR":  "0.20",
+                                      "InpUseHardObstacleFilter":  "true",
+                                      "InpUseSoftObstacleAsHardFilter":  "false",
+                                      "InpRoundNumberStepPips":  "0.0",
+                                      "InpSessionStartHour":  "0",
+                                      "InpSessionEndHour":  "0",
+                                      "InpMaxSpreadPips":  "2.5",
+                                      "InpEnableTelemetry":  "true",
+                                      "InpTelemetryFileName":  "mt5_company_usdjpy_20260421_session_one_shot_target_1_2_clean_path_reference_2025.csv",
+                                      "InpMagicNumber":  "2026062404"
+                                  }
+               }
+}

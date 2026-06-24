@@ -1,0 +1,6 @@
+scenario,target_reward_multiple,hard_filter,soft_as_hard,trades,blocked_signals,net_profit,profit_factor,avg_r,win_rate,clean_path_trades,clean_path_avg_r,dirty_path_trades,dirty_path_avg_r,passed_2025_shallow_gate
+session_one_shot_no_obstacle_filter,1.5,False,False,99,0,-81.71999999999998,0.7707456657128426,-0.025416473945027756,0.29292929292929293,30,-0.0747301368627473,69,-0.003975750937323592,False
+session_one_shot_target_1_5_clean_path,1.5,True,False,30,69,-74.46000000000001,0.32339845524761474,-0.07520502464647799,0.23333333333333334,30,-0.07520502464647799,0,0.0,False
+session_one_shot_target_2_0_clean_path_reference,2.0,True,False,25,74,-57.43000000000001,0.367232260907889,-0.06934256108991292,0.24,25,-0.06934256108991292,0,0.0,False
+session_one_shot_target_1_2_clean_path_reference,1.2,True,False,36,63,-97.54,0.29993540515323336,-0.08096679283087321,0.2222222222222222,36,-0.08096679283087321,0,0.0,False
+session_one_shot_target_1_5_soft_obstacle_diagnostics,1.5,True,False,30,69,-74.46000000000001,0.32339845524761474,-0.07520502464647799,0.23333333333333334,30,-0.07520502464647799,0,0.0,False
