@@ -34,6 +34,14 @@ enum ENUM_HTF_ALIGNMENT_MODE
    HTF_ALIGNMENT_SOFT = 3
   };
 
+enum ENUM_HTF_PERMISSION_MODE
+  {
+   HTF_PERMISSION_CURRENT_POST_FILTER = 0,
+   HTF_PERMISSION_H1_DIRECTION_H4_NOT_OPPOSITE_PREFILTER = 1,
+   HTF_PERMISSION_H4_BIAS_H1_REVERSAL_PREFILTER = 2,
+   HTF_PERMISSION_SOFT_PREFILTER = 3
+  };
+
 enum ENUM_BREAK_EVEN_MODE
   {
    BREAK_EVEN_DISABLED = 0,
@@ -88,14 +96,27 @@ struct SignalPlan
    string            ltfWave3Direction;
    string            ltfWave3Timeframe;
    string            htfAlignmentMode;
+   string            htfPermissionMode;
+   string            allowedDirection;
    string            htfWave3Direction;
    bool              htfWave3Confirmed;
    string            htfH4Wave3Direction;
    string            htfH1Wave3Direction;
+   string            h4DirectionState;
+   string            h1DirectionState;
    string            htfFractalAlignment;
    double            htfWave3BreakLevel;
    double            htfWave3PullbackLevel;
    bool              wave3AlignmentPassed;
+   bool              rejectedByHtfPermission;
+   bool              candidateLongDetected;
+   bool              candidateShortDetected;
+   string            selectedCandidateDirection;
+   string            selectedCandidateTimeframe;
+   string            m15BestPattern;
+   double            m15BestScore;
+   string            m5BestPattern;
+   double            m5BestScore;
    double            htfNearestResistance;
    double            htfNearestSupport;
    double            nearestObstaclePrice;
@@ -105,6 +126,15 @@ struct SignalPlan
    string            retestReferenceType;
    double            retestReferencePrice;
    int               retestReferenceCount;
+   double            retestReferenceDistanceAtr;
+   double            targetRoomScore;
+   double            retestScore;
+   string            timeBucket;
+   bool              timeScoreRemovedFlag;
+   bool              candidateOrderableBeforeSessionSelection;
+   string            rejectedBeforeSelectionReason;
+   string            sessionConsumedReason;
+   double            finalScore;
    double            initialRiskPriceDistance;
    double            targetRewardMultiple;
    double            targetPrice;
@@ -160,14 +190,27 @@ struct TrackedTrade
    string            ltfWave3Direction;
    string            ltfWave3Timeframe;
    string            htfAlignmentMode;
+   string            htfPermissionMode;
+   string            allowedDirection;
    string            htfWave3Direction;
    bool              htfWave3Confirmed;
    string            htfH4Wave3Direction;
    string            htfH1Wave3Direction;
+   string            h4DirectionState;
+   string            h1DirectionState;
    string            htfFractalAlignment;
    double            htfWave3BreakLevel;
    double            htfWave3PullbackLevel;
    bool              wave3AlignmentPassed;
+   bool              rejectedByHtfPermission;
+   bool              candidateLongDetected;
+   bool              candidateShortDetected;
+   string            selectedCandidateDirection;
+   string            selectedCandidateTimeframe;
+   string            m15BestPattern;
+   double            m15BestScore;
+   string            m5BestPattern;
+   double            m5BestScore;
    double            htfNearestResistance;
    double            htfNearestSupport;
    double            nearestObstaclePrice;
@@ -176,6 +219,15 @@ struct TrackedTrade
    string            retestReferenceType;
    double            retestReferencePrice;
    int               retestReferenceCount;
+   double            retestReferenceDistanceAtr;
+   double            targetRoomScore;
+   double            retestScore;
+   string            timeBucket;
+   bool              timeScoreRemovedFlag;
+   bool              candidateOrderableBeforeSessionSelection;
+   string            rejectedBeforeSelectionReason;
+   string            sessionConsumedReason;
+   double            finalScore;
    bool              cleanPathToTarget;
    bool              hardObstaclePresentBeforeTarget;
    bool              softObstaclePresentBeforeTarget;
@@ -209,6 +261,19 @@ struct TrackedTrade
    double            score;
   };
 
+struct PatternCandidate
+  {
+   bool              valid;
+   int               direction;
+   string            pattern;
+   string            trigger;
+   double            neckline;
+   double            stopAnchor;
+   double            score;
+   string            timeframeLabel;
+   double            atr;
+  };
+
 input string          InpSymbols                       = "USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD";
 input ENUM_SESSION_REVERSAL_SCENARIO InpScenarioMode   = SESSION_REVERSAL_ONE_SYMBOL_FIRST120;
 input ENUM_TIMEFRAMES InpScanTF                        = PERIOD_M15;
@@ -225,7 +290,9 @@ input int             InpHTFWaveLookbackBars           = 120;
 input double          InpHTFWaveBreakBufferATR         = 0.05;
 input bool            InpRequireH4H1Wave3Alignment     = true;
 input ENUM_HTF_ALIGNMENT_MODE InpHTFAlignmentMode       = HTF_ALIGNMENT_STRICT_H4_H1;
+input ENUM_HTF_PERMISSION_MODE InpHTFPermissionMode     = HTF_PERMISSION_CURRENT_POST_FILTER;
 input bool            InpUseM5LowerTimeframeWave3      = true;
+input bool            InpFilterOrderableBeforeSessionSelection = false;
 input ENUM_BREAK_EVEN_MODE InpBreakEvenMode             = BREAK_EVEN_DISABLED;
 input double          InpBreakEvenOffsetPoints         = 0.0;
 input int             InpOpeningRangeMinutes           = 30;
@@ -275,6 +342,8 @@ long          g_orderSentCount = 0;
 long          g_orderFailedCount = 0;
 long          g_blockedCount = 0;
 long          g_closedTradeCount = 0;
+long          g_htfPermissionRejectedCount = 0;
+long          g_preselectionRejectedCount = 0;
 
 string BoolText(const bool value)
   {
@@ -355,6 +424,48 @@ string HTFAlignmentModeName()
    if(InpHTFAlignmentMode == HTF_ALIGNMENT_SOFT)
       return "htf_soft_alignment";
    return "strict_h4_h1_alignment";
+  }
+
+string HTFPermissionModeName()
+  {
+   if(InpHTFPermissionMode == HTF_PERMISSION_H1_DIRECTION_H4_NOT_OPPOSITE_PREFILTER)
+      return "h1_direction_h4_not_opposite_pre_filter";
+   if(InpHTFPermissionMode == HTF_PERMISSION_H4_BIAS_H1_REVERSAL_PREFILTER)
+      return "h4_bias_h1_reversal_pre_filter";
+   if(InpHTFPermissionMode == HTF_PERMISSION_SOFT_PREFILTER)
+      return "soft_pre_filter";
+   return "current_post_filter";
+  }
+
+bool UsesHtfPrefilter()
+  {
+   return InpHTFPermissionMode != HTF_PERMISSION_CURRENT_POST_FILTER;
+  }
+
+string AllowedDirectionText(const int allowedDirection)
+  {
+   if(allowedDirection > 1)
+      return "both";
+   if(allowedDirection > 0)
+      return "long_only";
+   if(allowedDirection < 0)
+      return "short_only";
+   return "none";
+  }
+
+string TimeBucketLabel(const int minutesFromStart)
+  {
+   if(minutesFromStart < 0)
+      return "outside";
+   if(minutesFromStart < 30)
+      return "0-30";
+   if(minutesFromStart < 60)
+      return "30-60";
+   if(minutesFromStart < 90)
+      return "60-90";
+   if(minutesFromStart < 120)
+      return "90-120";
+   return "120+";
   }
 
 string BreakEvenModeName()
@@ -949,23 +1060,90 @@ int DetermineWave3DirectionOnTf(const string symbol,
    return 0;
   }
 
+void PopulateHtfDirectionDiagnostics(const string symbol,
+                                     SignalPlan &plan,
+                                     int &h4Direction,
+                                     int &h1Direction,
+                                     double &h4Break,
+                                     double &h4Pullback,
+                                     double &h1Break,
+                                     double &h1Pullback)
+  {
+   string h4State = "";
+   string h1State = "";
+   h4Direction = DetermineWave3DirectionOnTf(symbol, PERIOD_H4, h4Break, h4Pullback, h4State);
+   h1Direction = DetermineWave3DirectionOnTf(symbol, PERIOD_H1, h1Break, h1Pullback, h1State);
+
+   plan.htfH4Wave3Direction = DirectionText(h4Direction);
+   plan.htfH1Wave3Direction = DirectionText(h1Direction);
+   plan.h4DirectionState = h4State;
+   plan.h1DirectionState = h1State;
+   plan.htfFractalAlignment = "H4_" + plan.htfH4Wave3Direction + "_" + h4State +
+                              "|H1_" + plan.htfH1Wave3Direction + "_" + h1State;
+   plan.htfWave3Direction = (h4Direction == h1Direction && h1Direction != 0) ? DirectionText(h1Direction) : "NONE";
+   plan.htfWave3Confirmed = false;
+   plan.wave3AlignmentPassed = false;
+  }
+
+int DetermineHtfAllowedDirection(const string symbol, SignalPlan &plan)
+  {
+   double h4Break = 0.0;
+   double h4Pullback = 0.0;
+   double h1Break = 0.0;
+   double h1Pullback = 0.0;
+   int h4Direction = 0;
+   int h1Direction = 0;
+   PopulateHtfDirectionDiagnostics(symbol, plan, h4Direction, h1Direction,
+                                   h4Break, h4Pullback, h1Break, h1Pullback);
+
+   plan.htfWave3BreakLevel = h1Break > 0.0 ? h1Break : h4Break;
+   plan.htfWave3PullbackLevel = h1Pullback > 0.0 ? h1Pullback : h4Pullback;
+   plan.htfPermissionMode = HTFPermissionModeName();
+
+   int allowed = 0;
+   if(InpHTFPermissionMode == HTF_PERMISSION_H1_DIRECTION_H4_NOT_OPPOSITE_PREFILTER)
+     {
+      if(h1Direction != 0 && h4Direction != -h1Direction)
+         allowed = h1Direction;
+     }
+   else if(InpHTFPermissionMode == HTF_PERMISSION_H4_BIAS_H1_REVERSAL_PREFILTER)
+     {
+      if(h4Direction != 0)
+         allowed = h4Direction;
+     }
+   else if(InpHTFPermissionMode == HTF_PERMISSION_SOFT_PREFILTER)
+     {
+      if(h4Direction != 0 && h4Direction == h1Direction)
+         allowed = h4Direction;
+      else
+         allowed = 2;
+     }
+   else
+      allowed = 2;
+
+   plan.allowedDirection = AllowedDirectionText(allowed);
+   if(allowed == 0)
+     {
+      plan.rejectedByHtfPermission = true;
+      plan.reason = "htf_permission_none";
+      plan.failureType = "htf_permission_none";
+   }
+   return allowed;
+  }
+
 bool ApplyHtfWave3Alignment(const string symbol, const int entryDirection, SignalPlan &plan)
   {
    double h4Break = 0.0;
    double h4Pullback = 0.0;
    double h1Break = 0.0;
    double h1Pullback = 0.0;
-   string h4State = "";
-   string h1State = "";
-   int h4Direction = DetermineWave3DirectionOnTf(symbol, PERIOD_H4, h4Break, h4Pullback, h4State);
-   int h1Direction = DetermineWave3DirectionOnTf(symbol, PERIOD_H1, h1Break, h1Pullback, h1State);
-
-   plan.htfH4Wave3Direction = DirectionText(h4Direction);
-   plan.htfH1Wave3Direction = DirectionText(h1Direction);
-   plan.htfFractalAlignment = "H4_" + plan.htfH4Wave3Direction + "_" + h4State +
-                              "|H1_" + plan.htfH1Wave3Direction + "_" + h1State;
+   int h4Direction = 0;
+   int h1Direction = 0;
+   PopulateHtfDirectionDiagnostics(symbol, plan, h4Direction, h1Direction,
+                                   h4Break, h4Pullback, h1Break, h1Pullback);
    plan.htfAlignmentMode = HTFAlignmentModeName();
-   plan.htfWave3Direction = (h4Direction == h1Direction && h1Direction != 0) ? DirectionText(h1Direction) : "NONE";
+   plan.htfPermissionMode = HTFPermissionModeName();
+   plan.allowedDirection = "post_filter";
    plan.htfWave3Confirmed = h4Direction == entryDirection && h1Direction == entryDirection;
    plan.wave3AlignmentPassed = plan.htfWave3Confirmed;
 
@@ -1390,6 +1568,180 @@ bool DetectShortPattern(const string symbol,
    return false;
   }
 
+void ResetPatternCandidate(PatternCandidate &candidate)
+  {
+   candidate.valid = false;
+   candidate.direction = 0;
+   candidate.pattern = "";
+   candidate.trigger = "";
+   candidate.neckline = 0.0;
+   candidate.stopAnchor = 0.0;
+   candidate.score = 0.0;
+   candidate.timeframeLabel = "";
+   candidate.atr = 0.0;
+  }
+
+void ConsiderPatternCandidate(PatternCandidate &best,
+                              const int direction,
+                              const string pattern,
+                              const string trigger,
+                              const double neckline,
+                              const double stopAnchor,
+                              const double score,
+                              const string timeframeLabel,
+                              const double atr)
+  {
+   if(pattern == "" || score <= 0.0)
+      return;
+   if(!best.valid || score > best.score)
+     {
+      best.valid = true;
+      best.direction = direction;
+      best.pattern = pattern;
+      best.trigger = trigger;
+      best.neckline = neckline;
+      best.stopAnchor = stopAnchor;
+      best.score = score;
+      best.timeframeLabel = timeframeLabel;
+      best.atr = atr;
+     }
+  }
+
+void UpdateTimeframeBestDiagnostics(SignalPlan &plan,
+                                    const string timeframeLabel,
+                                    const string pattern,
+                                    const double score)
+  {
+   if(pattern == "" || score <= 0.0)
+      return;
+   if(timeframeLabel == EnumToString(InpScanTF))
+     {
+      if(score > plan.m15BestScore)
+        {
+         plan.m15BestScore = score;
+         plan.m15BestPattern = pattern;
+        }
+      return;
+     }
+   if(timeframeLabel == EnumToString(InpDiagnosticTF))
+     {
+      if(score > plan.m5BestScore)
+        {
+         plan.m5BestScore = score;
+         plan.m5BestPattern = pattern;
+        }
+     }
+  }
+
+void EvaluatePatternCandidatesOnTf(const string symbol,
+                                   const MqlRates &rates[],
+                                   const double atr,
+                                   const string timeframeLabel,
+                                   const int allowedDirection,
+                                   SignalPlan &plan,
+                                   PatternCandidate &best)
+  {
+   string pattern = "";
+   string trigger = "";
+   double neckline = 0.0;
+   double stopAnchor = 0.0;
+   double score = 0.0;
+
+   if(allowedDirection == 2 || allowedDirection > 0)
+     {
+      if(DetectLongPattern(symbol, rates, atr, pattern, trigger, neckline, stopAnchor, score))
+        {
+         plan.candidateLongDetected = true;
+         UpdateTimeframeBestDiagnostics(plan, timeframeLabel, pattern, score);
+         ConsiderPatternCandidate(best, 1, pattern, trigger, neckline, stopAnchor, score, timeframeLabel, atr);
+        }
+     }
+
+   pattern = "";
+   trigger = "";
+   neckline = 0.0;
+   stopAnchor = 0.0;
+   score = 0.0;
+   if(allowedDirection == 2 || allowedDirection < 0)
+     {
+      if(DetectShortPattern(symbol, rates, atr, pattern, trigger, neckline, stopAnchor, score))
+        {
+         plan.candidateShortDetected = true;
+         UpdateTimeframeBestDiagnostics(plan, timeframeLabel, pattern, score);
+         ConsiderPatternCandidate(best, -1, pattern, trigger, neckline, stopAnchor, score, timeframeLabel, atr);
+        }
+     }
+  }
+
+void ApplySelectedCandidateToPlan(SignalPlan &plan, const PatternCandidate &candidate)
+  {
+   plan.entryPattern = candidate.pattern;
+   plan.entryTrigger = candidate.trigger;
+   plan.necklineLevel = candidate.neckline;
+   plan.score = candidate.score;
+   plan.atr = candidate.atr;
+   plan.ltfWave3Direction = DirectionText(candidate.direction);
+   plan.ltfWave3Timeframe = candidate.timeframeLabel;
+   plan.selectedCandidateDirection = DirectionText(candidate.direction);
+   plan.selectedCandidateTimeframe = candidate.timeframeLabel;
+  }
+
+double RetestReferenceScore(const string referenceType)
+  {
+   if(referenceType == "none" || referenceType == "")
+      return 0.0;
+   double score = 0.15;
+   if(StringFind(referenceType, "neckline_level") >= 0)
+      score = MathMax(score, 0.20);
+   if(StringFind(referenceType, "opening_range_high") >= 0 ||
+      StringFind(referenceType, "opening_range_low") >= 0)
+      score = MathMax(score, 0.15);
+   if(StringFind(referenceType, "session_high") >= 0 ||
+      StringFind(referenceType, "session_low") >= 0)
+      score = MathMax(score, 0.10);
+   return score;
+  }
+
+double TargetRoomScore(const SignalPlan &plan)
+  {
+   if(plan.cleanPathToTarget || plan.nearestObstacleType == "none")
+      return 0.35;
+   if(plan.nearestObstacleDistanceR >= 1.50)
+      return 0.35;
+   if(plan.nearestObstacleDistanceR >= 1.00)
+      return 0.15;
+   if(plan.nearestObstacleDistanceR > 0.0 && plan.nearestObstacleDistanceR < 0.80)
+      return -0.30;
+   return 0.0;
+  }
+
+void ApplyScoreComponents(SignalPlan &plan)
+  {
+   plan.retestReferenceDistanceAtr = 0.0;
+   if(plan.retestReferencePrice > 0.0 && plan.atr > 0.0)
+      plan.retestReferenceDistanceAtr = MathAbs(plan.entry - plan.retestReferencePrice) / plan.atr;
+
+   if(UsesHtfPrefilter())
+     {
+      plan.timeScoreRemovedFlag = true;
+      plan.retestScore = RetestReferenceScore(plan.retestReferenceType);
+      plan.targetRoomScore = TargetRoomScore(plan);
+      plan.score += plan.retestScore + plan.targetRoomScore;
+     }
+   else
+     {
+      plan.timeScoreRemovedFlag = false;
+      plan.retestScore = 0.0;
+      plan.targetRoomScore = plan.cleanPathToTarget ? 0.35 : 0.0;
+      if(plan.cleanPathToTarget)
+         plan.score += 0.35;
+      if(plan.minutesFromSessionStart < 60)
+         plan.score += 0.20;
+     }
+
+   plan.finalScore = plan.score;
+  }
+
 void ResetPlan(SignalPlan &plan, const string symbol)
   {
    plan.valid = false;
@@ -1418,14 +1770,27 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.ltfWave3Direction = "NONE";
    plan.ltfWave3Timeframe = EnumToString(InpScanTF);
    plan.htfAlignmentMode = HTFAlignmentModeName();
+   plan.htfPermissionMode = HTFPermissionModeName();
+   plan.allowedDirection = UsesHtfPrefilter() ? "none" : "post_filter";
    plan.htfWave3Direction = "NONE";
    plan.htfWave3Confirmed = false;
    plan.htfH4Wave3Direction = "NONE";
    plan.htfH1Wave3Direction = "NONE";
+   plan.h4DirectionState = "none";
+   plan.h1DirectionState = "none";
    plan.htfFractalAlignment = "none";
    plan.htfWave3BreakLevel = 0.0;
    plan.htfWave3PullbackLevel = 0.0;
    plan.wave3AlignmentPassed = false;
+   plan.rejectedByHtfPermission = false;
+   plan.candidateLongDetected = false;
+   plan.candidateShortDetected = false;
+   plan.selectedCandidateDirection = "NONE";
+   plan.selectedCandidateTimeframe = "none";
+   plan.m15BestPattern = "none";
+   plan.m15BestScore = 0.0;
+   plan.m5BestPattern = "none";
+   plan.m5BestScore = 0.0;
    plan.htfNearestResistance = 0.0;
    plan.htfNearestSupport = 0.0;
    plan.nearestObstaclePrice = 0.0;
@@ -1435,6 +1800,15 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.retestReferenceType = "none";
    plan.retestReferencePrice = 0.0;
    plan.retestReferenceCount = 0;
+   plan.retestReferenceDistanceAtr = 0.0;
+   plan.targetRoomScore = 0.0;
+   plan.retestScore = 0.0;
+   plan.timeBucket = "outside";
+   plan.timeScoreRemovedFlag = false;
+   plan.candidateOrderableBeforeSessionSelection = false;
+   plan.rejectedBeforeSelectionReason = "none";
+   plan.sessionConsumedReason = "not_consumed";
+   plan.finalScore = 0.0;
    plan.initialRiskPriceDistance = 0.0;
    plan.targetRewardMultiple = EffectiveTargetRewardMultiple();
    plan.targetPrice = 0.0;
@@ -1470,6 +1844,7 @@ void ApplySessionInfo(SignalPlan &plan, const SessionInfo &info)
    plan.sessionLabel = info.label;
    plan.sessionStartUtc = info.sessionStartUtc;
    plan.minutesFromSessionStart = info.minutesFromStart;
+   plan.timeBucket = TimeBucketLabel(info.minutesFromStart);
    plan.tradeWindowLabel = info.tradeWindowLabel;
    plan.isWithinFirst60 = info.first60;
    plan.isWithinFirst120 = info.first120;
@@ -1874,67 +2249,124 @@ bool BuildSessionReversalSignal(const string symbol, const SessionInfo &session,
      }
    plan.atr = atr;
 
-   string longPattern = "";
-   string longTrigger = "";
-   string shortPattern = "";
-   string shortTrigger = "";
-   double longNeck = 0.0;
-   double shortNeck = 0.0;
-   double longStop = 0.0;
-   double shortStop = 0.0;
-   double longScore = 0.0;
-   double shortScore = 0.0;
-   string lowerTimeframeLabel = EnumToString(InpScanTF);
-   bool longValid = DetectLongPattern(symbol, scan, atr, longPattern, longTrigger, longNeck, longStop, longScore);
-   bool shortValid = DetectShortPattern(symbol, scan, atr, shortPattern, shortTrigger, shortNeck, shortStop, shortScore);
-
-   if(!longValid && !shortValid && InpUseM5LowerTimeframeWave3 && InpDiagnosticTF != InpScanTF)
-     {
-      MqlRates diagnostic[];
-      if(CopyClosedRates(symbol, InpDiagnosticTF, requiredScan, diagnostic))
-        {
-         double diagnosticAtr = ATR(diagnostic, 0, InpATRPeriod);
-         if(diagnosticAtr > 0.0)
-           {
-            longValid = DetectLongPattern(symbol, diagnostic, diagnosticAtr, longPattern, longTrigger, longNeck, longStop, longScore);
-            shortValid = DetectShortPattern(symbol, diagnostic, diagnosticAtr, shortPattern, shortTrigger, shortNeck, shortStop, shortScore);
-            if(longValid || shortValid)
-               lowerTimeframeLabel = EnumToString(InpDiagnosticTF);
-           }
-        }
-     }
-
-   if(!longValid && !shortValid)
-      return false;
-
    int direction = 0;
    double stopAnchor = 0.0;
-   if(longValid && (!shortValid || longScore >= shortScore))
+   if(UsesHtfPrefilter())
      {
-      direction = 1;
-      plan.entryPattern = longPattern;
-      plan.entryTrigger = longTrigger;
-      plan.necklineLevel = longNeck;
-      stopAnchor = longStop;
-      plan.score = longScore;
-   }
+      int allowedDirection = DetermineHtfAllowedDirection(symbol, plan);
+      if(allowedDirection == 0)
+        {
+         ++g_htfPermissionRejectedCount;
+         return false;
+        }
+
+      PatternCandidate bestCandidate;
+      ResetPatternCandidate(bestCandidate);
+      EvaluatePatternCandidatesOnTf(symbol, scan, atr, EnumToString(InpScanTF),
+                                    allowedDirection, plan, bestCandidate);
+
+      if(InpUseM5LowerTimeframeWave3 && InpDiagnosticTF != InpScanTF)
+        {
+         MqlRates diagnostic[];
+         if(CopyClosedRates(symbol, InpDiagnosticTF, requiredScan, diagnostic))
+           {
+            double diagnosticAtr = ATR(diagnostic, 0, InpATRPeriod);
+            if(diagnosticAtr > 0.0)
+               EvaluatePatternCandidatesOnTf(symbol, diagnostic, diagnosticAtr, EnumToString(InpDiagnosticTF),
+                                             allowedDirection, plan, bestCandidate);
+           }
+        }
+
+      if(!bestCandidate.valid)
+         return false;
+
+      direction = bestCandidate.direction;
+      stopAnchor = bestCandidate.stopAnchor;
+      ApplySelectedCandidateToPlan(plan, bestCandidate);
+      plan.wave3AlignmentPassed = true;
+      plan.htfWave3Confirmed = (direction > 0 && plan.htfH4Wave3Direction == "LONG" && plan.htfH1Wave3Direction == "LONG") ||
+                               (direction < 0 && plan.htfH4Wave3Direction == "SHORT" && plan.htfH1Wave3Direction == "SHORT");
+      if(plan.htfWave3Direction == "NONE" && allowedDirection != 2)
+         plan.htfWave3Direction = DirectionText(allowedDirection);
+     }
    else
      {
-      direction = -1;
-      plan.entryPattern = shortPattern;
-      plan.entryTrigger = shortTrigger;
-      plan.necklineLevel = shortNeck;
-      stopAnchor = shortStop;
-      plan.score = shortScore;
-     }
+      string longPattern = "";
+      string longTrigger = "";
+      string shortPattern = "";
+      string shortTrigger = "";
+      double longNeck = 0.0;
+      double shortNeck = 0.0;
+      double longStop = 0.0;
+      double shortStop = 0.0;
+      double longScore = 0.0;
+      double shortScore = 0.0;
+      string lowerTimeframeLabel = EnumToString(InpScanTF);
+      bool longValid = DetectLongPattern(symbol, scan, atr, longPattern, longTrigger, longNeck, longStop, longScore);
+      bool shortValid = DetectShortPattern(symbol, scan, atr, shortPattern, shortTrigger, shortNeck, shortStop, shortScore);
+      plan.candidateLongDetected = longValid;
+      plan.candidateShortDetected = shortValid;
+      if(longValid)
+         UpdateTimeframeBestDiagnostics(plan, lowerTimeframeLabel, longPattern, longScore);
+      if(shortValid)
+         UpdateTimeframeBestDiagnostics(plan, lowerTimeframeLabel, shortPattern, shortScore);
 
-   plan.ltfWave3Direction = DirectionText(direction);
-   plan.ltfWave3Timeframe = lowerTimeframeLabel;
-   if(!ApplyHtfWave3Alignment(symbol, direction, plan))
-     {
-      plan.reason = "htf_wave3_alignment_failed";
-      plan.failureType = "htf_wave3_alignment_failed";
-      return false;
+      if(!longValid && !shortValid && InpUseM5LowerTimeframeWave3 && InpDiagnosticTF != InpScanTF)
+        {
+         MqlRates diagnostic[];
+         if(CopyClosedRates(symbol, InpDiagnosticTF, requiredScan, diagnostic))
+           {
+            double diagnosticAtr = ATR(diagnostic, 0, InpATRPeriod);
+            if(diagnosticAtr > 0.0)
+              {
+               longValid = DetectLongPattern(symbol, diagnostic, diagnosticAtr, longPattern, longTrigger, longNeck, longStop, longScore);
+               shortValid = DetectShortPattern(symbol, diagnostic, diagnosticAtr, shortPattern, shortTrigger, shortNeck, shortStop, shortScore);
+               plan.candidateLongDetected = longValid;
+               plan.candidateShortDetected = shortValid;
+               if(longValid)
+                  UpdateTimeframeBestDiagnostics(plan, EnumToString(InpDiagnosticTF), longPattern, longScore);
+               if(shortValid)
+                  UpdateTimeframeBestDiagnostics(plan, EnumToString(InpDiagnosticTF), shortPattern, shortScore);
+               if(longValid || shortValid)
+                  lowerTimeframeLabel = EnumToString(InpDiagnosticTF);
+              }
+           }
+        }
+
+      if(!longValid && !shortValid)
+         return false;
+
+      if(longValid && (!shortValid || longScore >= shortScore))
+        {
+         direction = 1;
+         plan.entryPattern = longPattern;
+         plan.entryTrigger = longTrigger;
+         plan.necklineLevel = longNeck;
+         stopAnchor = longStop;
+         plan.score = longScore;
+      }
+      else
+        {
+         direction = -1;
+         plan.entryPattern = shortPattern;
+         plan.entryTrigger = shortTrigger;
+         plan.necklineLevel = shortNeck;
+         stopAnchor = shortStop;
+         plan.score = shortScore;
+        }
+
+      plan.ltfWave3Direction = DirectionText(direction);
+      plan.ltfWave3Timeframe = lowerTimeframeLabel;
+      plan.selectedCandidateDirection = DirectionText(direction);
+      plan.selectedCandidateTimeframe = lowerTimeframeLabel;
+      if(!ApplyHtfWave3Alignment(symbol, direction, plan))
+        {
+         plan.rejectedByHtfPermission = true;
+         plan.reason = "htf_wave3_alignment_failed";
+         plan.failureType = "htf_wave3_alignment_failed";
+         ++g_htfPermissionRejectedCount;
+         return false;
+        }
      }
 
    double sessionHigh = 0.0;
@@ -1981,13 +2413,29 @@ bool BuildSessionReversalSignal(const string symbol, const SessionInfo &session,
    if(plan.obstacleBlocked && UsesCleanTargetPath())
       plan.failureType = plan.obstacleBlockReason;
 
-   if(plan.cleanPathToTarget)
-      plan.score += 0.35;
-   if(plan.minutesFromSessionStart < 60)
-      plan.score += 0.20;
+   ApplyScoreComponents(plan);
 
    plan.valid = true;
    return true;
+  }
+
+string SignalHeaderLine()
+  {
+   return "time,event,strategy,symbol,direction,server_time,server_hour,utc_hour,jst_hour," +
+          "session_label,session_start_utc,minutes_from_session_start,trade_window_label,is_within_first_60min,is_within_first_120min," +
+          "broker_utc_offset_used,selected_symbol_for_session,selected_reason,session_candidate_symbol_map," +
+          "entry_pattern,entry_trigger,neckline_level,ltf_wave3_timeframe,htf_alignment_mode,htf_permission_mode,allowed_direction," +
+          "h4_direction_state,h1_direction_state,rejected_by_htf_permission,candidate_long_detected,candidate_short_detected," +
+          "selected_candidate_direction,selected_candidate_timeframe,m15_best_pattern,m15_best_score,m5_best_pattern,m5_best_score," +
+          "htf_wave3_direction,htf_wave3_confirmed,htf_fractal_alignment,wave3_alignment_passed,htf_nearest_resistance,htf_nearest_support," +
+          "nearest_obstacle_price,nearest_obstacle_type,nearest_obstacle_distance_price,nearest_obstacle_distance_r," +
+          "retest_reference_type,retest_reference_price,retest_reference_distance_atr,clean_path_to_target," +
+          "hard_obstacle_present_before_target,soft_obstacle_present_before_target,obstacle_blocked,obstacle_block_reason," +
+          "obstacle_count_before_target,hard_obstacle_count_before_target,soft_obstacle_count_before_target," +
+          "target_reward_multiple,target_price,target_room_score,retest_score,entry_price,stop_loss_price,initial_risk_price_distance," +
+          "take_profit,reward_r,atr,spread_points,time_bucket,time_score_removed_flag,candidate_orderable_before_session_selection," +
+          "rejected_before_selection_reason,session_consumed_reason,score,final_score,result_r,failure_type,session_invalidated," +
+          "invalidation_reason,reason";
   }
 
 void WriteSignalRow(const SignalPlan &plan, const string eventName)
@@ -2003,87 +2451,91 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    bool header = (FileSize(handle) == 0);
    FileSeek(handle, 0, SEEK_END);
    if(header)
-      FileWrite(handle,
-                "time", "event", "strategy", "symbol", "direction",
-                "server_time", "server_hour", "utc_hour", "jst_hour",
-                "session_label", "session_start_utc", "minutes_from_session_start",
-                "trade_window_label", "is_within_first_60min", "is_within_first_120min",
-                "broker_utc_offset_used", "selected_symbol_for_session", "selected_reason",
-                "session_candidate_symbol_map",
-                "entry_pattern", "entry_trigger", "neckline_level",
-                "ltf_wave3_timeframe", "htf_wave3_direction", "htf_wave3_confirmed",
-                "htf_fractal_alignment", "wave3_alignment_passed",
-                "htf_nearest_resistance", "htf_nearest_support",
-                "nearest_obstacle_price", "nearest_obstacle_type", "nearest_obstacle_distance_price",
-                "nearest_obstacle_distance_r", "retest_reference_type", "retest_reference_price",
-                "clean_path_to_target",
-                "hard_obstacle_present_before_target", "soft_obstacle_present_before_target",
-                "obstacle_blocked", "obstacle_block_reason", "obstacle_count_before_target",
-                "hard_obstacle_count_before_target", "soft_obstacle_count_before_target",
-                "target_reward_multiple", "target_price", "entry_price", "stop_loss_price",
-                "initial_risk_price_distance", "take_profit", "reward_r", "atr", "spread_points",
-                "score", "result_r", "failure_type", "session_invalidated", "invalidation_reason",
-                "reason");
+      FileWriteString(handle, SignalHeaderLine() + "\r\n");
 
-   FileWrite(handle,
-             TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
-             eventName,
-             plan.strategy,
-             plan.symbol,
-             plan.direction,
-             TimeToString(plan.serverTime, TIME_DATE | TIME_SECONDS),
-             IntegerToString(plan.serverHour),
-             IntegerToString(plan.utcHour),
-             IntegerToString(plan.jstHour),
-             plan.sessionLabel,
-             TimeToString(plan.sessionStartUtc, TIME_DATE | TIME_MINUTES),
-             IntegerToString(plan.minutesFromSessionStart),
-             plan.tradeWindowLabel,
-             BoolText(plan.isWithinFirst60),
-             BoolText(plan.isWithinFirst120),
-             IntegerToString(InpBrokerUtcOffsetHours),
-             plan.selectedSymbolForSession,
-             plan.selectedReason,
-             plan.sessionCandidateSymbolMap,
-             plan.entryPattern,
-             plan.entryTrigger,
-             DoubleToString(plan.necklineLevel, 8),
-             plan.ltfWave3Timeframe,
-             plan.htfWave3Direction,
-             BoolText(plan.htfWave3Confirmed),
-             plan.htfFractalAlignment,
-             BoolText(plan.wave3AlignmentPassed),
-             DoubleToString(plan.htfNearestResistance, 8),
-             DoubleToString(plan.htfNearestSupport, 8),
-             DoubleToString(plan.nearestObstaclePrice, 8),
-             plan.nearestObstacleType,
-             DoubleToString(plan.nearestObstacleDistancePrice, 8),
-             DoubleToString(plan.nearestObstacleDistanceR, 4),
-             plan.retestReferenceType,
-             DoubleToString(plan.retestReferencePrice, 8),
-             BoolText(plan.cleanPathToTarget),
-             BoolText(plan.hardObstaclePresentBeforeTarget),
-             BoolText(plan.softObstaclePresentBeforeTarget),
-             BoolText(plan.obstacleBlocked),
-             plan.obstacleBlockReason,
-             IntegerToString(plan.obstacleCountBeforeTarget),
-             IntegerToString(plan.hardObstacleCountBeforeTarget),
-             IntegerToString(plan.softObstacleCountBeforeTarget),
-             DoubleToString(plan.targetRewardMultiple, 2),
-             DoubleToString(plan.targetPrice, 8),
-             DoubleToString(plan.entry, 8),
-             DoubleToString(plan.stopLoss, 8),
-             DoubleToString(plan.initialRiskPriceDistance, 8),
-             DoubleToString(plan.takeProfit, 8),
-             DoubleToString(plan.rewardR, 3),
-             DoubleToString(plan.atr, 8),
-             DoubleToString(plan.spreadPoints, 2),
-             DoubleToString(plan.score, 3),
-             "0.0000",
-             plan.failureType,
-             BoolText(plan.sessionInvalidated),
-             plan.invalidationReason,
-             plan.reason);
+   string line = "";
+   CsvAppend(line, TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS));
+   CsvAppend(line, eventName);
+   CsvAppend(line, plan.strategy);
+   CsvAppend(line, plan.symbol);
+   CsvAppend(line, plan.direction);
+   CsvAppend(line, TimeToString(plan.serverTime, TIME_DATE | TIME_SECONDS));
+   CsvAppend(line, IntegerToString(plan.serverHour));
+   CsvAppend(line, IntegerToString(plan.utcHour));
+   CsvAppend(line, IntegerToString(plan.jstHour));
+   CsvAppend(line, plan.sessionLabel);
+   CsvAppend(line, TimeToString(plan.sessionStartUtc, TIME_DATE | TIME_MINUTES));
+   CsvAppend(line, IntegerToString(plan.minutesFromSessionStart));
+   CsvAppend(line, plan.tradeWindowLabel);
+   CsvAppend(line, BoolText(plan.isWithinFirst60));
+   CsvAppend(line, BoolText(plan.isWithinFirst120));
+   CsvAppend(line, IntegerToString(InpBrokerUtcOffsetHours));
+   CsvAppend(line, plan.selectedSymbolForSession);
+   CsvAppend(line, plan.selectedReason);
+   CsvAppend(line, plan.sessionCandidateSymbolMap);
+   CsvAppend(line, plan.entryPattern);
+   CsvAppend(line, plan.entryTrigger);
+   CsvAppend(line, DoubleToString(plan.necklineLevel, 8));
+   CsvAppend(line, plan.ltfWave3Timeframe);
+   CsvAppend(line, plan.htfAlignmentMode);
+   CsvAppend(line, plan.htfPermissionMode);
+   CsvAppend(line, plan.allowedDirection);
+   CsvAppend(line, plan.h4DirectionState);
+   CsvAppend(line, plan.h1DirectionState);
+   CsvAppend(line, BoolText(plan.rejectedByHtfPermission));
+   CsvAppend(line, BoolText(plan.candidateLongDetected));
+   CsvAppend(line, BoolText(plan.candidateShortDetected));
+   CsvAppend(line, plan.selectedCandidateDirection);
+   CsvAppend(line, plan.selectedCandidateTimeframe);
+   CsvAppend(line, plan.m15BestPattern);
+   CsvAppend(line, DoubleToString(plan.m15BestScore, 3));
+   CsvAppend(line, plan.m5BestPattern);
+   CsvAppend(line, DoubleToString(plan.m5BestScore, 3));
+   CsvAppend(line, plan.htfWave3Direction);
+   CsvAppend(line, BoolText(plan.htfWave3Confirmed));
+   CsvAppend(line, plan.htfFractalAlignment);
+   CsvAppend(line, BoolText(plan.wave3AlignmentPassed));
+   CsvAppend(line, DoubleToString(plan.htfNearestResistance, 8));
+   CsvAppend(line, DoubleToString(plan.htfNearestSupport, 8));
+   CsvAppend(line, DoubleToString(plan.nearestObstaclePrice, 8));
+   CsvAppend(line, plan.nearestObstacleType);
+   CsvAppend(line, DoubleToString(plan.nearestObstacleDistancePrice, 8));
+   CsvAppend(line, DoubleToString(plan.nearestObstacleDistanceR, 4));
+   CsvAppend(line, plan.retestReferenceType);
+   CsvAppend(line, DoubleToString(plan.retestReferencePrice, 8));
+   CsvAppend(line, DoubleToString(plan.retestReferenceDistanceAtr, 4));
+   CsvAppend(line, BoolText(plan.cleanPathToTarget));
+   CsvAppend(line, BoolText(plan.hardObstaclePresentBeforeTarget));
+   CsvAppend(line, BoolText(plan.softObstaclePresentBeforeTarget));
+   CsvAppend(line, BoolText(plan.obstacleBlocked));
+   CsvAppend(line, plan.obstacleBlockReason);
+   CsvAppend(line, IntegerToString(plan.obstacleCountBeforeTarget));
+   CsvAppend(line, IntegerToString(plan.hardObstacleCountBeforeTarget));
+   CsvAppend(line, IntegerToString(plan.softObstacleCountBeforeTarget));
+   CsvAppend(line, DoubleToString(plan.targetRewardMultiple, 2));
+   CsvAppend(line, DoubleToString(plan.targetPrice, 8));
+   CsvAppend(line, DoubleToString(plan.targetRoomScore, 3));
+   CsvAppend(line, DoubleToString(plan.retestScore, 3));
+   CsvAppend(line, DoubleToString(plan.entry, 8));
+   CsvAppend(line, DoubleToString(plan.stopLoss, 8));
+   CsvAppend(line, DoubleToString(plan.initialRiskPriceDistance, 8));
+   CsvAppend(line, DoubleToString(plan.takeProfit, 8));
+   CsvAppend(line, DoubleToString(plan.rewardR, 3));
+   CsvAppend(line, DoubleToString(plan.atr, 8));
+   CsvAppend(line, DoubleToString(plan.spreadPoints, 2));
+   CsvAppend(line, plan.timeBucket);
+   CsvAppend(line, BoolText(plan.timeScoreRemovedFlag));
+   CsvAppend(line, BoolText(plan.candidateOrderableBeforeSessionSelection));
+   CsvAppend(line, plan.rejectedBeforeSelectionReason);
+   CsvAppend(line, plan.sessionConsumedReason);
+   CsvAppend(line, DoubleToString(plan.score, 3));
+   CsvAppend(line, DoubleToString(plan.finalScore, 3));
+   CsvAppend(line, "0.0000");
+   CsvAppend(line, plan.failureType);
+   CsvAppend(line, BoolText(plan.sessionInvalidated));
+   CsvAppend(line, plan.invalidationReason);
+   CsvAppend(line, plan.reason);
+   FileWriteString(handle, line + "\r\n");
    FileClose(handle);
   }
 
@@ -2152,11 +2604,15 @@ string TradeHeaderLine()
    return "entry_time,exit_time,strategy,symbol,direction,server_time,server_hour,utc_hour,jst_hour," +
           "session_label,session_start_utc,minutes_from_session_start,trade_window_label,is_within_first_60min,is_within_first_120min," +
           "broker_utc_offset_used,selected_symbol_for_session,selected_reason,session_candidate_symbol_map," +
-          "entry_pattern,entry_trigger,neckline_level,ltf_wave3_timeframe,htf_alignment_mode,htf_wave3_direction,htf_wave3_confirmed," +
-          "htf_fractal_alignment,wave3_alignment_passed,htf_nearest_resistance,htf_nearest_support," +
-          "nearest_obstacle_price,nearest_obstacle_type,nearest_obstacle_distance_r,retest_reference_type,retest_reference_price," +
+          "entry_pattern,entry_trigger,neckline_level,ltf_wave3_timeframe,htf_alignment_mode,htf_permission_mode,allowed_direction," +
+          "h4_direction_state,h1_direction_state,rejected_by_htf_permission,candidate_long_detected,candidate_short_detected," +
+          "selected_candidate_direction,selected_candidate_timeframe,m15_best_pattern,m15_best_score,m5_best_pattern,m5_best_score," +
+          "htf_wave3_direction,htf_wave3_confirmed,htf_fractal_alignment,wave3_alignment_passed,htf_nearest_resistance,htf_nearest_support," +
+          "nearest_obstacle_price,nearest_obstacle_type,nearest_obstacle_distance_r,retest_reference_type,retest_reference_price,retest_reference_distance_atr," +
           "clean_path_to_target,hard_obstacle_present_before_target,soft_obstacle_present_before_target,obstacle_blocked," +
-          "target_reward_multiple,target_price,entry,exit,stop_loss,take_profit,risk_price,result_r," +
+          "target_reward_multiple,target_price,target_room_score,retest_score,time_bucket,time_score_removed_flag," +
+          "candidate_orderable_before_session_selection,rejected_before_selection_reason,session_consumed_reason,final_score," +
+          "entry,exit,stop_loss,take_profit,risk_price,result_r," +
           "initial_stop_loss_price,current_stop_loss_price,break_even_enabled,break_even_triggered,break_even_trigger_type," +
           "break_even_trigger_r,break_even_trigger_time,bars_to_break_even,max_favorable_r_before_exit,max_adverse_r_before_exit," +
           "exit_type,full_sl_exit,break_even_exit,tp_exit,time_exit,result_r_before_be,result_r_after_be," +
@@ -2234,6 +2690,19 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, DoubleToString(tracked.necklineLevel, 8));
    CsvAppend(line, tracked.ltfWave3Timeframe);
    CsvAppend(line, tracked.htfAlignmentMode);
+   CsvAppend(line, tracked.htfPermissionMode);
+   CsvAppend(line, tracked.allowedDirection);
+   CsvAppend(line, tracked.h4DirectionState);
+   CsvAppend(line, tracked.h1DirectionState);
+   CsvAppend(line, BoolText(tracked.rejectedByHtfPermission));
+   CsvAppend(line, BoolText(tracked.candidateLongDetected));
+   CsvAppend(line, BoolText(tracked.candidateShortDetected));
+   CsvAppend(line, tracked.selectedCandidateDirection);
+   CsvAppend(line, tracked.selectedCandidateTimeframe);
+   CsvAppend(line, tracked.m15BestPattern);
+   CsvAppend(line, DoubleToString(tracked.m15BestScore, 3));
+   CsvAppend(line, tracked.m5BestPattern);
+   CsvAppend(line, DoubleToString(tracked.m5BestScore, 3));
    CsvAppend(line, tracked.htfWave3Direction);
    CsvAppend(line, BoolText(tracked.htfWave3Confirmed));
    CsvAppend(line, tracked.htfFractalAlignment);
@@ -2245,12 +2714,21 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, DoubleToString(tracked.nearestObstacleDistanceR, 4));
    CsvAppend(line, tracked.retestReferenceType);
    CsvAppend(line, DoubleToString(tracked.retestReferencePrice, 8));
+   CsvAppend(line, DoubleToString(tracked.retestReferenceDistanceAtr, 4));
    CsvAppend(line, BoolText(tracked.cleanPathToTarget));
    CsvAppend(line, BoolText(tracked.hardObstaclePresentBeforeTarget));
    CsvAppend(line, BoolText(tracked.softObstaclePresentBeforeTarget));
    CsvAppend(line, BoolText(tracked.obstacleBlocked));
    CsvAppend(line, DoubleToString(tracked.targetRewardMultiple, 2));
    CsvAppend(line, DoubleToString(tracked.targetPrice, 8));
+   CsvAppend(line, DoubleToString(tracked.targetRoomScore, 3));
+   CsvAppend(line, DoubleToString(tracked.retestScore, 3));
+   CsvAppend(line, tracked.timeBucket);
+   CsvAppend(line, BoolText(tracked.timeScoreRemovedFlag));
+   CsvAppend(line, BoolText(tracked.candidateOrderableBeforeSessionSelection));
+   CsvAppend(line, tracked.rejectedBeforeSelectionReason);
+   CsvAppend(line, tracked.sessionConsumedReason);
+   CsvAppend(line, DoubleToString(tracked.finalScore, 3));
    CsvAppend(line, DoubleToString(tracked.entryPrice, 8));
    CsvAppend(line, DoubleToString(exitPrice, 8));
    CsvAppend(line, DoubleToString(tracked.stopLoss, 8));
@@ -2309,7 +2787,9 @@ void WriteSummaryRow()
                 "final_equity", "peak_equity", "daily_stopped", "drawdown_stopped",
                 "trade_window_label", "target_reward_multiple", "broker_utc_offset_used",
                 "session_windows_mode", "require_h4_h1_wave3_alignment", "htf_alignment_mode",
-                "use_m5_lower_tf_wave3", "break_even_mode");
+                "htf_permission_mode", "filter_orderable_before_session_selection",
+                "use_m5_lower_tf_wave3", "break_even_mode", "htf_permission_rejections",
+                "preselection_rejections");
 
    FileWrite(handle,
              TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
@@ -2331,8 +2811,12 @@ void WriteSummaryRow()
              "non_exclusive_independent_start_windows",
              BoolText(InpRequireH4H1Wave3Alignment),
              HTFAlignmentModeName(),
+             HTFPermissionModeName(),
+             BoolText(InpFilterOrderableBeforeSessionSelection),
              BoolText(InpUseM5LowerTimeframeWave3),
-             BreakEvenModeName());
+             BreakEvenModeName(),
+             IntegerToString((int)g_htfPermissionRejectedCount),
+             IntegerToString((int)g_preselectionRejectedCount));
    FileClose(handle);
   }
 
@@ -2681,14 +3165,27 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].ltfWave3Direction = plan.ltfWave3Direction;
    g_trades[size].ltfWave3Timeframe = plan.ltfWave3Timeframe;
    g_trades[size].htfAlignmentMode = plan.htfAlignmentMode;
+   g_trades[size].htfPermissionMode = plan.htfPermissionMode;
+   g_trades[size].allowedDirection = plan.allowedDirection;
    g_trades[size].htfWave3Direction = plan.htfWave3Direction;
    g_trades[size].htfWave3Confirmed = plan.htfWave3Confirmed;
    g_trades[size].htfH4Wave3Direction = plan.htfH4Wave3Direction;
    g_trades[size].htfH1Wave3Direction = plan.htfH1Wave3Direction;
+   g_trades[size].h4DirectionState = plan.h4DirectionState;
+   g_trades[size].h1DirectionState = plan.h1DirectionState;
    g_trades[size].htfFractalAlignment = plan.htfFractalAlignment;
    g_trades[size].htfWave3BreakLevel = plan.htfWave3BreakLevel;
    g_trades[size].htfWave3PullbackLevel = plan.htfWave3PullbackLevel;
    g_trades[size].wave3AlignmentPassed = plan.wave3AlignmentPassed;
+   g_trades[size].rejectedByHtfPermission = plan.rejectedByHtfPermission;
+   g_trades[size].candidateLongDetected = plan.candidateLongDetected;
+   g_trades[size].candidateShortDetected = plan.candidateShortDetected;
+   g_trades[size].selectedCandidateDirection = plan.selectedCandidateDirection;
+   g_trades[size].selectedCandidateTimeframe = plan.selectedCandidateTimeframe;
+   g_trades[size].m15BestPattern = plan.m15BestPattern;
+   g_trades[size].m15BestScore = plan.m15BestScore;
+   g_trades[size].m5BestPattern = plan.m5BestPattern;
+   g_trades[size].m5BestScore = plan.m5BestScore;
    g_trades[size].htfNearestResistance = plan.htfNearestResistance;
    g_trades[size].htfNearestSupport = plan.htfNearestSupport;
    g_trades[size].nearestObstaclePrice = plan.nearestObstaclePrice;
@@ -2697,6 +3194,15 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].retestReferenceType = plan.retestReferenceType;
    g_trades[size].retestReferencePrice = plan.retestReferencePrice;
    g_trades[size].retestReferenceCount = plan.retestReferenceCount;
+   g_trades[size].retestReferenceDistanceAtr = plan.retestReferenceDistanceAtr;
+   g_trades[size].targetRoomScore = plan.targetRoomScore;
+   g_trades[size].retestScore = plan.retestScore;
+   g_trades[size].timeBucket = plan.timeBucket;
+   g_trades[size].timeScoreRemovedFlag = plan.timeScoreRemovedFlag;
+   g_trades[size].candidateOrderableBeforeSessionSelection = plan.candidateOrderableBeforeSessionSelection;
+   g_trades[size].rejectedBeforeSelectionReason = plan.rejectedBeforeSelectionReason;
+   g_trades[size].sessionConsumedReason = plan.sessionConsumedReason;
+   g_trades[size].finalScore = plan.finalScore;
    g_trades[size].cleanPathToTarget = plan.cleanPathToTarget;
    g_trades[size].hardObstaclePresentBeforeTarget = plan.hardObstaclePresentBeforeTarget;
    g_trades[size].softObstaclePresentBeforeTarget = plan.softObstaclePresentBeforeTarget;
@@ -2794,6 +3300,7 @@ void TryOpenSignal(SignalPlan &plan)
      {
       ++g_blockedCount;
       plan.reason = blockReason;
+      plan.sessionConsumedReason = "blocked_" + blockReason;
       if(plan.failureType == "other")
          plan.failureType = blockReason;
       WriteSignalRow(plan, "blocked");
@@ -2814,6 +3321,7 @@ void TryOpenSignal(SignalPlan &plan)
    if(ok)
      {
       ++g_orderSentCount;
+      plan.sessionConsumedReason = "order_sent";
       TrackNewPosition(plan, volume);
       WriteSignalRow(plan, "order_sent");
       MarkSessionConsumed(plan);
@@ -2822,6 +3330,7 @@ void TryOpenSignal(SignalPlan &plan)
      {
       ++g_orderFailedCount;
       plan.reason = "order_failed_" + IntegerToString((int)trade.ResultRetcode());
+      plan.sessionConsumedReason = "order_failed";
       WriteSignalRow(plan, "order_failed");
       MarkSessionConsumed(plan);
      }
@@ -2902,8 +3411,26 @@ void ScanSymbols()
       double bestScore = -1.0;
       for(int i = 0; i < ArraySize(candidates); ++i)
         {
+         if(!candidates[i].valid)
+            continue;
          if(HasKey(g_consumedSessionKeys, candidates[i].sessionKey))
             continue;
+         if(InpFilterOrderableBeforeSessionSelection)
+           {
+            string preselectBlockReason = "";
+            if(!CanOpenSignal(candidates[i], preselectBlockReason))
+              {
+               ++g_preselectionRejectedCount;
+               candidates[i].candidateOrderableBeforeSessionSelection = false;
+               candidates[i].rejectedBeforeSelectionReason = preselectBlockReason;
+               candidates[i].sessionConsumedReason = "not_consumed_preselection_rejected";
+               WriteSignalRow(candidates[i], "preselection_rejected");
+               candidates[i].valid = false;
+               continue;
+              }
+            candidates[i].candidateOrderableBeforeSessionSelection = true;
+            candidates[i].rejectedBeforeSelectionReason = "none";
+           }
          if(candidates[i].score > bestScore)
            {
             best = i;
