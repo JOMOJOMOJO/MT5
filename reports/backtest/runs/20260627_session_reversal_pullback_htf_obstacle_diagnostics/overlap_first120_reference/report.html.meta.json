@@ -1,9 +1,9 @@
 ﻿{
-    "generated_at":  "2026-06-27T15:43:56.9182237+09:00",
+    "generated_at":  "2026-06-27T17:06:00.8471865+09:00",
     "config":  {
                    "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_FXSessionReversalPullbackTrader_overlap_first120_reference_2025.ini",
-                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp9A16.ini",
-                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp9A16.ini"
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp6E27.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp6E27.ini"
                },
     "tester":  {
                    "symbol":  "USDJPY",
@@ -29,6 +29,10 @@
                                       "InpPatternLookbackBars":  "36",
                                       "InpSwingDepth":  "3",
                                       "InpHTFLookbackBars":  "80",
+                                      "InpHTFWaveLookbackBars":  "120",
+                                      "InpHTFWaveBreakBufferATR":  "0.05",
+                                      "InpRequireH4H1Wave3Alignment":  "true",
+                                      "InpUseM5LowerTimeframeWave3":  "true",
                                       "InpOpeningRangeMinutes":  "30",
                                       "InpPreSessionMinutes":  "60",
                                       "InpTargetRewardMultiple":  "1.50",

@@ -120,6 +120,8 @@ def year_key(value):
 
 
 def htf_state(row):
+    if row.get("htf_fractal_alignment"):
+        return row.get("htf_fractal_alignment")
     obstacle = row.get("nearest_obstacle_type", "")
     if obstacle in {"h4_confirmed_swing_high", "h4_confirmed_swing_low", "h1_confirmed_swing_high", "h1_confirmed_swing_low"}:
         return obstacle
@@ -260,10 +262,15 @@ def main():
         "session_breakdown.csv": "session_label",
         "trade_window_breakdown.csv": "trade_window_label",
         "symbol_session_breakdown.csv": "symbol_session",
+        "session_candidate_map_breakdown.csv": "session_candidate_symbol_map",
         "entry_pattern_breakdown.csv": "entry_pattern",
         "entry_trigger_breakdown.csv": "entry_trigger",
+        "ltf_wave3_timeframe_breakdown.csv": "ltf_wave3_timeframe",
+        "htf_wave3_direction_breakdown.csv": "htf_wave3_direction",
+        "wave3_alignment_breakdown.csv": "wave3_alignment_passed",
         "target_multiple_breakdown.csv": "target_reward_multiple",
         "obstacle_breakdown.csv": "nearest_obstacle_type",
+        "retest_reference_breakdown.csv": "retest_reference_type",
         "clean_path_to_target_breakdown.csv": "clean_path_to_target",
         "htf_level_breakdown.csv": "htf_level_state",
         "failure_type_breakdown.csv": "failure_type",
@@ -297,20 +304,32 @@ def main():
     first120 = next((r for r in comparison if r["scenario"] == "session_reversal_pullback_one_symbol_first120"), None)
     clean120 = next((r for r in comparison if r["scenario"] == "session_reversal_pullback_clean_target_path_first120"), None)
     one120 = first120
+    london = next((r for r in comparison if r["scenario"] == "london_first120_reference"), None)
+    tokyo = next((r for r in comparison if r["scenario"] == "tokyo_first120_reference"), None)
     passed = [r for r in comparison if r["passed_2025_shallow_gate"]]
 
     session_rows = [r for r in group_stats(all_trades, "all", "session_label") if r["trades"] > 0]
     best_session = max(session_rows, key=lambda r: r["avg_r"]) if session_rows else None
     pattern_rows = [r for r in group_stats(all_trades, "all", "entry_pattern") if r["trades"] > 0]
     best_pattern = max(pattern_rows, key=lambda r: r["avg_r"]) if pattern_rows else None
+    alignment_rows = [r for r in group_stats(all_trades, "all", "htf_fractal_alignment") if r["trades"] > 0]
+    best_alignment = max(alignment_rows, key=lambda r: r["avg_r"]) if alignment_rows else None
+    retest_rows = [r for r in group_stats(all_trades, "all", "retest_reference_type") if r["trades"] > 0]
+    best_retest = max(retest_rows, key=lambda r: r["avg_r"]) if retest_rows else None
 
     lines = [
         "# Session Reversal Pullback HTF Obstacle Diagnostics",
         "",
         "## Implementation",
+        "- Session labels are not exclusive: Tokyo, London, Overlap, and New York are evaluated as independent UTC session start windows.",
+        "- London first60/first120 is evaluated from UTC 07:00 through 08:59 even while Tokyo remains an active session context.",
+        "- Tokyo session candidates are restricted to JPY crosses: USDJPY, EURJPY, GBPJPY, AUDJPY; each session candidate map is exported.",
         "- The EA evaluates only the first 60 or 120 minutes after each UTC session start, not the whole session.",
         "- Broker server time is converted to UTC with `InpBrokerUtcOffsetHours`; server/UTC/JST hour and minutes_from_session_start are exported.",
         "- H4/H1 swings use only confirmed fractal-style pivots with `InpSwingDepth`; ZigZag repaint values are not used.",
+        "- H4 and H1 confirmed wave3 direction are used as a hard alignment gate by default; only same-direction M15/M5 lower-timeframe wave3 retest entries are allowed.",
+        "- Lower-timeframe wave3 entries remain first-pullback/retest entries after H&S/inverse H&S, W top/bottom, sweep reclaim, CHoCH, or BOS confirmation.",
+        "- Already-broken neckline, opening range, and session high/low lines are exported as retest reference lines, not target-path obstacles.",
         "- Target path is explicitly defined by `entry_price`, `stop_loss_price`, `initial_risk_price_distance`, `target_reward_multiple`, and `target_price`.",
         "- Hard obstacles are no-trade gates only in clean target path scenarios; soft obstacles remain diagnostic.",
         "",
@@ -321,6 +340,10 @@ def main():
     if first60 and first120:
         better = "first60" if first60["avg_r"] > first120["avg_r"] else "first120"
         lines.append(f"- first60 vs first120: better_by_avg_R={better}; first60 avg_R={first60['avg_r']:.4f}, trades={first60['trades']}; first120 avg_R={first120['avg_r']:.4f}, trades={first120['trades']}.")
+    if london:
+        lines.append(f"- London first120 UTC 07:00-08:59 check: trades={london['trades']} PF={london['profit_factor']:.2f} avg_R={london['avg_r']:.4f}.")
+    if tokyo:
+        lines.append(f"- Tokyo first120 JPY-only check: trades={tokyo['trades']} PF={tokyo['profit_factor']:.2f} avg_R={tokyo['avg_r']:.4f}.")
     if best_session:
         lines.append(f"- Best session by avg_R across all trades: `{best_session['session_label']}` avg_R={best_session['avg_r']:.4f}, trades={best_session['trades']}.")
     if clean120 and one120:
@@ -329,6 +352,10 @@ def main():
         lines.append(f"- clean_path_to_target split in one_symbol_first120: clean_avg_R={one120['clean_avg_r']:.4f}, dirty_avg_R={one120['dirty_avg_r']:.4f}.")
     if best_pattern:
         lines.append(f"- Best entry pattern by avg_R across all trades: `{best_pattern['entry_pattern']}` avg_R={best_pattern['avg_r']:.4f}, trades={best_pattern['trades']}.")
+    if best_alignment:
+        lines.append(f"- Best HTF fractal alignment by avg_R: `{best_alignment['htf_fractal_alignment']}` avg_R={best_alignment['avg_r']:.4f}, trades={best_alignment['trades']}.")
+    if best_retest:
+        lines.append(f"- Best retest reference bucket by avg_R: `{best_retest['retest_reference_type']}` avg_R={best_retest['avg_r']:.4f}, trades={best_retest['trades']}.")
     lines.extend([
         f"- 2025 shallow gate pass candidates: {', '.join(r['scenario'] for r in passed) if passed else 'none'}.",
         "",
@@ -336,13 +363,14 @@ def main():
         "1. Session was restricted to first 60/120 minutes, not the whole session.",
         "2. first60/first120 comparison is in `comparison.csv` and `trade_window_breakdown.csv`.",
         "3. Tokyo/London/New York/Overlap comparison is in `session_breakdown.csv`.",
-        "4. HTF resistance/support and target path obstacles were recorded in trades/signals CSV.",
+        "4. HTF wave3 alignment, HTF resistance/support, and target path obstacles were recorded in trades/signals CSV.",
         "5. Clean path did not automatically become a pass; gate result is based on PF, avg_R, net, trade count, and concentration.",
         "6. clean_path_to_target=true/false comparison is in `clean_path_to_target_breakdown.csv`.",
         "7. Pattern comparison is in `entry_pattern_breakdown.csv` and `entry_trigger_breakdown.csv`.",
         "8. one session / one symbol / one trade was tested against all-symbol mode.",
         "9. 200+ trade requirement is checked in `comparison.csv`.",
         "10. 2025 shallow gate result is recorded above; no scenario moves to 3-year BT/OOS unless it passes.",
+        "11. Session candidate maps are in `session_candidate_map_breakdown.csv`; retest reference behavior is in `retest_reference_breakdown.csv`.",
     ])
     (OUT / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 

@@ -64,15 +64,30 @@ struct SignalPlan
    double            brokerUtcOffsetUsed;
    string            selectedSymbolForSession;
    string            selectedReason;
+   string            sessionCandidateSymbolMap;
+   string            sessionCandidateSymbols;
    string            entryPattern;
    string            entryTrigger;
    double            necklineLevel;
+   string            ltfWave3Direction;
+   string            ltfWave3Timeframe;
+   string            htfWave3Direction;
+   bool              htfWave3Confirmed;
+   string            htfH4Wave3Direction;
+   string            htfH1Wave3Direction;
+   string            htfFractalAlignment;
+   double            htfWave3BreakLevel;
+   double            htfWave3PullbackLevel;
+   bool              wave3AlignmentPassed;
    double            htfNearestResistance;
    double            htfNearestSupport;
    double            nearestObstaclePrice;
    string            nearestObstacleType;
    double            nearestObstacleDistancePrice;
    double            nearestObstacleDistanceR;
+   string            retestReferenceType;
+   double            retestReferencePrice;
+   int               retestReferenceCount;
    double            initialRiskPriceDistance;
    double            targetRewardMultiple;
    double            targetPrice;
@@ -120,14 +135,29 @@ struct TrackedTrade
    double            brokerUtcOffsetUsed;
    string            selectedSymbolForSession;
    string            selectedReason;
+   string            sessionCandidateSymbolMap;
+   string            sessionCandidateSymbols;
    string            entryPattern;
    string            entryTrigger;
    double            necklineLevel;
+   string            ltfWave3Direction;
+   string            ltfWave3Timeframe;
+   string            htfWave3Direction;
+   bool              htfWave3Confirmed;
+   string            htfH4Wave3Direction;
+   string            htfH1Wave3Direction;
+   string            htfFractalAlignment;
+   double            htfWave3BreakLevel;
+   double            htfWave3PullbackLevel;
+   bool              wave3AlignmentPassed;
    double            htfNearestResistance;
    double            htfNearestSupport;
    double            nearestObstaclePrice;
    string            nearestObstacleType;
    double            nearestObstacleDistanceR;
+   string            retestReferenceType;
+   double            retestReferencePrice;
+   int               retestReferenceCount;
    bool              cleanPathToTarget;
    bool              hardObstaclePresentBeforeTarget;
    bool              softObstaclePresentBeforeTarget;
@@ -161,6 +191,10 @@ input int             InpStructureLookbackBars         = 16;
 input int             InpPatternLookbackBars           = 36;
 input int             InpSwingDepth                    = 3;
 input int             InpHTFLookbackBars               = 80;
+input int             InpHTFWaveLookbackBars           = 120;
+input double          InpHTFWaveBreakBufferATR         = 0.05;
+input bool            InpRequireH4H1Wave3Alignment     = true;
+input bool            InpUseM5LowerTimeframeWave3      = true;
 input int             InpOpeningRangeMinutes           = 30;
 input int             InpPreSessionMinutes             = 60;
 input double          InpTargetRewardMultiple          = 1.50;
@@ -292,6 +326,49 @@ bool ScenarioAllowsSession(const string label)
    return true;
   }
 
+bool IsTokyoJpySymbol(const string symbol)
+  {
+   return StringFind(symbol, "USDJPY") == 0 ||
+          StringFind(symbol, "EURJPY") == 0 ||
+          StringFind(symbol, "GBPJPY") == 0 ||
+          StringFind(symbol, "AUDJPY") == 0;
+  }
+
+bool SymbolAllowedForSession(const string symbol, const string label)
+  {
+   if(label == "tokyo")
+      return IsTokyoJpySymbol(symbol);
+   return true;
+  }
+
+string CandidateSymbolsForSession(const string label)
+  {
+   string value = "";
+   for(int i = 0; i < ArraySize(g_symbols); ++i)
+     {
+      if(!SymbolAllowedForSession(g_symbols[i], label))
+         continue;
+      if(value != "")
+         value += "|";
+      value += g_symbols[i];
+     }
+   return value == "" ? "none" : value;
+  }
+
+string CandidateSymbolMapForSession(const string label)
+  {
+   return label + "=" + CandidateSymbolsForSession(label);
+  }
+
+string DirectionText(const int direction)
+  {
+   if(direction > 0)
+      return "LONG";
+   if(direction < 0)
+      return "SHORT";
+   return "NONE";
+  }
+
 int DateKey(const datetime value)
   {
    MqlDateTime tm;
@@ -406,51 +483,25 @@ void ResetSessionInfo(SessionInfo &info)
    info.sessionKey = "";
   }
 
-bool BuildSessionInfo(const datetime serverTime, SessionInfo &info)
+void AddSessionInfo(const datetime utcTime,
+                    const int serverHour,
+                    const int utcHour,
+                    const string label,
+                    const int index,
+                    const int startUtcHour,
+                    SessionInfo &sessions[])
   {
+   int size = ArraySize(sessions);
+   ArrayResize(sessions, size + 1);
+   SessionInfo info;
    ResetSessionInfo(info);
-   MqlDateTime serverTm;
-   TimeToStruct(serverTime, serverTm);
-   datetime utcTime = ServerToUtc(serverTime);
-   MqlDateTime utcTm;
-   TimeToStruct(utcTime, utcTm);
-
-   info.serverHour = serverTm.hour;
-   info.utcHour = utcTm.hour;
-   info.jstHour = (utcTm.hour + 9) % 24;
-
-   if(utcTm.hour >= 0 && utcTm.hour <= 8)
-     {
-      info.active = true;
-      info.label = "tokyo";
-      info.index = 0;
-      info.startUtcHour = 0;
-     }
-   else if(utcTm.hour >= 7 && utcTm.hour <= 12)
-     {
-      info.active = true;
-      info.label = "london";
-      info.index = 1;
-      info.startUtcHour = 7;
-     }
-   else if(utcTm.hour >= 13 && utcTm.hour <= 15)
-     {
-      info.active = true;
-      info.label = "london_newyork_overlap";
-      info.index = 2;
-      info.startUtcHour = 13;
-     }
-   else if(utcTm.hour >= 16 && utcTm.hour <= 21)
-     {
-      info.active = true;
-      info.label = "new_york";
-      info.index = 3;
-      info.startUtcHour = 16;
-     }
-
-   if(!info.active)
-      return false;
-
+   info.active = true;
+   info.label = label;
+   info.index = index;
+   info.startUtcHour = startUtcHour;
+   info.serverHour = serverHour;
+   info.utcHour = utcHour;
+   info.jstHour = (utcHour + 9) % 24;
    info.sessionStartUtc = BuildUtcSessionStart(utcTime, info.startUtcHour);
    info.sessionStartServer = UtcToServer(info.sessionStartUtc);
    info.minutesFromStart = (int)((utcTime - info.sessionStartUtc) / 60);
@@ -458,6 +509,39 @@ bool BuildSessionInfo(const datetime serverTime, SessionInfo &info)
    info.first120 = info.minutesFromStart >= 0 && info.minutesFromStart < 120;
    info.tradeWindowLabel = TradeWindowLabel();
    info.sessionKey = info.label + "_" + TimeToString(info.sessionStartUtc, TIME_DATE | TIME_MINUTES);
+   sessions[size] = info;
+  }
+
+int BuildSessionInfos(const datetime serverTime, SessionInfo &sessions[])
+  {
+   ArrayResize(sessions, 0);
+   MqlDateTime serverTm;
+   TimeToStruct(serverTime, serverTm);
+   datetime utcTime = ServerToUtc(serverTime);
+   MqlDateTime utcTm;
+   TimeToStruct(utcTime, utcTm);
+
+   if(utcTm.hour >= 0 && utcTm.hour <= 8)
+      AddSessionInfo(utcTime, serverTm.hour, utcTm.hour, "tokyo", 0, 0, sessions);
+   if(utcTm.hour >= 7 && utcTm.hour <= 12)
+      AddSessionInfo(utcTime, serverTm.hour, utcTm.hour, "london", 1, 7, sessions);
+   if(utcTm.hour >= 13 && utcTm.hour <= 15)
+      AddSessionInfo(utcTime, serverTm.hour, utcTm.hour, "london_newyork_overlap", 2, 13, sessions);
+   if(utcTm.hour >= 16 && utcTm.hour <= 21)
+      AddSessionInfo(utcTime, serverTm.hour, utcTm.hour, "new_york", 3, 16, sessions);
+
+   return ArraySize(sessions);
+  }
+
+bool BuildSessionInfo(const datetime serverTime, SessionInfo &info)
+  {
+   SessionInfo sessions[];
+   if(BuildSessionInfos(serverTime, sessions) <= 0)
+     {
+      ResetSessionInfo(info);
+      return false;
+     }
+   info = sessions[0];
    return true;
   }
 
@@ -665,6 +749,191 @@ bool FindConfirmedSwingLevel(const string symbol,
         }
      }
    return false;
+  }
+
+bool FindConfirmedSwingPair(const string symbol,
+                            const ENUM_TIMEFRAMES tf,
+                            const bool wantHigh,
+                            const int depth,
+                            const int lookback,
+                            double &latestPrice,
+                            double &previousPrice,
+                            datetime &latestTime,
+                            datetime &previousTime)
+  {
+   latestPrice = 0.0;
+   previousPrice = 0.0;
+   latestTime = 0;
+   previousTime = 0;
+
+   MqlRates rates[];
+   ArraySetAsSeries(rates, true);
+   int bars = MathMax(lookback + depth + 8, depth * 2 + 12);
+   int copied = CopyRates(symbol, tf, 1, bars, rates);
+   if(copied < depth * 2 + 10)
+      return false;
+
+   int found = 0;
+   int maxShift = MathMin(copied - depth - 1, lookback);
+   for(int shift = depth + 1; shift <= maxShift; ++shift)
+     {
+      bool pivot = true;
+      double candidate = wantHigh ? rates[shift].high : rates[shift].low;
+      for(int j = 1; j <= depth; ++j)
+        {
+         if(wantHigh)
+           {
+            if(candidate <= rates[shift - j].high || candidate <= rates[shift + j].high)
+              {
+               pivot = false;
+               break;
+              }
+           }
+         else
+           {
+            if(candidate >= rates[shift - j].low || candidate >= rates[shift + j].low)
+              {
+               pivot = false;
+               break;
+              }
+           }
+        }
+
+      if(!pivot)
+         continue;
+
+      if(found == 0)
+        {
+         latestPrice = candidate;
+         latestTime = rates[shift].time;
+         ++found;
+        }
+      else
+        {
+         previousPrice = candidate;
+         previousTime = rates[shift].time;
+         return true;
+        }
+     }
+   return false;
+  }
+
+int DetermineWave3DirectionOnTf(const string symbol,
+                                const ENUM_TIMEFRAMES tf,
+                                double &breakLevel,
+                                double &pullbackLevel,
+                                string &state)
+  {
+   breakLevel = 0.0;
+   pullbackLevel = 0.0;
+   state = "none";
+
+   MqlRates rates[];
+   int requiredBars = MathMax(InpHTFWaveLookbackBars + InpSwingDepth * 2 + 12,
+                              InpATRPeriod + InpSwingDepth * 2 + 12);
+   if(!CopyClosedRates(symbol, tf, requiredBars, rates))
+     {
+      state = "data_unavailable";
+      return 0;
+     }
+
+   double atr = ATR(rates, 0, InpATRPeriod);
+   if(atr <= 0.0)
+     {
+      state = "invalid_atr";
+      return 0;
+     }
+
+   double latestHigh = 0.0;
+   double previousHigh = 0.0;
+   double latestLow = 0.0;
+   double previousLow = 0.0;
+   datetime latestHighTime = 0;
+   datetime previousHighTime = 0;
+   datetime latestLowTime = 0;
+   datetime previousLowTime = 0;
+
+   bool highs = FindConfirmedSwingPair(symbol, tf, true, InpSwingDepth, InpHTFWaveLookbackBars,
+                                       latestHigh, previousHigh, latestHighTime, previousHighTime);
+   bool lows = FindConfirmedSwingPair(symbol, tf, false, InpSwingDepth, InpHTFWaveLookbackBars,
+                                      latestLow, previousLow, latestLowTime, previousLowTime);
+   if(!highs || !lows)
+     {
+      state = "insufficient_confirmed_pivots";
+      return 0;
+     }
+
+   double closePrice = rates[0].close;
+   double buffer = atr * InpHTFWaveBreakBufferATR;
+   bool longBreak = closePrice > latestHigh + buffer;
+   bool shortBreak = closePrice < latestLow - buffer;
+   bool longStructure = latestLow > previousLow - atr * 0.10;
+   bool shortStructure = latestHigh < previousHigh + atr * 0.10;
+
+   if(longBreak && longStructure && !(shortBreak && shortStructure))
+     {
+      breakLevel = latestHigh;
+      pullbackLevel = latestLow;
+      state = "confirmed_break_above_swing_high";
+      return 1;
+     }
+   if(shortBreak && shortStructure && !(longBreak && longStructure))
+     {
+      breakLevel = latestLow;
+      pullbackLevel = latestHigh;
+      state = "confirmed_break_below_swing_low";
+      return -1;
+     }
+
+   if(longBreak && !longStructure)
+      state = "break_above_without_higher_pullback";
+   else if(shortBreak && !shortStructure)
+      state = "break_below_without_lower_pullback";
+   else
+      state = "no_confirmed_wave3_break";
+   return 0;
+  }
+
+bool ApplyHtfWave3Alignment(const string symbol, const int entryDirection, SignalPlan &plan)
+  {
+   double h4Break = 0.0;
+   double h4Pullback = 0.0;
+   double h1Break = 0.0;
+   double h1Pullback = 0.0;
+   string h4State = "";
+   string h1State = "";
+   int h4Direction = DetermineWave3DirectionOnTf(symbol, PERIOD_H4, h4Break, h4Pullback, h4State);
+   int h1Direction = DetermineWave3DirectionOnTf(symbol, PERIOD_H1, h1Break, h1Pullback, h1State);
+
+   plan.htfH4Wave3Direction = DirectionText(h4Direction);
+   plan.htfH1Wave3Direction = DirectionText(h1Direction);
+   plan.htfFractalAlignment = "H4_" + plan.htfH4Wave3Direction + "_" + h4State +
+                              "|H1_" + plan.htfH1Wave3Direction + "_" + h1State;
+   plan.htfWave3Direction = (h4Direction == h1Direction && h1Direction != 0) ? DirectionText(h1Direction) : "NONE";
+   plan.htfWave3Confirmed = h4Direction == entryDirection && h1Direction == entryDirection;
+   plan.wave3AlignmentPassed = plan.htfWave3Confirmed;
+
+   if(entryDirection > 0)
+     {
+      plan.htfWave3BreakLevel = h1Break > 0.0 ? h1Break : h4Break;
+      plan.htfWave3PullbackLevel = h1Pullback > 0.0 ? h1Pullback : h4Pullback;
+     }
+   else
+     {
+      plan.htfWave3BreakLevel = h1Break > 0.0 ? h1Break : h4Break;
+      plan.htfWave3PullbackLevel = h1Pullback > 0.0 ? h1Pullback : h4Pullback;
+     }
+
+   if(!InpRequireH4H1Wave3Alignment)
+     {
+      plan.wave3AlignmentPassed = (h1Direction == entryDirection && h4Direction != -entryDirection) ||
+                                  (h4Direction == entryDirection && h1Direction != -entryDirection);
+      if(plan.wave3AlignmentPassed && plan.htfWave3Direction == "NONE")
+         plan.htfWave3Direction = DirectionText(entryDirection);
+      return plan.wave3AlignmentPassed;
+     }
+
+   return plan.htfWave3Confirmed;
   }
 
 bool FindRecentEqualLevel(const MqlRates &rates[],
@@ -1058,15 +1327,30 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.brokerUtcOffsetUsed = InpBrokerUtcOffsetHours;
    plan.selectedSymbolForSession = "";
    plan.selectedReason = "";
+   plan.sessionCandidateSymbolMap = "";
+   plan.sessionCandidateSymbols = "";
    plan.entryPattern = "";
    plan.entryTrigger = "";
    plan.necklineLevel = 0.0;
+   plan.ltfWave3Direction = "NONE";
+   plan.ltfWave3Timeframe = EnumToString(InpScanTF);
+   plan.htfWave3Direction = "NONE";
+   plan.htfWave3Confirmed = false;
+   plan.htfH4Wave3Direction = "NONE";
+   plan.htfH1Wave3Direction = "NONE";
+   plan.htfFractalAlignment = "none";
+   plan.htfWave3BreakLevel = 0.0;
+   plan.htfWave3PullbackLevel = 0.0;
+   plan.wave3AlignmentPassed = false;
    plan.htfNearestResistance = 0.0;
    plan.htfNearestSupport = 0.0;
    plan.nearestObstaclePrice = 0.0;
    plan.nearestObstacleType = "none";
    plan.nearestObstacleDistancePrice = 0.0;
    plan.nearestObstacleDistanceR = 0.0;
+   plan.retestReferenceType = "none";
+   plan.retestReferencePrice = 0.0;
+   plan.retestReferenceCount = 0;
    plan.initialRiskPriceDistance = 0.0;
    plan.targetRewardMultiple = EffectiveTargetRewardMultiple();
    plan.targetPrice = 0.0;
@@ -1107,6 +1391,8 @@ void ApplySessionInfo(SignalPlan &plan, const SessionInfo &info)
    plan.isWithinFirst120 = info.first120;
    plan.sessionKey = info.sessionKey;
    plan.symbolSessionKey = plan.symbol + "_" + info.sessionKey;
+   plan.sessionCandidateSymbols = CandidateSymbolsForSession(info.label);
+   plan.sessionCandidateSymbolMap = CandidateSymbolMapForSession(info.label);
   }
 
 bool FillTradeLevels(SignalPlan &plan, const int direction, const double stopAnchor)
@@ -1285,6 +1571,67 @@ void RegisterObstacle(SignalPlan &plan,
       plan.cleanPathToTarget = false;
   }
 
+void RegisterRetestReference(SignalPlan &plan,
+                             const string referenceType,
+                             const double price)
+  {
+   if(price <= 0.0)
+      return;
+
+   ++plan.retestReferenceCount;
+   double distance = MathAbs(price - plan.entry);
+   if(plan.retestReferenceType == "none")
+      plan.retestReferenceType = referenceType;
+   else if(StringFind(plan.retestReferenceType, referenceType) < 0)
+      plan.retestReferenceType += "|" + referenceType;
+
+   if(plan.retestReferencePrice <= 0.0 || distance < MathAbs(plan.retestReferencePrice - plan.entry))
+      plan.retestReferencePrice = price;
+  }
+
+bool IsBreakoutRetestReferenceType(const string obstacleType, const string direction)
+  {
+   if(StringFind(obstacleType, "neckline") >= 0)
+      return true;
+   if(direction == "LONG")
+     {
+      return obstacleType == "session_high" ||
+             obstacleType == "opening_range_high";
+     }
+   if(direction == "SHORT")
+     {
+      return obstacleType == "session_low" ||
+             obstacleType == "opening_range_low";
+     }
+   return false;
+  }
+
+bool RegisterObstacleOrRetestReference(SignalPlan &plan,
+                                       const string obstacleType,
+                                       const double price,
+                                       const bool hardObstacle)
+  {
+   if(price <= 0.0)
+      return false;
+
+   double buffer = plan.atr * InpRetestToleranceATR;
+   bool brokenBehindEntry = false;
+   if(plan.direction == "LONG")
+      brokenBehindEntry = price <= plan.entry + buffer;
+   else if(plan.direction == "SHORT")
+      brokenBehindEntry = price >= plan.entry - buffer;
+
+   if(brokenBehindEntry && IsBreakoutRetestReferenceType(obstacleType, plan.direction))
+     {
+      RegisterRetestReference(plan, obstacleType, price);
+      UpdateNearestHtfLevels(plan, price);
+      return true;
+     }
+
+   RegisterObstacle(plan, obstacleType, price, hardObstacle);
+   return false;
+  }
+
 double RoundNumberStep(const string symbol)
   {
    if(InpRoundNumberStepPips <= 0.0)
@@ -1321,6 +1668,9 @@ void EvaluateTargetPathObstacles(SignalPlan &plan, const MqlRates &scan[])
    plan.softObstacleCountBeforeTarget = 0;
    plan.hardObstaclePresentBeforeTarget = false;
    plan.softObstaclePresentBeforeTarget = false;
+   plan.retestReferenceType = "none";
+   plan.retestReferencePrice = 0.0;
+   plan.retestReferenceCount = 0;
 
    double level = 0.0;
    RegisterObstacle(plan, "previous_day_high", iHigh(plan.symbol, PERIOD_D1, 1), true);
@@ -1345,8 +1695,8 @@ void EvaluateTargetPathObstacles(SignalPlan &plan, const MqlRates &scan[])
    if(CollectRangeByTime(plan.symbol, InpScanTF, UtcToServer(plan.sessionStartUtc), plan.serverTime,
                          sessionHigh, sessionLow, sessionOpen))
      {
-      RegisterObstacle(plan, "session_high", sessionHigh, true);
-      RegisterObstacle(plan, "session_low", sessionLow, true);
+      RegisterObstacleOrRetestReference(plan, "session_high", sessionHigh, true);
+      RegisterObstacleOrRetestReference(plan, "session_low", sessionLow, true);
      }
 
    double preHigh = 0.0;
@@ -1367,12 +1717,12 @@ void EvaluateTargetPathObstacles(SignalPlan &plan, const MqlRates &scan[])
                          sessionStartServer + InpOpeningRangeMinutes * 60,
                          openHigh, openLow, openOpen))
      {
-      RegisterObstacle(plan, "opening_range_high", openHigh, true);
-      RegisterObstacle(plan, "opening_range_low", openLow, true);
+      RegisterObstacleOrRetestReference(plan, "opening_range_high", openHigh, true);
+      RegisterObstacleOrRetestReference(plan, "opening_range_low", openLow, true);
      }
 
    if(plan.necklineLevel > 0.0)
-      RegisterObstacle(plan, "neckline_level", plan.necklineLevel, true);
+      RegisterObstacleOrRetestReference(plan, "neckline_level", plan.necklineLevel, true);
    if(FindFailedBreakoutLevel(scan, plan.direction == "LONG" ? 1 : -1, plan.atr, level))
       RegisterObstacle(plan, "failed_breakout_level", level, true);
 
@@ -1410,7 +1760,7 @@ void EvaluateTargetPathObstacles(SignalPlan &plan, const MqlRates &scan[])
    }
   }
 
-bool BuildSessionReversalSignal(const string symbol, SignalPlan &plan)
+bool BuildSessionReversalSignal(const string symbol, const SessionInfo &session, SignalPlan &plan)
   {
    ResetPlan(plan, symbol);
 
@@ -1424,11 +1774,10 @@ bool BuildSessionReversalSignal(const string symbol, SignalPlan &plan)
      }
 
    plan.serverTime = scan[0].time;
-   SessionInfo session;
-   if(!BuildSessionInfo(plan.serverTime, session))
-      return false;
    ApplySessionInfo(plan, session);
    if(!IsWithinTradeWindow(session))
+      return false;
+   if(!SymbolAllowedForSession(symbol, session.label))
       return false;
    if(SessionAlreadyConsumed(plan))
       return false;
@@ -1451,8 +1800,25 @@ bool BuildSessionReversalSignal(const string symbol, SignalPlan &plan)
    double shortStop = 0.0;
    double longScore = 0.0;
    double shortScore = 0.0;
+   string lowerTimeframeLabel = EnumToString(InpScanTF);
    bool longValid = DetectLongPattern(symbol, scan, atr, longPattern, longTrigger, longNeck, longStop, longScore);
    bool shortValid = DetectShortPattern(symbol, scan, atr, shortPattern, shortTrigger, shortNeck, shortStop, shortScore);
+
+   if(!longValid && !shortValid && InpUseM5LowerTimeframeWave3 && InpDiagnosticTF != InpScanTF)
+     {
+      MqlRates diagnostic[];
+      if(CopyClosedRates(symbol, InpDiagnosticTF, requiredScan, diagnostic))
+        {
+         double diagnosticAtr = ATR(diagnostic, 0, InpATRPeriod);
+         if(diagnosticAtr > 0.0)
+           {
+            longValid = DetectLongPattern(symbol, diagnostic, diagnosticAtr, longPattern, longTrigger, longNeck, longStop, longScore);
+            shortValid = DetectShortPattern(symbol, diagnostic, diagnosticAtr, shortPattern, shortTrigger, shortNeck, shortStop, shortScore);
+            if(longValid || shortValid)
+               lowerTimeframeLabel = EnumToString(InpDiagnosticTF);
+           }
+        }
+     }
 
    if(!longValid && !shortValid)
       return false;
@@ -1476,7 +1842,16 @@ bool BuildSessionReversalSignal(const string symbol, SignalPlan &plan)
       plan.necklineLevel = shortNeck;
       stopAnchor = shortStop;
       plan.score = shortScore;
-   }
+     }
+
+   plan.ltfWave3Direction = DirectionText(direction);
+   plan.ltfWave3Timeframe = lowerTimeframeLabel;
+   if(!ApplyHtfWave3Alignment(symbol, direction, plan))
+     {
+      plan.reason = "htf_wave3_alignment_failed";
+      plan.failureType = "htf_wave3_alignment_failed";
+      return false;
+     }
 
    double sessionHigh = 0.0;
    double sessionLow = 0.0;
@@ -1550,10 +1925,14 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
                 "session_label", "session_start_utc", "minutes_from_session_start",
                 "trade_window_label", "is_within_first_60min", "is_within_first_120min",
                 "broker_utc_offset_used", "selected_symbol_for_session", "selected_reason",
+                "session_candidate_symbol_map",
                 "entry_pattern", "entry_trigger", "neckline_level",
+                "ltf_wave3_timeframe", "htf_wave3_direction", "htf_wave3_confirmed",
+                "htf_fractal_alignment", "wave3_alignment_passed",
                 "htf_nearest_resistance", "htf_nearest_support",
                 "nearest_obstacle_price", "nearest_obstacle_type", "nearest_obstacle_distance_price",
-                "nearest_obstacle_distance_r", "clean_path_to_target",
+                "nearest_obstacle_distance_r", "retest_reference_type", "retest_reference_price",
+                "clean_path_to_target",
                 "hard_obstacle_present_before_target", "soft_obstacle_present_before_target",
                 "obstacle_blocked", "obstacle_block_reason", "obstacle_count_before_target",
                 "hard_obstacle_count_before_target", "soft_obstacle_count_before_target",
@@ -1581,15 +1960,23 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
              IntegerToString(InpBrokerUtcOffsetHours),
              plan.selectedSymbolForSession,
              plan.selectedReason,
+             plan.sessionCandidateSymbolMap,
              plan.entryPattern,
              plan.entryTrigger,
              DoubleToString(plan.necklineLevel, 8),
+             plan.ltfWave3Timeframe,
+             plan.htfWave3Direction,
+             BoolText(plan.htfWave3Confirmed),
+             plan.htfFractalAlignment,
+             BoolText(plan.wave3AlignmentPassed),
              DoubleToString(plan.htfNearestResistance, 8),
              DoubleToString(plan.htfNearestSupport, 8),
              DoubleToString(plan.nearestObstaclePrice, 8),
              plan.nearestObstacleType,
              DoubleToString(plan.nearestObstacleDistancePrice, 8),
              DoubleToString(plan.nearestObstacleDistanceR, 4),
+             plan.retestReferenceType,
+             DoubleToString(plan.retestReferencePrice, 8),
              BoolText(plan.cleanPathToTarget),
              BoolText(plan.hardObstaclePresentBeforeTarget),
              BoolText(plan.softObstaclePresentBeforeTarget),
@@ -1664,9 +2051,13 @@ void WriteTradeRow(const TrackedTrade &tracked,
                 "session_label", "session_start_utc", "minutes_from_session_start",
                 "trade_window_label", "is_within_first_60min", "is_within_first_120min",
                 "broker_utc_offset_used", "selected_symbol_for_session", "selected_reason",
+                "session_candidate_symbol_map",
                 "entry_pattern", "entry_trigger", "neckline_level",
+                "ltf_wave3_timeframe", "htf_wave3_direction", "htf_wave3_confirmed",
+                "htf_fractal_alignment", "wave3_alignment_passed",
                 "htf_nearest_resistance", "htf_nearest_support",
                 "nearest_obstacle_price", "nearest_obstacle_type", "nearest_obstacle_distance_r",
+                "retest_reference_type", "retest_reference_price",
                 "clean_path_to_target", "hard_obstacle_present_before_target",
                 "soft_obstacle_present_before_target", "obstacle_blocked",
                 "target_reward_multiple", "target_price",
@@ -1710,14 +2101,22 @@ void WriteTradeRow(const TrackedTrade &tracked,
              IntegerToString(InpBrokerUtcOffsetHours),
              tracked.selectedSymbolForSession,
              tracked.selectedReason,
+             tracked.sessionCandidateSymbolMap,
              tracked.entryPattern,
              tracked.entryTrigger,
              DoubleToString(tracked.necklineLevel, 8),
+             tracked.ltfWave3Timeframe,
+             tracked.htfWave3Direction,
+             BoolText(tracked.htfWave3Confirmed),
+             tracked.htfFractalAlignment,
+             BoolText(tracked.wave3AlignmentPassed),
              DoubleToString(tracked.htfNearestResistance, 8),
              DoubleToString(tracked.htfNearestSupport, 8),
              DoubleToString(tracked.nearestObstaclePrice, 8),
              tracked.nearestObstacleType,
              DoubleToString(tracked.nearestObstacleDistanceR, 4),
+             tracked.retestReferenceType,
+             DoubleToString(tracked.retestReferencePrice, 8),
              BoolText(tracked.cleanPathToTarget),
              BoolText(tracked.hardObstaclePresentBeforeTarget),
              BoolText(tracked.softObstaclePresentBeforeTarget),
@@ -1761,7 +2160,8 @@ void WriteSummaryRow()
       FileWrite(handle, "time", "strategy", "symbols", "signals", "orders_sent",
                 "orders_failed", "blocked", "closed_trades", "initial_equity",
                 "final_equity", "peak_equity", "daily_stopped", "drawdown_stopped",
-                "trade_window_label", "target_reward_multiple", "broker_utc_offset_used");
+                "trade_window_label", "target_reward_multiple", "broker_utc_offset_used",
+                "session_windows_mode", "require_h4_h1_wave3_alignment", "use_m5_lower_tf_wave3");
 
    FileWrite(handle,
              TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
@@ -1779,7 +2179,10 @@ void WriteSummaryRow()
              BoolText(g_drawdownStopped),
              TradeWindowLabel(),
              DoubleToString(EffectiveTargetRewardMultiple(), 2),
-             IntegerToString(InpBrokerUtcOffsetHours));
+             IntegerToString(InpBrokerUtcOffsetHours),
+             "non_exclusive_independent_start_windows",
+             BoolText(InpRequireH4H1Wave3Alignment),
+             BoolText(InpUseM5LowerTimeframeWave3));
    FileClose(handle);
   }
 
@@ -1952,14 +2355,29 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].brokerUtcOffsetUsed = plan.brokerUtcOffsetUsed;
    g_trades[size].selectedSymbolForSession = plan.selectedSymbolForSession;
    g_trades[size].selectedReason = plan.selectedReason;
+   g_trades[size].sessionCandidateSymbolMap = plan.sessionCandidateSymbolMap;
+   g_trades[size].sessionCandidateSymbols = plan.sessionCandidateSymbols;
    g_trades[size].entryPattern = plan.entryPattern;
    g_trades[size].entryTrigger = plan.entryTrigger;
    g_trades[size].necklineLevel = plan.necklineLevel;
+   g_trades[size].ltfWave3Direction = plan.ltfWave3Direction;
+   g_trades[size].ltfWave3Timeframe = plan.ltfWave3Timeframe;
+   g_trades[size].htfWave3Direction = plan.htfWave3Direction;
+   g_trades[size].htfWave3Confirmed = plan.htfWave3Confirmed;
+   g_trades[size].htfH4Wave3Direction = plan.htfH4Wave3Direction;
+   g_trades[size].htfH1Wave3Direction = plan.htfH1Wave3Direction;
+   g_trades[size].htfFractalAlignment = plan.htfFractalAlignment;
+   g_trades[size].htfWave3BreakLevel = plan.htfWave3BreakLevel;
+   g_trades[size].htfWave3PullbackLevel = plan.htfWave3PullbackLevel;
+   g_trades[size].wave3AlignmentPassed = plan.wave3AlignmentPassed;
    g_trades[size].htfNearestResistance = plan.htfNearestResistance;
    g_trades[size].htfNearestSupport = plan.htfNearestSupport;
    g_trades[size].nearestObstaclePrice = plan.nearestObstaclePrice;
    g_trades[size].nearestObstacleType = plan.nearestObstacleType;
    g_trades[size].nearestObstacleDistanceR = plan.nearestObstacleDistanceR;
+   g_trades[size].retestReferenceType = plan.retestReferenceType;
+   g_trades[size].retestReferencePrice = plan.retestReferencePrice;
+   g_trades[size].retestReferenceCount = plan.retestReferenceCount;
    g_trades[size].cleanPathToTarget = plan.cleanPathToTarget;
    g_trades[size].hardObstaclePresentBeforeTarget = plan.hardObstaclePresentBeforeTarget;
    g_trades[size].softObstaclePresentBeforeTarget = plan.softObstaclePresentBeforeTarget;
@@ -2115,13 +2533,20 @@ void ScanSymbols()
          continue;
       g_lastScannedBars[i] = barTime;
 
-      SignalPlan plan;
-      if(BuildSessionReversalSignal(g_symbols[i], plan))
+      SessionInfo sessions[];
+      if(BuildSessionInfos(barTime, sessions) <= 0)
+         continue;
+
+      for(int sessionIndex = 0; sessionIndex < ArraySize(sessions); ++sessionIndex)
         {
-         plan.valid = true;
-         int size = ArraySize(candidates);
-         ArrayResize(candidates, size + 1);
-         candidates[size] = plan;
+         SignalPlan plan;
+         if(BuildSessionReversalSignal(g_symbols[i], sessions[sessionIndex], plan))
+           {
+            plan.valid = true;
+            int size = ArraySize(candidates);
+            ArrayResize(candidates, size + 1);
+            candidates[size] = plan;
+           }
         }
      }
 
@@ -2139,33 +2564,39 @@ void ScanSymbols()
       return;
      }
 
-   int best = -1;
-   double bestScore = -1.0;
-   for(int i = 0; i < ArraySize(candidates); ++i)
+   while(true)
      {
-      if(HasKey(g_consumedSessionKeys, candidates[i].sessionKey))
-         continue;
-      if(candidates[i].score > bestScore)
+      int best = -1;
+      double bestScore = -1.0;
+      for(int i = 0; i < ArraySize(candidates); ++i)
         {
-         best = i;
-         bestScore = candidates[i].score;
+         if(HasKey(g_consumedSessionKeys, candidates[i].sessionKey))
+            continue;
+         if(candidates[i].score > bestScore)
+           {
+            best = i;
+            bestScore = candidates[i].score;
+           }
         }
-     }
-   if(best < 0)
-      return;
+      if(best < 0)
+         return;
 
-   string selected = SelectedSymbolForSession(candidates[best].sessionKey);
-   if(selected == "")
-     {
-      selected = candidates[best].symbol;
-      SetSelectedSymbolForSession(candidates[best].sessionKey, selected);
-     }
-   if(candidates[best].symbol != selected)
-      return;
+      string selected = SelectedSymbolForSession(candidates[best].sessionKey);
+      if(selected == "")
+        {
+         selected = candidates[best].symbol;
+         SetSelectedSymbolForSession(candidates[best].sessionKey, selected);
+        }
+      if(candidates[best].symbol != selected)
+        {
+         AddKey(g_consumedSessionKeys, candidates[best].sessionKey);
+         continue;
+        }
 
-   candidates[best].selectedSymbolForSession = selected;
-   candidates[best].selectedReason = "highest_score_in_session_bar";
-   TryOpenSignal(candidates[best]);
+      candidates[best].selectedSymbolForSession = selected;
+      candidates[best].selectedReason = "highest_score_in_session_bar";
+      TryOpenSignal(candidates[best]);
+     }
   }
 
 void OnTradeTransaction(const MqlTradeTransaction &trans,
@@ -2211,6 +2642,8 @@ int OnInit()
       InpPatternLookbackBars < 12 ||
       InpSwingDepth < 1 ||
       InpHTFLookbackBars < 20 ||
+      InpHTFWaveLookbackBars < 30 ||
+      InpHTFWaveBreakBufferATR < 0.0 ||
       InpOpeningRangeMinutes < 5 ||
       InpPreSessionMinutes < 15 ||
       InpTargetRewardMultiple <= 0.0 ||

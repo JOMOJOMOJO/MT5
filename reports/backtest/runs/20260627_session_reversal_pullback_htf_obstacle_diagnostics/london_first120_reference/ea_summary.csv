@@ -1,2 +1,2 @@
-time,strategy,symbols,signals,orders_sent,orders_failed,blocked,closed_trades,initial_equity,final_equity,peak_equity,daily_stopped,drawdown_stopped,trade_window_label,target_reward_multiple,broker_utc_offset_used
-2025.12.30 23:57:59,london_first120_reference,USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD,0,0,0,0,0,10000.00,10000.00,10000.00,false,false,first_120min,1.50,3
+time,strategy,symbols,signals,orders_sent,orders_failed,blocked,closed_trades,initial_equity,final_equity,peak_equity,daily_stopped,drawdown_stopped,trade_window_label,target_reward_multiple,broker_utc_offset_used,session_windows_mode,require_h4_h1_wave3_alignment,use_m5_lower_tf_wave3
+2025.12.30 23:57:59,london_first120_reference,USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD,95,26,0,69,26,10000.00,10296.49,10298.06,false,false,first_120min,1.50,3,non_exclusive_independent_start_windows,true,true

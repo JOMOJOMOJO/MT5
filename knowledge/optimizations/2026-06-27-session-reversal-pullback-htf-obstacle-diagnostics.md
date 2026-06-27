@@ -1,12 +1,19 @@
-# Session Reversal Pullback HTF Obstacle Diagnostics
+# Session Reversal Pullback HTF Wave Alignment Diagnostics
 
 ## Hypothesis
 
-Opening-session reversal pullbacks might have better expectancy if:
+Session reversal pullbacks may improve if:
 
-- trading is limited to the first 60/120 minutes of Tokyo, London, New York, or overlap sessions;
-- only one symbol is selected per session;
-- entries are skipped when hard HTF obstacles sit before the target price.
+- Tokyo, London, Overlap, and New York are evaluated as independent start windows instead of exclusive labels;
+- Tokyo trades only JPY pairs;
+- lower-timeframe M15/M5 reversal patterns are treated as wave3-start candidates only when H4 and H1 confirmed fractal wave3 direction agree;
+- broken neckline/opening-range/session lines are treated as retest bases instead of forward obstacles.
+
+## Prior Lessons Applied
+
+- Confirmed wave3 breaks have been materially better than early unconfirmed wave3 entries in prior Elliott/fractal diagnostics.
+- Neckline-break market entries tend to chase; retest/acceptance is a better first-pullback expression.
+- Obstacle filters can easily become over-pruning filters, so clean-path scenarios remain diagnostic rather than a rescue mechanism.
 
 ## Tested Scenarios
 
@@ -30,29 +37,43 @@ Main comparison:
 
 | Scenario | Trades | PF | avg_R | Net |
 |---|---:|---:|---:|---:|
-| all_symbols_first120 | 761 | 0.81 | -0.0898 | -1518.66 |
-| one_symbol_first120 | 380 | 0.70 | -0.1396 | -1243.41 |
-| one_symbol_first60 | 380 | 0.70 | -0.1396 | -1243.41 |
-| clean_target_path_first120 | 8 | 0.79 | -0.1012 | -20.45 |
-| target_multiple_2_0_reference | 5 | 1.72 | +0.2678 | +34.94 |
-
-The target 2.0 reference is too small to promote. It is a diagnostic fragment, not an operating candidate.
+| all_symbols_first120 | 163 | 0.81 | -0.1008 | -381.38 |
+| one_symbol_first120 | 116 | 0.87 | -0.0600 | -174.63 |
+| one_symbol_first60 | 93 | 0.80 | -0.1011 | -229.68 |
+| clean_target_path_first120 | 23 | 1.01 | +0.0015 | +2.02 |
+| tokyo_first120_reference | 18 | 1.05 | +0.0227 | +10.31 |
+| london_first120_reference | 26 | 2.40 | +0.4674 | +296.49 |
+| newyork_first120_reference | 49 | 0.27 | -0.4356 | -517.74 |
+| overlap_first120_reference | 32 | 0.86 | -0.0718 | -58.30 |
+| target_multiple_1_2_reference | 25 | 1.26 | +0.1014 | +59.51 |
+| target_multiple_2_0_reference | 22 | 0.98 | -0.0104 | -5.53 |
 
 ## Lessons
 
-- The first 60-minute restriction did not change the selected trade set versus first120; the online selection logic already chose early candidates.
-- One-symbol-per-session reduced frequency but worsened expectancy relative to all-symbol mode.
-- The HTF hard-obstacle clean-path gate blocked many signals, but the remaining sample was too small and still negative.
-- Session-specific references did not show a robust edge. New York was least bad by avg_R across the aggregate, but still negative.
-- Pattern fragments such as `bos_down`, `double_bottom`, and `sweep_low_reclaim` had some positive pockets, but sample size was too small or scenario-level expectancy remained negative.
+- Non-exclusive session labeling fixed the London blind spot: London first120 now evaluates UTC 07:00-08:59 and produced 26 trades.
+- Tokyo gating worked: Tokyo candidate map was `tokyo=USDJPY|EURJPY|GBPJPY|AUDJPY`, and only JPY pairs traded.
+- H4/H1 confirmed wave3 alignment improved selectivity but cut the integrated sample below the 200-trade operating threshold.
+- London first120 is the best fragment, but 26 trades is not enough for fixed BT or live consideration.
+- New York remains a structurally bad bucket after HTF alignment.
+- Broken neckline/opening/session levels as retest references are useful diagnostics, but they do not rescue the integrated system.
 
 ## Rejection Rule Applied
 
-The family is not advanced because the 200+ trade scenarios had PF < 1.05, avg_R < 0, and net < 0. No repair was attempted through symbol exclusion, direction exclusion, Friday stopping, fine session-minute tuning, target multiple fine-tuning, or post-hoc obstacle type exclusion.
+The family is not advanced because no integrated scenario had 200+ trades with PF >= 1.05, avg_R > 0, net > 0, and no DD stop. The sparse positive fragments are retained as research evidence only.
+
+No post-hoc rescue was attempted through:
+
+- symbol exclusion;
+- direction exclusion;
+- Friday or weekday stopping;
+- fine fib/session/RSI/MACD threshold tuning;
+- additional wave-count narrowing.
 
 ## Evidence
 
 - `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/summary.md`
 - `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/comparison.csv`
 - `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/r_metrics.csv`
-- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/failure_type_breakdown.csv`
+- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/session_breakdown.csv`
+- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/retest_reference_breakdown.csv`
+- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/session_candidate_map_breakdown.csv`

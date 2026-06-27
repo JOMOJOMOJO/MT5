@@ -1,26 +1,39 @@
-# 2026-06-27 Session Reversal Pullback HTF Obstacle Diagnostics
+# 2026-06-27 Session Reversal Pullback HTF Wave Alignment Diagnostics
 
 ## Task
 
-Build a dedicated multi-currency `Session Reversal Pullback` research EA and test whether opening-session reversal pullbacks improve when entries are limited to the first 60/120 minutes and filtered by higher-timeframe target-path obstacles.
+Refine `ExpectedValue_MultiCurrency_FXSessionReversalPullbackTrader` so session labels are not exclusive, London first60/first120 is evaluated at UTC 07:00-08:59, Tokyo is JPY-only, and entries require H4/H1 higher-timeframe wave3 alignment before taking M15/M5 first-pullback reversal patterns.
+
+## Prior Evidence Used
+
+- `reports/backtest/runs/20260624_fxfractal_dow_elliott_session_diagnostics/summary.md` showed confirmed wave3 breaks were materially better than unconfirmed early wave3 entries.
+- `reports/backtest/runs/20260623_fxelliott_roadmap_diagnostics/summary.md` also showed `wave3_break_confirmed=false` was materially worse.
+- `reports/backtest/runs/20260624_session_one_shot_obstacle_filter_diagnostics/summary.md` showed obstacle filters can over-prune trade count without creating expectancy.
+- `knowledge/experiments/2026-04-13-usdjpy-method2-triple-structure-postmortem-redesign.md` supported avoiding neckline-break chase entries and requiring retest/acceptance.
 
 ## Implementation
 
-- Added `mql/Experts/ExpectedValue_MultiCurrency_FXSessionReversalPullbackTrader.mq5`.
-- The EA monitors `USDJPY, EURJPY, GBPJPY, AUDJPY, EURUSD, GBPUSD`.
-- Sessions are defined in UTC after converting broker server time with `InpBrokerUtcOffsetHours`.
-- The EA evaluates only the first 60 or 120 minutes from each session start.
-- H4/H1 swing levels use confirmed fractal-style pivots only; ZigZag repaint values are not used.
-- Target path is defined explicitly from `entry_price`, `stop_loss_price`, `initial_risk_price_distance`, `target_reward_multiple`, and `target_price`.
-- Hard obstacles are previous day/week levels, H4/H1 confirmed swings, session/pre-session/opening-range levels, neckline, and failed breakout level.
-- Soft obstacles remain diagnostics: round number, recent equal highs/lows, rejection/wick clusters, consolidation, and congestion.
+- Changed session detection from exclusive `if/else` labeling to independent UTC start windows:
+  - Tokyo UTC 00:00 start
+  - London UTC 07:00 start
+  - Overlap UTC 13:00 start
+  - New York UTC 16:00 start
+- Added Tokyo-only symbol gating for `USDJPY, EURJPY, GBPJPY, AUDJPY`.
+- Exported `session_candidate_symbol_map` to signals/trades and breakdown CSV.
+- Added H4/H1 confirmed fractal-style wave3 direction diagnostics and a default hard gate requiring both HTFs to match the entry direction.
+- Kept M15 first-pullback/retest patterns and added M5 fallback as a lower-timeframe wave3 source.
+- Reclassified already-broken neckline/opening range/session high-low levels as `retest_reference_*` instead of target-path obstacles.
 
 ## Validation
 
 - Compile: `reports/compile/ExpectedValue_MultiCurrency_FXSessionReversalPullbackTrader_compile.txt`
-- Result: `0 errors, 0 warnings`.
-- 2025 shallow MT5 backtests were run for all 11 requested scenarios.
-- Aggregated evidence: `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/summary.md`
+- Compile result: `0 errors, 0 warnings`.
+- MT5 2025 shallow BT was rerun for all 11 scenarios with:
+  - M15
+  - Model 4
+  - Deposit 10000
+  - `C:\Program Files\XMTrading MT5\terminal64.exe`
+- The first attempted BT used the wrong terminal install (`XMTrading MT5 - 2`) and failed with `tester EX5 not found`; the rerun used the terminal tied to this repo data folder.
 
 ## Result
 
@@ -28,11 +41,25 @@ No scenario passed the 2025 shallow gate.
 
 Key outcomes:
 
-- `session_reversal_pullback_all_symbols_first120`: 761 trades, PF 0.81, avg_R -0.0898, net -1518.66.
-- `session_reversal_pullback_one_symbol_first120`: 380 trades, PF 0.70, avg_R -0.1396, net -1243.41.
-- `session_reversal_pullback_one_symbol_first60`: same trade set as first120; all selected trades occurred inside first60.
-- `session_reversal_pullback_clean_target_path_first120`: 8 trades, PF 0.79, avg_R -0.1012, net -20.45, with 730 obstacle-blocked signals.
-- `target_multiple_2_0_reference`: PF 1.72 and avg_R +0.2678, but only 5 trades, so it is not a fixed BT or operating candidate.
+| Scenario | Trades | PF | avg_R | Net |
+|---|---:|---:|---:|---:|
+| all_symbols_first120 | 163 | 0.81 | -0.1008 | -381.38 |
+| one_symbol_first120 | 116 | 0.87 | -0.0600 | -174.63 |
+| one_symbol_first60 | 93 | 0.80 | -0.1011 | -229.68 |
+| clean_target_path_first120 | 23 | 1.01 | +0.0015 | +2.02 |
+| tokyo_first120_reference | 18 | 1.05 | +0.0227 | +10.31 |
+| london_first120_reference | 26 | 2.40 | +0.4674 | +296.49 |
+| newyork_first120_reference | 49 | 0.27 | -0.4356 | -517.74 |
+| overlap_first120_reference | 32 | 0.86 | -0.0718 | -58.30 |
+| target_multiple_1_2_reference | 25 | 1.26 | +0.1014 | +59.51 |
+| target_multiple_2_0_reference | 22 | 0.98 | -0.0104 | -5.53 |
+
+Checks:
+
+- London reference now produced 26 trades, all at UTC hour 7 or 8 with `minutes_from_session_start` 0-105.
+- Tokyo reference exported `tokyo=USDJPY|EURJPY|GBPJPY|AUDJPY` and traded only JPY pairs.
+- HTF H4/H1 confirmed alignment reduced trade count below the 200-trade operating threshold.
+- London is an interesting fragment, but it is not a fixed BT candidate because it has only 26 trades.
 
 ## Decision
 
@@ -40,16 +67,16 @@ Do not advance to 3-year fixed BT or OOS.
 
 Reasons:
 
-- The only scenarios with 200+ trades were negative.
-- The clean target path filter reduced trade count too aggressively and did not produce a positive fixed candidate.
-- One-symbol-per-session did not improve expectancy versus all-symbol mode.
-- Session references did not reveal a robust standalone session edge; London produced no trades under the opening-window rules.
-- Positive-looking fragments were too small to promote.
+- No integrated scenario reached 200 trades with PF >= 1.05, avg_R > 0, and net > 0.
+- The best expectancy fragments are too sparse to promote.
+- New York remains structurally poor after HTF alignment.
+- Clean target path still over-filters and does not create a deployable sample.
+- No repair was attempted through symbol exclusion, direction exclusion, weekday stopping, or fine parameter tuning.
 
 ## Evidence
 
+- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/summary.md`
 - `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/comparison.csv`
-- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/trades_all_scenarios.csv`
-- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/session_breakdown.csv`
-- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/entry_pattern_breakdown.csv`
-- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/clean_path_to_target_breakdown.csv`
+- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/session_candidate_map_breakdown.csv`
+- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/retest_reference_breakdown.csv`
+- `reports/backtest/runs/20260627_session_reversal_pullback_htf_obstacle_diagnostics/htf_wave3_direction_breakdown.csv`
