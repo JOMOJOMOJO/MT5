@@ -26,6 +26,22 @@ enum ENUM_SESSION_REVERSAL_SCENARIO
    SESSION_REVERSAL_TARGET_MULTIPLE_2_0 = 10
   };
 
+enum ENUM_HTF_ALIGNMENT_MODE
+  {
+   HTF_ALIGNMENT_STRICT_H4_H1 = 0,
+   HTF_ALIGNMENT_H4_BIAS_H1_REVERSAL = 1,
+   HTF_ALIGNMENT_H1_CONFIRMED_H4_NOT_OPPOSITE = 2,
+   HTF_ALIGNMENT_SOFT = 3
+  };
+
+enum ENUM_BREAK_EVEN_MODE
+  {
+   BREAK_EVEN_DISABLED = 0,
+   BREAK_EVEN_AT_1_0R = 1,
+   BREAK_EVEN_AT_1_1R = 2,
+   BREAK_EVEN_TIME_30MIN_AND_0_5R_OR_1_0R = 3
+  };
+
 struct SessionInfo
   {
    bool              active;
@@ -71,6 +87,7 @@ struct SignalPlan
    double            necklineLevel;
    string            ltfWave3Direction;
    string            ltfWave3Timeframe;
+   string            htfAlignmentMode;
    string            htfWave3Direction;
    bool              htfWave3Confirmed;
    string            htfH4Wave3Direction;
@@ -142,6 +159,7 @@ struct TrackedTrade
    double            necklineLevel;
    string            ltfWave3Direction;
    string            ltfWave3Timeframe;
+   string            htfAlignmentMode;
    string            htfWave3Direction;
    bool              htfWave3Confirmed;
    string            htfH4Wave3Direction;
@@ -164,6 +182,18 @@ struct TrackedTrade
    bool              obstacleBlocked;
    double            targetRewardMultiple;
    double            targetPrice;
+   string            breakEvenMode;
+   bool              breakEvenEnabled;
+   bool              breakEvenTriggered;
+   string            breakEvenTriggerType;
+   double            breakEvenTriggerR;
+   datetime          breakEvenTriggerTime;
+   int               barsToBreakEven;
+   double            initialStopLossPrice;
+   double            currentStopLossPrice;
+   double            maxFavorableRBeforeExit;
+   double            maxAdverseRBeforeExit;
+   datetime          lastManagementBarTime;
    string            entryFailureType;
    bool              sessionInvalidated;
    string            invalidationReason;
@@ -194,7 +224,10 @@ input int             InpHTFLookbackBars               = 80;
 input int             InpHTFWaveLookbackBars           = 120;
 input double          InpHTFWaveBreakBufferATR         = 0.05;
 input bool            InpRequireH4H1Wave3Alignment     = true;
+input ENUM_HTF_ALIGNMENT_MODE InpHTFAlignmentMode       = HTF_ALIGNMENT_STRICT_H4_H1;
 input bool            InpUseM5LowerTimeframeWave3      = true;
+input ENUM_BREAK_EVEN_MODE InpBreakEvenMode             = BREAK_EVEN_DISABLED;
+input double          InpBreakEvenOffsetPoints         = 0.0;
 input int             InpOpeningRangeMinutes           = 30;
 input int             InpPreSessionMinutes             = 60;
 input double          InpTargetRewardMultiple          = 1.50;
@@ -311,6 +344,28 @@ string TradeWindowLabel()
    if(minutes == 90)
       return "first_90min_reference";
    return "first_120min";
+  }
+
+string HTFAlignmentModeName()
+  {
+   if(InpHTFAlignmentMode == HTF_ALIGNMENT_H4_BIAS_H1_REVERSAL)
+      return "h4_bias_h1_reversal_alignment";
+   if(InpHTFAlignmentMode == HTF_ALIGNMENT_H1_CONFIRMED_H4_NOT_OPPOSITE)
+      return "h1_confirmed_h4_not_opposite";
+   if(InpHTFAlignmentMode == HTF_ALIGNMENT_SOFT)
+      return "htf_soft_alignment";
+   return "strict_h4_h1_alignment";
+  }
+
+string BreakEvenModeName()
+  {
+   if(InpBreakEvenMode == BREAK_EVEN_AT_1_0R)
+      return "break_even_at_1_0r";
+   if(InpBreakEvenMode == BREAK_EVEN_AT_1_1R)
+      return "break_even_at_1_1r";
+   if(InpBreakEvenMode == BREAK_EVEN_TIME_30MIN_AND_0_5R_OR_1_0R)
+      return "time_30min_and_0_5r_break_even";
+   return "no_break_even";
   }
 
 bool ScenarioAllowsSession(const string label)
@@ -909,6 +964,7 @@ bool ApplyHtfWave3Alignment(const string symbol, const int entryDirection, Signa
    plan.htfH1Wave3Direction = DirectionText(h1Direction);
    plan.htfFractalAlignment = "H4_" + plan.htfH4Wave3Direction + "_" + h4State +
                               "|H1_" + plan.htfH1Wave3Direction + "_" + h1State;
+   plan.htfAlignmentMode = HTFAlignmentModeName();
    plan.htfWave3Direction = (h4Direction == h1Direction && h1Direction != 0) ? DirectionText(h1Direction) : "NONE";
    plan.htfWave3Confirmed = h4Direction == entryDirection && h1Direction == entryDirection;
    plan.wave3AlignmentPassed = plan.htfWave3Confirmed;
@@ -924,12 +980,39 @@ bool ApplyHtfWave3Alignment(const string symbol, const int entryDirection, Signa
       plan.htfWave3PullbackLevel = h1Pullback > 0.0 ? h1Pullback : h4Pullback;
      }
 
-   if(!InpRequireH4H1Wave3Alignment)
+   if(InpHTFAlignmentMode == HTF_ALIGNMENT_STRICT_H4_H1)
+      return plan.htfWave3Confirmed;
+
+   if(InpHTFAlignmentMode == HTF_ALIGNMENT_H4_BIAS_H1_REVERSAL)
      {
-      plan.wave3AlignmentPassed = (h1Direction == entryDirection && h4Direction != -entryDirection) ||
-                                  (h4Direction == entryDirection && h1Direction != -entryDirection);
+      plan.wave3AlignmentPassed = h4Direction == entryDirection && h1Direction != -entryDirection;
       if(plan.wave3AlignmentPassed && plan.htfWave3Direction == "NONE")
          plan.htfWave3Direction = DirectionText(entryDirection);
+      return plan.wave3AlignmentPassed;
+     }
+
+   if(InpHTFAlignmentMode == HTF_ALIGNMENT_H1_CONFIRMED_H4_NOT_OPPOSITE)
+     {
+      plan.wave3AlignmentPassed = h1Direction == entryDirection && h4Direction != -entryDirection;
+      if(plan.wave3AlignmentPassed && plan.htfWave3Direction == "NONE")
+         plan.htfWave3Direction = DirectionText(entryDirection);
+      return plan.wave3AlignmentPassed;
+     }
+
+   if(InpHTFAlignmentMode == HTF_ALIGNMENT_SOFT)
+     {
+      plan.wave3AlignmentPassed = !(h4Direction == -entryDirection && h1Direction == -entryDirection);
+      if(plan.wave3AlignmentPassed)
+        {
+         if(h4Direction == entryDirection)
+            plan.score += 0.30;
+         if(h1Direction == entryDirection)
+            plan.score += 0.30;
+         if(h4Direction == entryDirection && h1Direction == entryDirection)
+            plan.score += 0.20;
+         if(plan.htfWave3Direction == "NONE" && (h4Direction == entryDirection || h1Direction == entryDirection))
+            plan.htfWave3Direction = DirectionText(entryDirection);
+        }
       return plan.wave3AlignmentPassed;
      }
 
@@ -1334,6 +1417,7 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.necklineLevel = 0.0;
    plan.ltfWave3Direction = "NONE";
    plan.ltfWave3Timeframe = EnumToString(InpScanTF);
+   plan.htfAlignmentMode = HTFAlignmentModeName();
    plan.htfWave3Direction = "NONE";
    plan.htfWave3Confirmed = false;
    plan.htfH4Wave3Direction = "NONE";
@@ -2026,6 +2110,60 @@ string ClassifyFailure(const TrackedTrade &tracked, const string exitReason, con
    return "other";
   }
 
+string CsvEscape(string value)
+  {
+   bool quote = StringFind(value, ",") >= 0 ||
+                StringFind(value, "\"") >= 0 ||
+                StringFind(value, "\r") >= 0 ||
+                StringFind(value, "\n") >= 0;
+   StringReplace(value, "\"", "\"\"");
+   if(quote)
+      return "\"" + value + "\"";
+   return value;
+  }
+
+void CsvAppend(string &line, const string value)
+  {
+   if(line != "")
+      line += ",";
+   line += CsvEscape(value);
+  }
+
+string ExitTypeFromDeal(const TrackedTrade &tracked,
+                        const string exitReason,
+                        const double resultR,
+                        const int holdingBars)
+  {
+   if(StringFind(exitReason, "TP") >= 0)
+      return "tp";
+   if(StringFind(exitReason, "SL") >= 0)
+     {
+      if(tracked.breakEvenTriggered && resultR > -0.25 && resultR < 0.35)
+         return "break_even";
+      return "full_sl";
+     }
+   if(StringFind(exitReason, "EXPERT") >= 0 || holdingBars >= InpMaxHoldBars)
+      return "time";
+   return "other";
+  }
+
+string TradeHeaderLine()
+  {
+   return "entry_time,exit_time,strategy,symbol,direction,server_time,server_hour,utc_hour,jst_hour," +
+          "session_label,session_start_utc,minutes_from_session_start,trade_window_label,is_within_first_60min,is_within_first_120min," +
+          "broker_utc_offset_used,selected_symbol_for_session,selected_reason,session_candidate_symbol_map," +
+          "entry_pattern,entry_trigger,neckline_level,ltf_wave3_timeframe,htf_alignment_mode,htf_wave3_direction,htf_wave3_confirmed," +
+          "htf_fractal_alignment,wave3_alignment_passed,htf_nearest_resistance,htf_nearest_support," +
+          "nearest_obstacle_price,nearest_obstacle_type,nearest_obstacle_distance_r,retest_reference_type,retest_reference_price," +
+          "clean_path_to_target,hard_obstacle_present_before_target,soft_obstacle_present_before_target,obstacle_blocked," +
+          "target_reward_multiple,target_price,entry,exit,stop_loss,take_profit,risk_price,result_r," +
+          "initial_stop_loss_price,current_stop_loss_price,break_even_enabled,break_even_triggered,break_even_trigger_type," +
+          "break_even_trigger_r,break_even_trigger_time,bars_to_break_even,max_favorable_r_before_exit,max_adverse_r_before_exit," +
+          "exit_type,full_sl_exit,break_even_exit,tp_exit,time_exit,result_r_before_be,result_r_after_be," +
+          "profit,commission,swap,net_profit,volume,reward_r,holding_bars,atr,spread_points,score,failure_type," +
+          "session_invalidated,invalidation_reason,exit_reason,position_id,break_even_mode";
+  }
+
 void WriteTradeRow(const TrackedTrade &tracked,
                    const datetime exitTime,
                    const double exitPrice,
@@ -2045,26 +2183,7 @@ void WriteTradeRow(const TrackedTrade &tracked,
    bool header = (FileSize(handle) == 0);
    FileSeek(handle, 0, SEEK_END);
    if(header)
-      FileWrite(handle,
-                "entry_time", "exit_time", "strategy", "symbol", "direction",
-                "server_time", "server_hour", "utc_hour", "jst_hour",
-                "session_label", "session_start_utc", "minutes_from_session_start",
-                "trade_window_label", "is_within_first_60min", "is_within_first_120min",
-                "broker_utc_offset_used", "selected_symbol_for_session", "selected_reason",
-                "session_candidate_symbol_map",
-                "entry_pattern", "entry_trigger", "neckline_level",
-                "ltf_wave3_timeframe", "htf_wave3_direction", "htf_wave3_confirmed",
-                "htf_fractal_alignment", "wave3_alignment_passed",
-                "htf_nearest_resistance", "htf_nearest_support",
-                "nearest_obstacle_price", "nearest_obstacle_type", "nearest_obstacle_distance_r",
-                "retest_reference_type", "retest_reference_price",
-                "clean_path_to_target", "hard_obstacle_present_before_target",
-                "soft_obstacle_present_before_target", "obstacle_blocked",
-                "target_reward_multiple", "target_price",
-                "entry", "exit", "stop_loss", "take_profit", "risk_price", "result_r",
-                "profit", "commission", "swap", "net_profit", "volume", "reward_r",
-                "holding_bars", "atr", "spread_points", "score", "failure_type",
-                "session_invalidated", "invalidation_reason", "exit_reason", "position_id");
+      FileWriteString(handle, TradeHeaderLine() + "\r\n");
 
    double resultR = 0.0;
    if(tracked.riskPrice > 0.0)
@@ -2081,69 +2200,97 @@ void WriteTradeRow(const TrackedTrade &tracked,
       holdingBars = shift;
 
    string failureType = ClassifyFailure(tracked, exitReason, resultR);
+   string exitType = ExitTypeFromDeal(tracked, exitReason, resultR, holdingBars);
+   bool fullSlExit = exitType == "full_sl";
+   bool breakEvenExit = exitType == "break_even";
+   bool tpExit = exitType == "tp";
+   bool timeExit = exitType == "time";
+   double resultRBeforeBE = tracked.breakEvenTriggered ? tracked.breakEvenTriggerR : resultR;
+   double resultRAfterBE = tracked.breakEvenTriggered ? resultR - tracked.breakEvenTriggerR : 0.0;
    double netProfit = profit + commission + swap;
-   FileWrite(handle,
-             TimeToString(tracked.entryTime, TIME_DATE | TIME_SECONDS),
-             TimeToString(exitTime, TIME_DATE | TIME_SECONDS),
-             tracked.strategy,
-             tracked.symbol,
-             tracked.direction,
-             TimeToString(tracked.serverTime, TIME_DATE | TIME_SECONDS),
-             IntegerToString(tracked.serverHour),
-             IntegerToString(tracked.utcHour),
-             IntegerToString(tracked.jstHour),
-             tracked.sessionLabel,
-             TimeToString(tracked.sessionStartUtc, TIME_DATE | TIME_MINUTES),
-             IntegerToString(tracked.minutesFromSessionStart),
-             tracked.tradeWindowLabel,
-             BoolText(tracked.isWithinFirst60),
-             BoolText(tracked.isWithinFirst120),
-             IntegerToString(InpBrokerUtcOffsetHours),
-             tracked.selectedSymbolForSession,
-             tracked.selectedReason,
-             tracked.sessionCandidateSymbolMap,
-             tracked.entryPattern,
-             tracked.entryTrigger,
-             DoubleToString(tracked.necklineLevel, 8),
-             tracked.ltfWave3Timeframe,
-             tracked.htfWave3Direction,
-             BoolText(tracked.htfWave3Confirmed),
-             tracked.htfFractalAlignment,
-             BoolText(tracked.wave3AlignmentPassed),
-             DoubleToString(tracked.htfNearestResistance, 8),
-             DoubleToString(tracked.htfNearestSupport, 8),
-             DoubleToString(tracked.nearestObstaclePrice, 8),
-             tracked.nearestObstacleType,
-             DoubleToString(tracked.nearestObstacleDistanceR, 4),
-             tracked.retestReferenceType,
-             DoubleToString(tracked.retestReferencePrice, 8),
-             BoolText(tracked.cleanPathToTarget),
-             BoolText(tracked.hardObstaclePresentBeforeTarget),
-             BoolText(tracked.softObstaclePresentBeforeTarget),
-             BoolText(tracked.obstacleBlocked),
-             DoubleToString(tracked.targetRewardMultiple, 2),
-             DoubleToString(tracked.targetPrice, 8),
-             DoubleToString(tracked.entryPrice, 8),
-             DoubleToString(exitPrice, 8),
-             DoubleToString(tracked.stopLoss, 8),
-             DoubleToString(tracked.takeProfit, 8),
-             DoubleToString(tracked.riskPrice, 8),
-             DoubleToString(resultR, 4),
-             DoubleToString(profit, 2),
-             DoubleToString(commission, 2),
-             DoubleToString(swap, 2),
-             DoubleToString(netProfit, 2),
-             DoubleToString(tracked.volume, 3),
-             DoubleToString(tracked.rewardR, 3),
-             IntegerToString(holdingBars),
-             DoubleToString(tracked.atr, 8),
-             DoubleToString(tracked.spreadPoints, 2),
-             DoubleToString(tracked.score, 3),
-             failureType,
-             BoolText(tracked.sessionInvalidated),
-             tracked.invalidationReason,
-             exitReason,
-             IntegerToString((int)tracked.positionId));
+
+   string line = "";
+   CsvAppend(line, TimeToString(tracked.entryTime, TIME_DATE | TIME_SECONDS));
+   CsvAppend(line, TimeToString(exitTime, TIME_DATE | TIME_SECONDS));
+   CsvAppend(line, tracked.strategy);
+   CsvAppend(line, tracked.symbol);
+   CsvAppend(line, tracked.direction);
+   CsvAppend(line, TimeToString(tracked.serverTime, TIME_DATE | TIME_SECONDS));
+   CsvAppend(line, IntegerToString(tracked.serverHour));
+   CsvAppend(line, IntegerToString(tracked.utcHour));
+   CsvAppend(line, IntegerToString(tracked.jstHour));
+   CsvAppend(line, tracked.sessionLabel);
+   CsvAppend(line, TimeToString(tracked.sessionStartUtc, TIME_DATE | TIME_MINUTES));
+   CsvAppend(line, IntegerToString(tracked.minutesFromSessionStart));
+   CsvAppend(line, tracked.tradeWindowLabel);
+   CsvAppend(line, BoolText(tracked.isWithinFirst60));
+   CsvAppend(line, BoolText(tracked.isWithinFirst120));
+   CsvAppend(line, IntegerToString(InpBrokerUtcOffsetHours));
+   CsvAppend(line, tracked.selectedSymbolForSession);
+   CsvAppend(line, tracked.selectedReason);
+   CsvAppend(line, tracked.sessionCandidateSymbolMap);
+   CsvAppend(line, tracked.entryPattern);
+   CsvAppend(line, tracked.entryTrigger);
+   CsvAppend(line, DoubleToString(tracked.necklineLevel, 8));
+   CsvAppend(line, tracked.ltfWave3Timeframe);
+   CsvAppend(line, tracked.htfAlignmentMode);
+   CsvAppend(line, tracked.htfWave3Direction);
+   CsvAppend(line, BoolText(tracked.htfWave3Confirmed));
+   CsvAppend(line, tracked.htfFractalAlignment);
+   CsvAppend(line, BoolText(tracked.wave3AlignmentPassed));
+   CsvAppend(line, DoubleToString(tracked.htfNearestResistance, 8));
+   CsvAppend(line, DoubleToString(tracked.htfNearestSupport, 8));
+   CsvAppend(line, DoubleToString(tracked.nearestObstaclePrice, 8));
+   CsvAppend(line, tracked.nearestObstacleType);
+   CsvAppend(line, DoubleToString(tracked.nearestObstacleDistanceR, 4));
+   CsvAppend(line, tracked.retestReferenceType);
+   CsvAppend(line, DoubleToString(tracked.retestReferencePrice, 8));
+   CsvAppend(line, BoolText(tracked.cleanPathToTarget));
+   CsvAppend(line, BoolText(tracked.hardObstaclePresentBeforeTarget));
+   CsvAppend(line, BoolText(tracked.softObstaclePresentBeforeTarget));
+   CsvAppend(line, BoolText(tracked.obstacleBlocked));
+   CsvAppend(line, DoubleToString(tracked.targetRewardMultiple, 2));
+   CsvAppend(line, DoubleToString(tracked.targetPrice, 8));
+   CsvAppend(line, DoubleToString(tracked.entryPrice, 8));
+   CsvAppend(line, DoubleToString(exitPrice, 8));
+   CsvAppend(line, DoubleToString(tracked.stopLoss, 8));
+   CsvAppend(line, DoubleToString(tracked.takeProfit, 8));
+   CsvAppend(line, DoubleToString(tracked.riskPrice, 8));
+   CsvAppend(line, DoubleToString(resultR, 4));
+   CsvAppend(line, DoubleToString(tracked.initialStopLossPrice, 8));
+   CsvAppend(line, DoubleToString(tracked.currentStopLossPrice, 8));
+   CsvAppend(line, BoolText(tracked.breakEvenEnabled));
+   CsvAppend(line, BoolText(tracked.breakEvenTriggered));
+   CsvAppend(line, tracked.breakEvenTriggerType);
+   CsvAppend(line, DoubleToString(tracked.breakEvenTriggerR, 4));
+   CsvAppend(line, tracked.breakEvenTriggerTime > 0 ? TimeToString(tracked.breakEvenTriggerTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, IntegerToString(tracked.barsToBreakEven));
+   CsvAppend(line, DoubleToString(tracked.maxFavorableRBeforeExit, 4));
+   CsvAppend(line, DoubleToString(tracked.maxAdverseRBeforeExit, 4));
+   CsvAppend(line, exitType);
+   CsvAppend(line, BoolText(fullSlExit));
+   CsvAppend(line, BoolText(breakEvenExit));
+   CsvAppend(line, BoolText(tpExit));
+   CsvAppend(line, BoolText(timeExit));
+   CsvAppend(line, DoubleToString(resultRBeforeBE, 4));
+   CsvAppend(line, DoubleToString(resultRAfterBE, 4));
+   CsvAppend(line, DoubleToString(profit, 2));
+   CsvAppend(line, DoubleToString(commission, 2));
+   CsvAppend(line, DoubleToString(swap, 2));
+   CsvAppend(line, DoubleToString(netProfit, 2));
+   CsvAppend(line, DoubleToString(tracked.volume, 3));
+   CsvAppend(line, DoubleToString(tracked.rewardR, 3));
+   CsvAppend(line, IntegerToString(holdingBars));
+   CsvAppend(line, DoubleToString(tracked.atr, 8));
+   CsvAppend(line, DoubleToString(tracked.spreadPoints, 2));
+   CsvAppend(line, DoubleToString(tracked.score, 3));
+   CsvAppend(line, failureType);
+   CsvAppend(line, BoolText(tracked.sessionInvalidated));
+   CsvAppend(line, tracked.invalidationReason);
+   CsvAppend(line, exitReason);
+   CsvAppend(line, IntegerToString((int)tracked.positionId));
+   CsvAppend(line, tracked.breakEvenMode);
+   FileWriteString(handle, line + "\r\n");
    FileClose(handle);
   }
 
@@ -2161,7 +2308,8 @@ void WriteSummaryRow()
                 "orders_failed", "blocked", "closed_trades", "initial_equity",
                 "final_equity", "peak_equity", "daily_stopped", "drawdown_stopped",
                 "trade_window_label", "target_reward_multiple", "broker_utc_offset_used",
-                "session_windows_mode", "require_h4_h1_wave3_alignment", "use_m5_lower_tf_wave3");
+                "session_windows_mode", "require_h4_h1_wave3_alignment", "htf_alignment_mode",
+                "use_m5_lower_tf_wave3", "break_even_mode");
 
    FileWrite(handle,
              TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
@@ -2182,7 +2330,9 @@ void WriteSummaryRow()
              IntegerToString(InpBrokerUtcOffsetHours),
              "non_exclusive_independent_start_windows",
              BoolText(InpRequireH4H1Wave3Alignment),
-             BoolText(InpUseM5LowerTimeframeWave3));
+             HTFAlignmentModeName(),
+             BoolText(InpUseM5LowerTimeframeWave3),
+             BreakEvenModeName());
    FileClose(handle);
   }
 
@@ -2328,6 +2478,174 @@ bool HardRiskStopped()
    return g_dailyStopped || g_drawdownStopped;
   }
 
+double TradeFavorableR(const TrackedTrade &tracked, const double price)
+  {
+   if(tracked.riskPrice <= 0.0)
+      return 0.0;
+   if(tracked.direction == "LONG")
+      return (price - tracked.entryPrice) / tracked.riskPrice;
+   if(tracked.direction == "SHORT")
+      return (tracked.entryPrice - price) / tracked.riskPrice;
+   return 0.0;
+  }
+
+double TradeAdverseR(const TrackedTrade &tracked, const double price)
+  {
+   if(tracked.riskPrice <= 0.0)
+      return 0.0;
+   if(tracked.direction == "LONG")
+      return (tracked.entryPrice - price) / tracked.riskPrice;
+   if(tracked.direction == "SHORT")
+      return (price - tracked.entryPrice) / tracked.riskPrice;
+   return 0.0;
+  }
+
+void UpdateTradeExcursionWithBar(TrackedTrade &tracked, const MqlRates &bar)
+  {
+   if(tracked.riskPrice <= 0.0)
+      return;
+   double favorable = 0.0;
+   double adverse = 0.0;
+   if(tracked.direction == "LONG")
+     {
+      favorable = TradeFavorableR(tracked, bar.high);
+      adverse = TradeAdverseR(tracked, bar.low);
+     }
+   else if(tracked.direction == "SHORT")
+     {
+      favorable = TradeFavorableR(tracked, bar.low);
+      adverse = TradeAdverseR(tracked, bar.high);
+     }
+   tracked.maxFavorableRBeforeExit = MathMax(tracked.maxFavorableRBeforeExit, favorable);
+   tracked.maxAdverseRBeforeExit = MathMax(tracked.maxAdverseRBeforeExit, adverse);
+  }
+
+void UpdateTradeExcursionWithPrice(TrackedTrade &tracked, const double price)
+  {
+   tracked.maxFavorableRBeforeExit = MathMax(tracked.maxFavorableRBeforeExit, TradeFavorableR(tracked, price));
+   tracked.maxAdverseRBeforeExit = MathMax(tracked.maxAdverseRBeforeExit, TradeAdverseR(tracked, price));
+  }
+
+double BreakEvenPrice(const TrackedTrade &tracked)
+  {
+   double point = SymbolInfoDouble(tracked.symbol, SYMBOL_POINT);
+   int digits = (int)SymbolInfoInteger(tracked.symbol, SYMBOL_DIGITS);
+   double offset = MathMax(0.0, InpBreakEvenOffsetPoints) * point;
+   double price = tracked.entryPrice;
+   if(tracked.direction == "LONG")
+      price += offset;
+   else if(tracked.direction == "SHORT")
+      price -= offset;
+   return NormalizeDouble(price, digits);
+  }
+
+bool BreakEvenTriggerReached(const TrackedTrade &tracked,
+                             const MqlRates &bar,
+                             double &triggerR,
+                             string &triggerType)
+  {
+   triggerR = TradeFavorableR(tracked, bar.close);
+   triggerType = "none";
+   if(InpBreakEvenMode == BREAK_EVEN_DISABLED)
+      return false;
+   if(InpBreakEvenMode == BREAK_EVEN_AT_1_0R)
+     {
+      triggerType = "price_1_0r_close";
+      return triggerR >= 1.0;
+     }
+   if(InpBreakEvenMode == BREAK_EVEN_AT_1_1R)
+     {
+      triggerType = "price_1_1r_close";
+      return triggerR >= 1.1;
+     }
+   if(InpBreakEvenMode == BREAK_EVEN_TIME_30MIN_AND_0_5R_OR_1_0R)
+     {
+      int elapsedSeconds = (int)(bar.time - tracked.entryTime);
+      if(triggerR >= 1.0)
+        {
+         triggerType = "price_1_0r_close";
+         return true;
+        }
+      if(elapsedSeconds >= 30 * 60 && triggerR >= 0.5)
+        {
+         triggerType = "time_30min_0_5r_close";
+         return true;
+        }
+     }
+   triggerType = "none";
+   return false;
+  }
+
+bool CanMoveStopToBreakEven(const TrackedTrade &tracked, const double breakEvenPrice)
+  {
+   MqlTick tick;
+   if(!SymbolInfoTick(tracked.symbol, tick))
+      return false;
+   double point = SymbolInfoDouble(tracked.symbol, SYMBOL_POINT);
+   int stopsLevel = (int)SymbolInfoInteger(tracked.symbol, SYMBOL_TRADE_STOPS_LEVEL);
+   double minDistance = (stopsLevel + 2) * point;
+   if(tracked.direction == "LONG")
+     {
+      if(tracked.currentStopLossPrice >= breakEvenPrice)
+         return false;
+      return tick.bid - breakEvenPrice >= minDistance;
+     }
+   if(tracked.direction == "SHORT")
+     {
+      if(tracked.currentStopLossPrice <= breakEvenPrice)
+         return false;
+      return breakEvenPrice - tick.ask >= minDistance;
+     }
+   return false;
+  }
+
+void ManageBreakEvenStops()
+  {
+   if(InpBreakEvenMode == BREAK_EVEN_DISABLED)
+      return;
+
+   trade.SetExpertMagicNumber(InpMagicNumber);
+   for(int i = 0; i < ArraySize(g_trades); ++i)
+     {
+      if(!g_trades[i].active || g_trades[i].breakEvenTriggered)
+         continue;
+      if(!PositionSelect(g_trades[i].symbol))
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      if((long)PositionGetInteger(POSITION_IDENTIFIER) != g_trades[i].positionId)
+         continue;
+
+      MqlRates rates[];
+      if(!CopyClosedRates(g_trades[i].symbol, InpScanTF, 1, rates))
+         continue;
+      if(rates[0].time <= g_trades[i].lastManagementBarTime)
+         continue;
+
+      g_trades[i].lastManagementBarTime = rates[0].time;
+      UpdateTradeExcursionWithBar(g_trades[i], rates[0]);
+
+      double triggerR = 0.0;
+      string triggerType = "none";
+      if(!BreakEvenTriggerReached(g_trades[i], rates[0], triggerR, triggerType))
+         continue;
+
+      double bePrice = BreakEvenPrice(g_trades[i]);
+      if(!CanMoveStopToBreakEven(g_trades[i], bePrice))
+         continue;
+
+      if(trade.PositionModify(g_trades[i].symbol, bePrice, g_trades[i].takeProfit))
+        {
+         g_trades[i].breakEvenTriggered = true;
+         g_trades[i].breakEvenTriggerType = triggerType;
+         g_trades[i].breakEvenTriggerR = triggerR;
+         g_trades[i].breakEvenTriggerTime = rates[0].time;
+         g_trades[i].barsToBreakEven = iBarShift(g_trades[i].symbol, InpScanTF, g_trades[i].entryTime, false);
+         g_trades[i].currentStopLossPrice = PositionGetDouble(POSITION_SL);
+        }
+     }
+  }
+
 void TrackNewPosition(const SignalPlan &plan, const double volume)
   {
    if(!PositionSelect(plan.symbol))
@@ -2362,6 +2680,7 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].necklineLevel = plan.necklineLevel;
    g_trades[size].ltfWave3Direction = plan.ltfWave3Direction;
    g_trades[size].ltfWave3Timeframe = plan.ltfWave3Timeframe;
+   g_trades[size].htfAlignmentMode = plan.htfAlignmentMode;
    g_trades[size].htfWave3Direction = plan.htfWave3Direction;
    g_trades[size].htfWave3Confirmed = plan.htfWave3Confirmed;
    g_trades[size].htfH4Wave3Direction = plan.htfH4Wave3Direction;
@@ -2384,6 +2703,18 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].obstacleBlocked = plan.obstacleBlocked;
    g_trades[size].targetRewardMultiple = plan.targetRewardMultiple;
    g_trades[size].targetPrice = plan.targetPrice;
+   g_trades[size].breakEvenMode = BreakEvenModeName();
+   g_trades[size].breakEvenEnabled = InpBreakEvenMode != BREAK_EVEN_DISABLED;
+   g_trades[size].breakEvenTriggered = false;
+   g_trades[size].breakEvenTriggerType = "none";
+   g_trades[size].breakEvenTriggerR = 0.0;
+   g_trades[size].breakEvenTriggerTime = 0;
+   g_trades[size].barsToBreakEven = -1;
+   g_trades[size].initialStopLossPrice = plan.stopLoss;
+   g_trades[size].currentStopLossPrice = plan.stopLoss;
+   g_trades[size].maxFavorableRBeforeExit = 0.0;
+   g_trades[size].maxAdverseRBeforeExit = 0.0;
+   g_trades[size].lastManagementBarTime = 0;
    g_trades[size].entryFailureType = plan.failureType;
    g_trades[size].sessionInvalidated = plan.sessionInvalidated;
    g_trades[size].invalidationReason = plan.invalidationReason;
@@ -2519,6 +2850,7 @@ void ManageTimeStops()
 void ScanSymbols()
   {
    UpdateRiskAnchors();
+   ManageBreakEvenStops();
    ManageTimeStops();
 
    SignalPlan candidates[];
@@ -2628,6 +2960,7 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,
    datetime exitTime = (datetime)HistoryDealGetInteger(trans.deal, DEAL_TIME);
    string exitReason = EnumToString((ENUM_DEAL_REASON)HistoryDealGetInteger(trans.deal, DEAL_REASON));
 
+   UpdateTradeExcursionWithPrice(g_trades[trackedIndex], exitPrice);
    WriteTradeRow(g_trades[trackedIndex], exitTime, exitPrice, profit, commission, swap, exitReason);
    g_trades[trackedIndex].active = false;
    ++g_closedTradeCount;
@@ -2644,6 +2977,7 @@ int OnInit()
       InpHTFLookbackBars < 20 ||
       InpHTFWaveLookbackBars < 30 ||
       InpHTFWaveBreakBufferATR < 0.0 ||
+      InpBreakEvenOffsetPoints < 0.0 ||
       InpOpeningRangeMinutes < 5 ||
       InpPreSessionMinutes < 15 ||
       InpTargetRewardMultiple <= 0.0 ||
