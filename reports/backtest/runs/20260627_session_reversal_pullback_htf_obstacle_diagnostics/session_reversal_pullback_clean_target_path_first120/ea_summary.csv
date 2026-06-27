@@ -1,0 +1,2 @@
+time,strategy,symbols,signals,orders_sent,orders_failed,blocked,closed_trades,initial_equity,final_equity,peak_equity,daily_stopped,drawdown_stopped,trade_window_label,target_reward_multiple,broker_utc_offset_used
+2025.12.30 23:57:59,session_reversal_pullback_clean_target_path_first120,USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD,774,8,0,766,8,10000.00,9979.55,10018.20,false,false,first_120min,1.50,3

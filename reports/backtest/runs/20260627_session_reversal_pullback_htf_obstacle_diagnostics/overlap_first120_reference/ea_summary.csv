@@ -1,0 +1,2 @@
+time,strategy,symbols,signals,orders_sent,orders_failed,blocked,closed_trades,initial_equity,final_equity,peak_equity,daily_stopped,drawdown_stopped,trade_window_label,target_reward_multiple,broker_utc_offset_used
+2025.12.30 23:57:59,overlap_first120_reference,USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD,258,121,0,137,121,10000.00,9515.50,10050.85,false,false,first_120min,1.50,3
