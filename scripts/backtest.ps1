@@ -157,6 +157,7 @@ $generatedConfigPath = $null
 $resolvedPresetPath = $null
 $presetName = $null
 $presetValue = $null
+$effectiveExpertParametersName = $null
 
 if ($presetSourceLine) {
     $presetValue = ($presetSourceLine -replace '^\s*PresetSource=', '').Trim()
@@ -180,10 +181,33 @@ if ($presetSourceLine) {
         throw "Could not determine preset name for '$resolvedPresetPath'."
     }
 
-    $candidatePresetTargets = @(
-        (Join-Path $terminalDataRoot "MQL5\Profiles\Tester"),
-        (Join-Path (Split-Path -Parent $resolvedTerminalPath) "Profiles\Tester")
-    ) | Select-Object -Unique
+    $expertValue = Get-ConfigValue -Lines $configLines -Key "Expert"
+    if ($expertValue) {
+        $effectiveExpertParametersName = [System.IO.Path]::GetFileNameWithoutExtension($expertValue) + ".set"
+    }
+    if (-not $effectiveExpertParametersName) {
+        $effectiveExpertParametersName = $presetName
+    }
+
+    $discoveredTerminalPresetTargets = @()
+    $appTerminalRoot = Join-Path $env:APPDATA "MetaQuotes\Terminal"
+    if ($expertValue -and (Test-Path $appTerminalRoot)) {
+        foreach ($terminalRoot in Get-ChildItem -LiteralPath $appTerminalRoot -Directory -ErrorAction SilentlyContinue) {
+            $candidateExpertPath = Join-Path $terminalRoot.FullName ("MQL5\Experts\" + $expertValue)
+            $candidateTesterProfile = Join-Path $terminalRoot.FullName "MQL5\Profiles\Tester"
+            if ((Test-Path $candidateExpertPath) -and (Test-Path (Split-Path -Parent $candidateTesterProfile))) {
+                $discoveredTerminalPresetTargets += $candidateTesterProfile
+            }
+        }
+    }
+
+    $candidatePresetTargets = @()
+    $candidatePresetTargets += (Join-Path $terminalDataRoot "MQL5\Profiles\Tester")
+    foreach ($discoveredPresetTarget in $discoveredTerminalPresetTargets) {
+        $candidatePresetTargets += $discoveredPresetTarget
+    }
+    $candidatePresetTargets += (Join-Path (Split-Path -Parent $resolvedTerminalPath) "Profiles\Tester")
+    $candidatePresetTargets = $candidatePresetTargets | Where-Object { $_ } | Select-Object -Unique
 
     $presetTargets = @()
     foreach ($candidateDir in $candidatePresetTargets) {
@@ -199,6 +223,12 @@ if ($presetSourceLine) {
     foreach ($presetDir in $presetTargets) {
         $targetPresetPath = Join-Path $presetDir $presetName
         Copy-Item -LiteralPath $resolvedPresetPath -Destination $targetPresetPath -Force -ErrorAction Stop
+        Write-Host "Preset copied: $targetPresetPath"
+        if ($effectiveExpertParametersName -ne $presetName) {
+            $targetEaPresetPath = Join-Path $presetDir $effectiveExpertParametersName
+            Copy-Item -LiteralPath $resolvedPresetPath -Destination $targetEaPresetPath -Force -ErrorAction Stop
+            Write-Host "EA preset copied: $targetEaPresetPath"
+        }
     }
 
     if ($presetTargets.Count -lt $candidatePresetTargets.Count) {
@@ -210,7 +240,7 @@ if ($presetSourceLine) {
             continue
         }
         if ($line -match '^\s*ExpertParameters=') {
-            "ExpertParameters=$presetName"
+            "ExpertParameters=$effectiveExpertParametersName"
             continue
         }
         $line
@@ -226,9 +256,9 @@ if ($presetSourceLine) {
             } else {
                 @()
             }
-            $filteredConfigLines = @($head + "ExpertParameters=$presetName" + $tail)
+            $filteredConfigLines = @($head + "ExpertParameters=$effectiveExpertParametersName" + $tail)
         } else {
-            $filteredConfigLines += "ExpertParameters=$presetName"
+            $filteredConfigLines += "ExpertParameters=$effectiveExpertParametersName"
         }
     }
 
@@ -349,6 +379,7 @@ if ($reportReady) {
         preset = if ($resolvedPresetPath) {
             [ordered]@{
                 name = $presetName
+                expert_parameters_name = $effectiveExpertParametersName
                 source = $presetValue
                 resolved_path = $resolvedPresetPath
                 parameters = Convert-PresetToHashtable -PresetPath $resolvedPresetPath
