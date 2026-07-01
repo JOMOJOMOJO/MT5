@@ -71,5 +71,28 @@ if ($exitCode -ne 0) {
     Write-Warning "MetaEditor returned exit code $exitCode, but the log reports a successful compile."
 }
 
+$marker = "\MQL5\Experts\"
+$markerIndex = $ex5Path.IndexOf($marker, [System.StringComparison]::OrdinalIgnoreCase)
+if ($markerIndex -ge 0) {
+    $relativeExpertPath = $ex5Path.Substring($markerIndex + $marker.Length)
+    $terminalRoot = Join-Path $env:APPDATA "MetaQuotes\Terminal"
+    if (Test-Path $terminalRoot) {
+        foreach ($terminalDir in Get-ChildItem -LiteralPath $terminalRoot -Directory -ErrorAction SilentlyContinue) {
+            $expertsDir = Join-Path $terminalDir.FullName "MQL5\Experts"
+            if (-not (Test-Path $expertsDir)) {
+                continue
+            }
+            $targetEx5Path = Join-Path $expertsDir $relativeExpertPath
+            if ($targetEx5Path -eq $ex5Path) {
+                continue
+            }
+            $targetDir = Split-Path -Parent $targetEx5Path
+            New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+            Copy-Item -LiteralPath $ex5Path -Destination $targetEx5Path -Force
+            Write-Host "Synced EX5: $targetEx5Path"
+        }
+    }
+}
+
 Write-Host "Compiled: $resolvedSource"
 Write-Host "Log: $LogPath"

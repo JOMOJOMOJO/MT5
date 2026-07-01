@@ -1,0 +1,7 @@
+﻿"group_name","group_value","trades","net","pf","avg_R","win_rate","full_sl","tp","break_even","time_exit"
+"c1_full_hard_wave3:cycle","c1_full_hard_wave3","163","-272.88","0.844","-0.0686","0.4663","63","24","0","76"
+"c2_q1_soft_bias:cycle","c2_q1_soft_bias","101","-74.66","0.935","-0.0319","0.4257","41","21","0","39"
+"c3_q1_retest_reclaim:cycle","c3_q1_retest_reclaim","99","-25.59","0.977","-0.0128","0.4343","39","21","0","39"
+"c4_q1_be_1_1r:cycle","c4_q1_be_1_1r","99","-93.88","0.914","-0.0426","0.4141","39","19","4","37"
+"c5_q1_break_then_retest:cycle","c5_q1_break_then_retest","98","-61.21","0.942","-0.0264","0.4388","39","18","0","41"
+"c6_full_cycle5_final:cycle","c6_full_cycle5_final","285","-700.13","0.788","-0.1046","0.4211","127","51","0","107"

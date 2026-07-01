@@ -80,6 +80,34 @@ function Test-RunComplete {
     return ($ReportPath -and (Test-Path -LiteralPath $ReportPath) -and (Test-Path -LiteralPath "$ReportPath.meta.json") -and $SummaryPath -and (Test-Path -LiteralPath $SummaryPath))
 }
 
+function Resolve-EaCsvPath {
+    param(
+        [string]$Folder,
+        [string]$ScenarioName,
+        [string]$Suffix
+    )
+    if (-not $Folder) {
+        return $null
+    }
+    $names = @(
+        ("fxsessionrev_{0}_{1}.csv" -f $ScenarioName, $Suffix),
+        ("fxsessionrev_session_reversal_pullback_{0}_{1}.csv" -f $ScenarioName, $Suffix)
+    )
+    foreach ($name in $names) {
+        $candidate = Join-Path $Folder $name
+        if (Test-Path -LiteralPath $candidate) {
+            return $candidate
+        }
+    }
+    if (Test-Path -LiteralPath $Folder) {
+        $match = Get-ChildItem -LiteralPath $Folder -Filter ("fxsessionrev_*_{0}.csv" -f $Suffix) -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($match) {
+            return $match.FullName
+        }
+    }
+    return (Join-Path $Folder $names[0])
+}
+
 function Append-Status {
     param([object]$Row)
     $exists = Test-Path -LiteralPath $statusPath
@@ -115,7 +143,7 @@ foreach ($run in $selected) {
     $reportPath = Get-ReportPathFromIni -IniPath $iniPath
     $logFolder = Get-LogFolderFromPreset -PresetPath $presetPath
     $commonRunFolder = if ($logFolder) { Join-Path $commonFiles $logFolder } else { $null }
-    $summaryPath = if ($commonRunFolder) { Join-Path $commonRunFolder ("fxsessionrev_" + $scenarioName + "_summary.csv") } else { $null }
+    $summaryPath = Resolve-EaCsvPath -Folder $commonRunFolder -ScenarioName $scenarioName -Suffix "summary"
 
     if (-not $Force -and (Test-RunComplete -ReportPath $reportPath -SummaryPath $summaryPath)) {
         Write-BatchLog "[$index/$($runs.Count)] SKIP completed run_id=$runId"
@@ -157,6 +185,7 @@ foreach ($run in $selected) {
     }
     $ended = Get-Date
     $duration = [int]($ended - $started).TotalSeconds
+    $summaryPath = Resolve-EaCsvPath -Folder $commonRunFolder -ScenarioName $scenarioName -Suffix "summary"
     $complete = Test-RunComplete -ReportPath $reportPath -SummaryPath $summaryPath
     $status = if ($exitCode -eq 0 -and $complete) {
         "completed"

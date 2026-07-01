@@ -315,6 +315,14 @@ struct PatternCandidate
    double            atr;
   };
 
+struct DowPivot
+  {
+   datetime          time;
+   double            price;
+   int               kind;     // 1 = swing high, -1 = swing low
+   int               shift;
+  };
+
 input string          InpSymbols                       = "USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD";
 input ENUM_SESSION_REVERSAL_SCENARIO InpScenarioMode   = SESSION_REVERSAL_ONE_SYMBOL_FIRST120;
 input ENUM_TIMEFRAMES InpScanTF                        = PERIOD_M15;
@@ -336,6 +344,12 @@ input int             InpSwingDepth                    = 3;
 input int             InpHTFLookbackBars               = 80;
 input int             InpHTFWaveLookbackBars           = 120;
 input double          InpHTFWaveBreakBufferATR         = 0.05;
+input bool            InpUseOrderedDowFractalStructure = true;
+input bool            InpTopContextTrendOnly           = true;
+input bool            InpAllowStructureTrendBiasWhenNoWave3 = false;
+input double          InpDowMinSwingATR                = 0.35;
+input double          InpDowStructureToleranceATR      = 0.10;
+input int             InpDowMinPivotsForTrend          = 4;
 input bool            InpRequireH4H1Wave3Alignment     = true;
 input ENUM_HTF_ALIGNMENT_MODE InpHTFAlignmentMode       = HTF_ALIGNMENT_STRICT_H4_H1;
 input ENUM_HTF_PERMISSION_MODE InpHTFPermissionMode     = HTF_PERMISSION_STRICT_PREFILTER;
@@ -356,6 +370,7 @@ input double          InpRoundNumberStepPips           = 50.0;
 input double          InpEqualLevelTolerancePips       = 6.0;
 input double          InpEqualLevelToleranceATR        = 0.12;
 input double          InpRetestToleranceATR            = 0.28;
+input bool            InpRequireRetestCloseBeyondNeckline = true;
 input double          InpBreakBufferATR                = 0.08;
 input double          InpStopBufferATR                 = 0.18;
 input double          InpMinSL_ATR                     = 0.35;
@@ -930,6 +945,282 @@ bool CollectRangeByTime(const string symbol,
    return high > 0.0 && low > 0.0;
   }
 
+bool IsConfirmedPivotAt(const MqlRates &rates[],
+                        const int shift,
+                        const bool wantHigh,
+                        const int depth)
+  {
+   int total = ArraySize(rates);
+   if(shift - depth < 0 || shift + depth >= total)
+      return false;
+
+   double candidate = wantHigh ? rates[shift].high : rates[shift].low;
+   for(int j = 1; j <= depth; ++j)
+     {
+      if(wantHigh)
+        {
+         if(candidate <= rates[shift - j].high || candidate <= rates[shift + j].high)
+            return false;
+        }
+      else
+        {
+         if(candidate >= rates[shift - j].low || candidate >= rates[shift + j].low)
+            return false;
+        }
+     }
+   return true;
+  }
+
+void AppendDowPivot(DowPivot &pivots[],
+                    const DowPivot &pivot,
+                    const double minSwingDistance)
+  {
+   int size = ArraySize(pivots);
+   if(size <= 0)
+     {
+      ArrayResize(pivots, 1);
+      pivots[0] = pivot;
+      return;
+     }
+
+   DowPivot last = pivots[size - 1];
+   if(last.kind == pivot.kind)
+     {
+      bool moreExtreme = (pivot.kind > 0 && pivot.price > last.price) ||
+                         (pivot.kind < 0 && pivot.price < last.price);
+      if(moreExtreme)
+         pivots[size - 1] = pivot;
+      return;
+     }
+
+   if(MathAbs(pivot.price - last.price) < minSwingDistance)
+      return;
+
+   ArrayResize(pivots, size + 1);
+   pivots[size] = pivot;
+  }
+
+bool CollectOrderedDowPivots(const string symbol,
+                             const ENUM_TIMEFRAMES tf,
+                             const int depth,
+                             const int lookback,
+                             DowPivot &pivots[],
+                             double &atr,
+                             string &state)
+  {
+   ArrayResize(pivots, 0);
+   atr = 0.0;
+   state = "none";
+
+   MqlRates rates[];
+   ArraySetAsSeries(rates, true);
+   int bars = MathMax(lookback + depth + 8, InpATRPeriod + depth * 2 + 12);
+   int copied = CopyRates(symbol, tf, 1, bars, rates);
+   if(copied < depth * 2 + 10)
+     {
+      state = "data_unavailable";
+      return false;
+     }
+
+   atr = ATR(rates, 0, InpATRPeriod);
+   if(atr <= 0.0)
+     {
+      state = "invalid_atr";
+      return false;
+     }
+
+   double minSwingDistance = atr * MathMax(0.0, InpDowMinSwingATR);
+   int maxShift = MathMin(copied - depth - 1, lookback);
+   for(int shift = maxShift; shift >= depth + 1; --shift)
+     {
+      if(IsConfirmedPivotAt(rates, shift, true, depth))
+        {
+         DowPivot pivot;
+         pivot.time = rates[shift].time;
+         pivot.price = rates[shift].high;
+         pivot.kind = 1;
+         pivot.shift = shift;
+         AppendDowPivot(pivots, pivot, minSwingDistance);
+        }
+      if(IsConfirmedPivotAt(rates, shift, false, depth))
+        {
+         DowPivot pivot;
+         pivot.time = rates[shift].time;
+         pivot.price = rates[shift].low;
+         pivot.kind = -1;
+         pivot.shift = shift;
+         AppendDowPivot(pivots, pivot, minSwingDistance);
+        }
+     }
+
+   int count = ArraySize(pivots);
+   if(count < InpDowMinPivotsForTrend)
+     {
+      state = "insufficient_ordered_dow_pivots";
+      return false;
+     }
+   state = "ordered_dow_pivots_ready";
+   return true;
+  }
+
+bool LastTwoDowPivotsOfKind(const DowPivot &pivots[],
+                            const int kind,
+                            double &latestPrice,
+                            double &previousPrice,
+                            datetime &latestTime,
+                            datetime &previousTime)
+  {
+   latestPrice = 0.0;
+   previousPrice = 0.0;
+   latestTime = 0;
+   previousTime = 0;
+   int found = 0;
+   for(int i = ArraySize(pivots) - 1; i >= 0; --i)
+     {
+      if(pivots[i].kind != kind)
+         continue;
+      if(found == 0)
+        {
+         latestPrice = pivots[i].price;
+         latestTime = pivots[i].time;
+         ++found;
+        }
+      else
+        {
+         previousPrice = pivots[i].price;
+         previousTime = pivots[i].time;
+         return true;
+        }
+     }
+   return false;
+  }
+
+int DetermineDowTrendDirectionOnTf(const string symbol,
+                                   const ENUM_TIMEFRAMES tf,
+                                   double &breakLevel,
+                                   double &pullbackLevel,
+                                   string &state)
+  {
+   breakLevel = 0.0;
+   pullbackLevel = 0.0;
+   state = "none";
+
+   DowPivot pivots[];
+   double atr = 0.0;
+   if(!CollectOrderedDowPivots(symbol, tf, InpSwingDepth, InpHTFWaveLookbackBars, pivots, atr, state))
+      return 0;
+
+   double latestHigh = 0.0;
+   double previousHigh = 0.0;
+   double latestLow = 0.0;
+   double previousLow = 0.0;
+   datetime latestHighTime = 0;
+   datetime previousHighTime = 0;
+   datetime latestLowTime = 0;
+   datetime previousLowTime = 0;
+   bool highs = LastTwoDowPivotsOfKind(pivots, 1, latestHigh, previousHigh, latestHighTime, previousHighTime);
+   bool lows = LastTwoDowPivotsOfKind(pivots, -1, latestLow, previousLow, latestLowTime, previousLowTime);
+   if(!highs || !lows)
+     {
+      state = "insufficient_ordered_dow_high_low_pairs";
+      return 0;
+     }
+
+   double tolerance = atr * MathMax(0.0, InpDowStructureToleranceATR);
+   bool higherHigh = latestHigh > previousHigh + tolerance;
+   bool higherLow = latestLow > previousLow - tolerance;
+   bool lowerLow = latestLow < previousLow - tolerance;
+   bool lowerHigh = latestHigh < previousHigh + tolerance;
+
+   if(higherHigh && higherLow && !(lowerLow && lowerHigh))
+     {
+      breakLevel = latestHigh;
+      pullbackLevel = latestLow;
+      state = "dow_trend_up_hh_hl";
+      return 1;
+     }
+   if(lowerLow && lowerHigh && !(higherHigh && higherLow))
+     {
+      breakLevel = latestLow;
+      pullbackLevel = latestHigh;
+      state = "dow_trend_down_ll_lh";
+      return -1;
+     }
+
+   state = "dow_range_or_transition";
+   return 0;
+  }
+
+int DetermineOrderedDowWave3DirectionOnTf(const string symbol,
+                                          const ENUM_TIMEFRAMES tf,
+                                          double &breakLevel,
+                                          double &pullbackLevel,
+                                          string &state)
+  {
+   breakLevel = 0.0;
+   pullbackLevel = 0.0;
+   state = "none";
+
+   DowPivot pivots[];
+   double atr = 0.0;
+   if(!CollectOrderedDowPivots(symbol, tf, InpSwingDepth, InpHTFWaveLookbackBars, pivots, atr, state))
+      return 0;
+
+   double latestHigh = 0.0;
+   double previousHigh = 0.0;
+   double latestLow = 0.0;
+   double previousLow = 0.0;
+   datetime latestHighTime = 0;
+   datetime previousHighTime = 0;
+   datetime latestLowTime = 0;
+   datetime previousLowTime = 0;
+   bool highs = LastTwoDowPivotsOfKind(pivots, 1, latestHigh, previousHigh, latestHighTime, previousHighTime);
+   bool lows = LastTwoDowPivotsOfKind(pivots, -1, latestLow, previousLow, latestLowTime, previousLowTime);
+   if(!highs || !lows)
+     {
+      state = "insufficient_ordered_dow_high_low_pairs";
+      return 0;
+     }
+
+   MqlRates rates[];
+   if(!CopyClosedRates(symbol, tf, MathMax(InpATRPeriod + 10, InpSwingDepth * 2 + 12), rates))
+     {
+      state = "data_unavailable";
+      return 0;
+     }
+
+   double closePrice = rates[0].close;
+   double breakBuffer = atr * InpHTFWaveBreakBufferATR;
+   double tolerance = atr * MathMax(0.0, InpDowStructureToleranceATR);
+   bool higherPullback = latestLow > previousLow - tolerance;
+   bool lowerPullback = latestHigh < previousHigh + tolerance;
+   bool longBreak = closePrice > latestHigh + breakBuffer;
+   bool shortBreak = closePrice < latestLow - breakBuffer;
+
+   if(longBreak && higherPullback && !(shortBreak && lowerPullback))
+     {
+      breakLevel = latestHigh;
+      pullbackLevel = latestLow;
+      state = "ordered_dow_wave3_break_above_swing_high";
+      return 1;
+     }
+   if(shortBreak && lowerPullback && !(longBreak && higherPullback))
+     {
+      breakLevel = latestLow;
+      pullbackLevel = latestHigh;
+      state = "ordered_dow_wave3_break_below_swing_low";
+      return -1;
+     }
+
+   if(longBreak && !higherPullback)
+      state = "break_above_without_higher_pullback";
+   else if(shortBreak && !lowerPullback)
+      state = "break_below_without_lower_pullback";
+   else
+      state = "no_ordered_dow_wave3_break";
+   return 0;
+  }
+
 bool FindConfirmedSwingLevel(const string symbol,
                              const ENUM_TIMEFRAMES tf,
                              const bool wantHigh,
@@ -1050,6 +1341,9 @@ int DetermineWave3DirectionOnTf(const string symbol,
                                 double &pullbackLevel,
                                 string &state)
   {
+   if(InpUseOrderedDowFractalStructure)
+      return DetermineOrderedDowWave3DirectionOnTf(symbol, tf, breakLevel, pullbackLevel, state);
+
    breakLevel = 0.0;
    pullbackLevel = 0.0;
    state = "none";
@@ -1131,8 +1425,25 @@ void PopulateHtfDirectionDiagnostics(const string symbol,
   {
    string topState = "";
    string structureState = "";
-   topDirection = DetermineWave3DirectionOnTf(symbol, InpTopContextTF, topBreak, topPullback, topState);
+   if(InpUseOrderedDowFractalStructure && InpTopContextTrendOnly)
+      topDirection = DetermineDowTrendDirectionOnTf(symbol, InpTopContextTF, topBreak, topPullback, topState);
+   else
+      topDirection = DetermineWave3DirectionOnTf(symbol, InpTopContextTF, topBreak, topPullback, topState);
    structureDirection = DetermineWave3DirectionOnTf(symbol, InpStructureTF, structureBreak, structurePullback, structureState);
+   if(structureDirection == 0 && InpUseOrderedDowFractalStructure && InpAllowStructureTrendBiasWhenNoWave3)
+     {
+      double trendBreak = 0.0;
+      double trendPullback = 0.0;
+      string trendState = "";
+      int trendDirection = DetermineDowTrendDirectionOnTf(symbol, InpStructureTF, trendBreak, trendPullback, trendState);
+      if(trendDirection != 0)
+        {
+         structureDirection = trendDirection;
+         structureBreak = trendBreak;
+         structurePullback = trendPullback;
+         structureState = "structure_trend_bias_" + trendState;
+        }
+     }
 
    plan.htfH4Wave3Direction = DirectionText(topDirection);
    plan.htfH1Wave3Direction = DirectionText(structureDirection);
@@ -1377,10 +1688,9 @@ bool DetectDoubleBottom(const string symbol, const MqlRates &rates[], const doub
          neckline = HighestHigh(rates, right + 1, left - right - 1);
          if(neckline <= 0.0)
             continue;
-         bool broke = rates[1].close > neckline + atr * InpBreakBufferATR ||
-                      rates[0].close > neckline + atr * InpBreakBufferATR;
-         bool retest = rates[0].low <= neckline + atr * InpRetestToleranceATR &&
-                       rates[0].close >= neckline - atr * InpBreakBufferATR;
+          bool broke = rates[1].close > neckline + atr * InpBreakBufferATR;
+          bool retest = rates[0].low <= neckline + atr * InpRetestToleranceATR &&
+                        (InpRequireRetestCloseBeyondNeckline ? rates[0].close > neckline : rates[0].close >= neckline - atr * InpBreakBufferATR);
          if(broke && retest)
            {
             stopAnchor = MathMin(rates[right].low, rates[left].low);
@@ -1410,10 +1720,9 @@ bool DetectInverseHeadAndShoulders(const MqlRates &rates[], const double atr, do
             double leftNeck = HighestHigh(rates, head + 1, left - head - 1);
             double rightNeck = HighestHigh(rates, right + 1, head - right - 1);
             neckline = MathMax(leftNeck, rightNeck);
-            bool broke = rates[1].close > neckline + atr * InpBreakBufferATR ||
-                         rates[0].close > neckline + atr * InpBreakBufferATR;
-            bool retest = rates[0].low <= neckline + atr * InpRetestToleranceATR &&
-                          rates[0].close >= neckline - atr * InpBreakBufferATR;
+             bool broke = rates[1].close > neckline + atr * InpBreakBufferATR;
+             bool retest = rates[0].low <= neckline + atr * InpRetestToleranceATR &&
+                           (InpRequireRetestCloseBeyondNeckline ? rates[0].close > neckline : rates[0].close >= neckline - atr * InpBreakBufferATR);
             if(neckline > 0.0 && broke && retest)
               {
                stopAnchor = headLow;
@@ -1438,10 +1747,9 @@ bool DetectDoubleTop(const string symbol, const MqlRates &rates[], const double 
          neckline = LowestLow(rates, right + 1, left - right - 1);
          if(neckline <= 0.0)
             continue;
-         bool broke = rates[1].close < neckline - atr * InpBreakBufferATR ||
-                      rates[0].close < neckline - atr * InpBreakBufferATR;
-         bool retest = rates[0].high >= neckline - atr * InpRetestToleranceATR &&
-                       rates[0].close <= neckline + atr * InpBreakBufferATR;
+          bool broke = rates[1].close < neckline - atr * InpBreakBufferATR;
+          bool retest = rates[0].high >= neckline - atr * InpRetestToleranceATR &&
+                        (InpRequireRetestCloseBeyondNeckline ? rates[0].close < neckline : rates[0].close <= neckline + atr * InpBreakBufferATR);
          if(broke && retest)
            {
             stopAnchor = MathMax(rates[right].high, rates[left].high);
@@ -1471,10 +1779,9 @@ bool DetectHeadAndShoulders(const MqlRates &rates[], const double atr, double &n
             double leftNeck = LowestLow(rates, head + 1, left - head - 1);
             double rightNeck = LowestLow(rates, right + 1, head - right - 1);
             neckline = MathMin(leftNeck, rightNeck);
-            bool broke = rates[1].close < neckline - atr * InpBreakBufferATR ||
-                         rates[0].close < neckline - atr * InpBreakBufferATR;
-            bool retest = rates[0].high >= neckline - atr * InpRetestToleranceATR &&
-                          rates[0].close <= neckline + atr * InpBreakBufferATR;
+             bool broke = rates[1].close < neckline - atr * InpBreakBufferATR;
+             bool retest = rates[0].high >= neckline - atr * InpRetestToleranceATR &&
+                           (InpRequireRetestCloseBeyondNeckline ? rates[0].close < neckline : rates[0].close <= neckline + atr * InpBreakBufferATR);
             if(neckline > 0.0 && broke && retest)
               {
                stopAnchor = headHigh;
@@ -1513,7 +1820,7 @@ bool DetectLongPattern(const string symbol,
    if(DetectInverseHeadAndShoulders(rates, atr, localNeck, localStop))
      {
       pattern = "inverse_head_and_shoulders";
-      trigger = "right_shoulder_entry";
+      trigger = "neckline_break_retest";
       neckline = localNeck;
       stopAnchor = localStop;
       score = 4.5;
@@ -1598,7 +1905,7 @@ bool DetectShortPattern(const string symbol,
    if(DetectHeadAndShoulders(rates, atr, localNeck, localStop))
      {
       pattern = "head_and_shoulders";
-      trigger = "right_shoulder_entry";
+      trigger = "neckline_break_retest";
       neckline = localNeck;
       stopAnchor = localStop;
       score = 4.5;
@@ -2993,18 +3300,25 @@ void WriteSummaryRow()
                 "orders_failed", "blocked", "closed_trades", "initial_equity",
                 "final_equity", "peak_equity", "daily_stopped", "drawdown_stopped",
                 "trade_window_label", "target_reward_multiple", "broker_utc_offset_used",
-                "session_windows_mode", "require_h4_h1_wave3_alignment", "htf_alignment_mode",
-                "htf_permission_mode", "filter_orderable_before_session_selection",
-                "use_m5_lower_tf_wave3", "top_context_tf", "structure_tf", "primary_entry_tf",
-                "secondary_entry_tf", "use_secondary_entry_tf", "require_structure_tf_confirmation",
-                "use_top_tf_as_opposite_filter_only", "use_fib_pullback_score", "require_fib_pullback_zone",
-                "fib_preferred_min", "fib_preferred_max", "fib_deep_max", "break_even_mode",
-                "htf_permission_rejections", "preselection_rejections");
+                 "session_windows_mode", "require_h4_h1_wave3_alignment", "htf_alignment_mode",
+                 "htf_permission_mode", "filter_orderable_before_session_selection",
+                 "use_m5_lower_tf_wave3", "top_context_tf", "structure_tf", "primary_entry_tf",
+                 "secondary_entry_tf", "use_secondary_entry_tf", "require_structure_tf_confirmation",
+                 "use_top_tf_as_opposite_filter_only", "use_ordered_dow_fractal_structure",
+                 "top_context_trend_only", "allow_structure_trend_bias_when_no_wave3",
+                 "dow_min_swing_atr", "dow_structure_tolerance_atr",
+                 "dow_min_pivots_for_trend", "use_fib_pullback_score", "require_fib_pullback_zone",
+                 "fib_preferred_min", "fib_preferred_max", "fib_deep_max",
+                 "require_retest_close_beyond_neckline", "break_even_mode",
+                 "htf_permission_rejections", "preselection_rejections");
+
+   string symbolsForSummary = InpSymbols;
+   StringReplace(symbolsForSummary, ",", ";");
 
    FileWrite(handle,
-             TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
-             ScenarioModeName(),
-             InpSymbols,
+              TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS),
+              ScenarioModeName(),
+              symbolsForSummary,
              IntegerToString((int)g_signalCount),
              IntegerToString((int)g_orderSentCount),
              IntegerToString((int)g_orderFailedCount),
@@ -3028,15 +3342,22 @@ void WriteSummaryRow()
              TFName(InpStructureTF),
              TFName(InpPrimaryEntryTF),
              TFName(InpSecondaryEntryTF),
-             BoolText(InpUseSecondaryEntryTF),
-             BoolText(InpRequireStructureTFConfirmation),
-             BoolText(InpUseTopTFAsOppositeFilterOnly),
-             BoolText(InpUseFibPullbackScore),
-             BoolText(InpRequireFibPullbackZone),
-             DoubleToString(InpFibPreferredMin, 3),
-             DoubleToString(InpFibPreferredMax, 3),
-             DoubleToString(InpFibDeepMax, 3),
-             BreakEvenModeName(),
+              BoolText(InpUseSecondaryEntryTF),
+              BoolText(InpRequireStructureTFConfirmation),
+              BoolText(InpUseTopTFAsOppositeFilterOnly),
+              BoolText(InpUseOrderedDowFractalStructure),
+              BoolText(InpTopContextTrendOnly),
+              BoolText(InpAllowStructureTrendBiasWhenNoWave3),
+              DoubleToString(InpDowMinSwingATR, 3),
+              DoubleToString(InpDowStructureToleranceATR, 3),
+              IntegerToString(InpDowMinPivotsForTrend),
+              BoolText(InpUseFibPullbackScore),
+              BoolText(InpRequireFibPullbackZone),
+              DoubleToString(InpFibPreferredMin, 3),
+              DoubleToString(InpFibPreferredMax, 3),
+              DoubleToString(InpFibDeepMax, 3),
+              BoolText(InpRequireRetestCloseBeyondNeckline),
+              BreakEvenModeName(),
              IntegerToString((int)g_htfPermissionRejectedCount),
              IntegerToString((int)g_preselectionRejectedCount));
    FileClose(handle);
@@ -3746,6 +4067,9 @@ int OnInit()
       InpHTFLookbackBars < 20 ||
       InpHTFWaveLookbackBars < 30 ||
       InpHTFWaveBreakBufferATR < 0.0 ||
+      InpDowMinSwingATR < 0.0 ||
+      InpDowStructureToleranceATR < 0.0 ||
+      InpDowMinPivotsForTrend < 4 ||
       InpBreakEvenOffsetPoints < 0.0 ||
       InpOpeningRangeMinutes < 5 ||
       InpPreSessionMinutes < 15 ||

@@ -207,13 +207,28 @@ def run_folder(run):
     return COMMON_FILES / f"fx_session_reversal_timeframes_{run['run_id']}_2025"
 
 
+def resolve_ea_csv(folder, scenario_name, suffix):
+    names = [
+        f"fxsessionrev_{scenario_name}_{suffix}.csv",
+        f"fxsessionrev_session_reversal_pullback_{scenario_name}_{suffix}.csv",
+    ]
+    for name in names:
+        candidate = folder / name
+        if candidate.exists():
+            return candidate
+    matches = sorted(folder.glob(f"fxsessionrev_*_{suffix}.csv")) if folder.exists() else []
+    if matches:
+        return matches[0]
+    return folder / names[0]
+
+
 def csv_names(run):
     folder = run_folder(run)
     scenario_name = run["scenario_name"]
     return {
-        "signals": folder / f"fxsessionrev_{scenario_name}_signals.csv",
-        "trades": folder / f"fxsessionrev_{scenario_name}_trades.csv",
-        "summary": folder / f"fxsessionrev_{scenario_name}_summary.csv",
+        "signals": resolve_ea_csv(folder, scenario_name, "signals"),
+        "trades": resolve_ea_csv(folder, scenario_name, "trades"),
+        "summary": resolve_ea_csv(folder, scenario_name, "summary"),
     }
 
 
@@ -339,9 +354,9 @@ def main():
         shutil.copy2(compile_log, OUT / "compile.log")
 
     london_current = best_row(comparison, lambda r: r["scenario_id"] == "london_first120_reference" and r["timeframe_config_id"] == "current_default" and r["break_even_id"] == "no_be")
-    london_h1 = best_row(comparison, lambda r: r["scenario_id"] == "london_first120_reference" and r["timeframe_config_id"].startswith("h1_m15_m5"))
+    london_h1 = best_row(comparison, lambda r: r["scenario_id"] == "london_first120_reference" and r["timeframe_config_id"].startswith("h1_"))
     best_current = best_row(comparison, lambda r: r["timeframe_config_id"] == "current_default", lambda r: (fnum(r.get("avg_r")), fnum(r.get("profit_factor"))))
-    best_h1 = best_row(comparison, lambda r: r["timeframe_config_id"].startswith("h1_m15_m5"), lambda r: (fnum(r.get("avg_r")), fnum(r.get("profit_factor")), fnum(r.get("trades"))))
+    best_h1 = best_row(comparison, lambda r: r["timeframe_config_id"].startswith("h1_"), lambda r: (fnum(r.get("avg_r")), fnum(r.get("profit_factor")), fnum(r.get("trades"))))
     best_m5 = best_row(comparison, lambda r: r["primary_entry_tf"] == "PERIOD_M5", lambda r: (fnum(r.get("avg_r")), fnum(r.get("profit_factor")), fnum(r.get("trades"))))
     dual = best_row(comparison, lambda r: r["timeframe_config_id"] == "h1_m15_m5_dual_entry", lambda r: (fnum(r.get("avg_r")), fnum(r.get("profit_factor"))))
     fib_score = best_row(comparison, lambda r: r["timeframe_config_id"] == "h1_m15_m5_with_fib_score", lambda r: (fnum(r.get("avg_r")), fnum(r.get("profit_factor")), fnum(r.get("trades"))))
@@ -357,16 +372,16 @@ def main():
         "",
         "## Implementation",
         "- Timeframes are input-parameterized as `InpTopContextTF`, `InpStructureTF`, `InpPrimaryEntryTF`, and `InpSecondaryEntryTF`.",
-        "- The default H4/H1/M15/M5 structure is reproduced through inputs, while H1/M15/M5 variants use M5 as the main trigger.",
+        "- The default H4/H1/M15/M5 structure is reproduced through inputs, while H1/M15/M5 and H1/M30/M5 variants use M5 as the main trigger.",
         "- Primary and secondary entry candidates are both scored when secondary is enabled; the highest score is selected.",
         "- First-60 time score is removed; time is retained as gate and diagnostic bucket only.",
         "- Fib pullback is coarse diagnostic/scoring only, with no fine threshold optimization.",
         "",
         "## Required Answers",
         f"0. Matrix completion: {len(completed_runs)} / {len(comparison)} runs completed. Missing rows are marked `missing_or_failed` in `comparison.csv`; the MT5 terminal stopped progressing after broker authorization/synchronization failures, so incomplete rows are not interpreted as strategy evidence.",
-        f"1. London first120 count over 26: current default no_BE was {row_desc(london_current)}; best H1/M15/M5 London row was {row_desc(london_h1)}.",
+        f"1. London first120 count over 26: current default no_BE was {row_desc(london_current)}; best H1 fractal-stack London row was {row_desc(london_h1)}.",
         f"2. PF / avg_R with trade count increase: compare the London rows above; low-count London remains diagnostic-only below 200 trades.",
-        f"3. Better than current_default: best current_default row was {row_desc(best_current)}; best H1/M15/M5 row was {row_desc(best_h1)}.",
+        f"3. Better than current_default: best current_default row was {row_desc(best_current)}; best H1 fractal-stack row was {row_desc(best_h1)}.",
         f"4. M5 trigger: best primary M5 row was {row_desc(best_m5)}; entry timeframe details are in `entry_timeframe_breakdown.csv`.",
         f"5. M15 as structure confirmation: best dual-entry row was {row_desc(dual)}.",
         f"6. Fib score: best fib-score row was {row_desc(fib_score)}; fib zone details are in `fib_zone_breakdown.csv`.",
