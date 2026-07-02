@@ -67,6 +67,47 @@ enum ENUM_NESTED_THIRDWAVE_MODE
    NESTED_THIRDWAVE_REQUIRED = 3
   };
 
+enum ENUM_SESSION_GATE_MODE
+  {
+   SESSION_GATE_EXISTING_FIRST120 = 0,
+   SESSION_GATE_NONE_DIAGNOSTIC = 1,
+   SESSION_GATE_ACTIVE_LABEL_ONLY = 2,
+   SESSION_GATE_ALLOW_LATE_STRUCTURE = 3
+  };
+
+enum ENUM_M5_CORRECTIVE_MODE
+  {
+   M5_CORRECTIVE_OFF = 0,
+   M5_CORRECTIVE_DIAGNOSTIC_ONLY = 1,
+   M5_CORRECTIVE_SCORE = 2,
+   M5_CORRECTIVE_REQUIRED = 3
+  };
+
+enum ENUM_M15_WAVE_CONTEXT_MODE
+  {
+   M15_WAVE_CONTEXT_OFF = 0,
+   M15_WAVE_CONTEXT_DIAGNOSTIC_ONLY = 1,
+   M15_WAVE_CONTEXT_SCORE = 2,
+   M15_WAVE_CONTEXT_REQUIRED_LIGHT = 3,
+   M15_WAVE_CONTEXT_REQUIRED_STRICT = 4
+  };
+
+enum ENUM_EXIT_MODE
+  {
+   EXIT_FIXED_TP_SL = 0,
+   EXIT_M5_FAILURE = 1,
+   EXIT_M5_FAILURE_STRUCTURE_TARGET = 2,
+   EXIT_M5_FAILURE_SHORTER_HOLD = 3
+  };
+
+enum ENUM_STRUCTURE_TARGET_MODE
+  {
+   STRUCTURE_TARGET_OFF = 0,
+   STRUCTURE_TARGET_PRIOR_M15_SWING = 1,
+   STRUCTURE_TARGET_M15_WAVE3_PROJECTION = 2,
+   STRUCTURE_TARGET_NEAREST_HTF_OBSTACLE = 3
+  };
+
 struct SessionInfo
   {
    bool              active;
@@ -107,6 +148,12 @@ struct SignalPlan
    string            selectedReason;
    string            sessionCandidateSymbolMap;
    string            sessionCandidateSymbols;
+   string            sessionGateMode;
+   string            activeSessionLabel;
+   bool              structureStartedInFirst120;
+   bool              entryAfterFirst120;
+   bool              sessionGatePass;
+   string            sessionGateRejectReason;
    string            entryPattern;
    string            entryTrigger;
    double            necklineLevel;
@@ -163,15 +210,36 @@ struct SignalPlan
    double            m15Wave2RetraceRatio;
    string            m15Wave2FibZone;
    double            m15Wave2FibScore;
+   string            m15WaveContextMode;
+   int               m15Wave2AgeBars;
+   double            m15WaveContextScore;
    bool              m5CorrectiveWaveDetected;
    string            m5CorrectiveDirection;
    int               m5CorrectiveSwingCount;
    bool              m5Corrective123Detected;
+   bool              m5CorrectiveABCDetected;
+   int               m5CorrectiveLegCount;
+   datetime          m5CorrectiveStartTime;
+   datetime          m5CorrectiveEndTime;
+   int               m5CorrectiveAgeBars;
+   double            m5CorrectivePullbackAtr;
+   double            m5CorrectiveLastLHLevel;
+   double            m5CorrectiveLastHLLevel;
+   double            m5CorrectiveInvalidationLevel;
    bool              m5CorrectiveInvalidation;
    string            m5InvalidationType;
    double            m5InvalidationLevel;
+   bool              m5InvalidationDetected;
+   bool              m5InvalidationCloseBreak;
+   double            m5InvalidationBreakAtr;
+   double            m5InvalidationBodyAtr;
    bool              postBreakAcceptancePass;
    int               postBreakAcceptanceBars;
+   double            postBreakReturnAtr;
+   bool              firstRetestAfterInvalidation;
+   int               barsFromInvalidationToEntry;
+   double            retestLevel;
+   double            retestDistanceAtr;
    string            sma75State;
    bool              sma75Reclaim;
    double            sma75GranvilleScore;
@@ -227,6 +295,11 @@ struct SignalPlan
    int               obstacleCountBeforeTarget;
    int               hardObstacleCountBeforeTarget;
    int               softObstacleCountBeforeTarget;
+   string            exitMode;
+   string            structureTargetMode;
+   string            structureTargetType;
+   double            structureTargetPrice;
+   double            structureTargetR;
    double            entry;
    double            stopLoss;
    double            takeProfit;
@@ -265,6 +338,12 @@ struct TrackedTrade
    string            selectedReason;
    string            sessionCandidateSymbolMap;
    string            sessionCandidateSymbols;
+   string            sessionGateMode;
+   string            activeSessionLabel;
+   bool              structureStartedInFirst120;
+   bool              entryAfterFirst120;
+   bool              sessionGatePass;
+   string            sessionGateRejectReason;
    string            entryPattern;
    string            entryTrigger;
    double            necklineLevel;
@@ -321,15 +400,36 @@ struct TrackedTrade
    double            m15Wave2RetraceRatio;
    string            m15Wave2FibZone;
    double            m15Wave2FibScore;
+   string            m15WaveContextMode;
+   int               m15Wave2AgeBars;
+   double            m15WaveContextScore;
    bool              m5CorrectiveWaveDetected;
    string            m5CorrectiveDirection;
    int               m5CorrectiveSwingCount;
    bool              m5Corrective123Detected;
+   bool              m5CorrectiveABCDetected;
+   int               m5CorrectiveLegCount;
+   datetime          m5CorrectiveStartTime;
+   datetime          m5CorrectiveEndTime;
+   int               m5CorrectiveAgeBars;
+   double            m5CorrectivePullbackAtr;
+   double            m5CorrectiveLastLHLevel;
+   double            m5CorrectiveLastHLLevel;
+   double            m5CorrectiveInvalidationLevel;
    bool              m5CorrectiveInvalidation;
    string            m5InvalidationType;
    double            m5InvalidationLevel;
+   bool              m5InvalidationDetected;
+   bool              m5InvalidationCloseBreak;
+   double            m5InvalidationBreakAtr;
+   double            m5InvalidationBodyAtr;
    bool              postBreakAcceptancePass;
    int               postBreakAcceptanceBars;
+   double            postBreakReturnAtr;
+   bool              firstRetestAfterInvalidation;
+   int               barsFromInvalidationToEntry;
+   double            retestLevel;
+   double            retestDistanceAtr;
    string            sma75State;
    bool              sma75Reclaim;
    double            sma75GranvilleScore;
@@ -379,6 +479,11 @@ struct TrackedTrade
    bool              obstacleBlocked;
    double            targetRewardMultiple;
    double            targetPrice;
+   string            exitMode;
+   string            structureTargetMode;
+   string            structureTargetType;
+   double            structureTargetPrice;
+   double            structureTargetR;
    string            breakEvenMode;
    bool              breakEvenEnabled;
    bool              breakEvenTriggered;
@@ -391,6 +496,15 @@ struct TrackedTrade
    double            maxFavorableRBeforeExit;
    double            maxAdverseRBeforeExit;
    datetime          lastManagementBarTime;
+   datetime          lastExcursionBarTime;
+   bool              reached05R;
+   bool              reached08R;
+   bool              reached10R;
+   bool              reached13R;
+   bool              reached15R;
+   int               barsTo05R;
+   int               barsTo10R;
+   int               barsTo13R;
    string            entryFailureType;
    bool              sessionInvalidated;
    string            invalidationReason;
@@ -504,6 +618,28 @@ input bool            InpRequireM15Wave2FibZone        = false;
 input bool            InpUseSma75GranvilleDiagnostic   = true;
 input bool            InpUseSma75GranvilleScore        = false;
 input bool            InpRequireSma75Granville         = false;
+input ENUM_SESSION_GATE_MODE InpSessionGateMode        = SESSION_GATE_EXISTING_FIRST120;
+input bool            InpUseM5CorrectiveABC            = false;
+input ENUM_M5_CORRECTIVE_MODE InpM5CorrectiveMode      = M5_CORRECTIVE_OFF;
+input int             InpM5CorrectiveMinSwings         = 3;
+input bool            InpM5CorrectiveRequireTwoLegs    = true;
+input int             InpM5CorrectiveMaxAgeBars        = 36;
+input double          InpM5CorrectiveMinPullbackAtr    = 0.35;
+input double          InpM5CorrectiveMaxPullbackAtr    = 3.0;
+input bool            InpRequireM5InvalidationClose    = false;
+input double          InpM5InvalidationMinBodyAtr      = 0.10;
+input double          InpM5InvalidationMinBreakAtr     = 0.05;
+input bool            InpUsePostBreakAcceptance        = false;
+input double          InpPostBreakMaxReturnAtr         = 0.20;
+input bool            InpRequireFirstRetestAfterInvalidation = false;
+input int             InpFirstRetestMaxBars            = 12;
+input ENUM_M15_WAVE_CONTEXT_MODE InpM15WaveContextMode = M15_WAVE_CONTEXT_OFF;
+input int             InpM15Wave2MaxAgeBars            = 24;
+input double          InpM15Wave2MinRetrace            = 0.236;
+input double          InpM15Wave2PreferredMin          = 0.382;
+input double          InpM15Wave2PreferredMax          = 0.786;
+input ENUM_EXIT_MODE  InpExitMode                      = EXIT_M5_FAILURE;
+input ENUM_STRUCTURE_TARGET_MODE InpStructureTargetMode = STRUCTURE_TARGET_OFF;
 input double          InpSessionInvalidationATR        = 0.85;
 input int             InpMaxHoldBars                   = 24;
 input double          InpRiskPerTradePercent           = 0.25;
@@ -713,6 +849,88 @@ string BreakEvenModeName()
    if(InpBreakEvenMode == BREAK_EVEN_TIME_30MIN_AND_0_5R_OR_1_0R)
       return "time_30min_and_0_5r_break_even";
    return "no_break_even";
+  }
+
+string SessionGateModeName()
+  {
+   if(InpSessionGateMode == SESSION_GATE_NONE_DIAGNOSTIC)
+      return "no_session_gate_diagnostic";
+   if(InpSessionGateMode == SESSION_GATE_ACTIVE_LABEL_ONLY)
+      return "active_session_label_only";
+   if(InpSessionGateMode == SESSION_GATE_ALLOW_LATE_STRUCTURE)
+      return "session_gate_but_allow_late_structure_completion";
+   return "existing_first120_gate";
+  }
+
+string M5CorrectiveModeName()
+  {
+   if(InpM5CorrectiveMode == M5_CORRECTIVE_DIAGNOSTIC_ONLY)
+      return "diagnostic_only";
+   if(InpM5CorrectiveMode == M5_CORRECTIVE_SCORE)
+      return "score";
+   if(InpM5CorrectiveMode == M5_CORRECTIVE_REQUIRED)
+      return "required";
+   return "off";
+  }
+
+string M15WaveContextModeName()
+  {
+   if(InpM15WaveContextMode == M15_WAVE_CONTEXT_DIAGNOSTIC_ONLY)
+      return "diagnostic_only";
+   if(InpM15WaveContextMode == M15_WAVE_CONTEXT_SCORE)
+      return "score";
+   if(InpM15WaveContextMode == M15_WAVE_CONTEXT_REQUIRED_LIGHT)
+      return "required_light";
+   if(InpM15WaveContextMode == M15_WAVE_CONTEXT_REQUIRED_STRICT)
+      return "required_strict";
+   return "off";
+  }
+
+string ExitModeName()
+  {
+   if(InpExitMode == EXIT_FIXED_TP_SL)
+      return "fixed_tp_sl";
+   if(InpExitMode == EXIT_M5_FAILURE_STRUCTURE_TARGET)
+      return "m5_failure_exit_structure_target";
+   if(InpExitMode == EXIT_M5_FAILURE_SHORTER_HOLD)
+      return "m5_failure_exit_shorter_hold_diagnostic";
+   return "m5_failure_exit";
+  }
+
+string StructureTargetModeName()
+  {
+   if(InpStructureTargetMode == STRUCTURE_TARGET_PRIOR_M15_SWING)
+      return "prior_m15_swing";
+   if(InpStructureTargetMode == STRUCTURE_TARGET_M15_WAVE3_PROJECTION)
+      return "m15_wave3_projection";
+   if(InpStructureTargetMode == STRUCTURE_TARGET_NEAREST_HTF_OBSTACLE)
+      return "nearest_htf_obstacle";
+   return "off";
+  }
+
+bool UsesM5CorrectiveABC()
+  {
+   return InpUseM5CorrectiveABC || InpM5CorrectiveMode != M5_CORRECTIVE_OFF;
+  }
+
+bool UsesM15WaveContext()
+  {
+   return InpM15WaveContextMode != M15_WAVE_CONTEXT_OFF;
+  }
+
+bool UsesPrimaryFailureExit()
+  {
+   return InpTranscriptUsePrimaryFailureExit ||
+          InpExitMode == EXIT_M5_FAILURE ||
+          InpExitMode == EXIT_M5_FAILURE_STRUCTURE_TARGET ||
+          InpExitMode == EXIT_M5_FAILURE_SHORTER_HOLD;
+  }
+
+int EffectiveMaxHoldBars()
+  {
+   if(InpExitMode == EXIT_M5_FAILURE_SHORTER_HOLD)
+      return MathMax(1, InpMaxHoldBars / 2);
+   return InpMaxHoldBars;
   }
 
 bool ScenarioAllowsSession(const string label)
@@ -949,10 +1167,41 @@ bool BuildSessionInfo(const datetime serverTime, SessionInfo &info)
 
 bool IsWithinTradeWindow(const SessionInfo &info)
   {
+   if(InpSessionGateMode == SESSION_GATE_NONE_DIAGNOSTIC ||
+      InpSessionGateMode == SESSION_GATE_ACTIVE_LABEL_ONLY)
+      return true;
    if(!info.active || !ScenarioAllowsSession(info.label))
       return false;
    int minutes = EffectiveWindowMinutes();
+   if(InpSessionGateMode == SESSION_GATE_ALLOW_LATE_STRUCTURE)
+      minutes = MathMax(minutes, 180);
    return info.minutesFromStart >= 0 && info.minutesFromStart < minutes;
+  }
+
+void BuildNoSessionInfo(const datetime serverTime, SessionInfo &info)
+  {
+   ResetSessionInfo(info);
+   MqlDateTime serverTm;
+   TimeToStruct(serverTime, serverTm);
+   datetime utcTime = serverTime - InpBrokerUtcOffsetHours * 3600;
+   MqlDateTime utcTm;
+   TimeToStruct(utcTime, utcTm);
+   datetime jstTime = utcTime + 9 * 3600;
+   MqlDateTime jstTm;
+   TimeToStruct(jstTime, jstTm);
+
+   info.active = false;
+   info.label = "none";
+   info.index = -1;
+   info.startUtcHour = -1;
+   info.sessionStartUtc = 0;
+   info.sessionStartServer = 0;
+   info.minutesFromStart = -1;
+   info.serverHour = serverTm.hour;
+   info.utcHour = utcTm.hour;
+   info.jstHour = jstTm.hour;
+   info.tradeWindowLabel = TradeWindowLabel();
+   info.sessionKey = "none_" + IntegerToString(DateKey(utcTime));
   }
 
 bool HasKey(const string &keys[], const string key)
@@ -1875,6 +2124,424 @@ bool PostBreakAcceptance(const string symbol,
                          StringFind(entryTrigger, "bos") >= 0 ||
                          StringFind(entryTrigger, "sweep") >= 0;
    return held && (retested || triggerAccepts);
+  }
+
+bool IsTimeWithinSessionWindow(const SignalPlan &plan,
+                               const datetime serverTime,
+                               const int windowMinutes)
+  {
+   if(plan.sessionStartUtc <= 0 || serverTime <= 0 || windowMinutes <= 0)
+      return false;
+   datetime sessionStartServer = plan.sessionStartUtc + InpBrokerUtcOffsetHours * 3600;
+   int minutes = (int)((serverTime - sessionStartServer) / 60);
+   return minutes >= 0 && minutes < windowMinutes;
+  }
+
+bool StructureStartedFirst120(const SignalPlan &plan)
+  {
+   if(plan.sessionStartUtc <= 0)
+      return false;
+   if(plan.m15Wave1Candidate && IsTimeWithinSessionWindow(plan, plan.serverTime - plan.m15Wave1AgeBars * PeriodSeconds(InpStructureTF), 120))
+      return true;
+   if(plan.m5CorrectiveStartTime > 0 && IsTimeWithinSessionWindow(plan, plan.m5CorrectiveStartTime, 120))
+      return true;
+   return false;
+  }
+
+bool FinalizeSessionGate(SignalPlan &plan)
+  {
+   plan.sessionGateMode = SessionGateModeName();
+   plan.structureStartedInFirst120 = StructureStartedFirst120(plan);
+
+   if(InpSessionGateMode == SESSION_GATE_NONE_DIAGNOSTIC ||
+      InpSessionGateMode == SESSION_GATE_ACTIVE_LABEL_ONLY)
+     {
+      plan.sessionGatePass = true;
+      plan.sessionGateRejectReason = "not_gated";
+      return true;
+     }
+
+   int effectiveWindow = EffectiveWindowMinutes();
+   if(plan.minutesFromSessionStart >= 0 && plan.minutesFromSessionStart < effectiveWindow)
+     {
+      plan.sessionGatePass = true;
+      plan.sessionGateRejectReason = "passed_first_window";
+      return true;
+     }
+
+   if(InpSessionGateMode == SESSION_GATE_ALLOW_LATE_STRUCTURE &&
+      plan.minutesFromSessionStart >= effectiveWindow &&
+      plan.minutesFromSessionStart < 180 &&
+      plan.structureStartedInFirst120)
+     {
+      plan.sessionGatePass = true;
+      plan.sessionGateRejectReason = "late_entry_allowed_structure_started_first120";
+      return true;
+     }
+
+   plan.sessionGatePass = false;
+   plan.sessionGateRejectReason = "session_gate_failed";
+   plan.reason = "session_gate_failed";
+   plan.failureType = "session_gate_failed";
+   return false;
+  }
+
+bool DetectRefinedM15WaveContext(SignalPlan &plan, const int entryDirection)
+  {
+   plan.m15WaveContextMode = M15WaveContextModeName();
+   if(!UsesM15WaveContext() && !UsesM5CorrectiveABC())
+      return true;
+
+   double waveHigh = 0.0;
+   double waveLow = 0.0;
+   int swingCount = 0;
+   plan.m15Wave1Candidate = FindRecentDirectionalBreakDetailed(plan.symbol, InpStructureTF, entryDirection,
+                                                               InpM15Wave2MaxAgeBars,
+                                                               plan.m15Wave1BreakLevel,
+                                                               plan.m15Wave1AgeBars,
+                                                               plan.m15Wave1BreakType,
+                                                               waveHigh,
+                                                               waveLow,
+                                                               swingCount);
+   if(plan.m15Wave1Candidate)
+     {
+      plan.m15Wave1Direction = DirectionText(entryDirection);
+      plan.m15Wave1High = waveHigh;
+      plan.m15Wave1Low = waveLow;
+      plan.m15Wave2AgeBars = plan.m15Wave1AgeBars;
+      if(waveHigh > waveLow && plan.entry > 0.0)
+        {
+         double range = waveHigh - waveLow;
+         if(entryDirection > 0)
+            plan.m15Wave2RetraceRatio = (waveHigh - plan.entry) / range;
+         else
+            plan.m15Wave2RetraceRatio = (plan.entry - waveLow) / range;
+         plan.m15Wave2FibZone = NestedFibBucket(plan.m15Wave2RetraceRatio);
+         if(plan.m15Wave2RetraceRatio >= InpM15Wave2PreferredMin &&
+            plan.m15Wave2RetraceRatio <= MathMax(InpM15Wave2PreferredMax, InpM15Wave2PreferredMin))
+            plan.m15Wave2FibScore = 0.20;
+         else if(plan.m15Wave2RetraceRatio >= InpM15Wave2MinRetrace &&
+                 plan.m15Wave2RetraceRatio <= 0.90)
+            plan.m15Wave2FibScore = 0.10;
+         else
+            plan.m15Wave2FibScore = 0.0;
+         plan.m15Wave2Candidate = plan.m15Wave2RetraceRatio >= InpM15Wave2MinRetrace &&
+                                  plan.m15Wave2RetraceRatio <= 0.90;
+        }
+     }
+
+   plan.m15WaveContextScore = 0.0;
+   if(plan.m15Wave1Candidate)
+      plan.m15WaveContextScore += 0.20;
+   if(plan.m15Wave2Candidate)
+      plan.m15WaveContextScore += 0.20;
+   plan.m15WaveContextScore += plan.m15Wave2FibScore;
+
+   if(InpM15WaveContextMode == M15_WAVE_CONTEXT_SCORE)
+     {
+      plan.nestedScore += plan.m15WaveContextScore;
+      plan.score += plan.m15WaveContextScore;
+     }
+
+   if(InpM15WaveContextMode == M15_WAVE_CONTEXT_REQUIRED_LIGHT && !plan.m15Wave2Candidate)
+     {
+      plan.reason = "m15_wave2_context_required_failed";
+      plan.failureType = "m15_wave_context_failed";
+      return false;
+     }
+   if(InpM15WaveContextMode == M15_WAVE_CONTEXT_REQUIRED_STRICT &&
+      (!plan.m15Wave1Candidate || !plan.m15Wave2Candidate || plan.m15Wave2FibScore < 0.20))
+     {
+      plan.reason = "m15_wave2_context_strict_failed";
+      plan.failureType = "m15_wave_context_failed";
+      return false;
+     }
+
+   return true;
+  }
+
+bool DetectRefinedM5CorrectiveABC(SignalPlan &plan, const int entryDirection)
+  {
+   if(!UsesM5CorrectiveABC())
+      return true;
+
+   DowPivot pivots[];
+   double atr = 0.0;
+   string state = "";
+   int lookback = MathMax(InpM5CorrectiveMaxAgeBars + InpSwingDepth + 12, InpHTFWaveLookbackBars);
+   if(!CollectOrderedDowPivots(plan.symbol, InpPrimaryEntryTF, InpSwingDepth, lookback, pivots, atr, state))
+      return true;
+
+   int recentIndexes[];
+   ArrayResize(recentIndexes, 0);
+   for(int i = 0; i < ArraySize(pivots); ++i)
+     {
+      if(pivots[i].shift > InpM5CorrectiveMaxAgeBars)
+         continue;
+      int size = ArraySize(recentIndexes);
+      ArrayResize(recentIndexes, size + 1);
+      recentIndexes[size] = i;
+     }
+
+   int recentCount = ArraySize(recentIndexes);
+   plan.m5CorrectiveSwingCount = recentCount;
+   plan.m5CorrectiveDirection = DirectionText(-entryDirection);
+   if(recentCount < MathMax(2, InpM5CorrectiveMinSwings))
+      return true;
+
+   double latestHigh = 0.0;
+   double previousHigh = 0.0;
+   double latestLow = 0.0;
+   double previousLow = 0.0;
+   datetime latestHighTime = 0;
+   datetime previousHighTime = 0;
+   datetime latestLowTime = 0;
+   datetime previousLowTime = 0;
+   int latestHighShift = -1;
+   int latestLowShift = -1;
+   int foundHigh = 0;
+   int foundLow = 0;
+
+   for(int r = recentCount - 1; r >= 0; --r)
+     {
+      DowPivot pivot = pivots[recentIndexes[r]];
+      if(pivot.kind == 1)
+        {
+         if(foundHigh == 0)
+           {
+            latestHigh = pivot.price;
+            latestHighTime = pivot.time;
+            latestHighShift = pivot.shift;
+            ++foundHigh;
+           }
+         else if(foundHigh == 1)
+           {
+            previousHigh = pivot.price;
+            previousHighTime = pivot.time;
+            ++foundHigh;
+           }
+        }
+      if(pivot.kind == -1)
+        {
+         if(foundLow == 0)
+           {
+            latestLow = pivot.price;
+            latestLowTime = pivot.time;
+            latestLowShift = pivot.shift;
+            ++foundLow;
+           }
+         else if(foundLow == 1)
+           {
+            previousLow = pivot.price;
+            previousLowTime = pivot.time;
+            ++foundLow;
+           }
+        }
+      if(foundHigh >= 2 && foundLow >= 2)
+         break;
+     }
+   if(foundHigh < 2 || foundLow < 2)
+      return true;
+
+   double tolerance = atr * MathMax(0.0, InpDowStructureToleranceATR);
+   bool lowerHigh = latestHigh < previousHigh + tolerance;
+   bool lowerLow = latestLow < previousLow - tolerance;
+   bool higherHigh = latestHigh > previousHigh + tolerance;
+   bool higherLow = latestLow > previousLow - tolerance;
+
+   int legCount = 0;
+   if(entryDirection > 0)
+     {
+      if(lowerHigh)
+         ++legCount;
+      if(lowerLow)
+         ++legCount;
+      plan.m5CorrectiveLastLHLevel = latestHigh;
+      plan.m5CorrectiveInvalidationLevel = latestHigh;
+      plan.m5CorrectiveABCDetected = InpM5CorrectiveRequireTwoLegs ? (lowerHigh && lowerLow) : (lowerHigh || lowerLow);
+     }
+   else
+     {
+      if(higherHigh)
+         ++legCount;
+      if(higherLow)
+         ++legCount;
+      plan.m5CorrectiveLastHLLevel = latestLow;
+      plan.m5CorrectiveInvalidationLevel = latestLow;
+      plan.m5CorrectiveABCDetected = InpM5CorrectiveRequireTwoLegs ? (higherHigh && higherLow) : (higherHigh || higherLow);
+     }
+
+   plan.m5CorrectiveLegCount = legCount;
+   plan.m5Corrective123Detected = plan.m5CorrectiveABCDetected && recentCount >= InpM5CorrectiveMinSwings;
+   plan.m5CorrectiveWaveDetected = plan.m5Corrective123Detected;
+   plan.m5CorrectiveStartTime = MathMin(previousHighTime, previousLowTime);
+   plan.m5CorrectiveEndTime = MathMax(latestHighTime, latestLowTime);
+   plan.m5CorrectiveAgeBars = MathMin(latestHighShift, latestLowShift);
+   if(plan.m5CorrectiveAgeBars < 0)
+      plan.m5CorrectiveAgeBars = MathMax(latestHighShift, latestLowShift);
+
+   double highMax = MathMax(MathMax(latestHigh, previousHigh), MathMax(latestLow, previousLow));
+   double lowMin = MathMin(MathMin(latestHigh, previousHigh), MathMin(latestLow, previousLow));
+   plan.m5CorrectivePullbackAtr = atr > 0.0 ? (highMax - lowMin) / atr : 0.0;
+   if(plan.m5CorrectivePullbackAtr < InpM5CorrectiveMinPullbackAtr ||
+      plan.m5CorrectivePullbackAtr > InpM5CorrectiveMaxPullbackAtr)
+     {
+      plan.m5CorrectiveABCDetected = false;
+      plan.m5Corrective123Detected = false;
+      plan.m5CorrectiveWaveDetected = false;
+     }
+
+   return true;
+  }
+
+bool DetectRefinedM5Invalidation(SignalPlan &plan, const int entryDirection)
+  {
+   if(!UsesM5CorrectiveABC())
+      return true;
+
+   double level = plan.m5CorrectiveInvalidationLevel;
+   if(level <= 0.0)
+      return true;
+
+   MqlRates rates[];
+   int bars = MathMax(InpM5CorrectiveMaxAgeBars + InpFirstRetestMaxBars + InpPostBreakAcceptanceBars + 8,
+                      InpATRPeriod + 20);
+   if(!CopyClosedRates(plan.symbol, InpPrimaryEntryTF, bars, rates))
+      return true;
+   double atr = ATR(rates, 0, InpATRPeriod);
+   if(atr <= 0.0)
+      return true;
+
+   int maxShift = MathMin(InpFirstRetestMaxBars, ArraySize(rates) - 1);
+   double minBreak = atr * MathMax(0.0, InpM5InvalidationMinBreakAtr);
+   double minBody = atr * MathMax(0.0, InpM5InvalidationMinBodyAtr);
+   int breakShift = -1;
+   double breakAtr = 0.0;
+   double bodyAtr = 0.0;
+
+   for(int shift = maxShift; shift >= 0; --shift)
+     {
+      if(plan.m5CorrectiveEndTime > 0 && rates[shift].time <= plan.m5CorrectiveEndTime)
+         continue;
+      double body = MathAbs(rates[shift].close - rates[shift].open);
+      bool broke = entryDirection > 0 ? rates[shift].close > level + minBreak :
+                                        rates[shift].close < level - minBreak;
+      if(!broke)
+         continue;
+      if(body < minBody)
+         continue;
+      breakShift = shift;
+      breakAtr = entryDirection > 0 ? (rates[shift].close - level) / atr :
+                                      (level - rates[shift].close) / atr;
+      bodyAtr = body / atr;
+      break;
+     }
+
+   if(breakShift < 0)
+      return true;
+
+   plan.m5InvalidationDetected = true;
+   plan.m5CorrectiveInvalidation = true;
+   plan.m5InvalidationCloseBreak = true;
+   plan.m5InvalidationLevel = level;
+   plan.m5InvalidationBreakAtr = breakAtr;
+   plan.m5InvalidationBodyAtr = bodyAtr;
+   plan.m5InvalidationType = entryDirection > 0 ? "m5_lh_close_break_up" : "m5_hl_close_break_down";
+   plan.barsFromInvalidationToEntry = breakShift;
+   plan.retestLevel = level;
+
+   double maxReturn = 0.0;
+   for(int shift = breakShift - 1; shift >= 0; --shift)
+     {
+      double returnAtr = entryDirection > 0 ? MathMax(0.0, (level - rates[shift].close) / atr) :
+                                            MathMax(0.0, (rates[shift].close - level) / atr);
+      maxReturn = MathMax(maxReturn, returnAtr);
+     }
+   plan.postBreakReturnAtr = maxReturn;
+   plan.postBreakAcceptanceBars = InpPostBreakAcceptanceBars;
+   plan.postBreakAcceptancePass = !InpUsePostBreakAcceptance || maxReturn <= InpPostBreakMaxReturnAtr;
+
+   double retestTolerance = atr * MathMax(0.0, InpRetestToleranceATR);
+   bool held = entryDirection > 0 ? rates[0].close >= level - atr * InpPostBreakMaxReturnAtr :
+                                    rates[0].close <= level + atr * InpPostBreakMaxReturnAtr;
+   bool touched = entryDirection > 0 ? rates[0].low <= level + retestTolerance :
+                                       rates[0].high >= level - retestTolerance;
+   plan.firstRetestAfterInvalidation = breakShift > 0 && breakShift <= InpFirstRetestMaxBars && held && touched;
+   if(entryDirection > 0)
+      plan.retestDistanceAtr = MathAbs(rates[0].low - level) / atr;
+   else
+      plan.retestDistanceAtr = MathAbs(rates[0].high - level) / atr;
+
+   return true;
+  }
+
+bool ApplyRefinedWaveContext(SignalPlan &plan, const int entryDirection)
+  {
+   if(!UsesM15WaveContext() && !UsesM5CorrectiveABC())
+      return true;
+
+   if(!DetectRefinedM15WaveContext(plan, entryDirection))
+      return false;
+   if(!DetectRefinedM5CorrectiveABC(plan, entryDirection))
+      return false;
+   if(!DetectRefinedM5Invalidation(plan, entryDirection))
+      return false;
+
+   if(UsesM5CorrectiveABC())
+     {
+      double m5Score = 0.0;
+      if(plan.m5CorrectiveABCDetected)
+         m5Score += 0.25;
+      if(plan.m5InvalidationDetected)
+         m5Score += 0.35;
+      if(plan.postBreakAcceptancePass && InpUsePostBreakAcceptance)
+         m5Score += 0.20;
+      if(plan.firstRetestAfterInvalidation)
+         m5Score += 0.20;
+
+      if(InpM5CorrectiveMode == M5_CORRECTIVE_SCORE)
+        {
+         plan.nestedScore += m5Score;
+         plan.score += m5Score;
+        }
+
+      if(InpM5CorrectiveMode == M5_CORRECTIVE_REQUIRED)
+        {
+         if(!plan.m5CorrectiveABCDetected)
+           {
+            plan.reason = "m5_corrective_abc_required_failed";
+            plan.failureType = "m5_corrective_abc_failed";
+            return false;
+           }
+         if(InpRequireM5InvalidationClose && !plan.m5InvalidationCloseBreak)
+           {
+            plan.reason = "m5_invalidation_close_required_failed";
+            plan.failureType = "m5_invalidation_failed";
+            return false;
+           }
+         if(!InpRequireM5InvalidationClose && !plan.m5InvalidationDetected)
+           {
+            plan.reason = "m5_invalidation_required_failed";
+            plan.failureType = "m5_invalidation_failed";
+            return false;
+           }
+        }
+
+      if(InpUsePostBreakAcceptance && InpRequirePostBreakAcceptance && !plan.postBreakAcceptancePass)
+        {
+         plan.reason = "post_break_acceptance_required_failed";
+         plan.failureType = "post_break_acceptance_failed";
+         return false;
+        }
+      if(InpRequireFirstRetestAfterInvalidation && !plan.firstRetestAfterInvalidation)
+        {
+         plan.reason = "first_retest_after_invalidation_required_failed";
+         plan.failureType = "first_retest_failed";
+         return false;
+        }
+     }
+
+   return true;
   }
 
 bool ApplyNestedThirdWaveLaunch(SignalPlan &plan, const int entryDirection)
@@ -3124,6 +3791,12 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.selectedReason = "";
    plan.sessionCandidateSymbolMap = "";
    plan.sessionCandidateSymbols = "";
+   plan.sessionGateMode = SessionGateModeName();
+   plan.activeSessionLabel = "none";
+   plan.structureStartedInFirst120 = false;
+   plan.entryAfterFirst120 = false;
+   plan.sessionGatePass = false;
+   plan.sessionGateRejectReason = "not_evaluated";
    plan.entryPattern = "";
    plan.entryTrigger = "";
    plan.necklineLevel = 0.0;
@@ -3180,15 +3853,36 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.m15Wave2RetraceRatio = 0.0;
    plan.m15Wave2FibZone = "none";
    plan.m15Wave2FibScore = 0.0;
+   plan.m15WaveContextMode = M15WaveContextModeName();
+   plan.m15Wave2AgeBars = -1;
+   plan.m15WaveContextScore = 0.0;
    plan.m5CorrectiveWaveDetected = false;
    plan.m5CorrectiveDirection = "NONE";
    plan.m5CorrectiveSwingCount = 0;
    plan.m5Corrective123Detected = false;
+   plan.m5CorrectiveABCDetected = false;
+   plan.m5CorrectiveLegCount = 0;
+   plan.m5CorrectiveStartTime = 0;
+   plan.m5CorrectiveEndTime = 0;
+   plan.m5CorrectiveAgeBars = -1;
+   plan.m5CorrectivePullbackAtr = 0.0;
+   plan.m5CorrectiveLastLHLevel = 0.0;
+   plan.m5CorrectiveLastHLLevel = 0.0;
+   plan.m5CorrectiveInvalidationLevel = 0.0;
    plan.m5CorrectiveInvalidation = false;
    plan.m5InvalidationType = "none";
    plan.m5InvalidationLevel = 0.0;
+   plan.m5InvalidationDetected = false;
+   plan.m5InvalidationCloseBreak = false;
+   plan.m5InvalidationBreakAtr = 0.0;
+   plan.m5InvalidationBodyAtr = 0.0;
    plan.postBreakAcceptancePass = false;
    plan.postBreakAcceptanceBars = InpPostBreakAcceptanceBars;
+   plan.postBreakReturnAtr = 0.0;
+   plan.firstRetestAfterInvalidation = false;
+   plan.barsFromInvalidationToEntry = -1;
+   plan.retestLevel = 0.0;
+   plan.retestDistanceAtr = 0.0;
    plan.sma75State = "none";
    plan.sma75Reclaim = false;
    plan.sma75GranvilleScore = 0.0;
@@ -3238,6 +3932,11 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.obstacleCountBeforeTarget = 0;
    plan.hardObstacleCountBeforeTarget = 0;
    plan.softObstacleCountBeforeTarget = 0;
+   plan.exitMode = ExitModeName();
+   plan.structureTargetMode = StructureTargetModeName();
+   plan.structureTargetType = "none";
+   plan.structureTargetPrice = 0.0;
+   plan.structureTargetR = 0.0;
    plan.entry = 0.0;
    plan.stopLoss = 0.0;
    plan.takeProfit = 0.0;
@@ -3270,6 +3969,11 @@ void ApplySessionInfo(SignalPlan &plan, const SessionInfo &info)
    plan.symbolSessionKey = plan.symbol + "_" + info.sessionKey;
    plan.sessionCandidateSymbols = CandidateSymbolsForSession(info.label);
    plan.sessionCandidateSymbolMap = CandidateSymbolMapForSession(info.label);
+   plan.sessionGateMode = SessionGateModeName();
+   plan.activeSessionLabel = info.active ? info.label : "none";
+   plan.entryAfterFirst120 = info.minutesFromStart >= 120;
+   plan.sessionGatePass = false;
+   plan.sessionGateRejectReason = "not_evaluated";
   }
 
 bool FillTradeLevels(SignalPlan &plan, const int direction, const double stopAnchor)
@@ -3351,6 +4055,83 @@ bool FillTradeLevels(SignalPlan &plan, const int direction, const double stopAnc
    plan.initialRiskPriceDistance = plan.riskPrice;
    plan.rewardR = MathAbs(plan.takeProfit - plan.entry) / MathMax(plan.riskPrice, point);
    return plan.riskPrice > 0.0;
+  }
+
+bool FindPriorStructureTarget(const string symbol,
+                              const ENUM_TIMEFRAMES tf,
+                              const int direction,
+                              const double entryPrice,
+                              double &targetPrice,
+                              string &targetType)
+  {
+   targetPrice = 0.0;
+   targetType = "none";
+
+   DowPivot pivots[];
+   double atr = 0.0;
+   string state = "";
+   if(!CollectOrderedDowPivots(symbol, tf, InpSwingDepth, InpHTFWaveLookbackBars, pivots, atr, state))
+      return false;
+
+   double bestDistance = DBL_MAX;
+   int wantedKind = direction > 0 ? 1 : -1;
+   for(int i = ArraySize(pivots) - 1; i >= 0; --i)
+     {
+      if(pivots[i].kind != wantedKind)
+         continue;
+      double distance = direction > 0 ? pivots[i].price - entryPrice : entryPrice - pivots[i].price;
+      if(distance <= 0.0 || distance >= bestDistance)
+         continue;
+      bestDistance = distance;
+      targetPrice = pivots[i].price;
+      targetType = direction > 0 ? "prior_m15_swing_high" : "prior_m15_swing_low";
+     }
+
+   return targetPrice > 0.0;
+  }
+
+void ApplyStructureTarget(SignalPlan &plan, const int direction)
+  {
+   plan.exitMode = ExitModeName();
+   plan.structureTargetMode = StructureTargetModeName();
+   if(InpExitMode != EXIT_M5_FAILURE_STRUCTURE_TARGET ||
+      InpStructureTargetMode == STRUCTURE_TARGET_OFF ||
+      plan.entry <= 0.0 ||
+      plan.riskPrice <= 0.0)
+      return;
+
+   double targetPrice = 0.0;
+   string targetType = "none";
+   if(InpStructureTargetMode == STRUCTURE_TARGET_PRIOR_M15_SWING)
+      FindPriorStructureTarget(plan.symbol, InpStructureTF, direction, plan.entry, targetPrice, targetType);
+   else if(InpStructureTargetMode == STRUCTURE_TARGET_M15_WAVE3_PROJECTION && plan.m15Wave1High > plan.m15Wave1Low)
+     {
+      double projection = (plan.m15Wave1High - plan.m15Wave1Low) * 1.0;
+      targetPrice = direction > 0 ? plan.entry + projection : plan.entry - projection;
+      targetType = "m15_wave3_projection_1_0";
+     }
+   else if(InpStructureTargetMode == STRUCTURE_TARGET_NEAREST_HTF_OBSTACLE)
+     {
+      targetPrice = plan.nearestObstaclePrice;
+      targetType = plan.nearestObstacleType;
+     }
+
+   if(targetPrice <= 0.0)
+      return;
+
+   double targetR = direction > 0 ? (targetPrice - plan.entry) / plan.riskPrice :
+                                    (plan.entry - targetPrice) / plan.riskPrice;
+   if(targetR < 0.60 || targetR >= plan.rewardR)
+      return;
+
+   int digits = (int)SymbolInfoInteger(plan.symbol, SYMBOL_DIGITS);
+   plan.structureTargetType = targetType;
+   plan.structureTargetPrice = NormalizeDouble(targetPrice, digits);
+   plan.structureTargetR = targetR;
+   plan.takeProfit = plan.structureTargetPrice;
+   plan.targetPrice = plan.structureTargetPrice;
+   plan.rewardR = targetR;
+   plan.targetRewardMultiple = targetR;
   }
 
 bool PriceBeforeTarget(const SignalPlan &plan, const double price)
@@ -3654,8 +4435,10 @@ bool BuildSessionReversalSignal(const string symbol, const SessionInfo &session,
    plan.serverTime = scan[0].time;
    ApplySessionInfo(plan, session);
    if(!IsWithinTradeWindow(session))
-      return false;
-   if(!SymbolAllowedForSession(symbol, session.label))
+     return false;
+   if((InpSessionGateMode == SESSION_GATE_EXISTING_FIRST120 ||
+       InpSessionGateMode == SESSION_GATE_ALLOW_LATE_STRUCTURE) &&
+      !SymbolAllowedForSession(symbol, session.label))
       return false;
    if(SessionAlreadyConsumed(plan))
       return false;
@@ -3786,7 +4569,14 @@ bool BuildSessionReversalSignal(const string symbol, const SessionInfo &session,
    if(!ApplyNestedThirdWaveLaunch(plan, direction))
       return false;
 
+   if(!ApplyRefinedWaveContext(plan, direction))
+      return false;
+
+   if(!FinalizeSessionGate(plan))
+      return false;
+
    EvaluateTargetPathObstacles(plan, scan);
+   ApplyStructureTarget(plan, direction);
 
    if(plan.entryTrigger == "neckline_break_retest")
       plan.failureType = "neckline_retest_failed";
@@ -3815,6 +4605,7 @@ string SignalHeaderLine()
    return "time,event,strategy,symbol,direction,server_time,server_hour,utc_hour,jst_hour," +
           "session_label,session_start_utc,minutes_from_session_start,trade_window_label,is_within_first_60min,is_within_first_120min," +
           "broker_utc_offset_used,selected_symbol_for_session,selected_reason,session_candidate_symbol_map," +
+          "session_gate_mode,active_session_label,structure_started_in_first120,entry_after_first120,session_gate_pass,session_gate_reject_reason," +
           "entry_pattern,entry_trigger,neckline_level,ltf_wave3_timeframe,top_context_tf,structure_tf,primary_entry_tf,secondary_entry_tf,use_secondary_entry_tf," +
           "htf_alignment_mode,htf_permission_mode,allowed_direction,top_context_direction_state,structure_direction_state," +
           "h4_direction_state,h1_direction_state,rejected_by_htf_permission,candidate_long_detected,candidate_short_detected," +
@@ -3826,15 +4617,19 @@ string SignalHeaderLine()
           "nested_thirdwave_enabled,nested_thirdwave_mode,h1_context_direction,h1_context_impulse_direction,context_impulse_high,context_impulse_low," +
           "h1_context_fib_retrace_ratio,h1_context_fib_room_bucket,context_fib_room_score," +
           "m15_wave1_candidate,m15_wave1_direction,m15_wave1_break_type,m15_wave1_break_level,m15_wave1_age_bars,m15_wave1_high,m15_wave1_low," +
-          "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score," +
-          "m5_corrective_wave_detected,m5_corrective_direction,m5_corrective_swing_count,m5_corrective_123_detected,m5_corrective_invalidation," +
-          "m5_invalidation_type,m5_invalidation_level,post_break_acceptance_pass,post_break_acceptance_bars," +
+          "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode,m15_wave2_age_bars,m15_wave_context_score," +
+          "m5_corrective_wave_detected,m5_corrective_direction,m5_corrective_swing_count,m5_corrective_123_detected,m5_corrective_abc_detected," +
+          "m5_corrective_leg_count,m5_corrective_start_time,m5_corrective_end_time,m5_corrective_age_bars,m5_corrective_pullback_atr," +
+          "m5_corrective_last_lh_level,m5_corrective_last_hl_level,m5_corrective_invalidation_level,m5_corrective_invalidation," +
+          "m5_invalidation_detected,m5_invalidation_type,m5_invalidation_level,m5_invalidation_close_break,m5_invalidation_break_atr,m5_invalidation_body_atr," +
+          "post_break_acceptance_pass,post_break_acceptance_bars,post_break_return_atr,first_retest_after_invalidation,bars_from_invalidation_to_entry,retest_level,retest_distance_atr," +
           "sma75_state,sma75_reclaim,sma75_granville_score,nested_score," +
           "htf_nearest_resistance,htf_nearest_support," +
           "nearest_obstacle_price,nearest_obstacle_type,nearest_obstacle_distance_price,nearest_obstacle_distance_r," +
           "retest_reference_type,retest_reference_price,retest_reference_distance_atr,clean_path_to_target," +
           "hard_obstacle_present_before_target,soft_obstacle_present_before_target,obstacle_blocked,obstacle_block_reason," +
           "obstacle_count_before_target,hard_obstacle_count_before_target,soft_obstacle_count_before_target," +
+          "exit_mode,structure_target_mode,structure_target_type,structure_target_price,structure_target_r," +
           "target_reward_multiple,target_price,base_pattern_score,target_room_score,retest_score,fib_source_tf,fib_impulse_high,fib_impulse_low," +
           "fib_retrace_ratio,fib_zone,fib_score,fib_required_pass,entry_price,stop_loss_price,initial_risk_price_distance," +
           "take_profit,reward_r,atr,spread_points,time_bucket,time_score_removed_flag,candidate_orderable_before_session_selection," +
@@ -3877,6 +4672,12 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    CsvAppend(line, plan.selectedSymbolForSession);
    CsvAppend(line, plan.selectedReason);
    CsvAppend(line, plan.sessionCandidateSymbolMap);
+   CsvAppend(line, plan.sessionGateMode);
+   CsvAppend(line, plan.activeSessionLabel);
+   CsvAppend(line, BoolText(plan.structureStartedInFirst120));
+   CsvAppend(line, BoolText(plan.entryAfterFirst120));
+   CsvAppend(line, BoolText(plan.sessionGatePass));
+   CsvAppend(line, plan.sessionGateRejectReason);
    CsvAppend(line, plan.entryPattern);
    CsvAppend(line, plan.entryTrigger);
    CsvAppend(line, DoubleToString(plan.necklineLevel, 8));
@@ -3942,15 +4743,36 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    CsvAppend(line, DoubleToString(plan.m15Wave2RetraceRatio, 4));
    CsvAppend(line, plan.m15Wave2FibZone);
    CsvAppend(line, DoubleToString(plan.m15Wave2FibScore, 3));
+   CsvAppend(line, plan.m15WaveContextMode);
+   CsvAppend(line, IntegerToString(plan.m15Wave2AgeBars));
+   CsvAppend(line, DoubleToString(plan.m15WaveContextScore, 3));
    CsvAppend(line, BoolText(plan.m5CorrectiveWaveDetected));
    CsvAppend(line, plan.m5CorrectiveDirection);
    CsvAppend(line, IntegerToString(plan.m5CorrectiveSwingCount));
    CsvAppend(line, BoolText(plan.m5Corrective123Detected));
+   CsvAppend(line, BoolText(plan.m5CorrectiveABCDetected));
+   CsvAppend(line, IntegerToString(plan.m5CorrectiveLegCount));
+   CsvAppend(line, plan.m5CorrectiveStartTime > 0 ? TimeToString(plan.m5CorrectiveStartTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, plan.m5CorrectiveEndTime > 0 ? TimeToString(plan.m5CorrectiveEndTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, IntegerToString(plan.m5CorrectiveAgeBars));
+   CsvAppend(line, DoubleToString(plan.m5CorrectivePullbackAtr, 4));
+   CsvAppend(line, DoubleToString(plan.m5CorrectiveLastLHLevel, 8));
+   CsvAppend(line, DoubleToString(plan.m5CorrectiveLastHLLevel, 8));
+   CsvAppend(line, DoubleToString(plan.m5CorrectiveInvalidationLevel, 8));
    CsvAppend(line, BoolText(plan.m5CorrectiveInvalidation));
+   CsvAppend(line, BoolText(plan.m5InvalidationDetected));
    CsvAppend(line, plan.m5InvalidationType);
    CsvAppend(line, DoubleToString(plan.m5InvalidationLevel, 8));
+   CsvAppend(line, BoolText(plan.m5InvalidationCloseBreak));
+   CsvAppend(line, DoubleToString(plan.m5InvalidationBreakAtr, 4));
+   CsvAppend(line, DoubleToString(plan.m5InvalidationBodyAtr, 4));
    CsvAppend(line, BoolText(plan.postBreakAcceptancePass));
    CsvAppend(line, IntegerToString(plan.postBreakAcceptanceBars));
+   CsvAppend(line, DoubleToString(plan.postBreakReturnAtr, 4));
+   CsvAppend(line, BoolText(plan.firstRetestAfterInvalidation));
+   CsvAppend(line, IntegerToString(plan.barsFromInvalidationToEntry));
+   CsvAppend(line, DoubleToString(plan.retestLevel, 8));
+   CsvAppend(line, DoubleToString(plan.retestDistanceAtr, 4));
    CsvAppend(line, plan.sma75State);
    CsvAppend(line, BoolText(plan.sma75Reclaim));
    CsvAppend(line, DoubleToString(plan.sma75GranvilleScore, 3));
@@ -3972,6 +4794,11 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    CsvAppend(line, IntegerToString(plan.obstacleCountBeforeTarget));
    CsvAppend(line, IntegerToString(plan.hardObstacleCountBeforeTarget));
    CsvAppend(line, IntegerToString(plan.softObstacleCountBeforeTarget));
+   CsvAppend(line, plan.exitMode);
+   CsvAppend(line, plan.structureTargetMode);
+   CsvAppend(line, plan.structureTargetType);
+   CsvAppend(line, DoubleToString(plan.structureTargetPrice, 8));
+   CsvAppend(line, DoubleToString(plan.structureTargetR, 4));
    CsvAppend(line, DoubleToString(plan.targetRewardMultiple, 2));
    CsvAppend(line, DoubleToString(plan.targetPrice, 8));
    CsvAppend(line, DoubleToString(plan.basePatternScore, 3));
@@ -4057,14 +4884,19 @@ string ExitTypeFromDeal(const TrackedTrade &tracked,
                         const int holdingBars)
   {
    if(StringFind(exitReason, "TP") >= 0)
+     {
+      if(tracked.structureTargetPrice > 0.0 &&
+         MathAbs(tracked.takeProfit - tracked.structureTargetPrice) <= SymbolInfoDouble(tracked.symbol, SYMBOL_POINT) * 3.0)
+         return "structure_target";
       return "tp";
+     }
    if(StringFind(exitReason, "SL") >= 0)
      {
       if(tracked.breakEvenTriggered && resultR > -0.25 && resultR < 0.35)
          return "break_even";
       return "full_sl";
      }
-   if(StringFind(exitReason, "EXPERT") >= 0 || holdingBars >= InpMaxHoldBars)
+   if(StringFind(exitReason, "EXPERT") >= 0 || holdingBars >= EffectiveMaxHoldBars())
       return "time";
    return "other";
   }
@@ -4074,6 +4906,7 @@ string TradeHeaderLine()
    return "entry_time,exit_time,strategy,symbol,direction,server_time,server_hour,utc_hour,jst_hour," +
           "session_label,session_start_utc,minutes_from_session_start,trade_window_label,is_within_first_60min,is_within_first_120min," +
           "broker_utc_offset_used,selected_symbol_for_session,selected_reason,session_candidate_symbol_map," +
+          "session_gate_mode,active_session_label,structure_started_in_first120,entry_after_first120,session_gate_pass,session_gate_reject_reason," +
           "entry_pattern,entry_trigger,neckline_level,ltf_wave3_timeframe,top_context_tf,structure_tf,primary_entry_tf,secondary_entry_tf,use_secondary_entry_tf," +
           "htf_alignment_mode,htf_permission_mode,allowed_direction,top_context_direction_state,structure_direction_state," +
           "h4_direction_state,h1_direction_state,rejected_by_htf_permission,candidate_long_detected,candidate_short_detected," +
@@ -4085,20 +4918,25 @@ string TradeHeaderLine()
           "nested_thirdwave_enabled,nested_thirdwave_mode,h1_context_direction,h1_context_impulse_direction,context_impulse_high,context_impulse_low," +
           "h1_context_fib_retrace_ratio,h1_context_fib_room_bucket,context_fib_room_score," +
           "m15_wave1_candidate,m15_wave1_direction,m15_wave1_break_type,m15_wave1_break_level,m15_wave1_age_bars,m15_wave1_high,m15_wave1_low," +
-          "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score," +
-          "m5_corrective_wave_detected,m5_corrective_direction,m5_corrective_swing_count,m5_corrective_123_detected,m5_corrective_invalidation," +
-          "m5_invalidation_type,m5_invalidation_level,post_break_acceptance_pass,post_break_acceptance_bars," +
+          "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode,m15_wave2_age_bars,m15_wave_context_score," +
+          "m5_corrective_wave_detected,m5_corrective_direction,m5_corrective_swing_count,m5_corrective_123_detected,m5_corrective_abc_detected," +
+          "m5_corrective_leg_count,m5_corrective_start_time,m5_corrective_end_time,m5_corrective_age_bars,m5_corrective_pullback_atr," +
+          "m5_corrective_last_lh_level,m5_corrective_last_hl_level,m5_corrective_invalidation_level,m5_corrective_invalidation," +
+          "m5_invalidation_detected,m5_invalidation_type,m5_invalidation_level,m5_invalidation_close_break,m5_invalidation_break_atr,m5_invalidation_body_atr," +
+          "post_break_acceptance_pass,post_break_acceptance_bars,post_break_return_atr,first_retest_after_invalidation,bars_from_invalidation_to_entry,retest_level,retest_distance_atr," +
           "sma75_state,sma75_reclaim,sma75_granville_score,nested_score," +
           "htf_nearest_resistance,htf_nearest_support," +
           "nearest_obstacle_price,nearest_obstacle_type,nearest_obstacle_distance_r,retest_reference_type,retest_reference_price,retest_reference_distance_atr," +
           "clean_path_to_target,hard_obstacle_present_before_target,soft_obstacle_present_before_target,obstacle_blocked," +
+          "exit_mode,structure_target_mode,structure_target_type,structure_target_price,structure_target_r," +
           "target_reward_multiple,target_price,base_pattern_score,target_room_score,retest_score,fib_source_tf,fib_impulse_high,fib_impulse_low," +
           "fib_retrace_ratio,fib_zone,fib_score,fib_required_pass,time_bucket,time_score_removed_flag," +
           "candidate_orderable_before_session_selection,rejected_before_selection_reason,session_consumed_reason,final_score," +
           "entry,exit,stop_loss,take_profit,risk_price,result_r," +
           "initial_stop_loss_price,current_stop_loss_price,break_even_enabled,break_even_triggered,break_even_trigger_type," +
           "break_even_trigger_r,break_even_trigger_time,bars_to_break_even,max_favorable_r_before_exit,max_adverse_r_before_exit," +
-          "exit_type,full_sl_exit,break_even_exit,tp_exit,time_exit,result_r_before_be,result_r_after_be," +
+          "reached_0_5r,reached_0_8r,reached_1_0r,reached_1_3r,reached_1_5r,bars_to_0_5r,bars_to_1_0r,bars_to_1_3r,mfe_before_failure_exit,mfe_before_time_exit," +
+          "exit_type,full_sl_exit,break_even_exit,tp_exit,time_exit,structure_target_exit,result_r_before_be,result_r_after_be," +
           "profit,commission,swap,net_profit,volume,reward_r,holding_bars,atr,spread_points,score,failure_type," +
           "session_invalidated,invalidation_reason,exit_reason,position_id,break_even_mode";
   }
@@ -4144,9 +4982,13 @@ void WriteTradeRow(const TrackedTrade &tracked,
    bool breakEvenExit = exitType == "break_even";
    bool tpExit = exitType == "tp";
    bool timeExit = exitType == "time";
+   bool structureTargetExit = exitType == "structure_target";
    double resultRBeforeBE = tracked.breakEvenTriggered ? tracked.breakEvenTriggerR : resultR;
    double resultRAfterBE = tracked.breakEvenTriggered ? resultR - tracked.breakEvenTriggerR : 0.0;
    double netProfit = profit + commission + swap;
+   double mfeBeforeFailureExit = StringFind(exitReason, "failure") >= 0 ||
+                                 StringFind(exitReason, "structure") >= 0 ? tracked.maxFavorableRBeforeExit : 0.0;
+   double mfeBeforeTimeExit = timeExit ? tracked.maxFavorableRBeforeExit : 0.0;
 
    string line = "";
    CsvAppend(line, TimeToString(tracked.entryTime, TIME_DATE | TIME_SECONDS));
@@ -4168,6 +5010,12 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, tracked.selectedSymbolForSession);
    CsvAppend(line, tracked.selectedReason);
    CsvAppend(line, tracked.sessionCandidateSymbolMap);
+   CsvAppend(line, tracked.sessionGateMode);
+   CsvAppend(line, tracked.activeSessionLabel);
+   CsvAppend(line, BoolText(tracked.structureStartedInFirst120));
+   CsvAppend(line, BoolText(tracked.entryAfterFirst120));
+   CsvAppend(line, BoolText(tracked.sessionGatePass));
+   CsvAppend(line, tracked.sessionGateRejectReason);
    CsvAppend(line, tracked.entryPattern);
    CsvAppend(line, tracked.entryTrigger);
    CsvAppend(line, DoubleToString(tracked.necklineLevel, 8));
@@ -4233,15 +5081,36 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, DoubleToString(tracked.m15Wave2RetraceRatio, 4));
    CsvAppend(line, tracked.m15Wave2FibZone);
    CsvAppend(line, DoubleToString(tracked.m15Wave2FibScore, 3));
+   CsvAppend(line, tracked.m15WaveContextMode);
+   CsvAppend(line, IntegerToString(tracked.m15Wave2AgeBars));
+   CsvAppend(line, DoubleToString(tracked.m15WaveContextScore, 3));
    CsvAppend(line, BoolText(tracked.m5CorrectiveWaveDetected));
    CsvAppend(line, tracked.m5CorrectiveDirection);
    CsvAppend(line, IntegerToString(tracked.m5CorrectiveSwingCount));
    CsvAppend(line, BoolText(tracked.m5Corrective123Detected));
+   CsvAppend(line, BoolText(tracked.m5CorrectiveABCDetected));
+   CsvAppend(line, IntegerToString(tracked.m5CorrectiveLegCount));
+   CsvAppend(line, tracked.m5CorrectiveStartTime > 0 ? TimeToString(tracked.m5CorrectiveStartTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, tracked.m5CorrectiveEndTime > 0 ? TimeToString(tracked.m5CorrectiveEndTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, IntegerToString(tracked.m5CorrectiveAgeBars));
+   CsvAppend(line, DoubleToString(tracked.m5CorrectivePullbackAtr, 4));
+   CsvAppend(line, DoubleToString(tracked.m5CorrectiveLastLHLevel, 8));
+   CsvAppend(line, DoubleToString(tracked.m5CorrectiveLastHLLevel, 8));
+   CsvAppend(line, DoubleToString(tracked.m5CorrectiveInvalidationLevel, 8));
    CsvAppend(line, BoolText(tracked.m5CorrectiveInvalidation));
+   CsvAppend(line, BoolText(tracked.m5InvalidationDetected));
    CsvAppend(line, tracked.m5InvalidationType);
    CsvAppend(line, DoubleToString(tracked.m5InvalidationLevel, 8));
+   CsvAppend(line, BoolText(tracked.m5InvalidationCloseBreak));
+   CsvAppend(line, DoubleToString(tracked.m5InvalidationBreakAtr, 4));
+   CsvAppend(line, DoubleToString(tracked.m5InvalidationBodyAtr, 4));
    CsvAppend(line, BoolText(tracked.postBreakAcceptancePass));
    CsvAppend(line, IntegerToString(tracked.postBreakAcceptanceBars));
+   CsvAppend(line, DoubleToString(tracked.postBreakReturnAtr, 4));
+   CsvAppend(line, BoolText(tracked.firstRetestAfterInvalidation));
+   CsvAppend(line, IntegerToString(tracked.barsFromInvalidationToEntry));
+   CsvAppend(line, DoubleToString(tracked.retestLevel, 8));
+   CsvAppend(line, DoubleToString(tracked.retestDistanceAtr, 4));
    CsvAppend(line, tracked.sma75State);
    CsvAppend(line, BoolText(tracked.sma75Reclaim));
    CsvAppend(line, DoubleToString(tracked.sma75GranvilleScore, 3));
@@ -4258,6 +5127,11 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, BoolText(tracked.hardObstaclePresentBeforeTarget));
    CsvAppend(line, BoolText(tracked.softObstaclePresentBeforeTarget));
    CsvAppend(line, BoolText(tracked.obstacleBlocked));
+   CsvAppend(line, tracked.exitMode);
+   CsvAppend(line, tracked.structureTargetMode);
+   CsvAppend(line, tracked.structureTargetType);
+   CsvAppend(line, DoubleToString(tracked.structureTargetPrice, 8));
+   CsvAppend(line, DoubleToString(tracked.structureTargetR, 4));
    CsvAppend(line, DoubleToString(tracked.targetRewardMultiple, 2));
    CsvAppend(line, DoubleToString(tracked.targetPrice, 8));
    CsvAppend(line, DoubleToString(tracked.basePatternScore, 3));
@@ -4292,11 +5166,22 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, IntegerToString(tracked.barsToBreakEven));
    CsvAppend(line, DoubleToString(tracked.maxFavorableRBeforeExit, 4));
    CsvAppend(line, DoubleToString(tracked.maxAdverseRBeforeExit, 4));
+   CsvAppend(line, BoolText(tracked.reached05R));
+   CsvAppend(line, BoolText(tracked.reached08R));
+   CsvAppend(line, BoolText(tracked.reached10R));
+   CsvAppend(line, BoolText(tracked.reached13R));
+   CsvAppend(line, BoolText(tracked.reached15R));
+   CsvAppend(line, IntegerToString(tracked.barsTo05R));
+   CsvAppend(line, IntegerToString(tracked.barsTo10R));
+   CsvAppend(line, IntegerToString(tracked.barsTo13R));
+   CsvAppend(line, DoubleToString(mfeBeforeFailureExit, 4));
+   CsvAppend(line, DoubleToString(mfeBeforeTimeExit, 4));
    CsvAppend(line, exitType);
    CsvAppend(line, BoolText(fullSlExit));
    CsvAppend(line, BoolText(breakEvenExit));
    CsvAppend(line, BoolText(tpExit));
    CsvAppend(line, BoolText(timeExit));
+   CsvAppend(line, BoolText(structureTargetExit));
    CsvAppend(line, DoubleToString(resultRBeforeBE, 4));
    CsvAppend(line, DoubleToString(resultRAfterBE, 4));
    CsvAppend(line, DoubleToString(profit, 2));
@@ -4575,6 +5460,30 @@ double TradeAdverseR(const TrackedTrade &tracked, const double price)
    return 0.0;
   }
 
+void UpdateTradeExcursionThresholds(TrackedTrade &tracked, const double favorable)
+  {
+   int heldBars = iBarShift(tracked.symbol, InpPrimaryEntryTF, tracked.entryTime, false);
+   if(favorable >= 0.5 && !tracked.reached05R)
+     {
+      tracked.reached05R = true;
+      tracked.barsTo05R = heldBars;
+     }
+   if(favorable >= 0.8)
+      tracked.reached08R = true;
+   if(favorable >= 1.0 && !tracked.reached10R)
+     {
+      tracked.reached10R = true;
+      tracked.barsTo10R = heldBars;
+     }
+   if(favorable >= 1.3 && !tracked.reached13R)
+     {
+      tracked.reached13R = true;
+      tracked.barsTo13R = heldBars;
+     }
+   if(favorable >= 1.5)
+      tracked.reached15R = true;
+  }
+
 void UpdateTradeExcursionWithBar(TrackedTrade &tracked, const MqlRates &bar)
   {
    if(tracked.riskPrice <= 0.0)
@@ -4593,12 +5502,38 @@ void UpdateTradeExcursionWithBar(TrackedTrade &tracked, const MqlRates &bar)
      }
    tracked.maxFavorableRBeforeExit = MathMax(tracked.maxFavorableRBeforeExit, favorable);
    tracked.maxAdverseRBeforeExit = MathMax(tracked.maxAdverseRBeforeExit, adverse);
+   UpdateTradeExcursionThresholds(tracked, favorable);
   }
 
 void UpdateTradeExcursionWithPrice(TrackedTrade &tracked, const double price)
   {
-   tracked.maxFavorableRBeforeExit = MathMax(tracked.maxFavorableRBeforeExit, TradeFavorableR(tracked, price));
+   double favorable = TradeFavorableR(tracked, price);
+   tracked.maxFavorableRBeforeExit = MathMax(tracked.maxFavorableRBeforeExit, favorable);
    tracked.maxAdverseRBeforeExit = MathMax(tracked.maxAdverseRBeforeExit, TradeAdverseR(tracked, price));
+   UpdateTradeExcursionThresholds(tracked, favorable);
+  }
+
+void ManageTradeExcursions()
+  {
+   for(int i = 0; i < ArraySize(g_trades); ++i)
+     {
+      if(!g_trades[i].active)
+         continue;
+      if(!PositionSelect(g_trades[i].symbol))
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      if((long)PositionGetInteger(POSITION_IDENTIFIER) != g_trades[i].positionId)
+         continue;
+
+      MqlRates rates[];
+      if(!CopyClosedRates(g_trades[i].symbol, InpPrimaryEntryTF, 1, rates))
+         continue;
+      if(rates[0].time <= g_trades[i].lastExcursionBarTime)
+         continue;
+      g_trades[i].lastExcursionBarTime = rates[0].time;
+      UpdateTradeExcursionWithBar(g_trades[i], rates[0]);
+     }
   }
 
 double BreakEvenPrice(const TrackedTrade &tracked)
@@ -4726,7 +5661,7 @@ bool TranscriptPrimaryFailureExitSignal(TrackedTrade &tracked,
                                         string &exitReason)
   {
    exitReason = "none";
-   if(!InpTranscriptUsePrimaryFailureExit)
+   if(!UsesPrimaryFailureExit())
       return false;
 
    int heldBars = iBarShift(tracked.symbol, InpPrimaryEntryTF, tracked.entryTime, false);
@@ -4789,7 +5724,7 @@ bool TranscriptPrimaryFailureExitSignal(TrackedTrade &tracked,
 
 void ManageTranscriptPrimaryFailureExits()
   {
-   if(!InpTranscriptUsePrimaryFailureExit)
+   if(!UsesPrimaryFailureExit())
       return;
 
    trade.SetExpertMagicNumber(InpMagicNumber);
@@ -4850,6 +5785,12 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].selectedReason = plan.selectedReason;
    g_trades[size].sessionCandidateSymbolMap = plan.sessionCandidateSymbolMap;
    g_trades[size].sessionCandidateSymbols = plan.sessionCandidateSymbols;
+   g_trades[size].sessionGateMode = plan.sessionGateMode;
+   g_trades[size].activeSessionLabel = plan.activeSessionLabel;
+   g_trades[size].structureStartedInFirst120 = plan.structureStartedInFirst120;
+   g_trades[size].entryAfterFirst120 = plan.entryAfterFirst120;
+   g_trades[size].sessionGatePass = plan.sessionGatePass;
+   g_trades[size].sessionGateRejectReason = plan.sessionGateRejectReason;
    g_trades[size].entryPattern = plan.entryPattern;
    g_trades[size].entryTrigger = plan.entryTrigger;
    g_trades[size].necklineLevel = plan.necklineLevel;
@@ -4906,15 +5847,36 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].m15Wave2RetraceRatio = plan.m15Wave2RetraceRatio;
    g_trades[size].m15Wave2FibZone = plan.m15Wave2FibZone;
    g_trades[size].m15Wave2FibScore = plan.m15Wave2FibScore;
+   g_trades[size].m15WaveContextMode = plan.m15WaveContextMode;
+   g_trades[size].m15Wave2AgeBars = plan.m15Wave2AgeBars;
+   g_trades[size].m15WaveContextScore = plan.m15WaveContextScore;
    g_trades[size].m5CorrectiveWaveDetected = plan.m5CorrectiveWaveDetected;
    g_trades[size].m5CorrectiveDirection = plan.m5CorrectiveDirection;
    g_trades[size].m5CorrectiveSwingCount = plan.m5CorrectiveSwingCount;
    g_trades[size].m5Corrective123Detected = plan.m5Corrective123Detected;
+   g_trades[size].m5CorrectiveABCDetected = plan.m5CorrectiveABCDetected;
+   g_trades[size].m5CorrectiveLegCount = plan.m5CorrectiveLegCount;
+   g_trades[size].m5CorrectiveStartTime = plan.m5CorrectiveStartTime;
+   g_trades[size].m5CorrectiveEndTime = plan.m5CorrectiveEndTime;
+   g_trades[size].m5CorrectiveAgeBars = plan.m5CorrectiveAgeBars;
+   g_trades[size].m5CorrectivePullbackAtr = plan.m5CorrectivePullbackAtr;
+   g_trades[size].m5CorrectiveLastLHLevel = plan.m5CorrectiveLastLHLevel;
+   g_trades[size].m5CorrectiveLastHLLevel = plan.m5CorrectiveLastHLLevel;
+   g_trades[size].m5CorrectiveInvalidationLevel = plan.m5CorrectiveInvalidationLevel;
    g_trades[size].m5CorrectiveInvalidation = plan.m5CorrectiveInvalidation;
    g_trades[size].m5InvalidationType = plan.m5InvalidationType;
    g_trades[size].m5InvalidationLevel = plan.m5InvalidationLevel;
+   g_trades[size].m5InvalidationDetected = plan.m5InvalidationDetected;
+   g_trades[size].m5InvalidationCloseBreak = plan.m5InvalidationCloseBreak;
+   g_trades[size].m5InvalidationBreakAtr = plan.m5InvalidationBreakAtr;
+   g_trades[size].m5InvalidationBodyAtr = plan.m5InvalidationBodyAtr;
    g_trades[size].postBreakAcceptancePass = plan.postBreakAcceptancePass;
    g_trades[size].postBreakAcceptanceBars = plan.postBreakAcceptanceBars;
+   g_trades[size].postBreakReturnAtr = plan.postBreakReturnAtr;
+   g_trades[size].firstRetestAfterInvalidation = plan.firstRetestAfterInvalidation;
+   g_trades[size].barsFromInvalidationToEntry = plan.barsFromInvalidationToEntry;
+   g_trades[size].retestLevel = plan.retestLevel;
+   g_trades[size].retestDistanceAtr = plan.retestDistanceAtr;
    g_trades[size].sma75State = plan.sma75State;
    g_trades[size].sma75Reclaim = plan.sma75Reclaim;
    g_trades[size].sma75GranvilleScore = plan.sma75GranvilleScore;
@@ -4964,6 +5926,11 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].obstacleBlocked = plan.obstacleBlocked;
    g_trades[size].targetRewardMultiple = plan.targetRewardMultiple;
    g_trades[size].targetPrice = plan.targetPrice;
+   g_trades[size].exitMode = plan.exitMode;
+   g_trades[size].structureTargetMode = plan.structureTargetMode;
+   g_trades[size].structureTargetType = plan.structureTargetType;
+   g_trades[size].structureTargetPrice = plan.structureTargetPrice;
+   g_trades[size].structureTargetR = plan.structureTargetR;
    g_trades[size].breakEvenMode = BreakEvenModeName();
    g_trades[size].breakEvenEnabled = InpBreakEvenMode != BREAK_EVEN_DISABLED;
    g_trades[size].breakEvenTriggered = false;
@@ -4976,6 +5943,15 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].maxFavorableRBeforeExit = 0.0;
    g_trades[size].maxAdverseRBeforeExit = 0.0;
    g_trades[size].lastManagementBarTime = 0;
+   g_trades[size].lastExcursionBarTime = 0;
+   g_trades[size].reached05R = false;
+   g_trades[size].reached08R = false;
+   g_trades[size].reached10R = false;
+   g_trades[size].reached13R = false;
+   g_trades[size].reached15R = false;
+   g_trades[size].barsTo05R = -1;
+   g_trades[size].barsTo10R = -1;
+   g_trades[size].barsTo13R = -1;
    g_trades[size].entryFailureType = plan.failureType;
    g_trades[size].sessionInvalidated = plan.sessionInvalidated;
    g_trades[size].invalidationReason = plan.invalidationReason;
@@ -5093,7 +6069,8 @@ void TryOpenSignal(SignalPlan &plan)
 
 void ManageTimeStops()
   {
-   if(InpMaxHoldBars <= 0)
+   int maxHoldBars = EffectiveMaxHoldBars();
+   if(maxHoldBars <= 0)
       return;
 
    for(int i = PositionsTotal() - 1; i >= 0; --i)
@@ -5106,7 +6083,7 @@ void ManageTimeStops()
       string symbol = PositionGetString(POSITION_SYMBOL);
       datetime openedAt = (datetime)PositionGetInteger(POSITION_TIME);
       int shift = iBarShift(symbol, InpPrimaryEntryTF, openedAt, false);
-      if(shift >= InpMaxHoldBars)
+      if(shift >= maxHoldBars)
          trade.PositionClose(ticket);
      }
   }
@@ -5114,6 +6091,7 @@ void ManageTimeStops()
 void ScanSymbols()
   {
    UpdateRiskAnchors();
+   ManageTradeExcursions();
    ManageTranscriptPrimaryFailureExits();
    ManageBreakEvenStops();
    ManageTimeStops();
@@ -5132,7 +6110,13 @@ void ScanSymbols()
 
       SessionInfo sessions[];
       if(BuildSessionInfos(barTime, sessions) <= 0)
-         continue;
+        {
+         if(InpSessionGateMode != SESSION_GATE_NONE_DIAGNOSTIC &&
+            InpSessionGateMode != SESSION_GATE_ACTIVE_LABEL_ONLY)
+            continue;
+         ArrayResize(sessions, 1);
+         BuildNoSessionInfo(barTime, sessions[0]);
+        }
 
       for(int sessionIndex = 0; sessionIndex < ArraySize(sessions); ++sessionIndex)
         {
@@ -5280,6 +6264,18 @@ int OnInit()
        InpTranscriptPriorImpulseMinPivots < 3 ||
        InpTranscriptExitLookbackBars < 4 ||
        InpPostBreakAcceptanceBars < 0 ||
+       InpM5CorrectiveMinSwings < 2 ||
+       InpM5CorrectiveMaxAgeBars < 6 ||
+       InpM5CorrectiveMinPullbackAtr < 0.0 ||
+       InpM5CorrectiveMaxPullbackAtr < InpM5CorrectiveMinPullbackAtr ||
+       InpM5InvalidationMinBodyAtr < 0.0 ||
+       InpM5InvalidationMinBreakAtr < 0.0 ||
+       InpPostBreakMaxReturnAtr < 0.0 ||
+       InpFirstRetestMaxBars < 1 ||
+       InpM15Wave2MaxAgeBars < 1 ||
+       InpM15Wave2MinRetrace < 0.0 ||
+       InpM15Wave2PreferredMin < InpM15Wave2MinRetrace ||
+       InpM15Wave2PreferredMax < InpM15Wave2PreferredMin ||
        InpSessionInvalidationATR <= 0.0 ||
       InpMaxHoldBars < 1 ||
       InpRiskPerTradePercent <= 0.0 ||
