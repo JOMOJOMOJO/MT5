@@ -2,7 +2,8 @@ param(
     [string]$TerminalPath = $env:MT5_TERMINAL,
     [string]$ConfigPath,
     [int]$TimeoutSeconds = 180,
-    [switch]$RestartExisting
+    [switch]$RestartExisting,
+    [switch]$AllowTerminalAlgoTrading
 )
 
 function Get-ConfigValue {
@@ -47,6 +48,78 @@ function Convert-PresetToHashtable {
     }
 
     return $values
+}
+
+function Set-IniSectionValues {
+    param(
+        [string[]]$Lines,
+        [string]$Section,
+        [hashtable]$Values
+    )
+
+    $result = New-Object System.Collections.Generic.List[string]
+    $inTargetSection = $false
+    $sectionFound = $false
+    $written = @{}
+
+    function Add-MissingSectionValues {
+        param(
+            [System.Collections.Generic.List[string]]$Target,
+            [hashtable]$AllValues,
+            [hashtable]$AlreadyWritten
+        )
+
+        foreach ($key in $AllValues.Keys) {
+            if (-not $AlreadyWritten.ContainsKey($key)) {
+                $Target.Add("$key=$($AllValues[$key])")
+                $AlreadyWritten[$key] = $true
+            }
+        }
+    }
+
+    foreach ($line in $Lines) {
+        if ($line -match '^\s*\[(.+?)\]\s*$') {
+            if ($inTargetSection) {
+                Add-MissingSectionValues -Target $result -AllValues $Values -AlreadyWritten $written
+            }
+
+            $inTargetSection = ($matches[1] -ieq $Section)
+            if ($inTargetSection) {
+                $sectionFound = $true
+                $written = @{}
+            }
+
+            $result.Add($line)
+            continue
+        }
+
+        if ($inTargetSection -and $line -match '^\s*([^=;#][^=]*?)\s*=') {
+            $key = $matches[1].Trim()
+            if ($Values.ContainsKey($key)) {
+                $result.Add("$key=$($Values[$key])")
+                $written[$key] = $true
+                continue
+            }
+        }
+
+        $result.Add($line)
+    }
+
+    if ($inTargetSection) {
+        Add-MissingSectionValues -Target $result -AllValues $Values -AlreadyWritten $written
+    }
+
+    if (-not $sectionFound) {
+        if ($result.Count -gt 0 -and $result[$result.Count - 1].Trim()) {
+            $result.Add("")
+        }
+        $result.Add("[$Section]")
+        foreach ($key in $Values.Keys) {
+            $result.Add("$key=$($Values[$key])")
+        }
+    }
+
+    return $result.ToArray()
 }
 
 function Get-MatchingTerminalProcesses {
@@ -113,6 +186,55 @@ function Test-DirectoryWritable {
         return $true
     } catch {
         return $false
+    }
+}
+
+function Get-TerminalDataRoots {
+    param(
+        [string]$PrimaryTerminalDataRoot
+    )
+
+    $roots = @()
+    if ($PrimaryTerminalDataRoot -and (Test-Path $PrimaryTerminalDataRoot)) {
+        $roots += (Resolve-Path $PrimaryTerminalDataRoot).Path
+    }
+
+    $appTerminalRoot = Join-Path $env:APPDATA "MetaQuotes\Terminal"
+    if (Test-Path $appTerminalRoot) {
+        foreach ($terminalRoot in Get-ChildItem -LiteralPath $appTerminalRoot -Directory -ErrorAction SilentlyContinue) {
+            $commonConfig = Join-Path $terminalRoot.FullName "config\common.ini"
+            if (Test-Path $commonConfig) {
+                $roots += $terminalRoot.FullName
+            }
+        }
+    }
+
+    return @($roots | Where-Object { $_ } | Select-Object -Unique)
+}
+
+function Set-TerminalAlgoTradingState {
+    param(
+        [string[]]$TerminalRoots,
+        [bool]$Enabled
+    )
+
+    $value = if ($Enabled) { "1" } else { "0" }
+
+    foreach ($terminalRoot in $TerminalRoots) {
+        $commonConfig = Join-Path $terminalRoot "config\common.ini"
+        if (-not (Test-Path $commonConfig)) {
+            continue
+        }
+
+        $lines = Get-Content -Path $commonConfig
+        $updatedLines = Set-IniSectionValues -Lines $lines -Section "Experts" -Values @{
+            Enabled = $value
+            AllowLiveTrading = $value
+        }
+        Set-Content -Path $commonConfig -Value $updatedLines -Encoding Default
+        if (-not $Enabled) {
+            Write-Host "MT5 Algo Trading disabled in: $commonConfig"
+        }
     }
 }
 
@@ -270,6 +392,20 @@ if ($presetSourceLine) {
     Write-Warning "No ExpertParameters or PresetSource was set in '$resolvedConfig'. MT5 may reuse the last tester inputs."
 }
 
+if (-not $AllowTerminalAlgoTrading) {
+    $configLines = Set-IniSectionValues -Lines $configLines -Section "Experts" -Values @{
+        Enabled = "0"
+        AllowLiveTrading = "0"
+    }
+
+    if (-not $generatedConfigPath) {
+        $generatedConfigPath = [System.IO.Path]::ChangeExtension([System.IO.Path]::GetTempFileName(), ".ini")
+    }
+
+    Set-Content -Path $generatedConfigPath -Value $configLines -Encoding UTF8
+    $resolvedConfig = $generatedConfigPath
+}
+
 $reportLine = $configLines | Where-Object { $_ -match '^\s*Report=' } | Select-Object -First 1
 $expectedReportPath = $null
 
@@ -308,6 +444,11 @@ if ($effectiveRestartExisting) {
     if ($stoppedCount -gt 0) {
         Write-Host "Stopped $stoppedCount running MT5 terminal process(es)."
     }
+}
+
+$terminalDataRootsForAlgoSwitch = Get-TerminalDataRoots -PrimaryTerminalDataRoot $terminalDataRoot
+if (-not $AllowTerminalAlgoTrading) {
+    Set-TerminalAlgoTradingState -TerminalRoots $terminalDataRootsForAlgoSwitch -Enabled $false
 }
 
 $process = Start-Process -FilePath $resolvedTerminalPath -ArgumentList "/config:$resolvedConfig" -PassThru
@@ -356,9 +497,13 @@ if ($exitCode -ne 0 -and $reportReady) {
     Write-Warning "Terminal returned exit code $exitCode, but a fresh report was generated."
 }
 
+if (-not $AllowTerminalAlgoTrading) {
+    Set-TerminalAlgoTradingState -TerminalRoots $terminalDataRootsForAlgoSwitch -Enabled $false
+}
+
 Write-Host "Backtest launched with config: $resolvedConfig"
 if ($generatedConfigPath) {
-    Write-Host "Preset-backed generated config: $generatedConfigPath"
+    Write-Host "Generated config: $generatedConfigPath"
 }
 if ($reportReady) {
     $reportMetaPath = "$expectedReportPath.meta.json"
