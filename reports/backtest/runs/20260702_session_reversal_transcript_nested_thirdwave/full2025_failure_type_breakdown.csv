@@ -1,0 +1,6 @@
+failure_type,run_id,trades,wins,win_rate,net_profit,gross_profit,gross_loss,profit_factor,sum_r,avg_r,r_profit_factor,max_dd_profit,max_dd_pct,recovery_factor,full_sl_exits,full_sl_rate,tp_exits,tp_exit_rate,time_exits,time_exit_rate
+bos_pullback_failed,c10_full2025_counter_diag_sma_failure_exit_relaxed_retest,1,0,0.0,-24.97,0,-24.97,0.0,-1.0721,-1.0721,0.0,24.97,0.2497,-1.0,1,1.0,0,0.0,0,0.0
+choch_failed,c10_full2025_counter_diag_sma_failure_exit_relaxed_retest,1,0,0.0,-3.7,0,-3.7,0.0,-0.1674,-0.1674,0.0,3.7,0.037,-1.0,0,0.0,0,0.0,1,1.0
+neckline_retest_failed,c10_full2025_counter_diag_sma_failure_exit_relaxed_retest,239,0,0.0,-2763.6499999999996,0,-2763.6499999999996,0.0,-122.60889999999998,-0.5130079497907949,0.0,2763.6499999999996,27.636499999999998,-1.0,32,0.13389121338912133,0,0.0,207,0.8661087866108786
+other,c10_full2025_counter_diag_sma_failure_exit_relaxed_retest,53,53,1.0,1511.9400000000003,1511.9400000000003,0,0,67.3736,1.2711999999999999,0,0,0.0,0,0,0.0,49,0.9245283018867925,4,0.07547169811320754
+target_not_reached_before_session_end,c10_full2025_counter_diag_sma_failure_exit_relaxed_retest,24,24,1.0,135.49,135.49,0,0,6.154100000000001,0.2564208333333334,0,0,0.0,0,0,0.0,0,0.0,24,1.0

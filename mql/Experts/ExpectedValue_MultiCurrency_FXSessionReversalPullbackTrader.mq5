@@ -51,6 +51,14 @@ enum ENUM_BREAK_EVEN_MODE
    BREAK_EVEN_TIME_30MIN_AND_0_5R_OR_1_0R = 3
   };
 
+enum ENUM_TRANSCRIPT_CONTEXT_MODE
+  {
+   TRANSCRIPT_CONTEXT_DISABLED = 0,
+   TRANSCRIPT_CONTEXT_H1_COUNTER_M15_REVERSAL = 1,
+   TRANSCRIPT_CONTEXT_H1_NOT_OPPOSITE_M15_REVERSAL = 2,
+   TRANSCRIPT_CONTEXT_H1_ALIGNED_M15_REVERSAL = 3
+  };
+
 struct SessionInfo
   {
    bool              active;
@@ -116,6 +124,17 @@ struct SignalPlan
    double            htfWave3BreakLevel;
    double            htfWave3PullbackLevel;
    bool              wave3AlignmentPassed;
+   string            transcriptContextMode;
+   bool              transcriptContextPassed;
+   string            transcriptStage;
+   string            transcriptRejectReason;
+   string            topSma75State;
+   string            structureSma75State;
+   string            primarySma75State;
+   int               structureBreakAgeBars;
+   double            structureBreakLevel;
+   int               primaryBreakAgeBars;
+   double            primaryBreakLevel;
    bool              rejectedByHtfPermission;
    bool              candidateLongDetected;
    bool              candidateShortDetected;
@@ -230,6 +249,17 @@ struct TrackedTrade
    double            htfWave3BreakLevel;
    double            htfWave3PullbackLevel;
    bool              wave3AlignmentPassed;
+   string            transcriptContextMode;
+   bool              transcriptContextPassed;
+   string            transcriptStage;
+   string            transcriptRejectReason;
+   string            topSma75State;
+   string            structureSma75State;
+   string            primarySma75State;
+   int               structureBreakAgeBars;
+   double            structureBreakLevel;
+   int               primaryBreakAgeBars;
+   double            primaryBreakLevel;
    bool              rejectedByHtfPermission;
    bool              candidateLongDetected;
    bool              candidateShortDetected;
@@ -375,6 +405,16 @@ input double          InpBreakBufferATR                = 0.08;
 input double          InpStopBufferATR                 = 0.18;
 input double          InpMinSL_ATR                     = 0.35;
 input double          InpMaxSL_ATR                     = 3.00;
+input ENUM_TRANSCRIPT_CONTEXT_MODE InpTranscriptContextMode = TRANSCRIPT_CONTEXT_DISABLED;
+input int             InpTranscriptSmaPeriod           = 75;
+input int             InpTranscriptStructureBreakMaxBars = 24;
+input int             InpTranscriptPrimaryBreakMaxBars = 8;
+input bool            InpTranscriptRequireStructureBreak = true;
+input bool            InpTranscriptRequireSmaReclaim   = true;
+input bool            InpTranscriptRequirePriorImpulse = false;
+input int             InpTranscriptPriorImpulseMinPivots = 5;
+input bool            InpTranscriptUsePrimaryFailureExit = false;
+input int             InpTranscriptExitLookbackBars    = 10;
 input double          InpSessionInvalidationATR        = 0.85;
 input int             InpMaxHoldBars                   = 24;
 input double          InpRiskPerTradePercent           = 0.25;
@@ -505,6 +545,22 @@ string HTFPermissionModeName()
    if(InpHTFPermissionMode == HTF_PERMISSION_SOFT_PREFILTER)
       return "soft_pre_filter";
    return "current_post_filter";
+  }
+
+string TranscriptContextModeName()
+  {
+   if(InpTranscriptContextMode == TRANSCRIPT_CONTEXT_H1_COUNTER_M15_REVERSAL)
+      return "h1_counter_m15_reversal";
+   if(InpTranscriptContextMode == TRANSCRIPT_CONTEXT_H1_NOT_OPPOSITE_M15_REVERSAL)
+      return "h1_not_opposite_m15_reversal";
+   if(InpTranscriptContextMode == TRANSCRIPT_CONTEXT_H1_ALIGNED_M15_REVERSAL)
+      return "h1_aligned_m15_reversal";
+   return "disabled";
+  }
+
+bool UsesTranscriptNestedThirdWave()
+  {
+   return InpTranscriptContextMode != TRANSCRIPT_CONTEXT_DISABLED;
   }
 
 bool UsesHtfPrefilter()
@@ -1218,7 +1274,257 @@ int DetermineOrderedDowWave3DirectionOnTf(const string symbol,
       state = "break_below_without_lower_pullback";
    else
       state = "no_ordered_dow_wave3_break";
+    return 0;
+  }
+
+int SmaContextDirection(const MqlRates &rates[],
+                        const int period,
+                        const double atr,
+                        string &state)
+  {
+   state = "sma_data_unavailable";
+   if(period <= 1 || ArraySize(rates) < period + 8)
+      return 0;
+
+   double smaNow = SMA(rates, 0, period);
+   double smaPrior = SMA(rates, 5, period);
+   if(smaNow <= 0.0 || smaPrior <= 0.0)
+      return 0;
+
+   double closePrice = rates[0].close;
+   double buffer = MathMax(atr * 0.03, 0.0);
+   bool above = closePrice > smaNow + buffer;
+   bool below = closePrice < smaNow - buffer;
+   bool rising = smaNow >= smaPrior;
+   bool falling = smaNow <= smaPrior;
+
+   if(above && rising)
+     {
+      state = "above_75sma_rising";
+      return 1;
+     }
+   if(below && falling)
+     {
+      state = "below_75sma_falling";
+      return -1;
+     }
+   if(above)
+     {
+      state = "above_75sma_flat_or_falling";
+      return 1;
+     }
+   if(below)
+     {
+      state = "below_75sma_flat_or_rising";
+      return -1;
+     }
+
+   state = "near_75sma";
    return 0;
+  }
+
+bool FindRecentBreakOfConfirmedSwing(const string symbol,
+                                     const ENUM_TIMEFRAMES tf,
+                                     const int direction,
+                                     const int maxAgeBars,
+                                     double &breakLevel,
+                                     int &breakAgeBars,
+                                     string &state)
+  {
+   breakLevel = 0.0;
+   breakAgeBars = -1;
+   state = "none";
+   if(direction == 0 || maxAgeBars < 0)
+     {
+      state = "invalid_recent_break_request";
+      return false;
+     }
+
+   DowPivot pivots[];
+   double pivotAtr = 0.0;
+   if(!CollectOrderedDowPivots(symbol, tf, InpSwingDepth, InpHTFWaveLookbackBars, pivots, pivotAtr, state))
+      return false;
+
+   MqlRates rates[];
+   int bars = MathMax(maxAgeBars + InpSwingDepth + 12, InpATRPeriod + InpTranscriptSmaPeriod + 12);
+   if(!CopyClosedRates(symbol, tf, bars, rates))
+     {
+      state = "data_unavailable";
+      return false;
+     }
+
+   double atr = ATR(rates, 0, InpATRPeriod);
+   if(atr <= 0.0)
+     {
+      state = "invalid_atr";
+      return false;
+     }
+
+   int wantedKind = direction > 0 ? 1 : -1;
+   int maxShift = MathMin(maxAgeBars, ArraySize(rates) - 1);
+   double breakBuffer = atr * MathMax(0.0, InpBreakBufferATR);
+   double retestBuffer = atr * MathMax(0.0, InpRetestToleranceATR);
+
+   for(int p = ArraySize(pivots) - 1; p >= 0; --p)
+     {
+      if(pivots[p].kind != wantedKind)
+         continue;
+
+      for(int shift = 0; shift <= maxShift; ++shift)
+        {
+         if(rates[shift].time <= pivots[p].time)
+            continue;
+
+         bool broke = direction > 0 ?
+                      rates[shift].close > pivots[p].price + breakBuffer :
+                      rates[shift].close < pivots[p].price - breakBuffer;
+         if(!broke)
+            continue;
+
+         bool stillValid = direction > 0 ?
+                           rates[0].close >= pivots[p].price - retestBuffer :
+                           rates[0].close <= pivots[p].price + retestBuffer;
+         if(!stillValid)
+           {
+            state = "recent_confirmed_swing_break_failed";
+            return false;
+           }
+
+         bool retesting = direction > 0 ?
+                          rates[0].low <= pivots[p].price + retestBuffer :
+                          rates[0].high >= pivots[p].price - retestBuffer;
+         breakLevel = pivots[p].price;
+         breakAgeBars = shift;
+         state = retesting ? "recent_confirmed_swing_break_retest" : "recent_confirmed_swing_break_continuation";
+         return true;
+        }
+     }
+
+   state = "no_recent_confirmed_swing_break";
+   return false;
+  }
+
+bool ApplyTranscriptNestedThirdWaveContext(const string symbol,
+                                           const int entryDirection,
+                                           SignalPlan &plan)
+  {
+   plan.transcriptContextMode = TranscriptContextModeName();
+   plan.transcriptContextPassed = false;
+   plan.transcriptRejectReason = "none";
+
+   double topBreak = 0.0;
+   double topPullback = 0.0;
+   double structureBreak = 0.0;
+   double structurePullback = 0.0;
+   int topDirection = 0;
+   int structureDirection = 0;
+   PopulateHtfDirectionDiagnostics(symbol, plan, topDirection, structureDirection,
+                                   topBreak, topPullback, structureBreak, structurePullback);
+   plan.htfAlignmentMode = HTFAlignmentModeName();
+   plan.htfPermissionMode = HTFPermissionModeName();
+   plan.allowedDirection = "transcript_post_filter";
+
+   MqlRates topRates[];
+   MqlRates structureRates[];
+   MqlRates primaryRates[];
+   int bars = InpTranscriptSmaPeriod + InpATRPeriod + 20;
+   if(!CopyClosedRates(symbol, InpTopContextTF, bars, topRates) ||
+      !CopyClosedRates(symbol, InpStructureTF, bars, structureRates) ||
+      !CopyClosedRates(symbol, InpPrimaryEntryTF, bars, primaryRates))
+     {
+      plan.transcriptRejectReason = "transcript_data_unavailable";
+      plan.reason = plan.transcriptRejectReason;
+      plan.failureType = plan.transcriptRejectReason;
+      return false;
+     }
+
+   double topAtr = ATR(topRates, 0, InpATRPeriod);
+   double structureAtr = ATR(structureRates, 0, InpATRPeriod);
+   double primaryAtr = ATR(primaryRates, 0, InpATRPeriod);
+   int topSmaDirection = SmaContextDirection(topRates, InpTranscriptSmaPeriod, topAtr, plan.topSma75State);
+   int structureSmaDirection = SmaContextDirection(structureRates, InpTranscriptSmaPeriod, structureAtr, plan.structureSma75State);
+   int primarySmaDirection = SmaContextDirection(primaryRates, InpTranscriptSmaPeriod, primaryAtr, plan.primarySma75State);
+
+   bool contextOk = false;
+   if(InpTranscriptContextMode == TRANSCRIPT_CONTEXT_H1_COUNTER_M15_REVERSAL)
+      contextOk = topDirection != entryDirection;
+   else if(InpTranscriptContextMode == TRANSCRIPT_CONTEXT_H1_NOT_OPPOSITE_M15_REVERSAL)
+      contextOk = topDirection != -entryDirection;
+   else if(InpTranscriptContextMode == TRANSCRIPT_CONTEXT_H1_ALIGNED_M15_REVERSAL)
+      contextOk = topDirection == entryDirection;
+   else
+      contextOk = true;
+
+   if(!contextOk)
+     {
+      plan.transcriptRejectReason = "transcript_top_context_mismatch";
+      plan.reason = plan.transcriptRejectReason;
+      plan.failureType = plan.transcriptRejectReason;
+      return false;
+     }
+
+   string structureBreakState = "";
+   bool structureBreakOk = FindRecentBreakOfConfirmedSwing(symbol, InpStructureTF, entryDirection,
+                                                           InpTranscriptStructureBreakMaxBars,
+                                                           plan.structureBreakLevel,
+                                                           plan.structureBreakAgeBars,
+                                                           structureBreakState);
+   string primaryBreakState = "";
+   bool primaryBreakOk = FindRecentBreakOfConfirmedSwing(symbol, InpPrimaryEntryTF, entryDirection,
+                                                         InpTranscriptPrimaryBreakMaxBars,
+                                                         plan.primaryBreakLevel,
+                                                         plan.primaryBreakAgeBars,
+                                                         primaryBreakState);
+
+   if(InpTranscriptRequireStructureBreak && !structureBreakOk)
+     {
+      plan.transcriptRejectReason = "transcript_structure_break_missing_" + structureBreakState;
+      plan.reason = plan.transcriptRejectReason;
+      plan.failureType = plan.transcriptRejectReason;
+      return false;
+     }
+
+   bool smaOk = structureSmaDirection == entryDirection || primarySmaDirection == entryDirection;
+   if(InpTranscriptRequireSmaReclaim && !smaOk)
+     {
+      plan.transcriptRejectReason = "transcript_75sma_reclaim_missing";
+      plan.reason = plan.transcriptRejectReason;
+      plan.failureType = plan.transcriptRejectReason;
+      return false;
+     }
+
+   if(InpTranscriptRequirePriorImpulse)
+     {
+      DowPivot pivots[];
+      double impulseAtr = 0.0;
+      string impulseState = "";
+      bool enoughPivots = CollectOrderedDowPivots(symbol, InpStructureTF, InpSwingDepth,
+                                                  InpHTFWaveLookbackBars, pivots, impulseAtr, impulseState) &&
+                          ArraySize(pivots) >= InpTranscriptPriorImpulseMinPivots;
+      if(!enoughPivots || topDirection != -entryDirection)
+        {
+         plan.transcriptRejectReason = "transcript_prior_impulse_missing";
+         plan.reason = plan.transcriptRejectReason;
+         plan.failureType = plan.transcriptRejectReason;
+         return false;
+        }
+     }
+
+   plan.transcriptStage = "top_" + DirectionText(topDirection) + "_" + plan.topContextDirectionState +
+                          "|structure_" + DirectionText(structureDirection) + "_" + plan.structureDirectionState +
+                          "|structure_break_" + structureBreakState +
+                          "|primary_break_" + primaryBreakState;
+   plan.transcriptContextPassed = true;
+   plan.wave3AlignmentPassed = true;
+   plan.htfWave3Direction = DirectionText(entryDirection);
+   plan.htfWave3Confirmed = structureBreakOk && (topDirection == entryDirection || topDirection == -entryDirection);
+   if(structureBreakOk)
+      plan.score += 0.35;
+   if(primaryBreakOk)
+      plan.score += 0.20;
+   if(smaOk)
+      plan.score += 0.20;
+   return true;
   }
 
 bool FindConfirmedSwingLevel(const string symbol,
@@ -2282,6 +2588,17 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.htfWave3BreakLevel = 0.0;
    plan.htfWave3PullbackLevel = 0.0;
    plan.wave3AlignmentPassed = false;
+   plan.transcriptContextMode = TranscriptContextModeName();
+   plan.transcriptContextPassed = false;
+   plan.transcriptStage = "none";
+   plan.transcriptRejectReason = "none";
+   plan.topSma75State = "none";
+   plan.structureSma75State = "none";
+   plan.primarySma75State = "none";
+   plan.structureBreakAgeBars = -1;
+   plan.structureBreakLevel = 0.0;
+   plan.primaryBreakAgeBars = -1;
+   plan.primaryBreakLevel = 0.0;
    plan.rejectedByHtfPermission = false;
    plan.candidateLongDetected = false;
    plan.candidateShortDetected = false;
@@ -2790,13 +3107,19 @@ bool BuildSessionReversalSignal(const string symbol, const SessionInfo &session,
 
       direction = bestCandidate.direction;
       stopAnchor = bestCandidate.stopAnchor;
-      ApplySelectedCandidateToPlan(plan, bestCandidate);
-      plan.wave3AlignmentPassed = true;
-      plan.htfWave3Confirmed = (direction > 0 && plan.htfH4Wave3Direction == "LONG" && plan.htfH1Wave3Direction == "LONG") ||
-                               (direction < 0 && plan.htfH4Wave3Direction == "SHORT" && plan.htfH1Wave3Direction == "SHORT");
-      if(plan.htfWave3Direction == "NONE" && allowedDirection != 2)
-         plan.htfWave3Direction = DirectionText(allowedDirection);
-     }
+       ApplySelectedCandidateToPlan(plan, bestCandidate);
+       plan.wave3AlignmentPassed = true;
+       plan.htfWave3Confirmed = (direction > 0 && plan.htfH4Wave3Direction == "LONG" && plan.htfH1Wave3Direction == "LONG") ||
+                                (direction < 0 && plan.htfH4Wave3Direction == "SHORT" && plan.htfH1Wave3Direction == "SHORT");
+       if(plan.htfWave3Direction == "NONE" && allowedDirection != 2)
+          plan.htfWave3Direction = DirectionText(allowedDirection);
+       if(UsesTranscriptNestedThirdWave() && !ApplyTranscriptNestedThirdWaveContext(symbol, direction, plan))
+         {
+          plan.rejectedByHtfPermission = true;
+          ++g_htfPermissionRejectedCount;
+          return false;
+         }
+      }
    else
      {
       PatternCandidate bestCandidate;
@@ -2819,17 +3142,22 @@ bool BuildSessionReversalSignal(const string symbol, const SessionInfo &session,
       if(!bestCandidate.valid)
          return false;
 
-      direction = bestCandidate.direction;
-      stopAnchor = bestCandidate.stopAnchor;
-      ApplySelectedCandidateToPlan(plan, bestCandidate);
-      if(!ApplyHtfWave3Alignment(symbol, direction, plan))
-        {
-         plan.rejectedByHtfPermission = true;
-         plan.reason = "htf_wave3_alignment_failed";
-         plan.failureType = "htf_wave3_alignment_failed";
-         ++g_htfPermissionRejectedCount;
-         return false;
-        }
+       direction = bestCandidate.direction;
+       stopAnchor = bestCandidate.stopAnchor;
+       ApplySelectedCandidateToPlan(plan, bestCandidate);
+       bool alignmentOk = UsesTranscriptNestedThirdWave() ?
+                          ApplyTranscriptNestedThirdWaveContext(symbol, direction, plan) :
+                          ApplyHtfWave3Alignment(symbol, direction, plan);
+       if(!alignmentOk)
+         {
+          plan.rejectedByHtfPermission = true;
+          if(plan.reason == "")
+             plan.reason = UsesTranscriptNestedThirdWave() ? "transcript_nested_context_failed" : "htf_wave3_alignment_failed";
+          if(plan.failureType == "")
+             plan.failureType = plan.reason;
+          ++g_htfPermissionRejectedCount;
+          return false;
+         }
      }
 
    double sessionHigh = 0.0;
@@ -2895,7 +3223,10 @@ string SignalHeaderLine()
           "h4_direction_state,h1_direction_state,rejected_by_htf_permission,candidate_long_detected,candidate_short_detected," +
           "selected_candidate_direction,selected_candidate_timeframe,selected_candidate_pattern,primary_best_pattern,primary_best_score,secondary_best_pattern,secondary_best_score," +
           "m15_best_pattern,m15_best_score,m5_best_pattern,m5_best_score," +
-          "htf_wave3_direction,htf_wave3_confirmed,htf_fractal_alignment,wave3_alignment_passed,htf_nearest_resistance,htf_nearest_support," +
+          "htf_wave3_direction,htf_wave3_confirmed,htf_fractal_alignment,wave3_alignment_passed," +
+          "transcript_context_mode,transcript_context_passed,transcript_stage,transcript_reject_reason," +
+          "top_sma75_state,structure_sma75_state,primary_sma75_state,structure_break_age_bars,structure_break_level,primary_break_age_bars,primary_break_level," +
+          "htf_nearest_resistance,htf_nearest_support," +
           "nearest_obstacle_price,nearest_obstacle_type,nearest_obstacle_distance_price,nearest_obstacle_distance_r," +
           "retest_reference_type,retest_reference_price,retest_reference_distance_atr,clean_path_to_target," +
           "hard_obstacle_present_before_target,soft_obstacle_present_before_target,obstacle_blocked,obstacle_block_reason," +
@@ -2976,6 +3307,17 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    CsvAppend(line, BoolText(plan.htfWave3Confirmed));
    CsvAppend(line, plan.htfFractalAlignment);
    CsvAppend(line, BoolText(plan.wave3AlignmentPassed));
+   CsvAppend(line, plan.transcriptContextMode);
+   CsvAppend(line, BoolText(plan.transcriptContextPassed));
+   CsvAppend(line, plan.transcriptStage);
+   CsvAppend(line, plan.transcriptRejectReason);
+   CsvAppend(line, plan.topSma75State);
+   CsvAppend(line, plan.structureSma75State);
+   CsvAppend(line, plan.primarySma75State);
+   CsvAppend(line, IntegerToString(plan.structureBreakAgeBars));
+   CsvAppend(line, DoubleToString(plan.structureBreakLevel, 8));
+   CsvAppend(line, IntegerToString(plan.primaryBreakAgeBars));
+   CsvAppend(line, DoubleToString(plan.primaryBreakLevel, 8));
    CsvAppend(line, DoubleToString(plan.htfNearestResistance, 8));
    CsvAppend(line, DoubleToString(plan.htfNearestSupport, 8));
    CsvAppend(line, DoubleToString(plan.nearestObstaclePrice, 8));
@@ -3100,7 +3442,10 @@ string TradeHeaderLine()
           "h4_direction_state,h1_direction_state,rejected_by_htf_permission,candidate_long_detected,candidate_short_detected," +
           "selected_candidate_direction,selected_candidate_timeframe,selected_candidate_pattern,primary_best_pattern,primary_best_score,secondary_best_pattern,secondary_best_score," +
           "m15_best_pattern,m15_best_score,m5_best_pattern,m5_best_score," +
-          "htf_wave3_direction,htf_wave3_confirmed,htf_fractal_alignment,wave3_alignment_passed,htf_nearest_resistance,htf_nearest_support," +
+          "htf_wave3_direction,htf_wave3_confirmed,htf_fractal_alignment,wave3_alignment_passed," +
+          "transcript_context_mode,transcript_context_passed,transcript_stage,transcript_reject_reason," +
+          "top_sma75_state,structure_sma75_state,primary_sma75_state,structure_break_age_bars,structure_break_level,primary_break_age_bars,primary_break_level," +
+          "htf_nearest_resistance,htf_nearest_support," +
           "nearest_obstacle_price,nearest_obstacle_type,nearest_obstacle_distance_r,retest_reference_type,retest_reference_price,retest_reference_distance_atr," +
           "clean_path_to_target,hard_obstacle_present_before_target,soft_obstacle_present_before_target,obstacle_blocked," +
           "target_reward_multiple,target_price,base_pattern_score,target_room_score,retest_score,fib_source_tf,fib_impulse_high,fib_impulse_low," +
@@ -3213,6 +3558,17 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, BoolText(tracked.htfWave3Confirmed));
    CsvAppend(line, tracked.htfFractalAlignment);
    CsvAppend(line, BoolText(tracked.wave3AlignmentPassed));
+   CsvAppend(line, tracked.transcriptContextMode);
+   CsvAppend(line, BoolText(tracked.transcriptContextPassed));
+   CsvAppend(line, tracked.transcriptStage);
+   CsvAppend(line, tracked.transcriptRejectReason);
+   CsvAppend(line, tracked.topSma75State);
+   CsvAppend(line, tracked.structureSma75State);
+   CsvAppend(line, tracked.primarySma75State);
+   CsvAppend(line, IntegerToString(tracked.structureBreakAgeBars));
+   CsvAppend(line, DoubleToString(tracked.structureBreakLevel, 8));
+   CsvAppend(line, IntegerToString(tracked.primaryBreakAgeBars));
+   CsvAppend(line, DoubleToString(tracked.primaryBreakLevel, 8));
    CsvAppend(line, DoubleToString(tracked.htfNearestResistance, 8));
    CsvAppend(line, DoubleToString(tracked.htfNearestSupport, 8));
    CsvAppend(line, DoubleToString(tracked.nearestObstaclePrice, 8));
@@ -3309,7 +3665,12 @@ void WriteSummaryRow()
                  "dow_min_swing_atr", "dow_structure_tolerance_atr",
                  "dow_min_pivots_for_trend", "use_fib_pullback_score", "require_fib_pullback_zone",
                  "fib_preferred_min", "fib_preferred_max", "fib_deep_max",
-                 "require_retest_close_beyond_neckline", "break_even_mode",
+                 "require_retest_close_beyond_neckline", "transcript_context_mode",
+                 "transcript_sma_period", "transcript_structure_break_max_bars",
+                 "transcript_primary_break_max_bars", "transcript_require_structure_break",
+                 "transcript_require_sma_reclaim", "transcript_require_prior_impulse",
+                 "transcript_prior_impulse_min_pivots", "transcript_use_primary_failure_exit",
+                 "transcript_exit_lookback_bars", "break_even_mode",
                  "htf_permission_rejections", "preselection_rejections");
 
    string symbolsForSummary = InpSymbols;
@@ -3354,11 +3715,21 @@ void WriteSummaryRow()
               BoolText(InpUseFibPullbackScore),
               BoolText(InpRequireFibPullbackZone),
               DoubleToString(InpFibPreferredMin, 3),
-              DoubleToString(InpFibPreferredMax, 3),
-              DoubleToString(InpFibDeepMax, 3),
-              BoolText(InpRequireRetestCloseBeyondNeckline),
-              BreakEvenModeName(),
-             IntegerToString((int)g_htfPermissionRejectedCount),
+               DoubleToString(InpFibPreferredMax, 3),
+               DoubleToString(InpFibDeepMax, 3),
+               BoolText(InpRequireRetestCloseBeyondNeckline),
+               TranscriptContextModeName(),
+               IntegerToString(InpTranscriptSmaPeriod),
+               IntegerToString(InpTranscriptStructureBreakMaxBars),
+               IntegerToString(InpTranscriptPrimaryBreakMaxBars),
+               BoolText(InpTranscriptRequireStructureBreak),
+               BoolText(InpTranscriptRequireSmaReclaim),
+               BoolText(InpTranscriptRequirePriorImpulse),
+               IntegerToString(InpTranscriptPriorImpulseMinPivots),
+               BoolText(InpTranscriptUsePrimaryFailureExit),
+               IntegerToString(InpTranscriptExitLookbackBars),
+               BreakEvenModeName(),
+              IntegerToString((int)g_htfPermissionRejectedCount),
              IntegerToString((int)g_preselectionRejectedCount));
    FileClose(handle);
   }
@@ -3670,6 +4041,106 @@ void ManageBreakEvenStops()
          g_trades[i].barsToBreakEven = iBarShift(g_trades[i].symbol, InpPrimaryEntryTF, g_trades[i].entryTime, false);
          g_trades[i].currentStopLossPrice = PositionGetDouble(POSITION_SL);
         }
+      }
+  }
+
+bool TranscriptPrimaryFailureExitSignal(TrackedTrade &tracked,
+                                        const MqlRates &rates[],
+                                        string &exitReason)
+  {
+   exitReason = "none";
+   if(!InpTranscriptUsePrimaryFailureExit)
+      return false;
+
+   int heldBars = iBarShift(tracked.symbol, InpPrimaryEntryTF, tracked.entryTime, false);
+   if(heldBars < 2)
+      return false;
+
+   double atr = ATR(rates, 0, InpATRPeriod);
+   if(atr <= 0.0)
+      return false;
+
+   int lookback = MathMin(InpTranscriptExitLookbackBars, ArraySize(rates) - 2);
+   if(lookback < 4)
+      return false;
+
+   double fast = SMA(rates, 0, InpMAPeriodFast);
+   double slow = SMA(rates, 0, InpMAPeriodSlow);
+   double buffer = atr * MathMax(0.0, InpBreakBufferATR);
+
+   if(tracked.direction == "LONG")
+     {
+      double recentLow = LowestLow(rates, 1, lookback);
+      if(recentLow > 0.0 && rates[0].close < recentLow - buffer)
+        {
+         exitReason = "transcript_m5_structure_low_break_exit";
+         return true;
+        }
+      if(tracked.necklineLevel > 0.0 && rates[0].close < tracked.necklineLevel - buffer)
+        {
+         exitReason = "transcript_neckline_failure_exit";
+         return true;
+        }
+      if(heldBars >= 3 && fast > 0.0 && slow > 0.0 && fast < slow && rates[0].close < fast)
+        {
+         exitReason = "transcript_m5_ma_failure_exit";
+         return true;
+        }
+     }
+   else if(tracked.direction == "SHORT")
+     {
+      double recentHigh = HighestHigh(rates, 1, lookback);
+      if(recentHigh > 0.0 && rates[0].close > recentHigh + buffer)
+        {
+         exitReason = "transcript_m5_structure_high_break_exit";
+         return true;
+        }
+      if(tracked.necklineLevel > 0.0 && rates[0].close > tracked.necklineLevel + buffer)
+        {
+         exitReason = "transcript_neckline_failure_exit";
+         return true;
+        }
+      if(heldBars >= 3 && fast > 0.0 && slow > 0.0 && fast > slow && rates[0].close > fast)
+        {
+         exitReason = "transcript_m5_ma_failure_exit";
+         return true;
+        }
+     }
+
+   return false;
+  }
+
+void ManageTranscriptPrimaryFailureExits()
+  {
+   if(!InpTranscriptUsePrimaryFailureExit)
+      return;
+
+   trade.SetExpertMagicNumber(InpMagicNumber);
+   for(int i = 0; i < ArraySize(g_trades); ++i)
+     {
+      if(!g_trades[i].active)
+         continue;
+      if(!PositionSelect(g_trades[i].symbol))
+         continue;
+      if((long)PositionGetInteger(POSITION_MAGIC) != InpMagicNumber)
+         continue;
+      if((long)PositionGetInteger(POSITION_IDENTIFIER) != g_trades[i].positionId)
+         continue;
+
+      int bars = MathMax(InpTranscriptExitLookbackBars + InpMAPeriodSlow + 10, InpATRPeriod + InpMAPeriodSlow + 12);
+      MqlRates rates[];
+      if(!CopyClosedRates(g_trades[i].symbol, InpPrimaryEntryTF, bars, rates))
+         continue;
+
+      UpdateTradeExcursionWithBar(g_trades[i], rates[0]);
+
+      string exitReason = "none";
+      if(!TranscriptPrimaryFailureExitSignal(g_trades[i], rates, exitReason))
+         continue;
+
+      ulong ticket = (ulong)PositionGetInteger(POSITION_TICKET);
+      if(ticket > 0)
+         trade.PositionClose(ticket);
      }
   }
 
@@ -3727,6 +4198,17 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].htfWave3BreakLevel = plan.htfWave3BreakLevel;
    g_trades[size].htfWave3PullbackLevel = plan.htfWave3PullbackLevel;
    g_trades[size].wave3AlignmentPassed = plan.wave3AlignmentPassed;
+   g_trades[size].transcriptContextMode = plan.transcriptContextMode;
+   g_trades[size].transcriptContextPassed = plan.transcriptContextPassed;
+   g_trades[size].transcriptStage = plan.transcriptStage;
+   g_trades[size].transcriptRejectReason = plan.transcriptRejectReason;
+   g_trades[size].topSma75State = plan.topSma75State;
+   g_trades[size].structureSma75State = plan.structureSma75State;
+   g_trades[size].primarySma75State = plan.primarySma75State;
+   g_trades[size].structureBreakAgeBars = plan.structureBreakAgeBars;
+   g_trades[size].structureBreakLevel = plan.structureBreakLevel;
+   g_trades[size].primaryBreakAgeBars = plan.primaryBreakAgeBars;
+   g_trades[size].primaryBreakLevel = plan.primaryBreakLevel;
    g_trades[size].rejectedByHtfPermission = plan.rejectedByHtfPermission;
    g_trades[size].candidateLongDetected = plan.candidateLongDetected;
    g_trades[size].candidateShortDetected = plan.candidateShortDetected;
@@ -3922,6 +4404,7 @@ void ManageTimeStops()
 void ScanSymbols()
   {
    UpdateRiskAnchors();
+   ManageTranscriptPrimaryFailureExits();
    ManageBreakEvenStops();
    ManageTimeStops();
 
@@ -4077,11 +4560,16 @@ int OnInit()
       InpEqualLevelTolerancePips < 0.0 ||
       InpEqualLevelToleranceATR < 0.0 ||
       InpRetestToleranceATR <= 0.0 ||
-      InpBreakBufferATR < 0.0 ||
-      InpStopBufferATR <= 0.0 ||
-      InpMinSL_ATR <= 0.0 ||
-      InpMaxSL_ATR < InpMinSL_ATR ||
-      InpSessionInvalidationATR <= 0.0 ||
+       InpBreakBufferATR < 0.0 ||
+       InpStopBufferATR <= 0.0 ||
+       InpMinSL_ATR <= 0.0 ||
+       InpMaxSL_ATR < InpMinSL_ATR ||
+       InpTranscriptSmaPeriod < 10 ||
+       InpTranscriptStructureBreakMaxBars < 0 ||
+       InpTranscriptPrimaryBreakMaxBars < 0 ||
+       InpTranscriptPriorImpulseMinPivots < 3 ||
+       InpTranscriptExitLookbackBars < 4 ||
+       InpSessionInvalidationATR <= 0.0 ||
       InpMaxHoldBars < 1 ||
       InpRiskPerTradePercent <= 0.0 ||
       InpMaxTotalOpenRiskPercent <= 0.0 ||
