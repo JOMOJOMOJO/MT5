@@ -92,6 +92,28 @@ enum ENUM_M15_WAVE_CONTEXT_MODE
    M15_WAVE_CONTEXT_REQUIRED_STRICT = 4
   };
 
+enum ENUM_M15_WAVE2_EXPANSION_MODE
+  {
+   M15_WAVE2_EXPANSION_OFF = 0,
+   M15_WAVE2_EXPANSION_CURRENT_REQUIRED_LIGHT = 1,
+   M15_WAVE2_EXPANSION_PULLBACK_ONLY = 2,
+   M15_WAVE2_EXPANSION_WAVE1_OR_WAVE2 = 3,
+   M15_WAVE2_EXPANSION_NOT_OPPOSITE_PLUS_PULLBACK = 4,
+   M15_WAVE2_EXPANSION_FIB_OR_STRUCTURE_PULLBACK = 5,
+   M15_WAVE2_EXPANSION_DIAGNOSTIC_ONLY = 6
+  };
+
+enum ENUM_M15_WAVE2_GATE_MODE
+  {
+   M15_WAVE2_GATE_NO_GATE = 0,
+   M15_WAVE2_GATE_REQUIRED_LIGHT = 1,
+   M15_WAVE2_GATE_REQUIRED_EXPANDED = 2,
+   M15_WAVE2_GATE_REQUIRED_ONLY_LOW_QUALITY_M5 = 3,
+   M15_WAVE2_GATE_SCORE_ONLY = 4,
+   M15_WAVE2_GATE_DIAGNOSTIC_ONLY = 5,
+   M15_WAVE2_GATE_REQUIRED_MEDIUM_LOW_QUALITY_M5 = 6
+  };
+
 enum ENUM_EXIT_MODE
   {
    EXIT_FIXED_TP_SL = 0,
@@ -211,8 +233,17 @@ struct SignalPlan
    string            m15Wave2FibZone;
    double            m15Wave2FibScore;
    string            m15WaveContextMode;
+   string            m15Wave2ExpansionMode;
+   string            m15Wave2GateMode;
+   string            m15Wave2Type;
    int               m15Wave2AgeBars;
+   double            m15Wave2Score;
+   bool              m15Wave2GatePass;
+   string            m15Wave2GateRejectReason;
    double            m15WaveContextScore;
+   string            m5PatternQualityGroup;
+   bool              m15Wave2RequiredDueToPatternQuality;
+   bool              m15Wave2ScoreApplied;
    bool              m5CorrectiveWaveDetected;
    string            m5CorrectiveDirection;
    int               m5CorrectiveSwingCount;
@@ -401,8 +432,17 @@ struct TrackedTrade
    string            m15Wave2FibZone;
    double            m15Wave2FibScore;
    string            m15WaveContextMode;
+   string            m15Wave2ExpansionMode;
+   string            m15Wave2GateMode;
+   string            m15Wave2Type;
    int               m15Wave2AgeBars;
+   double            m15Wave2Score;
+   bool              m15Wave2GatePass;
+   string            m15Wave2GateRejectReason;
    double            m15WaveContextScore;
+   string            m5PatternQualityGroup;
+   bool              m15Wave2RequiredDueToPatternQuality;
+   bool              m15Wave2ScoreApplied;
    bool              m5CorrectiveWaveDetected;
    string            m5CorrectiveDirection;
    int               m5CorrectiveSwingCount;
@@ -638,6 +678,8 @@ input int             InpM15Wave2MaxAgeBars            = 24;
 input double          InpM15Wave2MinRetrace            = 0.236;
 input double          InpM15Wave2PreferredMin          = 0.382;
 input double          InpM15Wave2PreferredMax          = 0.786;
+input ENUM_M15_WAVE2_EXPANSION_MODE InpM15Wave2ExpansionMode = M15_WAVE2_EXPANSION_OFF;
+input ENUM_M15_WAVE2_GATE_MODE InpM15Wave2GateMode = M15_WAVE2_GATE_NO_GATE;
 input ENUM_EXIT_MODE  InpExitMode                      = EXIT_M5_FAILURE;
 input ENUM_STRUCTURE_TARGET_MODE InpStructureTargetMode = STRUCTURE_TARGET_OFF;
 input double          InpSessionInvalidationATR        = 0.85;
@@ -886,6 +928,40 @@ string M15WaveContextModeName()
    return "off";
   }
 
+string M15Wave2ExpansionModeName()
+  {
+   if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_CURRENT_REQUIRED_LIGHT)
+      return "current_required_light";
+   if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_PULLBACK_ONLY)
+      return "wave2_pullback_only";
+   if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_WAVE1_OR_WAVE2)
+      return "wave1_or_wave2_context";
+   if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_NOT_OPPOSITE_PLUS_PULLBACK)
+      return "structure_not_opposite_plus_pullback";
+   if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_FIB_OR_STRUCTURE_PULLBACK)
+      return "fib_or_structure_pullback";
+   if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_DIAGNOSTIC_ONLY)
+      return "diagnostic_only";
+   return "off";
+  }
+
+string M15Wave2GateModeName()
+  {
+   if(InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_LIGHT)
+      return "required_light";
+   if(InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_EXPANDED)
+      return "required_expanded";
+   if(InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_ONLY_LOW_QUALITY_M5)
+      return "required_only_if_m5_pattern_low_quality";
+   if(InpM15Wave2GateMode == M15_WAVE2_GATE_SCORE_ONLY)
+      return "score_only";
+   if(InpM15Wave2GateMode == M15_WAVE2_GATE_DIAGNOSTIC_ONLY)
+      return "diagnostic_only";
+   if(InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_MEDIUM_LOW_QUALITY_M5)
+      return "required_for_medium_low_quality_m5";
+   return "no_gate";
+  }
+
 string ExitModeName()
   {
    if(InpExitMode == EXIT_FIXED_TP_SL)
@@ -915,7 +991,25 @@ bool UsesM5CorrectiveABC()
 
 bool UsesM15WaveContext()
   {
-   return InpM15WaveContextMode != M15_WAVE_CONTEXT_OFF;
+   return InpM15WaveContextMode != M15_WAVE_CONTEXT_OFF ||
+          InpM15Wave2ExpansionMode != M15_WAVE2_EXPANSION_OFF ||
+          InpM15Wave2GateMode != M15_WAVE2_GATE_NO_GATE;
+  }
+
+string M5PatternQualityGroup(const string pattern)
+  {
+   if(pattern == "inverse_head_and_shoulders" ||
+      pattern == "head_and_shoulders" ||
+      pattern == "double_bottom" ||
+      pattern == "double_top")
+      return "high_quality";
+   if(pattern == "sweep_low_reclaim" || pattern == "sweep_high_reclaim")
+      return "medium_quality";
+   if(StringFind(pattern, "choch") >= 0 || StringFind(pattern, "bos") >= 0)
+      return "low_quality";
+   if(pattern == "" || pattern == "none")
+      return "unknown";
+   return "low_quality";
   }
 
 bool UsesPrimaryFailureExit()
@@ -1914,6 +2008,144 @@ double NestedWave2FibScore(const string zone)
    return 0.0;
   }
 
+string M15Wave2FibBucket(const double ratio)
+  {
+   if(ratio < 0.236)
+      return "no_fib";
+   if(ratio < 0.382)
+      return "shallow_236_382";
+   if(ratio <= 0.618)
+      return "preferred_382_618";
+   if(ratio <= 0.786)
+      return "deep_618_786";
+   return "too_deep";
+  }
+
+double M15Wave2FibScore(const string zone)
+  {
+   if(zone == "preferred_382_618")
+      return 0.20;
+   if(zone == "deep_618_786")
+      return 0.12;
+   if(zone == "shallow_236_382")
+      return 0.08;
+   return 0.0;
+  }
+
+string M15Wave2TypeFromContext(const string fibZone,
+                               const bool structurePullback,
+                               const bool rangePullback,
+                               const bool maPullback)
+  {
+   if(fibZone == "preferred_382_618")
+      return "fib_pullback";
+   if(fibZone == "shallow_236_382")
+      return "shallow_pullback";
+   if(fibZone == "deep_618_786" || fibZone == "too_deep")
+      return "deep_pullback";
+   if(structurePullback)
+      return "structure_pullback";
+   if(rangePullback)
+      return "range_pullback";
+   if(maPullback)
+      return "ma_pullback";
+   return "unknown";
+  }
+
+bool DetectM15ExpandedPullbackContext(SignalPlan &plan,
+                                      const int entryDirection,
+                                      bool &structurePullback,
+                                      bool &rangePullback,
+                                      bool &maPullback,
+                                      bool &notOpposite)
+  {
+   structurePullback = false;
+   rangePullback = false;
+   maPullback = false;
+   notOpposite = true;
+
+   MqlRates rates[];
+   int bars = MathMax(InpM15Wave2MaxAgeBars + InpSwingDepth + 12,
+                      InpTranscriptSmaPeriod + InpATRPeriod + 12);
+   if(!CopyClosedRates(plan.symbol, InpStructureTF, bars, rates))
+      return false;
+
+   double atr = ATR(rates, 0, InpATRPeriod);
+   if(atr <= 0.0)
+      return false;
+
+   double trendBreak = 0.0;
+   double trendPullback = 0.0;
+   string trendState = "";
+   int structureTrend = DetermineDowTrendDirectionOnTf(plan.symbol, InpStructureTF,
+                                                       trendBreak, trendPullback, trendState);
+   notOpposite = structureTrend != -entryDirection;
+
+   int lookback = MathMin(InpM15Wave2MaxAgeBars, ArraySize(rates) - 2);
+   if(lookback < 6)
+      return false;
+
+   double recentHigh = HighestHigh(rates, 1, lookback);
+   double recentLow = LowestLow(rates, 1, lookback);
+   double current = plan.entry > 0.0 ? plan.entry : rates[0].close;
+   double recentRange = recentHigh - recentLow;
+   if(recentRange > atr * 0.35)
+     {
+      double retrace = entryDirection > 0 ? (recentHigh - current) / recentRange :
+                                           (current - recentLow) / recentRange;
+      if(retrace > 0.0 && retrace < 1.25)
+        {
+         plan.m15Wave2RetraceRatio = retrace;
+         plan.m15Wave2FibZone = M15Wave2FibBucket(retrace);
+         plan.m15Wave2FibScore = M15Wave2FibScore(plan.m15Wave2FibZone);
+         rangePullback = retrace >= InpM15Wave2MinRetrace && retrace <= 0.95;
+         plan.m15Wave2AgeBars = lookback;
+         plan.m15Wave1High = recentHigh;
+         plan.m15Wave1Low = recentLow;
+        }
+     }
+
+   DowPivot pivots[];
+   double pivotAtr = 0.0;
+   string pivotState = "";
+   if(CollectOrderedDowPivots(plan.symbol, InpStructureTF, InpSwingDepth,
+                              MathMax(InpM15Wave2MaxAgeBars + 12, InpHTFWaveLookbackBars),
+                              pivots, pivotAtr, pivotState))
+     {
+      int count = ArraySize(pivots);
+      if(count >= 2)
+        {
+         DowPivot latest = pivots[count - 1];
+         DowPivot previous = pivots[count - 2];
+         if(entryDirection > 0 && previous.kind == 1 && latest.kind == -1 && latest.shift <= InpM15Wave2MaxAgeBars)
+           {
+            structurePullback = true;
+            plan.m15Wave2AgeBars = latest.shift;
+            plan.m15Wave1High = previous.price;
+            plan.m15Wave1Low = latest.price;
+           }
+         if(entryDirection < 0 && previous.kind == -1 && latest.kind == 1 && latest.shift <= InpM15Wave2MaxAgeBars)
+           {
+            structurePullback = true;
+            plan.m15Wave2AgeBars = latest.shift;
+            plan.m15Wave1High = latest.price;
+            plan.m15Wave1Low = previous.price;
+           }
+        }
+     }
+
+   double sma75 = SMA(rates, 0, InpTranscriptSmaPeriod);
+   if(sma75 > 0.0)
+     {
+      if(entryDirection > 0)
+         maPullback = rates[0].low <= sma75 + atr * 0.25 && rates[0].close >= sma75 - atr * 0.10;
+      else
+         maPullback = rates[0].high >= sma75 - atr * 0.25 && rates[0].close <= sma75 + atr * 0.10;
+     }
+
+   return rangePullback || structurePullback || maPullback;
+  }
+
 bool FindLatestContextImpulse(const string symbol,
                               const int entryDirection,
                               double &impulseHigh,
@@ -2189,20 +2421,28 @@ bool FinalizeSessionGate(SignalPlan &plan)
 bool DetectRefinedM15WaveContext(SignalPlan &plan, const int entryDirection)
   {
    plan.m15WaveContextMode = M15WaveContextModeName();
+   plan.m15Wave2ExpansionMode = M15Wave2ExpansionModeName();
+   plan.m15Wave2GateMode = M15Wave2GateModeName();
+   plan.m5PatternQualityGroup = M5PatternQualityGroup(plan.entryPattern);
+   plan.m15Wave2GatePass = true;
+   plan.m15Wave2GateRejectReason = "none";
+   plan.m15Wave2RequiredDueToPatternQuality = false;
+   plan.m15Wave2ScoreApplied = false;
    if(!UsesM15WaveContext() && !UsesM5CorrectiveABC())
       return true;
 
    double waveHigh = 0.0;
    double waveLow = 0.0;
    int swingCount = 0;
-   plan.m15Wave1Candidate = FindRecentDirectionalBreakDetailed(plan.symbol, InpStructureTF, entryDirection,
-                                                               InpM15Wave2MaxAgeBars,
-                                                               plan.m15Wave1BreakLevel,
-                                                               plan.m15Wave1AgeBars,
-                                                               plan.m15Wave1BreakType,
-                                                               waveHigh,
-                                                               waveLow,
-                                                               swingCount);
+   bool lightWave1 = FindRecentDirectionalBreakDetailed(plan.symbol, InpStructureTF, entryDirection,
+                                                        InpM15Wave2MaxAgeBars,
+                                                        plan.m15Wave1BreakLevel,
+                                                        plan.m15Wave1AgeBars,
+                                                        plan.m15Wave1BreakType,
+                                                        waveHigh,
+                                                        waveLow,
+                                                        swingCount);
+   plan.m15Wave1Candidate = lightWave1;
    if(plan.m15Wave1Candidate)
      {
       plan.m15Wave1Direction = DirectionText(entryDirection);
@@ -2216,44 +2456,141 @@ bool DetectRefinedM15WaveContext(SignalPlan &plan, const int entryDirection)
             plan.m15Wave2RetraceRatio = (waveHigh - plan.entry) / range;
          else
             plan.m15Wave2RetraceRatio = (plan.entry - waveLow) / range;
-         plan.m15Wave2FibZone = NestedFibBucket(plan.m15Wave2RetraceRatio);
-         if(plan.m15Wave2RetraceRatio >= InpM15Wave2PreferredMin &&
-            plan.m15Wave2RetraceRatio <= MathMax(InpM15Wave2PreferredMax, InpM15Wave2PreferredMin))
-            plan.m15Wave2FibScore = 0.20;
-         else if(plan.m15Wave2RetraceRatio >= InpM15Wave2MinRetrace &&
-                 plan.m15Wave2RetraceRatio <= 0.90)
-            plan.m15Wave2FibScore = 0.10;
-         else
-            plan.m15Wave2FibScore = 0.0;
+         plan.m15Wave2FibZone = M15Wave2FibBucket(plan.m15Wave2RetraceRatio);
+         plan.m15Wave2FibScore = M15Wave2FibScore(plan.m15Wave2FibZone);
          plan.m15Wave2Candidate = plan.m15Wave2RetraceRatio >= InpM15Wave2MinRetrace &&
                                   plan.m15Wave2RetraceRatio <= 0.90;
-        }
-     }
+         plan.m15Wave2Type = M15Wave2TypeFromContext(plan.m15Wave2FibZone, false, plan.m15Wave2Candidate, false);
+         }
+      }
+
+   bool lightWave2 = plan.m15Wave2Candidate;
+   bool structurePullback = false;
+   bool rangePullback = false;
+   bool maPullback = false;
+   bool notOpposite = true;
+   bool expandedPullback = DetectM15ExpandedPullbackContext(plan, entryDirection,
+                                                           structurePullback, rangePullback,
+                                                           maPullback, notOpposite);
+   if(expandedPullback && plan.m15Wave2Type == "unknown")
+      plan.m15Wave2Type = M15Wave2TypeFromContext(plan.m15Wave2FibZone, structurePullback, rangePullback, maPullback);
+
+   bool expandedCandidate = false;
+   if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_CURRENT_REQUIRED_LIGHT)
+      expandedCandidate = lightWave2;
+   else if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_PULLBACK_ONLY)
+      expandedCandidate = expandedPullback;
+   else if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_WAVE1_OR_WAVE2)
+      expandedCandidate = plan.m15Wave1Candidate || expandedPullback;
+   else if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_NOT_OPPOSITE_PLUS_PULLBACK)
+      expandedCandidate = notOpposite && expandedPullback;
+   else if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_FIB_OR_STRUCTURE_PULLBACK)
+      expandedCandidate = plan.m15Wave2FibScore > 0.0 || structurePullback || rangePullback;
+   else if(InpM15Wave2ExpansionMode == M15_WAVE2_EXPANSION_DIAGNOSTIC_ONLY)
+      expandedCandidate = expandedPullback || lightWave2;
+   else
+      expandedCandidate = lightWave2;
+
+   if(InpM15Wave2ExpansionMode != M15_WAVE2_EXPANSION_OFF)
+      plan.m15Wave2Candidate = expandedCandidate;
+
+   if(plan.m15Wave2FibZone == "none")
+      plan.m15Wave2FibZone = "no_fib";
+   if(plan.m15Wave2Type == "")
+      plan.m15Wave2Type = "unknown";
+
+   plan.m15Wave2Score = 0.0;
+   if(plan.m15Wave2Candidate)
+      plan.m15Wave2Score += 0.12;
+   if(structurePullback)
+      plan.m15Wave2Score += 0.12;
+   else if(rangePullback)
+      plan.m15Wave2Score += 0.08;
+   if(maPullback)
+      plan.m15Wave2Score += 0.05;
+   plan.m15Wave2Score += plan.m15Wave2FibScore;
 
    plan.m15WaveContextScore = 0.0;
    if(plan.m15Wave1Candidate)
-      plan.m15WaveContextScore += 0.20;
+      plan.m15WaveContextScore += 0.15;
    if(plan.m15Wave2Candidate)
-      plan.m15WaveContextScore += 0.20;
-   plan.m15WaveContextScore += plan.m15Wave2FibScore;
+      plan.m15WaveContextScore += plan.m15Wave2Score;
 
    if(InpM15WaveContextMode == M15_WAVE_CONTEXT_SCORE)
      {
       plan.nestedScore += plan.m15WaveContextScore;
       plan.score += plan.m15WaveContextScore;
-     }
+      plan.m15Wave2ScoreApplied = true;
+      }
 
-   if(InpM15WaveContextMode == M15_WAVE_CONTEXT_REQUIRED_LIGHT && !plan.m15Wave2Candidate)
+   if(InpM15WaveContextMode == M15_WAVE_CONTEXT_REQUIRED_LIGHT && !lightWave2)
      {
       plan.reason = "m15_wave2_context_required_failed";
       plan.failureType = "m15_wave_context_failed";
+      plan.m15Wave2GatePass = false;
+      plan.m15Wave2GateRejectReason = "legacy_required_light_failed";
       return false;
-     }
+      }
    if(InpM15WaveContextMode == M15_WAVE_CONTEXT_REQUIRED_STRICT &&
-      (!plan.m15Wave1Candidate || !plan.m15Wave2Candidate || plan.m15Wave2FibScore < 0.20))
+      (!plan.m15Wave1Candidate || !lightWave2 || plan.m15Wave2FibScore < 0.20))
      {
       plan.reason = "m15_wave2_context_strict_failed";
       plan.failureType = "m15_wave_context_failed";
+      plan.m15Wave2GatePass = false;
+      plan.m15Wave2GateRejectReason = "legacy_required_strict_failed";
+      return false;
+      }
+
+   bool requireGate = false;
+   bool gatePass = true;
+   string gateReject = "none";
+   if(InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_LIGHT)
+     {
+      requireGate = true;
+      gatePass = lightWave2;
+      gateReject = "required_light_failed";
+     }
+   else if(InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_EXPANDED)
+     {
+      requireGate = true;
+      gatePass = expandedCandidate;
+      gateReject = "required_expanded_failed";
+     }
+   else if(InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_ONLY_LOW_QUALITY_M5)
+     {
+      requireGate = plan.m5PatternQualityGroup == "low_quality";
+      gatePass = !requireGate || expandedCandidate;
+      gateReject = "required_low_quality_m5_failed";
+     }
+   else if(InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_MEDIUM_LOW_QUALITY_M5)
+     {
+      requireGate = plan.m5PatternQualityGroup == "low_quality" ||
+                    plan.m5PatternQualityGroup == "medium_quality";
+      gatePass = !requireGate || expandedCandidate;
+      gateReject = "required_medium_low_quality_m5_failed";
+     }
+
+   plan.m15Wave2RequiredDueToPatternQuality = requireGate &&
+      (InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_ONLY_LOW_QUALITY_M5 ||
+       InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_MEDIUM_LOW_QUALITY_M5);
+
+   bool shouldApplyScore = InpM15Wave2GateMode == M15_WAVE2_GATE_SCORE_ONLY ||
+                           ((InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_ONLY_LOW_QUALITY_M5 ||
+                             InpM15Wave2GateMode == M15_WAVE2_GATE_REQUIRED_MEDIUM_LOW_QUALITY_M5) &&
+                            !requireGate);
+   if(shouldApplyScore && plan.m15WaveContextScore > 0.0)
+     {
+      plan.nestedScore += plan.m15WaveContextScore;
+      plan.score += plan.m15WaveContextScore;
+      plan.m15Wave2ScoreApplied = true;
+     }
+
+   plan.m15Wave2GatePass = gatePass;
+   plan.m15Wave2GateRejectReason = gatePass ? "none" : gateReject;
+   if(!gatePass)
+     {
+      plan.reason = plan.m15Wave2GateRejectReason;
+      plan.failureType = "m15_wave2_gate_failed";
       return false;
      }
 
@@ -3854,8 +4191,17 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.m15Wave2FibZone = "none";
    plan.m15Wave2FibScore = 0.0;
    plan.m15WaveContextMode = M15WaveContextModeName();
+   plan.m15Wave2ExpansionMode = M15Wave2ExpansionModeName();
+   plan.m15Wave2GateMode = M15Wave2GateModeName();
+   plan.m15Wave2Type = "unknown";
    plan.m15Wave2AgeBars = -1;
+   plan.m15Wave2Score = 0.0;
+   plan.m15Wave2GatePass = true;
+   plan.m15Wave2GateRejectReason = "none";
    plan.m15WaveContextScore = 0.0;
+   plan.m5PatternQualityGroup = "unknown";
+   plan.m15Wave2RequiredDueToPatternQuality = false;
+   plan.m15Wave2ScoreApplied = false;
    plan.m5CorrectiveWaveDetected = false;
    plan.m5CorrectiveDirection = "NONE";
    plan.m5CorrectiveSwingCount = 0;
@@ -4617,7 +4963,9 @@ string SignalHeaderLine()
           "nested_thirdwave_enabled,nested_thirdwave_mode,h1_context_direction,h1_context_impulse_direction,context_impulse_high,context_impulse_low," +
           "h1_context_fib_retrace_ratio,h1_context_fib_room_bucket,context_fib_room_score," +
           "m15_wave1_candidate,m15_wave1_direction,m15_wave1_break_type,m15_wave1_break_level,m15_wave1_age_bars,m15_wave1_high,m15_wave1_low," +
-          "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode,m15_wave2_age_bars,m15_wave_context_score," +
+          "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
+          "m15_wave2_expansion_mode,m15_wave2_gate_mode,m15_wave2_type,m15_wave2_age_bars,m15_wave2_score,m15_wave2_gate_pass,m15_wave2_gate_reject_reason," +
+          "m15_wave_context_score,m5_pattern_quality_group,m15_wave2_required_due_to_pattern_quality,m15_wave2_score_applied," +
           "m5_corrective_wave_detected,m5_corrective_direction,m5_corrective_swing_count,m5_corrective_123_detected,m5_corrective_abc_detected," +
           "m5_corrective_leg_count,m5_corrective_start_time,m5_corrective_end_time,m5_corrective_age_bars,m5_corrective_pullback_atr," +
           "m5_corrective_last_lh_level,m5_corrective_last_hl_level,m5_corrective_invalidation_level,m5_corrective_invalidation," +
@@ -4744,8 +5092,17 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    CsvAppend(line, plan.m15Wave2FibZone);
    CsvAppend(line, DoubleToString(plan.m15Wave2FibScore, 3));
    CsvAppend(line, plan.m15WaveContextMode);
+   CsvAppend(line, plan.m15Wave2ExpansionMode);
+   CsvAppend(line, plan.m15Wave2GateMode);
+   CsvAppend(line, plan.m15Wave2Type);
    CsvAppend(line, IntegerToString(plan.m15Wave2AgeBars));
+   CsvAppend(line, DoubleToString(plan.m15Wave2Score, 3));
+   CsvAppend(line, BoolText(plan.m15Wave2GatePass));
+   CsvAppend(line, plan.m15Wave2GateRejectReason);
    CsvAppend(line, DoubleToString(plan.m15WaveContextScore, 3));
+   CsvAppend(line, plan.m5PatternQualityGroup);
+   CsvAppend(line, BoolText(plan.m15Wave2RequiredDueToPatternQuality));
+   CsvAppend(line, BoolText(plan.m15Wave2ScoreApplied));
    CsvAppend(line, BoolText(plan.m5CorrectiveWaveDetected));
    CsvAppend(line, plan.m5CorrectiveDirection);
    CsvAppend(line, IntegerToString(plan.m5CorrectiveSwingCount));
@@ -4918,7 +5275,9 @@ string TradeHeaderLine()
           "nested_thirdwave_enabled,nested_thirdwave_mode,h1_context_direction,h1_context_impulse_direction,context_impulse_high,context_impulse_low," +
           "h1_context_fib_retrace_ratio,h1_context_fib_room_bucket,context_fib_room_score," +
           "m15_wave1_candidate,m15_wave1_direction,m15_wave1_break_type,m15_wave1_break_level,m15_wave1_age_bars,m15_wave1_high,m15_wave1_low," +
-          "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode,m15_wave2_age_bars,m15_wave_context_score," +
+          "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
+          "m15_wave2_expansion_mode,m15_wave2_gate_mode,m15_wave2_type,m15_wave2_age_bars,m15_wave2_score,m15_wave2_gate_pass,m15_wave2_gate_reject_reason," +
+          "m15_wave_context_score,m5_pattern_quality_group,m15_wave2_required_due_to_pattern_quality,m15_wave2_score_applied," +
           "m5_corrective_wave_detected,m5_corrective_direction,m5_corrective_swing_count,m5_corrective_123_detected,m5_corrective_abc_detected," +
           "m5_corrective_leg_count,m5_corrective_start_time,m5_corrective_end_time,m5_corrective_age_bars,m5_corrective_pullback_atr," +
           "m5_corrective_last_lh_level,m5_corrective_last_hl_level,m5_corrective_invalidation_level,m5_corrective_invalidation," +
@@ -5082,8 +5441,17 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, tracked.m15Wave2FibZone);
    CsvAppend(line, DoubleToString(tracked.m15Wave2FibScore, 3));
    CsvAppend(line, tracked.m15WaveContextMode);
+   CsvAppend(line, tracked.m15Wave2ExpansionMode);
+   CsvAppend(line, tracked.m15Wave2GateMode);
+   CsvAppend(line, tracked.m15Wave2Type);
    CsvAppend(line, IntegerToString(tracked.m15Wave2AgeBars));
+   CsvAppend(line, DoubleToString(tracked.m15Wave2Score, 3));
+   CsvAppend(line, BoolText(tracked.m15Wave2GatePass));
+   CsvAppend(line, tracked.m15Wave2GateRejectReason);
    CsvAppend(line, DoubleToString(tracked.m15WaveContextScore, 3));
+   CsvAppend(line, tracked.m5PatternQualityGroup);
+   CsvAppend(line, BoolText(tracked.m15Wave2RequiredDueToPatternQuality));
+   CsvAppend(line, BoolText(tracked.m15Wave2ScoreApplied));
    CsvAppend(line, BoolText(tracked.m5CorrectiveWaveDetected));
    CsvAppend(line, tracked.m5CorrectiveDirection);
    CsvAppend(line, IntegerToString(tracked.m5CorrectiveSwingCount));
@@ -5848,8 +6216,17 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].m15Wave2FibZone = plan.m15Wave2FibZone;
    g_trades[size].m15Wave2FibScore = plan.m15Wave2FibScore;
    g_trades[size].m15WaveContextMode = plan.m15WaveContextMode;
+   g_trades[size].m15Wave2ExpansionMode = plan.m15Wave2ExpansionMode;
+   g_trades[size].m15Wave2GateMode = plan.m15Wave2GateMode;
+   g_trades[size].m15Wave2Type = plan.m15Wave2Type;
    g_trades[size].m15Wave2AgeBars = plan.m15Wave2AgeBars;
+   g_trades[size].m15Wave2Score = plan.m15Wave2Score;
+   g_trades[size].m15Wave2GatePass = plan.m15Wave2GatePass;
+   g_trades[size].m15Wave2GateRejectReason = plan.m15Wave2GateRejectReason;
    g_trades[size].m15WaveContextScore = plan.m15WaveContextScore;
+   g_trades[size].m5PatternQualityGroup = plan.m5PatternQualityGroup;
+   g_trades[size].m15Wave2RequiredDueToPatternQuality = plan.m15Wave2RequiredDueToPatternQuality;
+   g_trades[size].m15Wave2ScoreApplied = plan.m15Wave2ScoreApplied;
    g_trades[size].m5CorrectiveWaveDetected = plan.m5CorrectiveWaveDetected;
    g_trades[size].m5CorrectiveDirection = plan.m5CorrectiveDirection;
    g_trades[size].m5CorrectiveSwingCount = plan.m5CorrectiveSwingCount;
