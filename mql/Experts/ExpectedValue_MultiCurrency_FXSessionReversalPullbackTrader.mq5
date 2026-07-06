@@ -114,6 +114,27 @@ enum ENUM_M15_WAVE2_GATE_MODE
    M15_WAVE2_GATE_REQUIRED_MEDIUM_LOW_QUALITY_M5 = 6
   };
 
+enum ENUM_M15_WAVE2_ADJACENT_MODE
+  {
+   M15_WAVE2_ADJACENT_OFF = 0,
+   M15_WAVE2_ADJACENT_REQUIRED_LIGHT_ORIGINAL = 1,
+   M15_WAVE2_ADJACENT_RELAX_WAVE1_AGE_ONLY = 2,
+   M15_WAVE2_ADJACENT_RELAX_WAVE2_AGE_ONLY = 3,
+   M15_WAVE2_ADJACENT_RELAX_FIB_NEIGHBOR_ONLY = 4,
+   M15_WAVE2_ADJACENT_ALLOW_ADJACENT_BREAK_TYPE_ONLY = 5,
+   M15_WAVE2_ADJACENT_ALLOW_HIGH_QUALITY_M5_NEAR_MISS_ONLY = 6,
+   M15_WAVE2_ADJACENT_RELAX_CONTEXT_FIB_ROOM_ONLY = 7,
+   M15_WAVE2_ADJACENT_COMBINE_BEST_TWO = 8,
+   M15_WAVE2_ADJACENT_DIAGNOSTIC_ONLY = 9
+  };
+
+enum ENUM_M15_WAVE2_ADJACENT_FIB_SIDE
+  {
+   M15_WAVE2_ADJACENT_FIB_BOTH = 0,
+   M15_WAVE2_ADJACENT_FIB_SHALLOW_ONLY = 1,
+   M15_WAVE2_ADJACENT_FIB_DEEP_ONLY = 2
+  };
+
 enum ENUM_EXIT_MODE
   {
    EXIT_FIXED_TP_SL = 0,
@@ -244,6 +265,14 @@ struct SignalPlan
    string            m5PatternQualityGroup;
    bool              m15Wave2RequiredDueToPatternQuality;
    bool              m15Wave2ScoreApplied;
+   string            m15Wave2AdjacentMode;
+   string            m15Wave2AdjacentFibSide;
+   bool              m15RequiredLightPass;
+   string            m15RequiredLightRejectReason;
+   bool              m15Wave2AdjacentPass;
+   string            m15Wave2AdjacentReason;
+   string            m15Wave2AdjacentRelaxedComponent;
+   bool              m15Wave2NearMiss;
    bool              m5CorrectiveWaveDetected;
    string            m5CorrectiveDirection;
    int               m5CorrectiveSwingCount;
@@ -443,6 +472,14 @@ struct TrackedTrade
    string            m5PatternQualityGroup;
    bool              m15Wave2RequiredDueToPatternQuality;
    bool              m15Wave2ScoreApplied;
+   string            m15Wave2AdjacentMode;
+   string            m15Wave2AdjacentFibSide;
+   bool              m15RequiredLightPass;
+   string            m15RequiredLightRejectReason;
+   bool              m15Wave2AdjacentPass;
+   string            m15Wave2AdjacentReason;
+   string            m15Wave2AdjacentRelaxedComponent;
+   bool              m15Wave2NearMiss;
    bool              m5CorrectiveWaveDetected;
    string            m5CorrectiveDirection;
    int               m5CorrectiveSwingCount;
@@ -680,6 +717,10 @@ input double          InpM15Wave2PreferredMin          = 0.382;
 input double          InpM15Wave2PreferredMax          = 0.786;
 input ENUM_M15_WAVE2_EXPANSION_MODE InpM15Wave2ExpansionMode = M15_WAVE2_EXPANSION_OFF;
 input ENUM_M15_WAVE2_GATE_MODE InpM15Wave2GateMode = M15_WAVE2_GATE_NO_GATE;
+input ENUM_M15_WAVE2_ADJACENT_MODE InpM15Wave2AdjacentMode = M15_WAVE2_ADJACENT_OFF;
+input ENUM_M15_WAVE2_ADJACENT_FIB_SIDE InpM15Wave2AdjacentFibSide = M15_WAVE2_ADJACENT_FIB_BOTH;
+input int             InpM15Wave2AdjacentAgeExtraBars = 4;
+input int             InpM15Wave2AdjacentCombineMask = 0;
 input ENUM_EXIT_MODE  InpExitMode                      = EXIT_M5_FAILURE;
 input ENUM_STRUCTURE_TARGET_MODE InpStructureTargetMode = STRUCTURE_TARGET_OFF;
 input double          InpSessionInvalidationATR        = 0.85;
@@ -962,6 +1003,38 @@ string M15Wave2GateModeName()
    return "no_gate";
   }
 
+string M15Wave2AdjacentModeName()
+  {
+   if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_REQUIRED_LIGHT_ORIGINAL)
+      return "required_light_original";
+   if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_RELAX_WAVE1_AGE_ONLY)
+      return "relax_wave1_age_only";
+   if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_RELAX_WAVE2_AGE_ONLY)
+      return "relax_wave2_age_only";
+   if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_RELAX_FIB_NEIGHBOR_ONLY)
+      return "relax_fib_neighbor_only";
+   if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_ALLOW_ADJACENT_BREAK_TYPE_ONLY)
+      return "allow_adjacent_break_type_only";
+   if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_ALLOW_HIGH_QUALITY_M5_NEAR_MISS_ONLY)
+      return "allow_high_quality_m5_near_miss_only";
+   if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_RELAX_CONTEXT_FIB_ROOM_ONLY)
+      return "relax_context_fib_room_only";
+   if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_COMBINE_BEST_TWO)
+      return "combine_best_two_adjacent";
+   if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_DIAGNOSTIC_ONLY)
+      return "diagnostic_only";
+   return "off";
+  }
+
+string M15Wave2AdjacentFibSideName()
+  {
+   if(InpM15Wave2AdjacentFibSide == M15_WAVE2_ADJACENT_FIB_SHALLOW_ONLY)
+      return "shallow_only";
+   if(InpM15Wave2AdjacentFibSide == M15_WAVE2_ADJACENT_FIB_DEEP_ONLY)
+      return "deep_only";
+   return "both";
+  }
+
 string ExitModeName()
   {
    if(InpExitMode == EXIT_FIXED_TP_SL)
@@ -993,7 +1066,8 @@ bool UsesM15WaveContext()
   {
    return InpM15WaveContextMode != M15_WAVE_CONTEXT_OFF ||
           InpM15Wave2ExpansionMode != M15_WAVE2_EXPANSION_OFF ||
-          InpM15Wave2GateMode != M15_WAVE2_GATE_NO_GATE;
+          InpM15Wave2GateMode != M15_WAVE2_GATE_NO_GATE ||
+          InpM15Wave2AdjacentMode != M15_WAVE2_ADJACENT_OFF;
   }
 
 string M5PatternQualityGroup(const string pattern)
@@ -2032,6 +2106,88 @@ double M15Wave2FibScore(const string zone)
    return 0.0;
   }
 
+string RequiredLightRejectReason(const bool wave1,
+                                 const bool wave2,
+                                 const double retraceRatio,
+                                 const int ageBars,
+                                 const int maxAgeBars)
+  {
+   if(!wave1)
+      return "missing_recent_wave1_break";
+   if(ageBars > maxAgeBars)
+      return "wave1_break_too_old";
+   if(!wave2)
+     {
+      if(retraceRatio < InpM15Wave2MinRetrace)
+         return "wave2_retrace_too_shallow";
+      if(retraceRatio > 0.90)
+         return "wave2_retrace_too_deep";
+      return "wave2_pullback_missing";
+     }
+   return "none";
+  }
+
+bool EvaluateM15LightWave2(const string symbol,
+                           const int entryDirection,
+                           const int maxAgeBars,
+                           const double entryPrice,
+                           bool &wave1,
+                           bool &wave2,
+                           double &retraceRatio,
+                           string &fibZone,
+                           double &fibScore,
+                           int &ageBars,
+                           string &breakType,
+                           double &waveHigh,
+                           double &waveLow)
+  {
+   wave1 = false;
+   wave2 = false;
+   retraceRatio = 0.0;
+   fibZone = "no_fib";
+   fibScore = 0.0;
+   ageBars = -1;
+   breakType = "none";
+   waveHigh = 0.0;
+   waveLow = 0.0;
+
+   double breakLevel = 0.0;
+   int swingCount = 0;
+   wave1 = FindRecentDirectionalBreakDetailed(symbol, InpStructureTF, entryDirection,
+                                              maxAgeBars,
+                                              breakLevel,
+                                              ageBars,
+                                              breakType,
+                                              waveHigh,
+                                              waveLow,
+                                              swingCount);
+   if(!wave1 || waveHigh <= waveLow || entryPrice <= 0.0)
+      return wave1;
+
+   double range = waveHigh - waveLow;
+   if(entryDirection > 0)
+      retraceRatio = (waveHigh - entryPrice) / range;
+   else
+      retraceRatio = (entryPrice - waveLow) / range;
+
+   fibZone = M15Wave2FibBucket(retraceRatio);
+   fibScore = M15Wave2FibScore(fibZone);
+   wave2 = retraceRatio >= InpM15Wave2MinRetrace && retraceRatio <= 0.90;
+   return true;
+  }
+
+bool IsAdjacentFibNeighbor(const double retraceRatio)
+  {
+   double shallowMin = MathMax(0.0, InpM15Wave2MinRetrace - 0.06);
+   bool shallowNeighbor = retraceRatio >= shallowMin && retraceRatio < InpM15Wave2MinRetrace;
+   bool deepNeighbor = retraceRatio > 0.90 && retraceRatio <= 0.98;
+   if(InpM15Wave2AdjacentFibSide == M15_WAVE2_ADJACENT_FIB_SHALLOW_ONLY)
+      return shallowNeighbor;
+   if(InpM15Wave2AdjacentFibSide == M15_WAVE2_ADJACENT_FIB_DEEP_ONLY)
+      return deepNeighbor;
+   return shallowNeighbor || deepNeighbor;
+  }
+
 string M15Wave2TypeFromContext(const string fibZone,
                                const bool structurePullback,
                                const bool rangePullback,
@@ -2423,11 +2579,19 @@ bool DetectRefinedM15WaveContext(SignalPlan &plan, const int entryDirection)
    plan.m15WaveContextMode = M15WaveContextModeName();
    plan.m15Wave2ExpansionMode = M15Wave2ExpansionModeName();
    plan.m15Wave2GateMode = M15Wave2GateModeName();
+   plan.m15Wave2AdjacentMode = M15Wave2AdjacentModeName();
+   plan.m15Wave2AdjacentFibSide = M15Wave2AdjacentFibSideName();
    plan.m5PatternQualityGroup = M5PatternQualityGroup(plan.entryPattern);
    plan.m15Wave2GatePass = true;
    plan.m15Wave2GateRejectReason = "none";
    plan.m15Wave2RequiredDueToPatternQuality = false;
    plan.m15Wave2ScoreApplied = false;
+   plan.m15RequiredLightPass = false;
+   plan.m15RequiredLightRejectReason = "not_evaluated";
+   plan.m15Wave2AdjacentPass = false;
+   plan.m15Wave2AdjacentReason = "not_evaluated";
+   plan.m15Wave2AdjacentRelaxedComponent = "none";
+   plan.m15Wave2NearMiss = false;
    if(!UsesM15WaveContext() && !UsesM5CorrectiveABC())
       return true;
 
@@ -2465,6 +2629,12 @@ bool DetectRefinedM15WaveContext(SignalPlan &plan, const int entryDirection)
       }
 
    bool lightWave2 = plan.m15Wave2Candidate;
+   plan.m15RequiredLightPass = lightWave2;
+   plan.m15RequiredLightRejectReason = RequiredLightRejectReason(lightWave1,
+                                                                 lightWave2,
+                                                                 plan.m15Wave2RetraceRatio,
+                                                                 plan.m15Wave1AgeBars,
+                                                                 InpM15Wave2MaxAgeBars);
    bool structurePullback = false;
    bool rangePullback = false;
    bool maPullback = false;
@@ -2491,8 +2661,153 @@ bool DetectRefinedM15WaveContext(SignalPlan &plan, const int entryDirection)
    else
       expandedCandidate = lightWave2;
 
+   bool relaxedWave1 = false;
+   bool relaxedWave2 = false;
+   double relaxedRetrace = 0.0;
+   string relaxedFibZone = "no_fib";
+   double relaxedFibScore = 0.0;
+   int relaxedAge = -1;
+   string relaxedBreakType = "none";
+   double relaxedWaveHigh = 0.0;
+   double relaxedWaveLow = 0.0;
+   int adjacentAgeLimit = InpM15Wave2MaxAgeBars + MathMax(0, InpM15Wave2AdjacentAgeExtraBars);
+   EvaluateM15LightWave2(plan.symbol, entryDirection, adjacentAgeLimit, plan.entry,
+                         relaxedWave1, relaxedWave2, relaxedRetrace, relaxedFibZone,
+                         relaxedFibScore, relaxedAge, relaxedBreakType,
+                         relaxedWaveHigh, relaxedWaveLow);
+
+   bool ageAdjacent = relaxedWave2 && !lightWave2 && relaxedAge > InpM15Wave2MaxAgeBars;
+   bool fibAdjacent = !lightWave2 && lightWave1 && IsAdjacentFibNeighbor(plan.m15Wave2RetraceRatio);
+   bool breakAdjacent = false;
+   bool highQualityAdjacent = !lightWave2 &&
+                              plan.m5PatternQualityGroup == "high_quality" &&
+                              notOpposite &&
+                              (relaxedWave2 || fibAdjacent || expandedPullback);
+   bool contextAdjacent = !lightWave2 &&
+                          notOpposite &&
+                          plan.contextFibRoomScore > 0.0 &&
+                          (relaxedWave2 || fibAdjacent || expandedPullback);
+
+   bool adjacentCandidate = lightWave2;
+   string adjacentReason = lightWave2 ? "required_light_original_pass" : plan.m15RequiredLightRejectReason;
+   string adjacentComponent = "required_light";
+   if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_RELAX_WAVE1_AGE_ONLY)
+     {
+      adjacentCandidate = lightWave2 || ageAdjacent;
+      adjacentComponent = ageAdjacent ? "wave1_age" : "required_light";
+      adjacentReason = adjacentCandidate ? (ageAdjacent ? "relaxed_wave1_age_pass" : "required_light_original_pass") : "relaxed_wave1_age_failed";
+     }
+   else if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_RELAX_WAVE2_AGE_ONLY)
+     {
+      adjacentCandidate = lightWave2 || ageAdjacent;
+      adjacentComponent = ageAdjacent ? "wave2_age_proxy" : "required_light";
+      adjacentReason = adjacentCandidate ? (ageAdjacent ? "relaxed_wave2_age_proxy_pass" : "required_light_original_pass") : "relaxed_wave2_age_failed";
+     }
+   else if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_RELAX_FIB_NEIGHBOR_ONLY)
+     {
+      adjacentCandidate = lightWave2 || fibAdjacent;
+      adjacentComponent = fibAdjacent ? "fib_neighbor" : "required_light";
+      adjacentReason = adjacentCandidate ? (fibAdjacent ? "fib_neighbor_pass" : "required_light_original_pass") : "fib_neighbor_failed";
+     }
+   else if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_ALLOW_ADJACENT_BREAK_TYPE_ONLY)
+     {
+      adjacentCandidate = lightWave2 || breakAdjacent;
+      adjacentComponent = breakAdjacent ? "adjacent_break_type" : "required_light";
+      adjacentReason = adjacentCandidate ? (breakAdjacent ? "adjacent_break_type_pass" : "required_light_original_pass") : "no_adjacent_break_type_available";
+     }
+   else if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_ALLOW_HIGH_QUALITY_M5_NEAR_MISS_ONLY)
+     {
+      adjacentCandidate = lightWave2 || highQualityAdjacent;
+      adjacentComponent = highQualityAdjacent ? "high_quality_m5_near_miss" : "required_light";
+      adjacentReason = adjacentCandidate ? (highQualityAdjacent ? "high_quality_m5_near_miss_pass" : "required_light_original_pass") : "high_quality_m5_near_miss_failed";
+     }
+   else if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_RELAX_CONTEXT_FIB_ROOM_ONLY)
+     {
+      adjacentCandidate = lightWave2 || contextAdjacent;
+      adjacentComponent = contextAdjacent ? "context_fib_room" : "required_light";
+      adjacentReason = adjacentCandidate ? (contextAdjacent ? "context_fib_room_near_miss_pass" : "required_light_original_pass") : "context_fib_room_near_miss_failed";
+     }
+   else if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_COMBINE_BEST_TWO)
+     {
+      int mask = InpM15Wave2AdjacentCombineMask;
+      if(mask <= 0)
+         mask = 1 | 16;
+      bool wave1Enabled = (mask & 1) != 0;
+      bool wave2Enabled = (mask & 2) != 0;
+      bool fibEnabled = (mask & 4) != 0;
+      bool breakEnabled = (mask & 8) != 0;
+      bool highQualityEnabled = (mask & 16) != 0;
+      bool contextEnabled = (mask & 32) != 0;
+      bool combinedAdjacent =
+         (wave1Enabled && ageAdjacent) ||
+         (wave2Enabled && ageAdjacent) ||
+         (fibEnabled && fibAdjacent) ||
+         (breakEnabled && breakAdjacent) ||
+         (highQualityEnabled && highQualityAdjacent) ||
+         (contextEnabled && contextAdjacent);
+      adjacentCandidate = lightWave2 || combinedAdjacent;
+      if(combinedAdjacent)
+        {
+         if(wave1Enabled && ageAdjacent)
+            adjacentComponent = "wave1_age";
+         else if(wave2Enabled && ageAdjacent)
+            adjacentComponent = "wave2_age_proxy";
+         else if(fibEnabled && fibAdjacent)
+            adjacentComponent = "fib_neighbor";
+         else if(breakEnabled && breakAdjacent)
+            adjacentComponent = "adjacent_break_type";
+         else if(highQualityEnabled && highQualityAdjacent)
+            adjacentComponent = "high_quality_m5_near_miss";
+         else if(contextEnabled && contextAdjacent)
+            adjacentComponent = "context_fib_room";
+         adjacentReason = "combine_best_two_adjacent_pass";
+        }
+      else
+         adjacentReason = lightWave2 ? "required_light_original_pass" : "combine_best_two_adjacent_failed";
+     }
+   else if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_DIAGNOSTIC_ONLY)
+     {
+      adjacentCandidate = lightWave2 || ageAdjacent || fibAdjacent || breakAdjacent ||
+                          highQualityAdjacent || contextAdjacent;
+      adjacentComponent = lightWave2 ? "required_light" :
+                          (ageAdjacent ? "age_near_miss" :
+                           (fibAdjacent ? "fib_neighbor" :
+                            (highQualityAdjacent ? "high_quality_m5_near_miss" :
+                             (contextAdjacent ? "context_fib_room" : "none"))));
+      adjacentReason = adjacentCandidate ? "diagnostic_adjacent_detected" : plan.m15RequiredLightRejectReason;
+     }
+   else if(InpM15Wave2AdjacentMode == M15_WAVE2_ADJACENT_REQUIRED_LIGHT_ORIGINAL)
+     {
+      adjacentCandidate = lightWave2;
+      adjacentReason = lightWave2 ? "required_light_original_pass" : plan.m15RequiredLightRejectReason;
+      adjacentComponent = "required_light";
+     }
+
+   plan.m15Wave2AdjacentPass = adjacentCandidate;
+   plan.m15Wave2AdjacentReason = adjacentReason;
+   plan.m15Wave2AdjacentRelaxedComponent = adjacentComponent;
+   plan.m15Wave2NearMiss = adjacentCandidate && !lightWave2;
+
+   if(plan.m15Wave2NearMiss && ageAdjacent)
+     {
+      plan.m15Wave1Candidate = relaxedWave1;
+      plan.m15Wave1Direction = DirectionText(entryDirection);
+      plan.m15Wave1BreakType = relaxedBreakType;
+      plan.m15Wave1AgeBars = relaxedAge;
+      plan.m15Wave1High = relaxedWaveHigh;
+      plan.m15Wave1Low = relaxedWaveLow;
+      plan.m15Wave2RetraceRatio = relaxedRetrace;
+      plan.m15Wave2FibZone = relaxedFibZone;
+      plan.m15Wave2FibScore = relaxedFibScore;
+      plan.m15Wave2AgeBars = relaxedAge;
+      plan.m15Wave2Type = M15Wave2TypeFromContext(relaxedFibZone, false, true, false);
+     }
+
    if(InpM15Wave2ExpansionMode != M15_WAVE2_EXPANSION_OFF)
       plan.m15Wave2Candidate = expandedCandidate;
+   if(InpM15Wave2AdjacentMode != M15_WAVE2_ADJACENT_OFF &&
+      InpM15Wave2AdjacentMode != M15_WAVE2_ADJACENT_DIAGNOSTIC_ONLY)
+      plan.m15Wave2Candidate = adjacentCandidate;
 
    if(plan.m15Wave2FibZone == "none")
       plan.m15Wave2FibZone = "no_fib";
@@ -2566,8 +2881,16 @@ bool DetectRefinedM15WaveContext(SignalPlan &plan, const int entryDirection)
      {
       requireGate = plan.m5PatternQualityGroup == "low_quality" ||
                     plan.m5PatternQualityGroup == "medium_quality";
-      gatePass = !requireGate || expandedCandidate;
+     gatePass = !requireGate || expandedCandidate;
       gateReject = "required_medium_low_quality_m5_failed";
+     }
+
+   if(InpM15Wave2AdjacentMode != M15_WAVE2_ADJACENT_OFF &&
+      InpM15Wave2AdjacentMode != M15_WAVE2_ADJACENT_DIAGNOSTIC_ONLY)
+     {
+      requireGate = true;
+      gatePass = adjacentCandidate;
+      gateReject = adjacentReason;
      }
 
    plan.m15Wave2RequiredDueToPatternQuality = requireGate &&
@@ -4202,6 +4525,14 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.m5PatternQualityGroup = "unknown";
    plan.m15Wave2RequiredDueToPatternQuality = false;
    plan.m15Wave2ScoreApplied = false;
+   plan.m15Wave2AdjacentMode = M15Wave2AdjacentModeName();
+   plan.m15Wave2AdjacentFibSide = M15Wave2AdjacentFibSideName();
+   plan.m15RequiredLightPass = false;
+   plan.m15RequiredLightRejectReason = "not_evaluated";
+   plan.m15Wave2AdjacentPass = false;
+   plan.m15Wave2AdjacentReason = "not_evaluated";
+   plan.m15Wave2AdjacentRelaxedComponent = "none";
+   plan.m15Wave2NearMiss = false;
    plan.m5CorrectiveWaveDetected = false;
    plan.m5CorrectiveDirection = "NONE";
    plan.m5CorrectiveSwingCount = 0;
@@ -4966,6 +5297,8 @@ string SignalHeaderLine()
           "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
           "m15_wave2_expansion_mode,m15_wave2_gate_mode,m15_wave2_type,m15_wave2_age_bars,m15_wave2_score,m15_wave2_gate_pass,m15_wave2_gate_reject_reason," +
           "m15_wave_context_score,m5_pattern_quality_group,m15_wave2_required_due_to_pattern_quality,m15_wave2_score_applied," +
+          "m15_wave2_adjacent_mode,m15_wave2_adjacent_fib_side,m15_required_light_pass,m15_required_light_reject_reason," +
+          "m15_wave2_adjacent_pass,m15_wave2_adjacent_reason,m15_wave2_adjacent_relaxed_component,m15_wave2_near_miss," +
           "m5_corrective_wave_detected,m5_corrective_direction,m5_corrective_swing_count,m5_corrective_123_detected,m5_corrective_abc_detected," +
           "m5_corrective_leg_count,m5_corrective_start_time,m5_corrective_end_time,m5_corrective_age_bars,m5_corrective_pullback_atr," +
           "m5_corrective_last_lh_level,m5_corrective_last_hl_level,m5_corrective_invalidation_level,m5_corrective_invalidation," +
@@ -5103,6 +5436,14 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    CsvAppend(line, plan.m5PatternQualityGroup);
    CsvAppend(line, BoolText(plan.m15Wave2RequiredDueToPatternQuality));
    CsvAppend(line, BoolText(plan.m15Wave2ScoreApplied));
+   CsvAppend(line, plan.m15Wave2AdjacentMode);
+   CsvAppend(line, plan.m15Wave2AdjacentFibSide);
+   CsvAppend(line, BoolText(plan.m15RequiredLightPass));
+   CsvAppend(line, plan.m15RequiredLightRejectReason);
+   CsvAppend(line, BoolText(plan.m15Wave2AdjacentPass));
+   CsvAppend(line, plan.m15Wave2AdjacentReason);
+   CsvAppend(line, plan.m15Wave2AdjacentRelaxedComponent);
+   CsvAppend(line, BoolText(plan.m15Wave2NearMiss));
    CsvAppend(line, BoolText(plan.m5CorrectiveWaveDetected));
    CsvAppend(line, plan.m5CorrectiveDirection);
    CsvAppend(line, IntegerToString(plan.m5CorrectiveSwingCount));
@@ -5278,6 +5619,8 @@ string TradeHeaderLine()
           "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
           "m15_wave2_expansion_mode,m15_wave2_gate_mode,m15_wave2_type,m15_wave2_age_bars,m15_wave2_score,m15_wave2_gate_pass,m15_wave2_gate_reject_reason," +
           "m15_wave_context_score,m5_pattern_quality_group,m15_wave2_required_due_to_pattern_quality,m15_wave2_score_applied," +
+          "m15_wave2_adjacent_mode,m15_wave2_adjacent_fib_side,m15_required_light_pass,m15_required_light_reject_reason," +
+          "m15_wave2_adjacent_pass,m15_wave2_adjacent_reason,m15_wave2_adjacent_relaxed_component,m15_wave2_near_miss," +
           "m5_corrective_wave_detected,m5_corrective_direction,m5_corrective_swing_count,m5_corrective_123_detected,m5_corrective_abc_detected," +
           "m5_corrective_leg_count,m5_corrective_start_time,m5_corrective_end_time,m5_corrective_age_bars,m5_corrective_pullback_atr," +
           "m5_corrective_last_lh_level,m5_corrective_last_hl_level,m5_corrective_invalidation_level,m5_corrective_invalidation," +
@@ -5452,6 +5795,14 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, tracked.m5PatternQualityGroup);
    CsvAppend(line, BoolText(tracked.m15Wave2RequiredDueToPatternQuality));
    CsvAppend(line, BoolText(tracked.m15Wave2ScoreApplied));
+   CsvAppend(line, tracked.m15Wave2AdjacentMode);
+   CsvAppend(line, tracked.m15Wave2AdjacentFibSide);
+   CsvAppend(line, BoolText(tracked.m15RequiredLightPass));
+   CsvAppend(line, tracked.m15RequiredLightRejectReason);
+   CsvAppend(line, BoolText(tracked.m15Wave2AdjacentPass));
+   CsvAppend(line, tracked.m15Wave2AdjacentReason);
+   CsvAppend(line, tracked.m15Wave2AdjacentRelaxedComponent);
+   CsvAppend(line, BoolText(tracked.m15Wave2NearMiss));
    CsvAppend(line, BoolText(tracked.m5CorrectiveWaveDetected));
    CsvAppend(line, tracked.m5CorrectiveDirection);
    CsvAppend(line, IntegerToString(tracked.m5CorrectiveSwingCount));
@@ -6227,6 +6578,14 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].m5PatternQualityGroup = plan.m5PatternQualityGroup;
    g_trades[size].m15Wave2RequiredDueToPatternQuality = plan.m15Wave2RequiredDueToPatternQuality;
    g_trades[size].m15Wave2ScoreApplied = plan.m15Wave2ScoreApplied;
+   g_trades[size].m15Wave2AdjacentMode = plan.m15Wave2AdjacentMode;
+   g_trades[size].m15Wave2AdjacentFibSide = plan.m15Wave2AdjacentFibSide;
+   g_trades[size].m15RequiredLightPass = plan.m15RequiredLightPass;
+   g_trades[size].m15RequiredLightRejectReason = plan.m15RequiredLightRejectReason;
+   g_trades[size].m15Wave2AdjacentPass = plan.m15Wave2AdjacentPass;
+   g_trades[size].m15Wave2AdjacentReason = plan.m15Wave2AdjacentReason;
+   g_trades[size].m15Wave2AdjacentRelaxedComponent = plan.m15Wave2AdjacentRelaxedComponent;
+   g_trades[size].m15Wave2NearMiss = plan.m15Wave2NearMiss;
    g_trades[size].m5CorrectiveWaveDetected = plan.m5CorrectiveWaveDetected;
    g_trades[size].m5CorrectiveDirection = plan.m5CorrectiveDirection;
    g_trades[size].m5CorrectiveSwingCount = plan.m5CorrectiveSwingCount;
@@ -6653,6 +7012,8 @@ int OnInit()
        InpM15Wave2MinRetrace < 0.0 ||
        InpM15Wave2PreferredMin < InpM15Wave2MinRetrace ||
        InpM15Wave2PreferredMax < InpM15Wave2PreferredMin ||
+       InpM15Wave2AdjacentAgeExtraBars < 0 ||
+       InpM15Wave2AdjacentCombineMask < 0 ||
        InpSessionInvalidationATR <= 0.0 ||
       InpMaxHoldBars < 1 ||
       InpRiskPerTradePercent <= 0.0 ||
