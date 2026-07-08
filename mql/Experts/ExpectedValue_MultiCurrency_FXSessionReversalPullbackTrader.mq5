@@ -149,6 +149,23 @@ enum ENUM_NEAR_MISS_SEPARATOR_MODE
    NEAR_MISS_SEPARATOR_BEST_TWO = 9
   };
 
+enum ENUM_M15_WAVE1_QUALITY_MODE
+  {
+   M15_WAVE1_QUALITY_OFF = 0,
+   M15_WAVE1_QUALITY_DIAGNOSTIC_ONLY = 1,
+   M15_WAVE1_QUALITY_SCORE = 2,
+   M15_WAVE1_QUALITY_REQUIRED_LIGHT = 3,
+   M15_WAVE1_QUALITY_REQUIRED_STRICT = 4
+  };
+
+enum ENUM_M15_WAVE1_QUALITY_COMBINE_MODE
+  {
+   M15_WAVE1_QUALITY_COMBINE_INDEPENDENT = 0,
+   M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_AND_QUALITY = 1,
+   M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_OR_QUALITY = 2,
+   M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_OR_QUALITY_EXHAUSTION = 3
+  };
+
 enum ENUM_EXIT_MODE
   {
    EXIT_FIXED_TP_SL = 0,
@@ -263,6 +280,37 @@ struct SignalPlan
    int               m15Wave1AgeBars;
    double            m15Wave1High;
    double            m15Wave1Low;
+   bool              m15Wave1QualityEnabled;
+   string            m15Wave1QualityMode;
+   string            m15Wave1QualityCombineMode;
+   bool              m15Wave1QualityCandidate;
+   datetime          m15Wave1StartTime;
+   datetime          m15Wave1EndTime;
+   bool              m15Wave1CloseBeyondBreak;
+   double            m15Wave1ImpulseAtr;
+   string            m15Wave1ImpulseBucket;
+   double            m15Wave1BodyAtr;
+   double            m15Wave1BodyEfficiency;
+   string            m15Wave1BodyEfficiencyBucket;
+   double            m15Wave1RangeAtr;
+   double            m15Wave1NetMoveAtr;
+   double            m15Wave1OverlapRatio;
+   string            m15Wave1OverlapBucket;
+   double            m15Wave1PullbackInsideRatio;
+   int               m15Wave1ConsecutiveDirectionalCloses;
+   int               m15Wave1LargeBodyCount;
+   double            m15Wave1OppositeWickRatio;
+   string            m15Wave1BreakQualityBucket;
+   string            m15Wave1SpeedBucket;
+   string            m15Wave1FollowThroughBucket;
+   string            m15Wave1ObstacleClearanceBucket;
+   double            m15Wave1ObstacleDistanceR;
+   int               m15Wave1DurationBars;
+   double            m15Wave1QualityScore;
+   string            m15Wave1QualityBucket;
+   bool              m15Wave1QualityHigh;
+   bool              m15Wave1QualityGatePass;
+   string            m15Wave1QualityRejectReason;
    bool              m15Wave2Candidate;
    double            m15Wave2RetraceRatio;
    string            m15Wave2FibZone;
@@ -512,6 +560,37 @@ struct TrackedTrade
    int               m15Wave1AgeBars;
    double            m15Wave1High;
    double            m15Wave1Low;
+   bool              m15Wave1QualityEnabled;
+   string            m15Wave1QualityMode;
+   string            m15Wave1QualityCombineMode;
+   bool              m15Wave1QualityCandidate;
+   datetime          m15Wave1StartTime;
+   datetime          m15Wave1EndTime;
+   bool              m15Wave1CloseBeyondBreak;
+   double            m15Wave1ImpulseAtr;
+   string            m15Wave1ImpulseBucket;
+   double            m15Wave1BodyAtr;
+   double            m15Wave1BodyEfficiency;
+   string            m15Wave1BodyEfficiencyBucket;
+   double            m15Wave1RangeAtr;
+   double            m15Wave1NetMoveAtr;
+   double            m15Wave1OverlapRatio;
+   string            m15Wave1OverlapBucket;
+   double            m15Wave1PullbackInsideRatio;
+   int               m15Wave1ConsecutiveDirectionalCloses;
+   int               m15Wave1LargeBodyCount;
+   double            m15Wave1OppositeWickRatio;
+   string            m15Wave1BreakQualityBucket;
+   string            m15Wave1SpeedBucket;
+   string            m15Wave1FollowThroughBucket;
+   string            m15Wave1ObstacleClearanceBucket;
+   double            m15Wave1ObstacleDistanceR;
+   int               m15Wave1DurationBars;
+   double            m15Wave1QualityScore;
+   string            m15Wave1QualityBucket;
+   bool              m15Wave1QualityHigh;
+   bool              m15Wave1QualityGatePass;
+   string            m15Wave1QualityRejectReason;
    bool              m15Wave2Candidate;
    double            m15Wave2RetraceRatio;
    string            m15Wave2FibZone;
@@ -821,6 +900,15 @@ input int             InpM15Wave2AdjacentAgeExtraBars = 4;
 input int             InpM15Wave2AdjacentCombineMask = 0;
 input ENUM_NEAR_MISS_SEPARATOR_MODE InpNearMissSeparatorMode = NEAR_MISS_SEPARATOR_OFF;
 input int             InpNearMissSeparatorCombineMask = 0;
+input bool            InpUseM15Wave1Quality           = false;
+input ENUM_M15_WAVE1_QUALITY_MODE InpM15Wave1QualityMode = M15_WAVE1_QUALITY_OFF;
+input ENUM_M15_WAVE1_QUALITY_COMBINE_MODE InpM15Wave1QualityCombineMode = M15_WAVE1_QUALITY_COMBINE_INDEPENDENT;
+input double          InpM15Wave1MinImpulseAtr        = 0.8;
+input double          InpM15Wave1MinBodyEfficiency    = 0.45;
+input double          InpM15Wave1MaxOverlapRatio      = 0.60;
+input int             InpM15Wave1MaxAgeBars           = 24;
+input bool            InpM15Wave1RequireStructureBreak = false;
+input bool            InpM15Wave1RequireCloseBeyondBreak = false;
 input ENUM_EXIT_MODE  InpExitMode                      = EXIT_M5_FAILURE;
 input ENUM_STRUCTURE_TARGET_MODE InpStructureTargetMode = STRUCTURE_TARGET_OFF;
 input double          InpSessionInvalidationATR        = 0.85;
@@ -1158,6 +1246,30 @@ string NearMissSeparatorModeName()
    return "off";
   }
 
+string M15Wave1QualityModeName()
+  {
+   if(InpM15Wave1QualityMode == M15_WAVE1_QUALITY_DIAGNOSTIC_ONLY)
+      return "diagnostic_only";
+   if(InpM15Wave1QualityMode == M15_WAVE1_QUALITY_SCORE)
+      return "score";
+   if(InpM15Wave1QualityMode == M15_WAVE1_QUALITY_REQUIRED_LIGHT)
+      return "required_light";
+   if(InpM15Wave1QualityMode == M15_WAVE1_QUALITY_REQUIRED_STRICT)
+      return "required_strict";
+   return "off";
+  }
+
+string M15Wave1QualityCombineModeName()
+  {
+   if(InpM15Wave1QualityCombineMode == M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_AND_QUALITY)
+      return "required_light_and_wave1_quality";
+   if(InpM15Wave1QualityCombineMode == M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_OR_QUALITY)
+      return "required_light_or_wave1_quality";
+   if(InpM15Wave1QualityCombineMode == M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_OR_QUALITY_EXHAUSTION)
+      return "required_light_or_wave1_quality_and_corrective_exhaustion";
+   return "independent";
+  }
+
 string ExitModeName()
   {
    if(InpExitMode == EXIT_FIXED_TP_SL)
@@ -1182,12 +1294,21 @@ string StructureTargetModeName()
 
 bool UsesM5CorrectiveABC()
   {
-   return InpUseM5CorrectiveABC || InpM5CorrectiveMode != M5_CORRECTIVE_OFF || UsesNearMissSeparator();
+   return InpUseM5CorrectiveABC ||
+          InpM5CorrectiveMode != M5_CORRECTIVE_OFF ||
+          UsesNearMissSeparator() ||
+          (InpUseM15Wave1Quality &&
+           InpM15Wave1QualityCombineMode == M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_OR_QUALITY_EXHAUSTION);
   }
 
 bool UsesNearMissSeparator()
   {
    return InpNearMissSeparatorMode != NEAR_MISS_SEPARATOR_OFF;
+  }
+
+bool UsesM15Wave1Quality()
+  {
+   return InpUseM15Wave1Quality || InpM15Wave1QualityMode != M15_WAVE1_QUALITY_OFF;
   }
 
 bool UsesM15WaveContext()
@@ -1196,7 +1317,8 @@ bool UsesM15WaveContext()
           InpM15Wave2ExpansionMode != M15_WAVE2_EXPANSION_OFF ||
           InpM15Wave2GateMode != M15_WAVE2_GATE_NO_GATE ||
           InpM15Wave2AdjacentMode != M15_WAVE2_ADJACENT_OFF ||
-          UsesNearMissSeparator();
+          UsesNearMissSeparator() ||
+          UsesM15Wave1Quality();
   }
 
 string M5PatternQualityGroup(const string pattern)
@@ -2721,7 +2843,7 @@ bool DetectRefinedM15WaveContext(SignalPlan &plan, const int entryDirection)
    plan.m15Wave2AdjacentReason = "not_evaluated";
    plan.m15Wave2AdjacentRelaxedComponent = "none";
    plan.m15Wave2NearMiss = false;
-   if(!UsesM15WaveContext() && !UsesM5CorrectiveABC())
+   if(!UsesM15WaveContext() && !UsesM5CorrectiveABC() && !UsesM15Wave1Quality())
       return true;
 
    double waveHigh = 0.0;
@@ -3565,6 +3687,442 @@ void EvaluateGranvilleSeparator(SignalPlan &plan, const int entryDirection)
       plan.sma75GranvilleQualityBucket = "none";
   }
 
+string M15Wave1ImpulseBucket(const double value)
+  {
+   if(value <= 0.0)
+      return "none";
+   if(value < 0.5)
+      return "tiny";
+   if(value < 1.0)
+      return "small";
+   if(value < 1.5)
+      return "normal";
+   return "large";
+  }
+
+string M15Wave1BodyEfficiencyBucket(const double value)
+  {
+   if(value <= 0.0)
+      return "none";
+   if(value < 0.35)
+      return "inefficient";
+   if(value < 0.70)
+      return "normal";
+   return "efficient";
+  }
+
+string M15Wave1OverlapBucket(const double value)
+  {
+   if(value <= 0.0)
+      return "none";
+   if(value < 0.30)
+      return "clean";
+   if(value <= 0.60)
+      return "normal";
+   return "choppy";
+  }
+
+string M15Wave1BreakQualityBucket(const double breakAtr, const bool closeBeyond)
+  {
+   if(!closeBeyond)
+      return "no_clear_break";
+   if(breakAtr < 0.10)
+      return "weak_break";
+   if(breakAtr < 0.25)
+      return "normal_break";
+   return "strong_break";
+  }
+
+string M15Wave1SpeedBucket(const int durationBars, const int ageBars)
+  {
+   if(durationBars <= 0)
+      return "unknown";
+   if(ageBars > InpM15Wave1MaxAgeBars)
+      return "too_old";
+   if(durationBars <= 2)
+      return "too_fast";
+   if(durationBars <= 8)
+      return "normal";
+   if(durationBars <= 16)
+      return "too_slow";
+   return "too_old";
+  }
+
+string M15Wave1FollowThroughBucket(const bool invalidated, const double pullbackRatio)
+  {
+   if(invalidated)
+      return "invalidated";
+   if(pullbackRatio >= 0.78)
+      return "weak_hold";
+   return "normal_hold";
+  }
+
+string M15Wave1ObstacleBucket(const double distanceR)
+  {
+   if(distanceR <= 0.0)
+      return "unknown";
+   if(distanceR < 1.0)
+      return "blocked";
+   if(distanceR < 1.3)
+      return "limited";
+   return "room_available";
+  }
+
+double M15Wave1ScoreComponent(const string bucket, const string a, const double av,
+                              const string b = "", const double bv = 0.0,
+                              const string c = "", const double cv = 0.0)
+  {
+   if(bucket == a)
+      return av;
+   if(b != "" && bucket == b)
+      return bv;
+   if(c != "" && bucket == c)
+      return cv;
+   return 0.0;
+  }
+
+bool FindM15SmaReclaimCandidate(const string symbol,
+                                const int entryDirection,
+                                MqlRates &rates[],
+                                int &reclaimShift,
+                                double &reclaimLevel)
+  {
+   reclaimShift = -1;
+   reclaimLevel = 0.0;
+   int maxShift = MathMin(InpM15Wave1MaxAgeBars, ArraySize(rates) - InpTranscriptSmaPeriod - 2);
+   for(int shift = 0; shift <= maxShift; ++shift)
+     {
+      double sma = SMA(rates, shift, InpTranscriptSmaPeriod);
+      double priorSma = SMA(rates, shift + 1, InpTranscriptSmaPeriod);
+      if(sma <= 0.0 || priorSma <= 0.0)
+         continue;
+      bool reclaimed = entryDirection > 0 ?
+                       (rates[shift].close > sma && rates[shift + 1].close <= priorSma) :
+                       (rates[shift].close < sma && rates[shift + 1].close >= priorSma);
+      if(!reclaimed)
+         continue;
+      reclaimShift = shift;
+      reclaimLevel = sma;
+      return true;
+     }
+   return false;
+  }
+
+void EvaluateM15Wave1Quality(SignalPlan &plan, const int entryDirection)
+  {
+   plan.m15Wave1QualityEnabled = UsesM15Wave1Quality();
+   plan.m15Wave1QualityMode = M15Wave1QualityModeName();
+   plan.m15Wave1QualityCombineMode = M15Wave1QualityCombineModeName();
+   plan.m15Wave1QualityGatePass = true;
+   plan.m15Wave1QualityRejectReason = "none";
+   if(!UsesM15Wave1Quality())
+      return;
+
+   MqlRates rates[];
+   int bars = MathMax(InpM15Wave1MaxAgeBars + InpSwingDepth + InpTranscriptSmaPeriod + InpATRPeriod + 24,
+                      InpTranscriptSmaPeriod + InpATRPeriod + 40);
+   if(!CopyClosedRates(plan.symbol, InpStructureTF, bars, rates))
+     {
+      plan.m15Wave1QualityRejectReason = "m15_wave1_quality_data_unavailable";
+      return;
+     }
+
+   double atr = ATR(rates, 0, InpATRPeriod);
+   if(atr <= 0.0)
+     {
+      plan.m15Wave1QualityRejectReason = "m15_wave1_quality_invalid_atr";
+      return;
+     }
+
+   bool structureCandidate = plan.m15Wave1Candidate && plan.m15Wave1AgeBars >= 0;
+   int endShift = structureCandidate ? MathMin(plan.m15Wave1AgeBars, ArraySize(rates) - 1) : -1;
+   int startShift = -1;
+   double startTarget = entryDirection > 0 ? plan.m15Wave1Low : plan.m15Wave1High;
+
+   if(structureCandidate)
+     {
+      int searchMax = MathMin(ArraySize(rates) - 1, endShift + MathMax(4, InpM15Wave1MaxAgeBars));
+      double bestDistance = DBL_MAX;
+      for(int shift = endShift; shift <= searchMax; ++shift)
+        {
+         double price = entryDirection > 0 ? rates[shift].low : rates[shift].high;
+         double distance = MathAbs(price - startTarget);
+         if(distance < bestDistance)
+           {
+            bestDistance = distance;
+            startShift = shift;
+           }
+        }
+     }
+   else
+     {
+      double reclaimLevel = 0.0;
+      int reclaimShift = -1;
+      if(FindM15SmaReclaimCandidate(plan.symbol, entryDirection, rates, reclaimShift, reclaimLevel))
+        {
+         endShift = reclaimShift;
+         plan.m15Wave1BreakType = entryDirection > 0 ? "m15_75sma_reclaim_up" : "m15_75sma_reclaim_down";
+         plan.m15Wave1BreakLevel = reclaimLevel;
+         plan.m15Wave1AgeBars = reclaimShift;
+         int searchMax = MathMin(ArraySize(rates) - 1, endShift + MathMax(4, InpM15Wave1MaxAgeBars));
+         double extreme = entryDirection > 0 ? DBL_MAX : -DBL_MAX;
+         for(int shift = endShift; shift <= searchMax; ++shift)
+           {
+            if(entryDirection > 0 && rates[shift].low < extreme)
+              {
+               extreme = rates[shift].low;
+               startShift = shift;
+              }
+            if(entryDirection < 0 && rates[shift].high > extreme)
+              {
+               extreme = rates[shift].high;
+               startShift = shift;
+              }
+           }
+         plan.m15Wave1High = HighestHigh(rates, endShift, startShift - endShift + 1);
+         plan.m15Wave1Low = LowestLow(rates, endShift, startShift - endShift + 1);
+        }
+     }
+
+   if(endShift < 0 || startShift < endShift || startShift >= ArraySize(rates))
+     {
+      plan.m15Wave1QualityCandidate = false;
+      plan.m15Wave1QualityRejectReason = "m15_wave1_candidate_missing";
+      plan.m15Wave1QualityBucket = "no_candidate";
+      plan.m15Wave1QualityGatePass = false;
+      return;
+     }
+
+   plan.m15Wave1QualityCandidate = true;
+   plan.m15Wave1StartTime = rates[startShift].time;
+   plan.m15Wave1EndTime = rates[endShift].time;
+   plan.m15Wave1DurationBars = startShift - endShift + 1;
+   if(plan.m15Wave1Direction == "NONE")
+      plan.m15Wave1Direction = DirectionText(entryDirection);
+
+   double startPrice = entryDirection > 0 ? rates[startShift].low : rates[startShift].high;
+   double endPrice = rates[endShift].close;
+   double netMove = entryDirection > 0 ? endPrice - startPrice : startPrice - endPrice;
+   double totalRange = 0.0;
+   double directionalBody = 0.0;
+   double overlapNumerator = 0.0;
+   double overlapDenominator = 0.0;
+   double oppositeWickSum = 0.0;
+   int wickCount = 0;
+   int consecutive = 0;
+   int bestConsecutive = 0;
+   int largeBodyCount = 0;
+   double runningExtreme = startPrice;
+   double maxInsidePullback = 0.0;
+
+   for(int shift = startShift; shift >= endShift; --shift)
+     {
+      double range = MathMax(rates[shift].high - rates[shift].low, _Point);
+      double body = MathAbs(rates[shift].close - rates[shift].open);
+      totalRange += range;
+      bool directionalClose = entryDirection > 0 ? rates[shift].close > rates[shift].open :
+                                                   rates[shift].close < rates[shift].open;
+      if(directionalClose)
+        {
+         directionalBody += body;
+         ++consecutive;
+         if(body / atr >= 0.25)
+            ++largeBodyCount;
+        }
+      else
+         consecutive = 0;
+      bestConsecutive = MathMax(bestConsecutive, consecutive);
+
+      double upperWick = rates[shift].high - MathMax(rates[shift].open, rates[shift].close);
+      double lowerWick = MathMin(rates[shift].open, rates[shift].close) - rates[shift].low;
+      oppositeWickSum += entryDirection > 0 ? upperWick / range : lowerWick / range;
+      ++wickCount;
+
+      if(entryDirection > 0)
+        {
+         runningExtreme = MathMax(runningExtreme, rates[shift].high);
+         maxInsidePullback = MathMax(maxInsidePullback, runningExtreme - rates[shift].low);
+        }
+      else
+        {
+         runningExtreme = MathMin(runningExtreme, rates[shift].low);
+         maxInsidePullback = MathMax(maxInsidePullback, rates[shift].high - runningExtreme);
+        }
+
+      if(shift > endShift)
+        {
+         double currentRange = MathMax(rates[shift].high - rates[shift].low, _Point);
+         double nextRange = MathMax(rates[shift - 1].high - rates[shift - 1].low, _Point);
+         double overlap = MathMin(rates[shift].high, rates[shift - 1].high) -
+                          MathMax(rates[shift].low, rates[shift - 1].low);
+         if(overlap > 0.0)
+            overlapNumerator += overlap;
+         overlapDenominator += MathMin(currentRange, nextRange);
+        }
+     }
+
+   if(netMove <= 0.0)
+     {
+      plan.m15Wave1QualityRejectReason = "m15_wave1_no_net_impulse";
+      plan.m15Wave1QualityBucket = "poor";
+      plan.m15Wave1QualityGatePass = false;
+      return;
+     }
+
+   plan.m15Wave1ImpulseAtr = netMove / atr;
+   plan.m15Wave1ImpulseBucket = M15Wave1ImpulseBucket(plan.m15Wave1ImpulseAtr);
+   plan.m15Wave1RangeAtr = totalRange / atr;
+   plan.m15Wave1NetMoveAtr = plan.m15Wave1ImpulseAtr;
+   plan.m15Wave1BodyAtr = directionalBody / atr;
+   plan.m15Wave1BodyEfficiency = totalRange > 0.0 ? netMove / totalRange : 0.0;
+   plan.m15Wave1BodyEfficiencyBucket = M15Wave1BodyEfficiencyBucket(plan.m15Wave1BodyEfficiency);
+   plan.m15Wave1OverlapRatio = overlapDenominator > 0.0 ? overlapNumerator / overlapDenominator : 0.0;
+   plan.m15Wave1OverlapBucket = M15Wave1OverlapBucket(plan.m15Wave1OverlapRatio);
+   plan.m15Wave1PullbackInsideRatio = netMove > 0.0 ? MathMin(1.5, maxInsidePullback / netMove) : 0.0;
+   plan.m15Wave1ConsecutiveDirectionalCloses = bestConsecutive;
+   plan.m15Wave1LargeBodyCount = largeBodyCount;
+   plan.m15Wave1OppositeWickRatio = wickCount > 0 ? oppositeWickSum / wickCount : 0.0;
+
+   double breakAtr = 0.0;
+   if(plan.m15Wave1BreakLevel > 0.0)
+      breakAtr = entryDirection > 0 ? (rates[endShift].close - plan.m15Wave1BreakLevel) / atr :
+                                      (plan.m15Wave1BreakLevel - rates[endShift].close) / atr;
+   plan.m15Wave1CloseBeyondBreak = breakAtr > 0.0;
+   plan.m15Wave1BreakQualityBucket = M15Wave1BreakQualityBucket(MathMax(0.0, breakAtr), plan.m15Wave1CloseBeyondBreak);
+   plan.m15Wave1SpeedBucket = M15Wave1SpeedBucket(plan.m15Wave1DurationBars, plan.m15Wave1AgeBars);
+
+   bool invalidated = entryDirection > 0 ? plan.entry <= startPrice + atr * 0.05 :
+                                           plan.entry >= startPrice - atr * 0.05;
+   plan.m15Wave1FollowThroughBucket = M15Wave1FollowThroughBucket(invalidated, plan.m15Wave2RetraceRatio);
+   double m15Distance = NearestSwingObstacleDistanceR(plan.symbol, InpStructureTF, entryDirection, plan.entry, plan.riskPrice);
+   double topDistance = NearestSwingObstacleDistanceR(plan.symbol, InpTopContextTF, entryDirection, plan.entry, plan.riskPrice);
+   plan.m15Wave1ObstacleDistanceR = MathMin(m15Distance, topDistance);
+   plan.m15Wave1ObstacleClearanceBucket = M15Wave1ObstacleBucket(plan.m15Wave1ObstacleDistanceR);
+
+   double score = 0.0;
+   score += M15Wave1ScoreComponent(plan.m15Wave1ImpulseBucket, "large", 0.20, "normal", 0.15, "small", 0.05);
+   score += M15Wave1ScoreComponent(plan.m15Wave1BodyEfficiencyBucket, "efficient", 0.20, "normal", 0.10);
+   score += M15Wave1ScoreComponent(plan.m15Wave1BreakQualityBucket, "strong_break", 0.20, "normal_break", 0.15, "weak_break", 0.05);
+   score += M15Wave1ScoreComponent(plan.m15Wave1OverlapBucket, "clean", 0.15, "normal", 0.07);
+   score += M15Wave1ScoreComponent(plan.m15Wave1SpeedBucket, "normal", 0.10, "too_fast", 0.03, "too_slow", 0.03);
+   score += M15Wave1ScoreComponent(plan.m15Wave1FollowThroughBucket, "normal_hold", 0.10, "weak_hold", 0.04);
+   score += M15Wave1ScoreComponent(plan.m15Wave1ObstacleClearanceBucket, "room_available", 0.10, "limited", 0.03);
+   if(plan.m15Wave1ConsecutiveDirectionalCloses >= 3)
+      score += 0.05;
+   if(plan.m15Wave1LargeBodyCount >= 2)
+      score += 0.05;
+   if(plan.m15Wave1OppositeWickRatio <= 0.30)
+      score += 0.05;
+   plan.m15Wave1QualityScore = MathMin(1.0, score);
+
+   if(plan.m15Wave1QualityScore >= 0.70)
+      plan.m15Wave1QualityBucket = "high";
+   else if(plan.m15Wave1QualityScore >= 0.50)
+      plan.m15Wave1QualityBucket = "medium";
+   else if(plan.m15Wave1QualityScore >= 0.30)
+      plan.m15Wave1QualityBucket = "low";
+   else
+      plan.m15Wave1QualityBucket = "poor";
+
+   bool lightPass = plan.m15Wave1QualityCandidate &&
+                    plan.m15Wave1ImpulseAtr >= InpM15Wave1MinImpulseAtr &&
+                    plan.m15Wave1BodyEfficiency >= InpM15Wave1MinBodyEfficiency &&
+                    plan.m15Wave1OverlapRatio <= InpM15Wave1MaxOverlapRatio &&
+                    plan.m15Wave1AgeBars <= InpM15Wave1MaxAgeBars &&
+                    plan.m15Wave1FollowThroughBucket != "invalidated";
+   if(InpM15Wave1RequireStructureBreak && StringFind(plan.m15Wave1BreakType, "reclaim") >= 0)
+      lightPass = false;
+   if(InpM15Wave1RequireCloseBeyondBreak && !plan.m15Wave1CloseBeyondBreak)
+      lightPass = false;
+
+   bool strictPass = lightPass &&
+                     plan.m15Wave1QualityScore >= 0.70 &&
+                     (plan.m15Wave1BreakQualityBucket == "normal_break" ||
+                      plan.m15Wave1BreakQualityBucket == "strong_break") &&
+                     plan.m15Wave1ObstacleClearanceBucket != "blocked";
+   plan.m15Wave1QualityHigh = lightPass;
+   if(InpM15Wave1QualityMode == M15_WAVE1_QUALITY_REQUIRED_STRICT)
+      plan.m15Wave1QualityHigh = strictPass;
+
+   if(!plan.m15Wave1QualityHigh)
+     {
+      if(plan.m15Wave1ImpulseAtr < InpM15Wave1MinImpulseAtr)
+         plan.m15Wave1QualityRejectReason = "impulse_atr_too_small";
+      else if(plan.m15Wave1BodyEfficiency < InpM15Wave1MinBodyEfficiency)
+         plan.m15Wave1QualityRejectReason = "body_efficiency_low";
+      else if(plan.m15Wave1OverlapRatio > InpM15Wave1MaxOverlapRatio)
+         plan.m15Wave1QualityRejectReason = "overlap_choppy";
+      else if(plan.m15Wave1AgeBars > InpM15Wave1MaxAgeBars)
+         plan.m15Wave1QualityRejectReason = "wave1_too_old";
+      else if(plan.m15Wave1FollowThroughBucket == "invalidated")
+         plan.m15Wave1QualityRejectReason = "wave1_invalidated_before_entry";
+      else if(InpM15Wave1RequireStructureBreak && StringFind(plan.m15Wave1BreakType, "reclaim") >= 0)
+         plan.m15Wave1QualityRejectReason = "structure_break_required";
+      else if(InpM15Wave1RequireCloseBeyondBreak && !plan.m15Wave1CloseBeyondBreak)
+         plan.m15Wave1QualityRejectReason = "close_beyond_break_required";
+      else
+         plan.m15Wave1QualityRejectReason = "quality_score_not_high";
+     }
+   else
+      plan.m15Wave1QualityRejectReason = "none";
+  }
+
+bool ApplyM15Wave1QualityGate(SignalPlan &plan, const int entryDirection)
+  {
+   if(!UsesM15Wave1Quality())
+      return true;
+
+   EvaluateM15Wave1Quality(plan, entryDirection);
+   if(InpM15Wave1QualityMode == M15_WAVE1_QUALITY_DIAGNOSTIC_ONLY ||
+      InpM15Wave1QualityMode == M15_WAVE1_QUALITY_OFF)
+      return true;
+
+   if(InpM15Wave1QualityMode == M15_WAVE1_QUALITY_SCORE)
+     {
+      if(plan.m15Wave1QualityScore > 0.0)
+        {
+         plan.nestedScore += plan.m15Wave1QualityScore * 0.25;
+         plan.score += plan.m15Wave1QualityScore * 0.25;
+        }
+      return true;
+     }
+
+   bool qualityPass = plan.m15Wave1QualityHigh;
+   bool exhaustionPass = plan.m5CorrectiveExhaustionBucket == "strong_exhaustion" ||
+                         plan.m5CorrectiveExhaustionBucket == "mild_exhaustion";
+   bool pass = qualityPass;
+   string reject = plan.m15Wave1QualityRejectReason;
+
+   if(InpM15Wave1QualityCombineMode == M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_AND_QUALITY)
+     {
+      pass = plan.m15RequiredLightPass && qualityPass;
+      if(!plan.m15RequiredLightPass)
+         reject = "required_light_failed";
+      else if(!qualityPass)
+         reject = plan.m15Wave1QualityRejectReason;
+     }
+   else if(InpM15Wave1QualityCombineMode == M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_OR_QUALITY)
+     {
+      pass = plan.m15RequiredLightPass || qualityPass;
+      reject = pass ? "none" : "required_light_and_wave1_quality_failed";
+     }
+   else if(InpM15Wave1QualityCombineMode == M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_OR_QUALITY_EXHAUSTION)
+     {
+      pass = plan.m15RequiredLightPass || (qualityPass && exhaustionPass);
+      reject = pass ? "none" : "required_light_or_quality_exhaustion_failed";
+     }
+
+   plan.m15Wave1QualityGatePass = pass;
+   plan.m15Wave1QualityRejectReason = pass ? "none" : reject;
+   if(!pass)
+     {
+      plan.reason = plan.m15Wave1QualityRejectReason;
+      plan.failureType = "m15_wave1_quality_failed";
+      return false;
+     }
+   return true;
+  }
+
 bool NearMissInvalidationQualityPass(const SignalPlan &plan)
   {
    return plan.m5InvalidationQualityBucket == "very_strong" ||
@@ -3747,7 +4305,7 @@ bool ApplyNearMissSeparatorGate(SignalPlan &plan, const int entryDirection)
 
 bool ApplyRefinedWaveContext(SignalPlan &plan, const int entryDirection)
   {
-   if(!UsesM15WaveContext() && !UsesM5CorrectiveABC())
+   if(!UsesM15WaveContext() && !UsesM5CorrectiveABC() && !UsesM15Wave1Quality())
       return true;
 
    if(!DetectRefinedM15WaveContext(plan, entryDirection))
@@ -3755,6 +4313,9 @@ bool ApplyRefinedWaveContext(SignalPlan &plan, const int entryDirection)
    if(!DetectRefinedM5CorrectiveABC(plan, entryDirection))
       return false;
    if(!DetectRefinedM5Invalidation(plan, entryDirection))
+      return false;
+
+   if(!ApplyM15Wave1QualityGate(plan, entryDirection))
       return false;
 
    if(UsesM5CorrectiveABC())
@@ -5119,6 +5680,37 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.m15Wave1AgeBars = -1;
    plan.m15Wave1High = 0.0;
    plan.m15Wave1Low = 0.0;
+   plan.m15Wave1QualityEnabled = UsesM15Wave1Quality();
+   plan.m15Wave1QualityMode = M15Wave1QualityModeName();
+   plan.m15Wave1QualityCombineMode = M15Wave1QualityCombineModeName();
+   plan.m15Wave1QualityCandidate = false;
+   plan.m15Wave1StartTime = 0;
+   plan.m15Wave1EndTime = 0;
+   plan.m15Wave1CloseBeyondBreak = false;
+   plan.m15Wave1ImpulseAtr = 0.0;
+   plan.m15Wave1ImpulseBucket = "none";
+   plan.m15Wave1BodyAtr = 0.0;
+   plan.m15Wave1BodyEfficiency = 0.0;
+   plan.m15Wave1BodyEfficiencyBucket = "none";
+   plan.m15Wave1RangeAtr = 0.0;
+   plan.m15Wave1NetMoveAtr = 0.0;
+   plan.m15Wave1OverlapRatio = 0.0;
+   plan.m15Wave1OverlapBucket = "none";
+   plan.m15Wave1PullbackInsideRatio = 0.0;
+   plan.m15Wave1ConsecutiveDirectionalCloses = 0;
+   plan.m15Wave1LargeBodyCount = 0;
+   plan.m15Wave1OppositeWickRatio = 0.0;
+   plan.m15Wave1BreakQualityBucket = "none";
+   plan.m15Wave1SpeedBucket = "none";
+   plan.m15Wave1FollowThroughBucket = "none";
+   plan.m15Wave1ObstacleClearanceBucket = "none";
+   plan.m15Wave1ObstacleDistanceR = 0.0;
+   plan.m15Wave1DurationBars = 0;
+   plan.m15Wave1QualityScore = 0.0;
+   plan.m15Wave1QualityBucket = "none";
+   plan.m15Wave1QualityHigh = false;
+   plan.m15Wave1QualityGatePass = true;
+   plan.m15Wave1QualityRejectReason = "not_evaluated";
    plan.m15Wave2Candidate = false;
    plan.m15Wave2RetraceRatio = 0.0;
    plan.m15Wave2FibZone = "none";
@@ -5949,6 +6541,12 @@ string SignalHeaderLine()
           "nested_thirdwave_enabled,nested_thirdwave_mode,h1_context_direction,h1_context_impulse_direction,context_impulse_high,context_impulse_low," +
           "h1_context_fib_retrace_ratio,h1_context_fib_room_bucket,context_fib_room_score," +
           "m15_wave1_candidate,m15_wave1_direction,m15_wave1_break_type,m15_wave1_break_level,m15_wave1_age_bars,m15_wave1_high,m15_wave1_low," +
+          "m15_wave1_quality_enabled,m15_wave1_quality_mode,m15_wave1_quality_combine_mode,m15_wave1_quality_candidate,m15_wave1_start_time,m15_wave1_end_time," +
+          "m15_wave1_close_beyond_break,m15_wave1_impulse_atr,m15_wave1_impulse_bucket,m15_wave1_body_atr,m15_wave1_body_efficiency,m15_wave1_body_efficiency_bucket," +
+          "m15_wave1_range_atr,m15_wave1_net_move_atr,m15_wave1_overlap_ratio,m15_wave1_overlap_bucket,m15_wave1_pullback_inside_ratio," +
+          "m15_wave1_consecutive_directional_closes,m15_wave1_large_body_count,m15_wave1_opposite_wick_ratio,m15_wave1_break_quality,m15_wave1_speed_bucket," +
+          "m15_wave1_follow_through_bucket,m15_wave1_obstacle_clearance_bucket,m15_wave1_obstacle_distance_r,m15_wave1_duration_bars," +
+          "m15_wave1_quality_score,m15_wave1_quality_bucket,m15_wave1_quality_high,m15_wave1_quality_gate_pass,m15_wave1_quality_reject_reason," +
           "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
           "m15_wave2_expansion_mode,m15_wave2_gate_mode,m15_wave2_type,m15_wave2_age_bars,m15_wave2_score,m15_wave2_gate_pass,m15_wave2_gate_reject_reason," +
           "m15_wave_context_score,m5_pattern_quality_group,m15_wave2_required_due_to_pattern_quality,m15_wave2_score_applied," +
@@ -6083,6 +6681,37 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    CsvAppend(line, IntegerToString(plan.m15Wave1AgeBars));
    CsvAppend(line, DoubleToString(plan.m15Wave1High, 8));
    CsvAppend(line, DoubleToString(plan.m15Wave1Low, 8));
+   CsvAppend(line, BoolText(plan.m15Wave1QualityEnabled));
+   CsvAppend(line, plan.m15Wave1QualityMode);
+   CsvAppend(line, plan.m15Wave1QualityCombineMode);
+   CsvAppend(line, BoolText(plan.m15Wave1QualityCandidate));
+   CsvAppend(line, plan.m15Wave1StartTime > 0 ? TimeToString(plan.m15Wave1StartTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, plan.m15Wave1EndTime > 0 ? TimeToString(plan.m15Wave1EndTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, BoolText(plan.m15Wave1CloseBeyondBreak));
+   CsvAppend(line, DoubleToString(plan.m15Wave1ImpulseAtr, 4));
+   CsvAppend(line, plan.m15Wave1ImpulseBucket);
+   CsvAppend(line, DoubleToString(plan.m15Wave1BodyAtr, 4));
+   CsvAppend(line, DoubleToString(plan.m15Wave1BodyEfficiency, 4));
+   CsvAppend(line, plan.m15Wave1BodyEfficiencyBucket);
+   CsvAppend(line, DoubleToString(plan.m15Wave1RangeAtr, 4));
+   CsvAppend(line, DoubleToString(plan.m15Wave1NetMoveAtr, 4));
+   CsvAppend(line, DoubleToString(plan.m15Wave1OverlapRatio, 4));
+   CsvAppend(line, plan.m15Wave1OverlapBucket);
+   CsvAppend(line, DoubleToString(plan.m15Wave1PullbackInsideRatio, 4));
+   CsvAppend(line, IntegerToString(plan.m15Wave1ConsecutiveDirectionalCloses));
+   CsvAppend(line, IntegerToString(plan.m15Wave1LargeBodyCount));
+   CsvAppend(line, DoubleToString(plan.m15Wave1OppositeWickRatio, 4));
+   CsvAppend(line, plan.m15Wave1BreakQualityBucket);
+   CsvAppend(line, plan.m15Wave1SpeedBucket);
+   CsvAppend(line, plan.m15Wave1FollowThroughBucket);
+   CsvAppend(line, plan.m15Wave1ObstacleClearanceBucket);
+   CsvAppend(line, DoubleToString(plan.m15Wave1ObstacleDistanceR, 4));
+   CsvAppend(line, IntegerToString(plan.m15Wave1DurationBars));
+   CsvAppend(line, DoubleToString(plan.m15Wave1QualityScore, 4));
+   CsvAppend(line, plan.m15Wave1QualityBucket);
+   CsvAppend(line, BoolText(plan.m15Wave1QualityHigh));
+   CsvAppend(line, BoolText(plan.m15Wave1QualityGatePass));
+   CsvAppend(line, plan.m15Wave1QualityRejectReason);
    CsvAppend(line, BoolText(plan.m15Wave2Candidate));
    CsvAppend(line, DoubleToString(plan.m15Wave2RetraceRatio, 4));
    CsvAppend(line, plan.m15Wave2FibZone);
@@ -6321,6 +6950,12 @@ string TradeHeaderLine()
           "nested_thirdwave_enabled,nested_thirdwave_mode,h1_context_direction,h1_context_impulse_direction,context_impulse_high,context_impulse_low," +
           "h1_context_fib_retrace_ratio,h1_context_fib_room_bucket,context_fib_room_score," +
           "m15_wave1_candidate,m15_wave1_direction,m15_wave1_break_type,m15_wave1_break_level,m15_wave1_age_bars,m15_wave1_high,m15_wave1_low," +
+          "m15_wave1_quality_enabled,m15_wave1_quality_mode,m15_wave1_quality_combine_mode,m15_wave1_quality_candidate,m15_wave1_start_time,m15_wave1_end_time," +
+          "m15_wave1_close_beyond_break,m15_wave1_impulse_atr,m15_wave1_impulse_bucket,m15_wave1_body_atr,m15_wave1_body_efficiency,m15_wave1_body_efficiency_bucket," +
+          "m15_wave1_range_atr,m15_wave1_net_move_atr,m15_wave1_overlap_ratio,m15_wave1_overlap_bucket,m15_wave1_pullback_inside_ratio," +
+          "m15_wave1_consecutive_directional_closes,m15_wave1_large_body_count,m15_wave1_opposite_wick_ratio,m15_wave1_break_quality,m15_wave1_speed_bucket," +
+          "m15_wave1_follow_through_bucket,m15_wave1_obstacle_clearance_bucket,m15_wave1_obstacle_distance_r,m15_wave1_duration_bars," +
+          "m15_wave1_quality_score,m15_wave1_quality_bucket,m15_wave1_quality_high,m15_wave1_quality_gate_pass,m15_wave1_quality_reject_reason," +
           "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
           "m15_wave2_expansion_mode,m15_wave2_gate_mode,m15_wave2_type,m15_wave2_age_bars,m15_wave2_score,m15_wave2_gate_pass,m15_wave2_gate_reject_reason," +
           "m15_wave_context_score,m5_pattern_quality_group,m15_wave2_required_due_to_pattern_quality,m15_wave2_score_applied," +
@@ -6492,6 +7127,37 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, IntegerToString(tracked.m15Wave1AgeBars));
    CsvAppend(line, DoubleToString(tracked.m15Wave1High, 8));
    CsvAppend(line, DoubleToString(tracked.m15Wave1Low, 8));
+   CsvAppend(line, BoolText(tracked.m15Wave1QualityEnabled));
+   CsvAppend(line, tracked.m15Wave1QualityMode);
+   CsvAppend(line, tracked.m15Wave1QualityCombineMode);
+   CsvAppend(line, BoolText(tracked.m15Wave1QualityCandidate));
+   CsvAppend(line, tracked.m15Wave1StartTime > 0 ? TimeToString(tracked.m15Wave1StartTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, tracked.m15Wave1EndTime > 0 ? TimeToString(tracked.m15Wave1EndTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, BoolText(tracked.m15Wave1CloseBeyondBreak));
+   CsvAppend(line, DoubleToString(tracked.m15Wave1ImpulseAtr, 4));
+   CsvAppend(line, tracked.m15Wave1ImpulseBucket);
+   CsvAppend(line, DoubleToString(tracked.m15Wave1BodyAtr, 4));
+   CsvAppend(line, DoubleToString(tracked.m15Wave1BodyEfficiency, 4));
+   CsvAppend(line, tracked.m15Wave1BodyEfficiencyBucket);
+   CsvAppend(line, DoubleToString(tracked.m15Wave1RangeAtr, 4));
+   CsvAppend(line, DoubleToString(tracked.m15Wave1NetMoveAtr, 4));
+   CsvAppend(line, DoubleToString(tracked.m15Wave1OverlapRatio, 4));
+   CsvAppend(line, tracked.m15Wave1OverlapBucket);
+   CsvAppend(line, DoubleToString(tracked.m15Wave1PullbackInsideRatio, 4));
+   CsvAppend(line, IntegerToString(tracked.m15Wave1ConsecutiveDirectionalCloses));
+   CsvAppend(line, IntegerToString(tracked.m15Wave1LargeBodyCount));
+   CsvAppend(line, DoubleToString(tracked.m15Wave1OppositeWickRatio, 4));
+   CsvAppend(line, tracked.m15Wave1BreakQualityBucket);
+   CsvAppend(line, tracked.m15Wave1SpeedBucket);
+   CsvAppend(line, tracked.m15Wave1FollowThroughBucket);
+   CsvAppend(line, tracked.m15Wave1ObstacleClearanceBucket);
+   CsvAppend(line, DoubleToString(tracked.m15Wave1ObstacleDistanceR, 4));
+   CsvAppend(line, IntegerToString(tracked.m15Wave1DurationBars));
+   CsvAppend(line, DoubleToString(tracked.m15Wave1QualityScore, 4));
+   CsvAppend(line, tracked.m15Wave1QualityBucket);
+   CsvAppend(line, BoolText(tracked.m15Wave1QualityHigh));
+   CsvAppend(line, BoolText(tracked.m15Wave1QualityGatePass));
+   CsvAppend(line, tracked.m15Wave1QualityRejectReason);
    CsvAppend(line, BoolText(tracked.m15Wave2Candidate));
    CsvAppend(line, DoubleToString(tracked.m15Wave2RetraceRatio, 4));
    CsvAppend(line, tracked.m15Wave2FibZone);
@@ -7317,6 +7983,37 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].m15Wave1AgeBars = plan.m15Wave1AgeBars;
    g_trades[size].m15Wave1High = plan.m15Wave1High;
    g_trades[size].m15Wave1Low = plan.m15Wave1Low;
+   g_trades[size].m15Wave1QualityEnabled = plan.m15Wave1QualityEnabled;
+   g_trades[size].m15Wave1QualityMode = plan.m15Wave1QualityMode;
+   g_trades[size].m15Wave1QualityCombineMode = plan.m15Wave1QualityCombineMode;
+   g_trades[size].m15Wave1QualityCandidate = plan.m15Wave1QualityCandidate;
+   g_trades[size].m15Wave1StartTime = plan.m15Wave1StartTime;
+   g_trades[size].m15Wave1EndTime = plan.m15Wave1EndTime;
+   g_trades[size].m15Wave1CloseBeyondBreak = plan.m15Wave1CloseBeyondBreak;
+   g_trades[size].m15Wave1ImpulseAtr = plan.m15Wave1ImpulseAtr;
+   g_trades[size].m15Wave1ImpulseBucket = plan.m15Wave1ImpulseBucket;
+   g_trades[size].m15Wave1BodyAtr = plan.m15Wave1BodyAtr;
+   g_trades[size].m15Wave1BodyEfficiency = plan.m15Wave1BodyEfficiency;
+   g_trades[size].m15Wave1BodyEfficiencyBucket = plan.m15Wave1BodyEfficiencyBucket;
+   g_trades[size].m15Wave1RangeAtr = plan.m15Wave1RangeAtr;
+   g_trades[size].m15Wave1NetMoveAtr = plan.m15Wave1NetMoveAtr;
+   g_trades[size].m15Wave1OverlapRatio = plan.m15Wave1OverlapRatio;
+   g_trades[size].m15Wave1OverlapBucket = plan.m15Wave1OverlapBucket;
+   g_trades[size].m15Wave1PullbackInsideRatio = plan.m15Wave1PullbackInsideRatio;
+   g_trades[size].m15Wave1ConsecutiveDirectionalCloses = plan.m15Wave1ConsecutiveDirectionalCloses;
+   g_trades[size].m15Wave1LargeBodyCount = plan.m15Wave1LargeBodyCount;
+   g_trades[size].m15Wave1OppositeWickRatio = plan.m15Wave1OppositeWickRatio;
+   g_trades[size].m15Wave1BreakQualityBucket = plan.m15Wave1BreakQualityBucket;
+   g_trades[size].m15Wave1SpeedBucket = plan.m15Wave1SpeedBucket;
+   g_trades[size].m15Wave1FollowThroughBucket = plan.m15Wave1FollowThroughBucket;
+   g_trades[size].m15Wave1ObstacleClearanceBucket = plan.m15Wave1ObstacleClearanceBucket;
+   g_trades[size].m15Wave1ObstacleDistanceR = plan.m15Wave1ObstacleDistanceR;
+   g_trades[size].m15Wave1DurationBars = plan.m15Wave1DurationBars;
+   g_trades[size].m15Wave1QualityScore = plan.m15Wave1QualityScore;
+   g_trades[size].m15Wave1QualityBucket = plan.m15Wave1QualityBucket;
+   g_trades[size].m15Wave1QualityHigh = plan.m15Wave1QualityHigh;
+   g_trades[size].m15Wave1QualityGatePass = plan.m15Wave1QualityGatePass;
+   g_trades[size].m15Wave1QualityRejectReason = plan.m15Wave1QualityRejectReason;
    g_trades[size].m15Wave2Candidate = plan.m15Wave2Candidate;
    g_trades[size].m15Wave2RetraceRatio = plan.m15Wave2RetraceRatio;
    g_trades[size].m15Wave2FibZone = plan.m15Wave2FibZone;
@@ -7812,6 +8509,12 @@ int OnInit()
        InpM15Wave2AdjacentAgeExtraBars < 0 ||
        InpM15Wave2AdjacentCombineMask < 0 ||
        InpNearMissSeparatorCombineMask < 0 ||
+       InpM15Wave1MinImpulseAtr < 0.0 ||
+       InpM15Wave1MinBodyEfficiency < 0.0 ||
+       InpM15Wave1MinBodyEfficiency > 1.0 ||
+       InpM15Wave1MaxOverlapRatio < 0.0 ||
+       InpM15Wave1MaxOverlapRatio > 1.5 ||
+       InpM15Wave1MaxAgeBars < 1 ||
        InpSessionInvalidationATR <= 0.0 ||
       InpMaxHoldBars < 1 ||
       InpRiskPerTradePercent <= 0.0 ||
