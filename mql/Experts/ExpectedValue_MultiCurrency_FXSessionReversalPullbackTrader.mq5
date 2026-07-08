@@ -135,6 +135,20 @@ enum ENUM_M15_WAVE2_ADJACENT_FIB_SIDE
    M15_WAVE2_ADJACENT_FIB_DEEP_ONLY = 2
   };
 
+enum ENUM_NEAR_MISS_SEPARATOR_MODE
+  {
+   NEAR_MISS_SEPARATOR_OFF = 0,
+   NEAR_MISS_SEPARATOR_DIAGNOSTIC_ONLY = 1,
+   NEAR_MISS_SEPARATOR_INVALIDATION_QUALITY = 2,
+   NEAR_MISS_SEPARATOR_NO_IMMEDIATE_FAILURE = 3,
+   NEAR_MISS_SEPARATOR_RETEST_QUALITY = 4,
+   NEAR_MISS_SEPARATOR_CORRECTIVE_EXHAUSTION = 5,
+   NEAR_MISS_SEPARATOR_M15_COMPLETION = 6,
+   NEAR_MISS_SEPARATOR_TARGET_ROOM = 7,
+   NEAR_MISS_SEPARATOR_GRANVILLE_QUALITY = 8,
+   NEAR_MISS_SEPARATOR_BEST_TWO = 9
+  };
+
 enum ENUM_EXIT_MODE
   {
    EXIT_FIXED_TP_SL = 0,
@@ -300,6 +314,48 @@ struct SignalPlan
    int               barsFromInvalidationToEntry;
    double            retestLevel;
    double            retestDistanceAtr;
+   string            nearMissSeparatorMode;
+   bool              nearMissSeparatorPass;
+   string            nearMissSeparatorReason;
+   string            nearMissSeparatorComponent;
+   double            m5InvalidationCloseLocation;
+   double            m5InvalidationWickRatio;
+   string            m5InvalidationQualityBucket;
+   bool              noImmediateFailurePass;
+   bool              closeBackInsideWithin1Bar;
+   bool              closeBackInsideWithin2Bars;
+   double            maxAdverseReturnAtrAfterBreak;
+   string            postBreakHoldBucket;
+   bool              retestDetectedAfterInvalidation;
+   string            retestCloseSide;
+   double            retestRejectionWickRatio;
+   bool              retestNextBarConfirmation;
+   string            retestQualityBucket;
+   double            m5CorrectiveLastLegAtr;
+   double            m5CorrectivePrevLegAtr;
+   double            m5CorrectiveLegShrinkRatio;
+   double            m5CorrectiveNewExtremeAtr;
+   bool              m5CorrectiveFailedExtreme;
+   string            m5CorrectiveExhaustionBucket;
+   double            m15Wave2CompletionScore;
+   string            m15Wave2DepthBucket;
+   string            m15Wave2DurationBucket;
+   bool              m15Wave2InvalidatedWave1;
+   bool              m15Wave2EndNearFibZone;
+   string            m15Wave2CompletionQualityBucket;
+   double            nearestM15ObstacleDistanceR;
+   double            nearestH1ObstacleDistanceR;
+   double            nearestSessionObstacleDistanceR;
+   double            targetRoomMinR;
+   string            targetRoomBucket;
+   bool              cleanPathTo1R;
+   bool              cleanPathTo13R;
+   double            sma75Slope;
+   double            shortMaSma75DistanceAtr;
+   bool              maConvergenceBeforeEntry;
+   bool              maExpansionAfterReclaimPreEntry;
+   int               priceReclaimedSma75BarsAgo;
+   string            sma75GranvilleQualityBucket;
    string            sma75State;
    bool              sma75Reclaim;
    double            sma75GranvilleScore;
@@ -507,6 +563,48 @@ struct TrackedTrade
    int               barsFromInvalidationToEntry;
    double            retestLevel;
    double            retestDistanceAtr;
+   string            nearMissSeparatorMode;
+   bool              nearMissSeparatorPass;
+   string            nearMissSeparatorReason;
+   string            nearMissSeparatorComponent;
+   double            m5InvalidationCloseLocation;
+   double            m5InvalidationWickRatio;
+   string            m5InvalidationQualityBucket;
+   bool              noImmediateFailurePass;
+   bool              closeBackInsideWithin1Bar;
+   bool              closeBackInsideWithin2Bars;
+   double            maxAdverseReturnAtrAfterBreak;
+   string            postBreakHoldBucket;
+   bool              retestDetectedAfterInvalidation;
+   string            retestCloseSide;
+   double            retestRejectionWickRatio;
+   bool              retestNextBarConfirmation;
+   string            retestQualityBucket;
+   double            m5CorrectiveLastLegAtr;
+   double            m5CorrectivePrevLegAtr;
+   double            m5CorrectiveLegShrinkRatio;
+   double            m5CorrectiveNewExtremeAtr;
+   bool              m5CorrectiveFailedExtreme;
+   string            m5CorrectiveExhaustionBucket;
+   double            m15Wave2CompletionScore;
+   string            m15Wave2DepthBucket;
+   string            m15Wave2DurationBucket;
+   bool              m15Wave2InvalidatedWave1;
+   bool              m15Wave2EndNearFibZone;
+   string            m15Wave2CompletionQualityBucket;
+   double            nearestM15ObstacleDistanceR;
+   double            nearestH1ObstacleDistanceR;
+   double            nearestSessionObstacleDistanceR;
+   double            targetRoomMinR;
+   string            targetRoomBucket;
+   bool              cleanPathTo1R;
+   bool              cleanPathTo13R;
+   double            sma75Slope;
+   double            shortMaSma75DistanceAtr;
+   bool              maConvergenceBeforeEntry;
+   bool              maExpansionAfterReclaimPreEntry;
+   int               priceReclaimedSma75BarsAgo;
+   string            sma75GranvilleQualityBucket;
    string            sma75State;
    bool              sma75Reclaim;
    double            sma75GranvilleScore;
@@ -721,6 +819,8 @@ input ENUM_M15_WAVE2_ADJACENT_MODE InpM15Wave2AdjacentMode = M15_WAVE2_ADJACENT_
 input ENUM_M15_WAVE2_ADJACENT_FIB_SIDE InpM15Wave2AdjacentFibSide = M15_WAVE2_ADJACENT_FIB_BOTH;
 input int             InpM15Wave2AdjacentAgeExtraBars = 4;
 input int             InpM15Wave2AdjacentCombineMask = 0;
+input ENUM_NEAR_MISS_SEPARATOR_MODE InpNearMissSeparatorMode = NEAR_MISS_SEPARATOR_OFF;
+input int             InpNearMissSeparatorCombineMask = 0;
 input ENUM_EXIT_MODE  InpExitMode                      = EXIT_M5_FAILURE;
 input ENUM_STRUCTURE_TARGET_MODE InpStructureTargetMode = STRUCTURE_TARGET_OFF;
 input double          InpSessionInvalidationATR        = 0.85;
@@ -1035,6 +1135,29 @@ string M15Wave2AdjacentFibSideName()
    return "both";
   }
 
+string NearMissSeparatorModeName()
+  {
+   if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_DIAGNOSTIC_ONLY)
+      return "diagnostic_only";
+   if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_INVALIDATION_QUALITY)
+      return "invalidation_quality";
+   if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_NO_IMMEDIATE_FAILURE)
+      return "no_immediate_failure";
+   if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_RETEST_QUALITY)
+      return "retest_quality";
+   if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_CORRECTIVE_EXHAUSTION)
+      return "corrective_exhaustion";
+   if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_M15_COMPLETION)
+      return "m15_completion_quality";
+   if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_TARGET_ROOM)
+      return "target_room";
+   if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_GRANVILLE_QUALITY)
+      return "granville_quality";
+   if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_BEST_TWO)
+      return "best_two";
+   return "off";
+  }
+
 string ExitModeName()
   {
    if(InpExitMode == EXIT_FIXED_TP_SL)
@@ -1059,7 +1182,12 @@ string StructureTargetModeName()
 
 bool UsesM5CorrectiveABC()
   {
-   return InpUseM5CorrectiveABC || InpM5CorrectiveMode != M5_CORRECTIVE_OFF;
+   return InpUseM5CorrectiveABC || InpM5CorrectiveMode != M5_CORRECTIVE_OFF || UsesNearMissSeparator();
+  }
+
+bool UsesNearMissSeparator()
+  {
+   return InpNearMissSeparatorMode != NEAR_MISS_SEPARATOR_OFF;
   }
 
 bool UsesM15WaveContext()
@@ -1067,7 +1195,8 @@ bool UsesM15WaveContext()
    return InpM15WaveContextMode != M15_WAVE_CONTEXT_OFF ||
           InpM15Wave2ExpansionMode != M15_WAVE2_EXPANSION_OFF ||
           InpM15Wave2GateMode != M15_WAVE2_GATE_NO_GATE ||
-          InpM15Wave2AdjacentMode != M15_WAVE2_ADJACENT_OFF;
+          InpM15Wave2AdjacentMode != M15_WAVE2_ADJACENT_OFF ||
+          UsesNearMissSeparator();
   }
 
 string M5PatternQualityGroup(const string pattern)
@@ -3043,6 +3172,28 @@ bool DetectRefinedM5CorrectiveABC(SignalPlan &plan, const int entryDirection)
    double highMax = MathMax(MathMax(latestHigh, previousHigh), MathMax(latestLow, previousLow));
    double lowMin = MathMin(MathMin(latestHigh, previousHigh), MathMin(latestLow, previousLow));
    plan.m5CorrectivePullbackAtr = atr > 0.0 ? (highMax - lowMin) / atr : 0.0;
+   if(atr > 0.0)
+     {
+      plan.m5CorrectiveLastLegAtr = MathAbs(latestHigh - latestLow) / atr;
+      plan.m5CorrectivePrevLegAtr = MathAbs(previousHigh - previousLow) / atr;
+      plan.m5CorrectiveLegShrinkRatio = plan.m5CorrectivePrevLegAtr > 0.0 ?
+                                        plan.m5CorrectiveLastLegAtr / plan.m5CorrectivePrevLegAtr : 0.0;
+      plan.m5CorrectiveNewExtremeAtr = entryDirection > 0 ?
+                                       MathMax(0.0, (previousLow - latestLow) / atr) :
+                                       MathMax(0.0, (latestHigh - previousHigh) / atr);
+      plan.m5CorrectiveFailedExtreme = plan.m5CorrectiveNewExtremeAtr <= 0.05;
+      if(plan.m5CorrectiveFailedExtreme ||
+         (plan.m5CorrectiveLegShrinkRatio > 0.0 &&
+          plan.m5CorrectiveLegShrinkRatio <= 0.70 &&
+          plan.m5CorrectiveNewExtremeAtr <= 0.15))
+         plan.m5CorrectiveExhaustionBucket = "strong_exhaustion";
+      else if((plan.m5CorrectiveLegShrinkRatio > 0.0 &&
+               plan.m5CorrectiveLegShrinkRatio <= 0.90) ||
+              plan.m5CorrectiveNewExtremeAtr <= 0.25)
+         plan.m5CorrectiveExhaustionBucket = "mild_exhaustion";
+      else
+         plan.m5CorrectiveExhaustionBucket = "no_shrink";
+     }
    if(plan.m5CorrectivePullbackAtr < InpM5CorrectiveMinPullbackAtr ||
       plan.m5CorrectivePullbackAtr > InpM5CorrectiveMaxPullbackAtr)
      {
@@ -3110,6 +3261,32 @@ bool DetectRefinedM5Invalidation(SignalPlan &plan, const int entryDirection)
    plan.barsFromInvalidationToEntry = breakShift;
    plan.retestLevel = level;
 
+   double range = MathMax(rates[breakShift].high - rates[breakShift].low, _Point);
+   double upperWick = rates[breakShift].high - MathMax(rates[breakShift].open, rates[breakShift].close);
+   double lowerWick = MathMin(rates[breakShift].open, rates[breakShift].close) - rates[breakShift].low;
+   plan.m5InvalidationCloseLocation = entryDirection > 0 ?
+                                      (rates[breakShift].close - rates[breakShift].low) / range :
+                                      (rates[breakShift].high - rates[breakShift].close) / range;
+   plan.m5InvalidationWickRatio = entryDirection > 0 ? upperWick / range : lowerWick / range;
+   if(plan.m5InvalidationCloseBreak &&
+      plan.m5InvalidationBreakAtr >= 0.20 &&
+      plan.m5InvalidationBodyAtr >= 0.50 &&
+      plan.m5InvalidationCloseLocation >= 0.75 &&
+      plan.m5InvalidationWickRatio <= 0.25)
+      plan.m5InvalidationQualityBucket = "very_strong";
+   else if(plan.m5InvalidationCloseBreak &&
+           plan.m5InvalidationBreakAtr >= 0.10 &&
+           plan.m5InvalidationBodyAtr >= 0.25 &&
+           plan.m5InvalidationCloseLocation >= 0.60 &&
+           plan.m5InvalidationWickRatio <= 0.40)
+      plan.m5InvalidationQualityBucket = "strong";
+   else if(plan.m5InvalidationCloseBreak &&
+           plan.m5InvalidationBreakAtr >= 0.05 &&
+           plan.m5InvalidationBodyAtr >= 0.10)
+      plan.m5InvalidationQualityBucket = "normal";
+   else
+      plan.m5InvalidationQualityBucket = "weak";
+
    double maxReturn = 0.0;
    for(int shift = breakShift - 1; shift >= 0; --shift)
      {
@@ -3118,6 +3295,34 @@ bool DetectRefinedM5Invalidation(SignalPlan &plan, const int entryDirection)
       maxReturn = MathMax(maxReturn, returnAtr);
      }
    plan.postBreakReturnAtr = maxReturn;
+   plan.maxAdverseReturnAtrAfterBreak = maxReturn;
+   if(breakShift >= 1)
+      plan.closeBackInsideWithin1Bar = entryDirection > 0 ? rates[breakShift - 1].close < level :
+                                                            rates[breakShift - 1].close > level;
+   if(breakShift >= 2)
+     {
+      bool oneBarBack = plan.closeBackInsideWithin1Bar;
+      bool twoBarBack = entryDirection > 0 ? rates[breakShift - 2].close < level :
+                                             rates[breakShift - 2].close > level;
+      plan.closeBackInsideWithin2Bars = oneBarBack || twoBarBack;
+     }
+   else
+      plan.closeBackInsideWithin2Bars = plan.closeBackInsideWithin1Bar;
+   plan.noImmediateFailurePass = breakShift >= 1 &&
+                                 !plan.closeBackInsideWithin1Bar &&
+                                 !plan.closeBackInsideWithin2Bars &&
+                                 maxReturn <= InpPostBreakMaxReturnAtr;
+   if(breakShift <= 0)
+      plan.postBreakHoldBucket = "no_following_closed_bar";
+   else if(plan.closeBackInsideWithin1Bar)
+      plan.postBreakHoldBucket = "failed_1bar";
+   else if(plan.closeBackInsideWithin2Bars)
+      plan.postBreakHoldBucket = "failed_2bars";
+   else if(maxReturn <= 0.10)
+      plan.postBreakHoldBucket = "held_clean";
+   else
+      plan.postBreakHoldBucket = "held_no_close_back";
+
    plan.postBreakAcceptanceBars = InpPostBreakAcceptanceBars;
    plan.postBreakAcceptancePass = !InpUsePostBreakAcceptance || maxReturn <= InpPostBreakMaxReturnAtr;
 
@@ -3132,7 +3337,412 @@ bool DetectRefinedM5Invalidation(SignalPlan &plan, const int entryDirection)
    else
       plan.retestDistanceAtr = MathAbs(rates[0].high - level) / atr;
 
+   int retestShift = -1;
+   double bestRetestDistance = 999.0;
+   for(int shift = breakShift - 1; shift >= 0; --shift)
+     {
+      bool retestTouched = entryDirection > 0 ? rates[shift].low <= level + retestTolerance :
+                                                rates[shift].high >= level - retestTolerance;
+      if(!retestTouched)
+         continue;
+      double distanceAtr = entryDirection > 0 ? MathAbs(rates[shift].low - level) / atr :
+                                                MathAbs(rates[shift].high - level) / atr;
+      if(distanceAtr < bestRetestDistance)
+        {
+         bestRetestDistance = distanceAtr;
+         retestShift = shift;
+        }
+     }
+   if(retestShift >= 0)
+     {
+      plan.retestDetectedAfterInvalidation = true;
+      plan.retestDistanceAtr = bestRetestDistance;
+      bool favorableClose = entryDirection > 0 ? rates[retestShift].close >= level :
+                                                 rates[retestShift].close <= level;
+      plan.retestCloseSide = favorableClose ? "favorable_side" : "back_inside";
+      double retestRange = MathMax(rates[retestShift].high - rates[retestShift].low, _Point);
+      double retestUpper = rates[retestShift].high - MathMax(rates[retestShift].open, rates[retestShift].close);
+      double retestLower = MathMin(rates[retestShift].open, rates[retestShift].close) - rates[retestShift].low;
+      plan.retestRejectionWickRatio = entryDirection > 0 ? retestLower / retestRange : retestUpper / retestRange;
+      if(retestShift > 0)
+         plan.retestNextBarConfirmation = entryDirection > 0 ?
+                                          rates[retestShift - 1].close > rates[retestShift].close :
+                                          rates[retestShift - 1].close < rates[retestShift].close;
+      if(favorableClose && plan.retestRejectionWickRatio >= 0.35 && plan.retestNextBarConfirmation)
+         plan.retestQualityBucket = "strong_retest";
+      else if(favorableClose)
+         plan.retestQualityBucket = "clean_retest";
+      else
+         plan.retestQualityBucket = "weak_retest";
+     }
+   else
+      plan.retestQualityBucket = "no_retest";
+
    return true;
+  }
+
+string M15Wave2DepthBucket(const double retrace)
+  {
+   if(retrace <= 0.0)
+      return "none";
+   if(retrace < 0.236)
+      return "too_shallow";
+   if(retrace < 0.382)
+      return "shallow_236_382";
+   if(retrace <= 0.618)
+      return "preferred_382_618";
+   if(retrace <= 0.786)
+      return "deep_618_786";
+   if(retrace <= 1.0)
+      return "very_deep_786_100";
+   return "invalidated";
+  }
+
+string M15Wave2DurationBucket(const int ageBars)
+  {
+   if(ageBars < 0)
+      return "unknown";
+   if(ageBars < 2)
+      return "too_short";
+   if(ageBars <= 12)
+      return "normal";
+   if(ageBars <= InpM15Wave2MaxAgeBars)
+      return "extended";
+   return "too_old";
+  }
+
+void EvaluateM15Wave2CompletionSeparator(SignalPlan &plan)
+  {
+   plan.m15Wave2DepthBucket = M15Wave2DepthBucket(plan.m15Wave2RetraceRatio);
+   plan.m15Wave2DurationBucket = M15Wave2DurationBucket(plan.m15Wave2AgeBars);
+   plan.m15Wave2InvalidatedWave1 = plan.m15Wave2RetraceRatio > 1.0 || plan.m15Wave2RetraceRatio < 0.0;
+   plan.m15Wave2EndNearFibZone = plan.m15Wave2DepthBucket == "shallow_236_382" ||
+                                 plan.m15Wave2DepthBucket == "preferred_382_618" ||
+                                 plan.m15Wave2DepthBucket == "deep_618_786";
+
+   double score = 0.0;
+   if(plan.m15Wave1Candidate)
+      score += 0.25;
+   if(plan.m15Wave2Candidate)
+      score += 0.25;
+   if(plan.m15Wave2DepthBucket == "preferred_382_618")
+      score += 0.25;
+   else if(plan.m15Wave2DepthBucket == "deep_618_786" ||
+           plan.m15Wave2DepthBucket == "shallow_236_382")
+      score += 0.15;
+   if(plan.m15Wave2DurationBucket == "normal" || plan.m15Wave2DurationBucket == "extended")
+      score += 0.15;
+   if(plan.m5InvalidationDetected)
+      score += 0.15;
+   if(plan.m15Wave2InvalidatedWave1)
+      score -= 0.40;
+   plan.m15Wave2CompletionScore = MathMax(0.0, score);
+
+   if(plan.m15Wave2CompletionScore >= 0.85)
+      plan.m15Wave2CompletionQualityBucket = "strong";
+   else if(plan.m15Wave2CompletionScore >= 0.60)
+      plan.m15Wave2CompletionQualityBucket = "good";
+   else if(plan.m15Wave2CompletionScore >= 0.35)
+      plan.m15Wave2CompletionQualityBucket = "weak";
+   else
+      plan.m15Wave2CompletionQualityBucket = "poor";
+  }
+
+double NearestSwingObstacleDistanceR(const string symbol,
+                                     const ENUM_TIMEFRAMES tf,
+                                     const int direction,
+                                     const double entry,
+                                     const double riskPrice)
+  {
+   if(entry <= 0.0 || riskPrice <= 0.0)
+      return 9.99;
+
+   MqlRates rates[];
+   int bars = MathMax(InpHTFWaveLookbackBars, InpSwingDepth * 2 + InpATRPeriod + 24);
+   if(!CopyClosedRates(symbol, tf, bars, rates))
+      return 9.99;
+
+   double bestDistance = 0.0;
+   for(int shift = 1; shift < ArraySize(rates); ++shift)
+     {
+      double candidate = direction > 0 ? rates[shift].high : rates[shift].low;
+      bool ahead = direction > 0 ? candidate > entry : candidate < entry;
+      if(!ahead)
+         continue;
+      double distanceR = MathAbs(candidate - entry) / riskPrice;
+      if(bestDistance <= 0.0 || distanceR < bestDistance)
+         bestDistance = distanceR;
+     }
+
+   if(bestDistance <= 0.0)
+      return 9.99;
+   return bestDistance;
+  }
+
+void EvaluateTargetRoomSeparator(SignalPlan &plan, const int entryDirection)
+  {
+   plan.nearestM15ObstacleDistanceR = NearestSwingObstacleDistanceR(plan.symbol, InpStructureTF,
+                                                                    entryDirection, plan.entry, plan.riskPrice);
+   plan.nearestH1ObstacleDistanceR = NearestSwingObstacleDistanceR(plan.symbol, InpTopContextTF,
+                                                                   entryDirection, plan.entry, plan.riskPrice);
+   plan.nearestSessionObstacleDistanceR = 9.99;
+   if(StringFind(plan.nearestObstacleType, "session") >= 0 ||
+      StringFind(plan.nearestObstacleType, "opening_range") >= 0 ||
+      StringFind(plan.nearestObstacleType, "pre_session") >= 0)
+      plan.nearestSessionObstacleDistanceR = plan.nearestObstacleDistanceR > 0.0 ? plan.nearestObstacleDistanceR : 9.99;
+
+   double currentObstacle = plan.nearestObstacleDistanceR > 0.0 ? plan.nearestObstacleDistanceR : 9.99;
+   plan.targetRoomMinR = MathMin(currentObstacle,
+                                 MathMin(plan.nearestM15ObstacleDistanceR,
+                                         MathMin(plan.nearestH1ObstacleDistanceR,
+                                                 plan.nearestSessionObstacleDistanceR)));
+   plan.cleanPathTo1R = plan.targetRoomMinR >= 1.0;
+   plan.cleanPathTo13R = plan.targetRoomMinR >= 1.3;
+   if(plan.targetRoomMinR >= 1.8)
+      plan.targetRoomBucket = "ge_1_8r";
+   else if(plan.targetRoomMinR >= 1.3)
+      plan.targetRoomBucket = "1_3_1_8r";
+   else if(plan.targetRoomMinR >= 1.0)
+      plan.targetRoomBucket = "1_0_1_3r";
+   else
+      plan.targetRoomBucket = "lt_1_0r";
+  }
+
+void EvaluateGranvilleSeparator(SignalPlan &plan, const int entryDirection)
+  {
+   MqlRates rates[];
+   int bars = MathMax(InpTranscriptSmaPeriod + InpMAPeriodFast + InpATRPeriod + 20, InpTranscriptSmaPeriod + 20);
+   if(!CopyClosedRates(plan.symbol, InpPrimaryEntryTF, bars, rates))
+      return;
+
+   double atr = ATR(rates, 0, InpATRPeriod);
+   if(atr <= 0.0)
+      return;
+
+   double smaNow = SMA(rates, 0, InpTranscriptSmaPeriod);
+   double smaPrior = SMA(rates, 5, InpTranscriptSmaPeriod);
+   double fastNow = SMA(rates, 0, InpMAPeriodFast);
+   double fastPrior2 = SMA(rates, 2, InpMAPeriodFast);
+   double fastPrior5 = SMA(rates, 5, InpMAPeriodFast);
+   double smaPrior2 = SMA(rates, 2, InpTranscriptSmaPeriod);
+   if(smaNow <= 0.0 || smaPrior <= 0.0 || fastNow <= 0.0 || fastPrior2 <= 0.0 || fastPrior5 <= 0.0 || smaPrior2 <= 0.0)
+      return;
+
+   plan.sma75Slope = entryDirection > 0 ? (smaNow - smaPrior) / atr : (smaPrior - smaNow) / atr;
+   plan.shortMaSma75DistanceAtr = MathAbs(fastNow - smaNow) / atr;
+   double distanceNow = MathAbs(fastNow - smaNow);
+   double distancePrior2 = MathAbs(fastPrior2 - smaPrior2);
+   double distancePrior5 = MathAbs(fastPrior5 - smaPrior);
+   plan.maConvergenceBeforeEntry = distanceNow < distancePrior5;
+   plan.maExpansionAfterReclaimPreEntry = distanceNow > distancePrior2 && plan.sma75Slope >= 0.0;
+
+   plan.priceReclaimedSma75BarsAgo = -1;
+   int maxLookback = MathMin(12, ArraySize(rates) - InpTranscriptSmaPeriod - 2);
+   for(int shift = 0; shift <= maxLookback; ++shift)
+     {
+      double sma = SMA(rates, shift, InpTranscriptSmaPeriod);
+      double priorSma = SMA(rates, shift + 1, InpTranscriptSmaPeriod);
+      bool favorableNow = entryDirection > 0 ? rates[shift].close > sma : rates[shift].close < sma;
+      bool favorablePrior = entryDirection > 0 ? rates[shift + 1].close > priorSma : rates[shift + 1].close < priorSma;
+      if(sma > 0.0 && priorSma > 0.0 && favorableNow && !favorablePrior)
+        {
+         plan.priceReclaimedSma75BarsAgo = shift;
+         break;
+        }
+     }
+
+   if(plan.maConvergenceBeforeEntry &&
+      plan.maExpansionAfterReclaimPreEntry &&
+      plan.sma75Slope > 0.05 &&
+      plan.priceReclaimedSma75BarsAgo >= 0 &&
+      plan.priceReclaimedSma75BarsAgo <= 8)
+      plan.sma75GranvilleQualityBucket = "strong_expansion";
+   else if(plan.maExpansionAfterReclaimPreEntry && plan.sma75Slope >= 0.0)
+      plan.sma75GranvilleQualityBucket = "expansion";
+   else if(plan.priceReclaimedSma75BarsAgo >= 0)
+      plan.sma75GranvilleQualityBucket = "reclaim_only";
+   else
+      plan.sma75GranvilleQualityBucket = "none";
+  }
+
+bool NearMissInvalidationQualityPass(const SignalPlan &plan)
+  {
+   return plan.m5InvalidationQualityBucket == "very_strong" ||
+          plan.m5InvalidationQualityBucket == "strong";
+  }
+
+bool NearMissRetestQualityPass(const SignalPlan &plan)
+  {
+   return plan.retestQualityBucket == "strong_retest" ||
+          plan.retestQualityBucket == "clean_retest";
+  }
+
+bool NearMissCorrectiveExhaustionPass(const SignalPlan &plan)
+  {
+   return plan.m5CorrectiveExhaustionBucket == "strong_exhaustion" ||
+          plan.m5CorrectiveExhaustionBucket == "mild_exhaustion";
+  }
+
+bool NearMissM15CompletionPass(const SignalPlan &plan)
+  {
+   return plan.m15Wave2CompletionQualityBucket == "strong" ||
+          plan.m15Wave2CompletionQualityBucket == "good";
+  }
+
+bool NearMissTargetRoomPass(const SignalPlan &plan)
+  {
+   return plan.cleanPathTo13R || plan.targetRoomMinR >= 1.3;
+  }
+
+bool NearMissGranvillePass(const SignalPlan &plan)
+  {
+   return plan.sma75GranvilleQualityBucket == "strong_expansion" ||
+          plan.sma75GranvilleQualityBucket == "expansion";
+  }
+
+bool EvaluateNearMissSeparatorPass(SignalPlan &plan)
+  {
+   bool invalidationPass = NearMissInvalidationQualityPass(plan);
+   bool noFailurePass = plan.noImmediateFailurePass;
+   bool retestPass = NearMissRetestQualityPass(plan);
+   bool exhaustionPass = NearMissCorrectiveExhaustionPass(plan);
+   bool completionPass = NearMissM15CompletionPass(plan);
+   bool roomPass = NearMissTargetRoomPass(plan);
+   bool granvillePass = NearMissGranvillePass(plan);
+
+   bool pass = false;
+   string component = "none";
+   if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_INVALIDATION_QUALITY)
+     {
+      pass = invalidationPass;
+      component = "invalidation_quality";
+     }
+   else if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_NO_IMMEDIATE_FAILURE)
+     {
+      pass = noFailurePass;
+      component = "no_immediate_failure";
+     }
+   else if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_RETEST_QUALITY)
+     {
+      pass = retestPass;
+      component = "retest_quality";
+     }
+   else if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_CORRECTIVE_EXHAUSTION)
+     {
+      pass = exhaustionPass;
+      component = "corrective_exhaustion";
+     }
+   else if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_M15_COMPLETION)
+     {
+      pass = completionPass;
+      component = "m15_completion_quality";
+     }
+   else if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_TARGET_ROOM)
+     {
+      pass = roomPass;
+      component = "target_room";
+     }
+   else if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_GRANVILLE_QUALITY)
+     {
+      pass = granvillePass;
+      component = "granville_quality";
+     }
+   else if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_BEST_TWO)
+     {
+      int mask = InpNearMissSeparatorCombineMask;
+      if(mask <= 0)
+         mask = 1 | 32;
+      if((mask & 1) != 0 && invalidationPass)
+        {
+         pass = true;
+         component = "invalidation_quality";
+        }
+      else if((mask & 2) != 0 && noFailurePass)
+        {
+         pass = true;
+         component = "no_immediate_failure";
+        }
+      else if((mask & 4) != 0 && retestPass)
+        {
+         pass = true;
+         component = "retest_quality";
+        }
+      else if((mask & 8) != 0 && exhaustionPass)
+        {
+         pass = true;
+         component = "corrective_exhaustion";
+        }
+      else if((mask & 16) != 0 && completionPass)
+        {
+         pass = true;
+         component = "m15_completion_quality";
+        }
+      else if((mask & 32) != 0 && roomPass)
+        {
+         pass = true;
+         component = "target_room";
+        }
+      else if((mask & 64) != 0 && granvillePass)
+        {
+         pass = true;
+         component = "granville_quality";
+        }
+      else
+         component = "best_two_no_component";
+     }
+   else if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_DIAGNOSTIC_ONLY)
+     {
+      pass = invalidationPass || noFailurePass || retestPass || exhaustionPass ||
+             completionPass || roomPass || granvillePass;
+      if(invalidationPass)
+         component = "invalidation_quality";
+      else if(noFailurePass)
+         component = "no_immediate_failure";
+      else if(retestPass)
+         component = "retest_quality";
+      else if(exhaustionPass)
+         component = "corrective_exhaustion";
+      else if(completionPass)
+         component = "m15_completion_quality";
+      else if(roomPass)
+         component = "target_room";
+      else if(granvillePass)
+         component = "granville_quality";
+     }
+
+   plan.nearMissSeparatorPass = pass;
+   plan.nearMissSeparatorComponent = component;
+   plan.nearMissSeparatorReason = pass ? "separator_component_pass" : "separator_component_failed";
+   return pass;
+  }
+
+bool ApplyNearMissSeparatorGate(SignalPlan &plan, const int entryDirection)
+  {
+   plan.nearMissSeparatorMode = NearMissSeparatorModeName();
+   if(!UsesNearMissSeparator())
+      return true;
+
+   EvaluateM15Wave2CompletionSeparator(plan);
+   EvaluateTargetRoomSeparator(plan, entryDirection);
+   EvaluateGranvilleSeparator(plan, entryDirection);
+   bool separatorPass = EvaluateNearMissSeparatorPass(plan);
+
+   if(InpNearMissSeparatorMode == NEAR_MISS_SEPARATOR_DIAGNOSTIC_ONLY)
+      return true;
+
+   if(plan.m15RequiredLightPass)
+     {
+      plan.nearMissSeparatorReason = separatorPass ? "required_light_and_separator_pass" :
+                                     "required_light_original_pass";
+      return true;
+     }
+
+   if(separatorPass)
+      return true;
+
+   plan.reason = "near_miss_separator_failed";
+   plan.failureType = "near_miss_separator_failed";
+   return false;
   }
 
 bool ApplyRefinedWaveContext(SignalPlan &plan, const int entryDirection)
@@ -4560,6 +5170,48 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.barsFromInvalidationToEntry = -1;
    plan.retestLevel = 0.0;
    plan.retestDistanceAtr = 0.0;
+   plan.nearMissSeparatorMode = NearMissSeparatorModeName();
+   plan.nearMissSeparatorPass = false;
+   plan.nearMissSeparatorReason = "not_evaluated";
+   plan.nearMissSeparatorComponent = "none";
+   plan.m5InvalidationCloseLocation = 0.0;
+   plan.m5InvalidationWickRatio = 0.0;
+   plan.m5InvalidationQualityBucket = "none";
+   plan.noImmediateFailurePass = false;
+   plan.closeBackInsideWithin1Bar = false;
+   plan.closeBackInsideWithin2Bars = false;
+   plan.maxAdverseReturnAtrAfterBreak = 0.0;
+   plan.postBreakHoldBucket = "none";
+   plan.retestDetectedAfterInvalidation = false;
+   plan.retestCloseSide = "none";
+   plan.retestRejectionWickRatio = 0.0;
+   plan.retestNextBarConfirmation = false;
+   plan.retestQualityBucket = "none";
+   plan.m5CorrectiveLastLegAtr = 0.0;
+   plan.m5CorrectivePrevLegAtr = 0.0;
+   plan.m5CorrectiveLegShrinkRatio = 0.0;
+   plan.m5CorrectiveNewExtremeAtr = 0.0;
+   plan.m5CorrectiveFailedExtreme = false;
+   plan.m5CorrectiveExhaustionBucket = "none";
+   plan.m15Wave2CompletionScore = 0.0;
+   plan.m15Wave2DepthBucket = "none";
+   plan.m15Wave2DurationBucket = "none";
+   plan.m15Wave2InvalidatedWave1 = false;
+   plan.m15Wave2EndNearFibZone = false;
+   plan.m15Wave2CompletionQualityBucket = "none";
+   plan.nearestM15ObstacleDistanceR = 0.0;
+   plan.nearestH1ObstacleDistanceR = 0.0;
+   plan.nearestSessionObstacleDistanceR = 0.0;
+   plan.targetRoomMinR = 0.0;
+   plan.targetRoomBucket = "none";
+   plan.cleanPathTo1R = false;
+   plan.cleanPathTo13R = false;
+   plan.sma75Slope = 0.0;
+   plan.shortMaSma75DistanceAtr = 0.0;
+   plan.maConvergenceBeforeEntry = false;
+   plan.maExpansionAfterReclaimPreEntry = false;
+   plan.priceReclaimedSma75BarsAgo = -1;
+   plan.sma75GranvilleQualityBucket = "none";
    plan.sma75State = "none";
    plan.sma75Reclaim = false;
    plan.sma75GranvilleScore = 0.0;
@@ -5255,6 +5907,9 @@ bool BuildSessionReversalSignal(const string symbol, const SessionInfo &session,
    EvaluateTargetPathObstacles(plan, scan);
    ApplyStructureTarget(plan, direction);
 
+   if(!ApplyNearMissSeparatorGate(plan, direction))
+      return false;
+
    if(plan.entryTrigger == "neckline_break_retest")
       plan.failureType = "neckline_retest_failed";
    else if(StringFind(plan.entryTrigger, "choch") >= 0)
@@ -5304,6 +5959,14 @@ string SignalHeaderLine()
           "m5_corrective_last_lh_level,m5_corrective_last_hl_level,m5_corrective_invalidation_level,m5_corrective_invalidation," +
           "m5_invalidation_detected,m5_invalidation_type,m5_invalidation_level,m5_invalidation_close_break,m5_invalidation_break_atr,m5_invalidation_body_atr," +
           "post_break_acceptance_pass,post_break_acceptance_bars,post_break_return_atr,first_retest_after_invalidation,bars_from_invalidation_to_entry,retest_level,retest_distance_atr," +
+          "near_miss_separator_mode,near_miss_separator_pass,near_miss_separator_reason,near_miss_separator_component," +
+          "m5_invalidation_close_location,m5_invalidation_wick_ratio,m5_invalidation_quality_bucket," +
+          "no_immediate_failure_pass,close_back_inside_within_1bar,close_back_inside_within_2bars,max_adverse_return_atr_after_break,post_break_hold_bucket," +
+          "retest_detected_after_invalidation,retest_close_side,retest_rejection_wick_ratio,retest_next_bar_confirmation,retest_quality_bucket," +
+          "m5_corrective_last_leg_atr,m5_corrective_prev_leg_atr,m5_corrective_leg_shrink_ratio,m5_corrective_new_extreme_atr,m5_corrective_failed_extreme,m5_corrective_exhaustion_bucket," +
+          "m15_wave2_completion_score,m15_wave2_depth_bucket,m15_wave2_duration_bucket,m15_wave2_invalidated_wave1,m15_wave2_end_near_fib_zone,m15_wave2_completion_quality_bucket," +
+          "nearest_m15_obstacle_distance_r,nearest_h1_obstacle_distance_r,nearest_session_obstacle_distance_r,target_room_min_r,target_room_bucket,clean_path_to_1r,clean_path_to_1_3r," +
+          "sma75_slope,short_ma_sma75_distance_atr,ma_convergence_before_entry,ma_expansion_after_reclaim_pre_entry,price_reclaimed_sma75_bars_ago,sma75_granville_quality_bucket," +
           "sma75_state,sma75_reclaim,sma75_granville_score,nested_score," +
           "htf_nearest_resistance,htf_nearest_support," +
           "nearest_obstacle_price,nearest_obstacle_type,nearest_obstacle_distance_price,nearest_obstacle_distance_r," +
@@ -5471,6 +6134,48 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    CsvAppend(line, IntegerToString(plan.barsFromInvalidationToEntry));
    CsvAppend(line, DoubleToString(plan.retestLevel, 8));
    CsvAppend(line, DoubleToString(plan.retestDistanceAtr, 4));
+   CsvAppend(line, plan.nearMissSeparatorMode);
+   CsvAppend(line, BoolText(plan.nearMissSeparatorPass));
+   CsvAppend(line, plan.nearMissSeparatorReason);
+   CsvAppend(line, plan.nearMissSeparatorComponent);
+   CsvAppend(line, DoubleToString(plan.m5InvalidationCloseLocation, 4));
+   CsvAppend(line, DoubleToString(plan.m5InvalidationWickRatio, 4));
+   CsvAppend(line, plan.m5InvalidationQualityBucket);
+   CsvAppend(line, BoolText(plan.noImmediateFailurePass));
+   CsvAppend(line, BoolText(plan.closeBackInsideWithin1Bar));
+   CsvAppend(line, BoolText(plan.closeBackInsideWithin2Bars));
+   CsvAppend(line, DoubleToString(plan.maxAdverseReturnAtrAfterBreak, 4));
+   CsvAppend(line, plan.postBreakHoldBucket);
+   CsvAppend(line, BoolText(plan.retestDetectedAfterInvalidation));
+   CsvAppend(line, plan.retestCloseSide);
+   CsvAppend(line, DoubleToString(plan.retestRejectionWickRatio, 4));
+   CsvAppend(line, BoolText(plan.retestNextBarConfirmation));
+   CsvAppend(line, plan.retestQualityBucket);
+   CsvAppend(line, DoubleToString(plan.m5CorrectiveLastLegAtr, 4));
+   CsvAppend(line, DoubleToString(plan.m5CorrectivePrevLegAtr, 4));
+   CsvAppend(line, DoubleToString(plan.m5CorrectiveLegShrinkRatio, 4));
+   CsvAppend(line, DoubleToString(plan.m5CorrectiveNewExtremeAtr, 4));
+   CsvAppend(line, BoolText(plan.m5CorrectiveFailedExtreme));
+   CsvAppend(line, plan.m5CorrectiveExhaustionBucket);
+   CsvAppend(line, DoubleToString(plan.m15Wave2CompletionScore, 4));
+   CsvAppend(line, plan.m15Wave2DepthBucket);
+   CsvAppend(line, plan.m15Wave2DurationBucket);
+   CsvAppend(line, BoolText(plan.m15Wave2InvalidatedWave1));
+   CsvAppend(line, BoolText(plan.m15Wave2EndNearFibZone));
+   CsvAppend(line, plan.m15Wave2CompletionQualityBucket);
+   CsvAppend(line, DoubleToString(plan.nearestM15ObstacleDistanceR, 4));
+   CsvAppend(line, DoubleToString(plan.nearestH1ObstacleDistanceR, 4));
+   CsvAppend(line, DoubleToString(plan.nearestSessionObstacleDistanceR, 4));
+   CsvAppend(line, DoubleToString(plan.targetRoomMinR, 4));
+   CsvAppend(line, plan.targetRoomBucket);
+   CsvAppend(line, BoolText(plan.cleanPathTo1R));
+   CsvAppend(line, BoolText(plan.cleanPathTo13R));
+   CsvAppend(line, DoubleToString(plan.sma75Slope, 4));
+   CsvAppend(line, DoubleToString(plan.shortMaSma75DistanceAtr, 4));
+   CsvAppend(line, BoolText(plan.maConvergenceBeforeEntry));
+   CsvAppend(line, BoolText(plan.maExpansionAfterReclaimPreEntry));
+   CsvAppend(line, IntegerToString(plan.priceReclaimedSma75BarsAgo));
+   CsvAppend(line, plan.sma75GranvilleQualityBucket);
    CsvAppend(line, plan.sma75State);
    CsvAppend(line, BoolText(plan.sma75Reclaim));
    CsvAppend(line, DoubleToString(plan.sma75GranvilleScore, 3));
@@ -5626,6 +6331,14 @@ string TradeHeaderLine()
           "m5_corrective_last_lh_level,m5_corrective_last_hl_level,m5_corrective_invalidation_level,m5_corrective_invalidation," +
           "m5_invalidation_detected,m5_invalidation_type,m5_invalidation_level,m5_invalidation_close_break,m5_invalidation_break_atr,m5_invalidation_body_atr," +
           "post_break_acceptance_pass,post_break_acceptance_bars,post_break_return_atr,first_retest_after_invalidation,bars_from_invalidation_to_entry,retest_level,retest_distance_atr," +
+          "near_miss_separator_mode,near_miss_separator_pass,near_miss_separator_reason,near_miss_separator_component," +
+          "m5_invalidation_close_location,m5_invalidation_wick_ratio,m5_invalidation_quality_bucket," +
+          "no_immediate_failure_pass,close_back_inside_within_1bar,close_back_inside_within_2bars,max_adverse_return_atr_after_break,post_break_hold_bucket," +
+          "retest_detected_after_invalidation,retest_close_side,retest_rejection_wick_ratio,retest_next_bar_confirmation,retest_quality_bucket," +
+          "m5_corrective_last_leg_atr,m5_corrective_prev_leg_atr,m5_corrective_leg_shrink_ratio,m5_corrective_new_extreme_atr,m5_corrective_failed_extreme,m5_corrective_exhaustion_bucket," +
+          "m15_wave2_completion_score,m15_wave2_depth_bucket,m15_wave2_duration_bucket,m15_wave2_invalidated_wave1,m15_wave2_end_near_fib_zone,m15_wave2_completion_quality_bucket," +
+          "nearest_m15_obstacle_distance_r,nearest_h1_obstacle_distance_r,nearest_session_obstacle_distance_r,target_room_min_r,target_room_bucket,clean_path_to_1r,clean_path_to_1_3r," +
+          "sma75_slope,short_ma_sma75_distance_atr,ma_convergence_before_entry,ma_expansion_after_reclaim_pre_entry,price_reclaimed_sma75_bars_ago,sma75_granville_quality_bucket," +
           "sma75_state,sma75_reclaim,sma75_granville_score,nested_score," +
           "htf_nearest_resistance,htf_nearest_support," +
           "nearest_obstacle_price,nearest_obstacle_type,nearest_obstacle_distance_r,retest_reference_type,retest_reference_price,retest_reference_distance_atr," +
@@ -5830,6 +6543,48 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, IntegerToString(tracked.barsFromInvalidationToEntry));
    CsvAppend(line, DoubleToString(tracked.retestLevel, 8));
    CsvAppend(line, DoubleToString(tracked.retestDistanceAtr, 4));
+   CsvAppend(line, tracked.nearMissSeparatorMode);
+   CsvAppend(line, BoolText(tracked.nearMissSeparatorPass));
+   CsvAppend(line, tracked.nearMissSeparatorReason);
+   CsvAppend(line, tracked.nearMissSeparatorComponent);
+   CsvAppend(line, DoubleToString(tracked.m5InvalidationCloseLocation, 4));
+   CsvAppend(line, DoubleToString(tracked.m5InvalidationWickRatio, 4));
+   CsvAppend(line, tracked.m5InvalidationQualityBucket);
+   CsvAppend(line, BoolText(tracked.noImmediateFailurePass));
+   CsvAppend(line, BoolText(tracked.closeBackInsideWithin1Bar));
+   CsvAppend(line, BoolText(tracked.closeBackInsideWithin2Bars));
+   CsvAppend(line, DoubleToString(tracked.maxAdverseReturnAtrAfterBreak, 4));
+   CsvAppend(line, tracked.postBreakHoldBucket);
+   CsvAppend(line, BoolText(tracked.retestDetectedAfterInvalidation));
+   CsvAppend(line, tracked.retestCloseSide);
+   CsvAppend(line, DoubleToString(tracked.retestRejectionWickRatio, 4));
+   CsvAppend(line, BoolText(tracked.retestNextBarConfirmation));
+   CsvAppend(line, tracked.retestQualityBucket);
+   CsvAppend(line, DoubleToString(tracked.m5CorrectiveLastLegAtr, 4));
+   CsvAppend(line, DoubleToString(tracked.m5CorrectivePrevLegAtr, 4));
+   CsvAppend(line, DoubleToString(tracked.m5CorrectiveLegShrinkRatio, 4));
+   CsvAppend(line, DoubleToString(tracked.m5CorrectiveNewExtremeAtr, 4));
+   CsvAppend(line, BoolText(tracked.m5CorrectiveFailedExtreme));
+   CsvAppend(line, tracked.m5CorrectiveExhaustionBucket);
+   CsvAppend(line, DoubleToString(tracked.m15Wave2CompletionScore, 4));
+   CsvAppend(line, tracked.m15Wave2DepthBucket);
+   CsvAppend(line, tracked.m15Wave2DurationBucket);
+   CsvAppend(line, BoolText(tracked.m15Wave2InvalidatedWave1));
+   CsvAppend(line, BoolText(tracked.m15Wave2EndNearFibZone));
+   CsvAppend(line, tracked.m15Wave2CompletionQualityBucket);
+   CsvAppend(line, DoubleToString(tracked.nearestM15ObstacleDistanceR, 4));
+   CsvAppend(line, DoubleToString(tracked.nearestH1ObstacleDistanceR, 4));
+   CsvAppend(line, DoubleToString(tracked.nearestSessionObstacleDistanceR, 4));
+   CsvAppend(line, DoubleToString(tracked.targetRoomMinR, 4));
+   CsvAppend(line, tracked.targetRoomBucket);
+   CsvAppend(line, BoolText(tracked.cleanPathTo1R));
+   CsvAppend(line, BoolText(tracked.cleanPathTo13R));
+   CsvAppend(line, DoubleToString(tracked.sma75Slope, 4));
+   CsvAppend(line, DoubleToString(tracked.shortMaSma75DistanceAtr, 4));
+   CsvAppend(line, BoolText(tracked.maConvergenceBeforeEntry));
+   CsvAppend(line, BoolText(tracked.maExpansionAfterReclaimPreEntry));
+   CsvAppend(line, IntegerToString(tracked.priceReclaimedSma75BarsAgo));
+   CsvAppend(line, tracked.sma75GranvilleQualityBucket);
    CsvAppend(line, tracked.sma75State);
    CsvAppend(line, BoolText(tracked.sma75Reclaim));
    CsvAppend(line, DoubleToString(tracked.sma75GranvilleScore, 3));
@@ -6613,6 +7368,48 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].barsFromInvalidationToEntry = plan.barsFromInvalidationToEntry;
    g_trades[size].retestLevel = plan.retestLevel;
    g_trades[size].retestDistanceAtr = plan.retestDistanceAtr;
+   g_trades[size].nearMissSeparatorMode = plan.nearMissSeparatorMode;
+   g_trades[size].nearMissSeparatorPass = plan.nearMissSeparatorPass;
+   g_trades[size].nearMissSeparatorReason = plan.nearMissSeparatorReason;
+   g_trades[size].nearMissSeparatorComponent = plan.nearMissSeparatorComponent;
+   g_trades[size].m5InvalidationCloseLocation = plan.m5InvalidationCloseLocation;
+   g_trades[size].m5InvalidationWickRatio = plan.m5InvalidationWickRatio;
+   g_trades[size].m5InvalidationQualityBucket = plan.m5InvalidationQualityBucket;
+   g_trades[size].noImmediateFailurePass = plan.noImmediateFailurePass;
+   g_trades[size].closeBackInsideWithin1Bar = plan.closeBackInsideWithin1Bar;
+   g_trades[size].closeBackInsideWithin2Bars = plan.closeBackInsideWithin2Bars;
+   g_trades[size].maxAdverseReturnAtrAfterBreak = plan.maxAdverseReturnAtrAfterBreak;
+   g_trades[size].postBreakHoldBucket = plan.postBreakHoldBucket;
+   g_trades[size].retestDetectedAfterInvalidation = plan.retestDetectedAfterInvalidation;
+   g_trades[size].retestCloseSide = plan.retestCloseSide;
+   g_trades[size].retestRejectionWickRatio = plan.retestRejectionWickRatio;
+   g_trades[size].retestNextBarConfirmation = plan.retestNextBarConfirmation;
+   g_trades[size].retestQualityBucket = plan.retestQualityBucket;
+   g_trades[size].m5CorrectiveLastLegAtr = plan.m5CorrectiveLastLegAtr;
+   g_trades[size].m5CorrectivePrevLegAtr = plan.m5CorrectivePrevLegAtr;
+   g_trades[size].m5CorrectiveLegShrinkRatio = plan.m5CorrectiveLegShrinkRatio;
+   g_trades[size].m5CorrectiveNewExtremeAtr = plan.m5CorrectiveNewExtremeAtr;
+   g_trades[size].m5CorrectiveFailedExtreme = plan.m5CorrectiveFailedExtreme;
+   g_trades[size].m5CorrectiveExhaustionBucket = plan.m5CorrectiveExhaustionBucket;
+   g_trades[size].m15Wave2CompletionScore = plan.m15Wave2CompletionScore;
+   g_trades[size].m15Wave2DepthBucket = plan.m15Wave2DepthBucket;
+   g_trades[size].m15Wave2DurationBucket = plan.m15Wave2DurationBucket;
+   g_trades[size].m15Wave2InvalidatedWave1 = plan.m15Wave2InvalidatedWave1;
+   g_trades[size].m15Wave2EndNearFibZone = plan.m15Wave2EndNearFibZone;
+   g_trades[size].m15Wave2CompletionQualityBucket = plan.m15Wave2CompletionQualityBucket;
+   g_trades[size].nearestM15ObstacleDistanceR = plan.nearestM15ObstacleDistanceR;
+   g_trades[size].nearestH1ObstacleDistanceR = plan.nearestH1ObstacleDistanceR;
+   g_trades[size].nearestSessionObstacleDistanceR = plan.nearestSessionObstacleDistanceR;
+   g_trades[size].targetRoomMinR = plan.targetRoomMinR;
+   g_trades[size].targetRoomBucket = plan.targetRoomBucket;
+   g_trades[size].cleanPathTo1R = plan.cleanPathTo1R;
+   g_trades[size].cleanPathTo13R = plan.cleanPathTo13R;
+   g_trades[size].sma75Slope = plan.sma75Slope;
+   g_trades[size].shortMaSma75DistanceAtr = plan.shortMaSma75DistanceAtr;
+   g_trades[size].maConvergenceBeforeEntry = plan.maConvergenceBeforeEntry;
+   g_trades[size].maExpansionAfterReclaimPreEntry = plan.maExpansionAfterReclaimPreEntry;
+   g_trades[size].priceReclaimedSma75BarsAgo = plan.priceReclaimedSma75BarsAgo;
+   g_trades[size].sma75GranvilleQualityBucket = plan.sma75GranvilleQualityBucket;
    g_trades[size].sma75State = plan.sma75State;
    g_trades[size].sma75Reclaim = plan.sma75Reclaim;
    g_trades[size].sma75GranvilleScore = plan.sma75GranvilleScore;
@@ -7014,6 +7811,7 @@ int OnInit()
        InpM15Wave2PreferredMax < InpM15Wave2PreferredMin ||
        InpM15Wave2AdjacentAgeExtraBars < 0 ||
        InpM15Wave2AdjacentCombineMask < 0 ||
+       InpNearMissSeparatorCombineMask < 0 ||
        InpSessionInvalidationATR <= 0.0 ||
       InpMaxHoldBars < 1 ||
       InpRiskPerTradePercent <= 0.0 ||
