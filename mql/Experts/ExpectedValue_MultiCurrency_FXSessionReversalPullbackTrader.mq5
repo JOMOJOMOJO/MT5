@@ -166,6 +166,23 @@ enum ENUM_M15_WAVE1_QUALITY_COMBINE_MODE
    M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_OR_QUALITY_EXHAUSTION = 3
   };
 
+enum ENUM_M15_SWING_ANCHOR_MODE
+  {
+   M15_SWING_ANCHOR_OFF = 0,
+   M15_SWING_ANCHOR_DIAGNOSTIC_ONLY = 1,
+   M15_SWING_ANCHOR_SCORE = 2,
+   M15_SWING_ANCHOR_REQUIRED_BIAS = 3,
+   M15_SWING_ANCHOR_REQUIRED_REVERSAL_CONFIRMED = 4,
+   M15_SWING_ANCHOR_REQUIRED_BIAS_OR_REQUIRED_LIGHT = 5
+  };
+
+enum ENUM_M15_ANCHOR_RANGE_MODE
+  {
+   M15_ANCHOR_RANGE_ALLOW = 0,
+   M15_ANCHOR_RANGE_BLOCK = 1,
+   M15_ANCHOR_RANGE_REQUIRED_LIGHT_ONLY = 2
+  };
+
 enum ENUM_EXIT_MODE
   {
    EXIT_FIXED_TP_SL = 0,
@@ -311,6 +328,38 @@ struct SignalPlan
    bool              m15Wave1QualityHigh;
    bool              m15Wave1QualityGatePass;
    string            m15Wave1QualityRejectReason;
+   bool              m15AnchorBiasEnabled;
+   string            m15AnchorMode;
+   string            m15AnchorBiasState;
+   double            m15ActiveOshiyasuPrice;
+   datetime          m15ActiveOshiyasuTime;
+   double            m15ActiveModoritakanePrice;
+   datetime          m15ActiveModoritakaneTime;
+   datetime          m15AnchorLastUpdateTime;
+   bool              m15AnchorBreakDetected;
+   string            m15AnchorBreakDirection;
+   double            m15AnchorBreakLevel;
+   double            m15AnchorBreakClose;
+   double            m15AnchorBreakAtr;
+   int               m15AnchorBreakAgeBars;
+   bool              m15BiasFlipDetected;
+   string            m15BiasFlipDirection;
+   int               m15BiasFlipAgeBars;
+   bool              m15BiasAlignedWithEntry;
+   bool              m15BiasOppositeToEntry;
+   bool              m15BiasNeutral;
+   bool              m15AnchorGatePass;
+   string            m15AnchorGateRejectReason;
+   string            m15NState;
+   bool              m15RangeDetected;
+   double            m15RangeHigh;
+   double            m15RangeLow;
+   double            m15RangeWidthAtr;
+   bool              anchorBreakCloseBeyond;
+   double            anchorBreakBodyAtr;
+   double            anchorBreakWickRatio;
+   int               anchorBreakFollowthroughBars;
+   string            anchorBreakQualityBucket;
    bool              m15Wave2Candidate;
    double            m15Wave2RetraceRatio;
    string            m15Wave2FibZone;
@@ -591,6 +640,38 @@ struct TrackedTrade
    bool              m15Wave1QualityHigh;
    bool              m15Wave1QualityGatePass;
    string            m15Wave1QualityRejectReason;
+   bool              m15AnchorBiasEnabled;
+   string            m15AnchorMode;
+   string            m15AnchorBiasState;
+   double            m15ActiveOshiyasuPrice;
+   datetime          m15ActiveOshiyasuTime;
+   double            m15ActiveModoritakanePrice;
+   datetime          m15ActiveModoritakaneTime;
+   datetime          m15AnchorLastUpdateTime;
+   bool              m15AnchorBreakDetected;
+   string            m15AnchorBreakDirection;
+   double            m15AnchorBreakLevel;
+   double            m15AnchorBreakClose;
+   double            m15AnchorBreakAtr;
+   int               m15AnchorBreakAgeBars;
+   bool              m15BiasFlipDetected;
+   string            m15BiasFlipDirection;
+   int               m15BiasFlipAgeBars;
+   bool              m15BiasAlignedWithEntry;
+   bool              m15BiasOppositeToEntry;
+   bool              m15BiasNeutral;
+   bool              m15AnchorGatePass;
+   string            m15AnchorGateRejectReason;
+   string            m15NState;
+   bool              m15RangeDetected;
+   double            m15RangeHigh;
+   double            m15RangeLow;
+   double            m15RangeWidthAtr;
+   bool              anchorBreakCloseBeyond;
+   double            anchorBreakBodyAtr;
+   double            anchorBreakWickRatio;
+   int               anchorBreakFollowthroughBars;
+   string            anchorBreakQualityBucket;
    bool              m15Wave2Candidate;
    double            m15Wave2RetraceRatio;
    string            m15Wave2FibZone;
@@ -909,6 +990,17 @@ input double          InpM15Wave1MaxOverlapRatio      = 0.60;
 input int             InpM15Wave1MaxAgeBars           = 24;
 input bool            InpM15Wave1RequireStructureBreak = false;
 input bool            InpM15Wave1RequireCloseBeyondBreak = false;
+input bool            InpUseM15SwingAnchorBias        = false;
+input ENUM_M15_SWING_ANCHOR_MODE InpM15SwingAnchorMode = M15_SWING_ANCHOR_OFF;
+input bool            InpM15AnchorBreakUseClose       = true;
+input double          InpM15AnchorBreakMinAtr         = 0.05;
+input int             InpM15AnchorLookbackBars        = 96;
+input int             InpM15AnchorMinSwingStrength    = 2;
+input bool            InpM15RequirePullbackAfterBiasFlip = false;
+input int             InpM15BiasFlipMaxAgeBars        = 24;
+input bool            InpM15AnchorFlipRequireHighMediumM5Pattern = false;
+input bool            InpM15AnchorFlipRequireCorrectiveExhaustion = false;
+input ENUM_M15_ANCHOR_RANGE_MODE InpM15AnchorRangeMode = M15_ANCHOR_RANGE_ALLOW;
 input ENUM_EXIT_MODE  InpExitMode                      = EXIT_M5_FAILURE;
 input ENUM_STRUCTURE_TARGET_MODE InpStructureTargetMode = STRUCTURE_TARGET_OFF;
 input double          InpSessionInvalidationATR        = 0.85;
@@ -1270,6 +1362,30 @@ string M15Wave1QualityCombineModeName()
    return "independent";
   }
 
+string M15SwingAnchorModeName()
+  {
+   if(InpM15SwingAnchorMode == M15_SWING_ANCHOR_DIAGNOSTIC_ONLY)
+      return "diagnostic_only";
+   if(InpM15SwingAnchorMode == M15_SWING_ANCHOR_SCORE)
+      return "score";
+   if(InpM15SwingAnchorMode == M15_SWING_ANCHOR_REQUIRED_BIAS)
+      return "required_bias";
+   if(InpM15SwingAnchorMode == M15_SWING_ANCHOR_REQUIRED_REVERSAL_CONFIRMED)
+      return "required_reversal_confirmed";
+   if(InpM15SwingAnchorMode == M15_SWING_ANCHOR_REQUIRED_BIAS_OR_REQUIRED_LIGHT)
+      return "required_light_or_anchor_flip";
+   return "off";
+  }
+
+string M15AnchorRangeModeName()
+  {
+   if(InpM15AnchorRangeMode == M15_ANCHOR_RANGE_BLOCK)
+      return "range_block";
+   if(InpM15AnchorRangeMode == M15_ANCHOR_RANGE_REQUIRED_LIGHT_ONLY)
+      return "range_required_light_only";
+   return "range_allow";
+  }
+
 string ExitModeName()
   {
    if(InpExitMode == EXIT_FIXED_TP_SL)
@@ -1298,7 +1414,8 @@ bool UsesM5CorrectiveABC()
           InpM5CorrectiveMode != M5_CORRECTIVE_OFF ||
           UsesNearMissSeparator() ||
           (InpUseM15Wave1Quality &&
-           InpM15Wave1QualityCombineMode == M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_OR_QUALITY_EXHAUSTION);
+           InpM15Wave1QualityCombineMode == M15_WAVE1_QUALITY_COMBINE_REQUIRED_LIGHT_OR_QUALITY_EXHAUSTION) ||
+          (UsesM15SwingAnchorBias() && InpM15AnchorFlipRequireCorrectiveExhaustion);
   }
 
 bool UsesNearMissSeparator()
@@ -1311,6 +1428,12 @@ bool UsesM15Wave1Quality()
    return InpUseM15Wave1Quality || InpM15Wave1QualityMode != M15_WAVE1_QUALITY_OFF;
   }
 
+bool UsesM15SwingAnchorBias()
+  {
+   return InpUseM15SwingAnchorBias || InpM15SwingAnchorMode != M15_SWING_ANCHOR_OFF ||
+          InpM15AnchorRangeMode != M15_ANCHOR_RANGE_ALLOW;
+  }
+
 bool UsesM15WaveContext()
   {
    return InpM15WaveContextMode != M15_WAVE_CONTEXT_OFF ||
@@ -1318,7 +1441,8 @@ bool UsesM15WaveContext()
           InpM15Wave2GateMode != M15_WAVE2_GATE_NO_GATE ||
           InpM15Wave2AdjacentMode != M15_WAVE2_ADJACENT_OFF ||
           UsesNearMissSeparator() ||
-          UsesM15Wave1Quality();
+          UsesM15Wave1Quality() ||
+          UsesM15SwingAnchorBias();
   }
 
 string M5PatternQualityGroup(const string pattern)
@@ -3168,6 +3292,388 @@ bool DetectRefinedM15WaveContext(SignalPlan &plan, const int entryDirection)
       return false;
      }
 
+   DetectM15SwingAnchorBias(plan, entryDirection);
+   return true;
+  }
+
+string M15NStateFromPivots(const DowPivot &pivots[], const double atr)
+  {
+   double latestHigh = 0.0;
+   double previousHigh = 0.0;
+   double latestLow = 0.0;
+   double previousLow = 0.0;
+   datetime latestHighTime = 0;
+   datetime previousHighTime = 0;
+   datetime latestLowTime = 0;
+   datetime previousLowTime = 0;
+   bool highs = LastTwoDowPivotsOfKind(pivots, 1, latestHigh, previousHigh, latestHighTime, previousHighTime);
+   bool lows = LastTwoDowPivotsOfKind(pivots, -1, latestLow, previousLow, latestLowTime, previousLowTime);
+   if(!highs || !lows || atr <= 0.0)
+      return "unknown";
+
+   double tolerance = atr * MathMax(0.0, InpDowStructureToleranceATR);
+   bool higherHigh = latestHigh > previousHigh + tolerance;
+   bool higherLow = latestLow > previousLow - tolerance;
+   bool lowerHigh = latestHigh < previousHigh + tolerance;
+   bool lowerLow = latestLow < previousLow - tolerance;
+   if(higherHigh && higherLow)
+      return "rising_n";
+   if(lowerHigh && lowerLow)
+      return "falling_n";
+   return "range_n";
+  }
+
+string AnchorBreakQualityBucket(const double breakAtr,
+                                const double bodyAtr,
+                                const int followthroughBars)
+  {
+   if(breakAtr >= 0.20 && bodyAtr >= 0.30 && followthroughBars >= 1)
+      return "strong";
+   if(breakAtr >= 0.05 && bodyAtr >= 0.10)
+      return "normal";
+   return "weak";
+  }
+
+bool FindM15AnchorBreak(const MqlRates &rates[],
+                        const double atr,
+                        const datetime anchorEventTime,
+                        const double level,
+                        const int breakDirection,
+                        int &breakShift,
+                        double &breakClose,
+                        double &breakAtr,
+                        double &bodyAtr,
+                        double &wickRatio,
+                        int &followthroughBars)
+  {
+   breakShift = -1;
+   breakClose = 0.0;
+   breakAtr = 0.0;
+   bodyAtr = 0.0;
+   wickRatio = 0.0;
+   followthroughBars = 0;
+   if(level <= 0.0 || atr <= 0.0 || breakDirection == 0)
+      return false;
+
+   double minBreak = atr * MathMax(0.0, InpM15AnchorBreakMinAtr);
+   int maxShift = ArraySize(rates) - 1;
+   for(int shift = 0; shift <= maxShift; ++shift)
+     {
+      if(rates[shift].time <= anchorEventTime)
+         continue;
+      double testPrice = InpM15AnchorBreakUseClose ? rates[shift].close :
+                         (breakDirection > 0 ? rates[shift].high : rates[shift].low);
+      bool broke = breakDirection > 0 ? testPrice > level + minBreak :
+                                        testPrice < level - minBreak;
+      if(!broke)
+         continue;
+
+      breakShift = shift;
+      breakClose = rates[shift].close;
+      breakAtr = breakDirection > 0 ? (testPrice - level) / atr : (level - testPrice) / atr;
+      bodyAtr = MathAbs(rates[shift].close - rates[shift].open) / atr;
+      double totalRange = MathMax(rates[shift].high - rates[shift].low, _Point);
+      double body = MathAbs(rates[shift].close - rates[shift].open);
+      wickRatio = ClampDouble((totalRange - body) / totalRange, 0.0, 1.0);
+
+      for(int next = shift - 1; next >= 0; --next)
+        {
+         bool held = breakDirection > 0 ? rates[next].close > level : rates[next].close < level;
+         if(!held)
+            break;
+         ++followthroughBars;
+        }
+      return true;
+     }
+   return false;
+  }
+
+void EvaluateM15RangeDiagnostics(SignalPlan &plan, const DowPivot &pivots[], const double atr)
+  {
+   plan.m15NState = M15NStateFromPivots(pivots, atr);
+   plan.m15RangeDetected = plan.m15NState == "range_n";
+   plan.m15RangeHigh = 0.0;
+   plan.m15RangeLow = 0.0;
+   plan.m15RangeWidthAtr = 0.0;
+   if(atr <= 0.0 || ArraySize(pivots) < 2)
+      return;
+
+   int inspected = 0;
+   for(int i = ArraySize(pivots) - 1; i >= 0 && inspected < 6; --i, ++inspected)
+     {
+      if(plan.m15RangeHigh <= 0.0 || pivots[i].price > plan.m15RangeHigh)
+         plan.m15RangeHigh = pivots[i].price;
+      if(plan.m15RangeLow <= 0.0 || pivots[i].price < plan.m15RangeLow)
+         plan.m15RangeLow = pivots[i].price;
+     }
+   if(plan.m15RangeHigh > plan.m15RangeLow)
+      plan.m15RangeWidthAtr = (plan.m15RangeHigh - plan.m15RangeLow) / atr;
+  }
+
+bool DetectM15SwingAnchorBias(SignalPlan &plan, const int entryDirection)
+  {
+   plan.m15AnchorBiasEnabled = UsesM15SwingAnchorBias();
+   plan.m15AnchorMode = M15SwingAnchorModeName();
+   if(!UsesM15SwingAnchorBias())
+      return true;
+
+   DowPivot pivots[];
+   double atr = 0.0;
+   string state = "";
+   int depth = MathMax(1, InpM15AnchorMinSwingStrength);
+   if(!CollectOrderedDowPivots(plan.symbol, InpStructureTF, depth, InpM15AnchorLookbackBars, pivots, atr, state))
+     {
+      plan.m15AnchorBiasState = "unknown";
+      plan.m15NState = "unknown";
+      plan.m15AnchorGatePass = false;
+      plan.m15AnchorGateRejectReason = state;
+      return true;
+     }
+
+   EvaluateM15RangeDiagnostics(plan, pivots, atr);
+
+   double breakBuffer = atr * MathMax(0.0, InpM15AnchorBreakMinAtr);
+   double lastHigh = 0.0;
+   double lastLow = 0.0;
+   datetime lastHighTime = 0;
+   datetime lastLowTime = 0;
+   double latestOshiyasu = 0.0;
+   datetime latestOshiyasuTime = 0;
+   datetime latestLongEventTime = 0;
+   double latestModoritakane = 0.0;
+   datetime latestModoritakaneTime = 0;
+   datetime latestShortEventTime = 0;
+
+   for(int i = 0; i < ArraySize(pivots); ++i)
+     {
+      DowPivot pivot = pivots[i];
+      if(pivot.kind > 0)
+        {
+         if(lastHigh > 0.0 && pivot.price > lastHigh + breakBuffer && lastLow > 0.0)
+           {
+            latestOshiyasu = lastLow;
+            latestOshiyasuTime = lastLowTime;
+            latestLongEventTime = pivot.time;
+           }
+         lastHigh = pivot.price;
+         lastHighTime = pivot.time;
+        }
+      else if(pivot.kind < 0)
+        {
+         if(lastLow > 0.0 && pivot.price < lastLow - breakBuffer && lastHigh > 0.0)
+           {
+            latestModoritakane = lastHigh;
+            latestModoritakaneTime = lastHighTime;
+            latestShortEventTime = pivot.time;
+           }
+         lastLow = pivot.price;
+         lastLowTime = pivot.time;
+        }
+     }
+
+   plan.m15ActiveOshiyasuPrice = latestOshiyasu;
+   plan.m15ActiveOshiyasuTime = latestOshiyasuTime;
+   plan.m15ActiveModoritakanePrice = latestModoritakane;
+   plan.m15ActiveModoritakaneTime = latestModoritakaneTime;
+   plan.m15AnchorLastUpdateTime = MathMax(latestLongEventTime, latestShortEventTime);
+   if(plan.m15AnchorLastUpdateTime <= 0)
+     {
+      plan.m15AnchorBiasState = plan.m15RangeDetected ? "range" : "unknown";
+      plan.m15BiasNeutral = true;
+      return true;
+     }
+
+   MqlRates rates[];
+   int bars = MathMax(InpM15AnchorLookbackBars + depth + 8, InpATRPeriod + depth * 2 + 12);
+   if(!CopyClosedRates(plan.symbol, InpStructureTF, bars, rates))
+     {
+      plan.m15AnchorBiasState = "unknown";
+      plan.m15BiasNeutral = true;
+      return true;
+     }
+   double localAtr = ATR(rates, 0, InpATRPeriod);
+   if(localAtr <= 0.0)
+      localAtr = atr;
+
+   int breakShift = -1;
+   double breakClose = 0.0;
+   double breakAtr = 0.0;
+   double bodyAtr = 0.0;
+   double wickRatio = 0.0;
+   int followthrough = 0;
+   int activeDirection = 0;
+   double activeLevel = 0.0;
+   datetime activeEventTime = 0;
+
+   if(latestLongEventTime >= latestShortEventTime)
+     {
+      activeDirection = 1;
+      activeLevel = latestOshiyasu;
+      activeEventTime = latestLongEventTime;
+      plan.m15AnchorBiasState = "long_bias";
+      if(FindM15AnchorBreak(rates, localAtr, activeEventTime, activeLevel, -1,
+                            breakShift, breakClose, breakAtr, bodyAtr, wickRatio, followthrough))
+        {
+         plan.m15AnchorBiasState = "bias_flip_down";
+         plan.m15AnchorBreakDirection = "SHORT";
+         plan.m15BiasFlipDirection = "SHORT";
+        }
+     }
+   else
+     {
+      activeDirection = -1;
+      activeLevel = latestModoritakane;
+      activeEventTime = latestShortEventTime;
+      plan.m15AnchorBiasState = "short_bias";
+      if(FindM15AnchorBreak(rates, localAtr, activeEventTime, activeLevel, 1,
+                            breakShift, breakClose, breakAtr, bodyAtr, wickRatio, followthrough))
+        {
+         plan.m15AnchorBiasState = "bias_flip_up";
+         plan.m15AnchorBreakDirection = "LONG";
+         plan.m15BiasFlipDirection = "LONG";
+        }
+     }
+
+   if(breakShift >= 0)
+     {
+      plan.m15AnchorBreakDetected = true;
+      plan.m15AnchorBreakLevel = activeLevel;
+      plan.m15AnchorBreakClose = breakClose;
+      plan.m15AnchorBreakAtr = breakAtr;
+      plan.m15AnchorBreakAgeBars = breakShift;
+      plan.m15BiasFlipDetected = true;
+      plan.m15BiasFlipAgeBars = breakShift;
+      plan.anchorBreakCloseBeyond = true;
+      plan.anchorBreakBodyAtr = bodyAtr;
+      plan.anchorBreakWickRatio = wickRatio;
+      plan.anchorBreakFollowthroughBars = followthrough;
+      plan.anchorBreakQualityBucket = AnchorBreakQualityBucket(breakAtr, bodyAtr, followthrough);
+     }
+   else
+     {
+      plan.m15AnchorBreakDirection = "NONE";
+      plan.m15BiasFlipDirection = "NONE";
+     }
+
+   bool longLike = plan.m15AnchorBiasState == "long_bias" || plan.m15AnchorBiasState == "bias_flip_up";
+   bool shortLike = plan.m15AnchorBiasState == "short_bias" || plan.m15AnchorBiasState == "bias_flip_down";
+   plan.m15BiasAlignedWithEntry = (entryDirection > 0 && longLike) || (entryDirection < 0 && shortLike);
+   plan.m15BiasOppositeToEntry = (entryDirection > 0 && shortLike) || (entryDirection < 0 && longLike);
+   plan.m15BiasNeutral = !(plan.m15BiasAlignedWithEntry || plan.m15BiasOppositeToEntry);
+   return true;
+  }
+
+bool AnchorFlipEntryDirection(const SignalPlan &plan, const int entryDirection)
+  {
+   if(!plan.m15BiasFlipDetected)
+      return false;
+   return (entryDirection > 0 && plan.m15BiasFlipDirection == "LONG") ||
+          (entryDirection < 0 && plan.m15BiasFlipDirection == "SHORT");
+  }
+
+bool AnchorFlipQualifiersPass(const SignalPlan &plan, string &rejectReason)
+  {
+   rejectReason = "none";
+   if(InpM15BiasFlipMaxAgeBars > 0 &&
+      (plan.m15BiasFlipAgeBars < 0 || plan.m15BiasFlipAgeBars > InpM15BiasFlipMaxAgeBars))
+     {
+      rejectReason = "anchor_flip_age_failed";
+      return false;
+     }
+   if(InpM15RequirePullbackAfterBiasFlip && plan.m15BiasFlipAgeBars <= 0)
+     {
+      rejectReason = "anchor_flip_no_post_break_pullback";
+      return false;
+     }
+   if(InpM15AnchorFlipRequireHighMediumM5Pattern &&
+      plan.m5PatternQualityGroup != "high_quality" &&
+      plan.m5PatternQualityGroup != "medium_quality")
+     {
+      rejectReason = "anchor_flip_m5_pattern_quality_failed";
+      return false;
+     }
+   if(InpM15AnchorFlipRequireCorrectiveExhaustion &&
+      plan.m5CorrectiveExhaustionBucket != "strong_exhaustion" &&
+      plan.m5CorrectiveExhaustionBucket != "mild_exhaustion")
+     {
+      rejectReason = "anchor_flip_corrective_exhaustion_failed";
+      return false;
+     }
+   return true;
+  }
+
+bool ApplyM15SwingAnchorBiasGate(SignalPlan &plan, const int entryDirection)
+  {
+   if(!UsesM15SwingAnchorBias())
+      return true;
+
+   bool flipEntry = AnchorFlipEntryDirection(plan, entryDirection);
+   string qualifierReject = "none";
+   bool flipQualified = flipEntry && AnchorFlipQualifiersPass(plan, qualifierReject);
+   bool rangeBlocked = false;
+   if(plan.m15RangeDetected && InpM15AnchorRangeMode == M15_ANCHOR_RANGE_BLOCK)
+     {
+      rangeBlocked = true;
+      plan.m15AnchorGateRejectReason = "range_blocked";
+     }
+   else if(plan.m15RangeDetected &&
+           InpM15AnchorRangeMode == M15_ANCHOR_RANGE_REQUIRED_LIGHT_ONLY &&
+           !plan.m15RequiredLightPass)
+     {
+      rangeBlocked = true;
+      plan.m15AnchorGateRejectReason = "range_requires_required_light";
+     }
+
+   if(InpM15SwingAnchorMode == M15_SWING_ANCHOR_SCORE)
+     {
+      double anchorScore = 0.0;
+      if(plan.m15BiasAlignedWithEntry)
+         anchorScore += 0.12;
+      if(flipQualified)
+         anchorScore += 0.18;
+      if(plan.anchorBreakQualityBucket == "strong")
+         anchorScore += 0.08;
+      else if(plan.anchorBreakQualityBucket == "normal")
+         anchorScore += 0.04;
+      if(anchorScore > 0.0)
+        {
+         plan.nestedScore += anchorScore;
+         plan.score += anchorScore;
+        }
+     }
+
+   bool pass = true;
+   string rejectReason = "none";
+   if(rangeBlocked)
+     {
+      pass = false;
+      rejectReason = plan.m15AnchorGateRejectReason;
+     }
+   else if(InpM15SwingAnchorMode == M15_SWING_ANCHOR_REQUIRED_BIAS)
+     {
+      pass = plan.m15BiasAlignedWithEntry &&
+             (plan.m15AnchorBiasState == "long_bias" || plan.m15AnchorBiasState == "short_bias");
+      rejectReason = "anchor_bias_not_aligned";
+     }
+   else if(InpM15SwingAnchorMode == M15_SWING_ANCHOR_REQUIRED_REVERSAL_CONFIRMED)
+     {
+      pass = flipQualified;
+      rejectReason = flipEntry ? qualifierReject : "anchor_flip_not_in_entry_direction";
+     }
+   else if(InpM15SwingAnchorMode == M15_SWING_ANCHOR_REQUIRED_BIAS_OR_REQUIRED_LIGHT)
+     {
+      pass = plan.m15RequiredLightPass || flipQualified;
+      rejectReason = flipEntry ? qualifierReject : "required_light_or_anchor_flip_failed";
+     }
+
+   plan.m15AnchorGatePass = pass;
+   plan.m15AnchorGateRejectReason = pass ? "none" : rejectReason;
+   if(!pass)
+     {
+      plan.reason = plan.m15AnchorGateRejectReason;
+      plan.failureType = "m15_anchor_bias_failed";
+      return false;
+     }
    return true;
   }
 
@@ -4313,6 +4819,8 @@ bool ApplyRefinedWaveContext(SignalPlan &plan, const int entryDirection)
    if(!DetectRefinedM5CorrectiveABC(plan, entryDirection))
       return false;
    if(!DetectRefinedM5Invalidation(plan, entryDirection))
+      return false;
+   if(!ApplyM15SwingAnchorBiasGate(plan, entryDirection))
       return false;
 
    if(!ApplyM15Wave1QualityGate(plan, entryDirection))
@@ -5711,6 +6219,38 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.m15Wave1QualityHigh = false;
    plan.m15Wave1QualityGatePass = true;
    plan.m15Wave1QualityRejectReason = "not_evaluated";
+   plan.m15AnchorBiasEnabled = UsesM15SwingAnchorBias();
+   plan.m15AnchorMode = M15SwingAnchorModeName();
+   plan.m15AnchorBiasState = "unknown";
+   plan.m15ActiveOshiyasuPrice = 0.0;
+   plan.m15ActiveOshiyasuTime = 0;
+   plan.m15ActiveModoritakanePrice = 0.0;
+   plan.m15ActiveModoritakaneTime = 0;
+   plan.m15AnchorLastUpdateTime = 0;
+   plan.m15AnchorBreakDetected = false;
+   plan.m15AnchorBreakDirection = "NONE";
+   plan.m15AnchorBreakLevel = 0.0;
+   plan.m15AnchorBreakClose = 0.0;
+   plan.m15AnchorBreakAtr = 0.0;
+   plan.m15AnchorBreakAgeBars = -1;
+   plan.m15BiasFlipDetected = false;
+   plan.m15BiasFlipDirection = "NONE";
+   plan.m15BiasFlipAgeBars = -1;
+   plan.m15BiasAlignedWithEntry = false;
+   plan.m15BiasOppositeToEntry = false;
+   plan.m15BiasNeutral = true;
+   plan.m15AnchorGatePass = true;
+   plan.m15AnchorGateRejectReason = "not_evaluated";
+   plan.m15NState = "unknown";
+   plan.m15RangeDetected = false;
+   plan.m15RangeHigh = 0.0;
+   plan.m15RangeLow = 0.0;
+   plan.m15RangeWidthAtr = 0.0;
+   plan.anchorBreakCloseBeyond = false;
+   plan.anchorBreakBodyAtr = 0.0;
+   plan.anchorBreakWickRatio = 0.0;
+   plan.anchorBreakFollowthroughBars = 0;
+   plan.anchorBreakQualityBucket = "none";
    plan.m15Wave2Candidate = false;
    plan.m15Wave2RetraceRatio = 0.0;
    plan.m15Wave2FibZone = "none";
@@ -6547,6 +7087,12 @@ string SignalHeaderLine()
           "m15_wave1_consecutive_directional_closes,m15_wave1_large_body_count,m15_wave1_opposite_wick_ratio,m15_wave1_break_quality,m15_wave1_speed_bucket," +
           "m15_wave1_follow_through_bucket,m15_wave1_obstacle_clearance_bucket,m15_wave1_obstacle_distance_r,m15_wave1_duration_bars," +
           "m15_wave1_quality_score,m15_wave1_quality_bucket,m15_wave1_quality_high,m15_wave1_quality_gate_pass,m15_wave1_quality_reject_reason," +
+          "m15_anchor_bias_enabled,m15_anchor_mode,m15_anchor_bias_state,m15_active_oshiyasu_price,m15_active_oshiyasu_time," +
+          "m15_active_modoritakane_price,m15_active_modoritakane_time,m15_anchor_last_update_time,m15_anchor_break_detected,m15_anchor_break_direction," +
+          "m15_anchor_break_level,m15_anchor_break_close,m15_anchor_break_atr,m15_anchor_break_age_bars,m15_bias_flip_detected,m15_bias_flip_direction," +
+          "m15_bias_flip_age_bars,m15_bias_aligned_with_entry,m15_bias_opposite_to_entry,m15_bias_neutral,m15_anchor_gate_pass,m15_anchor_gate_reject_reason," +
+          "m15_n_state,m15_range_detected,m15_range_high,m15_range_low,m15_range_width_atr,anchor_break_close_beyond,anchor_break_body_atr," +
+          "anchor_break_wick_ratio,anchor_break_followthrough_bars,anchor_break_quality_bucket," +
           "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
           "m15_wave2_expansion_mode,m15_wave2_gate_mode,m15_wave2_type,m15_wave2_age_bars,m15_wave2_score,m15_wave2_gate_pass,m15_wave2_gate_reject_reason," +
           "m15_wave_context_score,m5_pattern_quality_group,m15_wave2_required_due_to_pattern_quality,m15_wave2_score_applied," +
@@ -6712,6 +7258,38 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    CsvAppend(line, BoolText(plan.m15Wave1QualityHigh));
    CsvAppend(line, BoolText(plan.m15Wave1QualityGatePass));
    CsvAppend(line, plan.m15Wave1QualityRejectReason);
+   CsvAppend(line, BoolText(plan.m15AnchorBiasEnabled));
+   CsvAppend(line, plan.m15AnchorMode);
+   CsvAppend(line, plan.m15AnchorBiasState);
+   CsvAppend(line, DoubleToString(plan.m15ActiveOshiyasuPrice, 8));
+   CsvAppend(line, plan.m15ActiveOshiyasuTime > 0 ? TimeToString(plan.m15ActiveOshiyasuTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, DoubleToString(plan.m15ActiveModoritakanePrice, 8));
+   CsvAppend(line, plan.m15ActiveModoritakaneTime > 0 ? TimeToString(plan.m15ActiveModoritakaneTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, plan.m15AnchorLastUpdateTime > 0 ? TimeToString(plan.m15AnchorLastUpdateTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, BoolText(plan.m15AnchorBreakDetected));
+   CsvAppend(line, plan.m15AnchorBreakDirection);
+   CsvAppend(line, DoubleToString(plan.m15AnchorBreakLevel, 8));
+   CsvAppend(line, DoubleToString(plan.m15AnchorBreakClose, 8));
+   CsvAppend(line, DoubleToString(plan.m15AnchorBreakAtr, 4));
+   CsvAppend(line, IntegerToString(plan.m15AnchorBreakAgeBars));
+   CsvAppend(line, BoolText(plan.m15BiasFlipDetected));
+   CsvAppend(line, plan.m15BiasFlipDirection);
+   CsvAppend(line, IntegerToString(plan.m15BiasFlipAgeBars));
+   CsvAppend(line, BoolText(plan.m15BiasAlignedWithEntry));
+   CsvAppend(line, BoolText(plan.m15BiasOppositeToEntry));
+   CsvAppend(line, BoolText(plan.m15BiasNeutral));
+   CsvAppend(line, BoolText(plan.m15AnchorGatePass));
+   CsvAppend(line, plan.m15AnchorGateRejectReason);
+   CsvAppend(line, plan.m15NState);
+   CsvAppend(line, BoolText(plan.m15RangeDetected));
+   CsvAppend(line, DoubleToString(plan.m15RangeHigh, 8));
+   CsvAppend(line, DoubleToString(plan.m15RangeLow, 8));
+   CsvAppend(line, DoubleToString(plan.m15RangeWidthAtr, 4));
+   CsvAppend(line, BoolText(plan.anchorBreakCloseBeyond));
+   CsvAppend(line, DoubleToString(plan.anchorBreakBodyAtr, 4));
+   CsvAppend(line, DoubleToString(plan.anchorBreakWickRatio, 4));
+   CsvAppend(line, IntegerToString(plan.anchorBreakFollowthroughBars));
+   CsvAppend(line, plan.anchorBreakQualityBucket);
    CsvAppend(line, BoolText(plan.m15Wave2Candidate));
    CsvAppend(line, DoubleToString(plan.m15Wave2RetraceRatio, 4));
    CsvAppend(line, plan.m15Wave2FibZone);
@@ -6956,6 +7534,12 @@ string TradeHeaderLine()
           "m15_wave1_consecutive_directional_closes,m15_wave1_large_body_count,m15_wave1_opposite_wick_ratio,m15_wave1_break_quality,m15_wave1_speed_bucket," +
           "m15_wave1_follow_through_bucket,m15_wave1_obstacle_clearance_bucket,m15_wave1_obstacle_distance_r,m15_wave1_duration_bars," +
           "m15_wave1_quality_score,m15_wave1_quality_bucket,m15_wave1_quality_high,m15_wave1_quality_gate_pass,m15_wave1_quality_reject_reason," +
+          "m15_anchor_bias_enabled,m15_anchor_mode,m15_anchor_bias_state,m15_active_oshiyasu_price,m15_active_oshiyasu_time," +
+          "m15_active_modoritakane_price,m15_active_modoritakane_time,m15_anchor_last_update_time,m15_anchor_break_detected,m15_anchor_break_direction," +
+          "m15_anchor_break_level,m15_anchor_break_close,m15_anchor_break_atr,m15_anchor_break_age_bars,m15_bias_flip_detected,m15_bias_flip_direction," +
+          "m15_bias_flip_age_bars,m15_bias_aligned_with_entry,m15_bias_opposite_to_entry,m15_bias_neutral,m15_anchor_gate_pass,m15_anchor_gate_reject_reason," +
+          "m15_n_state,m15_range_detected,m15_range_high,m15_range_low,m15_range_width_atr,anchor_break_close_beyond,anchor_break_body_atr," +
+          "anchor_break_wick_ratio,anchor_break_followthrough_bars,anchor_break_quality_bucket," +
           "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
           "m15_wave2_expansion_mode,m15_wave2_gate_mode,m15_wave2_type,m15_wave2_age_bars,m15_wave2_score,m15_wave2_gate_pass,m15_wave2_gate_reject_reason," +
           "m15_wave_context_score,m5_pattern_quality_group,m15_wave2_required_due_to_pattern_quality,m15_wave2_score_applied," +
@@ -7158,6 +7742,38 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, BoolText(tracked.m15Wave1QualityHigh));
    CsvAppend(line, BoolText(tracked.m15Wave1QualityGatePass));
    CsvAppend(line, tracked.m15Wave1QualityRejectReason);
+   CsvAppend(line, BoolText(tracked.m15AnchorBiasEnabled));
+   CsvAppend(line, tracked.m15AnchorMode);
+   CsvAppend(line, tracked.m15AnchorBiasState);
+   CsvAppend(line, DoubleToString(tracked.m15ActiveOshiyasuPrice, 8));
+   CsvAppend(line, tracked.m15ActiveOshiyasuTime > 0 ? TimeToString(tracked.m15ActiveOshiyasuTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, DoubleToString(tracked.m15ActiveModoritakanePrice, 8));
+   CsvAppend(line, tracked.m15ActiveModoritakaneTime > 0 ? TimeToString(tracked.m15ActiveModoritakaneTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, tracked.m15AnchorLastUpdateTime > 0 ? TimeToString(tracked.m15AnchorLastUpdateTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, BoolText(tracked.m15AnchorBreakDetected));
+   CsvAppend(line, tracked.m15AnchorBreakDirection);
+   CsvAppend(line, DoubleToString(tracked.m15AnchorBreakLevel, 8));
+   CsvAppend(line, DoubleToString(tracked.m15AnchorBreakClose, 8));
+   CsvAppend(line, DoubleToString(tracked.m15AnchorBreakAtr, 4));
+   CsvAppend(line, IntegerToString(tracked.m15AnchorBreakAgeBars));
+   CsvAppend(line, BoolText(tracked.m15BiasFlipDetected));
+   CsvAppend(line, tracked.m15BiasFlipDirection);
+   CsvAppend(line, IntegerToString(tracked.m15BiasFlipAgeBars));
+   CsvAppend(line, BoolText(tracked.m15BiasAlignedWithEntry));
+   CsvAppend(line, BoolText(tracked.m15BiasOppositeToEntry));
+   CsvAppend(line, BoolText(tracked.m15BiasNeutral));
+   CsvAppend(line, BoolText(tracked.m15AnchorGatePass));
+   CsvAppend(line, tracked.m15AnchorGateRejectReason);
+   CsvAppend(line, tracked.m15NState);
+   CsvAppend(line, BoolText(tracked.m15RangeDetected));
+   CsvAppend(line, DoubleToString(tracked.m15RangeHigh, 8));
+   CsvAppend(line, DoubleToString(tracked.m15RangeLow, 8));
+   CsvAppend(line, DoubleToString(tracked.m15RangeWidthAtr, 4));
+   CsvAppend(line, BoolText(tracked.anchorBreakCloseBeyond));
+   CsvAppend(line, DoubleToString(tracked.anchorBreakBodyAtr, 4));
+   CsvAppend(line, DoubleToString(tracked.anchorBreakWickRatio, 4));
+   CsvAppend(line, IntegerToString(tracked.anchorBreakFollowthroughBars));
+   CsvAppend(line, tracked.anchorBreakQualityBucket);
    CsvAppend(line, BoolText(tracked.m15Wave2Candidate));
    CsvAppend(line, DoubleToString(tracked.m15Wave2RetraceRatio, 4));
    CsvAppend(line, tracked.m15Wave2FibZone);
@@ -8014,6 +8630,38 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].m15Wave1QualityHigh = plan.m15Wave1QualityHigh;
    g_trades[size].m15Wave1QualityGatePass = plan.m15Wave1QualityGatePass;
    g_trades[size].m15Wave1QualityRejectReason = plan.m15Wave1QualityRejectReason;
+   g_trades[size].m15AnchorBiasEnabled = plan.m15AnchorBiasEnabled;
+   g_trades[size].m15AnchorMode = plan.m15AnchorMode;
+   g_trades[size].m15AnchorBiasState = plan.m15AnchorBiasState;
+   g_trades[size].m15ActiveOshiyasuPrice = plan.m15ActiveOshiyasuPrice;
+   g_trades[size].m15ActiveOshiyasuTime = plan.m15ActiveOshiyasuTime;
+   g_trades[size].m15ActiveModoritakanePrice = plan.m15ActiveModoritakanePrice;
+   g_trades[size].m15ActiveModoritakaneTime = plan.m15ActiveModoritakaneTime;
+   g_trades[size].m15AnchorLastUpdateTime = plan.m15AnchorLastUpdateTime;
+   g_trades[size].m15AnchorBreakDetected = plan.m15AnchorBreakDetected;
+   g_trades[size].m15AnchorBreakDirection = plan.m15AnchorBreakDirection;
+   g_trades[size].m15AnchorBreakLevel = plan.m15AnchorBreakLevel;
+   g_trades[size].m15AnchorBreakClose = plan.m15AnchorBreakClose;
+   g_trades[size].m15AnchorBreakAtr = plan.m15AnchorBreakAtr;
+   g_trades[size].m15AnchorBreakAgeBars = plan.m15AnchorBreakAgeBars;
+   g_trades[size].m15BiasFlipDetected = plan.m15BiasFlipDetected;
+   g_trades[size].m15BiasFlipDirection = plan.m15BiasFlipDirection;
+   g_trades[size].m15BiasFlipAgeBars = plan.m15BiasFlipAgeBars;
+   g_trades[size].m15BiasAlignedWithEntry = plan.m15BiasAlignedWithEntry;
+   g_trades[size].m15BiasOppositeToEntry = plan.m15BiasOppositeToEntry;
+   g_trades[size].m15BiasNeutral = plan.m15BiasNeutral;
+   g_trades[size].m15AnchorGatePass = plan.m15AnchorGatePass;
+   g_trades[size].m15AnchorGateRejectReason = plan.m15AnchorGateRejectReason;
+   g_trades[size].m15NState = plan.m15NState;
+   g_trades[size].m15RangeDetected = plan.m15RangeDetected;
+   g_trades[size].m15RangeHigh = plan.m15RangeHigh;
+   g_trades[size].m15RangeLow = plan.m15RangeLow;
+   g_trades[size].m15RangeWidthAtr = plan.m15RangeWidthAtr;
+   g_trades[size].anchorBreakCloseBeyond = plan.anchorBreakCloseBeyond;
+   g_trades[size].anchorBreakBodyAtr = plan.anchorBreakBodyAtr;
+   g_trades[size].anchorBreakWickRatio = plan.anchorBreakWickRatio;
+   g_trades[size].anchorBreakFollowthroughBars = plan.anchorBreakFollowthroughBars;
+   g_trades[size].anchorBreakQualityBucket = plan.anchorBreakQualityBucket;
    g_trades[size].m15Wave2Candidate = plan.m15Wave2Candidate;
    g_trades[size].m15Wave2RetraceRatio = plan.m15Wave2RetraceRatio;
    g_trades[size].m15Wave2FibZone = plan.m15Wave2FibZone;
@@ -8515,17 +9163,21 @@ int OnInit()
        InpM15Wave1MaxOverlapRatio < 0.0 ||
        InpM15Wave1MaxOverlapRatio > 1.5 ||
        InpM15Wave1MaxAgeBars < 1 ||
+       InpM15AnchorBreakMinAtr < 0.0 ||
+       InpM15AnchorLookbackBars < 24 ||
+       InpM15AnchorMinSwingStrength < 1 ||
+       InpM15BiasFlipMaxAgeBars < 1 ||
        InpSessionInvalidationATR <= 0.0 ||
-      InpMaxHoldBars < 1 ||
-      InpRiskPerTradePercent <= 0.0 ||
-      InpMaxTotalOpenRiskPercent <= 0.0 ||
-      InpMaxRiskPerSymbolPercent <= 0.0 ||
-      InpMaxPositions < 1 ||
-      InpDailyMaxLossPercent <= 0.0 ||
-      InpMaxDrawdownPercent <= 0.0 ||
-      InpMaxSpreadATR <= 0.0 ||
-      InpFixedLotFallback <= 0.0 ||
-      InpMaxLotCap <= 0.0)
+       InpMaxHoldBars < 1 ||
+       InpRiskPerTradePercent <= 0.0 ||
+       InpMaxTotalOpenRiskPercent <= 0.0 ||
+       InpMaxRiskPerSymbolPercent <= 0.0 ||
+       InpMaxPositions < 1 ||
+       InpDailyMaxLossPercent <= 0.0 ||
+       InpMaxDrawdownPercent <= 0.0 ||
+       InpMaxSpreadATR <= 0.0 ||
+       InpFixedLotFallback <= 0.0 ||
+       InpMaxLotCap <= 0.0)
      {
       PrintFormat("%s: invalid input", STRATEGY_NAME);
       return INIT_PARAMETERS_INCORRECT;
