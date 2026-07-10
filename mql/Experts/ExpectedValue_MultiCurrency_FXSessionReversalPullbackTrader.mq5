@@ -183,6 +183,14 @@ enum ENUM_M15_ANCHOR_RANGE_MODE
    M15_ANCHOR_RANGE_REQUIRED_LIGHT_ONLY = 2
   };
 
+enum ENUM_POST_ANCHOR_PULLBACK_MODE
+  {
+   POST_ANCHOR_PULLBACK_OFF = 0,
+   POST_ANCHOR_PULLBACK_DIAGNOSTIC_ONLY = 1,
+   POST_ANCHOR_PULLBACK_SCORE = 2,
+   POST_ANCHOR_PULLBACK_REQUIRED = 3
+  };
+
 enum ENUM_EXIT_MODE
   {
    EXIT_FIXED_TP_SL = 0,
@@ -342,14 +350,48 @@ struct SignalPlan
    double            m15AnchorBreakClose;
    double            m15AnchorBreakAtr;
    int               m15AnchorBreakAgeBars;
+   bool              m15AnchorFirstBreakDetected;
+   datetime          m15AnchorFirstBreakTime;
+   int               m15AnchorFirstBreakShift;
+   string            m15AnchorFirstBreakDirection;
+   double            m15AnchorFirstBreakLevel;
+   double            m15AnchorFirstBreakClose;
+   double            m15AnchorFirstBreakAtr;
+   double            m15AnchorFirstBreakBodyAtr;
+   string            m15AnchorFirstBreakQualityBucket;
+   datetime          m15AnchorLatestBreakTime;
+   string            m15AnchorBreakDetectionMode;
    bool              m15BiasFlipDetected;
    string            m15BiasFlipDirection;
    int               m15BiasFlipAgeBars;
+   int               m15BiasFlipAgeBarsOldLike;
+   int               m15BiasFlipAgeBarsFirstBreak;
+   bool              m15BiasFlipIsFresh;
+   bool              m15BiasFlipIsTooOld;
+   string            m15BiasFlipAgeBucket;
    bool              m15BiasAlignedWithEntry;
    bool              m15BiasOppositeToEntry;
    bool              m15BiasNeutral;
    bool              m15AnchorGatePass;
    string            m15AnchorGateRejectReason;
+   bool              postAnchorPullbackEnabled;
+   string            postAnchorPullbackMode;
+   bool              postAnchorPullbackDetected;
+   string            postAnchorPullbackTF;
+   datetime          postAnchorPullbackStartTime;
+   datetime          postAnchorPullbackEndTime;
+   int               postAnchorPullbackBarsAfterBreak;
+   double            postAnchorPullbackDistanceAtr;
+   bool              postAnchorRetestDetected;
+   double            postAnchorRetestLevel;
+   double            postAnchorRetestDistanceAtr;
+   bool              postAnchorCloseBackInside;
+   double            postAnchorCloseBackInsideAtr;
+   bool              postAnchorM5ReconfirmDetected;
+   string            postAnchorM5ReconfirmType;
+   string            postAnchorPullbackQualityBucket;
+   bool              postAnchorPullbackGatePass;
+   string            postAnchorPullbackRejectReason;
    string            m15NState;
    bool              m15RangeDetected;
    double            m15RangeHigh;
@@ -654,14 +696,48 @@ struct TrackedTrade
    double            m15AnchorBreakClose;
    double            m15AnchorBreakAtr;
    int               m15AnchorBreakAgeBars;
+   bool              m15AnchorFirstBreakDetected;
+   datetime          m15AnchorFirstBreakTime;
+   int               m15AnchorFirstBreakShift;
+   string            m15AnchorFirstBreakDirection;
+   double            m15AnchorFirstBreakLevel;
+   double            m15AnchorFirstBreakClose;
+   double            m15AnchorFirstBreakAtr;
+   double            m15AnchorFirstBreakBodyAtr;
+   string            m15AnchorFirstBreakQualityBucket;
+   datetime          m15AnchorLatestBreakTime;
+   string            m15AnchorBreakDetectionMode;
    bool              m15BiasFlipDetected;
    string            m15BiasFlipDirection;
    int               m15BiasFlipAgeBars;
+   int               m15BiasFlipAgeBarsOldLike;
+   int               m15BiasFlipAgeBarsFirstBreak;
+   bool              m15BiasFlipIsFresh;
+   bool              m15BiasFlipIsTooOld;
+   string            m15BiasFlipAgeBucket;
    bool              m15BiasAlignedWithEntry;
    bool              m15BiasOppositeToEntry;
    bool              m15BiasNeutral;
    bool              m15AnchorGatePass;
    string            m15AnchorGateRejectReason;
+   bool              postAnchorPullbackEnabled;
+   string            postAnchorPullbackMode;
+   bool              postAnchorPullbackDetected;
+   string            postAnchorPullbackTF;
+   datetime          postAnchorPullbackStartTime;
+   datetime          postAnchorPullbackEndTime;
+   int               postAnchorPullbackBarsAfterBreak;
+   double            postAnchorPullbackDistanceAtr;
+   bool              postAnchorRetestDetected;
+   double            postAnchorRetestLevel;
+   double            postAnchorRetestDistanceAtr;
+   bool              postAnchorCloseBackInside;
+   double            postAnchorCloseBackInsideAtr;
+   bool              postAnchorM5ReconfirmDetected;
+   string            postAnchorM5ReconfirmType;
+   string            postAnchorPullbackQualityBucket;
+   bool              postAnchorPullbackGatePass;
+   string            postAnchorPullbackRejectReason;
    string            m15NState;
    bool              m15RangeDetected;
    double            m15RangeHigh;
@@ -1001,6 +1077,14 @@ input int             InpM15BiasFlipMaxAgeBars        = 24;
 input bool            InpM15AnchorFlipRequireHighMediumM5Pattern = false;
 input bool            InpM15AnchorFlipRequireCorrectiveExhaustion = false;
 input ENUM_M15_ANCHOR_RANGE_MODE InpM15AnchorRangeMode = M15_ANCHOR_RANGE_ALLOW;
+input bool            InpUseTruePostAnchorBreakPullback = false;
+input ENUM_POST_ANCHOR_PULLBACK_MODE InpPostAnchorPullbackMode = POST_ANCHOR_PULLBACK_OFF;
+input ENUM_TIMEFRAMES InpPostAnchorPullbackTF      = PERIOD_M5;
+input int             InpPostAnchorPullbackMaxBars = 24;
+input int             InpPostAnchorPullbackMinBars = 1;
+input double          InpPostAnchorRetestMaxDistanceAtr = 0.25;
+input double          InpPostAnchorAllowCloseBackInsideAtr = 0.10;
+input bool            InpPostAnchorRequireM5Reconfirm = true;
 input ENUM_EXIT_MODE  InpExitMode                      = EXIT_M5_FAILURE;
 input ENUM_STRUCTURE_TARGET_MODE InpStructureTargetMode = STRUCTURE_TARGET_OFF;
 input double          InpSessionInvalidationATR        = 0.85;
@@ -1386,6 +1470,17 @@ string M15AnchorRangeModeName()
    return "range_allow";
   }
 
+string PostAnchorPullbackModeName()
+  {
+   if(InpPostAnchorPullbackMode == POST_ANCHOR_PULLBACK_DIAGNOSTIC_ONLY)
+      return "diagnostic_only";
+   if(InpPostAnchorPullbackMode == POST_ANCHOR_PULLBACK_SCORE)
+      return "score";
+   if(InpPostAnchorPullbackMode == POST_ANCHOR_PULLBACK_REQUIRED)
+      return "required";
+   return "off";
+  }
+
 string ExitModeName()
   {
    if(InpExitMode == EXIT_FIXED_TP_SL)
@@ -1431,7 +1526,15 @@ bool UsesM15Wave1Quality()
 bool UsesM15SwingAnchorBias()
   {
    return InpUseM15SwingAnchorBias || InpM15SwingAnchorMode != M15_SWING_ANCHOR_OFF ||
-          InpM15AnchorRangeMode != M15_ANCHOR_RANGE_ALLOW;
+           InpM15AnchorRangeMode != M15_ANCHOR_RANGE_ALLOW ||
+           InpUseTruePostAnchorBreakPullback ||
+           InpPostAnchorPullbackMode != POST_ANCHOR_PULLBACK_OFF;
+  }
+
+bool UsesTruePostAnchorBreakPullback()
+  {
+   return InpUseTruePostAnchorBreakPullback ||
+          InpPostAnchorPullbackMode != POST_ANCHOR_PULLBACK_OFF;
   }
 
 bool UsesM15WaveContext()
@@ -3334,12 +3437,27 @@ string AnchorBreakQualityBucket(const double breakAtr,
    return "weak";
   }
 
+string M15BiasFlipAgeBucket(const int ageBars)
+  {
+   if(ageBars < 0)
+      return "none";
+   if(ageBars <= 4)
+      return "fresh_0_4";
+   if(ageBars <= 12)
+      return "normal_5_12";
+   if(ageBars <= 24)
+      return "old_13_24";
+   return "too_old_gt24";
+  }
+
 bool FindM15AnchorBreak(const MqlRates &rates[],
                         const double atr,
                         const datetime anchorEventTime,
                         const double level,
                         const int breakDirection,
+                        const bool firstAfterAnchor,
                         int &breakShift,
+                        datetime &breakTime,
                         double &breakClose,
                         double &breakAtr,
                         double &bodyAtr,
@@ -3347,6 +3465,7 @@ bool FindM15AnchorBreak(const MqlRates &rates[],
                         int &followthroughBars)
   {
    breakShift = -1;
+   breakTime = 0;
    breakClose = 0.0;
    breakAtr = 0.0;
    bodyAtr = 0.0;
@@ -3357,7 +3476,10 @@ bool FindM15AnchorBreak(const MqlRates &rates[],
 
    double minBreak = atr * MathMax(0.0, InpM15AnchorBreakMinAtr);
    int maxShift = ArraySize(rates) - 1;
-   for(int shift = 0; shift <= maxShift; ++shift)
+   int start = firstAfterAnchor ? maxShift : 0;
+   int end = firstAfterAnchor ? 0 : maxShift;
+   int step = firstAfterAnchor ? -1 : 1;
+   for(int shift = start; firstAfterAnchor ? shift >= end : shift <= end; shift += step)
      {
       if(rates[shift].time <= anchorEventTime)
          continue;
@@ -3369,6 +3491,7 @@ bool FindM15AnchorBreak(const MqlRates &rates[],
          continue;
 
       breakShift = shift;
+      breakTime = rates[shift].time;
       breakClose = rates[shift].close;
       breakAtr = breakDirection > 0 ? (testPrice - level) / atr : (level - testPrice) / atr;
       bodyAtr = MathAbs(rates[shift].close - rates[shift].open) / atr;
@@ -3386,6 +3509,211 @@ bool FindM15AnchorBreak(const MqlRates &rates[],
       return true;
      }
    return false;
+  }
+
+string PostAnchorPullbackQualityBucket(const bool retestDetected,
+                                       const bool reconfirmDetected,
+                                       const bool closeBackInside,
+                                       const double distanceAtr)
+  {
+   if(closeBackInside)
+      return "failed_close_back_inside";
+   if(retestDetected && reconfirmDetected && distanceAtr <= 0.15)
+      return "clean_retest_reconfirm";
+   if(retestDetected && reconfirmDetected)
+      return "retest_reconfirm";
+   if(retestDetected)
+      return "retest_only";
+   return "none";
+  }
+
+bool DetectPostAnchorBreakPullback(SignalPlan &plan, const int entryDirection)
+  {
+   plan.postAnchorPullbackEnabled = UsesTruePostAnchorBreakPullback();
+   plan.postAnchorPullbackMode = PostAnchorPullbackModeName();
+   plan.postAnchorPullbackTF = TFName(InpPostAnchorPullbackTF);
+   plan.postAnchorPullbackGatePass = true;
+   plan.postAnchorPullbackRejectReason = "not_required";
+
+   if(!UsesTruePostAnchorBreakPullback())
+      return true;
+
+   plan.postAnchorPullbackGatePass = false;
+   plan.postAnchorPullbackRejectReason = "not_evaluated";
+
+   if(!AnchorFlipEntryDirection(plan, entryDirection))
+     {
+      plan.postAnchorPullbackRejectReason = "no_anchor_flip_in_entry_direction";
+      return true;
+     }
+
+   if(plan.m15AnchorFirstBreakTime <= 0 || plan.m15AnchorFirstBreakLevel <= 0.0)
+     {
+      plan.postAnchorPullbackRejectReason = "missing_first_anchor_break";
+      return true;
+     }
+
+   int tfSeconds = MathMax(1, PeriodSeconds(InpPostAnchorPullbackTF));
+   int structureSeconds = MathMax(1, PeriodSeconds(InpStructureTF));
+   int roughBarsFromM15 = MathMax(0, plan.m15BiasFlipAgeBarsFirstBreak) * (structureSeconds / tfSeconds + 1);
+   int bars = MathMax(InpPostAnchorPullbackMaxBars + InpATRPeriod + 12,
+                      MathMax(roughBarsFromM15 + 12, InpM15AnchorLookbackBars * 4));
+   MqlRates rates[];
+   if(!CopyClosedRates(plan.symbol, InpPostAnchorPullbackTF, bars, rates))
+     {
+      plan.postAnchorPullbackRejectReason = "post_anchor_rates_unavailable";
+      return true;
+     }
+
+   double atr = ATR(rates, 0, InpATRPeriod);
+   if(atr <= 0.0)
+     {
+      plan.postAnchorPullbackRejectReason = "post_anchor_invalid_atr";
+      return true;
+     }
+
+   int breakShift = -1;
+   for(int shift = 0; shift < ArraySize(rates); ++shift)
+     {
+      if(rates[shift].time <= plan.m15AnchorFirstBreakTime)
+        {
+         breakShift = shift;
+         break;
+        }
+     }
+   if(breakShift <= 0)
+     {
+      plan.postAnchorPullbackRejectReason = "no_closed_bar_after_anchor_break";
+      return true;
+     }
+
+   int barsAfterBreak = breakShift;
+   plan.postAnchorPullbackBarsAfterBreak = barsAfterBreak;
+   if(barsAfterBreak < InpPostAnchorPullbackMinBars)
+     {
+      plan.postAnchorPullbackRejectReason = "post_anchor_pullback_too_early";
+      return true;
+     }
+   if(InpPostAnchorPullbackMaxBars > 0 && barsAfterBreak > InpPostAnchorPullbackMaxBars)
+     {
+      plan.postAnchorPullbackRejectReason = "post_anchor_pullback_too_old";
+      return true;
+     }
+
+   double level = plan.m15AnchorFirstBreakLevel;
+   double maxDistance = atr * MathMax(0.0, InpPostAnchorRetestMaxDistanceAtr);
+   double closeBackInside = atr * MathMax(0.0, InpPostAnchorAllowCloseBackInsideAtr);
+   int retestShift = -1;
+   int reconfirmShift = -1;
+   string reconfirmType = "none";
+   double bestDistanceAtr = 0.0;
+   double closeBackInsideAtr = 0.0;
+   bool closeBackInsideSeen = false;
+
+   for(int shift = breakShift - 1; shift >= 0; --shift)
+     {
+      bool inside = false;
+      double insideAtr = 0.0;
+      bool retest = false;
+      double distanceAtr = 0.0;
+      if(entryDirection > 0)
+        {
+         inside = rates[shift].close < level - closeBackInside;
+         insideAtr = inside ? (level - rates[shift].close) / atr : 0.0;
+         distanceAtr = MathAbs(rates[shift].low - level) / atr;
+         retest = rates[shift].low <= level + maxDistance &&
+                  rates[shift].close >= level - closeBackInside;
+        }
+      else
+        {
+         inside = rates[shift].close > level + closeBackInside;
+         insideAtr = inside ? (rates[shift].close - level) / atr : 0.0;
+         distanceAtr = MathAbs(rates[shift].high - level) / atr;
+         retest = rates[shift].high >= level - maxDistance &&
+                  rates[shift].close <= level + closeBackInside;
+        }
+
+      if(inside)
+        {
+         closeBackInsideSeen = true;
+         closeBackInsideAtr = MathMax(closeBackInsideAtr, insideAtr);
+        }
+
+      if(!retest)
+         continue;
+
+      retestShift = shift;
+      bestDistanceAtr = distanceAtr;
+      plan.postAnchorPullbackStartTime = rates[breakShift - 1].time;
+      plan.postAnchorPullbackEndTime = rates[shift].time;
+      break;
+     }
+
+   if(retestShift >= 0)
+     {
+      for(int shift = retestShift - 1; shift >= 0; --shift)
+        {
+         if(entryDirection > 0)
+           {
+            bool bos = shift + 1 < ArraySize(rates) && rates[shift].close > rates[shift + 1].high;
+            bool directionClose = rates[shift].close > rates[shift].open && rates[shift].close > level;
+            if(bos || directionClose)
+              {
+               reconfirmShift = shift;
+               reconfirmType = bos ? "m5_bos_up_after_anchor_retest" : "m5_bullish_close_after_anchor_retest";
+               break;
+              }
+           }
+         else
+           {
+            bool bos = shift + 1 < ArraySize(rates) && rates[shift].close < rates[shift + 1].low;
+            bool directionClose = rates[shift].close < rates[shift].open && rates[shift].close < level;
+            if(bos || directionClose)
+              {
+               reconfirmShift = shift;
+               reconfirmType = bos ? "m5_bos_down_after_anchor_retest" : "m5_bearish_close_after_anchor_retest";
+               break;
+              }
+           }
+        }
+     }
+
+   plan.postAnchorCloseBackInside = closeBackInsideSeen;
+   plan.postAnchorCloseBackInsideAtr = closeBackInsideAtr;
+   plan.postAnchorRetestDetected = retestShift >= 0;
+   plan.postAnchorRetestLevel = level;
+   plan.postAnchorRetestDistanceAtr = bestDistanceAtr;
+   plan.postAnchorPullbackDetected = plan.postAnchorRetestDetected;
+   plan.postAnchorPullbackDistanceAtr = bestDistanceAtr;
+   plan.postAnchorM5ReconfirmDetected = reconfirmShift >= 0;
+   plan.postAnchorM5ReconfirmType = reconfirmType;
+   plan.postAnchorPullbackQualityBucket =
+      PostAnchorPullbackQualityBucket(plan.postAnchorRetestDetected,
+                                      plan.postAnchorM5ReconfirmDetected,
+                                      plan.postAnchorCloseBackInside,
+                                      plan.postAnchorRetestDistanceAtr);
+
+   bool pass = plan.postAnchorRetestDetected &&
+               !plan.postAnchorCloseBackInside &&
+               (!InpPostAnchorRequireM5Reconfirm || plan.postAnchorM5ReconfirmDetected);
+   plan.postAnchorPullbackGatePass = pass;
+   if(pass)
+      plan.postAnchorPullbackRejectReason = "none";
+   else if(!plan.postAnchorRetestDetected)
+      plan.postAnchorPullbackRejectReason = "post_anchor_retest_missing";
+   else if(plan.postAnchorCloseBackInside)
+      plan.postAnchorPullbackRejectReason = "post_anchor_close_back_inside";
+   else
+      plan.postAnchorPullbackRejectReason = "post_anchor_m5_reconfirm_missing";
+
+   if(InpPostAnchorPullbackMode == POST_ANCHOR_PULLBACK_SCORE && pass)
+     {
+      double score = plan.postAnchorM5ReconfirmDetected ? 0.18 : 0.10;
+      plan.nestedScore += score;
+      plan.score += score;
+     }
+
+   return true;
   }
 
 void EvaluateM15RangeDiagnostics(SignalPlan &plan, const DowPivot &pivots[], const double atr)
@@ -3495,12 +3823,20 @@ bool DetectM15SwingAnchorBias(SignalPlan &plan, const int entryDirection)
    if(localAtr <= 0.0)
       localAtr = atr;
 
-   int breakShift = -1;
-   double breakClose = 0.0;
-   double breakAtr = 0.0;
-   double bodyAtr = 0.0;
-   double wickRatio = 0.0;
-   int followthrough = 0;
+   int firstBreakShift = -1;
+   datetime firstBreakTime = 0;
+   double firstBreakClose = 0.0;
+   double firstBreakAtr = 0.0;
+   double firstBodyAtr = 0.0;
+   double firstWickRatio = 0.0;
+   int firstFollowthrough = 0;
+   int latestBreakShift = -1;
+   datetime latestBreakTime = 0;
+   double latestBreakClose = 0.0;
+   double latestBreakAtr = 0.0;
+   double latestBodyAtr = 0.0;
+   double latestWickRatio = 0.0;
+   int latestFollowthrough = 0;
    int activeDirection = 0;
    double activeLevel = 0.0;
    datetime activeEventTime = 0;
@@ -3508,51 +3844,80 @@ bool DetectM15SwingAnchorBias(SignalPlan &plan, const int entryDirection)
    if(latestLongEventTime >= latestShortEventTime)
      {
       activeDirection = 1;
-      activeLevel = latestOshiyasu;
-      activeEventTime = latestLongEventTime;
-      plan.m15AnchorBiasState = "long_bias";
-      if(FindM15AnchorBreak(rates, localAtr, activeEventTime, activeLevel, -1,
-                            breakShift, breakClose, breakAtr, bodyAtr, wickRatio, followthrough))
-        {
-         plan.m15AnchorBiasState = "bias_flip_down";
-         plan.m15AnchorBreakDirection = "SHORT";
+       activeLevel = latestOshiyasu;
+       activeEventTime = latestLongEventTime;
+       plan.m15AnchorBiasState = "long_bias";
+       bool firstBreak = FindM15AnchorBreak(rates, localAtr, activeEventTime, activeLevel, -1, true,
+                                            firstBreakShift, firstBreakTime, firstBreakClose, firstBreakAtr,
+                                            firstBodyAtr, firstWickRatio, firstFollowthrough);
+       FindM15AnchorBreak(rates, localAtr, activeEventTime, activeLevel, -1, false,
+                          latestBreakShift, latestBreakTime, latestBreakClose, latestBreakAtr,
+                          latestBodyAtr, latestWickRatio, latestFollowthrough);
+       if(firstBreak)
+         {
+          plan.m15AnchorBiasState = "bias_flip_down";
+          plan.m15AnchorBreakDirection = "SHORT";
          plan.m15BiasFlipDirection = "SHORT";
         }
      }
    else
      {
       activeDirection = -1;
-      activeLevel = latestModoritakane;
-      activeEventTime = latestShortEventTime;
-      plan.m15AnchorBiasState = "short_bias";
-      if(FindM15AnchorBreak(rates, localAtr, activeEventTime, activeLevel, 1,
-                            breakShift, breakClose, breakAtr, bodyAtr, wickRatio, followthrough))
-        {
-         plan.m15AnchorBiasState = "bias_flip_up";
-         plan.m15AnchorBreakDirection = "LONG";
+       activeLevel = latestModoritakane;
+       activeEventTime = latestShortEventTime;
+       plan.m15AnchorBiasState = "short_bias";
+       bool firstBreak = FindM15AnchorBreak(rates, localAtr, activeEventTime, activeLevel, 1, true,
+                                            firstBreakShift, firstBreakTime, firstBreakClose, firstBreakAtr,
+                                            firstBodyAtr, firstWickRatio, firstFollowthrough);
+       FindM15AnchorBreak(rates, localAtr, activeEventTime, activeLevel, 1, false,
+                          latestBreakShift, latestBreakTime, latestBreakClose, latestBreakAtr,
+                          latestBodyAtr, latestWickRatio, latestFollowthrough);
+       if(firstBreak)
+         {
+          plan.m15AnchorBiasState = "bias_flip_up";
+          plan.m15AnchorBreakDirection = "LONG";
          plan.m15BiasFlipDirection = "LONG";
         }
      }
 
-   if(breakShift >= 0)
+   if(firstBreakShift >= 0)
      {
       plan.m15AnchorBreakDetected = true;
       plan.m15AnchorBreakLevel = activeLevel;
-      plan.m15AnchorBreakClose = breakClose;
-      plan.m15AnchorBreakAtr = breakAtr;
-      plan.m15AnchorBreakAgeBars = breakShift;
+      plan.m15AnchorBreakClose = firstBreakClose;
+      plan.m15AnchorBreakAtr = firstBreakAtr;
+      plan.m15AnchorBreakAgeBars = firstBreakShift;
+      plan.m15AnchorFirstBreakDetected = true;
+      plan.m15AnchorFirstBreakTime = firstBreakTime;
+      plan.m15AnchorFirstBreakShift = firstBreakShift;
+      plan.m15AnchorFirstBreakDirection = plan.m15AnchorBreakDirection;
+      plan.m15AnchorFirstBreakLevel = activeLevel;
+      plan.m15AnchorFirstBreakClose = firstBreakClose;
+      plan.m15AnchorFirstBreakAtr = firstBreakAtr;
+      plan.m15AnchorFirstBreakBodyAtr = firstBodyAtr;
+      plan.m15AnchorFirstBreakQualityBucket = AnchorBreakQualityBucket(firstBreakAtr, firstBodyAtr, firstFollowthrough);
+      plan.m15AnchorLatestBreakTime = latestBreakTime;
+      plan.m15AnchorBreakDetectionMode = "first_after_anchor";
       plan.m15BiasFlipDetected = true;
-      plan.m15BiasFlipAgeBars = breakShift;
+      plan.m15BiasFlipAgeBars = firstBreakShift;
+      plan.m15BiasFlipAgeBarsFirstBreak = firstBreakShift;
+      plan.m15BiasFlipAgeBarsOldLike = latestBreakShift;
+      plan.m15BiasFlipAgeBucket = M15BiasFlipAgeBucket(firstBreakShift);
+      plan.m15BiasFlipIsFresh = firstBreakShift >= 0 && firstBreakShift <= 12;
+      plan.m15BiasFlipIsTooOld = firstBreakShift > 24;
       plan.anchorBreakCloseBeyond = true;
-      plan.anchorBreakBodyAtr = bodyAtr;
-      plan.anchorBreakWickRatio = wickRatio;
-      plan.anchorBreakFollowthroughBars = followthrough;
-      plan.anchorBreakQualityBucket = AnchorBreakQualityBucket(breakAtr, bodyAtr, followthrough);
+      plan.anchorBreakBodyAtr = firstBodyAtr;
+      plan.anchorBreakWickRatio = firstWickRatio;
+      plan.anchorBreakFollowthroughBars = firstFollowthrough;
+      plan.anchorBreakQualityBucket = plan.m15AnchorFirstBreakQualityBucket;
      }
    else
      {
       plan.m15AnchorBreakDirection = "NONE";
       plan.m15BiasFlipDirection = "NONE";
+      plan.m15AnchorLatestBreakTime = latestBreakTime;
+      plan.m15AnchorBreakDetectionMode = latestBreakShift >= 0 ? "latest_near_entry_only" : "none";
+      plan.m15BiasFlipAgeBarsOldLike = latestBreakShift;
      }
 
    bool longLike = plan.m15AnchorBiasState == "long_bias" || plan.m15AnchorBiasState == "bias_flip_up";
@@ -3580,9 +3945,13 @@ bool AnchorFlipQualifiersPass(const SignalPlan &plan, string &rejectReason)
       rejectReason = "anchor_flip_age_failed";
       return false;
      }
-   if(InpM15RequirePullbackAfterBiasFlip && plan.m15BiasFlipAgeBars <= 0)
+   if((InpM15RequirePullbackAfterBiasFlip ||
+       InpPostAnchorPullbackMode == POST_ANCHOR_PULLBACK_REQUIRED) &&
+      !plan.postAnchorPullbackGatePass)
      {
-      rejectReason = "anchor_flip_no_post_break_pullback";
+      rejectReason = plan.postAnchorPullbackRejectReason == "none" ?
+                     "anchor_flip_no_post_break_pullback" :
+                     plan.postAnchorPullbackRejectReason;
       return false;
      }
    if(InpM15AnchorFlipRequireHighMediumM5Pattern &&
@@ -4819,6 +5188,8 @@ bool ApplyRefinedWaveContext(SignalPlan &plan, const int entryDirection)
    if(!DetectRefinedM5CorrectiveABC(plan, entryDirection))
       return false;
    if(!DetectRefinedM5Invalidation(plan, entryDirection))
+      return false;
+   if(!DetectPostAnchorBreakPullback(plan, entryDirection))
       return false;
    if(!ApplyM15SwingAnchorBiasGate(plan, entryDirection))
       return false;
@@ -6233,14 +6604,48 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.m15AnchorBreakClose = 0.0;
    plan.m15AnchorBreakAtr = 0.0;
    plan.m15AnchorBreakAgeBars = -1;
+   plan.m15AnchorFirstBreakDetected = false;
+   plan.m15AnchorFirstBreakTime = 0;
+   plan.m15AnchorFirstBreakShift = -1;
+   plan.m15AnchorFirstBreakDirection = "NONE";
+   plan.m15AnchorFirstBreakLevel = 0.0;
+   plan.m15AnchorFirstBreakClose = 0.0;
+   plan.m15AnchorFirstBreakAtr = 0.0;
+   plan.m15AnchorFirstBreakBodyAtr = 0.0;
+   plan.m15AnchorFirstBreakQualityBucket = "none";
+   plan.m15AnchorLatestBreakTime = 0;
+   plan.m15AnchorBreakDetectionMode = "none";
    plan.m15BiasFlipDetected = false;
    plan.m15BiasFlipDirection = "NONE";
    plan.m15BiasFlipAgeBars = -1;
+   plan.m15BiasFlipAgeBarsOldLike = -1;
+   plan.m15BiasFlipAgeBarsFirstBreak = -1;
+   plan.m15BiasFlipIsFresh = false;
+   plan.m15BiasFlipIsTooOld = false;
+   plan.m15BiasFlipAgeBucket = "none";
    plan.m15BiasAlignedWithEntry = false;
    plan.m15BiasOppositeToEntry = false;
    plan.m15BiasNeutral = true;
    plan.m15AnchorGatePass = true;
    plan.m15AnchorGateRejectReason = "not_evaluated";
+   plan.postAnchorPullbackEnabled = UsesTruePostAnchorBreakPullback();
+   plan.postAnchorPullbackMode = PostAnchorPullbackModeName();
+   plan.postAnchorPullbackDetected = false;
+   plan.postAnchorPullbackTF = TFName(InpPostAnchorPullbackTF);
+   plan.postAnchorPullbackStartTime = 0;
+   plan.postAnchorPullbackEndTime = 0;
+   plan.postAnchorPullbackBarsAfterBreak = -1;
+   plan.postAnchorPullbackDistanceAtr = 0.0;
+   plan.postAnchorRetestDetected = false;
+   plan.postAnchorRetestLevel = 0.0;
+   plan.postAnchorRetestDistanceAtr = 0.0;
+   plan.postAnchorCloseBackInside = false;
+   plan.postAnchorCloseBackInsideAtr = 0.0;
+   plan.postAnchorM5ReconfirmDetected = false;
+   plan.postAnchorM5ReconfirmType = "none";
+   plan.postAnchorPullbackQualityBucket = "none";
+   plan.postAnchorPullbackGatePass = true;
+   plan.postAnchorPullbackRejectReason = "not_evaluated";
    plan.m15NState = "unknown";
    plan.m15RangeDetected = false;
    plan.m15RangeHigh = 0.0;
@@ -7089,8 +7494,16 @@ string SignalHeaderLine()
           "m15_wave1_quality_score,m15_wave1_quality_bucket,m15_wave1_quality_high,m15_wave1_quality_gate_pass,m15_wave1_quality_reject_reason," +
           "m15_anchor_bias_enabled,m15_anchor_mode,m15_anchor_bias_state,m15_active_oshiyasu_price,m15_active_oshiyasu_time," +
           "m15_active_modoritakane_price,m15_active_modoritakane_time,m15_anchor_last_update_time,m15_anchor_break_detected,m15_anchor_break_direction," +
-          "m15_anchor_break_level,m15_anchor_break_close,m15_anchor_break_atr,m15_anchor_break_age_bars,m15_bias_flip_detected,m15_bias_flip_direction," +
-          "m15_bias_flip_age_bars,m15_bias_aligned_with_entry,m15_bias_opposite_to_entry,m15_bias_neutral,m15_anchor_gate_pass,m15_anchor_gate_reject_reason," +
+          "m15_anchor_break_level,m15_anchor_break_close,m15_anchor_break_atr,m15_anchor_break_age_bars," +
+          "m15_anchor_first_break_detected,m15_anchor_first_break_time,m15_anchor_first_break_shift,m15_anchor_first_break_direction," +
+          "m15_anchor_first_break_level,m15_anchor_first_break_close,m15_anchor_first_break_atr,m15_anchor_first_break_body_atr,m15_anchor_first_break_quality_bucket," +
+          "m15_anchor_latest_break_time,m15_anchor_break_detection_mode,m15_bias_flip_detected,m15_bias_flip_direction," +
+          "m15_bias_flip_age_bars,m15_bias_flip_age_bars_old_like,m15_bias_flip_age_bars_first_break,m15_bias_flip_is_fresh,m15_bias_flip_is_too_old,m15_bias_flip_age_bucket," +
+          "m15_bias_aligned_with_entry,m15_bias_opposite_to_entry,m15_bias_neutral,m15_anchor_gate_pass,m15_anchor_gate_reject_reason," +
+          "post_anchor_pullback_enabled,post_anchor_pullback_mode,post_anchor_pullback_detected,post_anchor_pullback_tf,post_anchor_pullback_start_time,post_anchor_pullback_end_time," +
+          "post_anchor_pullback_bars_after_break,post_anchor_pullback_distance_atr,post_anchor_retest_detected,post_anchor_retest_level,post_anchor_retest_distance_atr," +
+          "post_anchor_close_back_inside,post_anchor_close_back_inside_atr,post_anchor_m5_reconfirm_detected,post_anchor_m5_reconfirm_type,post_anchor_pullback_quality_bucket," +
+          "post_anchor_pullback_gate_pass,post_anchor_pullback_reject_reason," +
           "m15_n_state,m15_range_detected,m15_range_high,m15_range_low,m15_range_width_atr,anchor_break_close_beyond,anchor_break_body_atr," +
           "anchor_break_wick_ratio,anchor_break_followthrough_bars,anchor_break_quality_bucket," +
           "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
@@ -7272,14 +7685,48 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    CsvAppend(line, DoubleToString(plan.m15AnchorBreakClose, 8));
    CsvAppend(line, DoubleToString(plan.m15AnchorBreakAtr, 4));
    CsvAppend(line, IntegerToString(plan.m15AnchorBreakAgeBars));
+   CsvAppend(line, BoolText(plan.m15AnchorFirstBreakDetected));
+   CsvAppend(line, plan.m15AnchorFirstBreakTime > 0 ? TimeToString(plan.m15AnchorFirstBreakTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, IntegerToString(plan.m15AnchorFirstBreakShift));
+   CsvAppend(line, plan.m15AnchorFirstBreakDirection);
+   CsvAppend(line, DoubleToString(plan.m15AnchorFirstBreakLevel, 8));
+   CsvAppend(line, DoubleToString(plan.m15AnchorFirstBreakClose, 8));
+   CsvAppend(line, DoubleToString(plan.m15AnchorFirstBreakAtr, 4));
+   CsvAppend(line, DoubleToString(plan.m15AnchorFirstBreakBodyAtr, 4));
+   CsvAppend(line, plan.m15AnchorFirstBreakQualityBucket);
+   CsvAppend(line, plan.m15AnchorLatestBreakTime > 0 ? TimeToString(plan.m15AnchorLatestBreakTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, plan.m15AnchorBreakDetectionMode);
    CsvAppend(line, BoolText(plan.m15BiasFlipDetected));
    CsvAppend(line, plan.m15BiasFlipDirection);
    CsvAppend(line, IntegerToString(plan.m15BiasFlipAgeBars));
+   CsvAppend(line, IntegerToString(plan.m15BiasFlipAgeBarsOldLike));
+   CsvAppend(line, IntegerToString(plan.m15BiasFlipAgeBarsFirstBreak));
+   CsvAppend(line, BoolText(plan.m15BiasFlipIsFresh));
+   CsvAppend(line, BoolText(plan.m15BiasFlipIsTooOld));
+   CsvAppend(line, plan.m15BiasFlipAgeBucket);
    CsvAppend(line, BoolText(plan.m15BiasAlignedWithEntry));
    CsvAppend(line, BoolText(plan.m15BiasOppositeToEntry));
    CsvAppend(line, BoolText(plan.m15BiasNeutral));
    CsvAppend(line, BoolText(plan.m15AnchorGatePass));
    CsvAppend(line, plan.m15AnchorGateRejectReason);
+   CsvAppend(line, BoolText(plan.postAnchorPullbackEnabled));
+   CsvAppend(line, plan.postAnchorPullbackMode);
+   CsvAppend(line, BoolText(plan.postAnchorPullbackDetected));
+   CsvAppend(line, plan.postAnchorPullbackTF);
+   CsvAppend(line, plan.postAnchorPullbackStartTime > 0 ? TimeToString(plan.postAnchorPullbackStartTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, plan.postAnchorPullbackEndTime > 0 ? TimeToString(plan.postAnchorPullbackEndTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, IntegerToString(plan.postAnchorPullbackBarsAfterBreak));
+   CsvAppend(line, DoubleToString(plan.postAnchorPullbackDistanceAtr, 4));
+   CsvAppend(line, BoolText(plan.postAnchorRetestDetected));
+   CsvAppend(line, DoubleToString(plan.postAnchorRetestLevel, 8));
+   CsvAppend(line, DoubleToString(plan.postAnchorRetestDistanceAtr, 4));
+   CsvAppend(line, BoolText(plan.postAnchorCloseBackInside));
+   CsvAppend(line, DoubleToString(plan.postAnchorCloseBackInsideAtr, 4));
+   CsvAppend(line, BoolText(plan.postAnchorM5ReconfirmDetected));
+   CsvAppend(line, plan.postAnchorM5ReconfirmType);
+   CsvAppend(line, plan.postAnchorPullbackQualityBucket);
+   CsvAppend(line, BoolText(plan.postAnchorPullbackGatePass));
+   CsvAppend(line, plan.postAnchorPullbackRejectReason);
    CsvAppend(line, plan.m15NState);
    CsvAppend(line, BoolText(plan.m15RangeDetected));
    CsvAppend(line, DoubleToString(plan.m15RangeHigh, 8));
@@ -7536,8 +7983,16 @@ string TradeHeaderLine()
           "m15_wave1_quality_score,m15_wave1_quality_bucket,m15_wave1_quality_high,m15_wave1_quality_gate_pass,m15_wave1_quality_reject_reason," +
           "m15_anchor_bias_enabled,m15_anchor_mode,m15_anchor_bias_state,m15_active_oshiyasu_price,m15_active_oshiyasu_time," +
           "m15_active_modoritakane_price,m15_active_modoritakane_time,m15_anchor_last_update_time,m15_anchor_break_detected,m15_anchor_break_direction," +
-          "m15_anchor_break_level,m15_anchor_break_close,m15_anchor_break_atr,m15_anchor_break_age_bars,m15_bias_flip_detected,m15_bias_flip_direction," +
-          "m15_bias_flip_age_bars,m15_bias_aligned_with_entry,m15_bias_opposite_to_entry,m15_bias_neutral,m15_anchor_gate_pass,m15_anchor_gate_reject_reason," +
+          "m15_anchor_break_level,m15_anchor_break_close,m15_anchor_break_atr,m15_anchor_break_age_bars," +
+          "m15_anchor_first_break_detected,m15_anchor_first_break_time,m15_anchor_first_break_shift,m15_anchor_first_break_direction," +
+          "m15_anchor_first_break_level,m15_anchor_first_break_close,m15_anchor_first_break_atr,m15_anchor_first_break_body_atr,m15_anchor_first_break_quality_bucket," +
+          "m15_anchor_latest_break_time,m15_anchor_break_detection_mode,m15_bias_flip_detected,m15_bias_flip_direction," +
+          "m15_bias_flip_age_bars,m15_bias_flip_age_bars_old_like,m15_bias_flip_age_bars_first_break,m15_bias_flip_is_fresh,m15_bias_flip_is_too_old,m15_bias_flip_age_bucket," +
+          "m15_bias_aligned_with_entry,m15_bias_opposite_to_entry,m15_bias_neutral,m15_anchor_gate_pass,m15_anchor_gate_reject_reason," +
+          "post_anchor_pullback_enabled,post_anchor_pullback_mode,post_anchor_pullback_detected,post_anchor_pullback_tf,post_anchor_pullback_start_time,post_anchor_pullback_end_time," +
+          "post_anchor_pullback_bars_after_break,post_anchor_pullback_distance_atr,post_anchor_retest_detected,post_anchor_retest_level,post_anchor_retest_distance_atr," +
+          "post_anchor_close_back_inside,post_anchor_close_back_inside_atr,post_anchor_m5_reconfirm_detected,post_anchor_m5_reconfirm_type,post_anchor_pullback_quality_bucket," +
+          "post_anchor_pullback_gate_pass,post_anchor_pullback_reject_reason," +
           "m15_n_state,m15_range_detected,m15_range_high,m15_range_low,m15_range_width_atr,anchor_break_close_beyond,anchor_break_body_atr," +
           "anchor_break_wick_ratio,anchor_break_followthrough_bars,anchor_break_quality_bucket," +
           "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
@@ -7756,14 +8211,48 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, DoubleToString(tracked.m15AnchorBreakClose, 8));
    CsvAppend(line, DoubleToString(tracked.m15AnchorBreakAtr, 4));
    CsvAppend(line, IntegerToString(tracked.m15AnchorBreakAgeBars));
+   CsvAppend(line, BoolText(tracked.m15AnchorFirstBreakDetected));
+   CsvAppend(line, tracked.m15AnchorFirstBreakTime > 0 ? TimeToString(tracked.m15AnchorFirstBreakTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, IntegerToString(tracked.m15AnchorFirstBreakShift));
+   CsvAppend(line, tracked.m15AnchorFirstBreakDirection);
+   CsvAppend(line, DoubleToString(tracked.m15AnchorFirstBreakLevel, 8));
+   CsvAppend(line, DoubleToString(tracked.m15AnchorFirstBreakClose, 8));
+   CsvAppend(line, DoubleToString(tracked.m15AnchorFirstBreakAtr, 4));
+   CsvAppend(line, DoubleToString(tracked.m15AnchorFirstBreakBodyAtr, 4));
+   CsvAppend(line, tracked.m15AnchorFirstBreakQualityBucket);
+   CsvAppend(line, tracked.m15AnchorLatestBreakTime > 0 ? TimeToString(tracked.m15AnchorLatestBreakTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, tracked.m15AnchorBreakDetectionMode);
    CsvAppend(line, BoolText(tracked.m15BiasFlipDetected));
    CsvAppend(line, tracked.m15BiasFlipDirection);
    CsvAppend(line, IntegerToString(tracked.m15BiasFlipAgeBars));
+   CsvAppend(line, IntegerToString(tracked.m15BiasFlipAgeBarsOldLike));
+   CsvAppend(line, IntegerToString(tracked.m15BiasFlipAgeBarsFirstBreak));
+   CsvAppend(line, BoolText(tracked.m15BiasFlipIsFresh));
+   CsvAppend(line, BoolText(tracked.m15BiasFlipIsTooOld));
+   CsvAppend(line, tracked.m15BiasFlipAgeBucket);
    CsvAppend(line, BoolText(tracked.m15BiasAlignedWithEntry));
    CsvAppend(line, BoolText(tracked.m15BiasOppositeToEntry));
    CsvAppend(line, BoolText(tracked.m15BiasNeutral));
    CsvAppend(line, BoolText(tracked.m15AnchorGatePass));
    CsvAppend(line, tracked.m15AnchorGateRejectReason);
+   CsvAppend(line, BoolText(tracked.postAnchorPullbackEnabled));
+   CsvAppend(line, tracked.postAnchorPullbackMode);
+   CsvAppend(line, BoolText(tracked.postAnchorPullbackDetected));
+   CsvAppend(line, tracked.postAnchorPullbackTF);
+   CsvAppend(line, tracked.postAnchorPullbackStartTime > 0 ? TimeToString(tracked.postAnchorPullbackStartTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, tracked.postAnchorPullbackEndTime > 0 ? TimeToString(tracked.postAnchorPullbackEndTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, IntegerToString(tracked.postAnchorPullbackBarsAfterBreak));
+   CsvAppend(line, DoubleToString(tracked.postAnchorPullbackDistanceAtr, 4));
+   CsvAppend(line, BoolText(tracked.postAnchorRetestDetected));
+   CsvAppend(line, DoubleToString(tracked.postAnchorRetestLevel, 8));
+   CsvAppend(line, DoubleToString(tracked.postAnchorRetestDistanceAtr, 4));
+   CsvAppend(line, BoolText(tracked.postAnchorCloseBackInside));
+   CsvAppend(line, DoubleToString(tracked.postAnchorCloseBackInsideAtr, 4));
+   CsvAppend(line, BoolText(tracked.postAnchorM5ReconfirmDetected));
+   CsvAppend(line, tracked.postAnchorM5ReconfirmType);
+   CsvAppend(line, tracked.postAnchorPullbackQualityBucket);
+   CsvAppend(line, BoolText(tracked.postAnchorPullbackGatePass));
+   CsvAppend(line, tracked.postAnchorPullbackRejectReason);
    CsvAppend(line, tracked.m15NState);
    CsvAppend(line, BoolText(tracked.m15RangeDetected));
    CsvAppend(line, DoubleToString(tracked.m15RangeHigh, 8));
@@ -8644,14 +9133,48 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].m15AnchorBreakClose = plan.m15AnchorBreakClose;
    g_trades[size].m15AnchorBreakAtr = plan.m15AnchorBreakAtr;
    g_trades[size].m15AnchorBreakAgeBars = plan.m15AnchorBreakAgeBars;
+   g_trades[size].m15AnchorFirstBreakDetected = plan.m15AnchorFirstBreakDetected;
+   g_trades[size].m15AnchorFirstBreakTime = plan.m15AnchorFirstBreakTime;
+   g_trades[size].m15AnchorFirstBreakShift = plan.m15AnchorFirstBreakShift;
+   g_trades[size].m15AnchorFirstBreakDirection = plan.m15AnchorFirstBreakDirection;
+   g_trades[size].m15AnchorFirstBreakLevel = plan.m15AnchorFirstBreakLevel;
+   g_trades[size].m15AnchorFirstBreakClose = plan.m15AnchorFirstBreakClose;
+   g_trades[size].m15AnchorFirstBreakAtr = plan.m15AnchorFirstBreakAtr;
+   g_trades[size].m15AnchorFirstBreakBodyAtr = plan.m15AnchorFirstBreakBodyAtr;
+   g_trades[size].m15AnchorFirstBreakQualityBucket = plan.m15AnchorFirstBreakQualityBucket;
+   g_trades[size].m15AnchorLatestBreakTime = plan.m15AnchorLatestBreakTime;
+   g_trades[size].m15AnchorBreakDetectionMode = plan.m15AnchorBreakDetectionMode;
    g_trades[size].m15BiasFlipDetected = plan.m15BiasFlipDetected;
    g_trades[size].m15BiasFlipDirection = plan.m15BiasFlipDirection;
    g_trades[size].m15BiasFlipAgeBars = plan.m15BiasFlipAgeBars;
+   g_trades[size].m15BiasFlipAgeBarsOldLike = plan.m15BiasFlipAgeBarsOldLike;
+   g_trades[size].m15BiasFlipAgeBarsFirstBreak = plan.m15BiasFlipAgeBarsFirstBreak;
+   g_trades[size].m15BiasFlipIsFresh = plan.m15BiasFlipIsFresh;
+   g_trades[size].m15BiasFlipIsTooOld = plan.m15BiasFlipIsTooOld;
+   g_trades[size].m15BiasFlipAgeBucket = plan.m15BiasFlipAgeBucket;
    g_trades[size].m15BiasAlignedWithEntry = plan.m15BiasAlignedWithEntry;
    g_trades[size].m15BiasOppositeToEntry = plan.m15BiasOppositeToEntry;
    g_trades[size].m15BiasNeutral = plan.m15BiasNeutral;
    g_trades[size].m15AnchorGatePass = plan.m15AnchorGatePass;
    g_trades[size].m15AnchorGateRejectReason = plan.m15AnchorGateRejectReason;
+   g_trades[size].postAnchorPullbackEnabled = plan.postAnchorPullbackEnabled;
+   g_trades[size].postAnchorPullbackMode = plan.postAnchorPullbackMode;
+   g_trades[size].postAnchorPullbackDetected = plan.postAnchorPullbackDetected;
+   g_trades[size].postAnchorPullbackTF = plan.postAnchorPullbackTF;
+   g_trades[size].postAnchorPullbackStartTime = plan.postAnchorPullbackStartTime;
+   g_trades[size].postAnchorPullbackEndTime = plan.postAnchorPullbackEndTime;
+   g_trades[size].postAnchorPullbackBarsAfterBreak = plan.postAnchorPullbackBarsAfterBreak;
+   g_trades[size].postAnchorPullbackDistanceAtr = plan.postAnchorPullbackDistanceAtr;
+   g_trades[size].postAnchorRetestDetected = plan.postAnchorRetestDetected;
+   g_trades[size].postAnchorRetestLevel = plan.postAnchorRetestLevel;
+   g_trades[size].postAnchorRetestDistanceAtr = plan.postAnchorRetestDistanceAtr;
+   g_trades[size].postAnchorCloseBackInside = plan.postAnchorCloseBackInside;
+   g_trades[size].postAnchorCloseBackInsideAtr = plan.postAnchorCloseBackInsideAtr;
+   g_trades[size].postAnchorM5ReconfirmDetected = plan.postAnchorM5ReconfirmDetected;
+   g_trades[size].postAnchorM5ReconfirmType = plan.postAnchorM5ReconfirmType;
+   g_trades[size].postAnchorPullbackQualityBucket = plan.postAnchorPullbackQualityBucket;
+   g_trades[size].postAnchorPullbackGatePass = plan.postAnchorPullbackGatePass;
+   g_trades[size].postAnchorPullbackRejectReason = plan.postAnchorPullbackRejectReason;
    g_trades[size].m15NState = plan.m15NState;
    g_trades[size].m15RangeDetected = plan.m15RangeDetected;
    g_trades[size].m15RangeHigh = plan.m15RangeHigh;
@@ -9167,6 +9690,11 @@ int OnInit()
        InpM15AnchorLookbackBars < 24 ||
        InpM15AnchorMinSwingStrength < 1 ||
        InpM15BiasFlipMaxAgeBars < 1 ||
+       InpPostAnchorPullbackMaxBars < 1 ||
+       InpPostAnchorPullbackMinBars < 0 ||
+       InpPostAnchorPullbackMinBars > InpPostAnchorPullbackMaxBars ||
+       InpPostAnchorRetestMaxDistanceAtr < 0.0 ||
+       InpPostAnchorAllowCloseBackInsideAtr < 0.0 ||
        InpSessionInvalidationATR <= 0.0 ||
        InpMaxHoldBars < 1 ||
        InpRiskPerTradePercent <= 0.0 ||
