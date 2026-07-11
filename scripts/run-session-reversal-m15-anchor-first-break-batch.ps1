@@ -1,6 +1,8 @@
 param(
     [string]$TerminalPath = "C:\Program Files\XMTrading MT5 - 2\terminal64.exe",
     [string]$MatrixPath = "reports\backtest\runs\20260710_session_reversal_m15_anchor_first_break_pullback\run_matrix.csv",
+    [string]$RunRootPath = "reports\backtest\runs\20260710_session_reversal_m15_anchor_first_break_pullback",
+    [string]$AnalysisScript = "scripts\analyze-session-reversal-m15-anchor-first-break-cycles.py",
     [int]$TimeoutSecondsPerRun = 2700,
     [int]$StartAt = 1,
     [int]$Limit = 0,
@@ -13,7 +15,7 @@ $ErrorActionPreference = "Stop"
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $terminalDataRoot = (Resolve-Path (Join-Path $repoRoot "..\..\..")).Path
 $commonFiles = Join-Path $env:APPDATA "MetaQuotes\Terminal\Common\Files"
-$runRoot = Join-Path $repoRoot "reports\backtest\runs\20260710_session_reversal_m15_anchor_first_break_pullback"
+$runRoot = if ([System.IO.Path]::IsPathRooted($RunRootPath)) { $RunRootPath } else { Join-Path $repoRoot $RunRootPath }
 $statusPath = Join-Path $runRoot "batch_status.csv"
 $batchLogPath = Join-Path $runRoot ("batch_" + (Get-Date -Format "yyyyMMdd_HHmmss") + ".log")
 
@@ -202,7 +204,7 @@ foreach ($run in $selected) {
 
 if ($AnalyzeWhenDone) {
     Write-BatchLog "Running M15 anchor first-break analysis script."
-    $analysisOutput = & python (Join-Path $repoRoot "scripts\analyze-session-reversal-m15-anchor-first-break-cycles.py") 2>&1
+    $analysisOutput = & python (Resolve-RepoPath $AnalysisScript) 2>&1
     foreach ($line in $analysisOutput) {
         Add-Content -LiteralPath $batchLogPath -Value ("    " + [string]$line) -Encoding UTF8
     }

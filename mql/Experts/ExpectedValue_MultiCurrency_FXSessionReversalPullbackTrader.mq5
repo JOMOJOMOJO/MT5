@@ -191,6 +191,15 @@ enum ENUM_POST_ANCHOR_PULLBACK_MODE
    POST_ANCHOR_PULLBACK_REQUIRED = 3
   };
 
+enum ENUM_M5_POST_ANCHOR_RELAUNCH_MODE
+  {
+   M5_POST_ANCHOR_RELAUNCH_OFF = 0,
+   M5_POST_ANCHOR_RELAUNCH_DIAGNOSTIC_ONLY = 1,
+   M5_POST_ANCHOR_RELAUNCH_SCORE = 2,
+   M5_POST_ANCHOR_RELAUNCH_REQUIRED = 3,
+   M5_POST_ANCHOR_RELAUNCH_REQUIRED_FIRST_SIGNAL_ONLY = 4
+  };
+
 enum ENUM_EXIT_MODE
   {
    EXIT_FIXED_TP_SL = 0,
@@ -392,6 +401,45 @@ struct SignalPlan
    string            postAnchorPullbackQualityBucket;
    bool              postAnchorPullbackGatePass;
    string            postAnchorPullbackRejectReason;
+   bool              m5PostAnchorEnabled;
+   string            m5PostAnchorMode;
+   string            m5PostAnchorDirection;
+   string            m5MicroNState;
+   double            m5ActiveOshiyasuPrice;
+   datetime          m5ActiveOshiyasuTime;
+   double            m5ActiveModoritakanePrice;
+   datetime          m5ActiveModoritakaneTime;
+   bool              m5MicroAnchorCreatedAfterM15Break;
+   datetime          m5MicroAnchorCreationTime;
+   int               m5MicroAnchorAgeBars;
+   bool              m5RelaunchBreakDetected;
+   string            m5RelaunchBreakDirection;
+   double            m5RelaunchBreakLevel;
+   datetime          m5RelaunchBreakTime;
+   double            m5RelaunchBreakClose;
+   double            m5RelaunchBreakAtr;
+   double            m5RelaunchBreakBodyAtr;
+   string            m5RelaunchBreakQualityBucket;
+   int               m5RelaunchSignalAgeBars;
+   bool              m5RelaunchIsFirstValidSignal;
+   bool              m5RelaunchSignalConsumed;
+   bool              m5RelaunchGatePass;
+   string            m5RelaunchRejectReason;
+   string            m15AnchorBreakEventId;
+   string            m5RelaunchEventId;
+   datetime          m5RelaunchFirstEligibleTime;
+   bool              m5RelaunchExpired;
+   bool              m5RelaunchConsumedBeforeEntry;
+   bool              m5RelaunchReusedSignalBlocked;
+   int               barsFromM15BreakToPullback;
+   int               barsFromPullbackToMicroAnchor;
+   int               barsFromMicroAnchorToRelaunch;
+   int               barsFromRelaunchToEntry;
+   int               totalBarsFromM15BreakToEntry;
+   bool              entryOnRelaunchBar;
+   bool              entryOneBarAfterRelaunch;
+   bool              entryLateAfterRelaunch;
+   double            priceDistanceFromRelaunchLevelAtEntryAtr;
    string            m15NState;
    bool              m15RangeDetected;
    double            m15RangeHigh;
@@ -738,6 +786,45 @@ struct TrackedTrade
    string            postAnchorPullbackQualityBucket;
    bool              postAnchorPullbackGatePass;
    string            postAnchorPullbackRejectReason;
+   bool              m5PostAnchorEnabled;
+   string            m5PostAnchorMode;
+   string            m5PostAnchorDirection;
+   string            m5MicroNState;
+   double            m5ActiveOshiyasuPrice;
+   datetime          m5ActiveOshiyasuTime;
+   double            m5ActiveModoritakanePrice;
+   datetime          m5ActiveModoritakaneTime;
+   bool              m5MicroAnchorCreatedAfterM15Break;
+   datetime          m5MicroAnchorCreationTime;
+   int               m5MicroAnchorAgeBars;
+   bool              m5RelaunchBreakDetected;
+   string            m5RelaunchBreakDirection;
+   double            m5RelaunchBreakLevel;
+   datetime          m5RelaunchBreakTime;
+   double            m5RelaunchBreakClose;
+   double            m5RelaunchBreakAtr;
+   double            m5RelaunchBreakBodyAtr;
+   string            m5RelaunchBreakQualityBucket;
+   int               m5RelaunchSignalAgeBars;
+   bool              m5RelaunchIsFirstValidSignal;
+   bool              m5RelaunchSignalConsumed;
+   bool              m5RelaunchGatePass;
+   string            m5RelaunchRejectReason;
+   string            m15AnchorBreakEventId;
+   string            m5RelaunchEventId;
+   datetime          m5RelaunchFirstEligibleTime;
+   bool              m5RelaunchExpired;
+   bool              m5RelaunchConsumedBeforeEntry;
+   bool              m5RelaunchReusedSignalBlocked;
+   int               barsFromM15BreakToPullback;
+   int               barsFromPullbackToMicroAnchor;
+   int               barsFromMicroAnchorToRelaunch;
+   int               barsFromRelaunchToEntry;
+   int               totalBarsFromM15BreakToEntry;
+   bool              entryOnRelaunchBar;
+   bool              entryOneBarAfterRelaunch;
+   bool              entryLateAfterRelaunch;
+   double            priceDistanceFromRelaunchLevelAtEntryAtr;
    string            m15NState;
    bool              m15RangeDetected;
    double            m15RangeHigh;
@@ -1085,6 +1172,16 @@ input int             InpPostAnchorPullbackMinBars = 1;
 input double          InpPostAnchorRetestMaxDistanceAtr = 0.25;
 input double          InpPostAnchorAllowCloseBackInsideAtr = 0.10;
 input bool            InpPostAnchorRequireM5Reconfirm = true;
+input bool            InpUseM5PostAnchorRelaunch      = false;
+input ENUM_M5_POST_ANCHOR_RELAUNCH_MODE InpM5PostAnchorRelaunchMode = M5_POST_ANCHOR_RELAUNCH_OFF;
+input int             InpM5MicroAnchorLookbackBars    = 48;
+input int             InpM5MicroAnchorMinSwingStrength = 2;
+input bool            InpM5RelaunchBreakUseClose      = true;
+input double          InpM5RelaunchBreakMinAtr        = 0.05;
+input int             InpM5RelaunchMaxBarsAfterRetest = 12;
+input int             InpM5RelaunchFirstSignalMaxAgeBars = 1;
+input bool            InpM5RequireNewMicroAnchorAfterM15Break = true;
+input bool            InpM5RelaunchRequireNormalBreakQuality = false;
 input ENUM_EXIT_MODE  InpExitMode                      = EXIT_M5_FAILURE;
 input ENUM_STRUCTURE_TARGET_MODE InpStructureTargetMode = STRUCTURE_TARGET_OFF;
 input double          InpSessionInvalidationATR        = 0.85;
@@ -1111,6 +1208,7 @@ string        g_consumedSessionKeys[];
 string        g_consumedSymbolSessionKeys[];
 string        g_selectedSessionKeys[];
 string        g_selectedSymbols[];
+string        g_consumedM5RelaunchEventKeys[];
 double        g_initialEquity = 0.0;
 double        g_peakEquity = 0.0;
 double        g_dayStartEquity = 0.0;
@@ -1481,6 +1579,19 @@ string PostAnchorPullbackModeName()
    return "off";
   }
 
+string M5PostAnchorRelaunchModeName()
+  {
+   if(InpM5PostAnchorRelaunchMode == M5_POST_ANCHOR_RELAUNCH_DIAGNOSTIC_ONLY)
+      return "diagnostic_only";
+   if(InpM5PostAnchorRelaunchMode == M5_POST_ANCHOR_RELAUNCH_SCORE)
+      return "score";
+   if(InpM5PostAnchorRelaunchMode == M5_POST_ANCHOR_RELAUNCH_REQUIRED)
+      return "required";
+   if(InpM5PostAnchorRelaunchMode == M5_POST_ANCHOR_RELAUNCH_REQUIRED_FIRST_SIGNAL_ONLY)
+      return "required_first_signal_only";
+   return "off";
+  }
+
 string ExitModeName()
   {
    if(InpExitMode == EXIT_FIXED_TP_SL)
@@ -1526,15 +1637,31 @@ bool UsesM15Wave1Quality()
 bool UsesM15SwingAnchorBias()
   {
    return InpUseM15SwingAnchorBias || InpM15SwingAnchorMode != M15_SWING_ANCHOR_OFF ||
-           InpM15AnchorRangeMode != M15_ANCHOR_RANGE_ALLOW ||
-           InpUseTruePostAnchorBreakPullback ||
-           InpPostAnchorPullbackMode != POST_ANCHOR_PULLBACK_OFF;
+            InpM15AnchorRangeMode != M15_ANCHOR_RANGE_ALLOW ||
+            InpUseTruePostAnchorBreakPullback ||
+            InpPostAnchorPullbackMode != POST_ANCHOR_PULLBACK_OFF ||
+            InpUseM5PostAnchorRelaunch ||
+            InpM5PostAnchorRelaunchMode != M5_POST_ANCHOR_RELAUNCH_OFF;
   }
 
 bool UsesTruePostAnchorBreakPullback()
   {
    return InpUseTruePostAnchorBreakPullback ||
-          InpPostAnchorPullbackMode != POST_ANCHOR_PULLBACK_OFF;
+          InpPostAnchorPullbackMode != POST_ANCHOR_PULLBACK_OFF ||
+          InpUseM5PostAnchorRelaunch ||
+          InpM5PostAnchorRelaunchMode != M5_POST_ANCHOR_RELAUNCH_OFF;
+  }
+
+bool UsesM5PostAnchorRelaunch()
+  {
+   return InpUseM5PostAnchorRelaunch ||
+          InpM5PostAnchorRelaunchMode != M5_POST_ANCHOR_RELAUNCH_OFF;
+  }
+
+bool RequiresM5PostAnchorRelaunch()
+  {
+   return InpM5PostAnchorRelaunchMode == M5_POST_ANCHOR_RELAUNCH_REQUIRED ||
+          InpM5PostAnchorRelaunchMode == M5_POST_ANCHOR_RELAUNCH_REQUIRED_FIRST_SIGNAL_ONLY;
   }
 
 bool UsesM15WaveContext()
@@ -3716,6 +3843,295 @@ bool DetectPostAnchorBreakPullback(SignalPlan &plan, const int entryDirection)
    return true;
   }
 
+int BarsBetweenTimes(const datetime olderTime,
+                     const datetime newerTime,
+                     const ENUM_TIMEFRAMES tf)
+  {
+   if(olderTime <= 0 || newerTime < olderTime)
+      return -1;
+   int seconds = MathMax(1, PeriodSeconds(tf));
+   return (int)((newerTime - olderTime) / seconds);
+  }
+
+string M5RelaunchBreakQualityBucket(const double breakAtr, const double bodyAtr)
+  {
+   if(breakAtr >= 0.20 && bodyAtr >= 0.30)
+      return "strong";
+   if(breakAtr >= MathMax(0.05, InpM5RelaunchBreakMinAtr) && bodyAtr >= 0.10)
+      return "normal";
+   return "weak";
+  }
+
+string M15AnchorBreakEventId(const SignalPlan &plan)
+  {
+   int digits = (int)SymbolInfoInteger(plan.symbol, SYMBOL_DIGITS);
+   return plan.symbol + "|" + plan.m15AnchorFirstBreakDirection + "|" +
+          IntegerToString((long)plan.m15AnchorFirstBreakTime) + "|" +
+          DoubleToString(plan.m15AnchorFirstBreakLevel, digits);
+  }
+
+bool DetectM5PostAnchorRelaunch(SignalPlan &plan, const int entryDirection)
+  {
+   plan.m5PostAnchorEnabled = UsesM5PostAnchorRelaunch();
+   plan.m5PostAnchorMode = M5PostAnchorRelaunchModeName();
+   plan.m5PostAnchorDirection = DirectionText(entryDirection);
+   plan.m5RelaunchGatePass = false;
+   plan.m5RelaunchRejectReason = "not_evaluated";
+
+   if(!UsesM5PostAnchorRelaunch())
+     {
+      plan.m5RelaunchGatePass = true;
+      plan.m5RelaunchRejectReason = "not_required";
+      return true;
+     }
+
+   if(!AnchorFlipEntryDirection(plan, entryDirection))
+     {
+      plan.m5RelaunchRejectReason = "no_anchor_flip_in_entry_direction";
+      return true;
+     }
+   if(plan.m15AnchorFirstBreakTime <= 0 || plan.m15AnchorFirstBreakLevel <= 0.0)
+     {
+      plan.m5RelaunchRejectReason = "missing_m15_anchor_break";
+      return true;
+     }
+   plan.m15AnchorBreakEventId = M15AnchorBreakEventId(plan);
+
+   if(!plan.postAnchorRetestDetected || plan.postAnchorPullbackEndTime <= 0)
+     {
+      plan.m5RelaunchRejectReason = "post_anchor_retest_missing";
+      return true;
+     }
+
+   MqlRates rates[];
+   int bars = MathMax(InpM5MicroAnchorLookbackBars + InpM5MicroAnchorMinSwingStrength + 12,
+                      InpATRPeriod + InpM5MicroAnchorMinSwingStrength * 2 + 12);
+   if(!CopyClosedRates(plan.symbol, PERIOD_M5, bars, rates))
+     {
+      plan.m5RelaunchRejectReason = "m5_rates_unavailable";
+      return true;
+     }
+   double atr = ATR(rates, 0, InpATRPeriod);
+   if(atr <= 0.0)
+     {
+      plan.m5RelaunchRejectReason = "m5_invalid_atr";
+      return true;
+     }
+
+   datetime structureStart = InpM5RequireNewMicroAnchorAfterM15Break ?
+                             MathMax(plan.m15AnchorFirstBreakTime, plan.postAnchorPullbackEndTime) :
+                             plan.postAnchorPullbackEndTime;
+   DowPivot pivots[];
+   ArrayResize(pivots, 0);
+   int depth = MathMax(1, InpM5MicroAnchorMinSwingStrength);
+   int maxShift = MathMin(ArraySize(rates) - depth - 1, InpM5MicroAnchorLookbackBars);
+   for(int shift = maxShift; shift >= depth; --shift)
+     {
+      if(rates[shift].time < structureStart)
+         continue;
+      if(IsConfirmedPivotAt(rates, shift, true, depth))
+        {
+         DowPivot pivot;
+         pivot.time = rates[shift].time;
+         pivot.price = rates[shift].high;
+         pivot.kind = 1;
+         pivot.shift = shift;
+         AppendDowPivot(pivots, pivot, 0.0);
+        }
+      if(IsConfirmedPivotAt(rates, shift, false, depth))
+        {
+         DowPivot pivot;
+         pivot.time = rates[shift].time;
+         pivot.price = rates[shift].low;
+         pivot.kind = -1;
+         pivot.shift = shift;
+         AppendDowPivot(pivots, pivot, 0.0);
+        }
+     }
+
+   int count = ArraySize(pivots);
+   if(count < 3)
+     {
+      plan.m5MicroNState = count > 0 ? "unknown" : "no_confirmed_micro_anchor";
+      plan.m5RelaunchRejectReason = "insufficient_confirmed_m5_pivots";
+      return true;
+     }
+
+   DowPivot first = pivots[count - 3];
+   DowPivot middle = pivots[count - 2];
+   DowPivot last = pivots[count - 1];
+   bool fallingN = first.kind < 0 && middle.kind > 0 && last.kind < 0 && last.price < first.price;
+   bool risingN = first.kind > 0 && middle.kind < 0 && last.kind > 0 && last.price > first.price;
+   if(fallingN)
+      plan.m5MicroNState = "falling_n";
+   else if(risingN)
+      plan.m5MicroNState = "rising_n";
+   else
+      plan.m5MicroNState = "range_n";
+
+   bool directionStructure = (entryDirection > 0 && fallingN) || (entryDirection < 0 && risingN);
+   if(!directionStructure)
+     {
+      plan.m5RelaunchRejectReason = "micro_n_not_corrective_for_entry";
+      return true;
+     }
+
+   int confirmationShift = last.shift - depth;
+   if(confirmationShift < 0 || confirmationShift >= ArraySize(rates))
+     {
+      plan.m5RelaunchRejectReason = "micro_anchor_not_confirmed";
+      return true;
+     }
+   plan.m5MicroAnchorCreationTime = rates[confirmationShift].time;
+   plan.m5MicroAnchorCreatedAfterM15Break =
+      plan.m5MicroAnchorCreationTime > plan.m15AnchorFirstBreakTime;
+   plan.m5MicroAnchorAgeBars = BarsBetweenTimes(plan.m5MicroAnchorCreationTime, rates[0].time, PERIOD_M5);
+   if(entryDirection > 0)
+     {
+      plan.m5ActiveModoritakanePrice = middle.price;
+      plan.m5ActiveModoritakaneTime = middle.time;
+      plan.m5ActiveOshiyasuPrice = last.price;
+      plan.m5ActiveOshiyasuTime = last.time;
+      plan.m5RelaunchBreakLevel = middle.price;
+     }
+   else
+     {
+      plan.m5ActiveOshiyasuPrice = middle.price;
+      plan.m5ActiveOshiyasuTime = middle.time;
+      plan.m5ActiveModoritakanePrice = last.price;
+      plan.m5ActiveModoritakaneTime = last.time;
+      plan.m5RelaunchBreakLevel = middle.price;
+     }
+
+   if(InpM5RequireNewMicroAnchorAfterM15Break && !plan.m5MicroAnchorCreatedAfterM15Break)
+     {
+      plan.m5RelaunchRejectReason = "micro_anchor_not_new_after_m15_break";
+      return true;
+     }
+
+   double minBreak = atr * MathMax(0.0, InpM5RelaunchBreakMinAtr);
+   int relaunchShift = -1;
+   bool invalidatedBeforeBreak = false;
+   for(int shift = confirmationShift - 1; shift >= 0; --shift)
+     {
+      if(entryDirection > 0 && rates[shift].close < last.price)
+        {
+         invalidatedBeforeBreak = true;
+         break;
+        }
+      if(entryDirection < 0 && rates[shift].close > last.price)
+        {
+         invalidatedBeforeBreak = true;
+         break;
+        }
+      double testPrice = InpM5RelaunchBreakUseClose ? rates[shift].close :
+                         (entryDirection > 0 ? rates[shift].high : rates[shift].low);
+      bool broke = entryDirection > 0 ? testPrice > middle.price + minBreak :
+                                        testPrice < middle.price - minBreak;
+      if(broke)
+        {
+         relaunchShift = shift;
+         break;
+        }
+     }
+   if(invalidatedBeforeBreak)
+     {
+      plan.m5RelaunchRejectReason = "micro_pullback_invalidated_before_relaunch";
+      return true;
+     }
+   if(relaunchShift < 0)
+     {
+      plan.m5RelaunchRejectReason = "micro_anchor_not_broken";
+      return true;
+     }
+
+   plan.m5RelaunchBreakDetected = true;
+   plan.m5RelaunchBreakDirection = DirectionText(entryDirection);
+   plan.m5RelaunchBreakTime = rates[relaunchShift].time;
+   plan.m5RelaunchBreakClose = rates[relaunchShift].close;
+   double testPrice = InpM5RelaunchBreakUseClose ? rates[relaunchShift].close :
+                      (entryDirection > 0 ? rates[relaunchShift].high : rates[relaunchShift].low);
+   plan.m5RelaunchBreakAtr = entryDirection > 0 ?
+                             (testPrice - middle.price) / atr :
+                             (middle.price - testPrice) / atr;
+   plan.m5RelaunchBreakBodyAtr = MathAbs(rates[relaunchShift].close - rates[relaunchShift].open) / atr;
+   plan.m5RelaunchBreakQualityBucket =
+      M5RelaunchBreakQualityBucket(plan.m5RelaunchBreakAtr, plan.m5RelaunchBreakBodyAtr);
+   plan.m5RelaunchSignalAgeBars = relaunchShift;
+   plan.m5RelaunchFirstEligibleTime = plan.m5RelaunchBreakTime;
+   plan.m5RelaunchIsFirstValidSignal =
+      relaunchShift <= MathMax(0, InpM5RelaunchFirstSignalMaxAgeBars);
+
+   int digits = (int)SymbolInfoInteger(plan.symbol, SYMBOL_DIGITS);
+   plan.m5RelaunchEventId = plan.m15AnchorBreakEventId + "|M5|" +
+                            IntegerToString((long)plan.m5MicroAnchorCreationTime) + "|" +
+                            DoubleToString(plan.m5RelaunchBreakLevel, digits);
+   plan.m5RelaunchConsumedBeforeEntry = HasKey(g_consumedM5RelaunchEventKeys, plan.m5RelaunchEventId);
+   plan.m5RelaunchSignalConsumed = plan.m5RelaunchConsumedBeforeEntry;
+   plan.m5RelaunchReusedSignalBlocked = plan.m5RelaunchConsumedBeforeEntry;
+   plan.m5RelaunchExpired = !plan.m5RelaunchIsFirstValidSignal;
+
+   plan.barsFromM15BreakToPullback =
+      BarsBetweenTimes(plan.m15AnchorFirstBreakTime, plan.postAnchorPullbackEndTime, PERIOD_M5);
+   plan.barsFromPullbackToMicroAnchor =
+      BarsBetweenTimes(plan.postAnchorPullbackEndTime, plan.m5MicroAnchorCreationTime, PERIOD_M5);
+   plan.barsFromMicroAnchorToRelaunch =
+      BarsBetweenTimes(plan.m5MicroAnchorCreationTime, plan.m5RelaunchBreakTime, PERIOD_M5);
+   plan.barsFromRelaunchToEntry = relaunchShift;
+   plan.totalBarsFromM15BreakToEntry =
+      BarsBetweenTimes(plan.m15AnchorFirstBreakTime, rates[0].time, PERIOD_M5);
+   plan.entryOnRelaunchBar = relaunchShift == 0;
+   plan.entryOneBarAfterRelaunch = relaunchShift == 1;
+   plan.entryLateAfterRelaunch = relaunchShift >= 2;
+   plan.priceDistanceFromRelaunchLevelAtEntryAtr = entryDirection > 0 ?
+      (rates[0].close - plan.m5RelaunchBreakLevel) / atr :
+      (plan.m5RelaunchBreakLevel - rates[0].close) / atr;
+
+   int barsAfterRetest = BarsBetweenTimes(plan.postAnchorPullbackEndTime,
+                                          plan.m5RelaunchBreakTime,
+                                          PERIOD_M5);
+   bool timingPass = barsAfterRetest >= 0 &&
+                     barsAfterRetest <= InpM5RelaunchMaxBarsAfterRetest;
+   bool qualityPass = !InpM5RelaunchRequireNormalBreakQuality ||
+                      plan.m5RelaunchBreakQualityBucket == "normal" ||
+                      plan.m5RelaunchBreakQualityBucket == "strong";
+   bool firstSignalMode =
+      InpM5PostAnchorRelaunchMode == M5_POST_ANCHOR_RELAUNCH_REQUIRED_FIRST_SIGNAL_ONLY;
+   bool pass = timingPass && qualityPass;
+   if(firstSignalMode)
+      pass = pass && plan.m5RelaunchIsFirstValidSignal &&
+             !plan.m5RelaunchConsumedBeforeEntry;
+   plan.m5RelaunchGatePass = pass;
+   if(!timingPass)
+      plan.m5RelaunchRejectReason = "relaunch_too_late_after_retest";
+   else if(!qualityPass)
+      plan.m5RelaunchRejectReason = "relaunch_break_quality_below_normal";
+   else if(firstSignalMode && plan.m5RelaunchConsumedBeforeEntry)
+      plan.m5RelaunchRejectReason = "relaunch_signal_already_consumed";
+   else if(firstSignalMode && !plan.m5RelaunchIsFirstValidSignal)
+      plan.m5RelaunchRejectReason = "relaunch_signal_expired";
+   else
+      plan.m5RelaunchRejectReason = "none";
+
+   if(InpM5PostAnchorRelaunchMode == M5_POST_ANCHOR_RELAUNCH_SCORE && pass)
+     {
+      double score = plan.m5RelaunchBreakQualityBucket == "strong" ? 0.22 : 0.16;
+      plan.nestedScore += score;
+      plan.score += score;
+     }
+   return true;
+  }
+
+void ReserveM5RelaunchSignal(SignalPlan &plan)
+  {
+   if(InpM5PostAnchorRelaunchMode != M5_POST_ANCHOR_RELAUNCH_REQUIRED_FIRST_SIGNAL_ONLY ||
+      !plan.m5RelaunchGatePass || plan.m5RelaunchEventId == "")
+      return;
+   if(!HasKey(g_consumedM5RelaunchEventKeys, plan.m5RelaunchEventId))
+      AddKey(g_consumedM5RelaunchEventKeys, plan.m5RelaunchEventId);
+   plan.m5RelaunchSignalConsumed = true;
+  }
+
 void EvaluateM15RangeDiagnostics(SignalPlan &plan, const DowPivot &pivots[], const double atr)
   {
    plan.m15NState = M15NStateFromPivots(pivots, atr);
@@ -3952,6 +4368,13 @@ bool AnchorFlipQualifiersPass(const SignalPlan &plan, string &rejectReason)
       rejectReason = plan.postAnchorPullbackRejectReason == "none" ?
                      "anchor_flip_no_post_break_pullback" :
                      plan.postAnchorPullbackRejectReason;
+      return false;
+     }
+   if(RequiresM5PostAnchorRelaunch() && !plan.m5RelaunchGatePass)
+     {
+      rejectReason = plan.m5RelaunchRejectReason == "none" ?
+                     "m5_micro_n_relaunch_failed" :
+                     plan.m5RelaunchRejectReason;
       return false;
      }
    if(InpM15AnchorFlipRequireHighMediumM5Pattern &&
@@ -5191,6 +5614,8 @@ bool ApplyRefinedWaveContext(SignalPlan &plan, const int entryDirection)
       return false;
    if(!DetectPostAnchorBreakPullback(plan, entryDirection))
       return false;
+   if(!DetectM5PostAnchorRelaunch(plan, entryDirection))
+      return false;
    if(!ApplyM15SwingAnchorBiasGate(plan, entryDirection))
       return false;
 
@@ -6337,6 +6762,69 @@ void ApplySelectedCandidateToPlan(SignalPlan &plan, const PatternCandidate &cand
    plan.selectedCandidatePattern = candidate.pattern;
   }
 
+bool ConsiderM5MicroNRelaunchCandidate(SignalPlan &plan,
+                                       const int allowedDirection,
+                                       const double atr,
+                                       PatternCandidate &best)
+  {
+   if(!RequiresM5PostAnchorRelaunch())
+      return false;
+
+   bool found = false;
+   SignalPlan basePlan = plan;
+   for(int direction = 1; direction >= -1; direction -= 2)
+     {
+      if(allowedDirection != 2 && allowedDirection != direction)
+         continue;
+
+      SignalPlan probe = basePlan;
+      if(!DetectRefinedM15WaveContext(probe, direction))
+         continue;
+      if(!DetectM15SwingAnchorBias(probe, direction))
+         continue;
+      if(!DetectPostAnchorBreakPullback(probe, direction))
+         continue;
+      if(!DetectM5PostAnchorRelaunch(probe, direction))
+         continue;
+      if(!AnchorFlipEntryDirection(probe, direction) ||
+         !probe.postAnchorPullbackGatePass ||
+         !probe.m5RelaunchGatePass)
+         continue;
+
+      double stopAnchor = direction > 0 ? probe.m5ActiveOshiyasuPrice :
+                                         probe.m5ActiveModoritakanePrice;
+      if(stopAnchor <= 0.0)
+         continue;
+
+      double qualityScore = probe.m5RelaunchBreakQualityBucket == "strong" ? 0.20 :
+                            (probe.m5RelaunchBreakQualityBucket == "normal" ? 0.10 : 0.0);
+      PatternCandidate candidate;
+      ResetPatternCandidate(candidate);
+      candidate.valid = true;
+      candidate.direction = direction;
+      candidate.pattern = "m5_micro_n_relaunch";
+      candidate.trigger = "first_confirmed_micro_anchor_break";
+      candidate.neckline = probe.m5RelaunchBreakLevel;
+      candidate.stopAnchor = stopAnchor;
+      candidate.score = 1.35 + qualityScore;
+      candidate.timeframeLabel = TFName(PERIOD_M5);
+      candidate.atr = atr;
+
+      if(!best.valid || candidate.score > best.score)
+        {
+         best = candidate;
+         plan = probe;
+        }
+      if(direction > 0)
+         plan.candidateLongDetected = true;
+      else
+         plan.candidateShortDetected = true;
+      UpdateTimeframeBestDiagnostics(plan, TFName(PERIOD_M5), candidate.pattern, candidate.score);
+      found = true;
+     }
+   return found;
+  }
+
 double RetestReferenceScore(const string referenceType)
   {
    if(referenceType == "none" || referenceType == "")
@@ -6646,6 +7134,45 @@ void ResetPlan(SignalPlan &plan, const string symbol)
    plan.postAnchorPullbackQualityBucket = "none";
    plan.postAnchorPullbackGatePass = true;
    plan.postAnchorPullbackRejectReason = "not_evaluated";
+   plan.m5PostAnchorEnabled = UsesM5PostAnchorRelaunch();
+   plan.m5PostAnchorMode = M5PostAnchorRelaunchModeName();
+   plan.m5PostAnchorDirection = "NONE";
+   plan.m5MicroNState = "unknown";
+   plan.m5ActiveOshiyasuPrice = 0.0;
+   plan.m5ActiveOshiyasuTime = 0;
+   plan.m5ActiveModoritakanePrice = 0.0;
+   plan.m5ActiveModoritakaneTime = 0;
+   plan.m5MicroAnchorCreatedAfterM15Break = false;
+   plan.m5MicroAnchorCreationTime = 0;
+   plan.m5MicroAnchorAgeBars = -1;
+   plan.m5RelaunchBreakDetected = false;
+   plan.m5RelaunchBreakDirection = "NONE";
+   plan.m5RelaunchBreakLevel = 0.0;
+   plan.m5RelaunchBreakTime = 0;
+   plan.m5RelaunchBreakClose = 0.0;
+   plan.m5RelaunchBreakAtr = 0.0;
+   plan.m5RelaunchBreakBodyAtr = 0.0;
+   plan.m5RelaunchBreakQualityBucket = "none";
+   plan.m5RelaunchSignalAgeBars = -1;
+   plan.m5RelaunchIsFirstValidSignal = false;
+   plan.m5RelaunchSignalConsumed = false;
+   plan.m5RelaunchGatePass = true;
+   plan.m5RelaunchRejectReason = "not_evaluated";
+   plan.m15AnchorBreakEventId = "";
+   plan.m5RelaunchEventId = "";
+   plan.m5RelaunchFirstEligibleTime = 0;
+   plan.m5RelaunchExpired = false;
+   plan.m5RelaunchConsumedBeforeEntry = false;
+   plan.m5RelaunchReusedSignalBlocked = false;
+   plan.barsFromM15BreakToPullback = -1;
+   plan.barsFromPullbackToMicroAnchor = -1;
+   plan.barsFromMicroAnchorToRelaunch = -1;
+   plan.barsFromRelaunchToEntry = -1;
+   plan.totalBarsFromM15BreakToEntry = -1;
+   plan.entryOnRelaunchBar = false;
+   plan.entryOneBarAfterRelaunch = false;
+   plan.entryLateAfterRelaunch = false;
+   plan.priceDistanceFromRelaunchLevelAtEntryAtr = 0.0;
    plan.m15NState = "unknown";
    plan.m15RangeDetected = false;
    plan.m15RangeHigh = 0.0;
@@ -7345,6 +7872,8 @@ bool BuildSessionReversalSignal(const string symbol, const SessionInfo &session,
            }
         }
 
+      ConsiderM5MicroNRelaunchCandidate(plan, allowedDirection, atr, bestCandidate);
+
       if(!bestCandidate.valid)
          return false;
 
@@ -7381,6 +7910,9 @@ bool BuildSessionReversalSignal(const string symbol, const SessionInfo &session,
                                              2, plan, bestCandidate);
            }
         }
+
+
+      ConsiderM5MicroNRelaunchCandidate(plan, 2, atr, bestCandidate);
 
       if(!bestCandidate.valid)
          return false;
@@ -7465,6 +7997,7 @@ bool BuildSessionReversalSignal(const string symbol, const SessionInfo &session,
 
    ApplyScoreComponents(plan);
 
+   ReserveM5RelaunchSignal(plan);
    plan.valid = true;
    return true;
   }
@@ -7504,6 +8037,16 @@ string SignalHeaderLine()
           "post_anchor_pullback_bars_after_break,post_anchor_pullback_distance_atr,post_anchor_retest_detected,post_anchor_retest_level,post_anchor_retest_distance_atr," +
           "post_anchor_close_back_inside,post_anchor_close_back_inside_atr,post_anchor_m5_reconfirm_detected,post_anchor_m5_reconfirm_type,post_anchor_pullback_quality_bucket," +
           "post_anchor_pullback_gate_pass,post_anchor_pullback_reject_reason," +
+          "m5_post_anchor_enabled,m5_post_anchor_mode,m5_post_anchor_direction,m5_micro_n_state," +
+          "m5_active_oshiyasu_price,m5_active_oshiyasu_time,m5_active_modoritakane_price,m5_active_modoritakane_time," +
+          "m5_micro_anchor_created_after_m15_break,m5_micro_anchor_creation_time,m5_micro_anchor_age_bars," +
+          "m5_relaunch_break_detected,m5_relaunch_break_direction,m5_relaunch_break_level,m5_relaunch_break_time,m5_relaunch_break_close," +
+          "m5_relaunch_break_atr,m5_relaunch_break_body_atr,m5_relaunch_break_quality_bucket,m5_relaunch_signal_age_bars," +
+          "m5_relaunch_is_first_valid_signal,m5_relaunch_signal_consumed,m5_relaunch_gate_pass,m5_relaunch_reject_reason," +
+          "m15_anchor_break_event_id,m5_relaunch_event_id,m5_relaunch_first_eligible_time,m5_relaunch_expired," +
+          "m5_relaunch_consumed_before_entry,m5_relaunch_reused_signal_blocked," +
+          "bars_from_m15_break_to_pullback,bars_from_pullback_to_micro_anchor,bars_from_micro_anchor_to_relaunch,bars_from_relaunch_to_entry," +
+          "total_bars_from_m15_break_to_entry,entry_on_relaunch_bar,entry_one_bar_after_relaunch,entry_late_after_relaunch,price_distance_from_relaunch_level_at_entry_atr," +
           "m15_n_state,m15_range_detected,m15_range_high,m15_range_low,m15_range_width_atr,anchor_break_close_beyond,anchor_break_body_atr," +
           "anchor_break_wick_ratio,anchor_break_followthrough_bars,anchor_break_quality_bucket," +
           "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
@@ -7727,6 +8270,45 @@ void WriteSignalRow(const SignalPlan &plan, const string eventName)
    CsvAppend(line, plan.postAnchorPullbackQualityBucket);
    CsvAppend(line, BoolText(plan.postAnchorPullbackGatePass));
    CsvAppend(line, plan.postAnchorPullbackRejectReason);
+   CsvAppend(line, BoolText(plan.m5PostAnchorEnabled));
+   CsvAppend(line, plan.m5PostAnchorMode);
+   CsvAppend(line, plan.m5PostAnchorDirection);
+   CsvAppend(line, plan.m5MicroNState);
+   CsvAppend(line, DoubleToString(plan.m5ActiveOshiyasuPrice, 8));
+   CsvAppend(line, plan.m5ActiveOshiyasuTime > 0 ? TimeToString(plan.m5ActiveOshiyasuTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, DoubleToString(plan.m5ActiveModoritakanePrice, 8));
+   CsvAppend(line, plan.m5ActiveModoritakaneTime > 0 ? TimeToString(plan.m5ActiveModoritakaneTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, BoolText(plan.m5MicroAnchorCreatedAfterM15Break));
+   CsvAppend(line, plan.m5MicroAnchorCreationTime > 0 ? TimeToString(plan.m5MicroAnchorCreationTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, IntegerToString(plan.m5MicroAnchorAgeBars));
+   CsvAppend(line, BoolText(plan.m5RelaunchBreakDetected));
+   CsvAppend(line, plan.m5RelaunchBreakDirection);
+   CsvAppend(line, DoubleToString(plan.m5RelaunchBreakLevel, 8));
+   CsvAppend(line, plan.m5RelaunchBreakTime > 0 ? TimeToString(plan.m5RelaunchBreakTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, DoubleToString(plan.m5RelaunchBreakClose, 8));
+   CsvAppend(line, DoubleToString(plan.m5RelaunchBreakAtr, 4));
+   CsvAppend(line, DoubleToString(plan.m5RelaunchBreakBodyAtr, 4));
+   CsvAppend(line, plan.m5RelaunchBreakQualityBucket);
+   CsvAppend(line, IntegerToString(plan.m5RelaunchSignalAgeBars));
+   CsvAppend(line, BoolText(plan.m5RelaunchIsFirstValidSignal));
+   CsvAppend(line, BoolText(plan.m5RelaunchSignalConsumed));
+   CsvAppend(line, BoolText(plan.m5RelaunchGatePass));
+   CsvAppend(line, plan.m5RelaunchRejectReason);
+   CsvAppend(line, plan.m15AnchorBreakEventId);
+   CsvAppend(line, plan.m5RelaunchEventId);
+   CsvAppend(line, plan.m5RelaunchFirstEligibleTime > 0 ? TimeToString(plan.m5RelaunchFirstEligibleTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, BoolText(plan.m5RelaunchExpired));
+   CsvAppend(line, BoolText(plan.m5RelaunchConsumedBeforeEntry));
+   CsvAppend(line, BoolText(plan.m5RelaunchReusedSignalBlocked));
+   CsvAppend(line, IntegerToString(plan.barsFromM15BreakToPullback));
+   CsvAppend(line, IntegerToString(plan.barsFromPullbackToMicroAnchor));
+   CsvAppend(line, IntegerToString(plan.barsFromMicroAnchorToRelaunch));
+   CsvAppend(line, IntegerToString(plan.barsFromRelaunchToEntry));
+   CsvAppend(line, IntegerToString(plan.totalBarsFromM15BreakToEntry));
+   CsvAppend(line, BoolText(plan.entryOnRelaunchBar));
+   CsvAppend(line, BoolText(plan.entryOneBarAfterRelaunch));
+   CsvAppend(line, BoolText(plan.entryLateAfterRelaunch));
+   CsvAppend(line, DoubleToString(plan.priceDistanceFromRelaunchLevelAtEntryAtr, 4));
    CsvAppend(line, plan.m15NState);
    CsvAppend(line, BoolText(plan.m15RangeDetected));
    CsvAppend(line, DoubleToString(plan.m15RangeHigh, 8));
@@ -7993,6 +8575,16 @@ string TradeHeaderLine()
           "post_anchor_pullback_bars_after_break,post_anchor_pullback_distance_atr,post_anchor_retest_detected,post_anchor_retest_level,post_anchor_retest_distance_atr," +
           "post_anchor_close_back_inside,post_anchor_close_back_inside_atr,post_anchor_m5_reconfirm_detected,post_anchor_m5_reconfirm_type,post_anchor_pullback_quality_bucket," +
           "post_anchor_pullback_gate_pass,post_anchor_pullback_reject_reason," +
+          "m5_post_anchor_enabled,m5_post_anchor_mode,m5_post_anchor_direction,m5_micro_n_state," +
+          "m5_active_oshiyasu_price,m5_active_oshiyasu_time,m5_active_modoritakane_price,m5_active_modoritakane_time," +
+          "m5_micro_anchor_created_after_m15_break,m5_micro_anchor_creation_time,m5_micro_anchor_age_bars," +
+          "m5_relaunch_break_detected,m5_relaunch_break_direction,m5_relaunch_break_level,m5_relaunch_break_time,m5_relaunch_break_close," +
+          "m5_relaunch_break_atr,m5_relaunch_break_body_atr,m5_relaunch_break_quality_bucket,m5_relaunch_signal_age_bars," +
+          "m5_relaunch_is_first_valid_signal,m5_relaunch_signal_consumed,m5_relaunch_gate_pass,m5_relaunch_reject_reason," +
+          "m15_anchor_break_event_id,m5_relaunch_event_id,m5_relaunch_first_eligible_time,m5_relaunch_expired," +
+          "m5_relaunch_consumed_before_entry,m5_relaunch_reused_signal_blocked," +
+          "bars_from_m15_break_to_pullback,bars_from_pullback_to_micro_anchor,bars_from_micro_anchor_to_relaunch,bars_from_relaunch_to_entry," +
+          "total_bars_from_m15_break_to_entry,entry_on_relaunch_bar,entry_one_bar_after_relaunch,entry_late_after_relaunch,price_distance_from_relaunch_level_at_entry_atr," +
           "m15_n_state,m15_range_detected,m15_range_high,m15_range_low,m15_range_width_atr,anchor_break_close_beyond,anchor_break_body_atr," +
           "anchor_break_wick_ratio,anchor_break_followthrough_bars,anchor_break_quality_bucket," +
           "m15_wave2_candidate,m15_wave2_retrace_ratio,m15_wave2_fib_zone,m15_wave2_fib_score,m15_wave_context_mode," +
@@ -8253,6 +8845,45 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, tracked.postAnchorPullbackQualityBucket);
    CsvAppend(line, BoolText(tracked.postAnchorPullbackGatePass));
    CsvAppend(line, tracked.postAnchorPullbackRejectReason);
+   CsvAppend(line, BoolText(tracked.m5PostAnchorEnabled));
+   CsvAppend(line, tracked.m5PostAnchorMode);
+   CsvAppend(line, tracked.m5PostAnchorDirection);
+   CsvAppend(line, tracked.m5MicroNState);
+   CsvAppend(line, DoubleToString(tracked.m5ActiveOshiyasuPrice, 8));
+   CsvAppend(line, tracked.m5ActiveOshiyasuTime > 0 ? TimeToString(tracked.m5ActiveOshiyasuTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, DoubleToString(tracked.m5ActiveModoritakanePrice, 8));
+   CsvAppend(line, tracked.m5ActiveModoritakaneTime > 0 ? TimeToString(tracked.m5ActiveModoritakaneTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, BoolText(tracked.m5MicroAnchorCreatedAfterM15Break));
+   CsvAppend(line, tracked.m5MicroAnchorCreationTime > 0 ? TimeToString(tracked.m5MicroAnchorCreationTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, IntegerToString(tracked.m5MicroAnchorAgeBars));
+   CsvAppend(line, BoolText(tracked.m5RelaunchBreakDetected));
+   CsvAppend(line, tracked.m5RelaunchBreakDirection);
+   CsvAppend(line, DoubleToString(tracked.m5RelaunchBreakLevel, 8));
+   CsvAppend(line, tracked.m5RelaunchBreakTime > 0 ? TimeToString(tracked.m5RelaunchBreakTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, DoubleToString(tracked.m5RelaunchBreakClose, 8));
+   CsvAppend(line, DoubleToString(tracked.m5RelaunchBreakAtr, 4));
+   CsvAppend(line, DoubleToString(tracked.m5RelaunchBreakBodyAtr, 4));
+   CsvAppend(line, tracked.m5RelaunchBreakQualityBucket);
+   CsvAppend(line, IntegerToString(tracked.m5RelaunchSignalAgeBars));
+   CsvAppend(line, BoolText(tracked.m5RelaunchIsFirstValidSignal));
+   CsvAppend(line, BoolText(tracked.m5RelaunchSignalConsumed));
+   CsvAppend(line, BoolText(tracked.m5RelaunchGatePass));
+   CsvAppend(line, tracked.m5RelaunchRejectReason);
+   CsvAppend(line, tracked.m15AnchorBreakEventId);
+   CsvAppend(line, tracked.m5RelaunchEventId);
+   CsvAppend(line, tracked.m5RelaunchFirstEligibleTime > 0 ? TimeToString(tracked.m5RelaunchFirstEligibleTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, BoolText(tracked.m5RelaunchExpired));
+   CsvAppend(line, BoolText(tracked.m5RelaunchConsumedBeforeEntry));
+   CsvAppend(line, BoolText(tracked.m5RelaunchReusedSignalBlocked));
+   CsvAppend(line, IntegerToString(tracked.barsFromM15BreakToPullback));
+   CsvAppend(line, IntegerToString(tracked.barsFromPullbackToMicroAnchor));
+   CsvAppend(line, IntegerToString(tracked.barsFromMicroAnchorToRelaunch));
+   CsvAppend(line, IntegerToString(tracked.barsFromRelaunchToEntry));
+   CsvAppend(line, IntegerToString(tracked.totalBarsFromM15BreakToEntry));
+   CsvAppend(line, BoolText(tracked.entryOnRelaunchBar));
+   CsvAppend(line, BoolText(tracked.entryOneBarAfterRelaunch));
+   CsvAppend(line, BoolText(tracked.entryLateAfterRelaunch));
+   CsvAppend(line, DoubleToString(tracked.priceDistanceFromRelaunchLevelAtEntryAtr, 4));
    CsvAppend(line, tracked.m15NState);
    CsvAppend(line, BoolText(tracked.m15RangeDetected));
    CsvAppend(line, DoubleToString(tracked.m15RangeHigh, 8));
@@ -9175,6 +9806,45 @@ void TrackNewPosition(const SignalPlan &plan, const double volume)
    g_trades[size].postAnchorPullbackQualityBucket = plan.postAnchorPullbackQualityBucket;
    g_trades[size].postAnchorPullbackGatePass = plan.postAnchorPullbackGatePass;
    g_trades[size].postAnchorPullbackRejectReason = plan.postAnchorPullbackRejectReason;
+   g_trades[size].m5PostAnchorEnabled = plan.m5PostAnchorEnabled;
+   g_trades[size].m5PostAnchorMode = plan.m5PostAnchorMode;
+   g_trades[size].m5PostAnchorDirection = plan.m5PostAnchorDirection;
+   g_trades[size].m5MicroNState = plan.m5MicroNState;
+   g_trades[size].m5ActiveOshiyasuPrice = plan.m5ActiveOshiyasuPrice;
+   g_trades[size].m5ActiveOshiyasuTime = plan.m5ActiveOshiyasuTime;
+   g_trades[size].m5ActiveModoritakanePrice = plan.m5ActiveModoritakanePrice;
+   g_trades[size].m5ActiveModoritakaneTime = plan.m5ActiveModoritakaneTime;
+   g_trades[size].m5MicroAnchorCreatedAfterM15Break = plan.m5MicroAnchorCreatedAfterM15Break;
+   g_trades[size].m5MicroAnchorCreationTime = plan.m5MicroAnchorCreationTime;
+   g_trades[size].m5MicroAnchorAgeBars = plan.m5MicroAnchorAgeBars;
+   g_trades[size].m5RelaunchBreakDetected = plan.m5RelaunchBreakDetected;
+   g_trades[size].m5RelaunchBreakDirection = plan.m5RelaunchBreakDirection;
+   g_trades[size].m5RelaunchBreakLevel = plan.m5RelaunchBreakLevel;
+   g_trades[size].m5RelaunchBreakTime = plan.m5RelaunchBreakTime;
+   g_trades[size].m5RelaunchBreakClose = plan.m5RelaunchBreakClose;
+   g_trades[size].m5RelaunchBreakAtr = plan.m5RelaunchBreakAtr;
+   g_trades[size].m5RelaunchBreakBodyAtr = plan.m5RelaunchBreakBodyAtr;
+   g_trades[size].m5RelaunchBreakQualityBucket = plan.m5RelaunchBreakQualityBucket;
+   g_trades[size].m5RelaunchSignalAgeBars = plan.m5RelaunchSignalAgeBars;
+   g_trades[size].m5RelaunchIsFirstValidSignal = plan.m5RelaunchIsFirstValidSignal;
+   g_trades[size].m5RelaunchSignalConsumed = plan.m5RelaunchSignalConsumed;
+   g_trades[size].m5RelaunchGatePass = plan.m5RelaunchGatePass;
+   g_trades[size].m5RelaunchRejectReason = plan.m5RelaunchRejectReason;
+   g_trades[size].m15AnchorBreakEventId = plan.m15AnchorBreakEventId;
+   g_trades[size].m5RelaunchEventId = plan.m5RelaunchEventId;
+   g_trades[size].m5RelaunchFirstEligibleTime = plan.m5RelaunchFirstEligibleTime;
+   g_trades[size].m5RelaunchExpired = plan.m5RelaunchExpired;
+   g_trades[size].m5RelaunchConsumedBeforeEntry = plan.m5RelaunchConsumedBeforeEntry;
+   g_trades[size].m5RelaunchReusedSignalBlocked = plan.m5RelaunchReusedSignalBlocked;
+   g_trades[size].barsFromM15BreakToPullback = plan.barsFromM15BreakToPullback;
+   g_trades[size].barsFromPullbackToMicroAnchor = plan.barsFromPullbackToMicroAnchor;
+   g_trades[size].barsFromMicroAnchorToRelaunch = plan.barsFromMicroAnchorToRelaunch;
+   g_trades[size].barsFromRelaunchToEntry = plan.barsFromRelaunchToEntry;
+   g_trades[size].totalBarsFromM15BreakToEntry = plan.totalBarsFromM15BreakToEntry;
+   g_trades[size].entryOnRelaunchBar = plan.entryOnRelaunchBar;
+   g_trades[size].entryOneBarAfterRelaunch = plan.entryOneBarAfterRelaunch;
+   g_trades[size].entryLateAfterRelaunch = plan.entryLateAfterRelaunch;
+   g_trades[size].priceDistanceFromRelaunchLevelAtEntryAtr = plan.priceDistanceFromRelaunchLevelAtEntryAtr;
    g_trades[size].m15NState = plan.m15NState;
    g_trades[size].m15RangeDetected = plan.m15RangeDetected;
    g_trades[size].m15RangeHigh = plan.m15RangeHigh;
@@ -9695,6 +10365,11 @@ int OnInit()
        InpPostAnchorPullbackMinBars > InpPostAnchorPullbackMaxBars ||
        InpPostAnchorRetestMaxDistanceAtr < 0.0 ||
        InpPostAnchorAllowCloseBackInsideAtr < 0.0 ||
+       InpM5MicroAnchorLookbackBars < 12 ||
+       InpM5MicroAnchorMinSwingStrength < 1 ||
+       InpM5RelaunchBreakMinAtr < 0.0 ||
+       InpM5RelaunchMaxBarsAfterRetest < 1 ||
+       InpM5RelaunchFirstSignalMaxAgeBars < 0 ||
        InpSessionInvalidationATR <= 0.0 ||
        InpMaxHoldBars < 1 ||
        InpRiskPerTradePercent <= 0.0 ||
