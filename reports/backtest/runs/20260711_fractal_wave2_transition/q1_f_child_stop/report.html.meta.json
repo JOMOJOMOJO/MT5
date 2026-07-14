@@ -1,0 +1,60 @@
+﻿{
+    "generated_at":  "2026-07-11T17:58:30.2482723+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_FractalWave2TransitionTrader_fw2t_q1_f_child_stop.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpFC17.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpFC17.ini"
+               },
+    "tester":  {
+                   "symbol":  "USDJPY",
+                   "period":  "M15",
+                   "from_date":  "2025.01.01",
+                   "to_date":  "2025.03.31",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_FractalWave2TransitionTrader_fw2t_q1_f_child_stop_report.html"
+               },
+    "preset":  {
+                   "name":  "ExpectedValue_MultiCurrency_FractalWave2TransitionTrader_fw2t_q1_f_child_stop.set",
+                   "expert_parameters_name":  "ExpectedValue_MultiCurrency_FractalWave2TransitionTrader.set",
+                   "source":  "reports\\presets\\ExpectedValue_MultiCurrency_FractalWave2TransitionTrader_fw2t_q1_f_child_stop.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\ExpectedValue_MultiCurrency_FractalWave2TransitionTrader_fw2t_q1_f_child_stop.set",
+                   "parameters":  {
+                                      "InpSymbols":  "USDJPY,EURJPY,GBPJPY,AUDJPY,EURUSD,GBPUSD",
+                                      "InpTopContextTF":  "16385",
+                                      "InpParentTF":  "15",
+                                      "InpChildTF":  "5",
+                                      "InpRunMode":  "4",
+                                      "InpStopMode":  "0",
+                                      "InpPortfolioMode":  "0",
+                                      "InpPivotDepth":  "2",
+                                      "InpATRPeriod":  "14",
+                                      "InpParentLookbackBars":  "160",
+                                      "InpChildLookbackBars":  "240",
+                                      "InpParentWave1MaxBars":  "32",
+                                      "InpParentWave2MaxBars":  "48",
+                                      "InpParentWave2InvalidationUseClose":  "true",
+                                      "InpEntryOnFirstChildTrendFlip":  "true",
+                                      "InpChildFlipMaxSignalAgeBars":  "1",
+                                      "InpRequireChildTrendBeforeFlip":  "true",
+                                      "InpOneEntryPerParentWave2":  "true",
+                                      "InpConsumeSignalBeforePortfolioSelection":  "true",
+                                      "InpTargetR":  "1.30",
+                                      "InpMaxHoldBars":  "30",
+                                      "InpRiskPerTradePercent":  "0.25",
+                                      "InpMaxTotalOpenRiskPercent":  "2.50",
+                                      "InpMaxRiskPerSymbolPercent":  "0.50",
+                                      "InpMaxPositions":  "6",
+                                      "InpDailyMaxLossPercent":  "3.00",
+                                      "InpMaxDrawdownPercent":  "15.00",
+                                      "InpMaxSpreadATR":  "0.20",
+                                      "InpStopBufferATR":  "0.10",
+                                      "InpFixedLotFallback":  "0.01",
+                                      "InpMaxLotCap":  "1.00",
+                                      "InpSlippagePoints":  "20",
+                                      "InpBrokerUtcOffsetHours":  "3",
+                                      "InpUseCommonFiles":  "true",
+                                      "InpMagicNumber":  "202607112006",
+                                      "InpRunId":  "q1_f_child_stop",
+                                      "InpLogFolder":  "fractal_wave2_transition_q1_f_child_stop"
+                                  }
+               }
+}

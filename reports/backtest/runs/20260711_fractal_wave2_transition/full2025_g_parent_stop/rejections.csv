@@ -1,0 +1,4 @@
+run_id,reason,count
+"full2025_g_parent_stop","spread_guard","1608"
+"full2025_g_parent_stop","invalid_stop_distance","1130"
+"full2025_g_parent_stop","symbol_position_cap","1"

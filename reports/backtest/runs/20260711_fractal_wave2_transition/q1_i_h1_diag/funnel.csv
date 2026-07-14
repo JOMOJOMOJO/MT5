@@ -1,0 +1,12 @@
+run_id,stage,count
+"q1_i_h1_diag","symbols_scanned","107140"
+"q1_i_h1_diag","parent_flips_detected","1093"
+"q1_i_h1_diag","valid_parent_wave1","1093"
+"q1_i_h1_diag","parent_wave2_started","945"
+"q1_i_h1_diag","parent_wave2_invalidated","19"
+"q1_i_h1_diag","child_countertrend_confirmed","1934"
+"q1_i_h1_diag","child_trend_flips_detected","693"
+"q1_i_h1_diag","first_flip_signals","693"
+"q1_i_h1_diag","signals_consumed","693"
+"q1_i_h1_diag","trades_taken","35"
+"q1_i_h1_diag","expired_signals","0"
