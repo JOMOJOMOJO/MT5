@@ -32,17 +32,33 @@ enum ENUM_PORTFOLIO_MODE
    PORTFOLIO_ONE_SYMBOL_PER_BAR = 1
   };
 
+enum ENUM_PARENT_WAVE2_START_MODE
+  {
+   WAVE2_START_FIRST_OPPOSITE_CLOSE = 0,
+   WAVE2_START_CONFIRMED_OPPOSITE_PIVOT = 1,
+   WAVE2_START_CHILD_COUNTERTREND = 2,
+   WAVE2_START_DIAGNOSTIC_ONLY = 3
+  };
+
+enum ENUM_CHILD_ANCHOR_MODE
+  {
+   CHILD_ANCHOR_LEGACY_FIRST = 0,
+   CHILD_ANCHOR_LATEST_VALID = 1
+  };
+
 enum ENUM_STRATEGY_STATE
   {
    STATE_IDLE = 0,
    STATE_PARENT_FLIP_DETECTED = 1,
    STATE_PARENT_WAVE1_CONFIRMED = 2,
-   STATE_PARENT_WAVE2_ACTIVE = 3,
-   STATE_CHILD_COUNTER_TREND_CONFIRMED = 4,
-   STATE_CHILD_TREND_FLIPPED = 5,
-   STATE_SIGNAL_CONSUMED = 6,
-   STATE_INVALIDATED = 7,
-   STATE_EXPIRED = 8
+   STATE_PARENT_WAVE2_PENDING = 3,
+   STATE_PARENT_WAVE2_ACTIVE = 4,
+   STATE_CHILD_COUNTER_TREND_CONFIRMED = 5,
+   STATE_CHILD_TREND_FLIPPED = 6,
+   STATE_SIGNAL_RESERVED = 7,
+   STATE_SIGNAL_CONSUMED = 8,
+   STATE_INVALIDATED = 9,
+   STATE_EXPIRED = 10
   };
 
 struct PivotPoint
@@ -52,6 +68,16 @@ struct PivotPoint
    double            price;
    int               kind;
    int               shift;
+  };
+
+struct ChildAnchorCandidate
+  {
+   double            price;
+   datetime          time;
+   datetime          confirmedTime;
+   double            extreme;
+   int               swingCount;
+   int               extensionCount;
   };
 
 struct SymbolState
@@ -80,7 +106,14 @@ struct SymbolState
    bool              parentWave1Valid;
    string            parentWave1InvalidReason;
    bool              parentWave2Active;
+   bool              parentWave2Pending;
    datetime          parentWave2StartTime;
+   datetime          parentWave2FirstOppositeCloseTime;
+   datetime          parentWave2ConfirmedPivotTime;
+   datetime          parentWave2ChildCountertrendStartTime;
+   datetime          parentWave2SelectedStartTime;
+   int               parentWave2StartDelayBars;
+   string            parentWave2StartReason;
    int               parentWave2Direction;
    int               parentWave2AgeBars;
    double            parentWave2InvalidationPrice;
@@ -95,6 +128,25 @@ struct SymbolState
    datetime          childActiveModoritakaneTime;
    double            childCorrectionExtreme;
    datetime          childAnchorConfirmedTime;
+   datetime          childStructureFirstDetectedTime;
+   datetime          childStructureLatestUpdateTime;
+   int               childAnchorUpdateCount;
+   int               childAnchorVersion;
+   double            childFirstAnchorPrice;
+   datetime          childFirstAnchorTime;
+   double            childLatestAnchorPrice;
+   datetime          childLatestAnchorTime;
+   bool              childAnchorChangedAfterInitialDetection;
+   double            childAnchorUsedForFlip;
+   bool              childAnchorIsLatestValid;
+   bool              childTrendInvalidatedBeforeFlip;
+   double            childTrendRangeAfterDetection;
+   int               childSwingCount;
+   int               childExtensionCount;
+   int               childAnchorCount;
+   bool              childCountertrendConfirmed;
+   bool              childCountertrendValidAtEntry;
+   string            childCountertrendRejectReason;
    bool              childTrendFlipDetected;
    int               childTrendFlipDirection;
    datetime          childTrendFlipTime;
@@ -102,8 +154,19 @@ struct SymbolState
    double            childTrendFlipClose;
    double            childTrendFlipAtr;
    string            childTrendFlipEventId;
+   int               childFlipAnchorVersion;
+   bool              childFlipIsFirstBreakAfterAnchor;
    int               childFlipSignalAgeBars;
+   bool              childFlipIsFresh;
+   bool              childFlipEventConsumed;
    bool              signalConsumed;
+   bool              signalReserved;
+   datetime          signalReservedTime;
+   bool              signalValidationPass;
+   string            signalValidationRejectReason;
+   bool              signalReservedBeforePortfolio;
+   string            signalNotTradedReason;
+   string            signalConsumptionStage;
    string            consumedFlipEventId;
    bool              signalReusedBlocked;
    bool              signalExpired;
@@ -128,6 +191,26 @@ struct EntryCandidate
    string            childTrendBeforeFlip;
    string            entryReason;
    string            entryRejectReason;
+   int               parentWave2StartMode;
+   string            parentWave2StartReason;
+   int               parentWave2StartDelayBars;
+   int               childAnchorVersion;
+   int               childAnchorUpdateCount;
+   double            childFirstAnchorPrice;
+   double            childLatestAnchorPrice;
+   double            childAnchorUsedForFlip;
+   bool              childAnchorIsLatestValid;
+   bool              childAnchorChangedAfterInitialDetection;
+   int               childSwingCount;
+   int               childExtensionCount;
+   bool              childCountertrendValidAtEntry;
+   string            childCountertrendRejectReason;
+   bool              childFlipIsFirstBreakAfterAnchor;
+   bool              childFlipIsFresh;
+   bool              signalValidationPass;
+   string            signalValidationRejectReason;
+   bool              signalReservedBeforePortfolio;
+   string            signalConsumptionStage;
    string            h1BiasState;
    bool              h1Alignment;
    string            h4BiasState;
@@ -167,6 +250,26 @@ struct TrackedTrade
    int               signalAgeBars;
    int               parentWave2Age;
    string            childTrendBeforeFlip;
+   int               parentWave2StartMode;
+   string            parentWave2StartReason;
+   int               parentWave2StartDelayBars;
+   int               childAnchorVersion;
+   int               childAnchorUpdateCount;
+   double            childFirstAnchorPrice;
+   double            childLatestAnchorPrice;
+   double            childAnchorUsedForFlip;
+   bool              childAnchorIsLatestValid;
+   bool              childAnchorChangedAfterInitialDetection;
+   int               childSwingCount;
+   int               childExtensionCount;
+   bool              childCountertrendValidAtEntry;
+   string            childCountertrendRejectReason;
+   bool              childFlipIsFirstBreakAfterAnchor;
+   bool              childFlipIsFresh;
+   bool              signalValidationPass;
+   string            signalValidationRejectReason;
+   bool              signalReservedBeforePortfolio;
+   string            signalConsumptionStage;
    string            h1BiasState;
    bool              h1Alignment;
    string            h4BiasState;
@@ -191,12 +294,16 @@ input ENUM_TIMEFRAMES InpChildTF = PERIOD_M5;
 input ENUM_RESEARCH_RUN_MODE InpRunMode = RUN_TRADE_FIRST_CHILD_FLIP;
 input ENUM_STOP_MODE InpStopMode = STOP_CHILD_WAVE_EXTREME;
 input ENUM_PORTFOLIO_MODE InpPortfolioMode = PORTFOLIO_ALL_SYMBOLS;
+input ENUM_PARENT_WAVE2_START_MODE InpParentWave2StartMode = WAVE2_START_CHILD_COUNTERTREND;
+input ENUM_CHILD_ANCHOR_MODE InpChildAnchorMode = CHILD_ANCHOR_LATEST_VALID;
+input bool            InpLegacyCurrentCodeDiagnostic = false;
 input int             InpPivotDepth = 2;
 input int             InpATRPeriod = 14;
 input int             InpParentLookbackBars = 160;
 input int             InpChildLookbackBars = 240;
 input int             InpParentWave1MaxBars = 32;
 input int             InpParentWave2MaxBars = 48;
+input int             InpChildStructureMaxAgeBars = 144;
 input bool            InpParentWave2InvalidationUseClose = true;
 input bool            InpEntryOnFirstChildTrendFlip = true;
 input int             InpChildFlipMaxSignalAgeBars = 1;
@@ -229,20 +336,39 @@ ReasonCounter g_rejections[];
 string        g_parentFlipKeys[];
 string        g_wave1Keys[];
 string        g_wave2Keys[];
+string        g_wave2PendingKeys[];
 string        g_invalidatedWave2Keys[];
 string        g_childTrendKeys[];
+string        g_childAnchorKeys[];
 string        g_childFlipKeys[];
 string        g_firstSignalKeys[];
+string        g_validCandidateKeys[];
+string        g_invalidCandidateKeys[];
+string        g_reservedSignalKeys[];
 string        g_consumedSignalKeys[];
 string        g_expiredSignalKeys[];
 long          g_symbolsScanned = 0;
 long          g_parentFlipsDetected = 0;
 long          g_validParentWave1 = 0;
 long          g_parentWave2Started = 0;
+long          g_parentWave2Pending = 0;
+long          g_parentWave2StartedFirstClose = 0;
+long          g_parentWave2StartedConfirmedPivot = 0;
+long          g_parentWave2StartedChildTrend = 0;
 long          g_parentWave2Invalidated = 0;
 long          g_childCountertrendConfirmed = 0;
+long          g_childAnchorsCreated = 0;
+long          g_childAnchorsUpdated = 0;
 long          g_childTrendFlipsDetected = 0;
 long          g_firstFlipSignals = 0;
+long          g_freshFirstFlipSignals = 0;
+long          g_validCandidates = 0;
+long          g_candidateInvalid = 0;
+long          g_signalsReserved = 0;
+long          g_portfolioSelected = 0;
+long          g_positionCapReject = 0;
+long          g_riskReject = 0;
+long          g_orderFailure = 0;
 long          g_signalsConsumed = 0;
 long          g_tradesTaken = 0;
 long          g_expiredSignals = 0;
@@ -271,9 +397,11 @@ string StateName(const ENUM_STRATEGY_STATE state)
   {
    if(state == STATE_PARENT_FLIP_DETECTED) return "PARENT_FLIP_DETECTED";
    if(state == STATE_PARENT_WAVE1_CONFIRMED) return "PARENT_WAVE1_CONFIRMED";
+   if(state == STATE_PARENT_WAVE2_PENDING) return "PARENT_WAVE2_PENDING";
    if(state == STATE_PARENT_WAVE2_ACTIVE) return "PARENT_WAVE2_ACTIVE";
    if(state == STATE_CHILD_COUNTER_TREND_CONFIRMED) return "CHILD_COUNTER_TREND_CONFIRMED";
    if(state == STATE_CHILD_TREND_FLIPPED) return "CHILD_TREND_FLIPPED";
+   if(state == STATE_SIGNAL_RESERVED) return "SIGNAL_RESERVED";
    if(state == STATE_SIGNAL_CONSUMED) return "SIGNAL_CONSUMED";
    if(state == STATE_INVALIDATED) return "INVALIDATED";
    if(state == STATE_EXPIRED) return "EXPIRED";
@@ -283,6 +411,22 @@ string StateName(const ENUM_STRATEGY_STATE state)
 string StopModeName()
   {
    return InpStopMode == STOP_PARENT_WAVE2_EXTREME ? "parent_wave2_extreme" : "child_wave_extreme";
+  }
+
+string ParentWave2StartModeName()
+  {
+   if(InpParentWave2StartMode == WAVE2_START_CONFIRMED_OPPOSITE_PIVOT)
+      return "confirmed_opposite_pivot";
+   if(InpParentWave2StartMode == WAVE2_START_CHILD_COUNTERTREND)
+      return "child_countertrend_started";
+   if(InpParentWave2StartMode == WAVE2_START_DIAGNOSTIC_ONLY)
+      return "diagnostic_only";
+   return "first_opposite_close";
+  }
+
+string ChildAnchorModeName()
+  {
+   return InpChildAnchorMode == CHILD_ANCHOR_LATEST_VALID ? "latest_valid" : "legacy_first";
   }
 
 string RunModeName()
@@ -510,7 +654,14 @@ void ResetState(SymbolState &state, const string symbol)
    state.parentWave1Valid = false;
    state.parentWave1InvalidReason = "not_detected";
    state.parentWave2Active = false;
+   state.parentWave2Pending = false;
    state.parentWave2StartTime = 0;
+   state.parentWave2FirstOppositeCloseTime = 0;
+   state.parentWave2ConfirmedPivotTime = 0;
+   state.parentWave2ChildCountertrendStartTime = 0;
+   state.parentWave2SelectedStartTime = 0;
+   state.parentWave2StartDelayBars = -1;
+   state.parentWave2StartReason = "not_detected";
    state.parentWave2Direction = 0;
    state.parentWave2AgeBars = -1;
    state.parentWave2InvalidationPrice = 0.0;
@@ -525,6 +676,25 @@ void ResetState(SymbolState &state, const string symbol)
    state.childActiveModoritakaneTime = 0;
    state.childCorrectionExtreme = 0.0;
    state.childAnchorConfirmedTime = 0;
+   state.childStructureFirstDetectedTime = 0;
+   state.childStructureLatestUpdateTime = 0;
+   state.childAnchorUpdateCount = 0;
+   state.childAnchorVersion = 0;
+   state.childFirstAnchorPrice = 0.0;
+   state.childFirstAnchorTime = 0;
+   state.childLatestAnchorPrice = 0.0;
+   state.childLatestAnchorTime = 0;
+   state.childAnchorChangedAfterInitialDetection = false;
+   state.childAnchorUsedForFlip = 0.0;
+   state.childAnchorIsLatestValid = false;
+   state.childTrendInvalidatedBeforeFlip = false;
+   state.childTrendRangeAfterDetection = 0.0;
+   state.childSwingCount = 0;
+   state.childExtensionCount = 0;
+   state.childAnchorCount = 0;
+   state.childCountertrendConfirmed = false;
+   state.childCountertrendValidAtEntry = false;
+   state.childCountertrendRejectReason = "no_confirmed_child_pivots";
    state.childTrendFlipDetected = false;
    state.childTrendFlipDirection = 0;
    state.childTrendFlipTime = 0;
@@ -532,8 +702,19 @@ void ResetState(SymbolState &state, const string symbol)
    state.childTrendFlipClose = 0.0;
    state.childTrendFlipAtr = 0.0;
    state.childTrendFlipEventId = "";
+   state.childFlipAnchorVersion = 0;
+   state.childFlipIsFirstBreakAfterAnchor = false;
    state.childFlipSignalAgeBars = -1;
+   state.childFlipIsFresh = false;
+   state.childFlipEventConsumed = false;
    state.signalConsumed = false;
+   state.signalReserved = false;
+   state.signalReservedTime = 0;
+   state.signalValidationPass = false;
+   state.signalValidationRejectReason = "not_evaluated";
+   state.signalReservedBeforePortfolio = false;
+   state.signalNotTradedReason = "none";
+   state.signalConsumptionStage = "none";
    state.consumedFlipEventId = "";
    state.signalReusedBlocked = false;
    state.signalExpired = false;
@@ -549,7 +730,7 @@ void WriteStateEvent(const SymbolState &state, const string eventName)
    FileSeek(handle, 0, SEEK_END);
    if(header)
       FileWriteString(handle,
-         "time,event,symbol,strategy_state,previous_strategy_state,state_changed_at,state_change_reason,parent_event_id,parent_direction,parent_bias_before_flip,parent_bias_after_flip,parent_anchor_type,parent_anchor_price,parent_anchor_time,parent_structure_confirmed_time,parent_first_break_time,parent_first_break_price,parent_wave1_start_time,parent_wave1_end_time,parent_wave1_start_price,parent_wave1_end_price,parent_wave1_range_atr,parent_wave1_valid,parent_wave1_invalid_reason,parent_wave2_active,parent_wave2_start_time,parent_wave2_direction,parent_wave2_age_bars,parent_wave2_invalidation_price,parent_wave2_extreme,parent_wave2_invalidated,parent_wave2_invalid_reason,child_trend_state,child_trend_aligned_with_wave2,child_active_oshiyasu,child_active_oshiyasu_time,child_active_modoritakane,child_active_modoritakane_time,child_anchor_confirmed_time,child_trend_flip_detected,child_trend_flip_direction,child_trend_flip_time,child_trend_flip_level,child_trend_flip_close,child_trend_flip_atr,child_trend_flip_event_id,entry_signal_age_bars,entry_signal_consumed,entry_signal_reused_blocked\r\n");
+         "time,event,symbol,strategy_state,previous_strategy_state,state_changed_at,state_change_reason,parent_event_id,parent_direction,parent_bias_before_flip,parent_bias_after_flip,parent_anchor_type,parent_anchor_price,parent_anchor_time,parent_structure_confirmed_time,parent_first_break_time,parent_first_break_price,parent_wave1_start_time,parent_wave1_end_time,parent_wave1_start_price,parent_wave1_end_price,parent_wave1_range_atr,parent_wave1_valid,parent_wave1_invalid_reason,parent_wave2_active,parent_wave2_start_time,parent_wave2_direction,parent_wave2_age_bars,parent_wave2_invalidation_price,parent_wave2_extreme,parent_wave2_invalidated,parent_wave2_invalid_reason,child_trend_state,child_trend_aligned_with_wave2,child_active_oshiyasu,child_active_oshiyasu_time,child_active_modoritakane,child_active_modoritakane_time,child_anchor_confirmed_time,child_trend_flip_detected,child_trend_flip_direction,child_trend_flip_time,child_trend_flip_level,child_trend_flip_close,child_trend_flip_atr,child_trend_flip_event_id,entry_signal_age_bars,entry_signal_consumed,entry_signal_reused_blocked,parent_wave2_start_mode,parent_wave2_pending,parent_wave2_first_opposite_close_time,parent_wave2_confirmed_pivot_time,parent_wave2_child_countertrend_start_time,parent_wave2_selected_start_time,parent_wave2_start_delay_bars,parent_wave2_start_reason,child_structure_first_detected_time,child_structure_latest_update_time,child_anchor_update_count,child_anchor_version,child_first_anchor_price,child_first_anchor_time,child_latest_anchor_price,child_latest_anchor_time,child_anchor_changed_after_initial_detection,child_anchor_used_for_flip,child_anchor_is_latest_valid,child_trend_invalidated_before_flip,child_trend_range_after_detection,child_countertrend_confirmed,child_countertrend_direction,child_countertrend_swing_count,child_countertrend_extension_count,child_countertrend_anchor_count,child_countertrend_valid_at_entry,child_countertrend_reject_reason,child_flip_anchor_version,child_flip_is_first_break_after_anchor,child_flip_signal_age_bars,child_flip_is_fresh,child_flip_event_consumed,child_flip_reused_blocked,signal_validation_pass,signal_validation_reject_reason,signal_reserved_before_portfolio,signal_reserved_time,signal_not_traded_reason,signal_consumption_stage,child_anchor_mode,child_event_id\r\n");
    string line = "";
    CsvAppend(line, TimeToString(TimeCurrent(), TIME_DATE | TIME_SECONDS));
    CsvAppend(line, eventName);
@@ -600,17 +781,87 @@ void WriteStateEvent(const SymbolState &state, const string eventName)
    CsvAppend(line, IntegerToString(state.childFlipSignalAgeBars));
    CsvAppend(line, BoolText(state.signalConsumed));
    CsvAppend(line, BoolText(state.signalReusedBlocked));
+   CsvAppend(line, IntegerToString((int)InpParentWave2StartMode));
+   CsvAppend(line, BoolText(state.parentWave2Pending));
+   CsvAppend(line, state.parentWave2FirstOppositeCloseTime > 0 ? TimeToString(state.parentWave2FirstOppositeCloseTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, state.parentWave2ConfirmedPivotTime > 0 ? TimeToString(state.parentWave2ConfirmedPivotTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, state.parentWave2ChildCountertrendStartTime > 0 ? TimeToString(state.parentWave2ChildCountertrendStartTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, state.parentWave2SelectedStartTime > 0 ? TimeToString(state.parentWave2SelectedStartTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, IntegerToString(state.parentWave2StartDelayBars));
+   CsvAppend(line, state.parentWave2StartReason);
+   CsvAppend(line, state.childStructureFirstDetectedTime > 0 ? TimeToString(state.childStructureFirstDetectedTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, state.childStructureLatestUpdateTime > 0 ? TimeToString(state.childStructureLatestUpdateTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, IntegerToString(state.childAnchorUpdateCount));
+   CsvAppend(line, IntegerToString(state.childAnchorVersion));
+   CsvAppend(line, DoubleToString(state.childFirstAnchorPrice, 8));
+   CsvAppend(line, state.childFirstAnchorTime > 0 ? TimeToString(state.childFirstAnchorTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, DoubleToString(state.childLatestAnchorPrice, 8));
+   CsvAppend(line, state.childLatestAnchorTime > 0 ? TimeToString(state.childLatestAnchorTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, BoolText(state.childAnchorChangedAfterInitialDetection));
+   CsvAppend(line, DoubleToString(state.childAnchorUsedForFlip, 8));
+   CsvAppend(line, BoolText(state.childAnchorIsLatestValid));
+   CsvAppend(line, BoolText(state.childTrendInvalidatedBeforeFlip));
+   CsvAppend(line, DoubleToString(state.childTrendRangeAfterDetection, 6));
+   CsvAppend(line, BoolText(state.childCountertrendConfirmed));
+   CsvAppend(line, DirectionText(-state.parentDirection));
+   CsvAppend(line, IntegerToString(state.childSwingCount));
+   CsvAppend(line, IntegerToString(state.childExtensionCount));
+   CsvAppend(line, IntegerToString(state.childAnchorCount));
+   CsvAppend(line, BoolText(state.childCountertrendValidAtEntry));
+   CsvAppend(line, state.childCountertrendRejectReason);
+   CsvAppend(line, IntegerToString(state.childFlipAnchorVersion));
+   CsvAppend(line, BoolText(state.childFlipIsFirstBreakAfterAnchor));
+   CsvAppend(line, IntegerToString(state.childFlipSignalAgeBars));
+   CsvAppend(line, BoolText(state.childFlipIsFresh));
+   CsvAppend(line, BoolText(state.childFlipEventConsumed));
+   CsvAppend(line, BoolText(state.signalReusedBlocked));
+   CsvAppend(line, BoolText(state.signalValidationPass));
+   CsvAppend(line, state.signalValidationRejectReason);
+   CsvAppend(line, BoolText(state.signalReservedBeforePortfolio));
+   CsvAppend(line, state.signalReservedTime > 0 ? TimeToString(state.signalReservedTime, TIME_DATE | TIME_SECONDS) : "");
+   CsvAppend(line, state.signalNotTradedReason);
+   CsvAppend(line, state.signalConsumptionStage);
+   CsvAppend(line, ChildAnchorModeName());
+   CsvAppend(line, state.childTrendFlipEventId);
    FileWriteString(handle, line + "\r\n");
    FileClose(handle);
   }
 
 void ChangeState(SymbolState &state,
-                 const ENUM_STRATEGY_STATE nextState,
-                 const datetime at,
-                 const string reason)
+                  const ENUM_STRATEGY_STATE nextState,
+                  const datetime at,
+                  const string reason)
   {
-   if(state.strategyState == nextState && state.stateChangeReason == reason)
+   if(state.strategyState == nextState)
       return;
+   bool allowed = nextState == STATE_PARENT_FLIP_DETECTED;
+   if(state.strategyState == STATE_IDLE)
+      allowed = nextState == STATE_PARENT_FLIP_DETECTED;
+   else if(state.strategyState == STATE_PARENT_FLIP_DETECTED)
+      allowed = nextState == STATE_PARENT_WAVE1_CONFIRMED;
+   else if(state.strategyState == STATE_PARENT_WAVE1_CONFIRMED)
+      allowed = nextState == STATE_PARENT_WAVE2_PENDING || nextState == STATE_PARENT_WAVE2_ACTIVE ||
+                nextState == STATE_INVALIDATED || nextState == STATE_EXPIRED || allowed;
+   else if(state.strategyState == STATE_PARENT_WAVE2_PENDING)
+      allowed = nextState == STATE_PARENT_WAVE2_ACTIVE || nextState == STATE_INVALIDATED ||
+                nextState == STATE_EXPIRED || allowed;
+   else if(state.strategyState == STATE_PARENT_WAVE2_ACTIVE)
+      allowed = nextState == STATE_CHILD_COUNTER_TREND_CONFIRMED || nextState == STATE_INVALIDATED ||
+                nextState == STATE_EXPIRED || allowed;
+   else if(state.strategyState == STATE_CHILD_COUNTER_TREND_CONFIRMED)
+      allowed = nextState == STATE_CHILD_TREND_FLIPPED || nextState == STATE_INVALIDATED ||
+                nextState == STATE_EXPIRED || allowed;
+   else if(state.strategyState == STATE_CHILD_TREND_FLIPPED)
+      allowed = nextState == STATE_SIGNAL_RESERVED || nextState == STATE_SIGNAL_CONSUMED ||
+                nextState == STATE_EXPIRED || allowed;
+   else if(state.strategyState == STATE_SIGNAL_RESERVED)
+      allowed = nextState == STATE_SIGNAL_CONSUMED || allowed;
+   if(!allowed)
+     {
+      AddRejection("invalid_state_transition_" + StateName(state.strategyState) + "_to_" + StateName(nextState));
+      WriteStateEvent(state, "invalid_state_transition_blocked");
+      return;
+     }
    state.previousState = state.strategyState;
    state.strategyState = nextState;
    state.stateChangedAt = at;
@@ -672,6 +923,25 @@ void ClearChildState(SymbolState &state)
    state.childActiveModoritakaneTime = 0;
    state.childCorrectionExtreme = 0.0;
    state.childAnchorConfirmedTime = 0;
+   state.childStructureFirstDetectedTime = 0;
+   state.childStructureLatestUpdateTime = 0;
+   state.childAnchorUpdateCount = 0;
+   state.childAnchorVersion = 0;
+   state.childFirstAnchorPrice = 0.0;
+   state.childFirstAnchorTime = 0;
+   state.childLatestAnchorPrice = 0.0;
+   state.childLatestAnchorTime = 0;
+   state.childAnchorChangedAfterInitialDetection = false;
+   state.childAnchorUsedForFlip = 0.0;
+   state.childAnchorIsLatestValid = false;
+   state.childTrendInvalidatedBeforeFlip = false;
+   state.childTrendRangeAfterDetection = 0.0;
+   state.childSwingCount = 0;
+   state.childExtensionCount = 0;
+   state.childAnchorCount = 0;
+   state.childCountertrendConfirmed = false;
+   state.childCountertrendValidAtEntry = false;
+   state.childCountertrendRejectReason = "no_confirmed_child_pivots";
    state.childTrendFlipDetected = false;
    state.childTrendFlipDirection = 0;
    state.childTrendFlipTime = 0;
@@ -679,11 +949,90 @@ void ClearChildState(SymbolState &state)
    state.childTrendFlipClose = 0.0;
    state.childTrendFlipAtr = 0.0;
    state.childTrendFlipEventId = "";
+   state.childFlipAnchorVersion = 0;
+   state.childFlipIsFirstBreakAfterAnchor = false;
    state.childFlipSignalAgeBars = -1;
+   state.childFlipIsFresh = false;
+   state.childFlipEventConsumed = false;
    state.signalConsumed = false;
+   state.signalReserved = false;
+   state.signalReservedTime = 0;
+   state.signalValidationPass = false;
+   state.signalValidationRejectReason = "not_evaluated";
+   state.signalReservedBeforePortfolio = false;
+   state.signalNotTradedReason = "none";
+   state.signalConsumptionStage = "none";
    state.consumedFlipEventId = "";
    state.signalReusedBlocked = false;
    state.signalExpired = false;
+  }
+
+bool FindFirstOppositeClose(const MqlRates &rates[], const int breakShift,
+                            const int direction, datetime &foundTime)
+  {
+   foundTime = 0;
+   for(int shift = breakShift - 1; shift >= 0; --shift)
+     {
+      bool opposite = false;
+      if(InpLegacyCurrentCodeDiagnostic)
+         opposite = direction > 0 ? rates[shift].close < rates[shift + 1].close :
+                                    rates[shift].close > rates[shift + 1].close;
+      else if(direction > 0)
+         opposite = rates[shift].close < rates[shift].open ||
+                    rates[shift].close < rates[shift + 1].low;
+      else
+         opposite = rates[shift].close > rates[shift].open ||
+                    rates[shift].close > rates[shift + 1].high;
+      if(opposite)
+        {
+         foundTime = rates[shift].time;
+         return true;
+        }
+     }
+   return false;
+  }
+
+bool FindConfirmedWave1EndPivot(const PivotPoint &pivots[], const datetime breakTime,
+                                const int direction, datetime &foundTime)
+  {
+   foundTime = 0;
+   int wantedKind = direction > 0 ? 1 : -1;
+   datetime earliestTerminalPivot = breakTime - InpPivotDepth * PeriodSeconds(InpParentTF);
+   for(int i = 0; i < ArraySize(pivots); ++i)
+     {
+      if(pivots[i].kind != wantedKind || pivots[i].time < earliestTerminalPivot ||
+         pivots[i].confirmedTime <= breakTime)
+         continue;
+      foundTime = pivots[i].confirmedTime;
+      return true;
+     }
+   return false;
+  }
+
+bool FindChildCountertrendStart(const string symbol, const datetime afterTime,
+                                const datetime nowBar, const int parentDirection,
+                                datetime &foundTime)
+  {
+   foundTime = 0;
+   MqlRates rates[];
+   PivotPoint pivots[];
+   double atr = 0.0;
+   if(!BuildPivots(symbol, InpChildTF, InpChildLookbackBars, rates, pivots, atr))
+      return false;
+   for(int i = 2; i < ArraySize(pivots); ++i)
+     {
+      PivotPoint a = pivots[i - 2], b = pivots[i - 1], c = pivots[i];
+      if(a.time < afterTime || c.confirmedTime > nowBar)
+         continue;
+      bool falling = a.kind < 0 && b.kind > 0 && c.kind < 0 && c.price < a.price;
+      bool rising = a.kind > 0 && b.kind < 0 && c.kind > 0 && c.price > a.price;
+      if((parentDirection > 0 && falling) || (parentDirection < 0 && rising))
+        {
+         foundTime = c.confirmedTime;
+         return true;
+        }
+     }
+   return false;
   }
 
 bool UpdateParentState(SymbolState &state, const datetime nowBar)
@@ -731,23 +1080,15 @@ bool UpdateParentState(SymbolState &state, const datetime nowBar)
    string beforeBias = "unknown", afterBias = "unknown", anchorType = "none";
    if(latestShortEvent > latestLongEvent && latestModoritakane > 0.0)
      {
-      direction = 1;
-      anchor = latestModoritakane;
-      anchorTime = latestModoritakaneTime;
-      structureEventTime = latestShortEvent;
-      beforeBias = "falling";
-      afterBias = "rising";
-      anchorType = "modoritakane";
+      direction = 1; anchor = latestModoritakane; anchorTime = latestModoritakaneTime;
+      structureEventTime = latestShortEvent; beforeBias = "falling";
+      afterBias = "rising"; anchorType = "modoritakane";
      }
    else if(latestLongEvent > latestShortEvent && latestOshiyasu > 0.0)
      {
-      direction = -1;
-      anchor = latestOshiyasu;
-      anchorTime = latestOshiyasuTime;
-      structureEventTime = latestLongEvent;
-      beforeBias = "rising";
-      afterBias = "falling";
-      anchorType = "oshiyasu";
+      direction = -1; anchor = latestOshiyasu; anchorTime = latestOshiyasuTime;
+      structureEventTime = latestLongEvent; beforeBias = "rising";
+      afterBias = "falling"; anchorType = "oshiyasu";
      }
    else
       return false;
@@ -755,8 +1096,33 @@ bool UpdateParentState(SymbolState &state, const datetime nowBar)
    int breakShift = -1;
    datetime breakTime = 0;
    double breakClose = 0.0;
-   if(!FindFirstBreak(rates, structureEventTime, anchor, direction, breakShift, breakTime, breakClose))
+   bool latestBreakFound = FindFirstBreak(rates, structureEventTime, anchor, direction,
+                                          breakShift, breakTime, breakClose);
+   if(!latestBreakFound && !(!InpLegacyCurrentCodeDiagnostic && state.parentWave2Pending && state.parentWave1Valid &&
+                            !state.parentWave2Invalidated && state.parentEventId != ""))
       return false;
+
+   // A pending wave1 owns its confirmation window. Without this lock, a newer
+   // parent pattern can replace it before the terminal pivot or M5 correction confirms.
+   if(!InpLegacyCurrentCodeDiagnostic && state.parentWave2Pending && state.parentWave1Valid &&
+      !state.parentWave2Invalidated && state.parentEventId != "")
+     {
+      direction = state.parentDirection;
+      anchor = state.parentAnchorPrice;
+      anchorTime = state.parentAnchorTime;
+      structureEventTime = state.parentStructureConfirmedTime;
+      beforeBias = state.parentBiasBeforeFlip;
+      afterBias = state.parentBiasAfterFlip;
+      anchorType = state.parentAnchorType;
+      breakTime = state.parentFirstBreakTime;
+      breakClose = state.parentFirstBreakPrice;
+      breakShift = -1;
+      for(int shift = ArraySize(rates) - 1; shift >= 0; --shift)
+         if(rates[shift].time == breakTime)
+           { breakShift = shift; break; }
+      if(breakShift < 0)
+         return false;
+     }
 
    string parentId = EventId(state.symbol, "PARENT", direction, breakTime, anchor);
    bool newParent = parentId != state.parentEventId;
@@ -773,11 +1139,18 @@ bool UpdateParentState(SymbolState &state, const datetime nowBar)
       state.parentFirstBreakTime = breakTime;
       state.parentFirstBreakPrice = breakClose;
       state.parentWave2Active = false;
+      state.parentWave2Pending = false;
+      state.parentWave2StartTime = 0;
+      state.parentWave2FirstOppositeCloseTime = 0;
+      state.parentWave2ConfirmedPivotTime = 0;
+      state.parentWave2ChildCountertrendStartTime = 0;
+      state.parentWave2SelectedStartTime = 0;
+      state.parentWave2StartDelayBars = -1;
+      state.parentWave2StartReason = "not_detected";
       state.parentWave2Invalidated = false;
       state.parentWave2InvalidReason = "none";
       ClearChildState(state);
-      if(AddUniqueKey(g_parentFlipKeys, parentId))
-         ++g_parentFlipsDetected;
+      if(AddUniqueKey(g_parentFlipKeys, parentId)) ++g_parentFlipsDetected;
       ChangeState(state, STATE_PARENT_FLIP_DETECTED, breakTime, "first_parent_anchor_close_break");
      }
 
@@ -796,182 +1169,313 @@ bool UpdateParentState(SymbolState &state, const datetime nowBar)
                                     (!startFound ? "wave1_start_pivot_missing" : "wave1_duration_or_direction_invalid");
    if(!state.parentWave1Valid)
       return true;
-   if(AddUniqueKey(g_wave1Keys, parentId))
-      ++g_validParentWave1;
-   if(state.strategyState < STATE_PARENT_WAVE1_CONFIRMED || newParent)
-      ChangeState(state, STATE_PARENT_WAVE1_CONFIRMED, breakTime, "parent_wave1_confirmed");
+   if(AddUniqueKey(g_wave1Keys, parentId)) ++g_validParentWave1;
+   if(newParent) ChangeState(state, STATE_PARENT_WAVE1_CONFIRMED, breakTime, "parent_wave1_confirmed");
 
-   int wave2StartShift = -1;
-   datetime wave2Start = 0;
-   for(int shift = breakShift - 1; shift >= 0; --shift)
-     {
-      bool opposite = direction > 0 ? rates[shift].close < rates[shift + 1].close :
-                                      rates[shift].close > rates[shift + 1].close;
-      if(opposite)
-        {
-         wave2StartShift = shift;
-         wave2Start = rates[shift].time;
-         break;
-        }
-     }
-   if(wave2StartShift < 0)
-      return true;
+   datetime firstClose = 0, confirmedPivot = 0, childStart = 0;
+   FindFirstOppositeClose(rates, breakShift, direction, firstClose);
+   FindConfirmedWave1EndPivot(pivots, breakTime, direction, confirmedPivot);
+   FindChildCountertrendStart(state.symbol, breakTime, nowBar, direction, childStart);
+   state.parentWave2FirstOppositeCloseTime = firstClose;
+   state.parentWave2ConfirmedPivotTime = confirmedPivot;
+   state.parentWave2ChildCountertrendStartTime = childStart;
 
-   state.parentWave2Active = true;
-   state.parentWave2StartTime = wave2Start;
+   datetime selectedStart = 0;
+   string startReason = "waiting_for_selected_start";
+   if(InpParentWave2StartMode == WAVE2_START_FIRST_OPPOSITE_CLOSE)
+     { selectedStart = firstClose; startReason = "first_opposite_close"; }
+   else if(InpParentWave2StartMode == WAVE2_START_CONFIRMED_OPPOSITE_PIVOT)
+     { selectedStart = confirmedPivot; startReason = "confirmed_wave1_terminal_pivot"; }
+   else if(InpParentWave2StartMode == WAVE2_START_CHILD_COUNTERTREND)
+     { selectedStart = childStart; startReason = "child_countertrend_confirmed"; }
+   else
+      startReason = "diagnostic_only_no_activation";
+
+   state.parentWave2Pending = selectedStart <= 0;
+   state.parentWave2Active = selectedStart > 0;
+   state.parentWave2SelectedStartTime = selectedStart;
+   state.parentWave2StartTime = selectedStart;
+   state.parentWave2StartReason = startReason;
+   state.parentWave2StartDelayBars = selectedStart > 0 ?
+      BarsBetween(state.symbol, InpParentTF, breakTime, selectedStart) : -1;
    state.parentWave2Direction = -direction;
-   state.parentWave2AgeBars = BarsBetween(state.symbol, InpParentTF, wave2Start, rates[0].time);
    state.parentWave2InvalidationPrice = state.parentWave1StartPrice;
-   state.parentWave2Extreme = direction > 0 ? rates[wave2StartShift].low : rates[wave2StartShift].high;
+   datetime ageOrigin = selectedStart > 0 ? selectedStart : breakTime;
+   state.parentWave2AgeBars = BarsBetween(state.symbol, InpParentTF, ageOrigin, nowBar);
+
    bool invalidated = false;
    string invalidReason = "none";
-   for(int shift = wave2StartShift; shift >= 0; --shift)
+   bool extremeSet = false;
+   for(int shift = breakShift - 1; shift >= 0; --shift)
      {
-      if(direction > 0)
-         state.parentWave2Extreme = MathMin(state.parentWave2Extreme, rates[shift].low);
-      else
-         state.parentWave2Extreme = MathMax(state.parentWave2Extreme, rates[shift].high);
+      if(rates[shift].time < breakTime) continue;
       double test = InpParentWave2InvalidationUseClose ? rates[shift].close :
                     (direction > 0 ? rates[shift].low : rates[shift].high);
       if((direction > 0 && test < state.parentWave2InvalidationPrice) ||
          (direction < 0 && test > state.parentWave2InvalidationPrice))
+        { invalidated = true; invalidReason = "wave1_origin_broken"; break; }
+      if(selectedStart > 0 && rates[shift].time >= selectedStart)
         {
-         invalidated = true;
-         invalidReason = "wave1_origin_broken";
-         break;
+         if(!extremeSet)
+           { state.parentWave2Extreme = direction > 0 ? rates[shift].low : rates[shift].high; extremeSet = true; }
+         else if(direction > 0) state.parentWave2Extreme = MathMin(state.parentWave2Extreme, rates[shift].low);
+         else state.parentWave2Extreme = MathMax(state.parentWave2Extreme, rates[shift].high);
         }
      }
    if(state.parentWave2AgeBars > InpParentWave2MaxBars)
-     {
-      invalidated = true;
-      invalidReason = "wave2_max_age_exceeded";
-     }
+     { invalidated = true; invalidReason = "wave2_max_age_exceeded"; }
    state.parentWave2Invalidated = invalidated;
    state.parentWave2InvalidReason = invalidReason;
    if(invalidated)
      {
       state.parentWave2Active = false;
-      if(AddUniqueKey(g_invalidatedWave2Keys, parentId))
-         ++g_parentWave2Invalidated;
+      state.parentWave2Pending = false;
+      ClearChildState(state);
+      if(AddUniqueKey(g_invalidatedWave2Keys, parentId)) ++g_parentWave2Invalidated;
       ChangeState(state, invalidReason == "wave2_max_age_exceeded" ? STATE_EXPIRED : STATE_INVALIDATED,
                   rates[0].time, invalidReason);
       return true;
      }
+
+   if(selectedStart <= 0)
+     {
+      string pendingKey = parentId + "|PENDING";
+      if(AddUniqueKey(g_wave2PendingKeys, pendingKey)) ++g_parentWave2Pending;
+      if(newParent || state.strategyState == STATE_PARENT_WAVE1_CONFIRMED)
+         ChangeState(state, STATE_PARENT_WAVE2_PENDING, nowBar, startReason);
+      return true;
+     }
+
    if(AddUniqueKey(g_wave2Keys, parentId))
+     {
       ++g_parentWave2Started;
-   if(state.strategyState < STATE_PARENT_WAVE2_ACTIVE || newParent)
-      ChangeState(state, STATE_PARENT_WAVE2_ACTIVE, wave2Start, "parent_wave2_started");
+      if(InpParentWave2StartMode == WAVE2_START_FIRST_OPPOSITE_CLOSE) ++g_parentWave2StartedFirstClose;
+      else if(InpParentWave2StartMode == WAVE2_START_CONFIRMED_OPPOSITE_PIVOT) ++g_parentWave2StartedConfirmedPivot;
+      else if(InpParentWave2StartMode == WAVE2_START_CHILD_COUNTERTREND) ++g_parentWave2StartedChildTrend;
+     }
+   if(newParent || state.strategyState == STATE_PARENT_WAVE2_PENDING ||
+      state.strategyState == STATE_PARENT_WAVE1_CONFIRMED)
+      ChangeState(state, STATE_PARENT_WAVE2_ACTIVE, selectedStart, startReason);
    return true;
   }
 
-void ConsumeSignal(SymbolState &state, const datetime at, const string reason)
+void ReserveSignal(SymbolState &state, const datetime at)
   {
-   if(state.signalConsumed)
+   if(state.signalReserved || state.signalConsumed)
       return;
+   state.signalReserved = true;
    state.signalConsumed = true;
+   state.signalReservedTime = at;
+   state.signalReservedBeforePortfolio = true;
+   state.signalConsumptionStage = "before_portfolio";
    state.consumedFlipEventId = state.childTrendFlipEventId;
-   if(AddUniqueKey(g_consumedSignalKeys, state.parentEventId))
-      ++g_signalsConsumed;
+   if(AddUniqueKey(g_reservedSignalKeys, state.parentEventId)) ++g_signalsReserved;
+   ChangeState(state, STATE_SIGNAL_RESERVED, at, "valid_signal_reserved_before_portfolio");
+  }
+
+void FinalizeSignal(SymbolState &state, const datetime at, const string stage, const string reason)
+  {
+   state.signalConsumed = true;
+   state.childFlipEventConsumed = true;
+   state.signalConsumptionStage = stage;
+   state.signalNotTradedReason = reason;
+   state.consumedFlipEventId = state.childTrendFlipEventId;
+   if(AddUniqueKey(g_consumedSignalKeys, state.parentEventId)) ++g_signalsConsumed;
    ChangeState(state, STATE_SIGNAL_CONSUMED, at, reason);
+  }
+
+void ExpireSignal(SymbolState &state, const datetime at, const string reason)
+  {
+   state.signalConsumed = true;
+   state.childFlipEventConsumed = true;
+   state.signalExpired = true;
+   state.signalConsumptionStage = "invalid_candidate";
+   state.signalValidationRejectReason = reason;
+   state.signalNotTradedReason = reason;
+   state.consumedFlipEventId = state.childTrendFlipEventId;
+   if(AddUniqueKey(g_consumedSignalKeys, state.parentEventId)) ++g_signalsConsumed;
+   ChangeState(state, STATE_EXPIRED, at, reason);
   }
 
 bool UpdateChildTrend(SymbolState &state, const datetime nowBar)
   {
-   if(!state.parentWave2Active || state.parentWave2StartTime <= 0)
+   if(!state.parentWave2Active || state.parentWave2StartTime <= 0 || state.parentWave2Invalidated)
       return false;
    if(state.childTrendFlipDetected)
+     {
+      state.childFlipSignalAgeBars = BarsBetween(state.symbol, InpChildTF,
+                                                 state.childTrendFlipTime, nowBar);
+      state.childFlipIsFresh = state.childFlipSignalAgeBars == 0;
+      if(!state.signalConsumed && state.childFlipSignalAgeBars > InpChildFlipMaxSignalAgeBars)
+        {
+         state.signalExpired = true;
+         state.signalReusedBlocked = true;
+         if(AddUniqueKey(g_expiredSignalKeys, state.parentEventId)) ++g_expiredSignals;
+         ExpireSignal(state, nowBar, "child_flip_signal_expired");
+        }
       return true;
+     }
    MqlRates rates[];
    PivotPoint allPivots[];
    double atr = 0.0;
    if(!BuildPivots(state.symbol, InpChildTF, InpChildLookbackBars, rates, allPivots, atr))
-      return false;
-   PivotPoint pivots[];
-   ArrayResize(pivots, 0);
-   for(int i = 0; i < ArraySize(allPivots); ++i)
      {
-      if(allPivots[i].time < state.parentWave2StartTime)
-         continue;
-      int size = ArraySize(pivots);
-      ArrayResize(pivots, size + 1);
-      pivots[size] = allPivots[i];
+      state.childCountertrendRejectReason = "no_confirmed_child_pivots";
+      return false;
      }
-   if(ArraySize(pivots) < 3)
-      return false;
 
-   bool trendFound = false;
-   for(int i = 2; i < ArraySize(pivots); ++i)
+   ChildAnchorCandidate anchors[];
+   ArrayResize(anchors, 0);
+   int filteredSwings = 0;
+   int eligiblePivots = 0;
+   bool oppositeShapeWithoutExtension = false;
+   for(int i = 0; i < ArraySize(allPivots); ++i)
+      if(allPivots[i].time >= state.parentFirstBreakTime && allPivots[i].confirmedTime <= nowBar)
+         ++eligiblePivots;
+   for(int i = 2; i < ArraySize(allPivots); ++i)
      {
-      PivotPoint a = pivots[i - 2];
-      PivotPoint b = pivots[i - 1];
-      PivotPoint c = pivots[i];
+      PivotPoint a = allPivots[i - 2], b = allPivots[i - 1], c = allPivots[i];
+      if(a.time < state.parentFirstBreakTime || c.confirmedTime > nowBar)
+         continue;
+      ++filteredSwings;
       bool falling = a.kind < 0 && b.kind > 0 && c.kind < 0 && c.price < a.price;
       bool rising = a.kind > 0 && b.kind < 0 && c.kind > 0 && c.price > a.price;
-      bool aligned = (state.parentDirection > 0 && falling) ||
-                     (state.parentDirection < 0 && rising);
-      if(!aligned)
+      bool fallingShape = a.kind < 0 && b.kind > 0 && c.kind < 0;
+      bool risingShape = a.kind > 0 && b.kind < 0 && c.kind > 0;
+      if((state.parentDirection > 0 && fallingShape && !falling) ||
+         (state.parentDirection < 0 && risingShape && !rising))
+         oppositeShapeWithoutExtension = true;
+      if(!((state.parentDirection > 0 && falling) || (state.parentDirection < 0 && rising)))
          continue;
-      trendFound = true;
-      state.childTrendState = falling ? "falling" : "rising";
-      state.childTrendAlignedWithWave2 = true;
-      state.childAnchorConfirmedTime = c.confirmedTime;
-      if(state.parentDirection > 0)
-        {
-         state.childActiveModoritakane = b.price;
-         state.childActiveModoritakaneTime = b.time;
-         state.childCorrectionExtreme = c.price;
-        }
-      else
-        {
-         state.childActiveOshiyasu = b.price;
-         state.childActiveOshiyasuTime = b.time;
-         state.childCorrectionExtreme = c.price;
-        }
-      string trendKey = state.parentEventId + "|CHILD|" + IntegerToString((long)c.confirmedTime);
-      if(AddUniqueKey(g_childTrendKeys, trendKey))
-         ++g_childCountertrendConfirmed;
-      if(state.strategyState < STATE_CHILD_COUNTER_TREND_CONFIRMED)
-         ChangeState(state, STATE_CHILD_COUNTER_TREND_CONFIRMED, c.confirmedTime,
-                     "child_countertrend_confirmed");
+      int size = ArraySize(anchors);
+      ArrayResize(anchors, size + 1);
+      anchors[size].price = b.price;
+      anchors[size].time = b.time;
+      anchors[size].confirmedTime = c.confirmedTime;
+      anchors[size].extreme = c.price;
+      anchors[size].swingCount = MathMax(3, filteredSwings + 2);
+      anchors[size].extensionCount = size + 1;
+     }
 
-      double flipLevel = b.price;
-      int flipShift = -1;
-      datetime flipTime = 0;
-      double flipClose = 0.0;
-      if(!FindFirstBreak(rates, c.confirmedTime, flipLevel, state.parentDirection,
-                         flipShift, flipTime, flipClose))
-         continue;
-      state.childTrendFlipDetected = true;
-      state.childTrendFlipDirection = state.parentDirection;
-      state.childTrendFlipTime = flipTime;
-      state.childTrendFlipLevel = flipLevel;
-      state.childTrendFlipClose = flipClose;
-      state.childTrendFlipAtr = state.parentDirection > 0 ? (flipClose - flipLevel) / atr :
-                                                          (flipLevel - flipClose) / atr;
-      state.childTrendFlipEventId = EventId(state.symbol, "CHILD_FLIP", state.parentDirection,
-                                            flipTime, flipLevel);
-      state.childFlipSignalAgeBars = flipShift;
-      if(AddUniqueKey(g_childFlipKeys, state.childTrendFlipEventId))
-         ++g_childTrendFlipsDetected;
-      if(AddUniqueKey(g_firstSignalKeys, state.parentEventId))
-         ++g_firstFlipSignals;
-      ChangeState(state, STATE_CHILD_TREND_FLIPPED, flipTime, "first_child_anchor_close_break");
-      state.signalExpired = flipShift > InpChildFlipMaxSignalAgeBars;
-      if(state.signalExpired && AddUniqueKey(g_expiredSignalKeys, state.parentEventId))
-        {
-         ++g_expiredSignals;
-         AddRejection("child_flip_signal_expired");
-         ConsumeSignal(state, nowBar, "expired_first_child_flip_consumed");
-         ChangeState(state, STATE_EXPIRED, nowBar, "child_flip_signal_expired");
-        }
-      return true;
-     }
-   if(!trendFound)
+   int oldObservedAnchorCount = state.childAnchorCount;
+   state.childSwingCount = filteredSwings + (filteredSwings > 0 ? 2 : 0);
+   state.childExtensionCount = ArraySize(anchors);
+   state.childAnchorCount = ArraySize(anchors);
+   if(ArraySize(anchors) == 0)
      {
-      state.childTrendState = "range";
+      state.childTrendState = filteredSwings > 0 ? "range" : "unknown";
       state.childTrendAlignedWithWave2 = false;
+      state.childCountertrendConfirmed = false;
+      state.childCountertrendRejectReason = eligiblePivots == 0 ? "no_confirmed_child_pivots" :
+                                               (eligiblePivots < 3 ? "only_one_opposite_bar" :
+                                                (oppositeShapeWithoutExtension ? "no_price_extension" :
+                                                 "child_range_only"));
+      return false;
      }
-   return trendFound;
+
+   int selected = InpChildAnchorMode == CHILD_ANCHOR_LEGACY_FIRST ? 0 : ArraySize(anchors) - 1;
+   ChildAnchorCandidate active = anchors[selected];
+   if(state.childStructureFirstDetectedTime <= 0)
+     {
+      state.childStructureFirstDetectedTime = anchors[0].confirmedTime;
+      state.childFirstAnchorPrice = anchors[0].price;
+      state.childFirstAnchorTime = anchors[0].time;
+      ++g_childAnchorsCreated;
+     }
+   if(ArraySize(anchors) > oldObservedAnchorCount)
+      g_childAnchorsUpdated += MathMax(0, ArraySize(anchors) - MathMax(1, oldObservedAnchorCount));
+   int oldVersion = state.childAnchorVersion;
+   state.childAnchorVersion = selected + 1;
+   bool activeAnchorChanged = state.childAnchorVersion > oldVersion;
+   state.childAnchorUpdateCount = MathMax(0, ArraySize(anchors) - 1);
+   state.childStructureLatestUpdateTime = active.confirmedTime;
+   state.childLatestAnchorPrice = anchors[ArraySize(anchors) - 1].price;
+   state.childLatestAnchorTime = anchors[ArraySize(anchors) - 1].time;
+   state.childAnchorChangedAfterInitialDetection = ArraySize(anchors) > 1;
+   state.childAnchorIsLatestValid = selected == ArraySize(anchors) - 1;
+   state.childAnchorConfirmedTime = active.confirmedTime;
+   state.childCorrectionExtreme = active.extreme;
+   state.childTrendState = state.parentDirection > 0 ? "falling" : "rising";
+   state.childTrendAlignedWithWave2 = true;
+   state.childCountertrendConfirmed = true;
+   state.childCountertrendRejectReason = "none";
+   int childAge = BarsBetween(state.symbol, InpChildTF,
+                              state.childStructureFirstDetectedTime, rates[0].time);
+   if(childAge > InpChildStructureMaxAgeBars)
+     {
+      state.childTrendAlignedWithWave2 = false;
+      state.childCountertrendConfirmed = false;
+      state.childCountertrendRejectReason = "child_structure_too_old";
+      return false;
+     }
+   if(state.parentDirection > 0)
+     {
+      state.childActiveModoritakane = active.price;
+      state.childActiveModoritakaneTime = active.time;
+     }
+   else
+     {
+      state.childActiveOshiyasu = active.price;
+      state.childActiveOshiyasuTime = active.time;
+     }
+
+   double rangeHigh = rates[0].high, rangeLow = rates[0].low;
+   for(int shift = ArraySize(rates) - 1; shift >= 0; --shift)
+     {
+      if(rates[shift].time < state.childStructureFirstDetectedTime) continue;
+      rangeHigh = MathMax(rangeHigh, rates[shift].high);
+      rangeLow = MathMin(rangeLow, rates[shift].low);
+     }
+   state.childTrendRangeAfterDetection = atr > 0.0 ? (rangeHigh - rangeLow) / atr : 0.0;
+   string trendKey = state.parentEventId + "|CHILD|" + IntegerToString((long)anchors[0].confirmedTime);
+   if(AddUniqueKey(g_childTrendKeys, trendKey)) ++g_childCountertrendConfirmed;
+   string anchorKey = state.parentEventId + "|ANCHOR|" + IntegerToString(state.childAnchorVersion);
+   AddUniqueKey(g_childAnchorKeys, anchorKey);
+   if(activeAnchorChanged)
+      WriteStateEvent(state, oldVersion == 0 ? "child_anchor_created" : "child_anchor_updated");
+   if(state.strategyState == STATE_PARENT_WAVE2_ACTIVE)
+      ChangeState(state, STATE_CHILD_COUNTER_TREND_CONFIRMED, active.confirmedTime,
+                  "child_countertrend_confirmed_latest_anchor_active");
+
+   double flipLevel = active.price;
+   int flipShift = -1;
+   datetime flipTime = 0;
+   double flipClose = 0.0;
+   if(!FindFirstBreak(rates, active.confirmedTime, flipLevel, state.parentDirection,
+                      flipShift, flipTime, flipClose))
+      return true;
+
+   state.childTrendFlipDetected = true;
+   state.childTrendFlipDirection = state.parentDirection;
+   state.childTrendFlipTime = flipTime;
+   state.childTrendFlipLevel = flipLevel;
+   state.childTrendFlipClose = flipClose;
+   state.childTrendFlipAtr = state.parentDirection > 0 ? (flipClose - flipLevel) / atr :
+                                                       (flipLevel - flipClose) / atr;
+   state.childAnchorUsedForFlip = flipLevel;
+   state.childFlipAnchorVersion = state.childAnchorVersion;
+   state.childFlipIsFirstBreakAfterAnchor = true;
+   state.childFlipSignalAgeBars = BarsBetween(state.symbol, InpChildTF, flipTime, rates[0].time);
+   state.childFlipIsFresh = flipTime == rates[0].time && state.childFlipSignalAgeBars == 0;
+   state.childTrendFlipEventId = EventId(state.symbol, "CHILD_FLIP", state.parentDirection,
+                                         flipTime, flipLevel);
+   if(AddUniqueKey(g_childFlipKeys, state.childTrendFlipEventId)) ++g_childTrendFlipsDetected;
+   if(AddUniqueKey(g_firstSignalKeys, state.parentEventId)) ++g_firstFlipSignals;
+   if(state.childFlipIsFresh) ++g_freshFirstFlipSignals;
+   ChangeState(state, STATE_CHILD_TREND_FLIPPED, flipTime, "first_close_break_of_active_child_anchor");
+
+   state.signalExpired = !state.childFlipIsFresh ||
+                         state.childFlipSignalAgeBars > InpChildFlipMaxSignalAgeBars;
+   if(state.signalExpired && AddUniqueKey(g_expiredSignalKeys, state.parentEventId))
+     {
+      ++g_expiredSignals;
+      state.signalReusedBlocked = true;
+      state.signalConsumptionStage = "invalid_candidate";
+      state.signalValidationRejectReason = "stale_child_flip_not_reused";
+      AddRejection("stale_child_flip_not_reused");
+      ExpireSignal(state, nowBar, "stale_child_flip_not_reused");
+     }
+   return true;
   }
 
 string BiasFromPivots(const string symbol, const ENUM_TIMEFRAMES tf)
@@ -1017,6 +1521,24 @@ void ResetCandidate(EntryCandidate &candidate)
    candidate.valid = false;
    candidate.stateIndex = -1;
    candidate.entryRejectReason = "none";
+   candidate.signalValidationPass = false;
+   candidate.signalValidationRejectReason = "not_evaluated";
+   candidate.signalReservedBeforePortfolio = false;
+   candidate.signalConsumptionStage = "none";
+  }
+
+bool RejectCandidate(SymbolState &state, EntryCandidate &candidate, const string reason)
+  {
+   state.signalValidationPass = false;
+   state.signalValidationRejectReason = reason;
+   state.signalConsumptionStage = "invalid_candidate";
+   state.signalNotTradedReason = reason;
+   candidate.entryRejectReason = reason;
+   candidate.signalValidationRejectReason = reason;
+   if(AddUniqueKey(g_invalidCandidateKeys, state.parentEventId)) ++g_candidateInvalid;
+   AddRejection("candidate_invalid_" + reason);
+   FinalizeSignal(state, TimeCurrent(), "invalid_candidate", reason);
+   return false;
   }
 
 bool BuildCandidateForState(const int index, SymbolState &state, EntryCandidate &candidate)
@@ -1032,41 +1554,46 @@ bool BuildCandidateForState(const int index, SymbolState &state, EntryCandidate 
       return false;
    if(InpEntryOnFirstChildTrendFlip && state.childFlipSignalAgeBars > InpChildFlipMaxSignalAgeBars)
       return false;
-   if(InpOneEntryPerParentWave2 && state.signalConsumed)
+   if(InpOneEntryPerParentWave2 && (state.signalReserved || state.signalConsumed))
      {
       state.signalReusedBlocked = true;
       return false;
      }
-   if(InpConsumeSignalBeforePortfolioSelection)
-      ConsumeSignal(state, state.childTrendFlipTime, "first_child_flip_reserved_before_validation");
 
    MqlRates child[];
    if(!CopyClosedRates(state.symbol, InpChildTF, InpATRPeriod + 4, child))
-      return false;
+      return RejectCandidate(state, candidate, "rates_unavailable");
    double atr = ATR(child, 0, InpATRPeriod);
    if(atr <= 0.0)
-      return false;
+      return RejectCandidate(state, candidate, "atr_unavailable");
    MqlTick tick;
    if(!SymbolInfoTick(state.symbol, tick))
-      return false;
+      return RejectCandidate(state, candidate, "tick_unavailable");
    int direction = state.parentDirection;
    double entry = direction > 0 ? tick.ask : tick.bid;
    double anchor = InpStopMode == STOP_PARENT_WAVE2_EXTREME ? state.parentWave2Extreme :
-                                                            state.childCorrectionExtreme;
+                                                             state.childCorrectionExtreme;
+   if(entry <= 0.0 || anchor <= 0.0)
+      return RejectCandidate(state, candidate, "entry_or_stop_anchor_invalid");
    double stop = direction > 0 ? anchor - atr * InpStopBufferATR : anchor + atr * InpStopBufferATR;
    double risk = MathAbs(entry - stop);
    if((direction > 0 && stop >= entry) || (direction < 0 && stop <= entry) ||
       risk < atr * 0.20 || risk > atr * 5.0)
      {
-      AddRejection("invalid_stop_distance");
-      return false;
+      return RejectCandidate(state, candidate, "invalid_stop_distance");
      }
+   double point = SymbolInfoDouble(state.symbol, SYMBOL_POINT);
+   int stopsLevel = (int)SymbolInfoInteger(state.symbol, SYMBOL_TRADE_STOPS_LEVEL);
+   if(point <= 0.0 || (stopsLevel > 0 && risk < stopsLevel * point))
+      return RejectCandidate(state, candidate, "broker_min_stop_distance");
    double spread = tick.ask - tick.bid;
    if(spread > atr * InpMaxSpreadATR)
      {
-      AddRejection("spread_guard");
-      return false;
+      return RejectCandidate(state, candidate, "spread_guard");
      }
+   long tradeMode = SymbolInfoInteger(state.symbol, SYMBOL_TRADE_MODE);
+   if(tradeMode == SYMBOL_TRADE_MODE_DISABLED || tradeMode == SYMBOL_TRADE_MODE_CLOSEONLY)
+      return RejectCandidate(state, candidate, "symbol_trade_mode_blocked");
 
    candidate.valid = true;
    candidate.stateIndex = index;
@@ -1085,6 +1612,23 @@ bool BuildCandidateForState(const int index, SymbolState &state, EntryCandidate 
    candidate.childTrendBeforeFlip = state.childTrendState;
    candidate.entryReason = "first_child_trend_flip_after_parent_wave2";
    candidate.entryRejectReason = "none";
+   candidate.parentWave2StartMode = (int)InpParentWave2StartMode;
+   candidate.parentWave2StartReason = state.parentWave2StartReason;
+   candidate.parentWave2StartDelayBars = state.parentWave2StartDelayBars;
+   candidate.childAnchorVersion = state.childAnchorVersion;
+   candidate.childAnchorUpdateCount = state.childAnchorUpdateCount;
+   candidate.childFirstAnchorPrice = state.childFirstAnchorPrice;
+   candidate.childLatestAnchorPrice = state.childLatestAnchorPrice;
+   candidate.childAnchorUsedForFlip = state.childAnchorUsedForFlip;
+   candidate.childAnchorIsLatestValid = state.childAnchorIsLatestValid;
+   candidate.childAnchorChangedAfterInitialDetection = state.childAnchorChangedAfterInitialDetection;
+   candidate.childSwingCount = state.childSwingCount;
+   candidate.childExtensionCount = state.childExtensionCount;
+   candidate.childCountertrendValidAtEntry = state.childCountertrendConfirmed &&
+                                             !state.childTrendInvalidatedBeforeFlip;
+   candidate.childCountertrendRejectReason = state.childCountertrendRejectReason;
+   candidate.childFlipIsFirstBreakAfterAnchor = state.childFlipIsFirstBreakAfterAnchor;
+   candidate.childFlipIsFresh = state.childFlipIsFresh;
    candidate.h1BiasState = BiasFromPivots(state.symbol, InpTopContextTF);
    candidate.h1Alignment = (direction > 0 && candidate.h1BiasState == "rising") ||
                            (direction < 0 && candidate.h1BiasState == "falling");
@@ -1094,9 +1638,17 @@ bool BuildCandidateForState(const int index, SymbolState &state, EntryCandidate 
    candidate.fractalAlignmentCount = 1 + (candidate.h1Alignment ? 1 : 0) + (candidate.h4Alignment ? 1 : 0);
    candidate.fullFractalAlignment = candidate.fractalAlignmentCount == 3;
    candidate.sessionLabel = SessionLabel(child[0].time, candidate.utcHour, candidate.weekday);
-
-   if(!state.signalConsumed)
-      ConsumeSignal(state, child[0].time, "first_child_flip_consumed_on_candidate");
+   state.childCountertrendValidAtEntry = candidate.childCountertrendValidAtEntry;
+   state.signalValidationPass = true;
+   state.signalValidationRejectReason = "none";
+   state.signalNotTradedReason = "pending_portfolio";
+   state.signalConsumptionStage = "before_portfolio";
+   candidate.signalValidationPass = true;
+   candidate.signalValidationRejectReason = "none";
+   candidate.signalReservedBeforePortfolio = true;
+   candidate.signalConsumptionStage = "before_portfolio";
+   if(AddUniqueKey(g_validCandidateKeys, state.parentEventId)) ++g_validCandidates;
+   ReserveSignal(state, child[0].time);
    return true;
   }
 
@@ -1231,6 +1783,26 @@ void TrackPosition(const EntryCandidate &candidate, const double volume)
    tracked.signalAgeBars = candidate.signalAgeBars;
    tracked.parentWave2Age = candidate.parentWave2Age;
    tracked.childTrendBeforeFlip = candidate.childTrendBeforeFlip;
+   tracked.parentWave2StartMode = candidate.parentWave2StartMode;
+   tracked.parentWave2StartReason = candidate.parentWave2StartReason;
+   tracked.parentWave2StartDelayBars = candidate.parentWave2StartDelayBars;
+   tracked.childAnchorVersion = candidate.childAnchorVersion;
+   tracked.childAnchorUpdateCount = candidate.childAnchorUpdateCount;
+   tracked.childFirstAnchorPrice = candidate.childFirstAnchorPrice;
+   tracked.childLatestAnchorPrice = candidate.childLatestAnchorPrice;
+   tracked.childAnchorUsedForFlip = candidate.childAnchorUsedForFlip;
+   tracked.childAnchorIsLatestValid = candidate.childAnchorIsLatestValid;
+   tracked.childAnchorChangedAfterInitialDetection = candidate.childAnchorChangedAfterInitialDetection;
+   tracked.childSwingCount = candidate.childSwingCount;
+   tracked.childExtensionCount = candidate.childExtensionCount;
+   tracked.childCountertrendValidAtEntry = candidate.childCountertrendValidAtEntry;
+   tracked.childCountertrendRejectReason = candidate.childCountertrendRejectReason;
+   tracked.childFlipIsFirstBreakAfterAnchor = candidate.childFlipIsFirstBreakAfterAnchor;
+   tracked.childFlipIsFresh = candidate.childFlipIsFresh;
+   tracked.signalValidationPass = candidate.signalValidationPass;
+   tracked.signalValidationRejectReason = candidate.signalValidationRejectReason;
+   tracked.signalReservedBeforePortfolio = candidate.signalReservedBeforePortfolio;
+   tracked.signalConsumptionStage = "traded";
    tracked.h1BiasState = candidate.h1BiasState;
    tracked.h1Alignment = candidate.h1Alignment;
    tracked.h4BiasState = candidate.h4BiasState;
@@ -1247,29 +1819,41 @@ bool OpenCandidate(const EntryCandidate &candidate)
   {
    if(!candidate.valid)
       return false;
+   ++g_portfolioSelected;
    if(RiskStopped())
      {
       AddRejection(g_dailyStopped ? "daily_loss_stop" : "drawdown_stop");
+      ++g_riskReject;
+      FinalizeSignal(g_states[candidate.stateIndex], TimeCurrent(), "risk_block",
+                     g_dailyStopped ? "daily_loss_stop" : "drawdown_stop");
       return false;
      }
    if(HasManagedPosition(candidate.symbol))
      {
       AddRejection("symbol_position_cap");
+      ++g_positionCapReject;
+      FinalizeSignal(g_states[candidate.stateIndex], TimeCurrent(), "position_cap", "symbol_position_cap");
       return false;
      }
    if(CountManagedPositions() >= InpMaxPositions)
      {
       AddRejection("portfolio_position_cap");
+      ++g_positionCapReject;
+      FinalizeSignal(g_states[candidate.stateIndex], TimeCurrent(), "position_cap", "portfolio_position_cap");
       return false;
      }
    if(CurrentOpenRiskPercent() + InpRiskPerTradePercent > InpMaxTotalOpenRiskPercent)
      {
       AddRejection("portfolio_risk_cap");
+      ++g_riskReject;
+      FinalizeSignal(g_states[candidate.stateIndex], TimeCurrent(), "risk_block", "portfolio_risk_cap");
       return false;
      }
    if(InpRiskPerTradePercent > InpMaxRiskPerSymbolPercent)
      {
       AddRejection("symbol_risk_cap");
+      ++g_riskReject;
+      FinalizeSignal(g_states[candidate.stateIndex], TimeCurrent(), "risk_block", "symbol_risk_cap");
       return false;
      }
    double volume = CalculatePositionSize(candidate.symbol, candidate.riskPrice);
@@ -1281,10 +1865,14 @@ bool OpenCandidate(const EntryCandidate &candidate)
    if(!ok)
      {
       AddRejection("order_failed_" + IntegerToString((int)trade.ResultRetcode()));
+      ++g_orderFailure;
+      FinalizeSignal(g_states[candidate.stateIndex], TimeCurrent(), "order_failure",
+                     "order_failed_" + IntegerToString((int)trade.ResultRetcode()));
       return false;
      }
    ++g_tradesTaken;
    TrackPosition(candidate, volume);
+   FinalizeSignal(g_states[candidate.stateIndex], TimeCurrent(), "traded", "traded");
    return true;
   }
 
@@ -1346,7 +1934,7 @@ void WriteTradeRow(const TrackedTrade &tracked,
    FileSeek(handle, 0, SEEK_END);
    if(header)
       FileWriteString(handle,
-         "entry_time,exit_time,strategy,run_id,symbol,direction,parent_tf,child_tf,top_context_tf,entry_parent_event_id,entry_child_flip_event_id,entry_signal_age_bars,entry_on_first_child_flip,entry_signal_consumed,entry_signal_reused_blocked,entry_parent_wave2_age,entry_child_trend_before_flip,entry_reason,entry_reject_reason,h1_bias_state,h1_alignment_with_parent,h4_bias_state,h4_alignment_with_parent,fractal_alignment_count,full_fractal_alignment,session_label,utc_hour,weekday,stop_mode,entry,exit,stop_loss,take_profit,risk_price,result_r,max_favorable_r_before_exit,max_adverse_r_before_exit,reached_0_5r,reached_0_8r,reached_1_0r,reached_1_3r,bars_to_0_5r,bars_to_1_0r,bars_to_1_3r,exit_type,full_sl_exit,tp_exit,time_exit,profit,commission,swap,net_profit,volume,reward_r,holding_bars,atr,deal_reason\r\n");
+         "entry_time,exit_time,strategy,run_id,symbol,direction,parent_tf,child_tf,top_context_tf,entry_parent_event_id,entry_child_flip_event_id,entry_signal_age_bars,entry_on_first_child_flip,entry_signal_consumed,entry_signal_reused_blocked,entry_parent_wave2_age,entry_child_trend_before_flip,parent_wave2_start_mode,parent_wave2_start_reason,parent_wave2_start_delay_bars,child_anchor_mode,child_anchor_version,child_anchor_update_count,child_first_anchor_price,child_latest_anchor_price,child_anchor_used_for_flip,child_anchor_is_latest_valid,child_anchor_changed_after_initial_detection,child_swing_count,child_extension_count,child_countertrend_valid_at_entry,child_countertrend_reject_reason,child_flip_is_first_break_after_anchor,child_flip_is_fresh,signal_validation_pass,signal_validation_reject_reason,signal_reserved_before_portfolio,signal_consumption_stage,entry_reason,entry_reject_reason,h1_bias_state,h1_alignment_with_parent,h4_bias_state,h4_alignment_with_parent,fractal_alignment_count,full_fractal_alignment,session_label,utc_hour,weekday,stop_mode,entry,exit,stop_loss,take_profit,risk_price,result_r,max_favorable_r_before_exit,max_adverse_r_before_exit,reached_0_5r,reached_0_8r,reached_1_0r,reached_1_3r,bars_to_0_5r,bars_to_1_0r,bars_to_1_3r,exit_type,full_sl_exit,tp_exit,time_exit,profit,commission,swap,net_profit,volume,reward_r,holding_bars,atr,deal_reason\r\n");
    double resultR = tracked.direction > 0 ? (exitPrice - tracked.entryPrice) / tracked.riskPrice :
                                            (tracked.entryPrice - exitPrice) / tracked.riskPrice;
    int holdingBars = iBarShift(tracked.symbol, InpChildTF, tracked.entryTime, false);
@@ -1371,6 +1959,27 @@ void WriteTradeRow(const TrackedTrade &tracked,
    CsvAppend(line, "false");
    CsvAppend(line, IntegerToString(tracked.parentWave2Age));
    CsvAppend(line, tracked.childTrendBeforeFlip);
+   CsvAppend(line, IntegerToString(tracked.parentWave2StartMode));
+   CsvAppend(line, tracked.parentWave2StartReason);
+   CsvAppend(line, IntegerToString(tracked.parentWave2StartDelayBars));
+   CsvAppend(line, ChildAnchorModeName());
+   CsvAppend(line, IntegerToString(tracked.childAnchorVersion));
+   CsvAppend(line, IntegerToString(tracked.childAnchorUpdateCount));
+   CsvAppend(line, DoubleToString(tracked.childFirstAnchorPrice, 8));
+   CsvAppend(line, DoubleToString(tracked.childLatestAnchorPrice, 8));
+   CsvAppend(line, DoubleToString(tracked.childAnchorUsedForFlip, 8));
+   CsvAppend(line, BoolText(tracked.childAnchorIsLatestValid));
+   CsvAppend(line, BoolText(tracked.childAnchorChangedAfterInitialDetection));
+   CsvAppend(line, IntegerToString(tracked.childSwingCount));
+   CsvAppend(line, IntegerToString(tracked.childExtensionCount));
+   CsvAppend(line, BoolText(tracked.childCountertrendValidAtEntry));
+   CsvAppend(line, tracked.childCountertrendRejectReason);
+   CsvAppend(line, BoolText(tracked.childFlipIsFirstBreakAfterAnchor));
+   CsvAppend(line, BoolText(tracked.childFlipIsFresh));
+   CsvAppend(line, BoolText(tracked.signalValidationPass));
+   CsvAppend(line, tracked.signalValidationRejectReason);
+   CsvAppend(line, BoolText(tracked.signalReservedBeforePortfolio));
+   CsvAppend(line, tracked.signalConsumptionStage);
    CsvAppend(line, "first_child_trend_flip_after_parent_wave2");
    CsvAppend(line, "none");
    CsvAppend(line, tracked.h1BiasState);
@@ -1422,8 +2031,8 @@ void WriteFunnel()
    if(handle == INVALID_HANDLE) return;
    FileSeek(handle, 0, SEEK_SET);
    FileWriteString(handle, "run_id,stage,count\r\n");
-   string stages[] = {"symbols_scanned","parent_flips_detected","valid_parent_wave1","parent_wave2_started","parent_wave2_invalidated","child_countertrend_confirmed","child_trend_flips_detected","first_flip_signals","signals_consumed","trades_taken","expired_signals"};
-   long values[] = {g_symbolsScanned,g_parentFlipsDetected,g_validParentWave1,g_parentWave2Started,g_parentWave2Invalidated,g_childCountertrendConfirmed,g_childTrendFlipsDetected,g_firstFlipSignals,g_signalsConsumed,g_tradesTaken,g_expiredSignals};
+   string stages[] = {"symbols_scanned","parent_anchor_states_available","parent_flips_detected","parent_wave1_confirmed","parent_wave2_pending","parent_wave2_started_first_close","parent_wave2_started_confirmed_pivot","parent_wave2_started_child_trend","child_countertrend_confirmed","child_anchor_created","child_anchor_updated","child_flip_detected","fresh_first_flip_signal","valid_candidate","signal_reserved","portfolio_selected","trades_taken","candidate_invalid","position_cap_reject","risk_reject","order_failure","expired","parent_invalidated","signals_consumed"};
+   long values[] = {g_symbolsScanned,g_parentFlipsDetected,g_parentFlipsDetected,g_validParentWave1,g_parentWave2Pending,g_parentWave2StartedFirstClose,g_parentWave2StartedConfirmedPivot,g_parentWave2StartedChildTrend,g_childCountertrendConfirmed,g_childAnchorsCreated,g_childAnchorsUpdated,g_childTrendFlipsDetected,g_freshFirstFlipSignals,g_validCandidates,g_signalsReserved,g_portfolioSelected,g_tradesTaken,g_candidateInvalid,g_positionCapReject,g_riskReject,g_orderFailure,g_expiredSignals,g_parentWave2Invalidated,g_signalsConsumed};
    for(int i = 0; i < ArraySize(stages); ++i)
       FileWriteString(handle, "\"" + InpRunId + "\",\"" + stages[i] + "\",\"" + IntegerToString(values[i]) + "\"\r\n");
    FileClose(handle);
@@ -1445,7 +2054,7 @@ void WriteSummary()
    int handle = FileOpen(LogFileName("summary"), LogFlags(), ',');
    if(handle == INVALID_HANDLE) return;
    FileSeek(handle, 0, SEEK_SET);
-   FileWriteString(handle, "run_id,run_mode,symbols,parent_tf,child_tf,top_context_tf,symbols_scanned,parent_flips_detected,valid_parent_wave1,parent_wave2_started,parent_wave2_invalidated,child_countertrend_confirmed,child_trend_flips_detected,first_flip_signals,signals_consumed,trades_taken,expired_signals,daily_stopped,drawdown_stopped\r\n");
+   FileWriteString(handle, "run_id,run_mode,symbols,parent_tf,child_tf,top_context_tf,parent_wave2_start_mode,child_anchor_mode,symbols_scanned,parent_flips_detected,parent_wave1_confirmed,parent_wave2_pending,parent_wave2_started,parent_wave2_started_first_close,parent_wave2_started_confirmed_pivot,parent_wave2_started_child_trend,parent_wave2_invalidated,child_countertrend_confirmed,child_anchor_created,child_anchor_updated,child_trend_flips_detected,fresh_first_flip_signals,valid_candidates,signals_reserved,signals_consumed,portfolio_selected,trades_taken,candidate_invalid,position_cap_reject,risk_reject,order_failure,expired_signals,daily_stopped,drawdown_stopped\r\n");
    string line = "";
    CsvAppend(line, InpRunId);
    CsvAppend(line, RunModeName());
@@ -1453,16 +2062,31 @@ void WriteSummary()
    CsvAppend(line, TFName(InpParentTF));
    CsvAppend(line, TFName(InpChildTF));
    CsvAppend(line, TFName(InpTopContextTF));
+   CsvAppend(line, ParentWave2StartModeName());
+   CsvAppend(line, ChildAnchorModeName());
    CsvAppend(line, IntegerToString(g_symbolsScanned));
    CsvAppend(line, IntegerToString(g_parentFlipsDetected));
    CsvAppend(line, IntegerToString(g_validParentWave1));
+   CsvAppend(line, IntegerToString(g_parentWave2Pending));
    CsvAppend(line, IntegerToString(g_parentWave2Started));
+   CsvAppend(line, IntegerToString(g_parentWave2StartedFirstClose));
+   CsvAppend(line, IntegerToString(g_parentWave2StartedConfirmedPivot));
+   CsvAppend(line, IntegerToString(g_parentWave2StartedChildTrend));
    CsvAppend(line, IntegerToString(g_parentWave2Invalidated));
    CsvAppend(line, IntegerToString(g_childCountertrendConfirmed));
+   CsvAppend(line, IntegerToString(g_childAnchorsCreated));
+   CsvAppend(line, IntegerToString(g_childAnchorsUpdated));
    CsvAppend(line, IntegerToString(g_childTrendFlipsDetected));
-   CsvAppend(line, IntegerToString(g_firstFlipSignals));
+   CsvAppend(line, IntegerToString(g_freshFirstFlipSignals));
+   CsvAppend(line, IntegerToString(g_validCandidates));
+   CsvAppend(line, IntegerToString(g_signalsReserved));
    CsvAppend(line, IntegerToString(g_signalsConsumed));
+   CsvAppend(line, IntegerToString(g_portfolioSelected));
    CsvAppend(line, IntegerToString(g_tradesTaken));
+   CsvAppend(line, IntegerToString(g_candidateInvalid));
+   CsvAppend(line, IntegerToString(g_positionCapReject));
+   CsvAppend(line, IntegerToString(g_riskReject));
+   CsvAppend(line, IntegerToString(g_orderFailure));
    CsvAppend(line, IntegerToString(g_expiredSignals));
    CsvAppend(line, BoolText(g_dailyStopped));
    CsvAppend(line, BoolText(g_drawdownStopped));
@@ -1526,7 +2150,11 @@ void ScanSymbols()
          if(candidates[i].score > candidates[best].score) best = i;
       for(int i = 0; i < ArraySize(candidates); ++i)
          if(i != best)
+           {
             AddRejection("portfolio_not_selected");
+            FinalizeSignal(g_states[candidates[i].stateIndex], TimeCurrent(),
+                           "before_portfolio", "portfolio_not_selected");
+           }
       OpenCandidate(candidates[best]);
       return;
      }

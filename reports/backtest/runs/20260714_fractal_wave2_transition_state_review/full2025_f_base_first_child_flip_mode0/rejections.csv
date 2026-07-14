@@ -1,0 +1,5 @@
+run_id,reason,count
+"full2025_f_base_first_child_flip_mode0","candidate_invalid_spread_guard","2592"
+"full2025_f_base_first_child_flip_mode0","candidate_invalid_invalid_stop_distance","419"
+"full2025_f_base_first_child_flip_mode0","stale_child_flip_not_reused","8"
+"full2025_f_base_first_child_flip_mode0","symbol_position_cap","1"

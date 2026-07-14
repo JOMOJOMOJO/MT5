@@ -1,0 +1,5 @@
+run_id,reason,count
+"q1_g_base_first_child_flip_mode1","candidate_invalid_spread_guard","606"
+"q1_g_base_first_child_flip_mode1","candidate_invalid_invalid_stop_distance","106"
+"q1_g_base_first_child_flip_mode1","stale_child_flip_not_reused","17"
+"q1_g_base_first_child_flip_mode1","symbol_position_cap","1"

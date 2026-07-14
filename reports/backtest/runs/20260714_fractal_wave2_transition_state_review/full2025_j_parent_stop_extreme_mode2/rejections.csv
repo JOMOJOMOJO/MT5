@@ -1,0 +1,5 @@
+run_id,reason,count
+"full2025_j_parent_stop_extreme_mode2","candidate_invalid_entry_or_stop_anchor_invalid","89"
+"full2025_j_parent_stop_extreme_mode2","candidate_invalid_spread_guard","299"
+"full2025_j_parent_stop_extreme_mode2","candidate_invalid_invalid_stop_distance","2723"
+"full2025_j_parent_stop_extreme_mode2","stale_child_flip_not_reused","1"
