@@ -1,0 +1,6 @@
+run_id,reason,count
+"combined_2025","candidate_invalid_spread_guard","2562"
+"combined_2025","candidate_invalid_invalid_stop_distance","406"
+"combined_2025","stale_child_flip_not_reused","1"
+"combined_2025","symbol_position_cap","1"
+"combined_2025","combined_same_direction_position_cap","1"

@@ -1,0 +1,10 @@
+﻿{
+    "locked_at":  "2026-08-15T21:36:50.4184238+09:00",
+    "oos_from":  "2026.01.01",
+    "oos_to_requested":  "2026.08.14",
+    "tester_model":  4,
+    "source_sha256":  "CE1B4E8804F3FDCEF1D94D544850185C3DA80D6D787FCAE604A7F82B4E08FF40",
+    "include_sha256":  "B1B63A46F7815233CFCDC27D8C70E6EB69F65420941A73FD3EF33F73A5C68C0B",
+    "preset_sha256":  "78D9FD360E8F3AE837403E1EADB12C1925A28869CADA55940AC60D064922C4C2",
+    "note":  "Parameters were locked before any 2026 run. Run-specific IDs, magic numbers and log folders differ; strategy parameters do not."
+}

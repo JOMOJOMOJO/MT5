@@ -1,0 +1,22 @@
+{
+  "period": "2024.01.01..2024.12.31",
+  "tester_model": 4,
+  "history_quality": "99% real ticks",
+  "ticks": 37115045,
+  "mt5_trades": 0,
+  "mt5_deals": 0,
+  "custom_orders": 0,
+  "pattern_reachability_tests_passed": 6,
+  "pattern_reachability_tests_failed": 0,
+  "m15_path_tests_passed": 2,
+  "m15_path_tests_failed": 0,
+  "shadow_started": 1,
+  "shadow_anchor": 1,
+  "shadow_anchor_before_origin_break": 1,
+  "shadow_no_anchor_within_240": 0,
+  "shadow_order_attempts": 0,
+  "shadow_temporal_order_violations": 0,
+  "strategy_parameter_change_count": 0,
+  "runtime_causality_violation_count": 0,
+  "m15_runtime_rows": 0
+}

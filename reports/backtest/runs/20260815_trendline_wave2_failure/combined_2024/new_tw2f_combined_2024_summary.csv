@@ -1,0 +1,18 @@
+time,metric,value
+2024.12.30 23:57:59,h4_prior_trend_candidates,55626
+2024.12.30 23:57:59,h4_impulse_candidates,386
+2024.12.30 23:57:59,h4_impulses,80
+2024.12.30 23:57:59,h4_structure_breaks,80
+2024.12.30 23:57:59,h1_mature,4
+2024.12.30 23:57:59,h1_trendline_breaks,1
+2024.12.30 23:57:59,m15_pullbacks,0
+2024.12.30 23:57:59,m15_continuation_failures,0
+2024.12.30 23:57:59,m15_structure_breaks,0
+2024.12.30 23:57:59,execution_pass,0
+2024.12.30 23:57:59,orders,0
+2024.12.30 23:57:59,daily_stops,0
+2024.12.30 23:57:59,weekly_stops,0
+2024.12.30 23:57:59,hard_stops,0
+2024.12.30 23:57:59,total_risk_rejects,0
+2024.12.30 23:57:59,currency_risk_rejects,0
+2024.12.30 23:57:59,reject_h4_opposite_structure_update,68

@@ -1,0 +1,7 @@
+run_id,reason,count
+"combined_2026","candidate_invalid_spread_guard","1500"
+"combined_2026","candidate_invalid_invalid_stop_distance","326"
+"combined_2026","stale_child_flip_not_reused","5"
+"combined_2026","invalid_state_transition_SIGNAL_CONSUMED_to_INVALIDATED","3"
+"combined_2026","invalid_state_transition_INVALIDATED_to_CHILD_TREND_FLIPPED","1"
+"combined_2026","invalid_state_transition_INVALIDATED_to_SIGNAL_CONSUMED","1"

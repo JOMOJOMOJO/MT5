@@ -1,0 +1,12 @@
+﻿{
+    "generated_at":  "2026-08-15T23:15:16.1486167+09:00",
+    "source_preset":  "reports\\backtest\\runs\\20260815_trendline_wave2_failure\\new_bucket_only_2024\\preset.set",
+    "tester_model":  4,
+    "period":  "2024.01.01..2024.12.31",
+    "locked_strategy_parameter_differences":  [
+
+                                              ],
+    "source_sha256":  "CE1B4E8804F3FDCEF1D94D544850185C3DA80D6D787FCAE604A7F82B4E08FF40",
+    "include_sha256":  "1B3E9DC9449FC58F56BA161102F6631B97491F96CC9FB323BDB14D7EAD6002C7",
+    "preset_sha256":  "F624133E1CC6CEB7F4A9637E63D3390ED005E20347841BD9EE3037E648DD6218"
+}

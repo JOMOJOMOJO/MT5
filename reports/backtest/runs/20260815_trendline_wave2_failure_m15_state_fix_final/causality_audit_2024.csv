@@ -1,0 +1,5 @@
+time_pair,populated_event_rows,pivot_after_confirmation_violations,confirmation_after_event_violations,status
+generic,243,0,0,PASS
+reference,0,0,0,PASS
+protected,0,0,0,PASS
+post_anchor,0,0,0,PASS

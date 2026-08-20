@@ -1,0 +1,7 @@
+run_id,year,mode,h4_prior_trend_candidates,h4_impulse_candidates,h4_impulses,h4_structure_breaks,h1_mature,h1_trendline_breaks,m15_pullbacks,m15_continuation_failures,m15_structure_breaks,execution_pass,orders,daily_stops,weekly_stops,hard_stops,total_risk_rejects,currency_risk_rejects,reject_h4_opposite_structure_update,reject_h1_wave1_origin_broken
+new_bucket_only_2024,2024,new_bucket_only,55626,386,80,80,4,1,0,0,0,0,0,0,0,0,0,0,68,
+combined_2024,2024,combined,55626,386,80,80,4,1,0,0,0,0,0,0,0,0,0,0,68,
+new_bucket_only_2025,2025,new_bucket_only,54885,288,48,48,3,2,2,0,0,0,0,0,0,0,0,0,41,
+combined_2025,2025,combined,54885,288,48,48,3,2,2,0,0,0,0,0,0,0,0,0,41,
+new_bucket_only_2026,2026,new_bucket_only,32721,175,40,40,1,1,0,0,0,0,0,0,0,0,0,0,32,1
+combined_2026,2026,combined,32721,175,40,40,1,1,0,0,0,0,0,0,0,0,0,0,32,1

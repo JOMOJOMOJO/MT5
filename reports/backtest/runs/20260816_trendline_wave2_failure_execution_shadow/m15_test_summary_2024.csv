@@ -1,0 +1,3 @@
+test_suite,scope,passed,failed,full_m15_path,candidate_assertions
+pattern_classification_reachability,"Long/Short equal, higher-low/lower-high, false-break through M15_CONTINUATION_FAILED",6,0,False,not_applicable
+m15_end_to_end_state_reachability,Long and Short H1_REVERSAL_LEG through ENTRY_READY,2,0,True,"valid,stateIndex,direction,stopLoss,takeProfit,volume"

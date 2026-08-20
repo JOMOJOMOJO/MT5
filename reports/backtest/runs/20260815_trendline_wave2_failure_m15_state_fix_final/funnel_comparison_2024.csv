@@ -1,0 +1,17 @@
+stage,old_metric,old_value,new_metric,new_value,delta
+h4_impulses,h4_impulses,80,h4_impulses,80,0
+h4_structure_breaks,h4_structure_breaks,80,h4_structure_breaks,80,0
+h1_mature,h1_mature,4,h1_mature,4,0
+h1_trendline_breaks,h1_trendline_breaks,1,h1_trendline_breaks,1,0
+countertrend_structure,not_recorded,not_recorded,countertrend_structure,0,not_comparable
+anchor_frozen,m15_pullbacks,0,anchor_frozen,0,0
+post_anchor_swing,not_recorded,not_recorded,post_anchor_swing,0,not_comparable
+equal_extreme,not_recorded,not_recorded,equal_extreme,0,not_comparable
+higher_low_or_lower_high,not_recorded,not_recorded,higher_low_or_lower_high,0,not_comparable
+false_break_recovery,not_recorded,not_recorded,false_break_recovery,0,not_comparable
+failure_invalidated,not_recorded,not_recorded,failure_invalidated,0,not_comparable
+continuation_failure,m15_continuation_failures,0,continuation_failure,0,0
+protected_break,m15_structure_breaks,0,protected_break,0,0
+ma_filter_reject,not_recorded,not_recorded,ma_filter_reject,0,not_comparable
+execution_pass,execution_pass,0,execution_pass,0,0
+order,orders,0,order,0,0

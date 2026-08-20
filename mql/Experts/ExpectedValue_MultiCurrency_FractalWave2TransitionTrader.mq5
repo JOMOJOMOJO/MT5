@@ -1857,6 +1857,15 @@ bool OpenCandidate(const EntryCandidate &candidate)
       return false;
      }
    double volume = CalculatePositionSize(candidate.symbol, candidate.riskPrice);
+   string combinedRiskReason = "";
+   if(!TW2FLegacyCombinedExecutionGate(candidate, volume, combinedRiskReason))
+     {
+      AddRejection("combined_" + combinedRiskReason);
+      ++g_riskReject;
+      FinalizeSignal(g_states[candidate.stateIndex], TimeCurrent(), "risk_block",
+                     "combined_" + combinedRiskReason);
+      return false;
+     }
    trade.SetExpertMagicNumber(InpMagicNumber);
    trade.SetDeviationInPoints(InpSlippagePoints);
    bool ok = candidate.direction > 0 ?
@@ -2095,7 +2104,9 @@ void WriteSummary()
    WriteFunnel();
   }
 
-bool ParseSymbols()
+#include "..\Include\TrendlineWave2Failure.mqh"
+
+ bool ParseSymbols()
   {
    string parts[];
    int count = StringSplit(InpSymbols, ',', parts);
@@ -2164,14 +2175,17 @@ void ScanSymbols()
 
 int OnInit()
   {
-   if(InpParentTF != PERIOD_M15 || InpChildTF != PERIOD_M5 || InpTopContextTF != PERIOD_H1 ||
-      InpPivotDepth < 1 || InpATRPeriod < 2 || InpParentWave1MaxBars < 1 ||
-      InpParentWave2MaxBars < 1 || InpChildFlipMaxSignalAgeBars < 0 || InpTargetR <= 0.0 ||
-      InpRiskPerTradePercent <= 0.0 || InpMaxRiskPerSymbolPercent <= 0.0 ||
-      InpMaxTotalOpenRiskPercent <= 0.0 || InpMaxPositions < 1)
-      return INIT_PARAMETERS_INCORRECT;
+   if(TW2FIncludesLegacy() &&
+      (InpParentTF != PERIOD_M15 || InpChildTF != PERIOD_M5 || InpTopContextTF != PERIOD_H1 ||
+       InpPivotDepth < 1 || InpATRPeriod < 2 || InpParentWave1MaxBars < 1 ||
+       InpParentWave2MaxBars < 1 || InpChildFlipMaxSignalAgeBars < 0 || InpTargetR <= 0.0 ||
+       InpRiskPerTradePercent <= 0.0 || InpMaxRiskPerSymbolPercent <= 0.0 ||
+       InpMaxTotalOpenRiskPercent <= 0.0 || InpMaxPositions < 1))
+       return INIT_PARAMETERS_INCORRECT;
    if(!ParseSymbols())
       return INIT_FAILED;
+   if(!TW2FInitialize())
+      return INIT_PARAMETERS_INCORRECT;
    g_initialEquity = AccountInfoDouble(ACCOUNT_EQUITY);
    g_peakEquity = g_initialEquity;
    g_dayStartEquity = g_initialEquity;
@@ -2183,18 +2197,24 @@ int OnInit()
 
 void OnDeinit(const int reason)
   {
-   WriteSummary();
+   if(TW2FIncludesLegacy())
+      WriteSummary();
+   TW2FFinalizeExpiryShadows();
+   TW2FWriteSummary();
   }
 
 void OnTick()
   {
-   ScanSymbols();
+   if(TW2FIncludesLegacy())
+      ScanSymbols();
+   TW2FScanSymbols();
   }
 
 void OnTradeTransaction(const MqlTradeTransaction &trans,
-                        const MqlTradeRequest &request,
-                        const MqlTradeResult &result)
+                         const MqlTradeRequest &request,
+                         const MqlTradeResult &result)
   {
+   TW2FOnTradeTransaction(trans);
    if(trans.type != TRADE_TRANSACTION_DEAL_ADD || !HistoryDealSelect(trans.deal))
       return;
    if((long)HistoryDealGetInteger(trans.deal, DEAL_MAGIC) != InpMagicNumber)

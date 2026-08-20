@@ -1,0 +1,2 @@
+﻿"sequence","run_id","year","mode","bucket_mode","model","from_date","to_date","preset","tester_ini","log_folder","legacy_log_folder"
+"1","m15_state_fix_final_2024","2024","new_bucket_only","1","4","2024.01.01","2024.12.31","reports\backtest\runs\20260815_trendline_wave2_failure_m15_state_fix_final\m15_state_fix_final_2024\preset.set","reports\backtest\runs\20260815_trendline_wave2_failure_m15_state_fix_final\m15_state_fix_final_2024\tester.ini","trendline_wave2_failure_m15_state_fix_final_2024","trendline_wave2_failure_m15_state_fix_final_2024_legacy"

@@ -1,0 +1,5 @@
+run_id,reason,count
+"baseline_2025","candidate_invalid_spread_guard","2562"
+"baseline_2025","candidate_invalid_invalid_stop_distance","406"
+"baseline_2025","stale_child_flip_not_reused","1"
+"baseline_2025","symbol_position_cap","1"

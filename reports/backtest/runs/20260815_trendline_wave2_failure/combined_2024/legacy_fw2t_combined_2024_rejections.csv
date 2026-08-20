@@ -1,0 +1,8 @@
+run_id,reason,count
+"combined_2024","candidate_invalid_spread_guard","2419"
+"combined_2024","invalid_state_transition_SIGNAL_CONSUMED_to_INVALIDATED","9"
+"combined_2024","candidate_invalid_invalid_stop_distance","468"
+"combined_2024","symbol_position_cap","1"
+"combined_2024","invalid_state_transition_INVALIDATED_to_CHILD_TREND_FLIPPED","1"
+"combined_2024","invalid_state_transition_INVALIDATED_to_SIGNAL_CONSUMED","1"
+"combined_2024","stale_child_flip_not_reused","1"
