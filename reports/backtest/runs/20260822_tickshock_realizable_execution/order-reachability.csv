@@ -1,0 +1,89 @@
+run_id,record_type,direction,phase,result,detail
+order_harness_v3_observation_truth_final,TEST,,partial_fill_tracker_production_unit,UNIT_PASS,requested=0.10;filled=0.10;remaining=0.00;average=99.99000000
+order_harness_v3_observation_truth_final,TEST,,tester_only_guard,PASS,harness refuses terminal/live execution
+order_harness_v3_observation_truth_final,ORDER,LONG,SERVER_SL_ENTRY_CHECK,PASS,retcode=0;comment=;requested_volume=0.01;sl=1.03987000;tp=1.05022000
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_SL_OrderCheck,PASS,retcode=0
+order_harness_v3_observation_truth_final,ORDER,LONG,SERVER_SL_ENTRY_SEND,PASS,retcode=10009;external=0;order=2;deal=2;requested_volume=0.01
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_SL_OrderSend,PASS,retcode=10009;order=2;deal=2
+order_harness_v3_observation_truth_final,DEAL,LONG,SERVER_SL_ENTRY_FILL,OBSERVED,deal=2;requested_volume=0.01;deal_volume=0.01;filled_volume=0.01;remaining_volume=0.00;price=1.04055000;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_SL_entry_fill,PASS,requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;deal_count=1;residual_closed=true
+order_harness_v3_observation_truth_final,RECOVERY,LONG,SERVER_SL_POSITION_FIELDS,PASS,ticket=2;open_msc=1740963600066;volume=0.01;price=1.04055000;sl=1.03987000;tp=1.05022000
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_SL_position_field_recovery,PASS,magic/time/volume/open/sl/tp recovered
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_SL_barrier_timeout,SKIP,NOT_OBSERVED within configured tick limit; closing cleanup position
+order_harness_v3_observation_truth_final,ORDER,LONG,CLEANUP_CHECK,PASS,retcode=0;volume=0.01
+order_harness_v3_observation_truth_final,ORDER,LONG,CLEANUP_SEND,PASS,retcode=10009;external=0;order=3;deal=3
+order_harness_v3_observation_truth_final,DEAL,LONG,SERVER_SL_EXIT_FILL,OBSERVED,deal=3;volume=0.01;aggregated_exit_volume=0.01;price=1.04077000;reason=3;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_SL_deal_aggregation,PASS,requested=0.01;filled=0.01;remaining=0.00;entry_deals=1;exit_volume=0.01;entry=1.04055000;exit=1.04077000
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_SL_server_SL,SKIP,NOT_OBSERVED; exit_reason=3
+order_harness_v3_observation_truth_final,TRADE,LONG,SERVER_SL_CLOSED,PASS,signal=1740963600066;request=1740963600000;fill=1740963600066;close=1740970812242;requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;entry=1.04055000;exit=1.04077000;commission=0.00000000;fee=0.00000000;swap=0.00000000;exit_reason=3;entry_order=2;entry_deal=2;exit_deal=3
+order_harness_v3_observation_truth_final,ORDER,LONG,SERVER_TP_ENTRY_CHECK,PASS,retcode=0;comment=;requested_volume=0.01;sl=1.03076000;tp=1.04096000
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_TP_OrderCheck,PASS,retcode=0
+order_harness_v3_observation_truth_final,ORDER,LONG,SERVER_TP_ENTRY_SEND,PASS,retcode=10009;external=0;order=4;deal=4;requested_volume=0.01
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_TP_OrderSend,PASS,retcode=10009;order=4;deal=4
+order_harness_v3_observation_truth_final,DEAL,LONG,SERVER_TP_ENTRY_FILL,OBSERVED,deal=4;requested_volume=0.01;deal_volume=0.01;filled_volume=0.01;remaining_volume=0.00;price=1.04094000;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_TP_entry_fill,PASS,requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;deal_count=1;residual_closed=true
+order_harness_v3_observation_truth_final,RECOVERY,LONG,SERVER_TP_POSITION_FIELDS,PASS,ticket=4;open_msc=1740970812948;volume=0.01;price=1.04094000;sl=1.03076000;tp=1.04096000
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_TP_position_field_recovery,PASS,magic/time/volume/open/sl/tp recovered
+order_harness_v3_observation_truth_final,DEAL,LONG,SERVER_TP_EXIT_FILL,OBSERVED,deal=5;volume=0.01;aggregated_exit_volume=0.01;price=1.04097000;reason=5;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_TP_deal_aggregation,PASS,requested=0.01;filled=0.01;remaining=0.00;entry_deals=1;exit_volume=0.01;entry=1.04094000;exit=1.04097000
+order_harness_v3_observation_truth_final,TEST,,LONG_SERVER_TP_server_TP,PASS,DEAL_REASON_TP observed
+order_harness_v3_observation_truth_final,TRADE,LONG,SERVER_TP_CLOSED,PASS,signal=1740970812948;request=1740970812000;fill=1740970812948;close=1740970863543;requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;entry=1.04094000;exit=1.04097000;commission=0.00000000;fee=0.00000000;swap=0.00000000;exit_reason=5;entry_order=4;entry_deal=4;exit_deal=5
+order_harness_v3_observation_truth_final,ORDER,LONG,TIME_ENTRY_CHECK,PASS,retcode=0;comment=;requested_volume=0.01;sl=1.03104000;tp=1.05104000
+order_harness_v3_observation_truth_final,TEST,,LONG_TIME_OrderCheck,PASS,retcode=0
+order_harness_v3_observation_truth_final,ORDER,LONG,TIME_ENTRY_SEND,PASS,retcode=10009;external=0;order=6;deal=6;requested_volume=0.01
+order_harness_v3_observation_truth_final,TEST,,LONG_TIME_OrderSend,PASS,retcode=10009;order=6;deal=6
+order_harness_v3_observation_truth_final,DEAL,LONG,TIME_ENTRY_FILL,OBSERVED,deal=6;requested_volume=0.01;deal_volume=0.01;filled_volume=0.01;remaining_volume=0.00;price=1.04122000;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,LONG_TIME_entry_fill,PASS,requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;deal_count=1;residual_closed=true
+order_harness_v3_observation_truth_final,RECOVERY,LONG,TIME_POSITION_FIELDS,PASS,ticket=6;open_msc=1740970868916;volume=0.01;price=1.04122000;sl=1.03104000;tp=1.05104000
+order_harness_v3_observation_truth_final,TEST,,LONG_TIME_position_field_recovery,PASS,magic/time/volume/open/sl/tp recovered
+order_harness_v3_observation_truth_final,ORDER,LONG,TIME_CLOSE_CHECK,PASS,retcode=0;volume=0.01
+order_harness_v3_observation_truth_final,TEST,,LONG_TIME_TimeClose_OrderCheck,PASS,retcode=0
+order_harness_v3_observation_truth_final,ORDER,LONG,TIME_CLOSE_SEND,PASS,retcode=10009;external=0;order=7;deal=7
+order_harness_v3_observation_truth_final,TEST,,LONG_TIME_TimeClose_OrderSend,PASS,retcode=10009
+order_harness_v3_observation_truth_final,DEAL,LONG,TIME_EXIT_FILL,OBSERVED,deal=7;volume=0.01;aggregated_exit_volume=0.01;price=1.04104000;reason=3;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,LONG_TIME_deal_aggregation,PASS,requested=0.01;filled=0.01;remaining=0.00;entry_deals=1;exit_volume=0.01;entry=1.04122000;exit=1.04104000
+order_harness_v3_observation_truth_final,TEST,,LONG_TIME_time_exit,PASS,expert market close observed
+order_harness_v3_observation_truth_final,TRADE,LONG,TIME_CLOSED,PASS,signal=1740970868916;request=1740970868000;fill=1740970868916;close=1740970872432;requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;entry=1.04122000;exit=1.04104000;commission=0.00000000;fee=0.00000000;swap=0.00000000;exit_reason=3;entry_order=6;entry_deal=6;exit_deal=7
+order_harness_v3_observation_truth_final,ORDER,SHORT,SERVER_SL_ENTRY_CHECK,PASS,retcode=0;comment=;requested_volume=0.01;sl=1.04144000;tp=1.03124000
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_SL_OrderCheck,PASS,retcode=0
+order_harness_v3_observation_truth_final,ORDER,SHORT,SERVER_SL_ENTRY_SEND,PASS,retcode=10009;external=0;order=8;deal=8;requested_volume=0.01
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_SL_OrderSend,PASS,retcode=10009;order=8;deal=8
+order_harness_v3_observation_truth_final,DEAL,SHORT,SERVER_SL_ENTRY_FILL,OBSERVED,deal=8;requested_volume=0.01;deal_volume=0.01;filled_volume=0.01;remaining_volume=0.00;price=1.04106000;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_SL_entry_fill,PASS,requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;deal_count=1;residual_closed=true
+order_harness_v3_observation_truth_final,RECOVERY,SHORT,SERVER_SL_POSITION_FIELDS,PASS,ticket=8;open_msc=1740970873106;volume=0.01;price=1.04106000;sl=1.04144000;tp=1.03124000
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_SL_position_field_recovery,PASS,magic/time/volume/open/sl/tp recovered
+order_harness_v3_observation_truth_final,DEAL,SHORT,SERVER_SL_EXIT_FILL,OBSERVED,deal=9;volume=0.01;aggregated_exit_volume=0.01;price=1.04145000;reason=4;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_SL_deal_aggregation,PASS,requested=0.01;filled=0.01;remaining=0.00;entry_deals=1;exit_volume=0.01;entry=1.04106000;exit=1.04145000
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_SL_server_SL,PASS,DEAL_REASON_SL observed
+order_harness_v3_observation_truth_final,TRADE,SHORT,SERVER_SL_CLOSED,PASS,signal=1740970873106;request=1740970873000;fill=1740970873106;close=1740970998354;requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;entry=1.04106000;exit=1.04145000;commission=0.00000000;fee=0.00000000;swap=0.00000000;exit_reason=4;entry_order=8;entry_deal=8;exit_deal=9
+order_harness_v3_observation_truth_final,ORDER,SHORT,SERVER_TP_ENTRY_CHECK,PASS,retcode=0;comment=;requested_volume=0.01;sl=1.05145000;tp=1.04125000
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_TP_OrderCheck,PASS,retcode=0
+order_harness_v3_observation_truth_final,ORDER,SHORT,SERVER_TP_ENTRY_SEND,PASS,retcode=10009;external=0;order=10;deal=10;requested_volume=0.01
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_TP_OrderSend,PASS,retcode=10009;order=10;deal=10
+order_harness_v3_observation_truth_final,DEAL,SHORT,SERVER_TP_ENTRY_FILL,OBSERVED,deal=10;requested_volume=0.01;deal_volume=0.01;filled_volume=0.01;remaining_volume=0.00;price=1.04127000;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_TP_entry_fill,PASS,requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;deal_count=1;residual_closed=true
+order_harness_v3_observation_truth_final,RECOVERY,SHORT,SERVER_TP_POSITION_FIELDS,PASS,ticket=10;open_msc=1740971000131;volume=0.01;price=1.04127000;sl=1.05145000;tp=1.04125000
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_TP_position_field_recovery,PASS,magic/time/volume/open/sl/tp recovered
+order_harness_v3_observation_truth_final,DEAL,SHORT,SERVER_TP_EXIT_FILL,OBSERVED,deal=11;volume=0.01;aggregated_exit_volume=0.01;price=1.04124000;reason=5;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_TP_deal_aggregation,PASS,requested=0.01;filled=0.01;remaining=0.00;entry_deals=1;exit_volume=0.01;entry=1.04127000;exit=1.04124000
+order_harness_v3_observation_truth_final,TEST,,SHORT_SERVER_TP_server_TP,PASS,DEAL_REASON_TP observed
+order_harness_v3_observation_truth_final,TRADE,SHORT,SERVER_TP_CLOSED,PASS,signal=1740971000131;request=1740971000000;fill=1740971000131;close=1740978822838;requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;entry=1.04127000;exit=1.04124000;commission=0.00000000;fee=0.00000000;swap=0.00000000;exit_reason=5;entry_order=10;entry_deal=10;exit_deal=11
+order_harness_v3_observation_truth_final,ORDER,SHORT,TIME_ENTRY_CHECK,PASS,retcode=0;comment=;requested_volume=0.01;sl=1.05124000;tp=1.03124000
+order_harness_v3_observation_truth_final,TEST,,SHORT_TIME_OrderCheck,PASS,retcode=0
+order_harness_v3_observation_truth_final,ORDER,SHORT,TIME_ENTRY_SEND,PASS,retcode=10009;external=0;order=12;deal=12;requested_volume=0.01
+order_harness_v3_observation_truth_final,TEST,,SHORT_TIME_OrderSend,PASS,retcode=10009;order=12;deal=12
+order_harness_v3_observation_truth_final,DEAL,SHORT,TIME_ENTRY_FILL,OBSERVED,deal=12;requested_volume=0.01;deal_volume=0.01;filled_volume=0.01;remaining_volume=0.00;price=1.04106000;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,SHORT_TIME_entry_fill,PASS,requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;deal_count=1;residual_closed=true
+order_harness_v3_observation_truth_final,RECOVERY,SHORT,TIME_POSITION_FIELDS,PASS,ticket=12;open_msc=1740978823869;volume=0.01;price=1.04106000;sl=1.05124000;tp=1.03124000
+order_harness_v3_observation_truth_final,TEST,,SHORT_TIME_position_field_recovery,PASS,magic/time/volume/open/sl/tp recovered
+order_harness_v3_observation_truth_final,ORDER,SHORT,TIME_CLOSE_CHECK,PASS,retcode=0;volume=0.01
+order_harness_v3_observation_truth_final,TEST,,SHORT_TIME_TimeClose_OrderCheck,PASS,retcode=0
+order_harness_v3_observation_truth_final,ORDER,SHORT,TIME_CLOSE_SEND,PASS,retcode=10009;external=0;order=13;deal=13
+order_harness_v3_observation_truth_final,TEST,,SHORT_TIME_TimeClose_OrderSend,PASS,retcode=10009
+order_harness_v3_observation_truth_final,DEAL,SHORT,TIME_EXIT_FILL,OBSERVED,deal=13;volume=0.01;aggregated_exit_volume=0.01;price=1.04123000;reason=3;commission=0.00000000;fee=0.00000000;swap=0.00000000
+order_harness_v3_observation_truth_final,TEST,,SHORT_TIME_deal_aggregation,PASS,requested=0.01;filled=0.01;remaining=0.00;entry_deals=1;exit_volume=0.01;entry=1.04106000;exit=1.04123000
+order_harness_v3_observation_truth_final,TEST,,SHORT_TIME_time_exit,PASS,expert market close observed
+order_harness_v3_observation_truth_final,TRADE,SHORT,TIME_CLOSED,PASS,signal=1740978823869;request=1740978823000;fill=1740978823869;close=1740978828562;requested_volume=0.01;filled_volume=0.01;remaining_volume=0.00;entry=1.04106000;exit=1.04123000;commission=0.00000000;fee=0.00000000;swap=0.00000000;exit_reason=3;entry_order=12;entry_deal=12;exit_deal=13
+order_harness_v3_observation_truth_final,TEST,,actual_partial_fill_observation,SKIP,NOT_OBSERVED; unit path is reported separately and is not counted as PASS
+order_harness_v3_observation_truth_final,TEST,,actual_process_restart,SKIP,NOT_OBSERVED; process restart was not injected
+order_harness_v3_observation_truth_final,SUMMARY,,ALL,PASS_WITH_SKIPS,passed=40;failed=0;skipped=4;unit_passed=1;state=4;long_time=true;short_time=true;unobserved_not_passed=true

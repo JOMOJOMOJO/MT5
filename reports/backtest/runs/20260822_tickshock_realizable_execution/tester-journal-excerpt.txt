@@ -1,0 +1,16 @@
+MetaTester 5 build 6140, 21 Aug 2026
+EURUSD,M1 (VantageTradingLtd-Live): generating based on real ticks
+Testing ExpectedValue_MultiCurrency_TickShockResearch.ex5 from 2025.03.01 to 2025.04.01
+Inputs: InpExecutionMode=1; InpSubmitLatencyMs=0; InpRunId=research_v7_realizable_202503_bounded_final
+ExpectedValue_MultiCurrency_TickShockResearch initialized research_only symbols=6 grid_ms=250 detectors=250,500,1000 execution_mode=REALIZABLE_EA submit_latency_ms=0
+GBPUSD: real ticks discarded for 179 minutes of 30187 total minute bars; every tick generation used
+ExpectedValue_MultiCurrency_TickShockResearch deinitialized events=19 rows=19
+EURUSD,M1: test passed in 0:05:56.766, including 0:00:00.703 ticks preprocessing
+10587807 total ticks for all symbols
+AUDUSD: generated/passed 1629371/1629371 ticks
+EURUSD: generated/passed 1364080/1364080 ticks
+GBPUSD: generated/passed 1504580/1504582 ticks
+USDCAD: generated/passed 1973153/1973154 ticks
+USDCHF: generated/passed 1176977/1176978 ticks
+USDJPY: generated/passed 2939646/2939646 ticks
+Tester memory: 513 MB including 40 MB history and 256 MB tick data

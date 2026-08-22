@@ -1,0 +1,20 @@
+test_id,test_name,result,detail
+1,detector_250_same_measure,PASS,250ms baseline and signal use the same absolute Mid-move helper
+2,detector_500_independent_boundary,PASS,500ms detector has its own boundaries
+3,detector_1000_independent_boundary,PASS,1000ms detector has its own boundaries
+4,missing_exact_anchor_rejected,PASS,no approximate or stale substitute for a missing grid anchor
+5,zero_mad_uses_noise_floor,PASS,noise floor use remains measurable
+6,broker_barrier_feasible,PASS,
+7,broker_stop_only_invalidates,PASS,INVALID_BROKER_STOP
+8,broker_target_only_invalidates,PASS,INVALID_BROKER_TARGET
+9,cost_policy_is_label,PASS,cost bit can fail without invalidating broker-feasible outcome
+10,range_policy_is_label,PASS,range bit can fail without erasing barrier result
+11,global_chronological_key,PASS,event-time ordering is deterministic
+12,same_millisecond_final_quote,PASS,grid closes only after the final quote in a same-time group
+13,execution_clock_excludes_merge_lag,PASS,processing/merge time is not an execution floor
+14,long_short_state_reachability,PASS,both state paths reach two-tick reacceleration
+15,target_is_limit_fill,PASS,TP_LIMIT
+16,stop_gap_and_exit_slippage,PASS,SL_GAP
+17,hard_time_uses_market_side,PASS,TIME_MARKET
+18,spread_stress_holds_absolute_risk,PASS,only Bid/Ask widen; paired stop width is unchanged
+SUMMARY,all,PASS,passed=18;failed=0

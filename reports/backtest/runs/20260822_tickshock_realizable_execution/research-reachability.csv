@@ -1,0 +1,20 @@
+test_id,test_name,result,detail
+1,stale_grid_quote_never_fills_boundary,PASS,eligible=1600;entry=1600
+2,processing_delay_blocks_past_quotes,PASS,processing=1600;eligible=1600;entry=1601
+3,requested_delays_are_added,PASS,e100=2100;q100=2100;e250=2250;q250=2250
+4,reversal_signal_is_invalidation_time,PASS,event=3000;processing=3600
+5,same_millisecond_uses_final_quote,PASS,100.3
+6,global_merge_chronology,PASS,cross-symbol event order remains monotonic
+7,independent_250_500_1000_returns,PASS,r250=0.009852296;r500=0.029852963;r1000=0.060624622
+8,market_cluster_cross_symbol,PASS,eur=1;jpy=1;gbp=2
+9,realized_rr_is_at_least_requested,PASS,long_tp=100.04;long_rr=1.333333;short_tp=99.96;short_rr=1.333333
+10,broker_distance_uses_bid_ask,PASS,INVALID_BROKER_STOP
+11,stops_and_freeze_are_distinct,PASS,StopsLevel passes; FreezeLevel remains diagnostic
+12,ideal_and_realizable_clocks_separate,PASS,ideal=10100;real=10650
+13,entry_invariant_enforced,PASS,eligible=1600;quote=1600
+14,reversal_requires_later_real_tick,PASS,entry=3601
+15,long_short_state_reachability,PASS,both production state paths reach two-tick reacceleration
+16,stop_gap_and_exit_slippage,PASS,SL_GAP
+17,target_is_limit_fill,PASS,TP_LIMIT
+18,spread_stress_keeps_absolute_risk,PASS,risk=1.00;bid100=99.900;bid125=99.875
+SUMMARY,all,PASS,passed=18;failed=0;production_path=true
