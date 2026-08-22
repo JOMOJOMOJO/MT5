@@ -1,0 +1,8 @@
+key,value,unit,note
+mode,REALIZABLE_EA,enum,causal execution mode
+signal_event_msc,1000,ms,market signal
+signal_processing_msc,1600,ms,recognition
+requested_delay_ms,0,ms,requested
+submit_latency_ms,0,ms,submission
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

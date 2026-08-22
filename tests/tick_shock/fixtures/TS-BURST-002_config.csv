@@ -1,0 +1,11 @@
+key,value,unit,note
+initial_state,BURST_ACTIVE,enum,preloaded
+direction,-1,sign,short
+detection_msc,1000,ms,detected
+last_extreme_msc,3900,ms,recent extreme
+burst_start,1.0010,price,start
+burst_extreme,0.9998,price,low
+burst_quiet_ms,5000,ms,disabled for case
+burst_max_ms,3000,ms,threshold
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

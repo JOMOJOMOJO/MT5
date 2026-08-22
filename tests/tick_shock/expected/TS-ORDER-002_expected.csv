@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+deal_count,2,0,count,both
+filled_volume,0.10,0.000000001,lots,sum
+remaining_volume,0,0.000000001,lots,resolved
+average_fill,1.10012,0.000000000001,price,weighted
+closed_after_first_deal,false,0,bool,forbidden

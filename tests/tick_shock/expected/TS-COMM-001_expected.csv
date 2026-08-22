@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+commission_r,0.07,0.000000001,R,7 divided by 100
+net_r,1.13,0.000000001,R,1.2 minus 0.07
+commission_applications,1,0,count,round turn once

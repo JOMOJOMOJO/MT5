@@ -1,0 +1,7 @@
+key,value,unit,note
+initial_state,WAIT_REACCELERATION,enum,preloaded
+burst_end_msc,1000,ms,freeze
+pullback_wait_ms,10000,ms,timeout
+reacceleration_ticks,0,ticks,none
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

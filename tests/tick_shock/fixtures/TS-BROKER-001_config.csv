@@ -1,0 +1,14 @@
+key,value,unit,note
+stops_distance,0.0005,price,broker minimum
+long_current_bid,1.1000,price,basis
+long_current_ask,1.1002,price,not SL basis
+long_sl_equal,1.0995,price,exact pass
+long_tp_equal,1.1005,price,exact pass
+long_sl_fail,1.09951,price,0.00049
+short_current_bid,1.1000,price,not basis
+short_current_ask,1.1002,price,basis
+short_sl_equal,1.1007,price,exact pass
+short_tp_equal,1.0997,price,exact pass
+short_sl_fail,1.10069,price,0.00049
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

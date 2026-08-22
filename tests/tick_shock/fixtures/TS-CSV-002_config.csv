@@ -1,0 +1,4 @@
+key,value,unit,note
+scenario_rows,TP:1.2|SL:-1.4|TIME:0.4|NO_SIGNAL:blank,list,synthetic compact record
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

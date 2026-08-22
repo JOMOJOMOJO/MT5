@@ -1,0 +1,8 @@
+key,value,unit,note
+mode,IDEAL_EVENT_STUDY,enum,event-time
+signal_event_msc,1000,ms,signal
+signal_processing_msc,1000,ms,processing
+requested_delay_ms,250,ms,delay
+submit_latency_ms,0,ms,latency
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

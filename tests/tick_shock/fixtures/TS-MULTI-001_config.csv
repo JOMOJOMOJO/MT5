@@ -1,0 +1,5 @@
+key,value,unit,note
+symbol_order,EURUSD|GBPUSD|USDJPY,list,index authority
+watermark,1200,ms,release below
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

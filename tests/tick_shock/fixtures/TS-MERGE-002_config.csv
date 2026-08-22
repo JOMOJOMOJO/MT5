@@ -1,0 +1,7 @@
+key,value,unit,note
+mode,REALIZABLE_EA,enum,current EA architecture
+signal_event_msc,1000,ms,EURUSD
+processing_msc,1600,ms,watermark release
+requested_delay_ms,0,ms,delay
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

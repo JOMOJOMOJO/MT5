@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+event_due_msc,1100,0,ms,1000 plus 100
+processing_due_msc,1250,0,ms,1200 plus 50
+entry_eligible_msc,1250,0,ms,maximum
+entry_quote_msc,1250,0,ms,first quote

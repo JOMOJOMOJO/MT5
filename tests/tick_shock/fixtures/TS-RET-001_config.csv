@@ -1,0 +1,6 @@
+key,value,unit,note
+event_msc,2000,ms,event
+event_mid,1.0020,price,event mid
+formula,ln(newer/older),definition,natural log
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

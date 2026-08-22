@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+baseline_ready,true,0,bool,inclusive
+detector_evaluated,true,0,bool,gates run
+insufficient_baseline_increment,0,0,count,not skipped

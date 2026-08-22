@@ -1,0 +1,6 @@
+key,value,unit,note
+entry,1.1000,price,Bid fill
+server_tp,1.0988,price,protective
+required_deal_reason,DEAL_REASON_TP,enum,server evidence
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

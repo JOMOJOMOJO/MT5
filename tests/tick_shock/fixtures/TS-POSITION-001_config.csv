@@ -1,0 +1,11 @@
+key,value,unit,note
+magic,26082191,id,owned
+symbol,EURUSD,symbol,position
+direction,LONG,enum,position type
+volume,0.10,lots,open
+open_msc,5000,ms,position time
+open_price,1.1002,price,fill
+sl,1.0990,price,server
+tp,1.1016,price,server
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

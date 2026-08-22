@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+long_equal_feasible,true,0,bool,Bid distances equal minimum
+long_stop_fail_reason,INVALID_BROKER_STOP,0,label,Bid minus SL too small
+short_equal_feasible,true,0,bool,Ask distances equal minimum
+short_stop_fail_reason,INVALID_BROKER_STOP,0,label,SL minus Ask too small
+freeze_level_used_as_initial_reject,false,0,bool,separate diagnostic

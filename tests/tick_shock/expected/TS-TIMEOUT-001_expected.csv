@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+action_10999,NONE,0,action,one ms early
+action_11000,PULLBACK_TIMEOUT,0,action,equality
+state_11000,EXPIRED,0,enum,terminal

@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+exit_reason,SL_GAP,0,label,market stop
+fill_price,1.1014,0.000000000001,price,1.1013 plus 0.0001
+stop_gap,0.0004,0.000000000001,price,fill minus SL
+gross_r,-1.4,0.000000001,R,loss

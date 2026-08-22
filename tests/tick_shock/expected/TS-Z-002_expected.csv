@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+raw_scale,0,0,price,1.4826 times zero
+noise_floor_price,0.00010,0,price,one tick
+robust_scale,0.00010,0,price,floor
+robust_z,3.5,0.000000001,z,0.00035 divided by 0.00010
+scale_floored,true,0,bool,floor use counted

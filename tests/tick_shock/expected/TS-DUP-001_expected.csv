@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+event_rows,1,0,count,one row
+duplicate_events,1,0,count,diagnostic
+duplicate_order_or_signal,0,0,count,forbidden

@@ -1,0 +1,5 @@
+sequence,symbol,time_msc,bid,ask,processing_msc,note
+1,EURUSD,1000,1.0000,1.0002,1600,event tick held by merge
+2,EURUSD,1500,1.0005,1.0007,1600,historical quote still before recognition
+3,USDJPY,1600,150.000,150.020,1600,slow frontier advances
+4,EURUSD,1601,1.0006,1.0008,1601,first post-processing quote

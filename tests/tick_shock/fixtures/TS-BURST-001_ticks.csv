@@ -1,0 +1,4 @@
+sequence,symbol,time_msc,bid,ask,processing_msc,note
+1,EURUSD,1100,1.0011,1.0013,1100,new extreme
+2,EURUSD,1399,1.0010,1.0012,1399,quiet 299
+3,EURUSD,1400,1.0010,1.0012,1400,quiet 300

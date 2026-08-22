@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+log_return_250,0.000499126539,0.000000000001,log_return,ln 1.0020 over 1.0015
+log_return_500,0.000998502330,0.000000000001,log_return,ln 1.0020 over 1.0010
+log_return_1000,0.001998002663,0.000000000001,log_return,ln 1.0020 over 1.0000
+all_valid,true,0,bool,all exact anchors exist
+returns_distinct,true,0,bool,no detector-value copying

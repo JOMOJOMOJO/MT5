@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+path_length,0,0,price,no updates
+valid,false,0,bool,denominator zero
+event_created,false,0,bool,must reject
+reject_reason,efficiency_failed,0,label,no division by zero

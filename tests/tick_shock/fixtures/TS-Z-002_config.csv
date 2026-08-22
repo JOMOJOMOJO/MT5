@@ -1,0 +1,8 @@
+key,value,unit,note
+move,0.00045,price,candidate
+median_move,0.00010,price,baseline
+mad_move,0,price,collapsed distribution
+noise_floor_ticks,1,ticks,configured
+tick_size,0.00010,price,symbol tick
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

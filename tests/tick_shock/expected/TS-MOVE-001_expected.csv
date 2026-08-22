@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+before_pass,false,0,bool,3.9999
+equal_pass,true,0,bool,inclusive
+after_pass,true,0,bool,above
+equal_ratio,4.0,0.000000001,ratio,0.0004 over 0.0001

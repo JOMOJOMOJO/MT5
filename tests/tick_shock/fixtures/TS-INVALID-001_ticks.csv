@@ -1,0 +1,2 @@
+sequence,symbol,time_msc,bid,ask,processing_msc,note
+1,EURUSD,3000,1.0004,1.0006,3000,invalidation tick

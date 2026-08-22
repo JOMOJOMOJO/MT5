@@ -1,0 +1,5 @@
+key,value,unit,note
+start_mid,1.0000,price,start
+end_mid,1.0000,price,end
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

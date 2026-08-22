@@ -1,0 +1,6 @@
+sequence,symbol,time_msc,bid,ask,processing_msc,note
+1,USDJPY,900,150.000,150.020,900,slow symbol old frontier
+2,EURUSD,1000,1.1000,1.1002,1600,active event held
+3,EURUSD,1100,1.1001,1.1003,1600,active quote held
+4,USDJPY,1600,150.010,150.030,1600,slow frontier advances
+5,EURUSD,1601,1.1002,1.1004,1601,first post-recognition quote

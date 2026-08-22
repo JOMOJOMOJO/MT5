@@ -1,0 +1,4 @@
+sequence,symbol,time_msc,bid,ask,processing_msc,note
+1,EURUSD,1000,0.9999,1.0001,1000,mid 1.0000
+2,EURUSD,1100,0.9999,1.0001,1100,unchanged
+3,EURUSD,1200,0.9999,1.0001,1200,unchanged

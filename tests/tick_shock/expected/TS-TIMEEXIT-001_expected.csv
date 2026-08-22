@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+resolved_120999,false,0,bool,one ms early
+resolved_121000,true,0,bool,equality
+exit_reason,TIME_MARKET,0,label,hard time
+fill_price,1.1004,0.000000000001,price,Bid
+gross_r,0.4,0.000000001,R,0.0004 over risk

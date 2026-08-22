@@ -1,0 +1,6 @@
+key,value,unit,note
+restart_injected,false,bool,test precondition
+observed_restart,false,bool,no process boundary
+pass_count_before,10,count,example
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

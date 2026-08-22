@@ -1,0 +1,7 @@
+key,value,unit,note
+initial_state,WAIT_PULLBACK,enum,preloaded
+retracement_pct,35.001,percent,above continuation max
+pullback_max_pct,35,percent,upper
+continuation_invalid_pct,50,percent,invalidation
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

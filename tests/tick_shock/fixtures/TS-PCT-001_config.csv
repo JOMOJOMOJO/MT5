@@ -1,0 +1,6 @@
+key,value,unit,note
+half_tick,0.00005,price,bin unit
+sorted_bins,2|4|6|8,bins,four observations
+percentile,75,percent,test quantile
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

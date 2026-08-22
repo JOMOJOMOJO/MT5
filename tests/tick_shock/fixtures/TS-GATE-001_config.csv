@@ -1,0 +1,9 @@
+key,value,unit,note
+percentile_cases,9.999|10|10.001,scalar,threshold 10
+z_cases,3.499|3.5|3.501,z,threshold 3.5
+efficiency_cases,0.649|0.65|0.651,ratio,threshold 0.65
+intensity_cases,1.499|1.5|1.501,ratio,threshold 1.5
+move_spread_cases,3.999|4|4.001,ratio,threshold 4
+spread_ratio_cases,1.499|1.5|1.501,ratio,maximum 1.5
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

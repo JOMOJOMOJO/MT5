@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+unobserved_status,SKIP,0,status,not PASS
+observed_exit_reason,SERVER_SL,0,label,only with deal
+deal_reason,DEAL_REASON_SL,0,enum,required
+pass_without_deal,false,0,bool,forbidden

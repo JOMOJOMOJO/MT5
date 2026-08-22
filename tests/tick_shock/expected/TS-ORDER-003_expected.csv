@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+filled_volume,0.06,0.000000001,lots,retained
+cancelled_volume,0.04,0.000000001,lots,residual
+remaining_volume,0,0.000000001,lots,no live request
+entry_resolved,true,0,bool,cancel confirmed
+next_state,WAIT_EXIT,0,enum,manage filled position

@@ -1,0 +1,8 @@
+key,value,unit,note
+tick_size,0.0001,price,grid
+spread_multiplier,1.25,ratio,stress
+entry_slippage_ticks,1,ticks,adverse
+stop_multiple,5,ratio,risk grid
+requested_rr,1.2,R,target
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+baseline_ready,false,0,bool,299 below 300
+event_created,false,0,bool,must not detect
+summary_skip_reason,insufficient_baseline,0,label,count only

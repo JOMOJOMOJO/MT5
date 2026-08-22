@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+entry_eligible_msc,1000,0,ms,event due
+signal_tick_accepted,false,0,bool,same tick forbidden
+entry_quote_msc,1001,0,ms,next real tick

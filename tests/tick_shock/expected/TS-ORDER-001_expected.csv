@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+filled_volume,0.10,0.000000001,lots,full
+remaining_volume,0,0.000000001,lots,none
+average_fill,1.1001,0.000000000001,price,one deal
+entry_resolved,true,0,bool,full
+next_state,WAIT_EXIT,0,enum,not closed

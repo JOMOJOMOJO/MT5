@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+action,NONE,0,action,no signal
+state,WAIT_PULLBACK,0,enum,still waits
+too_deep_seen,true,0,bool,diagnostic
+continuation_signal,false,0,bool,forbidden

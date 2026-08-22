@@ -1,0 +1,6 @@
+key,value,unit,note
+current_source_sha,976148D017E067728DC8827724516A076E7561C89D8D57BCD850D40DCB54A32C,sha256,checkpoint
+baseline_source_sha,969AC03545D02BBD3DA67EF1213DA39D6AFEDACD9C16F6E479973E123A07E6CD,sha256,reported baseline
+required_fields,commit|source_sha|set_sha|terminal_build|broker_server|chart_symbol|execution_mode,list,formal evidence
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

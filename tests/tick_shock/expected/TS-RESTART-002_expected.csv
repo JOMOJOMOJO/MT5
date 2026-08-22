@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+restart_observed,true,0,bool,injected
+position_recovered,true,0,bool,phase B
+new_entry_allowed,false,0,bool,guard
+management_continues,true,0,bool,not orphaned
+result_without_phase_boundary,SKIP,0,status,truthfulness fallback

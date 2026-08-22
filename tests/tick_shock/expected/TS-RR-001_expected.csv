@@ -1,0 +1,8 @@
+field,expected_value,tolerance,unit,note
+long_raw_tp,1.10036,0.000000000001,price,entry plus 1.2 risk
+long_tp,1.1004,0.000000000001,price,ceil
+short_raw_tp,1.09964,0.000000000001,price,entry minus 1.2 risk
+short_tp,1.0996,0.000000000001,price,floor
+long_realized_rr,1.333333333333,0.000000000001,R,0.0004 over 0.0003
+short_realized_rr,1.333333333333,0.000000000001,R,at least 1.2
+rr_below_requested,0,0,count,invariant

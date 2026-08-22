@@ -1,0 +1,4 @@
+sequence,symbol,time_msc,bid,ask,processing_msc,note
+1,EURUSD,5000,1.1000,1.1002,5000,phase A position open
+2,EURUSD,6000,1.1001,1.1003,6000,phase B first tick after reload
+3,EURUSD,121000,1.1004,1.1006,121000,continued time management

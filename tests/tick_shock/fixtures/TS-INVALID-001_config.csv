@@ -1,0 +1,6 @@
+key,value,unit,note
+initial_state,WAIT_REACCELERATION,enum,preloaded
+retracement_pct,50,percent,boundary
+continuation_invalid_pct,50,percent,threshold
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

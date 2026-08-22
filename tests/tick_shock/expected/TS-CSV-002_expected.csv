@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+valid_count,3,0,count,three outcomes
+invalid_count,1,0,count,NO_SIGNAL
+sum_r,0.2,0.000000001,R,1.2 minus 1.4 plus 0.4
+summary_match,true,0,bool,exact recount

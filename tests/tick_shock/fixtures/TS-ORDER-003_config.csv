@@ -1,0 +1,6 @@
+key,value,unit,note
+requested_volume,0.10,lots,request
+filled_volume,0.06,lots,partial
+cancelled_volume,0.04,lots,terminal residual
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

@@ -1,0 +1,8 @@
+key,value,unit,note
+mode,REALIZABLE_EA,enum,formal
+continuation_invalidated_msc,3000,ms,state transition
+signal_processing_msc,3600,ms,recognition
+requested_delay_ms,0,ms,delay
+submit_latency_ms,0,ms,latency
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

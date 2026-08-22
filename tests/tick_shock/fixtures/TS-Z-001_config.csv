@@ -1,0 +1,7 @@
+key,value,unit,note
+move,0.0005,price,candidate
+median_move,0.0002,price,baseline median
+mad_move,0.00005,price,median absolute deviation
+noise_floor,0.00001,price,below raw scale
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

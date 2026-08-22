@@ -1,0 +1,8 @@
+key,value,unit,note
+long_entry,1.1000,price,entry
+short_entry,1.1000,price,entry
+risk,0.0003,price,three ticks
+requested_rr,1.2,R,minimum
+tick_size,0.0001,price,grid
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

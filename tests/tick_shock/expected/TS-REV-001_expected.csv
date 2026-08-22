@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+reversal_signal_msc,3000,0,ms,immutable invalidation time
+entry_eligible_msc,3600,0,ms,processing dominates
+entry_quote_msc,3600,0,ms,first eligible later than signal
+reversal_signal_overwrites,0,0,count,invariant
+forbidden_signal_msc,3100|3600,0,ms,must not be shifted

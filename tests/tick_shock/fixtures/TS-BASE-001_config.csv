@@ -1,0 +1,5 @@
+key,value,unit,note
+valid_baseline_samples,299,samples,available
+minimum_samples,300,samples,required
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

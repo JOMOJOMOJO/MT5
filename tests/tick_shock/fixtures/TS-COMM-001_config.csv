@@ -1,0 +1,6 @@
+key,value,unit,note
+one_lot_sl_loss,100,account_currency,absolute OrderCalcProfit oracle input
+commission_round_turn,7,account_currency,actual or configured
+gross_r,1.2,R,TP result
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

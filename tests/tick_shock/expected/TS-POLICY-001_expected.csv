@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+case_both_mask,3,0,bitmask,cost bit1 plus range bit2
+case_cost_only_mask,1,0,bitmask,range fails
+case_range_only_mask,2,0,bitmask,cost fails
+case_none_mask,0,0,bitmask,both fail
+outcome_invalidated_by_policy,false,0,bool,diagnostic only

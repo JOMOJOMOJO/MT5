@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+valid,false,0,bool,exact anchor absent
+csv_value,,0,blank,must be blank
+forbidden_value,0,0,log_return,zero would imply a real observation

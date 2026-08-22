@@ -1,0 +1,6 @@
+key,value,unit,note
+symbol,EURUSD,symbol,key
+detector_window_ms,500,ms,key
+detection_msc,2000,ms,key
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

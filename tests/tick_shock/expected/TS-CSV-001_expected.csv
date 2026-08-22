@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+silent_append_allowed,false,0,bool,desired isolation
+second_attempt_status,RUN_ID_COLLISION,0,label,or unique attempt path
+mixed_event_rows,0,0,count,forbidden
+header_count_per_file,1,0,count,isolated file

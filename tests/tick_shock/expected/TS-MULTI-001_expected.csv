@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+processed_order,EURUSD@1000#2|GBPUSD@1000#1,0,sequence,time then symbol index then collection sequence
+global_order_violation,0,0,count,invariant
+event_time_changed,false,0,bool,sort only

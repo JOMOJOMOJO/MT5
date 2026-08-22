@@ -1,0 +1,8 @@
+key,value,unit,note
+spread,0.0001,price,current
+before_move,0.00039999,price,below
+equal_move,0.0004,price,equal
+after_move,0.00040001,price,above
+minimum,4.0,ratio,gate
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

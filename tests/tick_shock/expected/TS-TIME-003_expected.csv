@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+entry_eligible_msc,1100,0,ms,1000 plus 100
+quote_1099_accepted,false,0,bool,boundary minus one
+quote_1100_accepted,true,0,bool,equality accepted
+entry_quote_msc,1100,0,ms,first eligible

@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+rank,2.25,0,index,0.75 times n minus one
+lower_bin,6,0,bins,index 2
+upper_bin,8,0,bins,index 3
+percentile_bin,6.5,0.000000001,bins,linear interpolation
+percentile_price,0.000325,0.000000000001,price,6.5 times half tick

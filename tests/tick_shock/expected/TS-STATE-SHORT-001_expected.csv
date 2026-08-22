@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+transition_1400,BURST_FROZEN,0,action,range frozen
+burst_range,0.0032,0.000000000001,price,1.0030 minus 0.9998
+transition_1500,PULLBACK_VALID,0,action,valid
+transition_1700,REACCELERATION,0,action,second confirmation
+signal_direction,-1,0,sign,short continuation

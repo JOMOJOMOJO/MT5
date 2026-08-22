@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+action,CONTINUATION_INVALIDATED,0,action,inclusive
+state,EXPIRED,0,enum,terminal
+continuation_invalidated_msc,3000,0,ms,signal basis
+reversal_signal_basis,3000,0,ms,same tick

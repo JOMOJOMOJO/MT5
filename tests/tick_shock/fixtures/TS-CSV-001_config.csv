@@ -1,0 +1,6 @@
+key,value,unit,note
+run_id,collision_case,identifier,same for both attempts
+attempts,2,count,separate process identities
+metadata_hashes,hashA|hashB,sha256,different code or config
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

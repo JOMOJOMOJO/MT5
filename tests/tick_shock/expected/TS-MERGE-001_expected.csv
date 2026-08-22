@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+entry_eligible_msc,1600,0,ms,processing dominates
+entry_quote_msc,1601,0,ms,same-symbol next quote
+global_order_violation,0,0,count,sorted release
+entry_before_processing,0,0,count,invariant

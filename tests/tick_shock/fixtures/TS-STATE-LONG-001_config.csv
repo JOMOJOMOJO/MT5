@@ -1,0 +1,9 @@
+key,value,unit,note
+direction,1,sign,long
+burst_start,0.9990,price,frozen origin
+burst_quiet_ms,300,ms,freeze
+pullback_min_pct,15,percent,minimum
+pullback_max_pct,35,percent,maximum
+reacceleration_confirm_ticks,2,ticks,confirm
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

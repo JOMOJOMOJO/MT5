@@ -1,0 +1,8 @@
+key,value,unit,note
+phase_A_action,persist_position_snapshot,action,before unload
+process_restart_at_msc,5500,ms,injected boundary
+phase_B_action,load_snapshot_and_query_terminal,action,after reload
+magic,26082191,id,ownership
+position_volume,0.10,lots,remaining
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

@@ -1,0 +1,7 @@
+field,expected_value,tolerance,unit,note
+same_msc_group_size,3,0,ticks,all grouped
+grid_quote_msc,1000,0,ms,real group time
+grid_bid,1.1002,0.000000000001,price,final quote
+grid_ask,1.1004,0.000000000001,price,final quote
+grid_mid,1.1003,0.000000000001,price,final quote
+grid_close_count,1,0,count,not per tick

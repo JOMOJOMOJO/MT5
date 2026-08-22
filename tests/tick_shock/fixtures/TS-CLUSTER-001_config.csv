@@ -1,0 +1,5 @@
+key,value,unit,note
+cluster_window_ms,2000,ms,inclusive
+scope,all_symbols_all_detectors,definition,market cluster
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

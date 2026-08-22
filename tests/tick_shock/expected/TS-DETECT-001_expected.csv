@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+detection_quote_age_ms,50,0,ms,1000 minus 950
+entry_quote_msc,1030,0,ms,next real quote
+stale_detection_fills,0,0,count,invariant
+forbidden_entry_quote_msc,1000,0,ms,synthetic boundary fill forbidden

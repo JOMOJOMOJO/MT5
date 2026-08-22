@@ -1,0 +1,9 @@
+key,value,unit,note
+initial_state,WAIT_PULLBACK,enum,preloaded
+direction,1,sign,long
+burst_extreme,1.0010,price,high
+burst_range,0.0010,price,range
+current_retracement_pct,14.999,percent,independent scalar
+pullback_min_pct,15,percent,threshold
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

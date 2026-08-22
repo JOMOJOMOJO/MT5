@@ -1,0 +1,5 @@
+key,value,unit,note
+grid_boundary_msc,1000,ms,boundary
+symbol_index_EURUSD,0,index,configured first
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

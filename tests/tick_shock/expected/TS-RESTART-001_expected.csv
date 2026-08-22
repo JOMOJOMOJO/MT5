@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+result,SKIP,0,status,truthful
+detail,NOT_OBSERVED,0,label,explicit
+pass_count_after,10,0,count,unchanged
+reported_as_PASS,false,0,bool,forbidden

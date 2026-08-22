@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+recovered,true,0,bool,owned position
+new_entry_allowed,false,0,bool,single-position guard
+recovered_volume,0.10,0.000000001,lots,position
+recovered_open_msc,5000,0,ms,time
+unmanaged_position,false,0,bool,safety

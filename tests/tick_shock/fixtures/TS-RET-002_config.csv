@@ -1,0 +1,7 @@
+key,value,unit,note
+event_msc,2000,ms,event
+window_ms,1000,ms,required
+required_anchor_msc,1000,ms,exact
+available_anchor_msc,1001,ms,wrong by one
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

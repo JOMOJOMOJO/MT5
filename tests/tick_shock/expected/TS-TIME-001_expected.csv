@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+entry_eligible_msc,1600,0,ms,max of event due and processing due
+entry_quote_msc,1600,0,ms,first qualifying real quote
+entry_before_processing,0,0,count,invariant
+forbidden_entry_quote_msc,1100|1599,0,ms,must reject

@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+exit_reason,TP_LIMIT,0,label,target precedence after stop check
+fill_price,1.1012,0.000000000001,price,barrier not gapped quote
+gross_r,1.2,0.000000001,R,target
+stop_gap,0,0,price,not stop

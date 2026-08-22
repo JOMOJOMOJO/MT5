@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+action_3999,NONE,0,action,age 2999
+action_4000,BURST_FROZEN,0,action,age equality
+burst_end_msc,4000,0,ms,freeze

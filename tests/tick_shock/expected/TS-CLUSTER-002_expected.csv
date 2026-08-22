@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+event_rows,3,0,count,detector events retained
+symbol_clusters,2,0,count,EUR one plus GBP one
+market_clusters,1,0,count,shared market shock
+statistical_n,1,0,clusters,use market

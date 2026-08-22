@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+case_15_action,PULLBACK_VALID,0,action,lower inclusive
+case_35_action,PULLBACK_VALID,0,action,upper inclusive
+case_15_state,WAIT_REACCELERATION,0,enum,advance
+case_35_state,WAIT_REACCELERATION,0,enum,advance

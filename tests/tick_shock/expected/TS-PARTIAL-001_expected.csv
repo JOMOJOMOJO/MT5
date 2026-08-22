@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+remaining_after_deal_1,0.06,0.000000001,lots,pending
+remaining_after_deal_2,0.03,0.000000001,lots,pending
+remaining_after_deal_3,0,0.000000001,lots,resolved
+average_fill,1.10015,0.000000000001,price,all deals
+closed_after_first_deal,false,0,bool,must not transition to close

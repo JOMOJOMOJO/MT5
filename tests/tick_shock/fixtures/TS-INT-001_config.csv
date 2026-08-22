@@ -1,0 +1,8 @@
+key,value,unit,note
+baseline_median_ticks,20,ticks,median
+before_tick_count,29,ticks,ratio 1.45
+equal_tick_count,30,ticks,ratio 1.5
+after_tick_count,31,ticks,ratio 1.55
+minimum,1.5,ratio,gate
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

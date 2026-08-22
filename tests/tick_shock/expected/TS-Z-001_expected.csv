@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+raw_scale,0.00007413,0.000000000001,price,1.4826 times 0.00005
+robust_scale,0.00007413,0.000000000001,price,floor not used
+robust_z,4.046944556860,0.000000000001,z,0.0003 divided by scale
+scale_floored,false,0,bool,raw exceeds noise

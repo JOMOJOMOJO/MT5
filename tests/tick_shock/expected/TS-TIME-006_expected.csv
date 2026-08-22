@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+entry_eligible_msc,1250,0,ms,due
+entry_quote_msc,1251,0,ms,no synthetic interpolation
+forbidden_entry_quote_msc,1250,0,ms,no real tick exists

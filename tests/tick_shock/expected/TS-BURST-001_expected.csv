@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+action_1399,NONE,0,action,299 not enough
+state_1399,BURST_ACTIVE,0,enum,unchanged
+action_1400,BURST_FROZEN,0,action,equality freezes
+burst_end_msc,1400,0,ms,freeze tick

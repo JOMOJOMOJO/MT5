@@ -1,0 +1,9 @@
+key,value,unit,note
+direction,1,sign,long
+entry,1.1000,price,entry
+sl,1.0990,price,risk
+tp,1.1012,price,target
+exit_slippage,0.0001,price,one tick
+entry_msc,1000,ms,entry
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

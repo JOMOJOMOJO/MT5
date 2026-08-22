@@ -1,0 +1,9 @@
+key,value,unit,note
+detection_grid_msc,1000,ms,grid boundary
+detection_quote_msc,950,ms,source quote
+signal_event_msc,1000,ms,detection signal
+signal_processing_msc,1000,ms,recognition
+requested_delay_ms,0,ms,delay
+mode,REALIZABLE_EA,enum,formal mode
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

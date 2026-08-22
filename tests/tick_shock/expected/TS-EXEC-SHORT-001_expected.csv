@@ -1,0 +1,7 @@
+field,expected_value,tolerance,unit,note
+stressed_bid,1.099975,0.000000000001,price,mid minus half
+stressed_ask,1.100225,0.000000000001,price,mid plus half
+entry,1.0998,0.000000000001,price,bid minus slip rounded down
+requested_risk,0.0010,0.000000000001,price,unstressed base
+sl,1.1008,0.000000000001,price,outward
+tp,1.0986,0.000000000001,price,1.2R

@@ -1,0 +1,6 @@
+key,value,unit,note
+requested_volume,0.10,lots,request
+deal_1,0.04@1.1000,deal,first
+deal_2,0.06@1.1002,deal,second
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

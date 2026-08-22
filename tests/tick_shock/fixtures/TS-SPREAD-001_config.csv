@@ -1,0 +1,8 @@
+key,value,unit,note
+spread_median,0.0001,price,five minute median
+before_spread,0.00014999,price,below ceiling
+equal_spread,0.00015,price,equal
+after_spread,0.00015001,price,above
+maximum,1.5,ratio,gate
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

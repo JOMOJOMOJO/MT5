@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+close_request_msc,121000,0,ms,deadline
+exit_reason,TIME_CLOSE,0,label,not SL or TP
+exit_volume,0.10,0.000000001,lots,all
+server_barrier_claimed,false,0,bool,forbidden

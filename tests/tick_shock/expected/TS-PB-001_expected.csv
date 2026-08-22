@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+action,NONE,0,action,too shallow
+state,WAIT_PULLBACK,0,enum,unchanged
+pullback_msc,0,0,ms,not frozen

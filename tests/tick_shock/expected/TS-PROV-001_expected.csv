@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+source_sha_match,false,0,bool,different executable
+formal_edge_eligible,false,0,bool,must not inherit baseline
+missing_provenance_fields,terminal_build|broker_server|chart_symbol,0,list,must be recorded on rerun

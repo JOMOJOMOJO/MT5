@@ -1,0 +1,10 @@
+key,value,unit,note
+case3_spread,0.0002,price,cost ratio 0.20
+case3_risk,0.0010,price,risk
+case3_range,0.002222222222,price,range ratio 0.45
+case1_range,0.002173913043,price,range ratio 0.46
+case2_spread,0.000201,price,cost ratio 0.201
+case0_spread,0.000201,price,both fail
+case0_range,0.002173913043,price,both fail
+oracle_source,docs/research/tick_shock/03_test_oracle_calculation.md,path,independent specification
+production_function_used_for_expected,false,bool,mandatory

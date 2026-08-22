@@ -1,0 +1,2 @@
+sequence,symbol,time_msc,bid,ask,processing_msc,note
+1,EURUSD,2000,1.1000,1.1002,2000,entry quote base spread 0.0002

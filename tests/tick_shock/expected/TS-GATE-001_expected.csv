@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+minimum_gate_pattern,FAIL|PASS|PASS,0,pattern,percentile z efficiency intensity move spread
+maximum_gate_pattern,PASS|PASS|FAIL,0,pattern,spread ratio
+equal_all_gate_mask,63,0,bitmask,six bits true
+thresholds_changed,false,0,bool,no optimization

@@ -1,0 +1,7 @@
+sequence,symbol,time_msc,bid,ask,processing_msc,note
+1,EURUSD,1000,1.0019,1.0021,1000,detect mid 1.0020 burst start 1.0030
+2,EURUSD,1100,0.9997,0.9999,1100,new low mid 0.9998
+3,EURUSD,1400,0.9997,0.9999,1400,quiet freeze
+4,EURUSD,1500,1.00034,1.00054,1500,20 percent pullback mid 1.00044
+5,EURUSD,1600,0.99969,0.99989,1600,first break mid 0.99979
+6,EURUSD,1700,0.99968,0.99988,1700,second break mid 0.99978
