@@ -262,3 +262,78 @@ source, event pool, grid and detector context, M15/H1 indicators, terminal
 memory/time, CSV streams. External-state integration required: CopyTicks
 ordering semantics, SymbolInfo properties, OrderCheck/OrderSend, position and
 deal history, actual server SL/TP and partial fills.
+
+## Step 4 extracted types and dependency update
+
+This section supersedes the As-Is ownership columns above for production code;
+field values, array capacities, scenario indices, and units are unchanged.
+
+### New enums
+
+| Enum | Values/purpose | String boundary |
+|---|---|---|
+| `ENUM_TS_DETECTOR_REJECT` | accept plus percentile/Z/efficiency/intensity/Move-Spread/spread first rejection | `TSDetectorRejectName` |
+| `ENUM_TS_SCENARIO_STATUS` | not-signaled, pending, active, TP/SL/time outcomes, explicit invalid reasons, no-signal/incomplete | `TSScenarioStatusName` |
+
+Existing `ENUM_TS_STATE`, `ENUM_TS_ACTION`, and
+`ENUM_TS_RESEARCH_EXECUTION_MODE` moved without value changes to
+`mql/Include/TickShock/TickShockTypes.mqh`.
+
+### New/extracted structs
+
+| Struct | Owner | Lifetime | Mutation/injection |
+|---|---|---|---|
+| `TickShockConfig` | `TickShockConfig.mqh` | one run; loaded once from inputs | passed const to detector/state core; directly injectable |
+| `TickShockSymbolSpec` | `TickShockConfig.mqh` | one symbol/run | adapter populates; tests can supply fixed specs |
+| `TickShockQuote` | `TickShockTypes.mqh` | one tick call | built from real or fixture quote; carries event and processing ms |
+| `TickShockDetectorResult` | `TickShockTypes.mqh` | one evaluation | core output: six gates, 0..63 mask, reject enum, accepted |
+| `TickShockStateResult` | `TickShockTypes.mqh` | one transition | core output; action/state/time/range/retracement |
+| `TickShockExecutionRequest` | `TickShockScenarioEngine.mqh` | one scenario attempt | fully explicit clocks/quote/config/spec-derived inputs |
+| `TickShockExecutionResult` | `TickShockTypes.mqh` | one scenario attempt | core output; status, entry clock, stressed prices, entry/SL/TP/RR/policy |
+| `TickShockClusterAssignment` | `TickShockTypes.mqh` | one event | core output; ID and overlap |
+
+`TickShockMachine`, `TSResearchSignalClock`, `TSResearchEntryClock`, and
+`TSResearchClusterClock` retain their pre-refactor fields and semantics but now
+live in `TickShockTypes.mqh`.
+
+### Explicit config field units
+
+| Fields | Unit |
+|---|---|
+| `grid_ms`, `baseline_exclude_ms`, `max_quote_age_ms`, burst/pullback timers, `submit_latency_ms` | milliseconds |
+| `baseline_minutes` | minutes |
+| `max_hold_seconds` | seconds |
+| shock percentile, efficiency/ratio thresholds, RR | scalar |
+| pullback/continuation thresholds | percent |
+| entry/exit slippage, noise floor | tick-size multiples |
+| commission | account currency per lot round turn |
+
+### Capacity and index preservation
+
+No capacity changed in Step 4: tick ring 8,192 with 5,000 ms retention; grid 64;
+compile sample ceiling 3,612 with default per-detector logical capacities
+3,612/1,806/904; active events 64; pending merge 65,536; scenarios 552 per
+event. The index formulas remain:
+
+```text
+local = (stop_index * 3 + delay_index) * 2 + spread_index
+all   = strategy * 138 + local
+group = (strategy * 3 + delay_index) * 2 + spread_index
+```
+
+### Global ownership after extraction
+
+`g_core_config : TickShockConfig` is the only new EA global. `OnInit` maps the
+unchanged inputs into it, after which core calls receive it as a const argument.
+The existing `g_symbols`, `g_events`, bounded rings, merge queue, counters, and
+file handles remain owned by the EA composition root. Core modules introduce no
+module-level mutable globals.
+
+### MT5/event-queue notes
+
+All handlers still execute on the serialized MQL event queue. The adapter does
+not add threads. `TickShockMt5Adapter.mqh` is the only new module that owns
+SymbolInfo, CopyTicks, indicator, terminal clock/memory, timer, and file APIs.
+Core DTOs are therefore constructible in a Step 5 fixture without terminal
+state. Order lifecycle globals and APIs remain isolated in the existing order
+harness and are not promoted into the research core.

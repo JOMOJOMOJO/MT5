@@ -4,6 +4,9 @@
 
 #include "..\Include\TickShockStateMachine.mqh"
 #include "..\Include\TickShockResearchExecution.mqh"
+#include "..\Include\TickShock\TickShockEngine.mqh"
+#include "..\Include\TickShock\TickShockCsvSerializer.mqh"
+#include "..\Include\TickShock\TickShockMt5Adapter.mqh"
 
 // Research-only EA.  This file contains no OrderCheck/OrderSend call.
 // IDEAL_EVENT_STUDY is event-time research only.  REALIZABLE_EA includes the
@@ -168,7 +171,7 @@ struct TSRScenario
    double stop_gap;
    double exit_slippage;
    int policy_mask;
-   string status;
+   ENUM_TS_SCENARIO_STATUS status;
   };
 
 struct TSREvent
@@ -393,6 +396,38 @@ int g_debug_messages = 0;
 bool g_is_tester = false;
 double g_burst_spread_ratios[];
 long g_scenario_status_counts[8];
+TickShockConfig g_core_config;
+
+void TSRLoadCoreConfig(TickShockConfig &config)
+  {
+   TSResetConfig(config);
+   config.grid_ms=InpGridMs;
+   config.baseline_minutes=InpBaselineMinutes;
+   config.baseline_exclude_ms=InpBaselineExcludeMs;
+   config.min_baseline_samples=InpMinBaselineSamples;
+   config.shock_percentile=InpShockPercentile;
+   config.min_robust_z=InpMinRobustZ;
+   config.min_efficiency=InpMinEfficiency;
+   config.min_move_spread_ratio=InpMinMoveSpreadRatio;
+   config.min_tick_intensity_ratio=InpMinTickIntensityRatio;
+   config.max_spread_median_ratio=InpMaxSpreadMedianRatio;
+   config.max_quote_age_ms=InpMaxQuoteAgeMs;
+   config.noise_floor_ticks=InpNoiseFloorTicks;
+   config.burst_quiet_ms=InpBurstQuietMs;
+   config.burst_max_ms=InpBurstMaxMs;
+   config.pullback_min_pct=InpPullbackMinPct;
+   config.pullback_max_pct=InpPullbackMaxPct;
+   config.continuation_invalid_pct=InpContinuationInvalidPct;
+   config.pullback_wait_ms=InpPullbackWaitMs;
+   config.reacceleration_confirm_ticks=InpReaccelerationConfirmTicks;
+   config.reward_risk=InpRewardRisk;
+   config.max_hold_seconds=InpMaxHoldSeconds;
+   config.shadow_slippage_ticks=InpShadowSlippageTicks;
+   config.shadow_exit_slippage_ticks=InpShadowExitSlippageTicks;
+   config.commission_per_lot_round_turn=InpCommissionPerLotRoundTurn;
+   config.execution_mode=InpExecutionMode;
+   config.submit_latency_ms=InpSubmitLatencyMs;
+  }
 
 string TSRLong(const long value) { return StringFormat("%I64d", value); }
 string TSRDouble(const double value,const int digits=10)
@@ -400,8 +435,8 @@ string TSRDouble(const double value,const int digits=10)
    if(!MathIsValidNumber(value)) return "";
    return DoubleToString(value, digits);
   }
-string TSRBool(const bool value) { return value ? "true" : "false"; }
-string TSRDirection(const int direction) { return direction > 0 ? "LONG" : "SHORT"; }
+string TSRBool(const bool value) { return TSBoolName(value); }
+string TSRDirection(const int direction) { return TSDirectionName(direction); }
 
 string TSRExecutionModeName()
   {
@@ -444,9 +479,7 @@ int TSRExecutionGroupIndex(const int strategy,const int delay_index,const int sp
 
 void TSRCsvAppend(string &line,string value)
   {
-   StringReplace(value, "\"", "\"\"");
-   if(line != "") line += ",";
-   line += "\"" + value + "\"";
+   TSCsvAppendEscaped(line,value);
   }
 
 void TSRDebug(const string symbol,const string message)
@@ -463,16 +496,12 @@ string TSRFileName(const string suffix)
 
 int TSROpenCsv(const string suffix,const string header)
   {
-   FolderCreate(InpLogFolder, FILE_COMMON);
-   int handle = FileOpen(TSRFileName(suffix), FILE_READ|FILE_WRITE|FILE_TXT|FILE_ANSI|FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_COMMON);
+   int handle=TSMt5OpenAppendCsv(InpLogFolder,TSRFileName(suffix),header);
    if(handle == INVALID_HANDLE)
      {
       PrintFormat("%s FileOpen failed suffix=%s err=%d", TSR_NAME, suffix, GetLastError());
       return INVALID_HANDLE;
      }
-   bool empty = FileSize(handle) == 0;
-   FileSeek(handle, 0, SEEK_END);
-   if(empty) FileWriteString(handle, header + "\r\n");
    return handle;
   }
 
@@ -505,10 +534,10 @@ bool TSROpenLogs()
 
 void TSRCloseLogs()
   {
-   if(g_event_file!=INVALID_HANDLE){FileFlush(g_event_file);FileClose(g_event_file);g_event_file=INVALID_HANDLE;}
-   if(g_trade_file!=INVALID_HANDLE){FileFlush(g_trade_file);FileClose(g_trade_file);g_trade_file=INVALID_HANDLE;}
-   if(g_summary_file!=INVALID_HANDLE){FileFlush(g_summary_file);FileClose(g_summary_file);g_summary_file=INVALID_HANDLE;}
-   if(g_specs_file!=INVALID_HANDLE){FileFlush(g_specs_file);FileClose(g_specs_file);g_specs_file=INVALID_HANDLE;}
+   TSMt5Close(g_event_file);
+   TSMt5Close(g_trade_file);
+   TSMt5Close(g_summary_file);
+   TSMt5Close(g_specs_file);
   }
 
 double TSRPercentile(double &values[],const int count,const double percentile)
@@ -862,14 +891,7 @@ string TSRTrend(const int symbol_index,const ENUM_TIMEFRAMES timeframe)
    if(symbol_index<0 || symbol_index>=ArraySize(g_symbols)) return "UNAVAILABLE";
    int e20=timeframe==PERIOD_M15?g_symbols[symbol_index].ema20_m15:g_symbols[symbol_index].ema20_h1;
    int e50=timeframe==PERIOD_M15?g_symbols[symbol_index].ema50_m15:g_symbols[symbol_index].ema50_h1;
-   if(e20==INVALID_HANDLE || e50==INVALID_HANDLE || BarsCalculated(e20)<51 || BarsCalculated(e50)<51) return "UNAVAILABLE";
-   double e20_1[1],e20_4[1],e50_1[1];
-   if(CopyBuffer(e20,0,1,1,e20_1)!=1 || CopyBuffer(e20,0,4,1,e20_4)!=1 || CopyBuffer(e50,0,1,1,e50_1)!=1) return "UNAVAILABLE";
-   double close_1=iClose(g_symbols[symbol_index].symbol,timeframe,1);
-   if(close_1<=0.0) return "UNAVAILABLE";
-   if(close_1>e20_1[0] && e20_1[0]>e50_1[0] && e20_1[0]>e20_4[0]) return "UP";
-   if(close_1<e20_1[0] && e20_1[0]<e50_1[0] && e20_1[0]<e20_4[0]) return "DOWN";
-   return "NEUTRAL";
+   return TSMt5TrendLabel(g_symbols[symbol_index].symbol,timeframe,e20,e50);
   }
 
 string TSRAlignment(const int direction,const string m15,const string h1)
@@ -919,7 +941,7 @@ void TSRResetScenario(TSRScenario &scenario)
    scenario.stop_gap=0.0;
    scenario.exit_slippage=0.0;
    scenario.policy_mask=0;
-   scenario.status="NOT_SIGNALED";
+   scenario.status=TS_SCENARIO_NOT_SIGNALED;
   }
 
 int TSRAllocateEvent()
@@ -943,24 +965,24 @@ bool TSRContainsSymbol(const string symbol,const int upto)
 
 bool TSRInitializeSymbol(TSRSymbolContext &context,const string symbol)
   {
-   context.symbol=symbol;
-   context.digits=(int)SymbolInfoInteger(symbol,SYMBOL_DIGITS);
-   context.point=SymbolInfoDouble(symbol,SYMBOL_POINT);
-   context.tick_size=SymbolInfoDouble(symbol,SYMBOL_TRADE_TICK_SIZE);
-   context.tick_value=SymbolInfoDouble(symbol,SYMBOL_TRADE_TICK_VALUE_LOSS);
-   if(context.tick_value<=0.0) context.tick_value=SymbolInfoDouble(symbol,SYMBOL_TRADE_TICK_VALUE);
-   context.contract_size=SymbolInfoDouble(symbol,SYMBOL_TRADE_CONTRACT_SIZE);
-   context.volume_min=SymbolInfoDouble(symbol,SYMBOL_VOLUME_MIN);
-   context.volume_max=SymbolInfoDouble(symbol,SYMBOL_VOLUME_MAX);
-   context.volume_step=SymbolInfoDouble(symbol,SYMBOL_VOLUME_STEP);
-   context.stops_level=(int)SymbolInfoInteger(symbol,SYMBOL_TRADE_STOPS_LEVEL);
-   context.freeze_level=(int)SymbolInfoInteger(symbol,SYMBOL_TRADE_FREEZE_LEVEL);
-   context.filling_mode=(int)SymbolInfoInteger(symbol,SYMBOL_FILLING_MODE);
-   if(context.point<=0.0 || context.tick_size<=0.0 || context.volume_min<=0.0 || context.volume_step<=0.0)
+   TickShockSymbolSpec spec;
+   if(!TSMt5LoadSymbolSpec(symbol,spec))
      {
       PrintFormat("%s invalid symbol specification %s",TSR_NAME,symbol);
       return false;
      }
+   context.symbol=spec.symbol;
+   context.digits=spec.digits;
+   context.point=spec.point;
+   context.tick_size=spec.tick_size;
+   context.tick_value=spec.tick_value;
+   context.contract_size=spec.contract_size;
+   context.volume_min=spec.volume_min;
+   context.volume_max=spec.volume_max;
+   context.volume_step=spec.volume_step;
+   context.stops_level=spec.stops_level;
+   context.freeze_level=spec.freeze_level;
+   context.filling_mode=spec.filling_mode;
    ArrayResize(context.ticks,TSR_TICK_CAPACITY);
    ArrayResize(context.grid,TSR_GRID_CAPACITY);
    ArrayResize(context.samples250,TSRSampleCapacity(0));
@@ -975,13 +997,7 @@ bool TSRInitializeSymbol(TSRSymbolContext &context,const string symbol)
       context.baseline_cache_msc[d]=-1;
       context.baseline_hist_msc[d]=-1;
      }
-   context.ema20_m15=iMA(symbol,PERIOD_M15,20,0,MODE_EMA,PRICE_CLOSE);
-   context.ema50_m15=iMA(symbol,PERIOD_M15,50,0,MODE_EMA,PRICE_CLOSE);
-   context.ema20_h1=iMA(symbol,PERIOD_H1,20,0,MODE_EMA,PRICE_CLOSE);
-   context.ema50_h1=iMA(symbol,PERIOD_H1,50,0,MODE_EMA,PRICE_CLOSE);
-   if(context.ema20_m15==INVALID_HANDLE || context.ema50_m15==INVALID_HANDLE || context.ema20_h1==INVALID_HANDLE || context.ema50_h1==INVALID_HANDLE)
-      return false;
-   return true;
+   return TSMt5CreateTrendHandles(symbol,context.ema20_m15,context.ema50_m15,context.ema20_h1,context.ema50_h1);
   }
 
 bool TSRParseSymbols()
@@ -993,7 +1009,7 @@ bool TSRParseSymbols()
    for(int i=0;i<count;++i)
      {
       StringTrimLeft(parts[i]);StringTrimRight(parts[i]);
-      if(parts[i]=="" || TSRContainsSymbol(parts[i],i) || !SymbolSelect(parts[i],true) || !TSRInitializeSymbol(g_symbols[i],parts[i]))
+      if(parts[i]=="" || TSRContainsSymbol(parts[i],i) || !TSMt5SelectSymbol(parts[i]) || !TSRInitializeSymbol(g_symbols[i],parts[i]))
         {
          PrintFormat("%s symbol initialization failed token=%s",TSR_NAME,parts[i]);
          return false;
@@ -1014,9 +1030,9 @@ void TSRWriteSymbolSpecs()
       TSRCsvAppend(line,TSRDouble(g_symbols[i].contract_size));TSRCsvAppend(line,IntegerToString(g_symbols[i].stops_level));TSRCsvAppend(line,IntegerToString(g_symbols[i].freeze_level));
       TSRCsvAppend(line,TSRDouble(g_symbols[i].volume_min,8));TSRCsvAppend(line,TSRDouble(g_symbols[i].volume_max,8));TSRCsvAppend(line,TSRDouble(g_symbols[i].volume_step,8));
       TSRCsvAppend(line,IntegerToString(g_symbols[i].filling_mode));TSRCsvAppend(line,TSRDouble(InpCommissionPerLotRoundTurn,4));TSRCsvAppend(line,InpCommissionSource);
-      FileWriteString(g_specs_file,line+"\r\n");
+      TSMt5WriteLine(g_specs_file,line);
      }
-   FileFlush(g_specs_file);
+   TSMt5Flush(g_specs_file);
   }
 
 double TSRNormalizeNearest(const int symbol_index,const double price)
@@ -1028,19 +1044,14 @@ double TSRNormalizeNearest(const int symbol_index,const double price)
 
 double TSRNormalizeStopOutward(const int symbol_index,const int direction,const double price)
   {
-   double size=g_symbols[symbol_index].tick_size;
-   if(size<=0.0) return 0.0;
-   double units=price/size;
-   double value=direction>0?MathFloor(units+1e-10)*size:MathCeil(units-1e-10)*size;
-   return NormalizeDouble(value,g_symbols[symbol_index].digits);
+   return TSRoundStopOutward(direction,price,g_symbols[symbol_index].tick_size,g_symbols[symbol_index].digits);
   }
 
 double TSRCommissionR(const int symbol_index,const int direction,const double entry,const double sl)
   {
    if(InpCommissionPerLotRoundTurn<=0.0) return 0.0;
    double loss=0.0;
-   ENUM_ORDER_TYPE type=direction>0?ORDER_TYPE_BUY:ORDER_TYPE_SELL;
-   if(!OrderCalcProfit(type,g_symbols[symbol_index].symbol,1.0,entry,sl,loss) || loss>=0.0) return 0.0;
+   if(!TSMt5CalcOneLotLoss(direction,g_symbols[symbol_index].symbol,entry,sl,loss) || loss>=0.0) return 0.0;
    return InpCommissionPerLotRoundTurn/MathAbs(loss);
   }
 
@@ -1085,12 +1096,12 @@ bool TSRRegisterStrategySignal(TSREvent &event,
             event.scenarios[index].entry_eligible_msc=TSResearchEntryEligibleMsc(InpExecutionMode,signal_event_msc,signal_processing_msc,TSR_DELAY_MS[d],InpSubmitLatencyMs);
             event.scenarios[index].spread_multiplier=TSR_SPREAD_MULT[p];
             event.scenarios[index].stop_multiple=TSRStopMultiple(w);
-            event.scenarios[index].status="PENDING_ENTRY_QUOTE";
+            event.scenarios[index].status=TS_SCENARIO_PENDING_ENTRY_QUOTE;
            }
    return true;
   }
 
-void TSRInvalidateScenario(TSRScenario &scenario,const string reason)
+void TSRInvalidateScenario(TSRScenario &scenario,const ENUM_TS_SCENARIO_STATUS reason)
   {
    scenario.pending=false;
    scenario.active=false;
@@ -1100,11 +1111,7 @@ void TSRInvalidateScenario(TSRScenario &scenario,const string reason)
 
 double TSRNormalizeEntryAdverse(const int symbol_index,const int direction,const double price)
   {
-   double size=g_symbols[symbol_index].tick_size;
-   if(size<=0.0) return 0.0;
-   double units=price/size;
-   double value=direction>0?MathCeil(units-1e-10)*size:MathFloor(units+1e-10)*size;
-   return NormalizeDouble(value,g_symbols[symbol_index].digits);
+   return TSRoundEntryAdverse(direction,price,g_symbols[symbol_index].tick_size,g_symbols[symbol_index].digits);
   }
 
 double TSRKnownPolicyRange(const TSREvent &event,const int strategy)
@@ -1116,66 +1123,53 @@ double TSRKnownPolicyRange(const TSREvent &event,const int strategy)
 bool TSRTryStartScenario(TSREvent &event,const int scenario_index,const TSRShortTick &tick)
   {
    if(!event.scenarios[scenario_index].initialized || !event.scenarios[scenario_index].pending || event.scenarios[scenario_index].done) return false;
-   if(tick.bid<=0.0 || tick.ask<=tick.bid)
-     {
-      TSRInvalidateScenario(event.scenarios[scenario_index],"INVALID_STALE_QUOTE");
-      return false;
-     }
-   TSResearchEntryClock entry_clock=event.scenarios[scenario_index].entry_clock;
    int local=scenario_index%TSR_SCENARIO_COUNT;
    int delay_index=(local%(TSR_DELAY_COUNT*TSR_SPREAD_COUNT))/TSR_SPREAD_COUNT;
-   if(!TSResearchTryEntryClock(event.scenarios[scenario_index].signal_clock,InpExecutionMode,
-                               TSR_DELAY_MS[delay_index],InpSubmitLatencyMs,tick.time_msc,entry_clock)) return false;
-   double mid=tick.mid;
-   double base_spread=tick.ask-tick.bid;
-   double stressed_spread=base_spread*event.scenarios[scenario_index].spread_multiplier;
-   if(stressed_spread<=0.0)
+   TickShockExecutionRequest request;
+   request.signal_clock=event.scenarios[scenario_index].signal_clock;
+   request.prior_entry_clock=event.scenarios[scenario_index].entry_clock;
+   request.mode=g_core_config.execution_mode;
+   request.direction=event.scenarios[scenario_index].direction;
+   request.requested_delay_ms=TSR_DELAY_MS[delay_index];
+   request.submit_latency_ms=g_core_config.submit_latency_ms;
+   TSBuildQuote(g_symbols[event.symbol_index].symbol,event.symbol_index,0,tick.time_msc,tick.time_msc,
+                tick.bid,tick.ask,true,request.quote);
+   request.spread_multiplier=event.scenarios[scenario_index].spread_multiplier;
+   request.stop_multiple=event.scenarios[scenario_index].stop_multiple;
+   request.entry_slippage_ticks=g_core_config.shadow_slippage_ticks;
+   request.tick_size=g_symbols[event.symbol_index].tick_size;
+   request.digits=g_symbols[event.symbol_index].digits;
+   request.stops_distance=g_symbols[event.symbol_index].stops_level*g_symbols[event.symbol_index].point;
+   request.freeze_distance=g_symbols[event.symbol_index].freeze_level*g_symbols[event.symbol_index].point;
+   request.requested_rr=g_core_config.reward_risk;
+   int strategy=scenario_index/TSR_SCENARIO_COUNT;
+   request.known_range=TSRKnownPolicyRange(event,strategy);
+   TickShockExecutionResult result;
+   if(!TSEngineBuildScenarioEntry(request,result))
      {
-      TSRInvalidateScenario(event.scenarios[scenario_index],"INVALID_SPREAD");
+      if(result.done) TSRInvalidateScenario(event.scenarios[scenario_index],result.status);
       return false;
      }
-   double stressed_bid=mid-stressed_spread*0.5;
-   double stressed_ask=mid+stressed_spread*0.5;
-   double slip=MathMax(0.0,InpShadowSlippageTicks)*g_symbols[event.symbol_index].tick_size;
-   double raw_entry=event.scenarios[scenario_index].direction>0?stressed_ask+slip:stressed_bid-slip;
-   double entry=TSRNormalizeEntryAdverse(event.symbol_index,event.scenarios[scenario_index].direction,raw_entry);
-   double tick_size=g_symbols[event.symbol_index].tick_size;
-   double requested_risk=MathCeil(event.scenarios[scenario_index].stop_multiple*base_spread/tick_size-1e-10)*tick_size;
-   double raw_sl=event.scenarios[scenario_index].direction>0?entry-requested_risk:entry+requested_risk;
-   double sl=TSRNormalizeStopOutward(event.symbol_index,event.scenarios[scenario_index].direction,raw_sl);
-   double risk=MathAbs(entry-sl);
-   double stops_distance=g_symbols[event.symbol_index].stops_level*g_symbols[event.symbol_index].point;
-   double freeze_distance=g_symbols[event.symbol_index].freeze_level*g_symbols[event.symbol_index].point;
-   double tp=0.0,realized_rr=0.0;
-   string feasibility_reason="";
-   if(entry<=0.0 || sl<=0.0 ||
-      !TSBuildResearchTarget(event.scenarios[scenario_index].direction,entry,risk,InpRewardRisk,tick_size,g_symbols[event.symbol_index].digits,tp,realized_rr) ||
-      !TSProtectiveOrderDistanceFeasible(event.scenarios[scenario_index].direction,stressed_bid,stressed_ask,sl,tp,stops_distance,feasibility_reason))
-     {
-      TSRInvalidateScenario(event.scenarios[scenario_index],feasibility_reason==""?"INVALID_BROKER_TARGET":feasibility_reason);
-      return false;
-     }
-   if(realized_rr+1e-9<InpRewardRisk) ++g_rr_below_requested;
-   event.scenarios[scenario_index].entry_clock=entry_clock;
+   if(result.realized_rr+1e-9<InpRewardRisk) ++g_rr_below_requested;
+   event.scenarios[scenario_index].entry_clock=result.entry_clock;
    event.scenarios[scenario_index].pending=false;
    event.scenarios[scenario_index].active=true;
    event.scenarios[scenario_index].done=false;
-   event.scenarios[scenario_index].entry_eligible_msc=entry_clock.eligible_msc;
-   event.scenarios[scenario_index].entry_quote_msc=entry_clock.quote_msc;
-   event.scenarios[scenario_index].base_spread=base_spread;
-   event.scenarios[scenario_index].requested_risk=requested_risk;
-   event.scenarios[scenario_index].entry=entry;
-   event.scenarios[scenario_index].sl=sl;
-   event.scenarios[scenario_index].tp=tp;
-   event.scenarios[scenario_index].risk=risk;
+   event.scenarios[scenario_index].entry_eligible_msc=result.entry_clock.eligible_msc;
+   event.scenarios[scenario_index].entry_quote_msc=result.entry_clock.quote_msc;
+   event.scenarios[scenario_index].base_spread=result.base_spread;
+   event.scenarios[scenario_index].requested_risk=result.requested_risk;
+   event.scenarios[scenario_index].entry=result.entry;
+   event.scenarios[scenario_index].sl=result.sl;
+   event.scenarios[scenario_index].tp=result.tp;
+   event.scenarios[scenario_index].risk=result.risk;
    event.scenarios[scenario_index].requested_rr=InpRewardRisk;
-   event.scenarios[scenario_index].realized_rr=realized_rr;
-   event.scenarios[scenario_index].stops_distance=stops_distance;
-   event.scenarios[scenario_index].freeze_distance=freeze_distance;
-   event.scenarios[scenario_index].freeze_clear=TSProtectiveFreezeDistanceClear(event.scenarios[scenario_index].direction,stressed_bid,stressed_ask,sl,tp,freeze_distance);
-   event.scenarios[scenario_index].commission_r=TSRCommissionR(event.symbol_index,event.scenarios[scenario_index].direction,entry,sl);
-   int strategy=scenario_index/TSR_SCENARIO_COUNT;
-   event.scenarios[scenario_index].policy_mask=TSResearchPolicyMask(stressed_spread,risk,TSRKnownPolicyRange(event,strategy));
+   event.scenarios[scenario_index].realized_rr=result.realized_rr;
+   event.scenarios[scenario_index].stops_distance=result.stops_distance;
+   event.scenarios[scenario_index].freeze_distance=result.freeze_distance;
+   event.scenarios[scenario_index].freeze_clear=result.freeze_clear;
+   event.scenarios[scenario_index].commission_r=TSRCommissionR(event.symbol_index,event.scenarios[scenario_index].direction,result.entry,result.sl);
+   event.scenarios[scenario_index].policy_mask=result.policy_mask;
    if(!TSResearchEntryInvariant(event.scenarios[scenario_index].signal_clock,InpExecutionMode,TSR_DELAY_MS[delay_index],InpSubmitLatencyMs,event.scenarios[scenario_index].entry_clock))
       ++g_entry_before_eligible;
    if(InpExecutionMode==REALIZABLE_EA && event.scenarios[scenario_index].entry_quote_msc<event.scenarios[scenario_index].signal_processing_msc)
@@ -1183,7 +1177,7 @@ bool TSRTryStartScenario(TSREvent &event,const int scenario_index,const TSRShort
    if(strategy==TSR_DETECTION_CONTINUATION && event.detection_quote_age_ms>0 &&
       event.scenarios[scenario_index].entry_quote_msc==event.detection_grid_msc)
       ++g_stale_detection_fills;
-   event.scenarios[scenario_index].status="ACTIVE";
+   event.scenarios[scenario_index].status=result.status;
    return true;
   }
 
@@ -1224,7 +1218,7 @@ void TSRAdvanceScenario(TSREvent &event,const int scenario_index,const TSRShortT
    event.scenarios[scenario_index].exit_price=fill;
    event.scenarios[scenario_index].stop_gap=gap;
    event.scenarios[scenario_index].exit_slippage=reason=="SL_GAP"?exit_slip:0.0;
-   event.scenarios[scenario_index].status=reason;
+   event.scenarios[scenario_index].status=TSScenarioStatusFromExitReason(reason);
    event.scenarios[scenario_index].exit_msc=tick.time_msc;
    event.scenarios[scenario_index].active=false;
    event.scenarios[scenario_index].done=true;
@@ -1318,7 +1312,7 @@ void TSRMarkUnsignaledDone(TSREvent &event)
                   TSRResetScenario(event.scenarios[index]);
                   event.scenarios[index].initialized=true;
                   event.scenarios[index].done=true;
-                  event.scenarios[index].status="NO_SIGNAL";
+                  event.scenarios[index].status=TS_SCENARIO_NO_SIGNAL;
                  }
               }
      }
@@ -1339,11 +1333,11 @@ void TSRProcessEventTick(TSREvent &event,const TSRShortTick &tick,const long pro
 
    if(!event.terminal)
      {
-      ENUM_TS_ACTION action=TSAdvance(event.machine,tick.time_msc,tick.mid,
-                                      InpBurstQuietMs,InpBurstMaxMs,
-                                      InpPullbackMinPct,InpPullbackMaxPct,
-                                      InpContinuationInvalidPct,InpPullbackWaitMs,
-                                      InpReaccelerationConfirmTicks);
+      TickShockQuote core_quote;
+      TSBuildQuote(g_symbols[event.symbol_index].symbol,event.symbol_index,0,tick.time_msc,processing_msc,
+                   tick.bid,tick.ask,true,core_quote);
+      TickShockStateResult transition;
+      ENUM_TS_ACTION action=TSEngineAdvanceState(event.machine,core_quote,g_core_config,transition);
       event.max_retracement_pct=event.machine.max_retracement_pct;
       if(action==TS_ACTION_BURST_FROZEN)
         {
@@ -1436,35 +1430,24 @@ void TSRDetectShock(TSRSymbolContext &context,
    double intensity=sample.tick_count/context.baseline_median_ticks[detector];
    double move_spread=sample.price_move/sample.spread;
    double spread_ratio=sample.spread/context.spread_median_5m[detector];
-   bool gates[TSR_GATE_COUNT];
-   gates[0]=sample.price_move>=context.baseline_percentile[detector];
-   gates[1]=robust_z>=InpMinRobustZ;
-   gates[2]=efficiency>=InpMinEfficiency;
-   gates[3]=intensity>=InpMinTickIntensityRatio;
-   gates[4]=move_spread>=InpMinMoveSpreadRatio;
-   gates[5]=spread_ratio<=InpMaxSpreadMedianRatio;
-   int mask=0;
+   TickShockDetectorResult detector_result;
+   TSEngineEvaluateDetector(sample.price_move,context.baseline_percentile[detector],robust_z,efficiency,
+                            move_spread,intensity,spread_ratio,g_core_config,detector_result);
    bool cumulative=true;
    ++context.evaluable_samples[detector];
    for(int g=0;g<TSR_GATE_COUNT;++g)
      {
-      if(gates[g])
+      if(detector_result.gates[g])
         {
-         mask|=(1<<g);
          ++context.gate_true[detector*TSR_GATE_COUNT+g];
         }
-      cumulative=cumulative && gates[g];
+      cumulative=cumulative && detector_result.gates[g];
       if(cumulative) ++context.gate_cumulative[detector*TSR_GATE_COUNT+g];
      }
+   int mask=detector_result.gate_mask;
    ++context.gate_masks[detector*TSR_GATE_MASK_COUNT+mask];
-   if(gates[0]) { ++g_total_raw; ++context.raw_candidates[detector]; }
-   string reason="";
-   if(!gates[0]) reason="shock_percentile_failed";
-   else if(!gates[1]) reason="shock_z_failed";
-   else if(!gates[2]) reason="efficiency_failed";
-   else if(!gates[3]) reason="tick_intensity_failed";
-   else if(!gates[4]) reason="move_spread_failed";
-   else if(!gates[5]) reason="spread_too_wide";
+   if(detector_result.gates[0]) { ++g_total_raw; ++context.raw_candidates[detector]; }
+   string reason=TSDetectorRejectName(detector_result.reject);
    if(reason!="")
      {
       TSRCountPreSkip(symbol_index,reason);
@@ -1547,7 +1530,7 @@ void TSRDetectShock(TSRSymbolContext &context,
    g_events[slot].h1_trend=TSRTrend(symbol_index,PERIOD_H1);
    g_events[slot].htf_alignment=TSRAlignment(g_events[slot].direction,g_events[slot].m15_trend,g_events[slot].h1_trend);
    g_events[slot].session=TSRSessionLabel(sample.end_msc);
-   TSStartBurst(g_events[slot].machine,g_events[slot].direction,sample.end_msc,sample.start_mid,sample.end_mid);
+   TSEngineStartBurst(g_events[slot].machine,g_events[slot].direction,sample.end_msc,sample.start_mid,sample.end_mid);
    TSRRegisterStrategySignal(g_events[slot],TSR_DETECTION_CONTINUATION,g_events[slot].direction,sample.end_msc,processing_msc,point.bid,point.ask);
    ++g_total_events;
    ++context.valid_events[detector];
@@ -1669,13 +1652,15 @@ void TSRWriteEvent(TSREvent &event)
       int rem=local%(TSR_DELAY_COUNT*TSR_SPREAD_COUNT);
       int delay_index=rem/TSR_SPREAD_COUNT;
       int spread_index=rem%TSR_SPREAD_COUNT;
+      ENUM_TS_SCENARIO_STATUS scenario_status=event.scenarios[i].status;
+      string scenario_status_name=TSScenarioStatusName(scenario_status);
       bool result_available=event.scenarios[i].done &&
-                            (event.scenarios[i].status=="TP_LIMIT" || event.scenarios[i].status=="SL_GAP" || event.scenarios[i].status=="TIME_MARKET");
+                            (scenario_status==TS_SCENARIO_TP_LIMIT || scenario_status==TS_SCENARIO_SL_GAP || scenario_status==TS_SCENARIO_TIME_MARKET);
       long actual_delay=event.scenarios[i].entry_quote_msc>0 && event.scenarios[i].signal_event_msc>0?event.scenarios[i].entry_quote_msc-event.scenarios[i].signal_event_msc:-1;
       long processing_to_entry=event.scenarios[i].entry_quote_msc>0 && event.scenarios[i].signal_processing_msc>0?event.scenarios[i].entry_quote_msc-event.scenarios[i].signal_processing_msc:-1;
       string item=StringFormat("%s|w%.1f|d%d|s%d|%s|net=%s|gross=%s|signal_event=%I64d|signal_processing=%I64d|eligible=%I64d|entry_quote=%I64d|exit=%I64d|actual_delay=%I64d|processing_to_entry=%I64d|policy=%d|risk=%s|sl=%s|tp=%s|requested_rr=%s|realized_rr=%s|stops_distance=%s|freeze_distance=%s|freeze_clear=%s|exit_px=%s|stop_gap=%s|exit_slip=%s|commission_r=%s",
                                TSRStrategyName(strategy),TSRStopMultiple(stop_index),TSR_DELAY_MS[delay_index],(int)MathRound(TSR_SPREAD_MULT[spread_index]*100.0),
-                               event.scenarios[i].status,
+                               scenario_status_name,
                                result_available?TSRDouble(event.scenarios[i].result_r,6):"",
                                result_available?TSRDouble(event.scenarios[i].gross_r,6):"",
                                event.scenarios[i].signal_event_msc,event.scenarios[i].signal_processing_msc,event.scenarios[i].entry_eligible_msc,event.scenarios[i].entry_quote_msc,event.scenarios[i].exit_msc,actual_delay,processing_to_entry,event.scenarios[i].policy_mask,
@@ -1689,25 +1674,25 @@ void TSRWriteEvent(TSREvent &event)
          g_scenario_sum_r[i]+=event.scenarios[i].result_r;
          ++g_scenario_csv_recount_valid;
          g_scenario_csv_recount_sum_r+=event.scenarios[i].result_r;
-         if(event.scenarios[i].status=="TP_LIMIT") ++g_scenario_status_counts[0];
-         else if(event.scenarios[i].status=="SL_GAP") ++g_scenario_status_counts[1];
+         if(scenario_status==TS_SCENARIO_TP_LIMIT) ++g_scenario_status_counts[0];
+         else if(scenario_status==TS_SCENARIO_SL_GAP) ++g_scenario_status_counts[1];
          else ++g_scenario_status_counts[2];
         }
-      else if(StringFind(event.scenarios[i].status,"INVALID_")==0)
+      else if(TSScenarioStatusIsInvalid(scenario_status))
         {
          ++g_scenario_invalid[i];
          ++g_scenario_csv_recount_invalid;
-         if(event.scenarios[i].status=="INVALID_BROKER_STOP") ++g_scenario_status_counts[3];
-         else if(event.scenarios[i].status=="INVALID_BROKER_TARGET") ++g_scenario_status_counts[4];
-         else if(event.scenarios[i].status=="INVALID_STALE_QUOTE") ++g_scenario_status_counts[5];
-         else if(event.scenarios[i].status=="INVALID_SPREAD") ++g_scenario_status_counts[6];
+         if(scenario_status==TS_SCENARIO_INVALID_BROKER_STOP) ++g_scenario_status_counts[3];
+         else if(scenario_status==TS_SCENARIO_INVALID_BROKER_TARGET) ++g_scenario_status_counts[4];
+         else if(scenario_status==TS_SCENARIO_INVALID_STALE_QUOTE) ++g_scenario_status_counts[5];
+         else if(scenario_status==TS_SCENARIO_INVALID_SPREAD) ++g_scenario_status_counts[6];
          else ++g_scenario_status_counts[7];
         }
      }
    TSRCsvAppend(line,"strategy|stop_multiple_of_unstressed_fill_spread|requested_delay_ms|spread_pct|status|netR|grossR|signal_event_msc|signal_processing_msc|entry_eligible_msc|entry_quote_msc|exit_msc|actual_delay_ms|processing_to_entry_ms|policy_mask(cost=1,range=2)|risk|sl|tp|requested_rr|realized_rr|stops_distance|freeze_distance|freeze_clear_diagnostic|exit_price|stop_gap|exit_slippage|commissionR; policy does not invalidate outcomes");
    TSRCsvAppend(line,grid);
-   FileWriteString(g_event_file,line+"\r\n");
-   FileFlush(g_event_file);
+   TSMt5WriteLine(g_event_file,line);
+   TSMt5Flush(g_event_file);
    if(event.burst_end_msc>0) ++g_valid_bursts;
    if(burst_spread_ratio>0.0)
      {
@@ -1790,7 +1775,7 @@ void TSRCollectSymbolTicks(const int symbol_index,TSRMergedTick &merged[],int &s
       ulong from_msc=g_symbols[symbol_index].last_time_msc>0?(ulong)g_symbols[symbol_index].last_time_msc:0;
       int requested=g_symbols[symbol_index].last_time_msc>0?TSR_MAX_COPY_TICKS:1;
       ResetLastError();
-      int count=CopyTicks(g_symbols[symbol_index].symbol,copied,COPY_TICKS_INFO,from_msc,requested);
+      int count=TSMt5CopyInfoTicks(g_symbols[symbol_index].symbol,copied,from_msc,(uint)requested);
       if(count<=0)
         {
          int err=GetLastError();
@@ -1858,18 +1843,18 @@ void TSRSortMerged(TSRMergedTick &values[],int left,int right)
 
 long TSRProcessingMsc()
   {
-   long result=(long)TimeCurrent()*1000;
+   long result=TSMt5ServerNowMsc();
    for(int i=0;i<ArraySize(g_symbols);++i)
      {
       MqlTick quote;
-      if(SymbolInfoTick(g_symbols[i].symbol,quote)) result=MathMax(result,(long)quote.time_msc);
+      if(TSMt5VisibleQuote(g_symbols[i].symbol,quote)) result=MathMax(result,(long)quote.time_msc);
      }
    return result;
   }
 
 void TSRSampleMemory()
   {
-   long used=(long)MQLInfoInteger(MQL_MEMORY_USED);
+   long used=TSMt5MemoryUsedMb();
    if(used<0) return;
    ++g_memory_samples;
    g_memory_sum_mb+=(double)used;
@@ -1958,14 +1943,14 @@ void TSRSummaryRow(const string record_type,const string key,const long events,c
                    const long valid,const long invalid,const double expectancy,const string value)
   {
    if(g_summary_file==INVALID_HANDLE) return;
-   FileFlush(g_event_file);FileFlush(g_trade_file);
+   TSMt5Flush(g_event_file);TSMt5Flush(g_trade_file);
    string line="";
    TSRCsvAppend(line,InpRunId);TSRCsvAppend(line,record_type);TSRCsvAppend(line,key);TSRCsvAppend(line,TSRLong(events));TSRCsvAppend(line,TSRLong(raw));TSRCsvAppend(line,TSRLong(ticks));
    TSRCsvAppend(line,TSRLong(valid));TSRCsvAppend(line,TSRLong(invalid));TSRCsvAppend(line,valid>0?TSRDouble(expectancy,6):"");
    TSRCsvAppend(line,g_memory_samples>0?TSRDouble(g_memory_sum_mb/g_memory_samples,3):"0");TSRCsvAppend(line,TSRLong(g_memory_max_mb));
-   TSRCsvAppend(line,TSRLong(g_event_rows));TSRCsvAppend(line,TSRLong(FileSize(g_event_file)));TSRCsvAppend(line,"0");TSRCsvAppend(line,TSRLong(FileSize(g_trade_file)));
-   TSRCsvAppend(line,TSRDouble((GetTickCount64()-g_started_tick_count)/1000.0,3));TSRCsvAppend(line,value);
-   FileWriteString(g_summary_file,line+"\r\n");
+   TSRCsvAppend(line,TSRLong(g_event_rows));TSRCsvAppend(line,TSRLong(TSMt5FileSize(g_event_file)));TSRCsvAppend(line,"0");TSRCsvAppend(line,TSRLong(TSMt5FileSize(g_trade_file)));
+   TSRCsvAppend(line,TSRDouble((TSMt5RuntimeTickCount()-g_started_tick_count)/1000.0,3));TSRCsvAppend(line,value);
+   TSMt5WriteLine(g_summary_file,line);
   }
 
 void TSRWriteSummary()
@@ -2063,7 +2048,7 @@ void TSRWriteSummary()
    TSRSummaryRow("MODEL","protective_distance",0,0,0,0,0,0.0,"StopsLevel checked from current stressed Bid/Ask;FreezeLevel recorded separately as modification diagnostic;TP rounded outward so realized_rr>=requested_rr");
    TSRSummaryRow("MODEL","global_merge",0,0,0,0,0,0.0,StringFormat("order_violations=%I64d;max_pending=%I64d;pending_at_summary=%d",g_merge_order_violations,g_max_merged_batch,ArraySize(g_pending_ticks)));
    TSRSummaryRow("MODEL","commission",0,0,0,0,0,0.0,DoubleToString(InpCommissionPerLotRoundTurn,4)+":"+InpCommissionSource);
-   FileFlush(g_summary_file);
+   TSMt5Flush(g_summary_file);
   }
 
 void TSRFlushIncompleteEvents()
@@ -2078,11 +2063,11 @@ void TSRFlushIncompleteEvents()
          if(!g_events[i].scenarios[j].initialized)
            {
             TSRResetScenario(g_events[i].scenarios[j]);
-            g_events[i].scenarios[j].initialized=true;g_events[i].scenarios[j].done=true;g_events[i].scenarios[j].status="NO_SIGNAL";
+            g_events[i].scenarios[j].initialized=true;g_events[i].scenarios[j].done=true;g_events[i].scenarios[j].status=TS_SCENARIO_NO_SIGNAL;
            }
          else if(!g_events[i].scenarios[j].done)
            {
-            g_events[i].scenarios[j].pending=false;g_events[i].scenarios[j].active=false;g_events[i].scenarios[j].done=true;g_events[i].scenarios[j].status="INCOMPLETE_END_OF_RUN";
+            g_events[i].scenarios[j].pending=false;g_events[i].scenarios[j].active=false;g_events[i].scenarios[j].done=true;g_events[i].scenarios[j].status=TS_SCENARIO_INCOMPLETE_END_OF_RUN;
            }
         }
       TSRWriteEvent(g_events[i]);
@@ -2094,16 +2079,17 @@ void TSRReleaseSymbols()
   {
    for(int i=0;i<ArraySize(g_symbols);++i)
      {
-      if(g_symbols[i].ema20_m15!=INVALID_HANDLE) IndicatorRelease(g_symbols[i].ema20_m15);
-      if(g_symbols[i].ema50_m15!=INVALID_HANDLE) IndicatorRelease(g_symbols[i].ema50_m15);
-      if(g_symbols[i].ema20_h1!=INVALID_HANDLE) IndicatorRelease(g_symbols[i].ema20_h1);
-      if(g_symbols[i].ema50_h1!=INVALID_HANDLE) IndicatorRelease(g_symbols[i].ema50_h1);
+      TSMt5ReleaseIndicator(g_symbols[i].ema20_m15);
+      TSMt5ReleaseIndicator(g_symbols[i].ema50_m15);
+      TSMt5ReleaseIndicator(g_symbols[i].ema20_h1);
+      TSMt5ReleaseIndicator(g_symbols[i].ema50_h1);
      }
   }
 
 int OnInit()
   {
-   g_is_tester=(bool)MQLInfoInteger(MQL_TESTER);
+   g_is_tester=TSMt5IsTester();
+   TSRLoadCoreConfig(g_core_config);
    if(InpGridMs!=250 || InpBaselineExcludeMs<2000 ||
       InpMinBaselineSamples<=0 || InpMinBaselineSamples>TSR_SAMPLE_CAPACITY || InpRewardRisk<1.2 || InpMaxHoldSeconds<=0 || InpSubmitLatencyMs<0)
      {
@@ -2123,8 +2109,8 @@ int OnInit()
       TSRCloseLogs();TSRReleaseSymbols();return INIT_FAILED;
      }
    TSRWriteSymbolSpecs();
-   g_started_tick_count=GetTickCount64();
-   if(!g_is_tester && !EventSetMillisecondTimer(50))
+   g_started_tick_count=TSMt5RuntimeTickCount();
+   if(!g_is_tester && !TSMt5StartTimer(50))
      {
       PrintFormat("%s EventSetMillisecondTimer failed err=%d",TSR_NAME,GetLastError());
       TSRCloseLogs();TSRReleaseSymbols();return INIT_FAILED;
@@ -2135,7 +2121,7 @@ int OnInit()
 
 void OnDeinit(const int reason)
   {
-   if(!g_is_tester) EventKillTimer();
+   if(!g_is_tester) TSMt5StopTimer();
    TSRFlushPendingTicks();
    TSRFlushIncompleteEvents();
    TSRWriteSummary();

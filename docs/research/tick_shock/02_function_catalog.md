@@ -1,9 +1,9 @@
-# Tick-shock As-Is function catalog
+# Tick-shock function catalog (As-Is plus Step 4 extraction)
 
-- scope: current research EA, its two shared includes, research harness, and order harness
+- scope: Step 2 As-Is catalog plus the behavior-preserving Step 4 production modules
 - extraction: multiline function-definition regex plus brace-balanced body scan
-- mechanically extracted functions: 165
-- cataloged functions: 165
+- mechanically extracted current functions: 207
+- cataloged current functions: 207 (165 As-Is entries, 35 relocated by the canonical map below, and 42 new composition/module entries)
 - count difference: 0
 
 The catalog is As-Is documentation, not a claim that the implementation is causally validated. G:R/G:W list global/input/constant dependencies detected in the function body. Mutable reference parameters are reported under struct side effects. Pure means deterministic with no detected global, MQL built-in, file, or mutable-reference dependency; this is a deliberately conservative lexical label, so deterministic helpers using MathAbs or formatting APIs can appear impure. Stateful deterministic means mutation is limited to supplied data. The authoritative extraction candidates are listed in 02_refactor_targets.md.
@@ -17,7 +17,11 @@ The catalog is As-Is documentation, not a claim that the implementation is causa
 | mql/Include/TickShockResearchExecution.mqh | 14 | 14 | 0 |
 | mql/Experts/tests/ExpectedValue_TickShock_ResearchReachabilityHarness.mq5 | 8 | 8 | 0 |
 | mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5 | 29 | 29 | 0 |
-| **Total** | **165** | **165** | **0** |
+| **Step 2 total** | **165** | **165** | **0** |
+
+The reconciliation above is the immutable Step 2 snapshot. The current Step 4
+reconciliation is appended at the end of this document and is authoritative for
+module paths and extracted production entry points.
 
 ## Per-function catalog
 
@@ -217,3 +221,91 @@ The catalog is As-Is documentation, not a claim that the implementation is causa
 - Global read/write and calls are lexical results. Array/struct mutation delegated to a callee is represented by the mutable-reference and call-graph columns.
 - Overloaded names such as OnInit, OnTick, OnDeinit, and Almost are disambiguated by Function ID and file path.
 - Step 3 must turn the integration-required rows around dispatcher, detector, scenario, CSV and order lifecycle into executable production-path tests.
+
+## Step 4 current-source reconciliation
+
+The multiline definition scan was rerun after extraction. The two root
+compatibility includes now contain zero definitions; they forward the stable
+public names to the new modules.
+
+| Current file | Functions | Cataloged | Difference |
+|---|---:|---:|---:|
+| research EA | 94 | 94 | 0 |
+| `TickShockClusterer.mqh` | 5 | 5 | 0 |
+| `TickShockConfig.mqh` | 3 | 3 | 0 |
+| `TickShockCsvSerializer.mqh` | 7 | 7 | 0 |
+| `TickShockDetector.mqh` | 8 | 8 | 0 |
+| `TickShockEngine.mqh` | 5 | 5 | 0 |
+| `TickShockExecutionModel.mqh` | 20 | 20 | 0 |
+| `TickShockMt5Adapter.mqh` | 19 | 19 | 0 |
+| `TickShockScenarioEngine.mqh` | 3 | 3 | 0 |
+| `TickShockStateMachine.mqh` | 6 | 6 | 0 |
+| `TickShockTypes.mqh` and compatibility wrappers | 0 | 0 | 0 |
+| research harness | 8 | 8 | 0 |
+| order harness | 29 | 29 | 0 |
+| **Total** | **207** | **207** | **0** |
+
+The 35 original SM/EX functions retain their existing catalog rows and exact
+signatures. Canonical ownership is now Detector (7), StateMachine (6),
+ExecutionModel (18), and Clusterer (4). This is a relocation only. The current
+total adds the EA mapper below plus 41 new module functions.
+
+### Step 4 additions
+
+Shared rules for the table: `*_msc` arguments are milliseconds, prices and
+distances use symbol price units, RR is dimensionless, and slippage inputs are
+tick multiples. Core functions have no global read/write, MT5 API, or file I/O;
+their only side effects are mutable result/context parameters. Adapter functions
+are intentionally impure and require MT5 integration tests. Long/Short behavior
+is symmetric unless the responsibility names price-side rounding or order type.
+Rejects are returned as enum/status or false, never logged by the core.
+
+| ID | File / exact function | Responsibility and return | Side effect / calls | Testability and target |
+|---|---|---|---|---|
+| S4-001 | EA `TSRLoadCoreConfig(TickShockConfig &config)` | map unchanged `Inp*` values; void | reads inputs, updates config; calls reset | production mapping integration; composition root |
+| S4-002 | Clusterer `TSAssignMarketCluster(TSResearchClusterClock &clock,const long event_msc,const int cluster_window_ms,TickShockClusterAssignment &assignment)` | typed market-cluster assignment; void | updates clock/assignment; calls legacy assignment | direct fixture plus production path; clusterer |
+| S4-003 | Config `TSResetConfig(TickShockConfig &config)` | documented defaults; void | updates config | direct fixture; config |
+| S4-004 | Config `TSConfigValid(const TickShockConfig &config)` | structural validity; bool | none | pure direct unit; config |
+| S4-005 | Config `TSSymbolSpecValid(const TickShockSymbolSpec &spec)` | required unit/spec validity; bool | none | pure direct plus adapter integration; config |
+| S4-006 | Serializer `TSScenarioStatusName(const ENUM_TS_SCENARIO_STATUS status)` | enum to stable CSV token; string | none | pure direct/schema integration; serializer |
+| S4-007 | Serializer `TSScenarioStatusFromExitReason(const string reason)` | exit token to enum | none | pure direct/event integration; serializer |
+| S4-008 | Serializer `TSScenarioStatusIsInvalid(const ENUM_TS_SCENARIO_STATUS status)` | invalid-class predicate; bool | none | pure direct/recount integration; serializer |
+| S4-009 | Serializer `TSDetectorRejectName(const ENUM_TS_DETECTOR_REJECT reject)` | reject enum to existing skip token; string | none | pure direct/production path; serializer |
+| S4-010 | Serializer `TSBoolName(const bool value)` | bool token; string | none | pure direct; serializer |
+| S4-011 | Serializer `TSDirectionName(const int direction)` | LONG/SHORT token; string | none | pure direct; serializer |
+| S4-012 | Serializer `TSCsvAppendEscaped(string &line,string value)` | append quoted/escaped cell; void | updates line; string replacement | deterministic direct/schema integration; serializer |
+| S4-013 | Detector `TSEvaluateDetectorGates(...,const TickShockConfig &config,TickShockDetectorResult &result)` | six gates, mask, first reject; void | updates result only | direct plus facade integration; detector |
+| S4-014 | Engine `TSBuildQuote(...,TickShockQuote &quote)` | explicit event/processing quote DTO; bool | updates quote | direct production-path fixture; engine |
+| S4-015 | Engine `TSEngineStartBurst(TickShockMachine &machine,...)` | production burst facade; void | updates machine; calls `TSStartBurst` | production-path fixture; engine |
+| S4-016 | Engine `TSEngineAdvanceState(TickShockMachine &machine,const TickShockQuote &quote,const TickShockConfig &config,TickShockStateResult &result)` | action/state result; action enum | updates machine/result; calls `TSAdvance` | production-path Long/Short fixtures; engine |
+| S4-017 | Engine `TSEngineEvaluateDetector(...,const TickShockConfig &config,TickShockDetectorResult &result)` | production detector facade; bool | updates result; calls gate evaluator | production-path threshold fixtures; engine |
+| S4-018 | Engine `TSEngineBuildScenarioEntry(const TickShockExecutionRequest &request,TickShockExecutionResult &result)` | production entry facade; bool | updates result; calls scenario engine | production-path causality/execution fixtures; engine |
+| S4-019 | Execution `TSRoundEntryAdverse(const int direction,const double raw_entry,const double tick_size,const int digits)` | Long ceil/Short floor entry; price | Math/normalize only | deterministic direct; execution model |
+| S4-020 | Execution `TSRoundStopOutward(const int direction,const double raw_stop,const double tick_size,const int digits)` | Long floor/Short ceil stop; price | Math/normalize only | deterministic direct; execution model |
+| S4-021 | Adapter `TSMt5SelectSymbol(const string symbol)` | select symbol; bool | `SymbolSelect` | MT5 integration; adapter |
+| S4-022 | Adapter `TSMt5LoadSymbolSpec(const string symbol,TickShockSymbolSpec &spec)` | load digits/point/tick/volume/stops/freeze; bool | updates spec; `SymbolInfo*` | fixed-spec unit plus MT5 integration; adapter |
+| S4-023 | Adapter `TSMt5CopyInfoTicks(const string symbol,MqlTick &ticks[],const ulong from_msc,const uint count)` | INFO tick batch; count | updates array; `CopyTicks` | real-tick integration; adapter |
+| S4-024 | Adapter `TSMt5VisibleQuote(const string symbol,MqlTick &tick)` | latest visible quote; bool | updates tick; `SymbolInfoTick` | MT5 integration; adapter |
+| S4-025 | Adapter `TSMt5ServerNowMsc()` | server-clock lower bound; ms | `TimeCurrent` | fake clock at core, MT5 integration here; adapter |
+| S4-026 | Adapter `TSMt5MemoryUsedMb()` | runtime memory sample; long | `MQLInfoInteger` | MT5 integration; adapter |
+| S4-027 | Adapter `TSMt5CalcOneLotLoss(const int direction,const string symbol,const double entry,const double sl,double &loss)` | account-currency loss; bool | updates loss; `OrderCalcProfit` | Buy/Sell MT5 integration; adapter |
+| S4-028 | Adapter `TSMt5CreateTrendHandles(const string symbol,int &ema20_m15,int &ema50_m15,int &ema20_h1,int &ema50_h1)` | create four EMA handles; bool | updates handles; `iMA` | MT5 integration; adapter |
+| S4-029 | Adapter `TSMt5TrendLabel(const string symbol,const ENUM_TIMEFRAMES timeframe,const int ema20,const int ema50)` | confirmed-bar trend label; string | `BarsCalculated`, `CopyBuffer`, `iClose` | closed-bar MT5 integration; adapter |
+| S4-030 | Adapter `TSMt5ReleaseIndicator(const int handle)` | release handle; void | `IndicatorRelease` | lifecycle integration; adapter |
+| S4-031 | Adapter `TSMt5OpenAppendCsv(const string folder,const string path,const string header)` | append open/header; handle | folder/file APIs | file integration; adapter |
+| S4-032 | Adapter `TSMt5WriteLine(const int handle,const string line)` | write one row; void | `FileWriteString` | file/schema integration; adapter |
+| S4-033 | Adapter `TSMt5Flush(const int handle)` | flush; void | `FileFlush` | file integration; adapter |
+| S4-034 | Adapter `TSMt5Close(int &handle)` | flush/close/invalidate; void | updates handle; file APIs | lifecycle integration; adapter |
+| S4-035 | Adapter `TSMt5FileSize(const int handle)` | byte count; long | `FileSize` | file integration; adapter |
+| S4-036 | Adapter `TSMt5RuntimeTickCount()` | monotonic runtime ms; ulong | `GetTickCount64` | clock integration; adapter |
+| S4-037 | Adapter `TSMt5StartTimer(const int milliseconds)` | start timer; bool | `EventSetMillisecondTimer` | handler integration; adapter |
+| S4-038 | Adapter `TSMt5StopTimer()` | stop timer; void | `EventKillTimer` | handler integration; adapter |
+| S4-039 | Adapter `TSMt5IsTester()` | environment mode; bool | `MQLInfoInteger` | environment integration; adapter |
+| S4-040 | Scenario `TSResetExecutionResult(TickShockExecutionResult &result)` | pending result baseline; void | updates result/clock | deterministic direct/production path; scenario engine |
+| S4-041 | Scenario `TSScenarioStatusFromFeasibility(const string reason)` | reason to typed invalid status | none | pure direct/production path; scenario engine |
+| S4-042 | Scenario `TSBuildScenarioEntry(const TickShockExecutionRequest &request,TickShockExecutionResult &result)` | eligibility, stress, entry, SL/TP, broker/freeze, policy; bool | updates result/entry clock; calls execution model | direct and production-path fixtures; scenario engine |
+
+Full parameter lists and call direction for the five multiline facades are in
+their source and `04_module_mapping.md`; no expected fixture is generated from
+these functions. Errors/rejects remain the exact enum/string values documented
+in the Step 3 oracle and known-defect matrix.
