@@ -1,0 +1,9 @@
+InpMagicNumber=26082241
+InpVolume=0.01
+InpWaitTicksBeforeTimeClose=5
+InpBarrierTimeoutTicks=5000
+InpBarrierDistanceTicks=2
+InpFarBarrierTicks=1000
+InpEarliestServerHour=1
+InpRunId=order_harness_v3_observation_truth_final
+InpLogFolder=tick_shock_research
