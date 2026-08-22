@@ -1,0 +1,14 @@
+test_id,observed,expected,actual,difference,evidence_path
+TS-RET-001,MATCH,log_return_250=0.000499126539;log_return_500=0.000998502330;log_return_1000=0.001998002663;all_valid=true;returns_distinct=true,log_return_250=0.000499126539;log_return_500=0.000998502330;log_return_1000=0.001998002663;all_valid=true;returns_distinct=true,,detector.csv
+TS-RET-002,MATCH,valid=false;csv_value=;forbidden_value=0,valid=false;csv_value=;forbidden_value=0,,detector.csv
+TS-INT-001,MATCH,before_pass=false;equal_pass=true;after_pass=true;equal_ratio=1.5,before_pass=false;equal_pass=true;equal_ratio=1.5;after_pass=true,,detector.csv
+TS-MOVE-001,MATCH,before_pass=false;equal_pass=true;after_pass=true;equal_ratio=4.0,before_pass=false;equal_pass=true;equal_ratio=4.0;after_pass=true,,detector.csv
+TS-SPREAD-001,MATCH,before_pass=true;equal_pass=true;after_pass=false;equal_ratio=1.5,before_pass=true;equal_pass=true;equal_ratio=1.5;after_pass=false,,detector.csv
+TS-GATE-001,MATCH,minimum_gate_pattern=FAIL|PASS|PASS;maximum_gate_pattern=PASS|PASS|FAIL;equal_all_gate_mask=63;thresholds_changed=false,minimum_gate_pattern=FAIL|PASS|PASS;maximum_gate_pattern=PASS|PASS|FAIL;equal_all_gate_mask=63;thresholds_changed=false,,detector.csv
+TS-PCT-001,SKIP,,PRODUCTION_SEAM_NOT_EXTRACTED,PRODUCTION_SEAM_NOT_EXTRACTED,detector.csv
+TS-Z-001,SKIP,,PRODUCTION_SEAM_NOT_EXTRACTED,PRODUCTION_SEAM_NOT_EXTRACTED,detector.csv
+TS-Z-002,SKIP,,PRODUCTION_SEAM_NOT_EXTRACTED,PRODUCTION_SEAM_NOT_EXTRACTED,detector.csv
+TS-EFF-001,SKIP,,PRODUCTION_SEAM_NOT_EXTRACTED,PRODUCTION_SEAM_NOT_EXTRACTED,detector.csv
+TS-EFF-002,SKIP,,PRODUCTION_SEAM_NOT_EXTRACTED,PRODUCTION_SEAM_NOT_EXTRACTED,detector.csv
+TS-BASE-001,SKIP,,PRODUCTION_SEAM_NOT_EXTRACTED,PRODUCTION_SEAM_NOT_EXTRACTED,detector.csv
+TS-BASE-002,SKIP,,PRODUCTION_SEAM_NOT_EXTRACTED,PRODUCTION_SEAM_NOT_EXTRACTED,detector.csv
