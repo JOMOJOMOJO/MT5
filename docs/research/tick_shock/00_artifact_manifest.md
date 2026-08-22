@@ -433,4 +433,13 @@
 | TS-S7-C-003 | 07 | `reports/backtest/runs/20260822_tickshock_causal_comparison_202503/summary.md` | report | formal judgement | generated evidence | `68A72B08602D7394BB4E693CB847569F43CCEFEEA93315D86268AA3F73658EBC` | yes | Step 8 | READY | edge undetermined |
 | TS-S7-T-001 | 07 | `tools/tick_shock/reconcile_causal_runs.py` | Python tool | independent Step 7 analysis | source | `B7012C6DB13EBC3A996227CC724CB50A4F735E6EA512397CEE901E4EC1597487` | yes | Step 8 | PASS | no production formula calls |
 | TS-S7-D-001 | 07 | `docs/devlog/2026-08-23-tickshock-step07-causal-march.md` | devlog | validation boundary | source | `BF5231E79AC26773BC0D3B32A359C44E927FFED7B0DAB810EDAB98AE92C6FBF7` | yes | Step 8 | READY | no long OOS authority |
+
+## Step 8 final QA artifacts
+
+| artifact ID | step | artifact relative path | type | purpose | source/generated | SHA-256 | commit | next Step | status | note |
+|---|---:|---|---|---|---|---|---|---|---|---|
+| TS-S8-DOC-001 | 08 | `docs/research/tick_shock/08_final_qa.md` | final QA | cross-Step verdict and promotion gate | source | `1C8D641028DC499BB858B7E6D1906D8AA5BEC2121DCD7023F147EDAAC1959896` | yes | controlled evidence closure | FINAL_QA | not a production candidate; long OOS not authorized |
+| TS-S8-QA-001 | 08 | `reports/qa/tick_shock/step08_final_qa_findings.csv` | findings | severity-ranked open and verified findings | generated evidence | `9F6271312A5661A6BA7A6274B91187CDE364C66EC4B3321127A4172FD05F8F13` | yes | controlled evidence closure | FINDINGS_OPEN | 12 findings; one blocker |
+| TS-S8-QA-002 | 08 | `reports/qa/tick_shock/step08_traceability_audit.csv` | traceability | Requirement/Test/evidence/coverage audit | generated evidence | `15E604FAD8A411706E7D0CD6C94B0A51D1A8531D2671F9CD48FCBFCD19D45D16` | yes | controlled evidence closure | COMPLETE | 64 rows; structural gaps zero; 19 coverage-open |
+| TS-S8-QA-003 | 08 | `reports/qa/tick_shock/step08_recalculation.csv` | recalculation | independent causal/outcome/summary recount | generated evidence | `D8235D3C2127BBD175FD8DF1591B2846EF55E41DCD4CC0B72A96DD9462ADE32E` | yes | controlled evidence closure | PASS_WITH_FINDINGS | formal causal violations zero; documentation drift recorded |
 - 長期OOS未実施

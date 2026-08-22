@@ -1,0 +1,54 @@
+calculation_id,scope,metric,checked_count,independent_value,reported_value,tolerance,difference,status,evidence_path,note
+TSRC-001,manifest,registered_rows,393,393,393,0,0,PASS,docs/research/tick_shock/00_artifact_manifest.md,Parsed artifact rows with path and SHA
+TSRC-002,manifest,unique_registered_paths,377,377,377,0,0,PASS,docs/research/tick_shock/00_artifact_manifest.md,No registered file is missing
+TSRC-003,manifest,latest_path_sha_mismatches,377,0,0,0,0,PASS,docs/research/tick_shock/00_artifact_manifest.md,Latest registration per path matches current bytes
+TSRC-004,manifest,historical_sha_verified_at_step_commit,16,16,16,0,0,PASS,docs/research/tick_shock/00_artifact_manifest.md,All mutable-path historical rows match their owning Step commit
+TSRC-005,provenance,IDEAL_source_hash_mismatches,12,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_ideal_202503/source_hashes.txt,EA and eleven modules match commit 1d394891 and current files
+TSRC-006,provenance,REALIZABLE_source_hash_mismatches,12,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/source_hashes.txt,EA and eleven modules match commit 1d394891 and current files
+TSRC-007,traceability,test_ids,64,64,64,0,0,PASS,tests/tick_shock/spec/test_cases.csv,Unique Test IDs
+TSRC-008,traceability,requirement_ids,40,40,40,0,0,PASS,tests/tick_shock/spec/test_cases.csv,Unique Requirement IDs
+TSRC-009,traceability,fixture_expected_missing_paths,192,0,0,0,0,PASS,reports/qa/tick_shock/step08_traceability_audit.csv,64 tick fixtures plus 64 configs plus 64 expected files
+TSRC-010,traceability,requirement_or_evidence_path_gaps,64,0,0,0,0,PASS,reports/qa/tick_shock/step08_traceability_audit.csv,Step 5 and Step 6 IDs and evidence paths resolve
+TSRC-011,change_control,Step3_normative_file_changes_after_commit,131,0,0,0,0,PASS,672c18a85838e91f63c3247cccc82243037254ff,Fixtures expected registry and three Step 3 documents unchanged through Step 7
+TSRC-012,red_green,Step5_XFAIL,64,1,1,0,0,PASS,reports/tests/tick_shock/step05_pre_fix_results.csv,Only TS-CSV-001 reproduced RED
+TSRC-013,red_green,required_seven_pre_fix_XFAIL,7,0,7,0,-7,PARTIAL,reports/tests/tick_shock/step05_pre_fix_red_report.md,All seven were XPASS rather than the requested XFAIL
+TSRC-014,red_green,FAIL_to_SKIP_transitions,64,0,0,0,0,PASS,reports/tests/tick_shock/step06_post_fix_results.csv,No Step 5 FAIL existed and none moved to SKIP
+TSRC-015,green,Step6_PASS,64,45,45,0,0,PASS,reports/tests/tick_shock/step06_post_fix_results.csv,Re-executed Step 8 command reproduced 45
+TSRC-016,green,Step6_FAIL_XFAIL_XPASS,64,0,0,0,0,PASS,reports/tests/tick_shock/step06_post_fix_results.csv,Re-executed result remains fully green for observed cases
+TSRC-017,green,Step6_remaining_SKIP,64,19,19,0,0,PASS,reports/tests/tick_shock/step06_post_fix_results.csv,SKIP is not counted as PASS
+TSRC-018,function_catalog,current_function_definitions,216,216,207,0,9,FAIL,docs/research/tick_shock/02_function_catalog.md,Nine Step 6 definitions are absent from the Step 4 catalog snapshot
+TSRC-019,IDEAL,event_rows,19,19,19,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_ideal_202503/events.csv,One row per event
+TSRC-020,IDEAL,valid_scenario_cells,10488,7128,7128,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_ideal_202503/events.csv,3036 no-signal and 324 invalid are excluded
+TSRC-021,IDEAL,entry_event_plus_delay_violations,7128,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_ideal_202503/events.csv,Event-time research clock
+TSRC-022,IDEAL,entry_processing_plus_latency_violations,7128,6204,6204,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_ideal_202503/events.csv,Expected and non-formal diagnostic behavior
+TSRC-023,IDEAL,ExpectancyR,7128,-0.302408209175,-0.302408,0.000001,-0.000000209175,PASS,reports/backtest/runs/20260822_tickshock_causal_ideal_202503/events.csv,Mean of encoded valid-cell net R
+TSRC-024,REALIZABLE,event_rows,19,19,19,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,One row per event
+TSRC-025,REALIZABLE,all_scenario_cells,10488,10488,10488,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,19 events times 552 grid cells
+TSRC-026,REALIZABLE,valid_scenario_cells,10488,7128,7128,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Broker-feasible outcome cells
+TSRC-027,REALIZABLE,invalid_scenario_cells,10488,324,324,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,All are INVALID_BROKER_STOP
+TSRC-028,REALIZABLE,no_signal_cells,10488,3036,3036,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Unsignaled cells are not observations
+TSRC-029,REALIZABLE,entry_event_plus_delay_violations,7128,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Formal invariant
+TSRC-030,REALIZABLE,entry_processing_plus_latency_violations,7128,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Submit latency is zero in the preset
+TSRC-031,REALIZABLE,entry_eligible_violations,7128,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Formal invariant
+TSRC-032,REALIZABLE,entry_not_after_signal_violations,7128,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Signal tick is not reused as fill
+TSRC-033,REALIZABLE,stale_Detection_boundary_fills,2508,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Detection valid cells only
+TSRC-034,REALIZABLE,reversal_signal_clock_violations,1518,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Includes broker-invalid signaled reversal cells
+TSRC-035,REALIZABLE,realized_RR_violations,7128,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Minimum realized RR is 1.2
+TSRC-036,REALIZABLE,duplicate_events,19,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Key is symbol detector and detection time
+TSRC-037,REALIZABLE,market_clusters,19,15,15,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Fixed first-event anchor and inclusive 2000 ms window
+TSRC-038,REALIZABLE,market_cluster_id_violations,19,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Cross-symbol and cross-detector recomputation
+TSRC-039,REALIZABLE,TP_LIMIT,7128,1227,1227,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Outcome recount
+TSRC-040,REALIZABLE,SL_GAP,7128,2820,2820,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Outcome recount includes gap and exit slippage
+TSRC-041,REALIZABLE,TIME_MARKET,7128,3081,3081,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Outcome recount
+TSRC-042,REALIZABLE,policy_mask_0,7128,2037,2037,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Policy is diagnostic
+TSRC-043,REALIZABLE,policy_mask_1,7128,4353,4353,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Cost bit only
+TSRC-044,REALIZABLE,policy_mask_2,7128,717,717,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Range bit only
+TSRC-045,REALIZABLE,policy_mask_3,7128,21,21,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Both diagnostic bits
+TSRC-046,REALIZABLE,ExpectancyR,7128,-0.292361643098,-0.292362,0.000001,0.000000356902,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Mean of encoded valid-cell net R
+TSRC-047,REALIZABLE,cluster_mean_ExpectancyR,15,-0.242732085354,-0.242732,0.000001,-0.000000085354,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Each cluster first averages its correlated valid cells
+TSRC-048,REALIZABLE,positive_cluster_means,15,3,3,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_comparison_202503/summary.md,Descriptive only
+TSRC-049,REALIZABLE,scenario_summary_field_mismatches,1656,0,0,0.000001,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/summary.csv,552 keys times valid invalid and mean R
+TSRC-050,REALIZABLE,overall_and_funnel_mismatches,11,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/summary.csv,Overall four values and seven funnel counters
+TSRC-051,REALIZABLE,commission_R_absolute_max,7128,0,0,0,0,PARTIAL,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Configured commission is zero and source is ORDER_HARNESS_REQUIRED
+TSRC-052,REALIZABLE,generated_tick_fallback_minutes,30187,179,179,0,0,PARTIAL,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/tick_quality.csv,GBPUSD fallback rate is 0.5930 percent
+TSRC-053,REALIZABLE,independent_sample_count,19,15,15,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Statistical n is market clusters not 7128 scenario cells
