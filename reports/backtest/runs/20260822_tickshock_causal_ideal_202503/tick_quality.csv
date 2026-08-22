@@ -1,0 +1,7 @@
+symbol,ea_m1_minutes_seen,tester_reported_total_minutes,tester_reported_discarded_minutes,tester_reported_fallback_rate_pct,status,evidence
+EURUSD,30192,,,0.0000,NO_DISCARD_WARNING_OBSERVED,tester journal contains no discarded-real-ticks warning for this symbol
+GBPUSD,30188,30187,179,0.5930,GENERATED_TICK_FALLBACK_OBSERVED,"tester journal: real ticks discarded for 179 minutes of 30187 total minute bars"
+USDJPY,30195,,,0.0000,NO_DISCARD_WARNING_OBSERVED,tester journal contains no discarded-real-ticks warning for this symbol
+AUDUSD,30193,,,0.0000,NO_DISCARD_WARNING_OBSERVED,tester journal contains no discarded-real-ticks warning for this symbol
+USDCAD,30193,,,0.0000,NO_DISCARD_WARNING_OBSERVED,tester journal contains no discarded-real-ticks warning for this symbol
+USDCHF,30191,,,0.0000,NO_DISCARD_WARNING_OBSERVED,tester journal contains no discarded-real-ticks warning for this symbol

@@ -1,0 +1,16 @@
+Source: C:\Users\windows\AppData\Roaming\MetaQuotes\Tester\D232275B22422903BD477FB48B858FBA\Agent-127.0.0.1-3000\logs\20260823.log
+Extracted for run: step07_causal_realizable_202503_20260823
+
+00:26:44.979 Startup MetaTester 5 build 6140, 21 Aug 2026
+00:26:45.329 Tester InpExecutionMode=1
+00:26:45.329 Tester InpCommissionPerLotRoundTurn=0.0
+00:26:45.329 Tester InpCommissionSource=ORDER_HARNESS_REQUIRED
+00:26:45.329 Tester InpRunId=step07_causal_realizable_202503_20260823
+00:26:51.277 EA initialized research_only symbols=6 grid_ms=250 detectors=250,500,1000 execution_mode=REALIZABLE_EA submit_latency_ms=0
+00:26:51.564 Ticks GBPUSD: real ticks discarded for 179 minutes out of 1438 total minute bars within a day
+00:26:51.585 Ticks GBPUSD: 2025.03.01 00:00 - 2025.04.01 00:00 real ticks discarded for 179 minutes of 30187 total minute bars, every tick generation used
+00:32:42.675 Tester final balance 10000.00 USD
+00:32:42.688 EA deinitialized reason=1 events=19 rows=19
+
+Tester report metadata: EURUSD,M1; VantageTradingLtd-Live Build 6140; 2025.03.01 through 2025.04.01; model 4; USD 10,000; leverage 1:100.
+Absence of a discard warning is NO_DISCARD_WARNING_OBSERVED, not proof that every quote was broker-recorded.
