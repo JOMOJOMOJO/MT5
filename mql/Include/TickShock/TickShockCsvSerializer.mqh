@@ -3,6 +3,21 @@
 
 #include "TickShockTypes.mqh"
 
+string TSCsvOpenStatusName(const ENUM_TS_CSV_OPEN_STATUS status)
+  {
+   if(status==TS_CSV_OPEN_CREATED) return "CREATED";
+   if(status==TS_CSV_OPEN_RESUMED) return "RESUMED";
+   if(status==TS_CSV_OPEN_RUN_ID_COLLISION) return "RUN_ID_COLLISION";
+   return "IO_ERROR";
+  }
+
+string TSOrderEntryStateName(const ENUM_TS_ORDER_ENTRY_STATE state)
+  {
+   if(state==TS_ORDER_WAIT_EXIT) return "WAIT_EXIT";
+   if(state==TS_ORDER_ENTRY_CANCELLED) return "ENTRY_CANCELLED";
+   return "ENTRY_PENDING";
+  }
+
 string TSScenarioStatusName(const ENUM_TS_SCENARIO_STATUS status)
   {
    if(status==TS_SCENARIO_PENDING_ENTRY_QUOTE) return "PENDING_ENTRY_QUOTE";

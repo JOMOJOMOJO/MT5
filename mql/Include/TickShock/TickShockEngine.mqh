@@ -5,6 +5,7 @@
 #include "TickShockStateMachine.mqh"
 #include "TickShockScenarioEngine.mqh"
 #include "TickShockClusterer.mqh"
+#include "TickShockOrderLifecycle.mqh"
 
 bool TSBuildQuote(const string symbol,
                   const int symbol_index,

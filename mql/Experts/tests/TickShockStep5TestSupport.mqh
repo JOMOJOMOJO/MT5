@@ -319,21 +319,114 @@ void TS5RunMerge(const string id)
 
 void TS5RunUnsupported(const string id,const string reason="PRODUCTION_SEAM_NOT_EXTRACTED") { TS5RecordSkip(id,reason); }
 
+bool TS5ParseDeal(const string value,double &volume,double &price)
+  {
+   volume=0.0;price=0.0;
+   int separator=StringFind(value,"@");
+   if(separator<=0 || separator>=StringLen(value)-1) return false;
+   volume=StringToDouble(StringSubstr(value,0,separator));
+   price=StringToDouble(StringSubstr(value,separator+1));
+   return volume>0.0 && price>0.0;
+  }
+
+void TS5RunOrderLifecycle(const string id)
+  {
+   TS5ConfigItem cfg[];TS5Tick ticks[];
+   if(!TS5LoadAll(id,cfg,ticks)){TS5RecordSkip(id,"FIXTURE_UNREADABLE");return;}
+   TickShockOrderFillState state;
+   TSResetOrderFillState(state,TS5CfgDouble(cfg,"requested_volume",0.0));
+   TS5ActualItem a[];
+   if(id=="TS-ORDER-001")
+     {
+      TSApplyEntryDeal(state,TS5CfgDouble(cfg,"deal_1_volume"),TS5CfgDouble(cfg,"deal_1_price"));
+      TS5AddDouble(a,"filled_volume",state.filled_volume);
+      TS5AddDouble(a,"remaining_volume",state.remaining_volume);
+      TS5AddDouble(a,"average_fill",state.average_fill);
+      TS5AddBool(a,"entry_resolved",state.entry_resolved);
+      TS5Add(a,"next_state",TSOrderEntryStateName(state.state));
+     }
+   else if(id=="TS-ORDER-002")
+     {
+      double volume=0.0,price=0.0;
+      TS5ParseDeal(TS5Cfg(cfg,"deal_1"),volume,price);
+      TSApplyEntryDeal(state,volume,price);
+      bool closed_after_first=state.entry_resolved;
+      TS5ParseDeal(TS5Cfg(cfg,"deal_2"),volume,price);
+      TSApplyEntryDeal(state,volume,price);
+      TS5AddLong(a,"deal_count",state.deal_count);
+      TS5AddDouble(a,"filled_volume",state.filled_volume);
+      TS5AddDouble(a,"remaining_volume",state.remaining_volume);
+      TS5AddDouble(a,"average_fill",state.average_fill);
+      TS5AddBool(a,"closed_after_first_deal",closed_after_first);
+     }
+   else if(id=="TS-PARTIAL-001")
+     {
+      string deals[];
+      ushort separator=(ushort)StringGetCharacter("|",0);
+      int count=StringSplit(TS5Cfg(cfg,"deal_sequence"),separator,deals);
+      bool closed_after_first=false;
+      for(int i=0;i<count;++i)
+        {
+         double volume=0.0,price=0.0;
+         if(!TS5ParseDeal(deals[i],volume,price) || !TSApplyEntryDeal(state,volume,price)) continue;
+         TS5AddDouble(a,"remaining_after_deal_"+IntegerToString(i+1),state.remaining_volume);
+         if(i==0) closed_after_first=state.entry_resolved;
+        }
+      TS5AddDouble(a,"average_fill",state.average_fill);
+      TS5AddBool(a,"closed_after_first_deal",closed_after_first);
+     }
+   else if(id=="TS-ORDER-003")
+     {
+      TSApplyEntryDeal(state,TS5CfgDouble(cfg,"filled_volume"),ticks[1].ask);
+      TSResolveEntryRemainderCancel(state,TS5CfgDouble(cfg,"cancelled_volume"));
+      TS5AddDouble(a,"filled_volume",state.filled_volume);
+      TS5AddDouble(a,"cancelled_volume",state.cancelled_volume);
+      TS5AddDouble(a,"remaining_volume",state.remaining_volume);
+      TS5AddBool(a,"entry_resolved",state.entry_resolved);
+      TS5Add(a,"next_state",TSOrderEntryStateName(state.state));
+     }
+   else {TS5RecordSkip(id,"ORDER_LIFECYCLE_NOT_OBSERVED");return;}
+   TS5CompareAndRecord(id,a);
+  }
+
 void TS5RunCsvCollision()
   {
    string id="TS-CSV-001",folder=g_ts5_output_folder+"\\csv_collision",path=folder+"\\collision.csv";
+   TS5ConfigItem cfg[];
+   if(!TS5LoadConfig(id,cfg)){TS5RecordSkip(id,"FIXTURE_UNREADABLE");return;}
+   string run_id=TS5Cfg(cfg,"run_id"),hash_values=TS5Cfg(cfg,"metadata_hashes");
+   string hashes[];ushort hash_separator=(ushort)StringGetCharacter("|",0);
+   if(StringSplit(hash_values,hash_separator,hashes)!=2){TS5RecordSkip(id,"FIXTURE_UNREADABLE");return;}
    FileDelete(path,FILE_COMMON);
-   int first=TSMt5OpenAppendCsv(folder,path,"run_id,metadata_hash");
+   FileDelete(path+".runmeta",FILE_COMMON);
+   ENUM_TS_CSV_OPEN_STATUS first_status=TS_CSV_OPEN_IO_ERROR;
+   int first=TSMt5OpenAppendCsv(folder,path,"run_id,metadata_hash",run_id,hashes[0],first_status);
    bool first_open=first!=INVALID_HANDLE;
-   if(first_open){TSMt5WriteLine(first,"collision_case,hashA");TSMt5Close(first);}
-   int second=TSMt5OpenAppendCsv(folder,path,"run_id,metadata_hash");
+   if(first_open){TSMt5WriteLine(first,run_id+","+hashes[0]);TSMt5Close(first);}
+   ENUM_TS_CSV_OPEN_STATUS second_status=TS_CSV_OPEN_IO_ERROR;
+   int second=TSMt5OpenAppendCsv(folder,path,"run_id,metadata_hash",run_id,hashes[1],second_status);
    bool second_open=second!=INVALID_HANDLE;
-   if(second_open){TSMt5WriteLine(second,"collision_case,hashB");TSMt5Close(second);}
+   if(second_open){TSMt5WriteLine(second,run_id+","+hashes[1]);TSMt5Close(second);}
+   int header_count=0,data_rows=0;bool first_hash_seen=false,second_hash_seen=false;
+   int evidence=FileOpen(path,FILE_READ|FILE_TXT|FILE_ANSI|FILE_COMMON);
+   if(evidence!=INVALID_HANDLE)
+     {
+      while(!FileIsEnding(evidence))
+        {
+         string line=FileReadString(evidence);
+         if(line=="run_id,metadata_hash") {++header_count;continue;}
+         if(line=="") continue;
+         ++data_rows;
+         if(StringFind(line,hashes[0])>=0) first_hash_seen=true;
+         if(StringFind(line,hashes[1])>=0) second_hash_seen=true;
+        }
+      FileClose(evidence);
+     }
    TS5ActualItem a[];
    TS5AddBool(a,"silent_append_allowed",second_open);
-   TS5Add(a,"second_attempt_status",second_open?"APPENDED":"RUN_ID_COLLISION");
-   TS5AddLong(a,"mixed_event_rows",second_open?2:0);
-   TS5AddLong(a,"header_count_per_file",1);
+   TS5Add(a,"second_attempt_status",TSCsvOpenStatusName(second_status));
+   TS5AddLong(a,"mixed_event_rows",first_hash_seen&&second_hash_seen?data_rows:0);
+   TS5AddLong(a,"header_count_per_file",header_count);
    TS5CompareAndRecord(id,a);
   }
 

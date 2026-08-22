@@ -1,4 +1,8 @@
-param([int]$TimeoutSeconds = 120)
+param(
+    [int]$TimeoutSeconds = 120,
+    [ValidateSet("pre-fix","post-fix")]
+    [string]$Phase = "post-fix"
+)
 
 $ErrorActionPreference = "Stop"
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
@@ -6,10 +10,15 @@ $commonRoot = Join-Path $env:APPDATA "MetaQuotes\Terminal\Common\Files\tick_shoc
 $commonFixtures = Join-Path $commonRoot "fixtures"
 $commonExpected = Join-Path $commonRoot "expected"
 $commonRaw = Join-Path $commonRoot "raw"
-$evidenceRaw = Join-Path $repoRoot "reports\tests\tick_shock\raw"
+$evidenceRaw = if ($Phase -eq "pre-fix") {
+    Join-Path $repoRoot "reports\tests\tick_shock\raw"
+} else {
+    Join-Path $repoRoot "reports\tests\tick_shock\step06_raw"
+}
 $configRoot = Join-Path $repoRoot "reports\tests\tick_shock\configs"
 $compileRoot = Join-Path $repoRoot "reports\compile\tick_shock"
 $testerRoot = Join-Path $repoRoot "reports\tests\tick_shock\tester"
+$stepTag = if ($Phase -eq "pre-fix") { "step05" } else { "step06" }
 
 foreach ($path in @($commonFixtures,$commonExpected,$commonRaw,$evidenceRaw,$configRoot,$compileRoot,$testerRoot)) {
     New-Item -ItemType Directory -Force -Path $path | Out-Null
@@ -30,7 +39,7 @@ $harnesses = @(
 
 foreach ($name in $harnesses) {
     $source = Join-Path $repoRoot "mql\Experts\tests\ExpectedValue_TickShock_${name}Harness.mq5"
-    $compileLog = Join-Path $compileRoot "step05_ExpectedValue_TickShock_${name}Harness.log"
+    $compileLog = Join-Path $compileRoot "${stepTag}_ExpectedValue_TickShock_${name}Harness.log"
     & (Join-Path $repoRoot "scripts\compile.ps1") -Source $source -LogPath $compileLog
 
     $suite = switch ($name) {
@@ -45,8 +54,8 @@ foreach ($name in $harnesses) {
     $commonResult = Join-Path $commonRaw "$suite.csv"
     if (Test-Path -LiteralPath $commonResult) { Remove-Item -LiteralPath $commonResult -Force }
 
-    $configPath = Join-Path $configRoot "step05_${suite}.ini"
-    $reportRelative = "MQL5\Experts\dev\reports\tests\tick_shock\tester\step05_${suite}.html"
+    $configPath = Join-Path $configRoot "${stepTag}_${suite}.ini"
+    $reportRelative = "MQL5\Experts\dev\reports\tests\tick_shock\tester\${stepTag}_${suite}.html"
     $configLines = @(
         "[Experts]",
         "Enabled=0",

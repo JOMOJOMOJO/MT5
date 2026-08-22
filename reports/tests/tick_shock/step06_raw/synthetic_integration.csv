@@ -1,0 +1,4 @@
+test_id,observed,expected,actual,difference,evidence_path
+TS-TIME-001,MATCH,entry_eligible_msc=1600;entry_quote_msc=1600;entry_before_processing=0;forbidden_entry_quote_msc=1100|1599,entry_eligible_msc=1600;entry_quote_msc=1600;entry_before_processing=0;forbidden_entry_quote_msc=1100|1599,,synthetic_integration.csv
+TS-DETECT-001,MATCH,detection_quote_age_ms=50;entry_quote_msc=1030;stale_detection_fills=0;forbidden_entry_quote_msc=1000,detection_quote_age_ms=50;entry_quote_msc=1030;stale_detection_fills=0;forbidden_entry_quote_msc=1000,,synthetic_integration.csv
+TS-REV-001,MATCH,reversal_signal_msc=3000;entry_eligible_msc=3600;entry_quote_msc=3600;reversal_signal_overwrites=0;forbidden_signal_msc=3100|3600,reversal_signal_msc=3000;entry_eligible_msc=3600;entry_quote_msc=3600;reversal_signal_overwrites=0;forbidden_signal_msc=3100|3600,,synthetic_integration.csv

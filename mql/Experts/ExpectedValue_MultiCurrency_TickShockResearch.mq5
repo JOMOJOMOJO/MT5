@@ -77,6 +77,7 @@ input int InpDebugMaxMessages = 200;
 #define TSR_GATE_MASK_COUNT 64
 
 const string TSR_NAME = "ExpectedValue_MultiCurrency_TickShockResearch";
+const string TSR_SOURCE_REVISION = "step06_causal_execution_20260823";
 const int TSR_CHECKPOINT_SECONDS[TSR_CHECKPOINT_COUNT] = {5,10,20,30,60,120};
 const int TSR_DETECTOR_MS[TSR_DETECTOR_COUNT] = {250,500,1000};
 const int TSR_DELAY_MS[TSR_DELAY_COUNT] = {0,100,250};
@@ -443,6 +444,43 @@ string TSRExecutionModeName()
    return InpExecutionMode==REALIZABLE_EA?"REALIZABLE_EA":"IDEAL_EVENT_STUDY";
   }
 
+string TSRRunMetadataFingerprint()
+  {
+   string value="source_revision="+TSR_SOURCE_REVISION;
+   value+="|symbols="+InpSymbols;
+   value+="|grid_ms="+IntegerToString(InpGridMs);
+   value+="|baseline_minutes="+IntegerToString(InpBaselineMinutes);
+   value+="|baseline_exclude_ms="+IntegerToString(InpBaselineExcludeMs);
+   value+="|min_baseline_samples="+IntegerToString(InpMinBaselineSamples);
+   value+="|shock_percentile="+DoubleToString(InpShockPercentile,8);
+   value+="|min_robust_z="+DoubleToString(InpMinRobustZ,8);
+   value+="|min_efficiency="+DoubleToString(InpMinEfficiency,8);
+   value+="|min_move_spread="+DoubleToString(InpMinMoveSpreadRatio,8);
+   value+="|min_tick_intensity="+DoubleToString(InpMinTickIntensityRatio,8);
+   value+="|max_spread_median="+DoubleToString(InpMaxSpreadMedianRatio,8);
+   value+="|max_quote_age_ms="+IntegerToString(InpMaxQuoteAgeMs);
+   value+="|noise_floor_ticks="+DoubleToString(InpNoiseFloorTicks,8);
+   value+="|burst_quiet_ms="+IntegerToString(InpBurstQuietMs);
+   value+="|burst_max_ms="+IntegerToString(InpBurstMaxMs);
+   value+="|pullback_min="+DoubleToString(InpPullbackMinPct,8);
+   value+="|pullback_max="+DoubleToString(InpPullbackMaxPct,8);
+   value+="|continuation_invalid="+DoubleToString(InpContinuationInvalidPct,8);
+   value+="|pullback_wait_ms="+IntegerToString(InpPullbackWaitMs);
+   value+="|reacceleration_ticks="+IntegerToString(InpReaccelerationConfirmTicks);
+   value+="|reward_risk="+DoubleToString(InpRewardRisk,8);
+   value+="|max_hold_seconds="+IntegerToString(InpMaxHoldSeconds);
+   value+="|entry_slippage_ticks="+DoubleToString(InpShadowSlippageTicks,8);
+   value+="|exit_slippage_ticks="+DoubleToString(InpShadowExitSlippageTicks,8);
+   value+="|commission="+DoubleToString(InpCommissionPerLotRoundTurn,8);
+   value+="|commission_source="+InpCommissionSource;
+   value+="|execution_mode="+TSRExecutionModeName();
+   value+="|submit_latency_ms="+IntegerToString(InpSubmitLatencyMs);
+   value+="|sessions="+IntegerToString(InpTokyoStartHour)+"-"+IntegerToString(InpTokyoEndHour)+"/"+
+          IntegerToString(InpLondonStartHour)+"-"+IntegerToString(InpLondonEndHour)+"/"+
+          IntegerToString(InpNewYorkStartHour)+"-"+IntegerToString(InpNewYorkEndHour);
+   return value;
+  }
+
 string TSRStrategyName(const int strategy)
   {
    if(strategy == TSR_DETECTION_CONTINUATION) return "detection_time_continuation";
@@ -496,10 +534,13 @@ string TSRFileName(const string suffix)
 
 int TSROpenCsv(const string suffix,const string header)
   {
-   int handle=TSMt5OpenAppendCsv(InpLogFolder,TSRFileName(suffix),header);
+   ENUM_TS_CSV_OPEN_STATUS status=TS_CSV_OPEN_IO_ERROR;
+   int handle=TSMt5OpenAppendCsv(InpLogFolder,TSRFileName(suffix),header,
+                                 InpRunId,TSRRunMetadataFingerprint(),status);
    if(handle == INVALID_HANDLE)
      {
-      PrintFormat("%s FileOpen failed suffix=%s err=%d", TSR_NAME, suffix, GetLastError());
+      PrintFormat("%s FileOpen failed suffix=%s status=%s err=%d", TSR_NAME, suffix,
+                  TSCsvOpenStatusName(status),GetLastError());
       return INVALID_HANDLE;
      }
    return handle;

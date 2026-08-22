@@ -9,6 +9,15 @@
 - Raw ticks, detector grids, 1-second samples, and timer callbacks are never written as time-series CSV.
 - Pre-event gate failures are counts in `summary.csv`; post-event state failures are `state_skip_reason` in the event row.
 
+## Run identity and append safety
+
+Every output CSV has a sibling `<csv-path>.runmeta` sidecar containing the
+RunId, deterministic source/config metadata fingerprint, and exact CSV header.
+Appending is allowed only when all three values match. A non-empty CSV without
+valid matching metadata, a reused RunId with different source/config metadata,
+or a different header is rejected as `RUN_ID_COLLISION`. Exact restart/resume
+does not write a duplicate header.
+
 ## events.csv
 
 Core groups are:
@@ -81,3 +90,13 @@ Statuses include `TP_LIMIT`, `SL_GAP`, `TIME_MARKET`, `NO_SIGNAL`, and broker-gr
 One row per symbol records digits, point, tick size/value, contract size, stop/freeze levels, volume limits/step, filling mode, configured round-turn commission, and commission evidence source.
 
 MT5 symbol properties do not reliably expose account commission. This run uses an explicit input backed by an order-harness observation; a zero observation must not be generalized to other accounts, symbols, or live conditions.
+
+## Order lifecycle state used by a trading adapter
+
+The research EA does not send orders, but the shared production lifecycle keeps
+`requested_volume`, `filled_volume`, `remaining_volume`, `cancelled_volume`,
+weighted/average fill, deal count, and resolution state. A partial entry remains
+pending until either the requested volume is filled or the residual volume is
+confirmed cancelled. If any volume filled, the resolved next state is
+`WAIT_EXIT`; unobserved server SL/TP or restart behavior must remain SKIP rather
+than PASS.

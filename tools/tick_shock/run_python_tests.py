@@ -17,10 +17,12 @@ def read_csv(path: Path):
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", type=Path, default=Path(__file__).resolve().parents[2])
+    parser.add_argument("--phase", choices=("pre-fix", "post-fix"), default="post-fix")
     args = parser.parse_args()
     root = args.repo_root.resolve()
     tests_dir = root / "tests" / "tick_shock" / "python"
-    log_path = root / "reports" / "tests" / "tick_shock" / "step05_python_tests.log"
+    step = "step05" if args.phase == "pre-fix" else "step06"
+    log_path = root / "reports" / "tests" / "tick_shock" / f"{step}_python_tests.log"
     log_path.parent.mkdir(parents=True, exist_ok=True)
     proc = subprocess.run(
         [sys.executable, "-m", "unittest", "discover", "-s", str(tests_dir), "-p", "test_*.py", "-v"],
@@ -33,7 +35,8 @@ def main() -> int:
         return proc.returncode
 
     registry = read_csv(root / "tests" / "tick_shock" / "spec" / "test_cases.csv")
-    raw_dir = root / "reports" / "tests" / "tick_shock" / "raw"
+    raw_name = "raw" if args.phase == "pre-fix" else "step06_raw"
+    raw_dir = root / "reports" / "tests" / "tick_shock" / raw_name
     observations = {}
     for path in sorted(raw_dir.glob("*.csv")):
         for row in read_csv(path):
@@ -59,10 +62,12 @@ def main() -> int:
 
     force_xfail = {"TS-TIME-001","TS-DETECT-001","TS-REV-001","TS-RET-001","TS-CLUSTER-001","TS-RR-001","TS-BROKER-001"}
     force_skip = {
-        "TS-PARTIAL-001","TS-RESTART-001","TS-RESTART-002",
+        "TS-RESTART-001","TS-RESTART-002",
         "TS-SERVER-SL-LONG-001","TS-SERVER-SL-SHORT-001",
         "TS-SERVER-TP-LONG-001","TS-SERVER-TP-SHORT-001",
     }
+    if args.phase == "pre-fix":
+        force_skip.add("TS-PARTIAL-001")
     out_rows = []
     for case in registry:
         test_id = case["test_id"]
@@ -75,9 +80,9 @@ def main() -> int:
         if test_id in force_skip or observed == "SKIP":
             status = "SKIP"
         elif observed == "MATCH":
-            status = "XPASS" if planned == "XFAIL" else "PASS"
+            status = "XPASS" if args.phase == "pre-fix" and planned == "XFAIL" else "PASS"
         elif observed == "MISMATCH":
-            status = "XFAIL" if planned == "XFAIL" else "FAIL"
+            status = "XFAIL" if args.phase == "pre-fix" and planned == "XFAIL" else "FAIL"
         else:
             status = "FAIL"
         out_rows.append({
@@ -92,13 +97,16 @@ def main() -> int:
             "evidence_path": obs.get("evidence_path", ""),
         })
 
-    result_path = root / "reports" / "tests" / "tick_shock" / "step05_pre_fix_results.csv"
+    filename = "step05_pre_fix_results.csv" if args.phase == "pre-fix" else "step06_post_fix_results.csv"
+    result_path = root / "reports" / "tests" / "tick_shock" / filename
     with result_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(out_rows[0]))
         writer.writeheader(); writer.writerows(out_rows)
     counts = Counter(row["status"] for row in out_rows)
     print(" ".join(f"{key}={counts[key]}" for key in ("PASS","FAIL","XFAIL","XPASS","SKIP")))
     print(result_path)
+    if args.phase == "post-fix" and any(counts[key] for key in ("FAIL", "XFAIL", "XPASS")):
+        return 1
     return 0
 
 

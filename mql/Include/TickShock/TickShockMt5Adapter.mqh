@@ -80,14 +80,97 @@ void TSMt5ReleaseIndicator(const int handle)
    if(handle!=INVALID_HANDLE) IndicatorRelease(handle);
   }
 
-int TSMt5OpenAppendCsv(const string folder,const string path,const string header)
+bool TSMt5ReadRunMetadata(const string path,string &run_id,string &metadata_hash,string &header)
   {
+   run_id="";metadata_hash="";header="";
+   int handle=FileOpen(path,FILE_READ|FILE_TXT|FILE_ANSI|FILE_SHARE_READ|FILE_COMMON);
+   if(handle==INVALID_HANDLE) return false;
+   if(!FileIsEnding(handle)) run_id=FileReadString(handle);
+   if(!FileIsEnding(handle)) metadata_hash=FileReadString(handle);
+   if(!FileIsEnding(handle)) header=FileReadString(handle);
+   FileClose(handle);
+   return run_id!="" && metadata_hash!="" && header!="";
+  }
+
+bool TSMt5WriteRunMetadata(const string path,const string run_id,const string metadata_hash,const string header)
+  {
+   int handle=FileOpen(path,FILE_WRITE|FILE_TXT|FILE_ANSI|FILE_COMMON);
+   if(handle==INVALID_HANDLE) return false;
+   FileWriteString(handle,run_id+"\r\n"+metadata_hash+"\r\n"+header+"\r\n");
+   FileFlush(handle);
+   FileClose(handle);
+   return true;
+  }
+
+bool TSMt5ExistingCsvHeaderMatches(const string path,const string expected_header)
+  {
+   int handle=FileOpen(path,FILE_READ|FILE_TXT|FILE_ANSI|FILE_SHARE_READ|FILE_COMMON);
+   if(handle==INVALID_HANDLE) return false;
+   bool empty=FileSize(handle)==0;
+   string actual_header=empty?"":FileReadString(handle);
+   FileClose(handle);
+   return empty || actual_header==expected_header;
+  }
+
+int TSMt5OpenAppendCsv(const string folder,
+                       const string path,
+                       const string header,
+                       const string run_id,
+                       const string metadata_hash,
+                       ENUM_TS_CSV_OPEN_STATUS &status)
+  {
+   status=TS_CSV_OPEN_IO_ERROR;
+   if(folder=="" || path=="" || header=="" || run_id=="" || metadata_hash=="") return INVALID_HANDLE;
    FolderCreate(folder,FILE_COMMON);
+   string metadata_path=path+".runmeta";
+   bool data_exists=FileIsExist(path,FILE_COMMON);
+   bool metadata_exists=FileIsExist(metadata_path,FILE_COMMON);
+   ENUM_TS_CSV_OPEN_STATUS success_status=TS_CSV_OPEN_CREATED;
+   if(metadata_exists)
+     {
+      string existing_run_id="",existing_hash="",existing_header="";
+      if(!TSMt5ReadRunMetadata(metadata_path,existing_run_id,existing_hash,existing_header))
+        {
+         status=TS_CSV_OPEN_RUN_ID_COLLISION;
+         return INVALID_HANDLE;
+        }
+      if(existing_run_id!=run_id || existing_hash!=metadata_hash || existing_header!=header)
+        {
+         status=TS_CSV_OPEN_RUN_ID_COLLISION;
+         return INVALID_HANDLE;
+        }
+      if(data_exists && !TSMt5ExistingCsvHeaderMatches(path,header))
+        {
+         status=TS_CSV_OPEN_RUN_ID_COLLISION;
+         return INVALID_HANDLE;
+        }
+      success_status=TS_CSV_OPEN_RESUMED;
+     }
+   else
+     {
+      if(data_exists)
+        {
+         int existing=FileOpen(path,FILE_READ|FILE_TXT|FILE_ANSI|FILE_SHARE_READ|FILE_COMMON);
+         bool nonempty=existing!=INVALID_HANDLE && FileSize(existing)>0;
+         if(existing!=INVALID_HANDLE) FileClose(existing);
+         if(nonempty)
+           {
+            status=TS_CSV_OPEN_RUN_ID_COLLISION;
+            return INVALID_HANDLE;
+           }
+        }
+      if(!TSMt5WriteRunMetadata(metadata_path,run_id,metadata_hash,header)) return INVALID_HANDLE;
+     }
    int handle=FileOpen(path,FILE_READ|FILE_WRITE|FILE_TXT|FILE_ANSI|FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_COMMON);
-   if(handle==INVALID_HANDLE) return INVALID_HANDLE;
+   if(handle==INVALID_HANDLE)
+     {
+      status=TS_CSV_OPEN_IO_ERROR;
+      return INVALID_HANDLE;
+     }
    bool empty=FileSize(handle)==0;
    FileSeek(handle,0,SEEK_END);
    if(empty) FileWriteString(handle,header+"\r\n");
+   status=success_status;
    return handle;
   }
 

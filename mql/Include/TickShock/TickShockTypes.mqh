@@ -60,6 +60,21 @@ enum ENUM_TS_SCENARIO_STATUS
    TS_SCENARIO_INCOMPLETE_END_OF_RUN
   };
 
+enum ENUM_TS_ORDER_ENTRY_STATE
+  {
+   TS_ORDER_ENTRY_PENDING = 0,
+   TS_ORDER_WAIT_EXIT,
+   TS_ORDER_ENTRY_CANCELLED
+  };
+
+enum ENUM_TS_CSV_OPEN_STATUS
+  {
+   TS_CSV_OPEN_CREATED = 0,
+   TS_CSV_OPEN_RESUMED,
+   TS_CSV_OPEN_RUN_ID_COLLISION,
+   TS_CSV_OPEN_IO_ERROR
+  };
+
 struct TickShockMachine
   {
    ENUM_TS_STATE state;
@@ -160,6 +175,19 @@ struct TickShockClusterAssignment
   {
    long cluster_id;
    bool overlap;
+  };
+
+struct TickShockOrderFillState
+  {
+   ENUM_TS_ORDER_ENTRY_STATE state;
+   double requested_volume;
+   double filled_volume;
+   double remaining_volume;
+   double cancelled_volume;
+   double weighted_fill_value;
+   double average_fill;
+   int deal_count;
+   bool entry_resolved;
   };
 
 #endif
