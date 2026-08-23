@@ -1,4 +1,4 @@
-# Tick-shock Step 7 causal comparison: March 2025
+# Tick-shock Step 10 behavior-preservation and causal comparison: March 2025
 
 ## Formal judgement
 
@@ -10,7 +10,7 @@
 
 Only REALIZABLE_EA is used for the formal judgement. Feasibility here means causal, broker-grid-feasible shadow outcomes exist; it does not mean a deployable order EA or positive edge has been established.
 
-## Event funnel: previous baseline versus Step 7
+## Event funnel: previous baseline versus Step 10
 
 | Metric | Previous baseline | IDEAL | REALIZABLE |
 |---|---|---|---|
@@ -23,7 +23,7 @@ Only REALIZABLE_EA is used for the formal judgement. Feasibility here means caus
 
 Detector/event funnel is unchanged. The previous 17 independent clusters were symbol clusters; Step 7 adds 15 cross-symbol market clusters, which are the formal statistical n.
 
-## Execution outcome: previous baseline versus Step 7
+## Execution outcome: previous baseline versus Step 10
 
 | Metric | Previous baseline | IDEAL | REALIZABLE |
 |---|---|---|---|
@@ -118,15 +118,15 @@ Formal causal invariant violations: **0**.
 - retaining both modes would approximately double structured CSV volume to 128847264 bytes/year
 - no raw tick CSV or per-second time-series CSV was emitted
 
-## Step 8 handoff
+## Step 11 handoff
 
 - `docs/research/tick_shock/00_artifact_manifest.md`
 - `reports/tests/tick_shock/step06_post_fix_green_report.md`
 - `reports/tests/tick_shock/step06_post_fix_results.csv`
-- `C:/Users/windows/AppData/Local/Temp/tickshock_step10_ideal_ae9c74fdf2994196a4cf68e4021bebcb/summary.md`
-- `C:/Users/windows/AppData/Local/Temp/tickshock_step10_ideal_ae9c74fdf2994196a4cf68e4021bebcb/events.csv`
-- `C:/Users/windows/AppData/Local/Temp/tickshock_step10_ideal_ae9c74fdf2994196a4cf68e4021bebcb/summary.csv`
-- `C:/Users/windows/AppData/Local/Temp/tickshock_step10_ideal_ae9c74fdf2994196a4cf68e4021bebcb/reconciliation.md`
+- `reports/backtest/runs/20260822_tickshock_causal_ideal_202503/summary.md`
+- `reports/backtest/runs/20260822_tickshock_causal_ideal_202503/events.csv`
+- `reports/backtest/runs/20260822_tickshock_causal_ideal_202503/summary.csv`
+- `reports/backtest/runs/20260822_tickshock_causal_ideal_202503/reconciliation.md`
 - `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/summary.md`
 - `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/events.csv`
 - `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/summary.csv`

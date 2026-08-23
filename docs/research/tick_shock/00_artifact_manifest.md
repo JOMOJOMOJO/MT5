@@ -15,7 +15,9 @@ artifact rows were appended. The checked-in post-Step-8 state is therefore 397
 rows and 381 unique paths. Step 9 appends 13 latest-path/new-artifact rows, for a
 rollup of 410 rows and 384 unique paths. Step 10 adds 54 current-source/evidence
 rows, one consolidated compile row, one devlog row, and four tester image rows,
-of which 49 paths are new, for 470 rows and 433 unique paths. Artifact ID
+of which 49 paths are new, for 470 rows and 433 unique paths. A final Step 10
+path-provenance correction adds one latest-path row, for 471 rows and 433
+unique paths. Artifact ID
 duplicates are zero.
 
 Starting with Step 10, every new artifact row must include `owning_commit` as a
@@ -552,3 +554,4 @@ for previously registered paths are authoritative latest hashes.
 | TS-S10-RUN-021 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tester_report-holding.png` | tester image | holding-time visualization | generated evidence | `420B97960777DF5CBF9051CA5847F1E510B4B403B710B00C9FA65D88215F2DFC` | yes | Step 11 | COMPLETE | zero-order report image | SELF |
 | TS-S10-RUN-022 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tester_report-hst.png` | tester image | distribution visualization | generated evidence | `5B9668EF6D82EA20EEAB5B71848E8888EE466AA0F86591E14A7DC58584E5F2B9` | yes | Step 11 | COMPLETE | zero-order report image | SELF |
 | TS-S10-RUN-023 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tester_report-mfemae.png` | tester image | MFE/MAE visualization | generated evidence | `2A4950F6229528D0560066BF71D09891FFA6CFEB50C555BDA8DF0896C35C7512` | yes | Step 11 | COMPLETE | zero-order report image | SELF |
+| TS-S10-CMP-004 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_comparison_202503/summary.md` | corrected report | replace ephemeral handoff paths with canonical Step 7 IDEAL paths | generated evidence | `9BD8829E2982AC8F247E3E0B31F2979F3970BCB79260DC6C768ADEC42A1909AA` | yes | Step 11 | COMPLETE | values unchanged; reproducible handoff | SELF |
