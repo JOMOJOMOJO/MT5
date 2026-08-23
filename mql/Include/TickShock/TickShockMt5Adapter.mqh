@@ -2,6 +2,7 @@
 #define TICK_SHOCK_MT5_ADAPTER_MQH
 
 #include "TickShockConfig.mqh"
+#include "TickShockMetrics.mqh"
 
 bool TSMt5SelectSymbol(const string symbol)
   {
@@ -51,6 +52,19 @@ bool TSMt5CalcOneLotLoss(const int direction,const string symbol,const double en
   {
    ENUM_ORDER_TYPE type=direction>0?ORDER_TYPE_BUY:ORDER_TYPE_SELL;
    return OrderCalcProfit(type,symbol,1.0,entry,sl,loss);
+  }
+
+bool TSMt5CommissionResult(const int direction,
+                           const string symbol,
+                           const double entry,
+                           const double sl,
+                           const double commission_amount,
+                           const double gross_r,
+                           TickShockCommissionResult &result)
+  {
+   double profit_or_loss=0.0;
+   bool calculated=TSMt5CalcOneLotLoss(direction,symbol,entry,sl,profit_or_loss);
+   return TSBuildCommissionResult(calculated,profit_or_loss,commission_amount,gross_r,result);
   }
 
 bool TSMt5CreateTrendHandles(const string symbol,int &ema20_m15,int &ema50_m15,int &ema20_h1,int &ema50_h1)

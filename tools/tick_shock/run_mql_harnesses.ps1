@@ -1,6 +1,6 @@
 param(
     [int]$TimeoutSeconds = 120,
-    [ValidateSet("pre-fix","post-fix")]
+    [ValidateSet("pre-fix","post-fix","step10")]
     [string]$Phase = "post-fix"
 )
 
@@ -12,13 +12,15 @@ $commonExpected = Join-Path $commonRoot "expected"
 $commonRaw = Join-Path $commonRoot "raw"
 $evidenceRaw = if ($Phase -eq "pre-fix") {
     Join-Path $repoRoot "reports\tests\tick_shock\raw"
+} elseif ($Phase -eq "step10") {
+    Join-Path $repoRoot "reports\tests\tick_shock\step10_raw"
 } else {
     Join-Path $repoRoot "reports\tests\tick_shock\step06_raw"
 }
 $configRoot = Join-Path $repoRoot "reports\tests\tick_shock\configs"
 $compileRoot = Join-Path $repoRoot "reports\compile\tick_shock"
 $testerRoot = Join-Path $repoRoot "reports\tests\tick_shock\tester"
-$stepTag = if ($Phase -eq "pre-fix") { "step05" } else { "step06" }
+$stepTag = if ($Phase -eq "pre-fix") { "step05" } elseif ($Phase -eq "step10") { "step10" } else { "step06" }
 
 foreach ($path in @($commonFixtures,$commonExpected,$commonRaw,$evidenceRaw,$configRoot,$compileRoot,$testerRoot)) {
     New-Item -ItemType Directory -Force -Path $path | Out-Null

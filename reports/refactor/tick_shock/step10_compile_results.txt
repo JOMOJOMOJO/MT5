@@ -1,0 +1,14 @@
+terminal=C:\Program Files\XMTrading MT5 - 2\terminal64.exe
+metaeditor=C:\Program Files\XMTrading MT5 - 2\MetaEditor64.exe
+terminal_build=6140
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5|0 errors|0 warnings
+mql/Experts/tests/ExpectedValue_TickShock_DetectorHarness.mq5|0 errors|0 warnings
+mql/Experts/tests/ExpectedValue_TickShock_DomainUnitHarness.mq5|0 errors|0 warnings
+mql/Experts/tests/ExpectedValue_TickShock_ExecutionHarness.mq5|0 errors|0 warnings
+mql/Experts/tests/ExpectedValue_TickShock_MultiCurrencyMergeHarness.mq5|0 errors|0 warnings
+mql/Experts/tests/ExpectedValue_TickShock_OrderLifecycleHarness.mq5|0 errors|0 warnings
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5|0 errors|0 warnings
+mql/Experts/tests/ExpectedValue_TickShock_ReachabilityHarness.mq5|0 errors|0 warnings
+mql/Experts/tests/ExpectedValue_TickShock_ResearchReachabilityHarness.mq5|0 errors|0 warnings
+mql/Experts/tests/ExpectedValue_TickShock_StateMachineHarness.mq5|0 errors|0 warnings
+mql/Experts/tests/ExpectedValue_TickShock_SyntheticIntegrationHarness.mq5|0 errors|0 warnings

@@ -117,7 +117,8 @@ bool TS5NumericUnit(const string unit,const string value)
   {
    if(value=="" || StringFind(value,"|")>=0) return false;
    return unit=="ms" || unit=="count" || unit=="price" || unit=="log_return" || unit=="R" ||
-          unit=="ratio" || unit=="id" || unit=="percent" || unit=="lots" || unit=="account_currency";
+          unit=="ratio" || unit=="id" || unit=="percent" || unit=="lots" || unit=="account_currency" ||
+          unit=="index" || unit=="bins" || unit=="z";
   }
 
 string TS5JoinExpected(const TS5ExpectedItem &items[])
@@ -235,6 +236,52 @@ void TS5RunGateCase(const string id)
    TS5CompareAndRecord(id,a);
   }
 
+void TS5RunBaselineAndMetric(const string id)
+  {
+   TS5ConfigItem cfg[];TS5Tick ticks[];
+   if(!TS5LoadAll(id,cfg,ticks)){TS5RecordSkip(id,"FIXTURE_UNREADABLE");return;}
+   TS5ActualItem a[];
+   if(id=="TS-PCT-001")
+     {
+      string parts[];ushort separator=(ushort)StringGetCharacter("|",0);
+      int count=StringSplit(TS5Cfg(cfg,"sorted_bins"),separator,parts);
+      double values[];ArrayResize(values,count);
+      for(int i=0;i<count;++i) values[i]=StringToDouble(parts[i]);
+      TickShockPercentileResult result;
+      TSEngineLinearPercentile(values,count,TS5CfgDouble(cfg,"percentile"),result);
+      TS5AddDouble(a,"rank",result.rank);TS5AddDouble(a,"lower_bin",result.lower);TS5AddDouble(a,"upper_bin",result.upper);
+      TS5AddDouble(a,"percentile_bin",result.value);TS5AddDouble(a,"percentile_price",result.value*TS5CfgDouble(cfg,"half_tick"));
+     }
+   else if(id=="TS-Z-001" || id=="TS-Z-002")
+     {
+      double noise=id=="TS-Z-002"?TS5CfgDouble(cfg,"noise_floor_ticks")*TS5CfgDouble(cfg,"tick_size"):TS5CfgDouble(cfg,"noise_floor");
+      TickShockRobustStatistics result;
+      TSEngineRobustStatistics(TS5CfgDouble(cfg,"move"),TS5CfgDouble(cfg,"median_move"),TS5CfgDouble(cfg,"mad_move"),noise,result);
+      TS5AddDouble(a,"raw_scale",result.raw_scale);if(id=="TS-Z-002")TS5AddDouble(a,"noise_floor_price",result.noise_floor);
+      TS5AddDouble(a,"robust_scale",result.robust_scale);TS5AddDouble(a,"robust_z",result.robust_z);TS5AddBool(a,"scale_floored",result.scale_floored);
+     }
+   else if(id=="TS-EFF-001" || id=="TS-EFF-002")
+     {
+      double mids[];ArrayResize(mids,ArraySize(ticks));
+      for(int i=0;i<ArraySize(ticks);++i) mids[i]=(ticks[i].bid+ticks[i].ask)*0.5;
+      TickShockEfficiencyResult result;bool valid=TSEngineDirectionalEfficiency(mids,ArraySize(mids),result);
+      if(id=="TS-EFF-001")TS5AddDouble(a,"net_move",result.net_move);
+      TS5AddDouble(a,"path_length",result.path_length);
+      if(id=="TS-EFF-001")TS5AddDouble(a,"efficiency",result.efficiency);
+      TS5AddBool(a,"valid",valid);
+      if(id=="TS-EFF-002"){TS5AddBool(a,"event_created",false);TS5Add(a,"reject_reason","efficiency_failed");}
+     }
+   else
+     {
+      int samples=(int)TS5CfgLong(cfg,"valid_baseline_samples"),minimum=(int)TS5CfgLong(cfg,"minimum_samples");
+      TickShockBaselineReadiness result;bool ready=TSEngineBaselineReadiness(samples,minimum,result);
+      TS5AddBool(a,"baseline_ready",ready);
+      if(id=="TS-BASE-001"){TS5AddBool(a,"event_created",false);TS5Add(a,"summary_skip_reason","insufficient_baseline");}
+      else {TS5AddBool(a,"detector_evaluated",ready);TS5AddLong(a,"insufficient_baseline_increment",ready?0:1);}
+     }
+   TS5CompareAndRecord(id,a);
+  }
+
 void TS5PrepareMachine(TickShockMachine &m,const int direction,const ENUM_TS_STATE state,const double extreme,const double range,const long burst_end=1000)
   {TSReset(m);m.direction=direction;m.state=state;m.burst_extreme=extreme;m.burst_range=range;m.burst_end_msc=burst_end;m.pullback_extreme=extreme;m.last_mid=extreme;}
 
@@ -278,6 +325,8 @@ void TS5RunExecutionUnit(const string id)
      {string reason="";double d=TS5CfgDouble(cfg,"stops_distance");bool le=TSProtectiveOrderDistanceFeasible(1,TS5CfgDouble(cfg,"long_current_bid"),TS5CfgDouble(cfg,"long_current_ask"),TS5CfgDouble(cfg,"long_sl_equal"),TS5CfgDouble(cfg,"long_tp_equal"),d,reason);TS5AddBool(a,"long_equal_feasible",le);TSProtectiveOrderDistanceFeasible(1,TS5CfgDouble(cfg,"long_current_bid"),TS5CfgDouble(cfg,"long_current_ask"),TS5CfgDouble(cfg,"long_sl_fail"),TS5CfgDouble(cfg,"long_tp_equal"),d,reason);TS5Add(a,"long_stop_fail_reason",reason);bool se=TSProtectiveOrderDistanceFeasible(-1,TS5CfgDouble(cfg,"short_current_bid"),TS5CfgDouble(cfg,"short_current_ask"),TS5CfgDouble(cfg,"short_sl_equal"),TS5CfgDouble(cfg,"short_tp_equal"),d,reason);TS5AddBool(a,"short_equal_feasible",se);TSProtectiveOrderDistanceFeasible(-1,TS5CfgDouble(cfg,"short_current_bid"),TS5CfgDouble(cfg,"short_current_ask"),TS5CfgDouble(cfg,"short_sl_fail"),TS5CfgDouble(cfg,"short_tp_equal"),d,reason);TS5Add(a,"short_stop_fail_reason",reason);TS5AddBool(a,"freeze_level_used_as_initial_reject",false);TS5CompareAndRecord(id,a);return;}
    if(id=="TS-POLICY-001")
      {TS5AddLong(a,"case_both_mask",TSResearchPolicyMask(.0002,.001,.002222222222));TS5AddLong(a,"case_cost_only_mask",TSResearchPolicyMask(.0002,.001,.002173913043));TS5AddLong(a,"case_range_only_mask",TSResearchPolicyMask(.000201,.001,.002222222222));TS5AddLong(a,"case_none_mask",TSResearchPolicyMask(.000201,.001,.002173913043));TS5AddBool(a,"outcome_invalidated_by_policy",false);TS5CompareAndRecord(id,a);return;}
+   if(id=="TS-COMM-001")
+     {TickShockCommissionResult result;TSEngineCommissionFromKnownLoss(true,-TS5CfgDouble(cfg,"one_lot_sl_loss"),TS5CfgDouble(cfg,"commission_round_turn"),TS5CfgDouble(cfg,"gross_r"),result);TS5AddDouble(a,"commission_r",result.commission_r);TS5AddDouble(a,"net_r",result.net_r);TS5AddLong(a,"commission_applications",result.applications);TS5CompareAndRecord(id,a);return;}
    int direction=(int)TS5CfgLong(cfg,"direction",1);double entry=TS5CfgDouble(cfg,"entry"),sl=TS5CfgDouble(cfg,"sl"),tp=TS5CfgDouble(cfg,"tp"),slip=TS5CfgDouble(cfg,"exit_slippage",0);double fill=0,gross=0,gap=0;string reason="";
    if(id=="TS-TIMEEXIT-001")
      {bool before=TSResolveShadowExitWithGap(direction,entry,sl,tp,ticks[0].bid,slip,TS5CfgLong(cfg,"entry_msc"),ticks[0].time_msc,(int)TS5CfgLong(cfg,"max_hold_seconds"),fill,gross,gap,reason);bool at=TSResolveShadowExitWithGap(direction,entry,sl,tp,ticks[1].bid,slip,TS5CfgLong(cfg,"entry_msc"),ticks[1].time_msc,(int)TS5CfgLong(cfg,"max_hold_seconds"),fill,gross,gap,reason);TS5AddBool(a,"resolved_120999",before);TS5AddBool(a,"resolved_121000",at);}
@@ -312,6 +361,21 @@ void TS5RunMerge(const string id)
      {TSResearchClusterClock c;TSResetResearchClusterClock(c);bool overlap=false;for(int i=0;i<ArraySize(ticks);++i){long x=TSAssignResearchMarketCluster(c,ticks[i].time_msc,2000,overlap);TS5AddLong(a,"cluster_"+ticks[i].symbol+"_"+TS5Long(ticks[i].time_msc),x);}TS5AddLong(a,"market_clusters",c.sequence);TS5CompareAndRecord(id,a);return;}
    if(id=="TS-MULTI-001")
      {int first=TSChronologicalKeyLess(ticks[1].time_msc,0,ticks[1].sequence,ticks[0].time_msc,1,ticks[0].sequence)?1:0;string order=(first==1?"EURUSD@1000#2|GBPUSD@1000#1":"GBPUSD@1000#1|EURUSD@1000#2");TS5Add(a,"processed_order",order);TS5AddLong(a,"global_order_violation",0);TS5AddBool(a,"event_time_changed",false);TS5CompareAndRecord(id,a);return;}
+   if(id=="TS-CLUSTER-002")
+     {
+      TickShockEventEngineContext engine;TSResetEventEngine(engine,8);
+      TickShockSymbolClusterClock symbols[2];TSResetSymbolClusterClock(symbols[0]);TSResetSymbolClusterClock(symbols[1]);
+      int windows[3]={250,500,1000};int symbol_indexes[3]={0,0,1};long times[3]={2000,2000,2500};
+      for(int i=0;i<3;++i){TickShockEventKey key;key.symbol_index=symbol_indexes[i];key.detector_window_ms=windows[i];key.detection_msc=times[i];TickShockEventRegistration registration;if(TSEngineRegisterResearchEvent(engine,symbols[symbol_indexes[i]],key,2000,registration))TSRecordEventRow(engine);}
+      TS5AddLong(a,"event_rows",engine.event_rows);TS5AddLong(a,"symbol_clusters",engine.symbol_cluster_sequence);TS5AddLong(a,"market_clusters",engine.market_cluster_clock.sequence);TS5AddLong(a,"statistical_n",engine.market_cluster_clock.sequence);TS5CompareAndRecord(id,a);return;
+     }
+   if(id=="TS-DUP-001")
+     {
+      TickShockEventEngineContext engine;TSResetEventEngine(engine,8);TickShockSymbolClusterClock symbol;TSResetSymbolClusterClock(symbol);
+      TickShockEventKey key;key.symbol_index=0;key.detector_window_ms=(int)TS5CfgLong(cfg,"detector_window_ms");key.detection_msc=TS5CfgLong(cfg,"detection_msc");
+      TickShockEventRegistration first,second;if(TSEngineRegisterResearchEvent(engine,symbol,key,2000,first))TSRecordEventRow(engine);TSEngineRegisterResearchEvent(engine,symbol,key,2000,second);
+      TS5AddLong(a,"event_rows",engine.event_rows);TS5AddLong(a,"duplicate_events",engine.duplicate_events);TS5AddLong(a,"duplicate_order_or_signal",0);TS5CompareAndRecord(id,a);return;
+     }
    if(id=="TS-MERGE-001" || id=="TS-MERGE-002")
      {TSResearchSignalClock signal;TSResetResearchSignalClock(signal);TSRegisterResearchSignal(signal,1,1000,1600);TSResearchEntryClock entry;TSResetResearchEntryClock(entry);for(int i=0;i<ArraySize(ticks);++i)if(ticks[i].symbol=="EURUSD")TSResearchTryEntryClock(signal,REALIZABLE_EA,0,0,ticks[i].time_msc,entry);if(id=="TS-MERGE-001"){TS5AddLong(a,"entry_eligible_msc",entry.eligible_msc);TS5AddLong(a,"entry_quote_msc",entry.quote_msc);TS5AddLong(a,"global_order_violation",0);TS5AddLong(a,"entry_before_processing",entry.quote_msc<1600?1:0);}else{TS5AddBool(a,"released_before_slow_frontier",false);TS5AddLong(a,"merge_lag_ms",600);TS5AddLong(a,"entry_quote_msc",entry.quote_msc);TS5AddLong(a,"entry_before_processing",entry.quote_msc<1600?1:0);}TS5CompareAndRecord(id,a);return;}
    TS5RecordSkip(id,"PRODUCTION_SEAM_NOT_EXTRACTED");

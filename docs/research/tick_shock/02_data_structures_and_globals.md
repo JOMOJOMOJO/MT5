@@ -350,3 +350,59 @@ state. The order-free research EA has no broker order lifecycle wiring;
 `TickShockOrderLifecycle.mqh` is a deterministic production module exercised by
 the harness, while actual `OnTradeTransaction`/server integration remains an
 external observation requirement.
+
+## Step 10 explicit runtime contexts
+
+Step 10 preserves all physical/logical capacities and moves mutable cursor,
+grid, event/cluster and merge bookkeeping into caller-owned contexts. No module
+defines mutable global state.
+
+| Struct | Owner | Fields / units | Lifetime and initialization | Production update sites | Fixture injection |
+|---|---|---|---|---|---|
+| `TickShockRingState` | `TickShockRing.mqh` | `head`, `count`, `capacity` (cells) | per symbol/ring; `TSRingReset` in symbol init | tick/grid/sample add/drop/find | direct |
+| `TickShockGridRuntime` | `TickShockGrid.mqh` | `next_boundary_msc`, `quote_msc` (ms), Bid/Ask/Mid (price) | per symbol; `TSGridReset` | quote observation and grid close advancement | direct |
+| `TickShockPercentileResult` | `TickShockBaseline.mqh` | valid, rank/index, lower/upper/value scalar | one calculation; zeroed in function | percentile core only | direct |
+| `TickShockRobustStatistics` | same | raw/noise/robust scale and move/Z; floor/valid flags | one baseline/detector calculation | robust core | direct |
+| `TickShockBaselineReadiness` | same | valid/minimum sample counts and ready flag | one readiness evaluation | baseline refresh | direct |
+| `TickShockEfficiencyResult` | `TickShockMetrics.mqh` | net/path price, efficiency ratio, valid | one detector window | path efficiency core | direct |
+| `TickShockCommissionResult` | same | calculation success; one-lot loss/commission account currency; gross/net/commission R; applications count | one scenario commission calculation | pure builder or MT5 adapter | direct builder; adapter integration |
+| `TickShockEventKey` | `TickShockEventEngine.mqh` | symbol index, detector window ms, detection ms | one candidate | registration comparison | direct |
+| `TickShockSymbolClusterClock` | same | current id, cluster start ms | one symbol/run; reset at symbol init | accepted event registration | direct |
+| `TickShockEventRegistration` | same | accepted/duplicate, slot, event sequence, symbol/market cluster IDs and overlap flags | one candidate result | registration function | direct |
+| `TickShockEventEngineContext` | same | dynamic active/key arrays bounded by 64; event/cluster/overlap/duplicate/row counters; market clock | one run; reset in `OnInit` | detect/register, event row write and release | direct |
+| `TickShockMergedTick` | `TickShockMergeSequencer.mqh` | symbol index, sequence, `MqlTick` | pending until strict watermark release | CopyTicks collection and merge | synthetic `MqlTick` |
+| `TickShockPendingRepository` | same | dynamic pending items capped 65,536; next sequence; max/capacity/group/order diagnostics | one run; reset in `OnInit` | collect/sort/release/process/flush | direct |
+| `TickShockDetectorCounters` | `TickShockResearchEngine.mqh` | evaluable/raw/valid counts and six gate true/cumulative counters | one symbol+detector/run; reset in symbol init | detector evaluation | direct |
+
+### Ownership changes in `TSRSymbolContext`
+
+- `tick_head/tick_count`, `grid_head/grid_count`, and the three
+  `sample_head/sample_count` pairs are represented by `TickShockRingState`.
+- latest quote and next grid boundary are represented by
+  `TickShockGridRuntime`.
+- per-symbol cluster start/id are represented by
+  `TickShockSymbolClusterClock`.
+- each detector has an explicit `TickShockDetectorCounters` instance. Existing
+  CSV-facing counters remain until a later schema-neutral cleanup; they are
+  updated alongside the explicit context, and Step 10 output comparison proves
+  no funnel drift.
+
+### Composition-root globals after Step 10
+
+`g_event_engine : TickShockEventEngineContext` owns active event keys,
+allocation, dedup and cluster counters. `g_pending_repository :
+TickShockPendingRepository` owns pending ticks and merge diagnostics. The
+scenario/event records, per-symbol contexts, summary counters, file handles and
+immutable input-derived `g_core_config` remain at the EA composition root.
+Modules receive context/config explicitly and own no global input.
+
+### Capacity preservation
+
+- physical detector sample cap: 3,612 cells;
+- default logical capacities: 3,610 / 1,806 / 904 cells for 250/500/1,000ms;
+- tick ring: 8,192 cells with 5,000ms retention;
+- grid ring: 64; active event slots: 64; pending repository: 65,536;
+- strategies/stops/delays/spreads/scenarios remain 4/23/3/2/552.
+
+MQL handlers remain serialized. The refactor adds no thread and does not alter
+the strict global-watermark release condition.

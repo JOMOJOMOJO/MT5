@@ -86,11 +86,7 @@ const double TSR_SPREAD_MULT[TSR_SPREAD_COUNT] = {1.0,1.25};
 int TSRRequiredSampleCapacity(const int detector)
   {
    if(detector<0 || detector>=TSR_DETECTOR_COUNT) return 0;
-   long retained_msc=(long)InpBaselineMinutes*60*1000+InpBaselineExcludeMs;
-   // Retain the current boundary plus the sample removed on the next rolling
-   // update.  With the default inputs the 1-second series uses 904 cells,
-   // rather than inheriting the 250ms series' compile-time ceiling.
-   return (int)(retained_msc/TSR_DETECTOR_MS[detector])+2;
+   return TSBaselineRequiredCapacity(TSR_DETECTOR_MS[detector],InpBaselineMinutes,InpBaselineExcludeMs);
   }
 
 int TSRSampleCapacity(const int detector)
@@ -284,21 +280,14 @@ struct TSRSymbolContext
    long duplicate_ticks_skipped;
    long ticks_processed;
    TSRShortTick ticks[];
-   int tick_head;
-   int tick_count;
+   TickShockRingState tick_ring;
    TSRGridPoint grid[];
-   int grid_head;
-   int grid_count;
+   TickShockRingState grid_ring;
    TSRSecondSample samples250[];
    TSRSecondSample samples500[];
    TSRSecondSample samples1000[];
-   int sample_head[TSR_DETECTOR_COUNT];
-   int sample_count[TSR_DETECTOR_COUNT];
-   long next_grid_msc;
-   long last_quote_msc;
-   double last_bid;
-   double last_ask;
-   double last_mid;
+   TickShockRingState sample_ring[TSR_DETECTOR_COUNT];
+   TickShockGridRuntime grid_runtime;
    int ticks_since_window[TSR_DETECTOR_COUNT];
    long baseline_cache_msc[TSR_DETECTOR_COUNT];
    int baseline_samples[TSR_DETECTOR_COUNT];
@@ -332,17 +321,10 @@ struct TSRSymbolContext
    long gate_true[TSR_DETECTOR_COUNT*TSR_GATE_COUNT];
    long gate_cumulative[TSR_DETECTOR_COUNT*TSR_GATE_COUNT];
    long gate_masks[TSR_DETECTOR_COUNT*TSR_GATE_MASK_COUNT];
-   long last_symbol_cluster_start_msc;
-   long last_symbol_cluster_id;
+   TickShockDetectorCounters detector_counters[TSR_DETECTOR_COUNT];
+   TickShockSymbolClusterClock symbol_cluster_clock;
    long m1_minutes_seen;
    long last_m1_minute;
-  };
-
-struct TSRMergedTick
-  {
-   int symbol_index;
-   int sequence;
-   MqlTick tick;
   };
 
 TSRSymbolContext g_symbols[];
@@ -351,12 +333,6 @@ long g_pre_skip[];
 long g_scenario_valid[TSR_ALL_SCENARIOS];
 long g_scenario_invalid[TSR_ALL_SCENARIOS];
 double g_scenario_sum_r[TSR_ALL_SCENARIOS];
-long g_event_sequence = 0;
-long g_symbol_cluster_sequence = 0;
-long g_symbol_overlap_events = 0;
-TSResearchClusterClock g_market_cluster_clock;
-long g_market_overlap_events = 0;
-long g_duplicate_events = 0;
 long g_event_rows = 0;
 long g_total_ticks = 0;
 long g_total_raw = 0;
@@ -368,14 +344,6 @@ long g_detection_signals = 0;
 long g_post_burst_signals = 0;
 long g_pullback_signals = 0;
 long g_reversal_signals = 0;
-long g_last_merged_processed_msc = 0;
-long g_merge_order_violations = 0;
-long g_max_merged_batch = 0;
-long g_pending_capacity_hits = 0;
-int g_merge_sequence = 0;
-long g_same_msc_groups = 0;
-long g_same_msc_ticks = 0;
-long g_max_same_msc_group = 0;
 long g_entry_before_eligible = 0;
 long g_entry_before_processing = 0;
 long g_stale_detection_fills = 0;
@@ -384,7 +352,8 @@ long g_rr_below_requested = 0;
 long g_scenario_csv_recount_valid = 0;
 long g_scenario_csv_recount_invalid = 0;
 double g_scenario_csv_recount_sum_r = 0.0;
-TSRMergedTick g_pending_ticks[];
+TickShockEventEngineContext g_event_engine;
+TickShockPendingRepository g_pending_repository;
 long g_memory_samples = 0;
 double g_memory_sum_mb = 0.0;
 long g_memory_max_mb = 0;
@@ -583,13 +552,8 @@ void TSRCloseLogs()
 
 double TSRPercentile(double &values[],const int count,const double percentile)
   {
-   if(count<=0) return 0.0;
-   ArrayResize(values,count);
-   ArraySort(values);
-   double rank=(percentile/100.0)*(count-1);
-   int lo=(int)MathFloor(rank), hi=(int)MathCeil(rank);
-   if(lo==hi) return values[lo];
-   return values[lo]+(values[hi]-values[lo])*(rank-lo);
+   TickShockPercentileResult result;
+   return TSEngineLinearPercentile(values,count,percentile,result)?result.value:0.0;
   }
 
 double TSRMedian(double &values[],const int count)
@@ -599,28 +563,18 @@ double TSRMedian(double &values[],const int count)
 
 int TSROldestTick(const TSRSymbolContext &context)
   {
-   if(context.tick_count<=0) return -1;
-   int index=context.tick_head-context.tick_count;
-   while(index<0) index+=TSR_TICK_CAPACITY;
-   return index;
+   return TSRingOldestIndex(context.tick_ring);
   }
 
 int TSROldestGrid(const TSRSymbolContext &context)
   {
-   if(context.grid_count<=0) return -1;
-   int index=context.grid_head-context.grid_count;
-   while(index<0) index+=TSR_GRID_CAPACITY;
-   return index;
+   return TSRingOldestIndex(context.grid_ring);
   }
 
 int TSROldestSample(const TSRSymbolContext &context,const int detector)
   {
-   if(detector<0 || detector>=TSR_DETECTOR_COUNT || context.sample_count[detector]<=0) return -1;
-   int capacity=TSRSampleCapacity(detector);
-   if(capacity<=0) return -1;
-   int index=context.sample_head[detector]-context.sample_count[detector];
-   while(index<0) index+=capacity;
-   return index;
+   if(detector<0 || detector>=TSR_DETECTOR_COUNT) return -1;
+   return TSRingOldestIndex(context.sample_ring[detector]);
   }
 
 void TSRAddTick(TSRSymbolContext &context,const MqlTick &source)
@@ -630,22 +584,21 @@ void TSRAddTick(TSRSymbolContext &context,const MqlTick &source)
    tick.bid=source.bid;
    tick.ask=source.ask;
    tick.mid=(source.bid+source.ask)*0.5;
-   context.ticks[context.tick_head]=tick;
-   context.tick_head=(context.tick_head+1)%TSR_TICK_CAPACITY;
-   if(context.tick_count<TSR_TICK_CAPACITY) ++context.tick_count;
-   while(context.tick_count>0)
+   int write_index=TSRingReserveWrite(context.tick_ring);
+   if(write_index<0) return;
+   context.ticks[write_index]=tick;
+   while(context.tick_ring.count>0)
      {
       int oldest=TSROldestTick(context);
       if(oldest<0 || tick.time_msc-context.ticks[oldest].time_msc<=TSR_TICK_RETENTION_MS) break;
-      --context.tick_count;
+      TSRingDropOldest(context.tick_ring);
      }
   }
 
 void TSRAddGrid(TSRSymbolContext &context,const TSRGridPoint &point)
   {
-   context.grid[context.grid_head]=point;
-   context.grid_head=(context.grid_head+1)%TSR_GRID_CAPACITY;
-   if(context.grid_count<TSR_GRID_CAPACITY) ++context.grid_count;
+   int write_index=TSRingReserveWrite(context.grid_ring);
+   if(write_index>=0) context.grid[write_index]=point;
   }
 
 void TSRSetSample(TSRSymbolContext &context,const int detector,const int index,const TSRSecondSample &sample)
@@ -666,17 +619,15 @@ void TSRAddSample(TSRSymbolContext &context,const int detector,const TSRSecondSa
   {
    int capacity=TSRSampleCapacity(detector);
    if(capacity<=0) return;
-   int head=context.sample_head[detector];
-   TSRSetSample(context,detector,head,sample);
-   context.sample_head[detector]=(head+1)%capacity;
-   if(context.sample_count[detector]<capacity) ++context.sample_count[detector];
+   int head=TSRingReserveWrite(context.sample_ring[detector]);
+   if(head>=0) TSRSetSample(context,detector,head,sample);
   }
 
 bool TSRFindGrid(const TSRSymbolContext &context,const long time_msc,TSRGridPoint &point)
   {
    int oldest=TSROldestGrid(context);
    if(oldest<0) return false;
-   for(int i=0;i<context.grid_count;++i)
+   for(int i=0;i<context.grid_ring.count;++i)
      {
       int index=(oldest+i)%TSR_GRID_CAPACITY;
       if(TSExactAnchorTime(time_msc,context.grid[index].time_msc))
@@ -704,23 +655,25 @@ bool TSRPathEfficiency(const TSRSymbolContext &context,
   {
    efficiency=0.0;
    if(end_msc<=start_msc || start_mid<=0.0 || end_mid<=0.0) return false;
-   double path=0.0;
-   double last=start_mid;
+   double mids[];
+   ArrayResize(mids,1);
+   mids[0]=start_mid;
    int oldest=TSROldestTick(context);
    if(oldest<0) return false;
-   for(int i=0;i<context.tick_count;++i)
+   for(int i=0;i<context.tick_ring.count;++i)
      {
       int index=(oldest+i)%TSR_TICK_CAPACITY;
       TSRShortTick tick=context.ticks[index];
       if(tick.time_msc<=start_msc) continue;
       if(tick.time_msc>end_msc) break;
-      path+=MathAbs(tick.mid-last);
-      last=tick.mid;
+      int n=ArraySize(mids);ArrayResize(mids,n+1);mids[n]=tick.mid;
      }
-   if(MathAbs(end_mid-last)>0.0) path+=MathAbs(end_mid-last);
-   if(path<=0.0 || !MathIsValidNumber(path)) return false;
-   efficiency=MathAbs(end_mid-start_mid)/path;
-   return MathIsValidNumber(efficiency);
+   int n=ArraySize(mids);
+   if(n<=0 || MathAbs(end_mid-mids[n-1])>0.0) {ArrayResize(mids,n+1);mids[n]=end_mid;}
+   TickShockEfficiencyResult result;
+   if(!TSEngineDirectionalEfficiency(mids,ArraySize(mids),result)) return false;
+   efficiency=result.efficiency;
+   return true;
   }
 
 int TSRPreSkipIndex(const string reason)
@@ -748,13 +701,12 @@ void TSRCountPreSkip(const int symbol_index,const string reason)
 
 bool TSRFindSampleAt(const TSRSymbolContext &context,const int detector,const long target_msc,TSRSecondSample &sample)
   {
-   int count=context.sample_count[detector];
+   int count=context.sample_ring[detector].count;
    int capacity=TSRSampleCapacity(detector);
    if(capacity<=0) return false;
    for(int i=0;i<count;++i)
      {
-      int index=context.sample_head[detector]-1-i;
-      while(index<0) index+=capacity;
+      int index=TSRingIndexFromNewest(context.sample_ring[detector],i);
       TSRSecondSample candidate=TSRGetSample(context,detector,index);
       if(candidate.end_msc==target_msc) {sample=candidate;return true;}
       if(candidate.end_msc<target_msc) return false;
@@ -805,18 +757,7 @@ void TSRAdjustSpreadHistogram(TSRSymbolContext &context,const int detector,const
 
 double TSRHistogramPercentile(const int &hist[],const int offset,const int max_bin,const int count,const double percentile)
   {
-   if(count<=0) return 0.0;
-   double rank=(percentile/100.0)*(count-1);
-   int lo=(int)MathFloor(rank),hi=(int)MathCeil(rank);
-   int cumulative=0,lo_value=0,hi_value=0;
-   bool lo_found=false;
-   for(int bin=0;bin<=max_bin;++bin)
-     {
-      cumulative+=hist[offset+bin];
-      if(!lo_found && cumulative>lo) {lo_value=bin;lo_found=true;}
-      if(cumulative>hi) {hi_value=bin;break;}
-     }
-   return lo_value+(hi_value-lo_value)*(rank-lo);
+   return TSEngineHistogramPercentile(hist,offset,max_bin,count,percentile);
   }
 
 double TSRHistogramMadBins(const TSRSymbolContext &context,const int detector,const double median_bin,const int count)
@@ -849,7 +790,7 @@ void TSRRebuildBaselineHistograms(TSRSymbolContext &context,const int detector,c
    context.move_hist_max[detector]=0;context.tick_hist_max[detector]=0;context.spread_hist_max[detector]=0;
    long baseline_end=boundary_msc-InpBaselineExcludeMs;
    long baseline_start=baseline_end-(long)InpBaselineMinutes*60*1000;
-   int available=context.sample_count[detector];
+   int available=context.sample_ring[detector].count;
    int oldest=TSROldestSample(context,detector);
    int capacity=TSRSampleCapacity(detector);
    for(int i=0;i<available;++i)
@@ -902,15 +843,17 @@ bool TSRRefreshBaseline(TSRSymbolContext &context,const int detector,const long 
       context.baseline_median_ticks[detector]=TSRHistogramPercentile(context.tick_hist,detector*TSR_TICK_HIST_BINS,context.tick_hist_max[detector],value_count,50.0);
       context.baseline_mad[detector]=TSRHistogramMadBins(context,detector,median_bin,value_count)*half_tick;
       double noise_price=MathMax(InpNoiseFloorTicks,0.0)*context.tick_size;
-      bool scale_floored=false;
-      context.baseline_scale[detector]=TSRobustScaleWithNoiseFloor(context.baseline_mad[detector],noise_price,scale_floored);
+      TickShockRobustStatistics robust;
+      TSEngineRobustStatistics(context.baseline_median[detector],context.baseline_median[detector],context.baseline_mad[detector],noise_price,robust);
+      context.baseline_scale[detector]=robust.robust_scale;
       context.baseline_percentile[detector]=MathMax(context.baseline_percentile[detector],noise_price);
-      context.baseline_scale_floored[detector]=scale_floored;
+      context.baseline_scale_floored[detector]=robust.scale_floored;
       if(context.baseline_scale_floored[detector]) ++context.scale_floor_uses[detector];
      }
    if(spread_count>0)
       context.spread_median_5m[detector]=TSRHistogramPercentile(context.spread_hist,detector*TSR_SPREAD_HIST_BINS,context.spread_hist_max[detector],spread_count,50.0)*context.tick_size*0.5;
-   return value_count>=InpMinBaselineSamples;
+   TickShockBaselineReadiness readiness;
+   return TSEngineBaselineReadiness(value_count,InpMinBaselineSamples,readiness);
   }
 
 string TSRSessionLabel(const long time_msc)
@@ -985,19 +928,6 @@ void TSRResetScenario(TSRScenario &scenario)
    scenario.status=TS_SCENARIO_NOT_SIGNALED;
   }
 
-int TSRAllocateEvent()
-  {
-   for(int i=0;i<TSR_MAX_ACTIVE_EVENTS;++i)
-      if(!g_events[i].active)
-        {
-         ZeroMemory(g_events[i]);
-         g_events[i].active=true;
-         for(int j=0;j<TSR_ALL_SCENARIOS;++j) TSRResetScenario(g_events[i].scenarios[j]);
-         return i;
-        }
-   return -1;
-  }
-
 bool TSRContainsSymbol(const string symbol,const int upto)
   {
    for(int i=0;i<upto;++i) if(g_symbols[i].symbol==symbol) return true;
@@ -1029,14 +959,17 @@ bool TSRInitializeSymbol(TSRSymbolContext &context,const string symbol)
    ArrayResize(context.samples250,TSRSampleCapacity(0));
    ArrayResize(context.samples500,TSRSampleCapacity(1));
    ArrayResize(context.samples1000,TSRSampleCapacity(2));
-   context.tick_head=0;context.tick_count=0;context.grid_head=0;context.grid_count=0;
-   context.last_time_msc=0;context.processed_at_last_msc=0;context.next_grid_msc=0;context.last_quote_msc=0;
-   context.last_symbol_cluster_start_msc=0;context.last_symbol_cluster_id=0;context.m1_minutes_seen=0;context.last_m1_minute=-1;
+   TSRingReset(context.tick_ring,TSR_TICK_CAPACITY);
+   TSRingReset(context.grid_ring,TSR_GRID_CAPACITY);
+   TSGridReset(context.grid_runtime);
+   context.last_time_msc=0;context.processed_at_last_msc=0;
+   TSResetSymbolClusterClock(context.symbol_cluster_clock);context.m1_minutes_seen=0;context.last_m1_minute=-1;
    for(int d=0;d<TSR_DETECTOR_COUNT;++d)
      {
-      context.sample_head[d]=0;context.sample_count[d]=0;context.ticks_since_window[d]=0;
+      TSRingReset(context.sample_ring[d],TSRSampleCapacity(d));context.ticks_since_window[d]=0;
       context.baseline_cache_msc[d]=-1;
       context.baseline_hist_msc[d]=-1;
+      TSResetDetectorCounters(context.detector_counters[d]);
      }
    return TSMt5CreateTrendHandles(symbol,context.ema20_m15,context.ema50_m15,context.ema20_h1,context.ema50_h1);
   }
@@ -1091,9 +1024,9 @@ double TSRNormalizeStopOutward(const int symbol_index,const int direction,const 
 double TSRCommissionR(const int symbol_index,const int direction,const double entry,const double sl)
   {
    if(InpCommissionPerLotRoundTurn<=0.0) return 0.0;
-   double loss=0.0;
-   if(!TSMt5CalcOneLotLoss(direction,g_symbols[symbol_index].symbol,entry,sl,loss) || loss>=0.0) return 0.0;
-   return InpCommissionPerLotRoundTurn/MathAbs(loss);
+   TickShockCommissionResult result;
+   if(!TSMt5CommissionResult(direction,g_symbols[symbol_index].symbol,entry,sl,InpCommissionPerLotRoundTurn,0.0,result)) return 0.0;
+   return result.commission_r;
   }
 
 bool TSRRegisterStrategySignal(TSREvent &event,
@@ -1461,7 +1394,14 @@ void TSRDetectShock(TSRSymbolContext &context,
       TSRCountPreSkip(symbol_index,"invalid_denominator");
       return;
      }
-   double robust_z=(sample.price_move-context.baseline_median[detector])/context.baseline_scale[detector];
+   TickShockRobustStatistics robust_statistics;
+   if(!TSEngineRobustStatistics(sample.price_move,context.baseline_median[detector],context.baseline_mad[detector],
+                                MathMax(InpNoiseFloorTicks,0.0)*context.tick_size,robust_statistics))
+     {
+      TSRCountPreSkip(symbol_index,"invalid_denominator");
+      return;
+     }
+   double robust_z=robust_statistics.robust_z;
    double efficiency=0.0;
    if(!TSRPathEfficiency(context,sample.end_msc-TSR_DETECTOR_MS[detector],sample.end_msc,sample.start_mid,sample.end_mid,efficiency))
      {
@@ -1474,6 +1414,7 @@ void TSRDetectShock(TSRSymbolContext &context,
    TickShockDetectorResult detector_result;
    TSEngineEvaluateDetector(sample.price_move,context.baseline_percentile[detector],robust_z,efficiency,
                             move_spread,intensity,spread_ratio,g_core_config,detector_result);
+   TSObserveDetectorResult(context.detector_counters[detector],detector_result);
    bool cumulative=true;
    ++context.evaluable_samples[detector];
    for(int g=0;g<TSR_GATE_COUNT;++g)
@@ -1494,43 +1435,29 @@ void TSRDetectShock(TSRSymbolContext &context,
       TSRCountPreSkip(symbol_index,reason);
       return;
      }
-   for(int i=0;i<TSR_MAX_ACTIVE_EVENTS;++i)
-      if(g_events[i].active && g_events[i].symbol_index==symbol_index &&
-         g_events[i].detector_window_ms==TSR_DETECTOR_MS[detector] &&
-         g_events[i].detection_msc==sample.end_msc)
-        {
-         ++g_duplicate_events;
-         return;
-        }
-   int slot=TSRAllocateEvent();
-   if(slot<0)
+   TickShockEventKey event_key;
+   event_key.symbol_index=symbol_index;
+   event_key.detector_window_ms=TSR_DETECTOR_MS[detector];
+   event_key.detection_msc=sample.end_msc;
+   TickShockEventRegistration registration;
+   if(!TSEngineRegisterResearchEvent(g_event_engine,context.symbol_cluster_clock,event_key,2000,registration))
      {
-      TSRCountPreSkip(symbol_index,"invalid_denominator");
+      if(!registration.duplicate) TSRCountPreSkip(symbol_index,"invalid_denominator");
       return;
      }
-   ++g_event_sequence;
+   int slot=registration.slot;
+   ZeroMemory(g_events[slot]);
+   g_events[slot].active=true;
+   for(int j=0;j<TSR_ALL_SCENARIOS;++j) TSRResetScenario(g_events[slot].scenarios[j]);
    g_events[slot].symbol_index=symbol_index;
    g_events[slot].detector_window_ms=TSR_DETECTOR_MS[detector];
-   g_events[slot].event_id=StringFormat("%s_%s_w%d_%I64d_%I64d",InpRunId,context.symbol,TSR_DETECTOR_MS[detector],sample.end_msc,g_event_sequence);
+   g_events[slot].event_id=StringFormat("%s_%s_w%d_%I64d_%I64d",InpRunId,context.symbol,TSR_DETECTOR_MS[detector],sample.end_msc,registration.event_sequence);
    g_events[slot].direction=sample.signed_log_return>0.0?1:-1;
    g_events[slot].shock_gate_mask=mask;
-   if(context.last_symbol_cluster_start_msc>0 &&
-      sample.end_msc>=context.last_symbol_cluster_start_msc &&
-      sample.end_msc-context.last_symbol_cluster_start_msc<=2000)
-     {
-      g_events[slot].symbol_cluster_id=context.last_symbol_cluster_id;
-      g_events[slot].symbol_overlap_event=true;
-      ++g_symbol_overlap_events;
-     }
-   else
-     {
-      g_events[slot].symbol_cluster_id=++g_symbol_cluster_sequence;
-      g_events[slot].symbol_overlap_event=false;
-      context.last_symbol_cluster_start_msc=sample.end_msc;
-     }
-   context.last_symbol_cluster_id=g_events[slot].symbol_cluster_id;
-   g_events[slot].market_cluster_id=TSAssignResearchMarketCluster(g_market_cluster_clock,sample.end_msc,2000,g_events[slot].market_overlap_event);
-   if(g_events[slot].market_overlap_event) ++g_market_overlap_events;
+   g_events[slot].symbol_cluster_id=registration.symbol_cluster_id;
+   g_events[slot].symbol_overlap_event=registration.symbol_overlap;
+   g_events[slot].market_cluster_id=registration.market_cluster_id;
+   g_events[slot].market_overlap_event=registration.market_overlap;
    g_events[slot].detection_msc=sample.end_msc;
    g_events[slot].detection_grid_msc=sample.end_msc;
    g_events[slot].detection_quote_msc=point.quote_msc;
@@ -1582,12 +1509,12 @@ void TSRCloseGridBoundary(TSRSymbolContext &context,const int symbol_index,const
   {
    TSRGridPoint point;
    point.time_msc=boundary_msc;
-   point.quote_msc=context.last_quote_msc;
-   point.bid=context.last_bid;
-   point.ask=context.last_ask;
-   point.mid=context.last_mid;
-   point.quote_age_ms=context.last_quote_msc>0?(int)MathMax((long)0,boundary_msc-context.last_quote_msc):2147483647;
-   point.valid=context.last_mid>0.0 && context.last_ask>context.last_bid && point.quote_age_ms<=InpMaxQuoteAgeMs;
+   point.quote_msc=context.grid_runtime.quote_msc;
+   point.bid=context.grid_runtime.bid;
+   point.ask=context.grid_runtime.ask;
+   point.mid=context.grid_runtime.mid;
+   point.quote_age_ms=context.grid_runtime.quote_msc>0?(int)MathMax((long)0,boundary_msc-context.grid_runtime.quote_msc):2147483647;
+   point.valid=context.grid_runtime.mid>0.0 && context.grid_runtime.ask>context.grid_runtime.bid && point.quote_age_ms<=InpMaxQuoteAgeMs;
    TSRAddGrid(context,point);
    for(int detector=0;detector<TSR_DETECTOR_COUNT;++detector)
      {
@@ -1628,20 +1555,20 @@ void TSRCloseGridBoundary(TSRSymbolContext &context,const int symbol_index,const
 
 void TSRAdvanceGridBeforeTick(TSRSymbolContext &context,const int symbol_index,const long tick_msc,const long processing_msc)
   {
-   if(context.next_grid_msc<=0) return;
-   while(context.next_grid_msc<tick_msc)
+   if(context.grid_runtime.next_boundary_msc<=0) return;
+   while(context.grid_runtime.next_boundary_msc<tick_msc)
      {
-      TSRCloseGridBoundary(context,symbol_index,context.next_grid_msc,processing_msc);
-      context.next_grid_msc+=InpGridMs;
+      TSRCloseGridBoundary(context,symbol_index,context.grid_runtime.next_boundary_msc,processing_msc);
+      TSGridAdvanceBoundary(context.grid_runtime,InpGridMs);
      }
   }
 
 void TSRAdvanceGridAtTick(TSRSymbolContext &context,const int symbol_index,const long tick_msc,const long processing_msc)
   {
-   while(context.next_grid_msc>0 && context.next_grid_msc==tick_msc)
+   while(context.grid_runtime.next_boundary_msc>0 && context.grid_runtime.next_boundary_msc==tick_msc)
      {
-      TSRCloseGridBoundary(context,symbol_index,context.next_grid_msc,processing_msc);
-      context.next_grid_msc+=InpGridMs;
+      TSRCloseGridBoundary(context,symbol_index,context.grid_runtime.next_boundary_msc,processing_msc);
+      TSGridAdvanceBoundary(context.grid_runtime,InpGridMs);
      }
   }
 
@@ -1747,7 +1674,8 @@ void TSRWriteEvent(TSREvent &event)
    if(event.signal_started[TSR_POST_BURST_CONTINUATION]) ++g_post_burst_signals;
    if(event.signal_started[TSR_PULLBACK_CONTINUATION]) ++g_pullback_signals;
    if(event.signal_started[TSR_FAILED_SHOCK_REVERSAL]) ++g_reversal_signals;
-   ++g_event_rows;
+   TSRecordEventRow(g_event_engine);
+   g_event_rows=g_event_engine.event_rows;
    event.csv_written=true;
   }
 
@@ -1758,6 +1686,7 @@ void TSRReleaseWrittenEvents()
         {
          TSRWriteEvent(g_events[i]);
          g_events[i].active=false;
+         TSReleaseEventSlot(g_event_engine,i);
         }
   }
 
@@ -1765,13 +1694,10 @@ void TSRProcessOneTick(const int symbol_index,const MqlTick &source,const long p
   {
    if(source.bid<=0.0 || source.ask<=source.bid || source.time_msc<=0) return;
    long time_msc=(long)source.time_msc;
-   if(g_symbols[symbol_index].next_grid_msc<=0)
-      g_symbols[symbol_index].next_grid_msc=((time_msc/InpGridMs)+1)*InpGridMs;
+   if(g_symbols[symbol_index].grid_runtime.next_boundary_msc<=0)
+      g_symbols[symbol_index].grid_runtime.next_boundary_msc=((time_msc/InpGridMs)+1)*InpGridMs;
    TSRAdvanceGridBeforeTick(g_symbols[symbol_index],symbol_index,time_msc,processing_msc);
-   g_symbols[symbol_index].last_quote_msc=time_msc;
-   g_symbols[symbol_index].last_bid=source.bid;
-   g_symbols[symbol_index].last_ask=source.ask;
-   g_symbols[symbol_index].last_mid=(source.bid+source.ask)*0.5;
+   TSGridObserveQuote(g_symbols[symbol_index].grid_runtime,time_msc,source.bid,source.ask,InpGridMs);
    TSRAddTick(g_symbols[symbol_index],source);
    for(int d=0;d<TSR_DETECTOR_COUNT;++d) ++g_symbols[symbol_index].ticks_since_window[d];
    long minute=time_msc/60000;
@@ -1783,7 +1709,7 @@ void TSRProcessOneTick(const int symbol_index,const MqlTick &source,const long p
    ++g_symbols[symbol_index].ticks_processed;
    ++g_total_ticks;
    TSRShortTick tick;
-   tick.time_msc=time_msc;tick.bid=source.bid;tick.ask=source.ask;tick.mid=g_symbols[symbol_index].last_mid;
+   tick.time_msc=time_msc;tick.bid=source.bid;tick.ask=source.ask;tick.mid=g_symbols[symbol_index].grid_runtime.mid;
    for(int i=0;i<TSR_MAX_ACTIVE_EVENTS;++i)
       if(g_events[i].active && g_events[i].symbol_index==symbol_index)
          TSRProcessEventTick(g_events[i],tick,processing_msc);
@@ -1791,22 +1717,7 @@ void TSRProcessOneTick(const int symbol_index,const MqlTick &source,const long p
    TSRReleaseWrittenEvents();
   }
 
-bool TSRAppendMerged(TSRMergedTick &merged[],const int symbol_index,const int sequence,const MqlTick &tick)
-  {
-   int size=ArraySize(merged);
-   if(size>=TSR_PENDING_CAPACITY)
-     {
-      ++g_pending_capacity_hits;
-      return false;
-     }
-   ArrayResize(merged,size+1,TSR_PENDING_CAPACITY);
-   merged[size].symbol_index=symbol_index;
-   merged[size].sequence=sequence;
-   merged[size].tick=tick;
-   return true;
-  }
-
-void TSRCollectSymbolTicks(const int symbol_index,TSRMergedTick &merged[],int &sequence)
+void TSRCollectSymbolTicks(const int symbol_index,TickShockPendingRepository &repository)
   {
    int loops=0;
    while(loops<64)
@@ -1843,8 +1754,7 @@ void TSRCollectSymbolTicks(const int symbol_index,TSRMergedTick &merged[],int &s
                continue;
               }
            }
-         if(!TSRAppendMerged(merged,symbol_index,sequence,copied[i])) return;
-         ++sequence;
+         if(!TSMergeAppend(repository,symbol_index,copied[i],TSR_PENDING_CAPACITY)) return;
          if(t!=g_symbols[symbol_index].last_time_msc)
            {
             g_symbols[symbol_index].last_time_msc=t;
@@ -1856,30 +1766,6 @@ void TSRCollectSymbolTicks(const int symbol_index,TSRMergedTick &merged[],int &s
       if(count<requested) break;
       if(collected==0 && g_symbols[symbol_index].last_time_msc==before_time && g_symbols[symbol_index].processed_at_last_msc==before_count) break;
      }
-  }
-
-bool TSRMergedLess(const TSRMergedTick &a,const TSRMergedTick &b)
-  {
-   return TSChronologicalKeyLess((long)a.tick.time_msc,a.symbol_index,a.sequence,
-                                 (long)b.tick.time_msc,b.symbol_index,b.sequence);
-  }
-
-void TSRSortMerged(TSRMergedTick &values[],int left,int right)
-  {
-   int i=left,j=right;
-   TSRMergedTick pivot=values[(left+right)/2];
-   while(i<=j)
-     {
-      while(TSRMergedLess(values[i],pivot)) ++i;
-      while(TSRMergedLess(pivot,values[j])) --j;
-      if(i<=j)
-        {
-         TSRMergedTick temp=values[i];values[i]=values[j];values[j]=temp;
-         ++i;--j;
-        }
-     }
-   if(left<j) TSRSortMerged(values,left,j);
-   if(i<right) TSRSortMerged(values,i,right);
   }
 
 long TSRProcessingMsc()
@@ -1908,27 +1794,21 @@ void TSRProcessMergedPrefix(const int count,const long processing_msc)
    while(i<count)
      {
       int end=i+1;
-      long group_msc=(long)g_pending_ticks[i].tick.time_msc;
-      int symbol_index=g_pending_ticks[i].symbol_index;
-      while(end<count && (long)g_pending_ticks[end].tick.time_msc==group_msc &&
-            g_pending_ticks[end].symbol_index==symbol_index) ++end;
+      long group_msc=(long)g_pending_repository.items[i].tick.time_msc;
+      int symbol_index=g_pending_repository.items[i].symbol_index;
+      while(end<count && (long)g_pending_repository.items[end].tick.time_msc==group_msc &&
+            g_pending_repository.items[end].symbol_index==symbol_index) ++end;
       int group_size=end-i;
-      if(group_size>1)
-        {
-         ++g_same_msc_groups;
-         g_same_msc_ticks+=group_size;
-         g_max_same_msc_group=MathMax(g_max_same_msc_group,group_size);
-        }
+      TSMergeObserveGroup(g_pending_repository,group_size);
       for(int j=i;j<end;++j)
         {
-         long tick_msc=(long)g_pending_ticks[j].tick.time_msc;
-         if(g_last_merged_processed_msc>0 && tick_msc<g_last_merged_processed_msc) ++g_merge_order_violations;
-         g_last_merged_processed_msc=MathMax(g_last_merged_processed_msc,tick_msc);
+         long tick_msc=(long)g_pending_repository.items[j].tick.time_msc;
+         TSMergeObserveProcessed(g_pending_repository,tick_msc);
          bool has_next=j+1<count;
-         long next_msc=has_next?(long)g_pending_ticks[j+1].tick.time_msc:0;
-         int next_symbol=has_next?g_pending_ticks[j+1].symbol_index:-1;
+         long next_msc=has_next?(long)g_pending_repository.items[j+1].tick.time_msc:0;
+         int next_symbol=has_next?g_pending_repository.items[j+1].symbol_index:-1;
          bool final_quote=TSResearchFinalQuoteInSameMscGroup(tick_msc,symbol_index,has_next,next_msc,next_symbol);
-         TSRProcessOneTick(symbol_index,g_pending_ticks[j].tick,processing_msc,final_quote);
+         TSRProcessOneTick(symbol_index,g_pending_repository.items[j].tick,processing_msc,final_quote);
         }
       i=end;
      }
@@ -1937,10 +1817,9 @@ void TSRProcessMergedPrefix(const int count,const long processing_msc)
 void TSRDispatcher()
   {
    long processing_msc=TSRProcessingMsc();
-   for(int i=0;i<ArraySize(g_symbols);++i) TSRCollectSymbolTicks(i,g_pending_ticks,g_merge_sequence);
-   int count=ArraySize(g_pending_ticks);
-   g_max_merged_batch=MathMax(g_max_merged_batch,count);
-   if(count>1) TSRSortMerged(g_pending_ticks,0,count-1);
+   for(int i=0;i<ArraySize(g_symbols);++i) TSRCollectSymbolTicks(i,g_pending_repository);
+   int count=ArraySize(g_pending_repository.items);
+   TSMergeSortPending(g_pending_repository);
 
    // A tick is released only after every symbol has advanced beyond its
    // timestamp.  This watermark makes ordering global across dispatcher
@@ -1954,30 +1833,19 @@ void TSRDispatcher()
       if(watermark==0 || g_symbols[i].last_time_msc<watermark) watermark=g_symbols[i].last_time_msc;
      }
 
-   int released=0;
-   while(ready && released<count && (long)g_pending_ticks[released].tick.time_msc<watermark) ++released;
-   // Do not split a same-symbol/same-millisecond group.  The strict watermark
-   // normally guarantees this; the guard documents and enforces it.
-   while(released>0 && released<count &&
-         (long)g_pending_ticks[released-1].tick.time_msc==(long)g_pending_ticks[released].tick.time_msc &&
-         g_pending_ticks[released-1].symbol_index==g_pending_ticks[released].symbol_index) --released;
+   int released=ready?TSMergeReleasableCount(g_pending_repository,watermark):0;
    if(released>0) TSRProcessMergedPrefix(released,processing_msc);
-   if(released>0)
-     {
-      int remaining=count-released;
-      for(int i=0;i<remaining;++i) g_pending_ticks[i]=g_pending_ticks[released+i];
-      ArrayResize(g_pending_ticks,remaining);
-     }
+   if(released>0) TSMergeRemovePrefix(g_pending_repository,released);
    TSRSampleMemory();
   }
 
 void TSRFlushPendingTicks()
   {
-   int count=ArraySize(g_pending_ticks);
-   if(count>1) TSRSortMerged(g_pending_ticks,0,count-1);
+   int count=ArraySize(g_pending_repository.items);
+   TSMergeSortPending(g_pending_repository);
    long processing_msc=TSRProcessingMsc();
    TSRProcessMergedPrefix(count,processing_msc);
-   ArrayResize(g_pending_ticks,0);
+   ArrayResize(g_pending_repository.items,0);
   }
 
 void TSRSummaryRow(const string record_type,const string key,const long events,const long raw,const long ticks,
@@ -2005,7 +1873,7 @@ void TSRWriteSummary()
       all_sum_r+=g_scenario_sum_r[i];
      }
    TSRSummaryRow("OVERALL","ALL",g_total_events,g_total_raw,g_total_ticks,all_valid,all_invalid,all_valid>0?all_sum_r/all_valid:0.0,
-                 "validation=EDGE_UNDETERMINED;research_only=true;execution_mode="+TSRExecutionModeName()+";formal_edge_eligible="+TSRBool(InpExecutionMode==REALIZABLE_EA)+";market_clusters="+TSRLong(g_market_cluster_clock.sequence)+";commission="+InpCommissionSource);
+                 "validation=EDGE_UNDETERMINED;research_only=true;execution_mode="+TSRExecutionModeName()+";formal_edge_eligible="+TSRBool(InpExecutionMode==REALIZABLE_EA)+";market_clusters="+TSRLong(g_event_engine.market_cluster_clock.sequence)+";commission="+InpCommissionSource);
    TSRSummaryRow("FUNNEL","valid_bursts",g_valid_bursts,0,0,0,0,0.0,TSRLong(g_valid_bursts));
    TSRSummaryRow("FUNNEL","valid_pullbacks",g_valid_pullbacks,0,0,0,0,0.0,TSRLong(g_valid_pullbacks));
    TSRSummaryRow("FUNNEL","reacceleration_signals",g_reacceleration_signals,0,0,0,0,0.0,TSRLong(g_reacceleration_signals));
@@ -2064,7 +1932,7 @@ void TSRWriteSummary()
       TSRSummaryRow("DISTRIBUTION","burst_spread_ratio",0,0,0,0,0,0.0,
                     StringFormat("n=%d;min=%.6f;p25=%.6f;median=%.6f;p75=%.6f;p95=%.6f;max=%.6f",ratio_count,min_v,TSRPercentile(p25a,ratio_count,25.0),TSRPercentile(p50a,ratio_count,50.0),TSRPercentile(p75a,ratio_count,75.0),TSRPercentile(p95a,ratio_count,95.0),max_v));
      }
-   TSRSummaryRow("CLUSTER","counts",g_total_events,0,0,0,0,0.0,StringFormat("event_rows=%I64d;symbol_clusters=%I64d;market_clusters=%I64d;symbol_overlap_events=%I64d;market_overlap_events=%I64d;duplicate_events=%I64d",g_event_rows,g_symbol_cluster_sequence,g_market_cluster_clock.sequence,g_symbol_overlap_events,g_market_overlap_events,g_duplicate_events));
+   TSRSummaryRow("CLUSTER","counts",g_total_events,0,0,0,0,0.0,StringFormat("event_rows=%I64d;symbol_clusters=%I64d;market_clusters=%I64d;symbol_overlap_events=%I64d;market_overlap_events=%I64d;duplicate_events=%I64d",g_event_rows,g_event_engine.symbol_cluster_sequence,g_event_engine.market_cluster_clock.sequence,g_event_engine.symbol_overlap_events,g_event_engine.market_overlap_events,g_event_engine.duplicate_events));
    TSRSummaryRow("INVARIANT","entry_before_eligible",0,0,0,0,0,0.0,TSRLong(g_entry_before_eligible));
    TSRSummaryRow("INVARIANT","entry_before_processing",0,0,0,0,0,0.0,TSRLong(g_entry_before_processing));
    TSRSummaryRow("INVARIANT","stale_detection_fill",0,0,0,0,0,0.0,TSRLong(g_stale_detection_fills));
@@ -2077,8 +1945,8 @@ void TSRWriteSummary()
    TSRSummaryRow("BUFFER","tick_samples_per_symbol_max",0,0,0,0,0,0.0,IntegerToString(TSR_TICK_CAPACITY));
    TSRSummaryRow("BUFFER","tick_retention",0,0,0,0,0,0.0,"older_than_5000ms_or_capacity_8192");
    TSRSummaryRow("BUFFER","active_event_slots_max",0,0,0,0,0,0.0,IntegerToString(TSR_MAX_ACTIVE_EVENTS));
-   TSRSummaryRow("BUFFER","global_pending_ticks",0,0,0,0,0,0.0,StringFormat("capacity=%d;max_observed=%I64d;capacity_hits=%I64d",TSR_PENDING_CAPACITY,g_max_merged_batch,g_pending_capacity_hits));
-   TSRSummaryRow("BUFFER","same_millisecond_groups",0,0,0,0,0,0.0,StringFormat("groups=%I64d;ticks=%I64d;max_group=%I64d",g_same_msc_groups,g_same_msc_ticks,g_max_same_msc_group));
+   TSRSummaryRow("BUFFER","global_pending_ticks",0,0,0,0,0,0.0,StringFormat("capacity=%d;max_observed=%I64d;capacity_hits=%I64d",TSR_PENDING_CAPACITY,g_pending_repository.max_observed,g_pending_repository.capacity_hits));
+   TSRSummaryRow("BUFFER","same_millisecond_groups",0,0,0,0,0,0.0,StringFormat("groups=%I64d;ticks=%I64d;max_group=%I64d",g_pending_repository.same_msc_groups,g_pending_repository.same_msc_ticks,g_pending_repository.max_same_msc_group));
    TSRSummaryRow("LOG_POLICY","tick_or_grid_csv",0,0,0,0,0,0.0,"disabled");
    TSRSummaryRow("MODEL","return_definition",0,0,0,0,0,0.0,"independent_250_500_1000ms_detectors;signal_and_baseline_use_same_absolute_mid Move;rolling half-tick histogram;exclude_2000ms;log returns diagnostic only");
    TSRSummaryRow("MODEL","execution_mode",0,0,0,0,0,0.0,TSRExecutionModeName()+";formal_expectancy="+TSRBool(InpExecutionMode==REALIZABLE_EA));
@@ -2087,7 +1955,7 @@ void TSRWriteSummary()
    TSRSummaryRow("MODEL","spread_stress",0,0,0,0,0,0.0,"BidAsk widened around Mid;absolute risk distance fixed from unstressed spread for paired spread scenarios");
    TSRSummaryRow("MODEL","exit_execution",0,0,0,0,0,0.0,"TP_limit_at_barrier;SL_first_tradable_side_plus_adverse_slippage;TIME_current_tradable_side");
    TSRSummaryRow("MODEL","protective_distance",0,0,0,0,0,0.0,"StopsLevel checked from current stressed Bid/Ask;FreezeLevel recorded separately as modification diagnostic;TP rounded outward so realized_rr>=requested_rr");
-   TSRSummaryRow("MODEL","global_merge",0,0,0,0,0,0.0,StringFormat("order_violations=%I64d;max_pending=%I64d;pending_at_summary=%d",g_merge_order_violations,g_max_merged_batch,ArraySize(g_pending_ticks)));
+   TSRSummaryRow("MODEL","global_merge",0,0,0,0,0,0.0,StringFormat("order_violations=%I64d;max_pending=%I64d;pending_at_summary=%d",g_pending_repository.order_violations,g_pending_repository.max_observed,ArraySize(g_pending_repository.items)));
    TSRSummaryRow("MODEL","commission",0,0,0,0,0,0.0,DoubleToString(InpCommissionPerLotRoundTurn,4)+":"+InpCommissionSource);
    TSMt5Flush(g_summary_file);
   }
@@ -2113,6 +1981,7 @@ void TSRFlushIncompleteEvents()
         }
       TSRWriteEvent(g_events[i]);
       g_events[i].active=false;
+      TSReleaseEventSlot(g_event_engine,i);
      }
   }
 
@@ -2143,7 +2012,8 @@ int OnInit()
          PrintFormat("%s baseline exceeds sample capacity detector=%d required=%d cap=%d",TSR_NAME,detector,TSRRequiredSampleCapacity(detector),TSR_SAMPLE_CAPACITY);
          return INIT_PARAMETERS_INCORRECT;
         }
-   TSResetResearchClusterClock(g_market_cluster_clock);
+   TSResetEventEngine(g_event_engine,TSR_MAX_ACTIVE_EVENTS);
+   TSResetPendingRepository(g_pending_repository);
    if(!TSRParseSymbols()) return INIT_FAILED;
    if(!TSROpenLogs())
      {

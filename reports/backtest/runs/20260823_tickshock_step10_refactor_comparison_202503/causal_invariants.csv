@@ -1,0 +1,23 @@
+mode,invariant,checked_count,violation_count,status,formal_scope,evidence
+IDEAL_EVENT_STUDY,entry_quote_msc >= signal_event_msc + requested_delay_ms,7128,0,PASS,NO,independent scenario-grid comparison
+IDEAL_EVENT_STUDY,entry_quote_msc >= signal_processing_msc + submit_latency_ms,7128,6204,FAIL,NO,submit_latency_ms=0; IDEAL is diagnostic-only
+IDEAL_EVENT_STUDY,entry_quote_msc >= entry_eligible_msc,7128,0,PASS,NO,independent scenario-grid comparison
+IDEAL_EVENT_STUDY,entry_quote_msc > signal_event_msc,7128,0,PASS,NO,same signal tick cannot fill
+IDEAL_EVENT_STUDY,stale Detection boundary fill = 0,2508,0,PASS,NO,detection_quote_age_ms and grid clock checked separately
+IDEAL_EVENT_STUDY,reversal signal equals invalidation time,1518,0,PASS,NO,scenario signal_event compared with event invalidation clock
+IDEAL_EVENT_STUDY,realized RR >= requested RR (1.2),7128,0,PASS,NO,tick-rounded scenario values
+IDEAL_EVENT_STUDY,global order violation = 0,1,0,PASS,NO,order_violations=0;max_pending=319;pending_at_summary=0
+IDEAL_EVENT_STUDY,duplicate event = 0,19,0,PASS,NO,duplicate key is symbol + detector + detection_time_msc
+IDEAL_EVENT_STUDY,market cluster integrity,19,0,PASS,NO,recomputed_market_clusters=15
+IDEAL_EVENT_STUDY,CSV and summary reconciliation,8023,0,PASS,NO,mismatches=none
+REALIZABLE_EA,entry_quote_msc >= signal_event_msc + requested_delay_ms,7128,0,PASS,YES,independent scenario-grid comparison
+REALIZABLE_EA,entry_quote_msc >= signal_processing_msc + submit_latency_ms,7128,0,PASS,YES,submit_latency_ms=0; IDEAL is diagnostic-only
+REALIZABLE_EA,entry_quote_msc >= entry_eligible_msc,7128,0,PASS,YES,independent scenario-grid comparison
+REALIZABLE_EA,entry_quote_msc > signal_event_msc,7128,0,PASS,YES,same signal tick cannot fill
+REALIZABLE_EA,stale Detection boundary fill = 0,2508,0,PASS,YES,detection_quote_age_ms and grid clock checked separately
+REALIZABLE_EA,reversal signal equals invalidation time,1518,0,PASS,YES,scenario signal_event compared with event invalidation clock
+REALIZABLE_EA,realized RR >= requested RR (1.2),7128,0,PASS,YES,tick-rounded scenario values
+REALIZABLE_EA,global order violation = 0,1,0,PASS,YES,order_violations=0;max_pending=319;pending_at_summary=0
+REALIZABLE_EA,duplicate event = 0,19,0,PASS,YES,duplicate key is symbol + detector + detection_time_msc
+REALIZABLE_EA,market cluster integrity,19,0,PASS,YES,recomputed_market_clusters=15
+REALIZABLE_EA,CSV and summary reconciliation,8023,0,PASS,YES,mismatches=none

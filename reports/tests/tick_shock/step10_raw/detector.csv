@@ -1,0 +1,14 @@
+test_id,observed,expected,actual,difference,evidence_path
+TS-RET-001,MATCH,log_return_250=0.000499126539;log_return_500=0.000998502330;log_return_1000=0.001998002663;all_valid=true;returns_distinct=true,log_return_250=0.000499126539;log_return_500=0.000998502330;log_return_1000=0.001998002663;all_valid=true;returns_distinct=true,,detector.csv
+TS-RET-002,MATCH,valid=false;csv_value=;forbidden_value=0,valid=false;csv_value=;forbidden_value=0,,detector.csv
+TS-INT-001,MATCH,before_pass=false;equal_pass=true;after_pass=true;equal_ratio=1.5,before_pass=false;equal_pass=true;equal_ratio=1.5;after_pass=true,,detector.csv
+TS-MOVE-001,MATCH,before_pass=false;equal_pass=true;after_pass=true;equal_ratio=4.0,before_pass=false;equal_pass=true;equal_ratio=4.0;after_pass=true,,detector.csv
+TS-SPREAD-001,MATCH,before_pass=true;equal_pass=true;after_pass=false;equal_ratio=1.5,before_pass=true;equal_pass=true;equal_ratio=1.5;after_pass=false,,detector.csv
+TS-GATE-001,MATCH,minimum_gate_pattern=FAIL|PASS|PASS;maximum_gate_pattern=PASS|PASS|FAIL;equal_all_gate_mask=63;thresholds_changed=false,minimum_gate_pattern=FAIL|PASS|PASS;maximum_gate_pattern=PASS|PASS|FAIL;equal_all_gate_mask=63;thresholds_changed=false,,detector.csv
+TS-PCT-001,MATCH,rank=2.25;lower_bin=6;upper_bin=8;percentile_bin=6.5;percentile_price=0.000325,rank=2.250000000000;lower_bin=6.000000000000;upper_bin=8.000000000000;percentile_bin=6.500000000000;percentile_price=0.000325000000,,detector.csv
+TS-Z-001,MATCH,raw_scale=0.00007413;robust_scale=0.00007413;robust_z=4.046944556860;scale_floored=false,raw_scale=0.000074130000;robust_scale=0.000074130000;robust_z=4.046944556860;scale_floored=false,,detector.csv
+TS-Z-002,MATCH,raw_scale=0;noise_floor_price=0.00010;robust_scale=0.00010;robust_z=3.5;scale_floored=true,raw_scale=0.000000000000;noise_floor_price=0.000100000000;robust_scale=0.000100000000;robust_z=3.500000000000;scale_floored=true,,detector.csv
+TS-EFF-001,MATCH,net_move=0.0005;path_length=0.0007;efficiency=0.714285714286;valid=true,net_move=0.000500000000;path_length=0.000700000000;efficiency=0.714285714286;valid=true,,detector.csv
+TS-EFF-002,MATCH,path_length=0;valid=false;event_created=false;reject_reason=efficiency_failed,path_length=0.000000000000;valid=false;event_created=false;reject_reason=efficiency_failed,,detector.csv
+TS-BASE-001,MATCH,baseline_ready=false;event_created=false;summary_skip_reason=insufficient_baseline,baseline_ready=false;event_created=false;summary_skip_reason=insufficient_baseline,,detector.csv
+TS-BASE-002,MATCH,baseline_ready=true;detector_evaluated=true;insufficient_baseline_increment=0,baseline_ready=true;detector_evaluated=true;insufficient_baseline_increment=0,,detector.csv

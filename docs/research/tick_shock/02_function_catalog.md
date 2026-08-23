@@ -1,9 +1,9 @@
-# Tick-shock function catalog (As-Is through Step 9 current-source rollup)
+# Tick-shock function catalog (As-Is through Step 10 current-source rollup)
 
-- scope: Step 2 As-Is catalog, the behavior-preserving Step 4 modules, and the Step 9 current-source reconciliation
+- scope: Step 2 As-Is catalog, Step 4 modules, Step 9 reconciliation, and Step 10 production-callable seams
 - extraction: multiline function-definition regex plus brace-balanced body scan
-- mechanically extracted current functions: 216
-- cataloged current functions: 216 (165 Step 2 definitions retained, 42 Step 4 composition/module definitions, and 9 Step 6 definitions added below)
+- mechanically extracted current functions: 253
+- cataloged current functions: 253 (Step 10 removes four EA-local definitions and adds 41 module/facade/adapter definitions)
 - count difference: 0
 
 The catalog is As-Is documentation, not a claim that the implementation is causally validated. G:R/G:W list global/input/constant dependencies detected in the function body. Mutable reference parameters are reported under struct side effects. Pure means deterministic with no detected global, MQL built-in, file, or mutable-reference dependency; this is a deliberately conservative lexical label, so deterministic helpers using MathAbs or formatting APIs can appear impure. Stateful deterministic means mutation is limited to supplied data. The authoritative extraction candidates are listed in 02_refactor_targets.md.
@@ -365,3 +365,71 @@ caller: `TSROpenCsv`; test caller: `TS5RunCsvCollision`. Its precondition is a
 nonempty folder/path/header/run id/fingerprint; its postcondition is either a
 valid append-positioned handle with one matching header or `INVALID_HANDLE`
 without mixing runs. It is direction-neutral and requires file integration.
+
+## Step 10 current-source reconciliation
+
+The Step 9 scope was rescanned after the behavior-preserving extraction. The
+authoritative count is now 253 definitions and 253 catalog entries. The scan
+uses the same multiline definition regex and brace-balanced scope used by Step
+9. Step 5 support/harness helper functions remain outside this catalog scope.
+
+| Current file | Extracted | Cataloged | Difference |
+|---|---:|---:|---:|
+| `mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5` | 91 | 91 | 0 |
+| `TickShockBaseline.mqh` | 6 | 6 | 0 |
+| `TickShockClusterer.mqh` | 5 | 5 | 0 |
+| `TickShockConfig.mqh` | 3 | 3 | 0 |
+| `TickShockCsvSerializer.mqh` | 9 | 9 | 0 |
+| `TickShockDetector.mqh` | 8 | 8 | 0 |
+| `TickShockEngine.mqh` | 12 | 12 | 0 |
+| `TickShockEventEngine.mqh` | 6 | 6 | 0 |
+| `TickShockExecutionModel.mqh` | 20 | 20 | 0 |
+| `TickShockGrid.mqh` | 3 | 3 | 0 |
+| `TickShockMergeSequencer.mqh` | 9 | 9 | 0 |
+| `TickShockMetrics.mqh` | 2 | 2 | 0 |
+| `TickShockMt5Adapter.mqh` | 23 | 23 | 0 |
+| `TickShockOrderLifecycle.mqh` | 3 | 3 | 0 |
+| `TickShockResearchEngine.mqh` | 2 | 2 | 0 |
+| `TickShockRing.mqh` | 5 | 5 | 0 |
+| `TickShockScenarioEngine.mqh` | 3 | 3 | 0 |
+| `TickShockStateMachine.mqh` | 6 | 6 | 0 |
+| `TickShockTypes.mqh` and two compatibility includes | 0 | 0 | 0 |
+| Original research/order reachability harnesses | 37 | 37 | 0 |
+| **Total** | **253** | **253** | **0** |
+
+Removed EA-local definitions are `TSRAllocateEvent`, `TSRAppendMerged`,
+`TSRMergedLess`, and `TSRSortMerged`. Their behavior is now owned by explicit
+event and pending-repository contexts. Shared units: `*_msc`, delays and windows
+are milliseconds; prices/moves are symbol-price units; commission/loss is
+account currency per one lot; counts, indices and masks are unitless.
+
+| IDs / file | Exact functions | Responsibility, arguments, return | Side effects / global dependency | Production caller / test caller | Testability and error boundary |
+|---|---|---|---|---|---|
+| S10-BL-001..002 / `TickShockBaseline.mqh` | `TSBaselineRequiredCapacity(detector_window_ms,baseline_minutes,exclude_ms)`; `TSBaselineLogicalCapacity(...,physical_cap)` | Explicit retention config to required/logical cell count; returns `int`. | Pure; no globals. | `TSRRequiredSampleCapacity` / direct facade fixture. | Invalid nonpositive window/minutes returns 0. |
+| S10-BL-003 / same | `TSLinearPercentile(double &values[],count,percentile,TickShockPercentileResult &result)` | Type-7 sorted percentile; scalar array/count/percent; bool validity plus rank/lower/upper/value. | Does not mutate values; updates result; no globals. | `TSRPercentile` via facade / `TS-PCT-001`. | Deterministic; rejects bad count/range. |
+| S10-BL-004 / same | `TSHistogramPercentile(const int &hist[],offset,max_bin,count,percentile)` | Histogram Type-7 percentile; returns bin scalar. | Read-only histogram; no globals. | `TSRHistogramPercentile` via facade / indirect detector fixture. | Deterministic; invalid bounds/count returns 0. |
+| S10-BL-005 / same | `TSComputeRobustStatistics(move,median_move,mad_move,noise_floor,TickShockRobustStatistics &result)` | Raw scale, noise floor, robust scale/Z and floor flag; bool validity. | Updates result only; no globals. | baseline refresh and `TSRDetectShock` via facade / `TS-Z-001/002`. | False for zero/invalid scale. |
+| S10-BL-006 / same | `TSEvaluateBaselineReadiness(valid_samples,minimum_samples,TickShockBaselineReadiness &result)` | Inclusive readiness gate; returns ready. | Updates result only; no globals. | `TSRRefreshBaseline` via facade / `TS-BASE-001/002`. | Nonpositive minimum cannot pass. |
+| S10-EV-001 / `TickShockEventEngine.mqh` | `TSResetSymbolClusterClock(TickShockSymbolClusterClock &clock)` | Reset a per-symbol clock. | Mutates supplied clock only. | symbol initialization / cluster fixture. | Stateful deterministic. |
+| S10-EV-002 / same | `TSResetEventEngine(TickShockEventEngineContext &context,slot_capacity)` | Allocate/reset active keys, event/cluster/duplicate counters and market clock. | Mutates explicit context/dynamic arrays; no globals. | `OnInit` / cluster+dedup fixtures. | Stateful deterministic; cap clamped to zero. |
+| S10-EV-003 / same | `TSEventKeyEqual(const TickShockEventKey &left,const TickShockEventKey &right)` | Compare symbol+detector+detection time; bool. | Pure. | registration / indirect fixture. | Direct unit. |
+| S10-EV-004 / same | `TSReleaseEventSlot(context,slot)` | Release active key after write/flush. | Mutates context slot. | both event release paths / integration. | Invalid slot is a no-op. |
+| S10-EV-005 / same | `TSRegisterResearchEvent(context,symbol_clock,key,cluster_window_ms,registration)` | Dedup, slot, event sequence, symbol cluster and cross-symbol/cross-detector market cluster; bool accepted. | Mutates explicit contexts/result/counters; no globals. | `TSEngineRegisterResearchEvent` in `TSRDetectShock` / `TS-CLUSTER-002`, `TS-DUP-001`. | Duplicate/full/invalid returns false; duplicate flag explicit. |
+| S10-EV-006 / same | `TSRecordEventRow(context)` | Increment persisted event-row count. | Mutates context only. | `TSRWriteEvent` / cluster+dedup fixtures. | Stateful deterministic. |
+| S10-GR-001..003 / `TickShockGrid.mqh` | `TSGridReset(state)`; `TSGridObserveQuote(state,time_msc,bid,ask,grid_ms)`; `TSGridAdvanceBoundary(state,grid_ms)` | Own next boundary and latest quote used to close grids. | Mutates explicit runtime; no globals. | symbol init, tick path, both grid advances / production integration. | Preserves boundary/last-quote semantics. |
+| S10-MG-001 / `TickShockMergeSequencer.mqh` | `TSResetPendingRepository(repository)` | Reset pending items, sequence and diagnostics. | Mutates repository only. | `OnInit` / merge integration. | Stateful deterministic. |
+| S10-MG-002 / same | `TSMergeAppend(repository,symbol_index,MqlTick,capacity)` | Append pending real tick with monotonic sequence; bool. | Mutates items/counters. | `TSRCollectSymbolTicks` / merge integration. | False and capacity-hit increment at cap. |
+| S10-MG-003..005 / same | `TSMergeLess(left,right)`; `TSMergeSort(values,left,right)`; `TSMergeSortPending(repository)` | Time/symbol/sequence ordering and in-place sort. | Sort mutates supplied array/repository; no globals. | dispatcher/flush / multicurrency harness ordering oracle. | Caller supplies valid sort bounds. |
+| S10-MG-006 / same | `TSMergeReleasableCount(repository,watermark)` | Strict `< watermark` prefix without splitting a same-symbol/same-ms group; returns count. | Read-only repository. | dispatcher / merge integration. | Nonpositive watermark returns 0. |
+| S10-MG-007..008 / same | `TSMergeObserveGroup(repository,group_size)`; `TSMergeObserveProcessed(repository,tick_msc)` | Update group and chronological diagnostics. | Mutates explicit counters. | merged-prefix processing / merge integration. | Detects decreasing event time. |
+| S10-MG-009 / same | `TSMergeRemovePrefix(repository,released)` | Compact repository after release. | Mutates items. | dispatcher / merge integration. | Invalid release is a no-op. |
+| S10-MT-001 / `TickShockMetrics.mqh` | `TSComputeDirectionalEfficiency(const double &mids[],count,TickShockEfficiencyResult &result)` | Net/path/efficiency from explicit mids; bool valid. | Updates result only; no globals. | `TSRPathEfficiency` via facade / `TS-EFF-001/002`. | Zero path false; Long/Short symmetric. |
+| S10-MT-002 / same | `TSBuildCommissionResult(calculation_success,one_lot_profit_or_loss,commission_amount,gross_r,result)` | Convert one-lot SL loss and one round turn to commissionR/netR/applications. | Updates result only; no globals. | MT5 adapter/facade / `TS-COMM-001`. | Failure, nonloss or zero loss returns false explicitly. |
+| S10-RS-001..002 / `TickShockResearchEngine.mqh` | `TSResetDetectorCounters(counters)`; `TSObserveDetectorResult(counters,result)` | Reset/update evaluable, raw, valid and per-gate true/cumulative counters. | Mutates supplied counters only. | symbol init and detector / indirect detector harness. | Stateful deterministic. |
+| S10-RG-001..005 / `TickShockRing.mqh` | `TSRingReset`; `TSRingOldestIndex`; `TSRingReserveWrite`; `TSRingDropOldest`; `TSRingIndexFromNewest` | Generic bounded-ring cursor operations; indices/counts. | Reset/reserve/drop mutate explicit state; no globals. | tick/grid/sample add/find paths / constructible fixture. | Invalid capacity/index returns -1/false. |
+| S10-FC-001..007 / `TickShockEngine.mqh` | `TSEngineLinearPercentile`; `TSEngineHistogramPercentile`; `TSEngineRobustStatistics`; `TSEngineDirectionalEfficiency`; `TSEngineBaselineReadiness`; `TSEngineCommissionFromKnownLoss`; `TSEngineRegisterResearchEvent` | Stable production-callable facades with the same arguments/results as core. | Only supplied result/context references mutate; no facade globals. | EA paths above / Step 10 detector, execution and merge harnesses. | Tests call the production implementation; expected CSV stays independent. |
+| S10-AD-001 / `TickShockMt5Adapter.mqh` | `TSMt5CommissionResult(direction,symbol,entry,sl,commission_amount,gross_r,result)` | `OrderCalcProfit` one-lot loss then explicit commission result; bool. | MT5 read plus result mutation; no file/global mutation. | `TSRCommissionR` / harness uses shared downstream builder with oracle loss. | Adapter integration boundary; Buy/Sell selected by direction. |
+
+Step 10 harness-only parsing/comparison helpers are outside this production
+catalog. They read immutable fixture/expected CSVs and invoke the facades; they
+do not duplicate the production formulas.

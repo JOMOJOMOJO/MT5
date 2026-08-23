@@ -4,16 +4,19 @@
 - step: `01`
 - branch: `research/tickshock-testability-refactor-20260822`
 - purpose: testability refactor前のcanonical source、test、document、baseline/current evidence、checkpoint成果物を固定する
-- status: `STEP09_DOCUMENTATION_ROLLUP`
-- manifest_revision: `09`
-- covered_steps: `01-09`
-- last_audited_commit: `06f616d7abda785d21bdc9a75de6ac6df4e9c844`
-- last_updated_at: `2026-08-23T23:50:26+09:00`
+- status: `STEP10_TESTABILITY_REFACTOR_ROLLUP`
+- manifest_revision: `10`
+- covered_steps: `01-10`
+- last_audited_commit: `24e4f157230de327f59e51cb6426a5b48f6aad59`
+- last_updated_at: `2026-08-24T00:30:00+09:00`
 
 Step 8 QA counted 393 artifact rows and 377 unique paths before its own four
 artifact rows were appended. The checked-in post-Step-8 state is therefore 397
 rows and 381 unique paths. Step 9 appends 13 latest-path/new-artifact rows, for a
-rollup of 410 rows and 384 unique paths. Artifact ID duplicates are zero.
+rollup of 410 rows and 384 unique paths. Step 10 adds 54 current-source/evidence
+rows, one consolidated compile row, one devlog row, and four tester image rows,
+of which 49 paths are new, for 470 rows and 433 unique paths. Artifact ID
+duplicates are zero.
 
 Starting with Step 10, every new artifact row must include `owning_commit` as a
 full 40-character commit hash. When an artifact row and its file are introduced
@@ -481,3 +484,71 @@ these rows and artifacts.
 | TS-S9-DOC-001 | 09 | `docs/research/tick_shock/09_evidence_and_documentation_correction.md` | correction report | consolidate Step 1-8 evidence corrections | source | `4581650EDB4DD92E8B016273589C6290F8AC2D6802E13D63C90D150C91AD3960` | yes | Step 10 | COMPLETE | documents unresolved provenance limits | SELF |
 | TS-S9-QA-001 | 09 | `reports/qa/tick_shock/step09_documentation_corrections.csv` | correction ledger | old/corrected values and evidence ownership | generated evidence | `BD2BEE29F9BA6697369F9BDFE66112C2B66C231F0DFC703FCF3AE337E2794950` | yes | Step 10 | COMPLETE | 18 correction/verification rows | SELF |
 | TS-S9-INV-001 | 09 | `reports/checkpoints/tick_shock/step09_source_dependency_inventory.csv` | dependency inventory | portable compile/test/reproduction path rollup | generated evidence | `D89512E487450DD9C5317555FDC6E20FF2A842682D9EC558AD0B5795CE1A323C` | yes | Step 10 | COMPLETE | 301 tracked dependencies | SELF |
+
+## Step 10 behavior-preserving testability artifacts
+
+`owning_commit=SELF` means the Step 10 commit that introduces these rows. Rows
+for previously registered paths are authoritative latest hashes.
+
+| artifact ID | step | artifact relative path | type | purpose | source/generated | SHA-256 | commit | next Step | status | note | owning_commit |
+|---|---:|---|---|---|---|---|---|---|---|---|---|
+| TS-S10-SRC-001 | 10 | `mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5` | research EA | production wiring for explicit contexts | source | `D33CF37A0534F812112F29EC01F1463A6AFB816740BECC8DE23E561D7E17A539` | yes | Step 11 | BEHAVIOR_PRESERVED | order-free | SELF |
+| TS-S10-SRC-002 | 10 | `mql/Include/TickShock/TickShockBaseline.mqh` | module | baseline/histogram seam | source | `EA6CC2A70C5D65AC2E67F06CF259F8A746745843C7B416C47BE8F07A005A7971` | yes | Step 11 | PASS | production called | SELF |
+| TS-S10-SRC-003 | 10 | `mql/Include/TickShock/TickShockEngine.mqh` | facade | production/test shared entrypoints | source | `5AFE0D4984A5AE4355C60CD12C6B864D316CA9D3F5BA9EFA381C83E3FC5276AD` | yes | Step 11 | PASS | no copied oracle | SELF |
+| TS-S10-SRC-004 | 10 | `mql/Include/TickShock/TickShockEventEngine.mqh` | module | allocation/dedup/cluster context | source | `5DC71C9B21DA8B8D9866FD457BB83FD53C1438AE85D16CAF0FDA89490BFA16FF` | yes | Step 11 | PASS | production called | SELF |
+| TS-S10-SRC-005 | 10 | `mql/Include/TickShock/TickShockGrid.mqh` | module | grid clock/quote state | source | `BCD5EB6D6EFC60D935283909C95CE9B284A12972AE66A7EA7EB12564D804F44E` | yes | Step 11 | PASS | production called | SELF |
+| TS-S10-SRC-006 | 10 | `mql/Include/TickShock/TickShockMergeSequencer.mqh` | module | pending repository/watermark seam | source | `F70B36FADFED0573CB479D3471D2579BF96768BEA0FBC97A25D116E778297CD7` | yes | Step 11 | PASS | strict watermark unchanged | SELF |
+| TS-S10-SRC-007 | 10 | `mql/Include/TickShock/TickShockMetrics.mqh` | module | efficiency/commission result | source | `F10F3B605865A5C6934B5F6C5DAA1DA43C2A545F77C15CF68D68B67052F8506C` | yes | Step 11 | PASS | production called | SELF |
+| TS-S10-SRC-008 | 10 | `mql/Include/TickShock/TickShockMt5Adapter.mqh` | adapter | explicit OrderCalcProfit result | source | `F784BD399517E548C6E1C3E0104CD9708BD32FF5B4B3409CEDFF83177BF4032E` | yes | Step 11 | PASS | commission unchanged | SELF |
+| TS-S10-SRC-009 | 10 | `mql/Include/TickShock/TickShockResearchEngine.mqh` | module | detector counter context | source | `FDEC3A3E175143EEF317F2C1894BE18DEE9593611FB93D82007784AB6B28E75C` | yes | Step 11 | PASS | production called | SELF |
+| TS-S10-SRC-010 | 10 | `mql/Include/TickShock/TickShockRing.mqh` | module | bounded cursor seam | source | `145A061D3DCB05F1665E8830D65184C54DE62BB1084F44A788E8ACCFD9322862` | yes | Step 11 | PASS | capacities unchanged | SELF |
+| TS-S10-TST-001 | 10 | `mql/Experts/tests/TickShockStep5TestSupport.mqh` | test support | fixture-to-production facade execution | source | `F40B18CD0A19964ED3E7C3A0CB3B30DDCE72CFCBB2877AF5C5B9F6B153589E24` | yes | Step 11 | PASS | expected unchanged | SELF |
+| TS-S10-TST-002 | 10 | `mql/Experts/tests/ExpectedValue_TickShock_DetectorHarness.mq5` | harness | seven deterministic detector cases | source | `DDE477AFC57BD904F30FBCB978C93DF30B034921A38094AB05E0EBE2E96AB271` | yes | Step 11 | PASS | production path | SELF |
+| TS-S10-TST-003 | 10 | `mql/Experts/tests/ExpectedValue_TickShock_ExecutionHarness.mq5` | harness | commission deterministic case | source | `59BD1392A42AD31E9468999838A9587D52237D2A00C8AFD8E3D649A89A9B9A30` | yes | Step 11 | PASS | production path | SELF |
+| TS-S10-TOL-001 | 10 | `tools/tick_shock/run_all_tests.ps1` | runner | isolated Step 10 phase | source | `B078FAE9352810BDD6475E0934C4F6896582312428791A826C061573E7C8AC8D` | yes | Step 11 | PASS | Step 6 history preserved | SELF |
+| TS-S10-TOL-002 | 10 | `tools/tick_shock/run_mql_harnesses.ps1` | runner | Step 10 compile/test evidence | source | `161AD766270095814AE45F7F14314D430E41FFF6F3912051B4D985FF7B420142` | yes | Step 11 | PASS | no orders enabled | SELF |
+| TS-S10-TOL-003 | 10 | `tools/tick_shock/run_python_tests.py` | runner | Step 10 result reconciliation | source | `818D670F1023B1C19B732F8932EC0AC653790114AB8884B3DCEB8C6470CF6906` | yes | Step 11 | PASS | 55/9 | SELF |
+| TS-S10-DOC-001 | 10 | `docs/research/tick_shock/02_function_catalog.md` | catalog | current 253/253 reconciliation | source | `AEC1CE482619F969402B92CCA12660E9E0D594AA008D7F347ADFC20C78842504` | yes | Step 11 | COMPLETE | difference 0 | SELF |
+| TS-S10-DOC-002 | 10 | `docs/research/tick_shock/02_data_structures_and_globals.md` | catalog | explicit runtime contexts | source | `12C33714CDA553EAED0AF62860445432B5154F554093C8F8246C24796B1F0C9E` | yes | Step 11 | COMPLETE | capacities unchanged | SELF |
+| TS-S10-DOC-003 | 10 | `docs/research/tick_shock/10_testability_refactor.md` | report | Step 10 scope/result/gates | source | `67D6227DDA09F6F2199CCB961C06DDD03B0855C24514512692C2A8BC78F18E45` | yes | Step 11 | COMPLETE | no bug fix | SELF |
+| TS-S10-DOC-004 | 10 | `docs/research/tick_shock/10_to_be_runtime_architecture.md` | architecture | context ownership/dataflow | source | `3FC36192BD2BA0F85DA2CBD48D74B5757577E2C365D62430A3777A1576A927CC` | yes | Step 11 | COMPLETE | explicit clocks | SELF |
+| TS-S10-DOC-005 | 10 | `docs/research/tick_shock/10_module_and_test_seam_mapping.md` | mapping | production callsite to Test ID | source | `EB3A26416B68B65ED852406CB79657DBA2C00ACD956A2F2402DF2951E4041BB9` | yes | Step 11 | COMPLETE | no copied formulas | SELF |
+| TS-S10-REF-001 | 10 | `reports/refactor/tick_shock/step10_behavior_comparison.csv` | comparison | Step 7 preservation oracle | generated evidence | `973C7D119C199393BD4BD4A0FDE8FC665D7648A5050EDD2E007FEB2A74729B06` | yes | Step 11 | PASS | unintended difference 0 | SELF |
+| TS-S10-REF-002 | 10 | `reports/refactor/tick_shock/step10_behavior_comparison.md` | report | comparison interpretation | generated evidence | `E8D316B4597A5DA1314D65F17546DDC7FB2A78382FFCCC05D27FF8484387B53F` | yes | Step 11 | PASS | 272155 values | SELF |
+| TS-S10-REF-003 | 10 | `reports/refactor/tick_shock/step10_source_hashes.txt` | hashes | pre/post source/EX5/tool identity | generated evidence | `9628EF717A5525D4187C2077B413A1BAB53FC7308B1FFEEDBFE138ED42CB688F` | yes | Step 11 | COMPLETE | terminal build 6140 | SELF |
+| TS-S10-REF-004 | 10 | `reports/refactor/tick_shock/step10_compile_results.txt` | compile rollup | EA and ten harness build results | generated evidence | `103CB32506B40D8A34E467594683145CD289BBE2B6FD0BBCDBBAB50D6A758BD0` | yes | Step 11 | PASS | all 0 errors / 0 warnings | SELF |
+| TS-S10-RES-001 | 10 | `reports/tests/tick_shock/step10_post_refactor_results.csv` | test result | registry reconciliation | generated evidence | `998C6159754C3B3AE3C47D22B6AB3B45BC7D89F45E1FFD86F657B964B28D1036` | yes | Step 11 | PASS_WITH_SKIP | 55 PASS; 9 SKIP | SELF |
+| TS-S10-RAW-001 | 10 | `reports/tests/tick_shock/step10_raw/detector.csv` | raw test | detector observations | generated evidence | `6AA577C377844AEE556FDD14DA1F7EF1F2BDD23A60A18DA137EC5B651726EFAA` | yes | Step 11 | PASS | deterministic seams | SELF |
+| TS-S10-RAW-002 | 10 | `reports/tests/tick_shock/step10_raw/domain_unit.csv` | raw test | domain observations | generated evidence | `5FB8E3EC22F221F3C50F4A77DBA96DEAAE15B41CB5625FFE76156B7628AC77B2` | yes | Step 11 | PASS | production core | SELF |
+| TS-S10-RAW-003 | 10 | `reports/tests/tick_shock/step10_raw/execution.csv` | raw test | execution observations | generated evidence | `DEAC38163C1705248BCC942223C3249A37D140088D63640655C5B0BC04D9000D` | yes | Step 11 | PASS | commission seam | SELF |
+| TS-S10-RAW-004 | 10 | `reports/tests/tick_shock/step10_raw/multicurrency_merge.csv` | raw test | merge/cluster/dedup observations | generated evidence | `7CE240A9BAEFC75DF5D7008328843554ECB6DD8D8D3017C91B0711991284469D` | yes | Step 11 | PASS | production path | SELF |
+| TS-S10-RAW-005 | 10 | `reports/tests/tick_shock/step10_raw/order_lifecycle.csv` | raw test | lifecycle observations | generated evidence | `98AE76CA37434F2327864FC7B5747C2556ACB1A088C44F6B0820A41869947240` | yes | Step 11 | PARTIAL | external cases SKIP | SELF |
+| TS-S10-RAW-006 | 10 | `reports/tests/tick_shock/step10_raw/state_machine.csv` | raw test | state observations | generated evidence | `8DEAE9C9DCBE058AB3908674EE42455A0B23DAA8567D6739DC3C3936B8D5DE2B` | yes | Step 11 | PASS | unchanged | SELF |
+| TS-S10-RAW-007 | 10 | `reports/tests/tick_shock/step10_raw/synthetic_integration.csv` | raw test | causal integration | generated evidence | `CA6A026ECDF5BE8CC9EDC14A52EA937688254884EA8AD747415B3A9955F31042` | yes | Step 11 | PASS | unchanged | SELF |
+| TS-S10-RUN-001 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/compile.log` | compile | EA build | generated evidence | `F9DE73242E8507E83E7762237407368CF473D2790BF103C848AE8E8623CA1128` | yes | Step 11 | PASS | 0/0 | SELF |
+| TS-S10-RUN-002 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/events.csv` | events | March output | generated evidence | `5D6C5573FC186E0C335D3F5133F4F5F1B15C00BD73FD82315F09432B43E40EF4` | yes | Step 11 | PASS | 19 rows | SELF |
+| TS-S10-RUN-003 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/events.csv.runmeta` | metadata | events run binding | generated evidence | `0EB0076CF0F1DD669A18663B650C7F475F8D71BD4588047CAE72A38D0F4E23D8` | yes | Step 11 | PASS | unique RunId | SELF |
+| TS-S10-RUN-004 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/ExpectedValue_MultiCurrency_TickShockResearch_step10_realizable_202503.set` | preset | unchanged strategy parameters | source | `7062D0434F4D5AB15BC9762BB23F509F2E8F17DD990E7771DECD3E350461BF21` | yes | Step 11 | PASS | REALIZABLE | SELF |
+| TS-S10-RUN-005 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/reconciliation.md` | reconciliation | independent causal/count audit | generated evidence | `347D70158B32F4A750774591020B797F987DAF93D2BCDB6AF13CE08A5DE49BBE` | yes | Step 11 | PASS | violations 0 | SELF |
+| TS-S10-RUN-006 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/run_command.txt` | command | reproducibility | generated evidence | `12203D011B789432934A7EB54F3EB5E8F1B7FE5A5150BAFB1D39379754C84C16` | yes | Step 11 | COMPLETE | one run | SELF |
+| TS-S10-RUN-007 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/source_hashes.txt` | hashes | run source identity | generated evidence | `9628EF717A5525D4187C2077B413A1BAB53FC7308B1FFEEDBFE138ED42CB688F` | yes | Step 11 | COMPLETE | matches refactor hashes | SELF |
+| TS-S10-RUN-008 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/summary.csv` | summary | March aggregate | generated evidence | `077F7BF924D76CD41B2596AEE65B0B1C3CCED4D803B73C5C17CE8C197315537E` | yes | Step 11 | PASS | funnel exact | SELF |
+| TS-S10-RUN-009 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/summary.csv.runmeta` | metadata | summary run binding | generated evidence | `6710733DB8159DCD4D68C7456126DED13DD47C1B6AEF1A5222F631FDC48DE31D` | yes | Step 11 | PASS | unique RunId | SELF |
+| TS-S10-RUN-010 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/summary.md` | report | March result | generated evidence | `F316514ADCA17DCB0773F9A017B18BDEB3AC72D6518E400174833CA3365D3187` | yes | Step 11 | PASS | 15 clusters | SELF |
+| TS-S10-RUN-011 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/symbol_specs.csv` | specs | broker inputs | generated evidence | `C66650F57637CBE09735BBB62A00939100CAF68B2FBA057A3C739310A8EEF61C` | yes | Step 11 | PASS | six symbols | SELF |
+| TS-S10-RUN-012 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/symbol_specs.csv.runmeta` | metadata | specs run binding | generated evidence | `8229FEB757184BCDE2335A4139930B4F86C8677496D716354A5DD9681C9E9F1C` | yes | Step 11 | PASS | unique RunId | SELF |
+| TS-S10-RUN-013 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tester_config.ini` | config | MT5 real-tick run | source | `F4195D9A987196C1A47E376E281CDF95DCC1AA512327DF2FB319A73E5BD7CC5C` | yes | Step 11 | PASS | EURUSD M1 | SELF |
+| TS-S10-RUN-014 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tester_journal_excerpt.txt` | journal | build/server/fallback/runtime | generated evidence | `2AA3EA538958DEC83990CB3DFBBB7F7967EA594BA2466D00A01B5C2EB839F30F` | yes | Step 11 | PARTIAL | GBPUSD fallback | SELF |
+| TS-S10-RUN-015 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tester_report.html` | report | tester execution evidence | generated evidence | `4CF66E7B45140206A721781138DE50B2EA5ED2F2C719F7C71E369269FD16E047` | yes | Step 11 | PASS | no orders | SELF |
+| TS-S10-RUN-016 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tester_report.html.meta.json` | metadata | tester config provenance | generated evidence | `0C3833436E74AF4247E20718A83B440653E6F772F513EE9CA2C01ACA7F82E3B3` | yes | Step 11 | PASS | build 6140 | SELF |
+| TS-S10-RUN-017 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tick_quality.csv` | quality | real/generated evidence | generated evidence | `ABE0DC22294F3D584329B9069F06FA5A1DCA7683D3BC78A53F2BF989A60635AC` | yes | Step 11 | PARTIAL | 179/30187 GBPUSD | SELF |
+| TS-S10-RUN-018 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/trades.csv` | trades | order absence | generated evidence | `69DFAB285053561A1B3B95776103D8CEEB380E1963FE3C407392E6C216A729C6` | yes | Step 11 | PASS | 0 rows | SELF |
+| TS-S10-RUN-019 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/trades.csv.runmeta` | metadata | trades run binding | generated evidence | `8AC8E6D705C71C3859A0FC0395B16C1C9FD2AFFBFA7F2D11947E20A863032084` | yes | Step 11 | PASS | unique RunId | SELF |
+| TS-S10-CMP-001 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_comparison_202503/causal_invariants.csv` | invariants | independent causal checks | generated evidence | `2D562198021C8788B7CB3FCCF76170F00F63E3C87A78F79CAE63A3A2C53631F2` | yes | Step 11 | PASS | formal violations 0 | SELF |
+| TS-S10-CMP-002 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_comparison_202503/comparison.csv` | comparison | ideal/new-realizable/baseline | generated evidence | `C76D03202E018378323D79CA14461CB4B36FDB3BC438FBFF3C4B79D1EC70069F` | yes | Step 11 | PASS | 19/19 | SELF |
+| TS-S10-CMP-003 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_comparison_202503/summary.md` | report | causal comparison | generated evidence | `E92FED00E5993763A886564E79E85C60AD89BDC196F3C294C941C6D202D85445` | yes | Step 11 | COMPLETE | edge unchanged | SELF |
+| TS-S10-DEV-001 | 10 | `docs/devlog/2026-08-24-tickshock-step10-testability-refactor.md` | devlog | connect structural change to validation evidence | source | `D137E3B9A05D592C337EFE944D5C89F89604DA535EF47A83EA43103237F7C36A` | yes | Step 11 | COMPLETE | behavior-preserving decision record | SELF |
+| TS-S10-RUN-020 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tester_report.png` | tester image | balance/equity visualization | generated evidence | `06AA980FBE864302877DDB986E353149C546CFF30EF6FD8B46241A7E63E5C4E4` | yes | Step 11 | COMPLETE | zero-order report image | SELF |
+| TS-S10-RUN-021 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tester_report-holding.png` | tester image | holding-time visualization | generated evidence | `420B97960777DF5CBF9051CA5847F1E510B4B403B710B00C9FA65D88215F2DFC` | yes | Step 11 | COMPLETE | zero-order report image | SELF |
+| TS-S10-RUN-022 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tester_report-hst.png` | tester image | distribution visualization | generated evidence | `5B9668EF6D82EA20EEAB5B71848E8888EE466AA0F86591E14A7DC58584E5F2B9` | yes | Step 11 | COMPLETE | zero-order report image | SELF |
+| TS-S10-RUN-023 | 10 | `reports/backtest/runs/20260823_tickshock_step10_refactor_realizable_202503/tester_report-mfemae.png` | tester image | MFE/MAE visualization | generated evidence | `2A4950F6229528D0560066BF71D09891FFA6CFEB50C555BDA8DF0896C35C7512` | yes | Step 11 | COMPLETE | zero-order report image | SELF |
