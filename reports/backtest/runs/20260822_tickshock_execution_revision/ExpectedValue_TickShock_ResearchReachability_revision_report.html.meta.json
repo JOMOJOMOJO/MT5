@@ -1,0 +1,25 @@
+﻿{
+    "generated_at":  "2026-08-22T19:51:05.1721801+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\20260822_tickshock_execution_revision\\ExpectedValue_TickShock_ResearchReachability_revision.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp9C59.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp9C59.ini"
+               },
+    "tester":  {
+                   "symbol":  "EURUSD",
+                   "period":  "M1",
+                   "from_date":  "2025.03.03",
+                   "to_date":  "2025.03.04",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\20260822_tickshock_execution_revision\\ExpectedValue_TickShock_ResearchReachability_revision_report.html"
+               },
+    "preset":  {
+                   "name":  "ExpectedValue_TickShock_ResearchReachability_revision.set",
+                   "expert_parameters_name":  "ExpectedValue_TickShock_ResearchReachabilityHarness.set",
+                   "source":  "reports\\presets\\ExpectedValue_TickShock_ResearchReachability_revision.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\ExpectedValue_TickShock_ResearchReachability_revision.set",
+                   "parameters":  {
+                                      "InpRunId":  "research_v3_execution_revision",
+                                      "InpLogFolder":  "tick_shock_research"
+                                  }
+               }
+}

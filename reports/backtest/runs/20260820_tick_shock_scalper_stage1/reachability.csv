@@ -1,0 +1,18 @@
+test_id,test_name,result,detail
+1,long_reachability,PASS,up shock -> pullback -> two confirming updates
+2,short_reachability,PASS,down shock -> pullback -> two confirming updates
+3,insufficient_shock_move,PASS,shock_percentile_failed
+4,efficiency_failed,PASS,efficiency_failed
+5,spread_abnormal,PASS,spread_too_wide
+6,pullback_below_15pct,PASS,10 percent then timeout
+7,pullback_above_35pct,PASS,diagnostic, continuation not forced
+8,pullback_50pct_invalidation,PASS,reversal shadow trigger
+9,no_reacceleration_timeout,PASS,valid pullback without breakout
+10,spread_too_large_vs_stop,PASS,cost_too_large_vs_risk
+11,stop_too_wide_vs_burst,PASS,stop_too_wide_vs_burst
+12,highest_score_selection,PASS,candidate index 1
+13,hard_120_second_exit,PASS,exact boundary
+14,reversal_shadow_long_short,PASS,Bid/Ask-side direction resolver
+15,cooldown,PASS,boundary
+16,daily_loss_stop,PASS,3R boundary
+SUMMARY,all,PASS,passed=16;failed=0

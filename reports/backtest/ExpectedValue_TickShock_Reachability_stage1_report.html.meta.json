@@ -1,0 +1,25 @@
+﻿{
+    "generated_at":  "2026-08-20T23:58:52.9841061+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_TickShock_Reachability_stage1.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp7BFB.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp7BFB.ini"
+               },
+    "tester":  {
+                   "symbol":  "EURUSD",
+                   "period":  "M1",
+                   "from_date":  "2025.03.03",
+                   "to_date":  "2025.03.04",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_TickShock_Reachability_stage1_report.html"
+               },
+    "preset":  {
+                   "name":  "ExpectedValue_TickShock_Reachability_stage1.set",
+                   "expert_parameters_name":  "ExpectedValue_TickShock_ReachabilityHarness.set",
+                   "source":  "reports\\presets\\ExpectedValue_TickShock_Reachability_stage1.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\ExpectedValue_TickShock_Reachability_stage1.set",
+                   "parameters":  {
+                                      "InpRunId":  "stage1",
+                                      "InpLogFolder":  "tick_shock_scalper"
+                                  }
+               }
+}

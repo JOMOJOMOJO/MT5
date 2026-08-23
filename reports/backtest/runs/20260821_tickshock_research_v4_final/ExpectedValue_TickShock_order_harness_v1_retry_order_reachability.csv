@@ -1,0 +1,26 @@
+run_id,record_type,direction,phase,result,detail
+order_harness_v1_retry,TEST,,partial_fill_aggregation,PASS,deterministic multi-deal weighted fill
+order_harness_v1_retry,TEST,,tester_only_guard,PASS,harness refuses terminal/live execution
+order_harness_v1_retry,ORDER,LONG,ENTRY_CHECK,PASS,retcode=0;comment=
+order_harness_v1_retry,ORDER,LONG,ENTRY_SEND,PASS,retcode=10009;external=0;order=2;deal=2
+order_harness_v1_retry,DEAL,LONG,ENTRY_FILL,PASS,deal=2;volume=0.01;price=1.04055000
+order_harness_v1_retry,RECOVERY,LONG,POSITION_FIELDS,PASS,ticket=2;open_msc=1740963600066;volume=0.01;price=1.04055000
+order_harness_v1_retry,TEST,,recover_long_position,PASS,magic/time/volume/open price recovered from live tester position
+order_harness_v1_retry,ORDER,LONG,CLOSE_CHECK,PASS,retcode=0;comment=
+order_harness_v1_retry,ORDER,LONG,CLOSE_SEND,PASS,retcode=10009;external=0;order=3;deal=3
+order_harness_v1_retry,DEAL,LONG,EXIT_FILL,PASS,deal=3;volume=0.01;price=1.04021000
+order_harness_v1_retry,TRADE,LONG,CLOSED,PASS,signal=1740963600066;request=1740963600000;fill=1740963600066;close=1740963601990;request_price=1.04055000;fill_price=1.04055000;close_price=1.04021000;entry_volume=0.01;exit_volume=0.01;retcode=10009;external=0;entry_deal=2;exit_deal=3
+order_harness_v1_retry,TEST,,actual_long_order_cycle,PASS,OrderCheck -> OrderSend -> entry fill -> close fill
+order_harness_v1_retry,ORDER,SHORT,ENTRY_CHECK,PASS,retcode=0;comment=
+order_harness_v1_retry,ORDER,SHORT,ENTRY_SEND,PASS,retcode=10009;external=0;order=4;deal=4
+order_harness_v1_retry,DEAL,SHORT,ENTRY_FILL,PASS,deal=4;volume=0.01;price=1.04021000
+order_harness_v1_retry,RECOVERY,SHORT,POSITION_FIELDS,PASS,ticket=4;open_msc=1740963602434;volume=0.01;price=1.04021000
+order_harness_v1_retry,TEST,,recover_short_position,PASS,magic/time/volume/open price recovered from live tester position
+order_harness_v1_retry,ORDER,SHORT,CLOSE_CHECK,PASS,retcode=0;comment=
+order_harness_v1_retry,ORDER,SHORT,CLOSE_SEND,PASS,retcode=10009;external=0;order=5;deal=5
+order_harness_v1_retry,DEAL,SHORT,EXIT_FILL,PASS,deal=5;volume=0.01;price=1.04040000
+order_harness_v1_retry,TRADE,SHORT,CLOSED,PASS,signal=1740963602434;request=1740963602000;fill=1740963602434;close=1740963605288;request_price=1.04021000;fill_price=1.04021000;close_price=1.04040000;entry_volume=0.01;exit_volume=0.01;retcode=10009;external=0;entry_deal=4;exit_deal=5
+order_harness_v1_retry,TEST,,actual_short_order_cycle,PASS,OrderCheck -> OrderSend -> entry fill -> close fill
+order_harness_v1_retry,TEST,,actual_partial_fill_observation,PASS,NOT_OBSERVED in local tester; deterministic aggregation test covers multi-deal accounting
+order_harness_v1_retry,TEST,,restart_recovery_scope,PASS,actual position field recovery exercised; process restart itself not injected
+order_harness_v1_retry,SUMMARY,,ALL,PASS,passed=8;failed=0;state=8;long=true;short=true

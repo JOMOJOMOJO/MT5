@@ -1,0 +1,32 @@
+﻿{
+    "generated_at":  "2026-08-22T21:09:32.8870417+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\20260822_tickshock_realizable_execution\\ExpectedValue_TickShock_OrderReachability_observation_truth.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp71C1.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp71C1.ini"
+               },
+    "tester":  {
+                   "symbol":  "EURUSD",
+                   "period":  "M1",
+                   "from_date":  "2025.03.03",
+                   "to_date":  "2025.03.04",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\20260822_tickshock_realizable_execution\\ExpectedValue_TickShock_OrderReachability_observation_truth_report.html"
+               },
+    "preset":  {
+                   "name":  "ExpectedValue_TickShock_OrderReachability_observation_truth.set",
+                   "expert_parameters_name":  "ExpectedValue_TickShock_OrderReachabilityHarness.set",
+                   "source":  "reports\\presets\\ExpectedValue_TickShock_OrderReachability_observation_truth.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\ExpectedValue_TickShock_OrderReachability_observation_truth.set",
+                   "parameters":  {
+                                      "InpMagicNumber":  "26082241",
+                                      "InpVolume":  "0.01",
+                                      "InpWaitTicksBeforeTimeClose":  "5",
+                                      "InpBarrierTimeoutTicks":  "5000",
+                                      "InpBarrierDistanceTicks":  "2",
+                                      "InpFarBarrierTicks":  "1000",
+                                      "InpEarliestServerHour":  "1",
+                                      "InpRunId":  "order_harness_v3_observation_truth_final",
+                                      "InpLogFolder":  "tick_shock_research"
+                                  }
+               }
+}

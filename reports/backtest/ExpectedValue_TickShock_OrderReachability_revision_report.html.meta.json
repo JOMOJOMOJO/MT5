@@ -1,0 +1,29 @@
+﻿{
+    "generated_at":  "2026-08-22T19:50:22.2429076+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\20260822_tickshock_execution_revision\\ExpectedValue_TickShock_OrderReachability_revision.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpF471.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpF471.ini"
+               },
+    "tester":  {
+                   "symbol":  "EURUSD",
+                   "period":  "M1",
+                   "from_date":  "2025.03.03",
+                   "to_date":  "2025.03.04",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_TickShock_OrderReachability_revision_report.html"
+               },
+    "preset":  {
+                   "name":  "ExpectedValue_TickShock_OrderReachability_revision.set",
+                   "expert_parameters_name":  "ExpectedValue_TickShock_OrderReachabilityHarness.set",
+                   "source":  "reports\\presets\\ExpectedValue_TickShock_OrderReachability_revision.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\ExpectedValue_TickShock_OrderReachability_revision.set",
+                   "parameters":  {
+                                      "InpMagicNumber":  "26082231",
+                                      "InpVolume":  "0.01",
+                                      "InpWaitTicksBeforeClose":  "5",
+                                      "InpEarliestServerHour":  "1",
+                                      "InpRunId":  "order_harness_v2_commission",
+                                      "InpLogFolder":  "tick_shock_research"
+                                  }
+               }
+}

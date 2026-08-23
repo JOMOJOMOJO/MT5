@@ -1,0 +1,20 @@
+test_id,test_name,result,detail
+1,fixed_grid_same_measure,PASS,baseline and signal call the same production helper
+2,missing_exact_anchor_rejected,PASS,no approximate or stale substitute for a missing grid anchor
+3,zero_mad_uses_noise_floor,PASS,discrete zero MAD remains testable
+4,positive_mad_not_floored,PASS,robust scale preserved above noise
+5,barrier_feasible,PASS,
+6,cost_gate_symmetric,PASS,INVALID_COST_VS_RISK
+7,burst_gate,PASS,INVALID_STOP_VS_BURST
+8,broker_stop_gate,PASS,INVALID_BROKER_STOP
+9,global_chronological_key,PASS,time_msc then symbol then stable sequence
+10,watermark_retains_equal_time,PASS,strictly-less release prevents late equal-time inversion
+11,delay_and_processing_floor,PASS,fill is never earlier than either requested delay or actual processing time
+12,same_batch_event_path_not_retro_fill,PASS,same-batch tick remains available to MFE/state replay but cannot become a historical fill
+13,long_state_reachability,PASS,shock pullback two-tick reacceleration
+14,short_state_reachability,PASS,shock pullback two-tick reacceleration
+15,long_short_barrier_symmetry,PASS,TP/TP
+16,mfe_mae_detection_anchor,PASS,the 100-to-110 shock is excluded from post-detection excursion
+17,hard_120_second_exit,PASS,exact inclusive boundary
+18,all_events_preserved_without_ranking,PASS,overlapping symbols retain independent event records
+SUMMARY,all,PASS,passed=18;failed=0

@@ -1,0 +1,63 @@
+﻿{
+    "generated_at":  "2026-08-21T02:19:01.8711833+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_TickShockResearch_stage2_3bd.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp5D87.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp5D87.ini"
+               },
+    "tester":  {
+                   "symbol":  "EURUSD",
+                   "period":  "M1",
+                   "from_date":  "2025.03.03",
+                   "to_date":  "2025.03.06",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\ExpectedValue_MultiCurrency_TickShockResearch_stage2_gate_report.html"
+               },
+    "preset":  {
+                   "name":  "ExpectedValue_MultiCurrency_TickShockResearch_stage2_3bd.set",
+                   "expert_parameters_name":  "ExpectedValue_MultiCurrency_TickShockResearch.set",
+                   "source":  "reports\\presets\\ExpectedValue_MultiCurrency_TickShockResearch_stage2_3bd.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\presets\\ExpectedValue_MultiCurrency_TickShockResearch_stage2_3bd.set",
+                   "parameters":  {
+                                      "InpSymbols":  "EURUSD,GBPUSD,USDJPY,AUDUSD,USDCAD,USDCHF",
+                                      "InpGridMs":  "250",
+                                      "InpShockWindowMs":  "1000",
+                                      "InpBaselineMinutes":  "15",
+                                      "InpBaselineExcludeMs":  "2000",
+                                      "InpMinBaselineSamples":  "300",
+                                      "InpShockPercentile":  "99.5",
+                                      "InpMinRobustZ":  "3.5",
+                                      "InpMinEfficiency":  "0.65",
+                                      "InpMinMoveSpreadRatio":  "4.0",
+                                      "InpMinTickIntensityRatio":  "1.5",
+                                      "InpMaxSpreadMedianRatio":  "1.5",
+                                      "InpMaxQuoteAgeMs":  "500",
+                                      "InpNoiseFloorTicks":  "1.0",
+                                      "InpBurstQuietMs":  "300",
+                                      "InpBurstMaxMs":  "3000",
+                                      "InpPullbackMinPct":  "15.0",
+                                      "InpPullbackMaxPct":  "35.0",
+                                      "InpContinuationInvalidPct":  "50.0",
+                                      "InpPullbackWaitMs":  "10000",
+                                      "InpReaccelerationConfirmTicks":  "2",
+                                      "InpRewardRisk":  "1.2",
+                                      "InpMaxHoldSeconds":  "120",
+                                      "InpStopSpreadMultiple1":  "5.0",
+                                      "InpStopSpreadMultiple2":  "8.0",
+                                      "InpStopSpreadMultiple3":  "12.0",
+                                      "InpShadowSlippageTicks":  "1.0",
+                                      "InpCommissionPerLotRoundTurn":  "0.0",
+                                      "InpCommissionSource":  "UNCONFIRMED_ZERO_ASSUMPTION",
+                                      "InpTokyoStartHour":  "0",
+                                      "InpTokyoEndHour":  "9",
+                                      "InpLondonStartHour":  "8",
+                                      "InpLondonEndHour":  "17",
+                                      "InpNewYorkStartHour":  "13",
+                                      "InpNewYorkEndHour":  "22",
+                                      "InpRunId":  "research_v2_stage2_gate",
+                                      "InpLogFolder":  "tick_shock_research",
+                                      "InpEnableDebug":  "false",
+                                      "InpDebugSymbol":  "EURUSD",
+                                      "InpDebugMaxMessages":  "200"
+                                  }
+               }
+}

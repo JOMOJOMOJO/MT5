@@ -1,0 +1,6 @@
+InpMagicNumber=26082191
+InpVolume=0.01
+InpWaitTicksBeforeClose=5
+InpEarliestServerHour=1
+InpRunId=order_harness_v1_retry
+InpLogFolder=tick_shock_research
