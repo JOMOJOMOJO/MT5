@@ -7,7 +7,12 @@ The Step 1 source and the baseline evidence are not the same executable image.
 - Current research EA SHA-256:
   <code>976148D017E067728DC8827724516A076E7561C89D8D57BCD850D40DCB54A32C</code>
 - Baseline <code>summary.md</code> reports EA SHA-256:
-  <code>969AC03545D02BBD3DA67EF1213DA39D6AFEDACD9C16F6E479973E123A07E6CD</code>
+  <code>969AC0350AA64EAA1AFFFFECCA660E8CB2FB3877F4280186215A0E89251455C3</code>
+
+Both values are complete 64-hex SHA-256 values. The baseline identity is taken
+from the committed Step 1/2 `summary.md`; the historical baseline EA binary or
+matching source blob is not present in the checkpoint, so this identifies the
+reported run source but does not independently reproduce that executable.
 
 Consequently, a baseline-observed defect can be “guarded in current source”
 without being considered fixed until Step 3 exercises the current production

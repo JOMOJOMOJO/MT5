@@ -4,7 +4,23 @@
 - step: `01`
 - branch: `research/tickshock-testability-refactor-20260822`
 - purpose: testability refactor前のcanonical source、test、document、baseline/current evidence、checkpoint成果物を固定する
-- status: `CHECKPOINT_READY`
+- status: `STEP09_DOCUMENTATION_ROLLUP`
+- manifest_revision: `09`
+- covered_steps: `01-09`
+- last_audited_commit: `06f616d7abda785d21bdc9a75de6ac6df4e9c844`
+- last_updated_at: `2026-08-23T23:50:26+09:00`
+
+Step 8 QA counted 393 artifact rows and 377 unique paths before its own four
+artifact rows were appended. The checked-in post-Step-8 state is therefore 397
+rows and 381 unique paths. Step 9 appends 13 latest-path/new-artifact rows, for a
+rollup of 410 rows and 384 unique paths. Artifact ID duplicates are zero.
+
+Starting with Step 10, every new artifact row must include `owning_commit` as a
+full 40-character commit hash. When an artifact row and its file are introduced
+in the same commit, `SELF` may be used and means the first commit that introduces
+that artifact path; the next manifest rollup must resolve `SELF` to the full
+hash. Historical rows are attributed through Git history and are not rewritten
+solely to add the new column.
 
 `source/generated` は、実装・定義・設定を `source`、実行結果・集計・checkpoint記録を `generated evidence` として区別します。`commit対象` はこのStep 1 branchへ保存する判断です。
 
@@ -443,3 +459,25 @@
 | TS-S8-QA-002 | 08 | `reports/qa/tick_shock/step08_traceability_audit.csv` | traceability | Requirement/Test/evidence/coverage audit | generated evidence | `15E604FAD8A411706E7D0CD6C94B0A51D1A8531D2671F9CD48FCBFCD19D45D16` | yes | controlled evidence closure | COMPLETE | 64 rows; structural gaps zero; 19 coverage-open |
 | TS-S8-QA-003 | 08 | `reports/qa/tick_shock/step08_recalculation.csv` | recalculation | independent causal/outcome/summary recount | generated evidence | `D8235D3C2127BBD175FD8DF1591B2846EF55E41DCD4CC0B72A96DD9462ADE32E` | yes | controlled evidence closure | PASS_WITH_FINDINGS | formal causal violations zero; documentation drift recorded |
 - 長期OOS未実施
+
+## Step 9 documentation and evidence correction artifacts
+
+The rows below are the authoritative latest hashes for corrected historical
+paths. `owning_commit=SELF` resolves to the Step 9 commit that first contains
+these rows and artifacts.
+
+| artifact ID | step | artifact relative path | type | purpose | source/generated | SHA-256 | commit | next Step | status | note | owning_commit |
+|---|---:|---|---|---|---|---|---|---|---|---|---|
+| TS-S9-CORR-001 | 09 | `docs/research/tick_shock/02_as_is_architecture.md` | corrected document | clarify full baseline/checkpoint SHA identities | source | `7B8EC237C1EA5037FB5770E255063BEDACADEAFE5907044DBBA101A89A6DAFD5` | yes | Step 10 | CORRECTED | no source behavior change | SELF |
+| TS-S9-CORR-002 | 09 | `docs/research/tick_shock/02_known_defects.md` | corrected document | correct baseline EA SHA | source | `1EFA142B5D6910EC7CB9241F788D718F1F40E4A4F065EB68BC3F6FC31885AFAE` | yes | Step 10 | CORRECTED | baseline summary is reported identity authority | SELF |
+| TS-S9-CORR-003 | 09 | `docs/research/tick_shock/02_function_catalog.md` | corrected catalog | reconcile 216 current definitions | source | `AEF70AE160E66A8365B1218C3A8E742A390EAA223CB9E30222A599D781AF12D7` | yes | Step 10 | COMPLETE | extracted 216; cataloged 216 | SELF |
+| TS-S9-CORR-004 | 09 | `docs/research/tick_shock/02_data_structures_and_globals.md` | corrected catalog | add Step 6 types and exact capacities | source | `8AF0DEE94FD230FB6282D5851E8AFF8445B450F7F0DEA81211F1A71AE4BAD6A8` | yes | Step 10 | COMPLETE | physical 3612; logical 3610/1806/904 | SELF |
+| TS-S9-CORR-005 | 09 | `reports/analysis/tick_shock/step02_as_is_completion.md` | corrected evidence report | correct baseline EA SHA | generated evidence | `6742FB93AB8B5D66D3D694B7864858B82EDC999B9F4864E0CBBDD1071003C40B` | yes | Step 10 | CORRECTED | historical count retained | SELF |
+| TS-S9-CORR-006 | 09 | `reports/tests/tick_shock/step03_test_spec_review.md` | corrected evidence report | fix inverted SHA authority statement | generated evidence | `3905790F0A4AEE2516F69D903FE5766C01D3F6A32AC19EC4B65D757210234C8C` | yes | Step 10 | CORRECTED | normative test files unchanged | SELF |
+| TS-S9-CORR-007 | 09 | `reports/tests/tick_shock/step06_post_fix_green_report.md` | corrected evidence report | distinguish one XFAIL fix from seven XPASS audits | generated evidence | `A2213E35065A7569F9D605D50093FD991BE6E72EA7CD4FBC5C6F9ADC14C786F4` | yes | Step 10 | CLARIFIED | TS-CSV-001 is the only recorded XFAIL-to-PASS | SELF |
+| TS-S9-CORR-008 | 09 | `docs/research/tick_shock/08_final_qa.md` | corrected QA | close catalog drift and distinguish GBPUSD counters | source | `04F213EB8305EBA6F485A0486861E7B01F0E773E2858A62A6FE5A05AC8951AF8` | yes | Step 10 | CORRECTED | Step 8 verdict unchanged | SELF |
+| TS-S9-CORR-009 | 09 | `reports/qa/tick_shock/step08_final_qa_findings.csv` | corrected findings | resolve documentation and manifest findings | generated evidence | `4DE9C267281A7B78C849F479E7D13C14661772863E1D6E7267E5B69279CD39DB` | yes | Step 10 | RESOLVED_STEP09 | other Step 8 findings unchanged | SELF |
+| TS-S9-CORR-010 | 09 | `reports/qa/tick_shock/step08_recalculation.csv` | corrected recalculation note | distinguish tester denominator from EA minute counter | generated evidence | `5AB608FA7473AA11FA80CC99F9D1329F22DCDBF9F327279A33464703093C7568` | yes | Step 10 | CORRECTED | fallback result remains PARTIAL | SELF |
+| TS-S9-DOC-001 | 09 | `docs/research/tick_shock/09_evidence_and_documentation_correction.md` | correction report | consolidate Step 1-8 evidence corrections | source | `4581650EDB4DD92E8B016273589C6290F8AC2D6802E13D63C90D150C91AD3960` | yes | Step 10 | COMPLETE | documents unresolved provenance limits | SELF |
+| TS-S9-QA-001 | 09 | `reports/qa/tick_shock/step09_documentation_corrections.csv` | correction ledger | old/corrected values and evidence ownership | generated evidence | `BD2BEE29F9BA6697369F9BDFE66112C2B66C231F0DFC703FCF3AE337E2794950` | yes | Step 10 | COMPLETE | 18 correction/verification rows | SELF |
+| TS-S9-INV-001 | 09 | `reports/checkpoints/tick_shock/step09_source_dependency_inventory.csv` | dependency inventory | portable compile/test/reproduction path rollup | generated evidence | `D89512E487450DD9C5317555FDC6E20FF2A842682D9EC558AD0B5795CE1A323C` | yes | Step 10 | COMPLETE | 301 tracked dependencies | SELF |

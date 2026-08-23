@@ -2,7 +2,7 @@
 
 ## Scope and evidence boundary
 
-This document describes the current checkpoint source exactly as it exists at Step 2. It does not validate the execution model or change production/test code. The current research EA SHA-256 is `976148D017E067728DC8827724516A076E7561C89D8D57BCD850D40DCB54A32C`; the March baseline report identifies an older EA SHA-256, `969AC0350AA64EAA1AFFFFECCA660E8CB2FB3877F4280186215A0E89251455C3`. Therefore baseline output is behavioral evidence for the pre-checkpoint implementation, not proof of the current source.
+This document describes the current checkpoint source exactly as it exists at Step 2. It does not validate the execution model or change production/test code. The current research EA SHA-256 is `976148D017E067728DC8827724516A076E7561C89D8D57BCD850D40DCB54A32C`; the March baseline report identifies an older EA SHA-256, `969AC0350AA64EAA1AFFFFECCA660E8CB2FB3877F4280186215A0E89251455C3`. Both are complete 64-hex SHA-256 values, not shortened identifiers. Therefore baseline output is behavioral evidence for the pre-checkpoint implementation, not proof of the current source.
 
 ## Component composition
 

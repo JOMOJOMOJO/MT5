@@ -1,9 +1,9 @@
-# Tick-shock function catalog (As-Is plus Step 4 extraction)
+# Tick-shock function catalog (As-Is through Step 9 current-source rollup)
 
-- scope: Step 2 As-Is catalog plus the behavior-preserving Step 4 production modules
+- scope: Step 2 As-Is catalog, the behavior-preserving Step 4 modules, and the Step 9 current-source reconciliation
 - extraction: multiline function-definition regex plus brace-balanced body scan
-- mechanically extracted current functions: 207
-- cataloged current functions: 207 (165 As-Is entries, 35 relocated by the canonical map below, and 42 new composition/module entries)
+- mechanically extracted current functions: 216
+- cataloged current functions: 216 (165 Step 2 definitions retained, 42 Step 4 composition/module definitions, and 9 Step 6 definitions added below)
 - count difference: 0
 
 The catalog is As-Is documentation, not a claim that the implementation is causally validated. G:R/G:W list global/input/constant dependencies detected in the function body. Mutable reference parameters are reported under struct side effects. Pure means deterministic with no detected global, MQL built-in, file, or mutable-reference dependency; this is a deliberately conservative lexical label, so deterministic helpers using MathAbs or formatting APIs can appear impure. Stateful deterministic means mutation is limited to supplied data. The authoritative extraction candidates are listed in 02_refactor_targets.md.
@@ -19,9 +19,9 @@ The catalog is As-Is documentation, not a claim that the implementation is causa
 | mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5 | 29 | 29 | 0 |
 | **Step 2 total** | **165** | **165** | **0** |
 
-The reconciliation above is the immutable Step 2 snapshot. The current Step 4
-reconciliation is appended at the end of this document and is authoritative for
-module paths and extracted production entry points.
+The reconciliation above is the immutable Step 2 snapshot. The historical Step
+4 reconciliation and the authoritative Step 9 current-source reconciliation
+are appended at the end of this document.
 
 ## Per-function catalog
 
@@ -222,7 +222,7 @@ module paths and extracted production entry points.
 - Overloaded names such as OnInit, OnTick, OnDeinit, and Almost are disambiguated by Function ID and file path.
 - Step 3 must turn the integration-required rows around dispatcher, detector, scenario, CSV and order lifecycle into executable production-path tests.
 
-## Step 4 current-source reconciliation
+## Step 4 reconciliation (historical snapshot)
 
 The multiline definition scan was rerun after extraction. The two root
 compatibility includes now contain zero definitions; they forward the stable
@@ -309,3 +309,59 @@ Full parameter lists and call direction for the five multiline facades are in
 their source and `04_module_mapping.md`; no expected fixture is generated from
 these functions. Errors/rejects remain the exact enum/string values documented
 in the Step 3 oracle and known-defect matrix.
+
+## Step 9 current-source reconciliation
+
+The same brace-balanced top-level definition scan was rerun against the current
+research EA, the eleven canonical modules, the two compatibility wrappers, and
+the two original reachability harnesses. Step 5 harness functions remain outside
+the catalog scope, as they were in Step 8. This produces 216 definitions and 216
+catalog entries. The nine definitions added after the Step 4 snapshot are
+cataloged below; the expanded `TSMt5OpenAppendCsv` signature is an amendment to
+S4-031 and does not add a tenth definition.
+
+| Current file | Extracted | Cataloged | Difference |
+|---|---:|---:|---:|
+| `mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5` | 95 | 95 | 0 |
+| `mql/Include/TickShock/TickShockClusterer.mqh` | 5 | 5 | 0 |
+| `mql/Include/TickShock/TickShockConfig.mqh` | 3 | 3 | 0 |
+| `mql/Include/TickShock/TickShockCsvSerializer.mqh` | 9 | 9 | 0 |
+| `mql/Include/TickShock/TickShockDetector.mqh` | 8 | 8 | 0 |
+| `mql/Include/TickShock/TickShockEngine.mqh` | 5 | 5 | 0 |
+| `mql/Include/TickShock/TickShockExecutionModel.mqh` | 20 | 20 | 0 |
+| `mql/Include/TickShock/TickShockMt5Adapter.mqh` | 22 | 22 | 0 |
+| `mql/Include/TickShock/TickShockOrderLifecycle.mqh` | 3 | 3 | 0 |
+| `mql/Include/TickShock/TickShockScenarioEngine.mqh` | 3 | 3 | 0 |
+| `mql/Include/TickShock/TickShockStateMachine.mqh` | 6 | 6 | 0 |
+| `mql/Include/TickShock/TickShockTypes.mqh` and compatibility wrappers | 0 | 0 | 0 |
+| `mql/Experts/tests/ExpectedValue_TickShock_ResearchReachabilityHarness.mq5` | 8 | 8 | 0 |
+| `mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5` | 29 | 29 | 0 |
+| **Total** | **216** | **216** | **0** |
+
+Shared units below: volume is lots, price is symbol price, file paths are
+terminal `FILE_COMMON` relative paths, and enum/string values are unitless.
+
+| ID | File / exact signature | Responsibility; arguments and units; return | Globals and side effects | Production caller / test caller | MT5 API, I/O, testability and extraction target |
+|---|---|---|---|---|---|
+| S6-001 | EA `string TSRRunMetadataFingerprint()` | Serializes source revision, symbols, detector/state/execution parameters, execution mode and session hours into stable run metadata; no arguments; returns a unitless fingerprint string. | Reads `TSR_SOURCE_REVISION` and the named `Inp*` configuration globals; writes no global or struct. | `TSROpenCsv` / none directly. | Uses only formatting helpers and `TSRExecutionModeName`; no file I/O. Input-dependent deterministic helper; composition/metadata unit test plus CSV integration recommended. |
+| S6-002 | Serializer `string TSCsvOpenStatusName(const ENUM_TS_CSV_OPEN_STATUS status)` | Maps CSV open status enum to `CREATED`, `RESUMED`, `RUN_ID_COLLISION`, or `IO_ERROR`; returns string. | No globals or mutation. | `TSROpenCsv` / `TS5RunCsvCollision`. | Pure; no MT5 API or I/O. Direct unit test; serializer. |
+| S6-003 | Serializer `string TSOrderEntryStateName(const ENUM_TS_ORDER_ENTRY_STATE state)` | Maps order-entry lifecycle enum to stable evidence token; returns string. | No globals or mutation. | None in the order-free research EA / `TS5RunOrderLifecycle`. | Pure; no MT5 API or I/O. Direct unit test; serializer. |
+| S6-004 | Adapter `bool TSMt5ReadRunMetadata(const string path,string &run_id,string &metadata_hash,string &header)` | Reads three nonempty metadata lines; `path` is `FILE_COMMON` relative; output references are strings; returns true only when all three exist. | No globals; clears and updates all three output references. | `TSMt5OpenAppendCsv` / indirect through `TS5RunCsvCollision`. | `FileOpen`, `FileReadString`, `FileIsEnding`, `FileClose`; read I/O. Adapter integration test required. |
+| S6-005 | Adapter `bool TSMt5WriteRunMetadata(const string path,const string run_id,const string metadata_hash,const string header)` | Creates/overwrites the sidecar with run id, fingerprint and CSV header; all arguments are strings; returns write/open success. | No globals or caller struct mutation; changes `FILE_COMMON` state. | `TSMt5OpenAppendCsv` / indirect through `TS5RunCsvCollision`. | `FileOpen`, `FileWriteString`, `FileFlush`, `FileClose`; write I/O. Adapter integration test required. |
+| S6-006 | Adapter `bool TSMt5ExistingCsvHeaderMatches(const string path,const string expected_header)` | Accepts an empty CSV or exact first-line header match; returns bool. | No globals or caller mutation; reads `FILE_COMMON` state. | `TSMt5OpenAppendCsv` / indirect through `TS5RunCsvCollision`. | `FileOpen`, `FileSize`, `FileReadString`, `FileClose`; read I/O. File integration test required. |
+| S6-007 | Order lifecycle `void TSResetOrderFillState(TickShockOrderFillState &state,const double requested_volume)` | Initializes a request in `TS_ORDER_ENTRY_PENDING`; `requested_volume` is lots; no return. | No globals; zeroes and mutates `state`, clamps negative requested volume to zero, sets remaining volume. | None in the order-free research EA / `TS5RunOrderLifecycle`. | `ZeroMemory`, `MathMax`; stateful deterministic. Direct unit and production-order adapter integration required. |
+| S6-008 | Order lifecycle `bool TSApplyEntryDeal(TickShockOrderFillState &state,const double deal_volume,const double deal_price)` | Applies one entry deal, rejects invalid/resolved/overfill input, accumulates volume-weighted price, and resolves only when no remainder remains; volume lots, price symbol price; returns acceptance. | No globals; mutates filled/remaining/weighted value/average/deal count/resolution/state. | None in the order-free research EA / `TS5RunOrderLifecycle`. | Math only; stateful deterministic. Multi-deal/partial-fill unit test and actual `OnTradeTransaction` integration required. |
+| S6-009 | Order lifecycle `bool TSResolveEntryRemainderCancel(TickShockOrderFillState &state,const double cancelled_volume)` | Resolves a request only when cancelled lots equal the remaining lots within epsilon; returns acceptance. | No globals; mutates cancelled/remaining/resolution/state. | None in the order-free research EA / `TS5RunOrderLifecycle`. | Math only; stateful deterministic. Residual-cancel unit test and broker lifecycle integration required. |
+
+### Step 9 amendment to S4-031
+
+The current signature is
+`int TSMt5OpenAppendCsv(const string folder,const string path,const string header,const string run_id,const string metadata_hash,ENUM_TS_CSV_OPEN_STATUS &status)`.
+It validates nonempty identifiers, binds the CSV to a `.runmeta` sidecar, rejects
+run-id/fingerprint/header collisions, opens or resumes the file, returns a file
+handle, and writes `status` as the explicit outcome. It has no module global
+dependency, but mutates `FILE_COMMON` state and the status reference. Production
+caller: `TSROpenCsv`; test caller: `TS5RunCsvCollision`. Its precondition is a
+nonempty folder/path/header/run id/fingerprint; its postcondition is either a
+valid append-positioned handle with one matching header or `INVALID_HANDLE`
+without mixing runs. It is direction-neutral and requires file integration.

@@ -126,7 +126,7 @@ REALIZABLE ExpectancyRは `-0.292361643098`、summaryの `-0.292362` と一致�
 - MT5 adapter: `TSMt5ReadRunMetadata`、`TSMt5WriteRunMetadata`、`TSMt5ExistingCsvHeaderMatches`
 - order lifecycle: `TSResetOrderFillState`、`TSApplyEntryDeal`、`TSResolveEntryRemainderCancel`
 
-さらに `TSMt5OpenAppendCsv` のsignature/責務はStep 6で拡張されています。`02_data_structures_and_globals.md` にも `ENUM_TS_CSV_OPEN_STATUS`、`ENUM_TS_ORDER_ENTRY_STATE`、`TickShockOrderFillState` のStep 6更新が反映されていません。As-Is資料はStep 4までは網羅、現行HEADには9関数分のdriftがあります。
+さらに `TSMt5OpenAppendCsv` のsignature/責務はStep 6で拡張されています。`02_data_structures_and_globals.md` にも `ENUM_TS_CSV_OPEN_STATUS`、`ENUM_TS_ORDER_ENTRY_STATE`、`TickShockOrderFillState` のStep 6更新が反映されていません。これはStep 8時点のfindingです。Step 9で9関数と関連型を追記し、現行216関数とcatalog 216件を一致させました。
 
 ### Sourceとtester binaryの結合
 
@@ -136,7 +136,12 @@ source、base commit、preset、config、compile log、build 6140、VantageTradi
 
 ### Tick qualityとbroker spec
 
-- GBPUSDは30,187分中179分がgenerated fallback（0.5930%）でした。
+- GBPUSDのEA内M1 counterは30,188分です。一方、tester journalは
+  `real ticks discarded for 179 minutes of 30187 total minute bars` と報告し、
+  `tick_quality.csv`も `tester_reported_total_minutes=30187`、
+  `tester_reported_discarded_minutes=179` と保存しています。したがって
+  generated fallback率0.5930%の分母は30,187であり、30,188は別のEA観測
+  counterです。両値を同じ定義へ推測統一しません。
 - 他5 symbolsはdiscard warning未観測ですが、全tickがbroker-recordedである証明ではありません。
 - 6 symbolsのMarch `StopsLevel` と `FreezeLevel` はすべて0でした。Bid/Ask基準計算はfixtureで検証されていますが、非zero制約の実市場server acceptanceは未観測です。
 

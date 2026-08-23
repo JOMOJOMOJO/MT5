@@ -73,9 +73,12 @@ Catalog difference: **none**.
 - Production/test source SHA values remained identical to the Step 1 manifest
   throughout documentation.
 - The baseline summary reports research EA SHA
-  <code>969AC03545D02BBD3DA67EF1213DA39D6AFEDACD9C16F6E479973E123A07E6CD</code>,
+  <code>969AC0350AA64EAA1AFFFFECCA660E8CB2FB3877F4280186215A0E89251455C3</code>,
   which differs from current source SHA
   <code>976148D017E067728DC8827724516A076E7561C89D8D57BCD850D40DCB54A32C</code>.
+- These are complete SHA-256 values. The baseline value is the identity reported
+  by the committed Step 1/2 baseline summary; no matching archived source blob
+  was available for an independent binary-to-source reconstruction.
 - Therefore baseline-observed defects and current-source guards are documented
   separately. The baseline is not behavioral proof for current code.
 - Baseline re-analysis found 19 event rows and 7,452 stress-scenario outcomes.

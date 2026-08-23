@@ -50,5 +50,5 @@ TSRC-048,REALIZABLE,positive_cluster_means,15,3,3,0,0,PASS,reports/backtest/runs
 TSRC-049,REALIZABLE,scenario_summary_field_mismatches,1656,0,0,0.000001,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/summary.csv,552 keys times valid invalid and mean R
 TSRC-050,REALIZABLE,overall_and_funnel_mismatches,11,0,0,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/summary.csv,Overall four values and seven funnel counters
 TSRC-051,REALIZABLE,commission_R_absolute_max,7128,0,0,0,0,PARTIAL,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Configured commission is zero and source is ORDER_HARNESS_REQUIRED
-TSRC-052,REALIZABLE,generated_tick_fallback_minutes,30187,179,179,0,0,PARTIAL,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/tick_quality.csv,GBPUSD fallback rate is 0.5930 percent
+TSRC-052,REALIZABLE,generated_tick_fallback_minutes,30187,179,179,0,0,PARTIAL,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/tick_quality.csv,"GBPUSD fallback rate is 0.5930 percent using tester denominator 30187; EA m1_minutes_seen is a separate counter equal to 30188"
 TSRC-053,REALIZABLE,independent_sample_count,19,15,15,0,0,PASS,reports/backtest/runs/20260822_tickshock_causal_realizable_202503/events.csv,Statistical n is market clusters not 7128 scenario cells

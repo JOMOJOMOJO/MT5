@@ -50,7 +50,7 @@ PASS, 0 FAIL, 1 XFAIL, 16 XPASS, and 23 SKIP. Its sole XFAIL was
 | `TS-RR-001` | `REQ-EXEC-003` | `TS-KD-006` | `TSBuildResearchTarget` |
 | `TS-BROKER-001` | `REQ-EXEC-008` | `TS-KD-007` | `TSProtectiveOrderDistanceFeasible` |
 
-## Corrected and promoted Test IDs
+## Observed transitions: one XFAIL fix and audited promotions
 
 | Test ID | Step 5 | Step 5 actual | Step 6 | Step 6 actual / expected |
 |---|---|---|---|---|
@@ -67,9 +67,13 @@ PASS, 0 FAIL, 1 XFAIL, 16 XPASS, and 23 SKIP. Its sole XFAIL was
 | `TS-RR-001` | XPASS | Long/Short RR at least 1.333333333333 | PASS | unchanged and equal to expected |
 | `TS-BROKER-001` | XPASS | Bid/Ask StopsLevel basis correct | PASS | unchanged and equal to expected |
 
-The seven XPASS rows were already correct in the Step 4 extracted production
-core. Step 6 audited their actual EA wiring and promotes them to formal post-fix
-PASS; no fixture or expected value was relabelled.
+Only `TS-CSV-001` supplies a recorded XFAIL-to-PASS RED/GREEN transition.
+The seven specified causal tests were already XPASS in Step 5 and already
+returned their desired outputs in the Step 4 extracted production core. Step 6
+audited their actual EA wiring and recorded formal post-fix PASS without changing
+their behavior, fixture, or expected value. The available history therefore does
+not prove that Step 6 fixed those seven defects; the fixes may predate Step 4,
+and no historical RED production-path evidence for them is preserved.
 
 ## Production files and functions
 

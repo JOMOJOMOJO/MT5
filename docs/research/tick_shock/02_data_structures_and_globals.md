@@ -274,6 +274,8 @@ field values, array capacities, scenario indices, and units are unchanged.
 |---|---|---|
 | `ENUM_TS_DETECTOR_REJECT` | accept plus percentile/Z/efficiency/intensity/Move-Spread/spread first rejection | `TSDetectorRejectName` |
 | `ENUM_TS_SCENARIO_STATUS` | not-signaled, pending, active, TP/SL/time outcomes, explicit invalid reasons, no-signal/incomplete | `TSScenarioStatusName` |
+| `ENUM_TS_ORDER_ENTRY_STATE` | `TS_ORDER_ENTRY_PENDING`, `TS_ORDER_WAIT_EXIT`, `TS_ORDER_ENTRY_CANCELLED`; one entry request from submission through complete fill or remainder resolution | `TSOrderEntryStateName` |
+| `ENUM_TS_CSV_OPEN_STATUS` | `TS_CSV_OPEN_CREATED`, `TS_CSV_OPEN_RESUMED`, `TS_CSV_OPEN_RUN_ID_COLLISION`, `TS_CSV_OPEN_IO_ERROR`; explicit append/open result | `TSCsvOpenStatusName` |
 
 Existing `ENUM_TS_STATE`, `ENUM_TS_ACTION`, and
 `ENUM_TS_RESEARCH_EXECUTION_MODE` moved without value changes to
@@ -291,6 +293,14 @@ Existing `ENUM_TS_STATE`, `ENUM_TS_ACTION`, and
 | `TickShockExecutionRequest` | `TickShockScenarioEngine.mqh` | one scenario attempt | fully explicit clocks/quote/config/spec-derived inputs |
 | `TickShockExecutionResult` | `TickShockTypes.mqh` | one scenario attempt | core output; status, entry clock, stressed prices, entry/SL/TP/RR/policy |
 | `TickShockClusterAssignment` | `TickShockTypes.mqh` | one event | core output; ID and overlap |
+| `TickShockOrderFillState` | `TickShockTypes.mqh` | one order-entry request, reset before submission | directly injectable; `TSResetOrderFillState` initializes requested/remaining lots, `TSApplyEntryDeal` accumulates all entry deals and weighted price, and `TSResolveEntryRemainderCancel` resolves the residual without treating the first partial deal as a completed entry |
+
+`TickShockOrderFillState` stores unitless `state` and `entry_resolved`, lot-valued
+`requested_volume`, `filled_volume`, `remaining_volume`, and `cancelled_volume`,
+price-times-lot `weighted_fill_value`, symbol-price `average_fill`, and unitless
+`deal_count`. Its lifetime begins at `TSResetOrderFillState`; accepted deals and
+the final remainder cancellation are the only update sites. It owns no global
+state and is directly injectable from a deterministic transaction fixture.
 
 `TickShockMachine`, `TSResearchSignalClock`, `TSResearchEntryClock`, and
 `TSResearchClusterClock` retain their pre-refactor fields and semantics but now
@@ -310,9 +320,10 @@ live in `TickShockTypes.mqh`.
 
 ### Capacity and index preservation
 
-No capacity changed in Step 4: tick ring 8,192 with 5,000 ms retention; grid 64;
-compile sample ceiling 3,612 with default per-detector logical capacities
-3,612/1,806/904; active events 64; pending merge 65,536; scenarios 552 per
+No capacity changed in Step 4 or Step 6: tick ring 8,192 with 5,000 ms
+retention; grid 64; compile-time physical sample ceiling 3,612 with default
+per-detector logical capacities 3,610/1,806/904 for 250/500/1,000 ms;
+active events 64; pending merge 65,536; scenarios 552 per
 event. The index formulas remain:
 
 ```text
@@ -335,5 +346,7 @@ All handlers still execute on the serialized MQL event queue. The adapter does
 not add threads. `TickShockMt5Adapter.mqh` is the only new module that owns
 SymbolInfo, CopyTicks, indicator, terminal clock/memory, timer, and file APIs.
 Core DTOs are therefore constructible in a Step 5 fixture without terminal
-state. Order lifecycle globals and APIs remain isolated in the existing order
-harness and are not promoted into the research core.
+state. The order-free research EA has no broker order lifecycle wiring;
+`TickShockOrderLifecycle.mqh` is a deterministic production module exercised by
+the harness, while actual `OnTradeTransaction`/server integration remains an
+external observation requirement.

@@ -141,10 +141,12 @@ expected files. No production MQL function or baseline outcome was invoked.
 - Long/Short paths use explicit Bid/Ask sides.
 - Absence is represented as blank/invalid, never silently as zero.
 - Same-RunId append isolation and current-run provenance remain explicit XFAILs.
-- The Step 2 architecture document contains a shortened baseline SHA in one
-  sentence; this review uses the full authoritative SHA from
+- Step 9 correction: the Step 2 architecture contains the full authoritative
+  baseline SHA, <code>969AC0350AA64EAA1AFFFFECCA660E8CB2FB3877F4280186215A0E89251455C3</code>.
+  The original review inverted the evidence hierarchy and relied on a typo in
   <code>02_known_defects.md</code> and <code>step02_as_is_completion.md</code>.
-  Step 4 must use the full SHA shown in TS-PROV-001.
+  All three documents now distinguish that reported baseline-run identity from
+  the Step 1/2 checkpoint-source SHA.
 
 ## Step 4 handoff
 
