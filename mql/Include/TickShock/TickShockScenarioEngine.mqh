@@ -31,24 +31,41 @@ void TSResetExecutionResult(TickShockExecutionResult &result)
    TSResetResearchEntryClock(result.entry_clock);
   }
 
+ENUM_TS_SCENARIO_STATUS TSScenarioRequestStatus(const TickShockExecutionRequest &request)
+  {
+   if(request.direction!=1 && request.direction!=-1) return TS_SCENARIO_INVALID_DIRECTION;
+   if(request.tick_size<=0.0 || !MathIsValidNumber(request.tick_size)) return TS_SCENARIO_INVALID_TICK_SIZE;
+   if(request.requested_rr<=0.0 || !MathIsValidNumber(request.requested_rr)) return TS_SCENARIO_INVALID_RR;
+   if(request.stop_multiple<=0.0 || !MathIsValidNumber(request.stop_multiple)) return TS_SCENARIO_INVALID_RISK;
+   if(request.spread_multiplier<=0.0 || !MathIsValidNumber(request.spread_multiplier)) return TS_SCENARIO_INVALID_SPREAD;
+   return TS_SCENARIO_ACTIVE;
+  }
+
 ENUM_TS_SCENARIO_STATUS TSScenarioStatusFromFeasibility(const string reason)
   {
    if(reason=="INVALID_BROKER_STOP") return TS_SCENARIO_INVALID_BROKER_STOP;
    if(reason=="INVALID_PRICE") return TS_SCENARIO_INVALID_PRICE;
    if(reason=="INVALID_RISK_DISTANCE") return TS_SCENARIO_INVALID_RISK_DISTANCE;
-   return TS_SCENARIO_INVALID_BROKER_TARGET;
+   if(reason=="INVALID_BROKER_TARGET") return TS_SCENARIO_INVALID_BROKER_TARGET;
+   return TS_SCENARIO_INVALID_TARGET_BUILD;
   }
 
 bool TSBuildScenarioEntry(const TickShockExecutionRequest &request,TickShockExecutionResult &result)
   {
    TSResetExecutionResult(result);
    result.entry_clock=request.prior_entry_clock;
-   if(request.quote.bid<=0.0 || request.quote.ask<=request.quote.bid || !request.quote.real_tick)
+   ENUM_TS_SCENARIO_STATUS request_status=TSScenarioRequestStatus(request);
+   if(request_status!=TS_SCENARIO_ACTIVE)
+     {result.status=request_status;result.pending=false;result.done=true;return false;}
+   if(!request.quote.real_tick)
      {
       result.status=TS_SCENARIO_INVALID_STALE_QUOTE;
       result.pending=false;result.done=true;
       return false;
      }
+   if(request.quote.bid<=0.0 || request.quote.ask<=request.quote.bid ||
+      !MathIsValidNumber(request.quote.bid) || !MathIsValidNumber(request.quote.ask))
+     {result.status=TS_SCENARIO_INVALID_PRICE;result.pending=false;result.done=true;return false;}
    if(!TSResearchTryEntryClock(request.signal_clock,request.mode,request.requested_delay_ms,
                                request.submit_latency_ms,request.quote.time_msc,result.entry_clock)) return false;
    result.base_spread=request.quote.ask-request.quote.bid;
@@ -68,14 +85,18 @@ bool TSBuildScenarioEntry(const TickShockExecutionRequest &request,TickShockExec
    double raw_sl=request.direction>0?result.entry-result.requested_risk:result.entry+result.requested_risk;
    result.sl=TSRoundStopOutward(request.direction,raw_sl,request.tick_size,request.digits);
    result.risk=MathAbs(result.entry-result.sl);
+   if(result.risk<=0.0 || !MathIsValidNumber(result.risk))
+     {result.status=TS_SCENARIO_INVALID_RISK_DISTANCE;result.pending=false;result.done=true;return false;}
    result.stops_distance=request.stops_distance;
    result.freeze_distance=request.freeze_distance;
    result.requested_rr=request.requested_rr;
    string feasibility_reason="";
-   if(result.entry<=0.0 || result.sl<=0.0 ||
-      !TSBuildResearchTarget(request.direction,result.entry,result.risk,request.requested_rr,
-                             request.tick_size,request.digits,result.tp,result.realized_rr) ||
-      !TSProtectiveOrderDistanceFeasible(request.direction,result.stressed_bid,result.stressed_ask,
+   if(result.entry<=0.0 || result.sl<=0.0)
+     {result.status=TS_SCENARIO_INVALID_PRICE;result.pending=false;result.done=true;return false;}
+   if(!TSBuildResearchTarget(request.direction,result.entry,result.risk,request.requested_rr,
+                             request.tick_size,request.digits,result.tp,result.realized_rr))
+     {result.status=TS_SCENARIO_INVALID_TARGET_BUILD;result.pending=false;result.done=true;return false;}
+   if(!TSProtectiveOrderDistanceFeasible(request.direction,result.stressed_bid,result.stressed_ask,
                                          result.sl,result.tp,result.stops_distance,feasibility_reason))
      {
       result.status=TSScenarioStatusFromFeasibility(feasibility_reason);

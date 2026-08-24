@@ -17,12 +17,12 @@ $evidenceRaw = if ($Phase -eq "pre-fix") {
 } elseif ($Phase -eq "step11") {
     Join-Path $repoRoot "reports\tests\tick_shock\step11_raw"
 } else {
-    Join-Path $repoRoot "reports\tests\tick_shock\step06_raw"
+    Join-Path $repoRoot "reports\tests\tick_shock\step12_raw"
 }
 $configRoot = Join-Path $repoRoot "reports\tests\tick_shock\configs"
 $compileRoot = Join-Path $repoRoot "reports\compile\tick_shock"
 $testerRoot = Join-Path $repoRoot "reports\tests\tick_shock\tester"
-$stepTag = if ($Phase -eq "pre-fix") { "step05" } elseif ($Phase -eq "step10") { "step10" } elseif ($Phase -eq "step11") { "step11" } else { "step06" }
+$stepTag = if ($Phase -eq "pre-fix") { "step05" } elseif ($Phase -eq "step10") { "step10" } elseif ($Phase -eq "step11") { "step11" } else { "step12" }
 
 foreach ($path in @($commonFixtures,$commonExpected,$commonRaw,$evidenceRaw,$configRoot,$compileRoot,$testerRoot)) {
     New-Item -ItemType Directory -Force -Path $path | Out-Null

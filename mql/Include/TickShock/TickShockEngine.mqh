@@ -102,6 +102,9 @@ bool TSEngineCommissionFromKnownLoss(const bool calculation_success,const double
    return TSBuildCommissionResult(calculation_success,one_lot_profit_or_loss,commission_amount,gross_r,result);
   }
 
+bool TSEngineCommissionWithProvenance(const bool calculation_success,const double one_lot_profit_or_loss,const double commission_amount,const double gross_r,const string symbol,const string source,TickShockCommissionResult &result)
+  { return TSBuildCommissionResultWithProvenance(calculation_success,one_lot_profit_or_loss,commission_amount,gross_r,symbol,source,result); }
+
 bool TSEngineRegisterResearchEvent(TickShockEventEngineContext &context,
                                    TickShockSymbolClusterClock &symbol_clock,
                                    const TickShockEventKey &key,

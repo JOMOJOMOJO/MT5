@@ -64,7 +64,14 @@ bool TSMt5CommissionResult(const int direction,
   {
    double profit_or_loss=0.0;
    bool calculated=TSMt5CalcOneLotLoss(direction,symbol,entry,sl,profit_or_loss);
-   return TSBuildCommissionResult(calculated,profit_or_loss,commission_amount,gross_r,result);
+   return TSBuildCommissionResultWithProvenance(calculated,profit_or_loss,commission_amount,gross_r,symbol,"CONFIGURED_ROUND_TURN",result);
+  }
+
+string TSMt5RunIdentityFingerprint(const TickShockRunIdentity &identity)
+  {
+   return "period="+identity.period+"|model="+identity.model+"|broker_server="+identity.broker_server+
+          "|terminal_build="+StringFormat("%I64d",identity.terminal_build)+"|source_commit="+identity.source_commit+
+          "|ex5_hash="+identity.ex5_hash+"|schema="+identity.schema+"|config="+identity.config;
   }
 
 bool TSMt5CreateTrendHandles(const string symbol,int &ema20_m15,int &ema50_m15,int &ema20_h1,int &ema50_h1)
@@ -126,11 +133,12 @@ bool TSMt5ExistingCsvHeaderMatches(const string path,const string expected_heade
    return empty || actual_header==expected_header;
   }
 
-int TSMt5OpenAppendCsv(const string folder,
+int TSMt5OpenCsv(const string folder,
                        const string path,
                        const string header,
                        const string run_id,
                        const string metadata_hash,
+                       const TickShockCsvOpenRequest &request,
                        ENUM_TS_CSV_OPEN_STATUS &status)
   {
    status=TS_CSV_OPEN_IO_ERROR;
@@ -153,6 +161,16 @@ int TSMt5OpenAppendCsv(const string folder,
          status=TS_CSV_OPEN_RUN_ID_COLLISION;
          return INVALID_HANDLE;
         }
+      if(request.mode!=TS_CSV_EXPLICIT_RESUME)
+        {
+         status=TS_CSV_OPEN_FRESH_RUN_COLLISION;
+         return INVALID_HANDLE;
+        }
+      if(request.checkpoint=="" || request.last_event_sequence<0 || request.cursor_msc<=0)
+        {
+         status=TS_CSV_OPEN_RESUME_REJECTED;
+         return INVALID_HANDLE;
+        }
       if(data_exists && !TSMt5ExistingCsvHeaderMatches(path,header))
         {
          status=TS_CSV_OPEN_RUN_ID_COLLISION;
@@ -162,6 +180,8 @@ int TSMt5OpenAppendCsv(const string folder,
      }
    else
      {
+      if(request.mode==TS_CSV_EXPLICIT_RESUME)
+        {status=TS_CSV_OPEN_RESUME_REJECTED;return INVALID_HANDLE;}
       if(data_exists)
         {
          int existing=FileOpen(path,FILE_READ|FILE_TXT|FILE_ANSI|FILE_SHARE_READ|FILE_COMMON);
@@ -175,10 +195,10 @@ int TSMt5OpenAppendCsv(const string folder,
         }
       if(!TSMt5WriteRunMetadata(metadata_path,run_id,metadata_hash,header)) return INVALID_HANDLE;
      }
-   int handle=FileOpen(path,FILE_READ|FILE_WRITE|FILE_TXT|FILE_ANSI|FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_COMMON);
+   int handle=FileOpen(path,FILE_READ|FILE_WRITE|FILE_TXT|FILE_ANSI|FILE_COMMON);
    if(handle==INVALID_HANDLE)
      {
-      status=TS_CSV_OPEN_IO_ERROR;
+      status=TS_CSV_OPEN_WRITER_LOCKED;
       return INVALID_HANDLE;
      }
    bool empty=FileSize(handle)==0;
@@ -186,6 +206,13 @@ int TSMt5OpenAppendCsv(const string folder,
    if(empty) FileWriteString(handle,header+"\r\n");
    status=success_status;
    return handle;
+  }
+
+int TSMt5OpenAppendCsv(const string folder,const string path,const string header,const string run_id,
+                       const string metadata_hash,ENUM_TS_CSV_OPEN_STATUS &status)
+  {
+   TickShockCsvOpenRequest request;ZeroMemory(request);request.mode=TS_CSV_FRESH_RUN;
+   return TSMt5OpenCsv(folder,path,header,run_id,metadata_hash,request,status);
   }
 
 void TSMt5WriteLine(const int handle,const string line)

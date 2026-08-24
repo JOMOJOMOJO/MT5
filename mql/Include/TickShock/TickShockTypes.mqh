@@ -56,6 +56,12 @@ enum ENUM_TS_SCENARIO_STATUS
    TS_SCENARIO_INVALID_BROKER_TARGET,
    TS_SCENARIO_INVALID_PRICE,
    TS_SCENARIO_INVALID_RISK_DISTANCE,
+   TS_SCENARIO_INVALID_RISK,
+   TS_SCENARIO_INVALID_DIRECTION,
+   TS_SCENARIO_INVALID_TICK_SIZE,
+   TS_SCENARIO_INVALID_RR,
+   TS_SCENARIO_INVALID_TARGET_BUILD,
+   TS_SCENARIO_INVALID_COMMISSION,
    TS_SCENARIO_NO_SIGNAL,
    TS_SCENARIO_INCOMPLETE_END_OF_RUN
   };
@@ -72,7 +78,41 @@ enum ENUM_TS_CSV_OPEN_STATUS
    TS_CSV_OPEN_CREATED = 0,
    TS_CSV_OPEN_RESUMED,
    TS_CSV_OPEN_RUN_ID_COLLISION,
+   TS_CSV_OPEN_FRESH_RUN_COLLISION,
+   TS_CSV_OPEN_RESUME_REJECTED,
+   TS_CSV_OPEN_WRITER_LOCKED,
    TS_CSV_OPEN_IO_ERROR
+  };
+
+enum ENUM_TS_EVENT_REGISTRATION_STATUS
+  {
+   TS_EVENT_REGISTRATION_ACCEPTED=0,
+   TS_EVENT_REGISTRATION_INVALID_KEY,
+   TS_EVENT_REGISTRATION_DUPLICATE,
+   TS_EVENT_REGISTRATION_POOL_EXHAUSTED
+  };
+
+enum ENUM_TS_PENDING_STATUS
+  {
+   TS_PENDING_OK=0,
+   TS_PENDING_TICK_CAPACITY_EXHAUSTED,
+   TS_PENDING_CURSOR_STALLED,
+   TS_PENDING_INCOMPLETE_FRONTIER
+  };
+
+enum ENUM_TS_COMMISSION_STATUS
+  {
+   TS_COMMISSION_OK=0,
+   TS_COMMISSION_EXPLICIT_ZERO,
+   TS_COMMISSION_CALCULATION_FAILED,
+   TS_COMMISSION_INVALID_LOSS,
+   TS_COMMISSION_INVALID_AMOUNT
+  };
+
+enum ENUM_TS_CSV_RUN_MODE
+  {
+   TS_CSV_FRESH_RUN=0,
+   TS_CSV_EXPLICIT_RESUME=1
   };
 
 struct TickShockMachine
@@ -187,7 +227,47 @@ struct TickShockOrderFillState
    double weighted_fill_value;
    double average_fill;
    int deal_count;
+   double exit_volume;
+   double weighted_exit_value;
+   double average_exit;
+   int exit_deal_count;
+   int duplicate_deals;
+   int identity_rejections;
+   ulong request_ticket;
+   ulong order_ticket;
+   ulong position_ticket;
+   string symbol;
+   long magic;
+   int direction;
+   ulong seen_deal_tickets[];
    bool entry_resolved;
+  };
+
+struct TickShockCsvOpenRequest
+  {
+   ENUM_TS_CSV_RUN_MODE mode;
+   string checkpoint;
+   long last_event_sequence;
+   long cursor_msc;
+  };
+
+struct TickShockRunIdentity
+  {
+   string period;
+   string model;
+   string broker_server;
+   long terminal_build;
+   string source_commit;
+   string ex5_hash;
+   string schema;
+   string config;
+  };
+
+struct TickShockCursorProgress
+  {
+   bool terminated;
+   ENUM_TS_PENDING_STATUS status;
+   bool validation_invalid;
   };
 
 #endif

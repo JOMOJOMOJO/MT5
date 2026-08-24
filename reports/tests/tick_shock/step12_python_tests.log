@@ -1,0 +1,15 @@
+test_production_clock_observations_match_independent_expected_files (test_causal_execution.CausalExecutionTests.test_production_clock_observations_match_independent_expected_files) ... ok
+test_candidate_event_ids_are_unique (test_event_csv_invariants.EventCsvInvariantTests.test_candidate_event_ids_are_unique) ... ok
+test_realizable_candidate_has_no_entry_before_processing_or_eligibility (test_event_csv_invariants.EventCsvInvariantTests.test_realizable_candidate_has_no_entry_before_processing_or_eligibility) ... ok
+test_oracle_provenance_disallows_production_generated_expected (test_fixture_integrity.FixtureIntegrityTests.test_oracle_provenance_disallows_production_generated_expected) ... ok
+test_registry_has_one_fixture_config_and_expected_per_test (test_fixture_integrity.FixtureIntegrityTests.test_registry_has_one_fixture_config_and_expected_per_test) ... ok
+test_cross_symbol_boundary_fixture_uses_production_clusterer (test_market_clusters.MarketClusterTests.test_cross_symbol_boundary_fixture_uses_production_clusterer) ... ok
+test_bid_ask_broker_distance_fixture_matches_production (test_rr_and_broker_distance.RrAndBrokerDistanceTests.test_bid_ask_broker_distance_fixture_matches_production) ... ok
+test_outward_rr_fixture_matches_production (test_rr_and_broker_distance.RrAndBrokerDistanceTests.test_outward_rr_fixture_matches_production) ... ok
+test_scenario_rows_reconcile_to_overall (test_summary_reconciliation.SummaryReconciliationTests.test_scenario_rows_reconcile_to_overall) ... ok
+test_synthetic_summary_fixture_matches_literal_expected (test_summary_reconciliation.SummaryReconciliationTests.test_synthetic_summary_fixture_matches_literal_expected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.267s
+
+OK

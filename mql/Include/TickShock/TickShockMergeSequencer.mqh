@@ -21,6 +21,14 @@ struct TickShockPendingRepository
    long same_msc_groups;
    long same_msc_ticks;
    long max_same_msc_group;
+   ENUM_TS_PENDING_STATUS status;
+   long dropped_ticks;
+   long cursor_stalls;
+   int stale_symbol_count;
+   long max_frontier_lag_ms;
+   bool incomplete_frontier;
+   bool validation_invalid;
+   string fatal_reason;
   };
 
 void TSResetPendingRepository(TickShockPendingRepository &repository)
@@ -34,12 +42,17 @@ void TSResetPendingRepository(TickShockPendingRepository &repository)
    repository.same_msc_groups=0;
    repository.same_msc_ticks=0;
    repository.max_same_msc_group=0;
+   repository.status=TS_PENDING_OK;
+   repository.dropped_ticks=0;repository.cursor_stalls=0;repository.stale_symbol_count=0;
+   repository.max_frontier_lag_ms=0;repository.incomplete_frontier=false;
+   repository.validation_invalid=false;repository.fatal_reason="";
   }
 
 bool TSMergeAppend(TickShockPendingRepository &repository,const int symbol_index,const MqlTick &tick,const int capacity)
   {
    int size=ArraySize(repository.items);
-   if(size>=capacity) {++repository.capacity_hits;return false;}
+   if(size>=capacity)
+     {++repository.capacity_hits;++repository.dropped_ticks;repository.status=TS_PENDING_TICK_CAPACITY_EXHAUSTED;repository.validation_invalid=true;repository.fatal_reason="PENDING_TICK_CAPACITY_EXHAUSTED";return false;}
    ArrayResize(repository.items,size+1,capacity);
    repository.items[size].symbol_index=symbol_index;
    repository.items[size].sequence=repository.next_sequence++;
@@ -47,6 +60,46 @@ bool TSMergeAppend(TickShockPendingRepository &repository,const int symbol_index
    repository.max_observed=MathMax(repository.max_observed,(long)(size+1));
    return true;
   }
+
+string TSPendingStatusName(const ENUM_TS_PENDING_STATUS status)
+  {
+   if(status==TS_PENDING_TICK_CAPACITY_EXHAUSTED) return "PENDING_TICK_CAPACITY_EXHAUSTED";
+   if(status==TS_PENDING_CURSOR_STALLED) return "SAME_MSC_PAGE_SATURATED";
+   if(status==TS_PENDING_INCOMPLETE_FRONTIER) return "INCOMPLETE_GLOBAL_FRONTIER";
+   return "OK";
+  }
+
+bool TSObserveCopyPageProgress(TickShockPendingRepository &repository,
+                               const long before_time,const int before_count,
+                               const long after_time,const int after_count,
+                               const int copied_count,const int requested_count,
+                               TickShockCursorProgress &result)
+  {
+   ZeroMemory(result);result.terminated=true;result.status=TS_PENDING_OK;
+   if(copied_count>=requested_count && after_time==before_time && after_count==before_count)
+     {
+      ++repository.cursor_stalls;repository.status=TS_PENDING_CURSOR_STALLED;
+      repository.validation_invalid=true;repository.fatal_reason="SAME_MSC_PAGE_SATURATED";
+      result.status=TS_PENDING_CURSOR_STALLED;result.validation_invalid=true;return false;
+     }
+   return true;
+  }
+
+bool TSMergeObserveFrontier(TickShockPendingRepository &repository,const long now_msc,const long &frontiers[],const long stale_after_ms)
+  {
+   repository.stale_symbol_count=0;repository.max_frontier_lag_ms=0;repository.incomplete_frontier=false;
+   for(int i=0;i<ArraySize(frontiers);++i)
+     {
+      if(frontiers[i]<=0){++repository.stale_symbol_count;repository.incomplete_frontier=true;continue;}
+      long lag=MathMax((long)0,now_msc-frontiers[i]);repository.max_frontier_lag_ms=MathMax(repository.max_frontier_lag_ms,lag);
+      if(lag>stale_after_ms) ++repository.stale_symbol_count;
+     }
+   if(repository.stale_symbol_count>0 || repository.incomplete_frontier)
+     {repository.status=TS_PENDING_INCOMPLETE_FRONTIER;repository.validation_invalid=true;repository.fatal_reason="INCOMPLETE_GLOBAL_FRONTIER";return false;}
+   return true;
+  }
+
+string TSValidationStatus(const bool invalid) { return invalid?"VALIDATION_INVALID":"VALIDATED"; }
 
 bool TSMergeLess(const TickShockMergedTick &left,const TickShockMergedTick &right)
   {

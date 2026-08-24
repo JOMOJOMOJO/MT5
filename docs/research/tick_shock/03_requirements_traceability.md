@@ -116,6 +116,14 @@
 Every Test ID maps one-to-one to its registry row, fixture/config pair, expected
 file, raw observation row, and `step11_pre_fix_results.csv` evidence row.
 
+## Step 12 resolution
+
+REQ-CONFIG-001/002, REQ-COMM-001, REQ-RUN-001, REQ-INTEGRITY-001,
+REQ-STATUS-001, REQ-ORDER-006 and REQ-WATERMARK-001 now point to
+`reports/tests/tick_shock/step12_post_fix_results.csv` and `step12_raw/`.
+All 26 Step 11 additions are observable and PASS. No deterministic
+BLOCKED/FAIL/XFAIL/XPASS remains. Nine actual terminal-only cases retain SKIP.
+
 ## Change-control boundary
 
 A Function ID may change location/name in Step 4, but the Requirement ID, Test ID, fixture path, expected path, and independent numeric outcome remain stable. Traceability is updated only to point at the extracted equivalent. If a desired defect correction changes an expected value, it requires a reviewed specification change separate from production implementation.

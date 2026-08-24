@@ -1,0 +1,14 @@
+name,step11_definition,step12_definition,unchanged,status
+InpShockPercentile,input double InpShockPercentile = 99.5;,input double InpShockPercentile = 99.5;,true,PASS
+InpMinRobustZ,input double InpMinRobustZ = 3.5;,input double InpMinRobustZ = 3.5;,true,PASS
+InpMinEfficiency,input double InpMinEfficiency = 0.65;,input double InpMinEfficiency = 0.65;,true,PASS
+InpMinMoveSpreadRatio,input double InpMinMoveSpreadRatio = 4.0;,input double InpMinMoveSpreadRatio = 4.0;,true,PASS
+InpPullbackMinPct,input double InpPullbackMinPct = 15.0;,input double InpPullbackMinPct = 15.0;,true,PASS
+InpPullbackMaxPct,input double InpPullbackMaxPct = 35.0;,input double InpPullbackMaxPct = 35.0;,true,PASS
+InpContinuationInvalidPct,input double InpContinuationInvalidPct = 50.0;,input double InpContinuationInvalidPct = 50.0;,true,PASS
+InpRewardRisk,input double InpRewardRisk = 1.2;,input double InpRewardRisk = 1.2;,true,PASS
+InpMaxHoldSeconds,input int InpMaxHoldSeconds = 120;,input int InpMaxHoldSeconds = 120;,true,PASS
+TSR_STOP_COUNT,#define TSR_STOP_COUNT 23,#define TSR_STOP_COUNT 23,true,PASS
+TSR_DELAY_MS,"const int TSR_DELAY_MS[TSR_DELAY_COUNT] = {0,100,250};","const int TSR_DELAY_MS[TSR_DELAY_COUNT] = {0,100,250};",true,PASS
+TSR_SPREAD_MULT,"const double TSR_SPREAD_MULT[TSR_SPREAD_COUNT] = {1.0,1.25};","const double TSR_SPREAD_MULT[TSR_SPREAD_COUNT] = {1.0,1.25};",true,PASS
+TSR_STRATEGY_COUNT,#define TSR_STRATEGY_COUNT 4,#define TSR_STRATEGY_COUNT 4,true,PASS

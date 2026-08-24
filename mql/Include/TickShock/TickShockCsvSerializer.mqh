@@ -8,6 +8,9 @@ string TSCsvOpenStatusName(const ENUM_TS_CSV_OPEN_STATUS status)
    if(status==TS_CSV_OPEN_CREATED) return "CREATED";
    if(status==TS_CSV_OPEN_RESUMED) return "RESUMED";
    if(status==TS_CSV_OPEN_RUN_ID_COLLISION) return "RUN_ID_COLLISION";
+   if(status==TS_CSV_OPEN_FRESH_RUN_COLLISION) return "FRESH_RUN_COLLISION";
+   if(status==TS_CSV_OPEN_RESUME_REJECTED) return "RESUME_REJECTED";
+   if(status==TS_CSV_OPEN_WRITER_LOCKED) return "WRITER_LOCKED";
    return "IO_ERROR";
   }
 
@@ -31,6 +34,12 @@ string TSScenarioStatusName(const ENUM_TS_SCENARIO_STATUS status)
    if(status==TS_SCENARIO_INVALID_BROKER_TARGET) return "INVALID_BROKER_TARGET";
    if(status==TS_SCENARIO_INVALID_PRICE) return "INVALID_PRICE";
    if(status==TS_SCENARIO_INVALID_RISK_DISTANCE) return "INVALID_RISK_DISTANCE";
+   if(status==TS_SCENARIO_INVALID_RISK) return "INVALID_RISK";
+   if(status==TS_SCENARIO_INVALID_DIRECTION) return "INVALID_DIRECTION";
+   if(status==TS_SCENARIO_INVALID_TICK_SIZE) return "INVALID_TICK_SIZE";
+   if(status==TS_SCENARIO_INVALID_RR) return "INVALID_RR";
+   if(status==TS_SCENARIO_INVALID_TARGET_BUILD) return "INVALID_TARGET_BUILD";
+   if(status==TS_SCENARIO_INVALID_COMMISSION) return "INVALID_COMMISSION";
    if(status==TS_SCENARIO_NO_SIGNAL) return "NO_SIGNAL";
    if(status==TS_SCENARIO_INCOMPLETE_END_OF_RUN) return "INCOMPLETE_END_OF_RUN";
    return "NOT_SIGNALED";
@@ -51,7 +60,10 @@ bool TSScenarioStatusIsInvalid(const ENUM_TS_SCENARIO_STATUS status)
           status==TS_SCENARIO_INVALID_BROKER_STOP ||
           status==TS_SCENARIO_INVALID_BROKER_TARGET ||
           status==TS_SCENARIO_INVALID_PRICE ||
-          status==TS_SCENARIO_INVALID_RISK_DISTANCE;
+          status==TS_SCENARIO_INVALID_RISK_DISTANCE || status==TS_SCENARIO_INVALID_RISK ||
+          status==TS_SCENARIO_INVALID_DIRECTION || status==TS_SCENARIO_INVALID_TICK_SIZE ||
+          status==TS_SCENARIO_INVALID_RR || status==TS_SCENARIO_INVALID_TARGET_BUILD ||
+          status==TS_SCENARIO_INVALID_COMMISSION;
   }
 
 string TSDetectorRejectName(const ENUM_TS_DETECTOR_REJECT reject)
@@ -71,9 +83,7 @@ string TSBoolName(const bool value)
   }
 
 string TSDirectionName(const int direction)
-  {
-   return direction>0?"LONG":"SHORT";
-  }
+  { if(direction>0) return "LONG";if(direction<0) return "SHORT";return "NONE"; }
 
 void TSCsvAppendEscaped(string &line,string value)
   {

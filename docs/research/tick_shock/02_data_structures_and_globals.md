@@ -406,3 +406,26 @@ Modules receive context/config explicitly and own no global input.
 
 MQL handlers remain serialized. The refactor adds no thread and does not alter
 the strict global-watermark release condition.
+
+## Step 12 integrity structures and globals
+
+- `TickShockCommissionResult` adds validity, typed reason, symbol, source, and
+  one-lot loss evidence.
+- event registration and event-engine context distinguish pool exhaustion and
+  retain its fatal validation flag; physical capacity remains 64.
+- `TickShockPendingRepository` owns capacity hits, dropped ticks, cursor stalls,
+  stale-symbol count, maximum frontier lag, incomplete-frontier flag and fatal
+  reason. Capacity remains 65,536; watermark release is unchanged.
+- `TickShockCursorProgress` is the explicit per-CopyTicks-page result.
+- `TickShockRunIdentity` contains period, model, broker/server, terminal build,
+  source commit, EX5 hash, schema and config.
+- `TickShockCsvOpenRequest` separates fresh/resume and carries checkpoint, last
+  event sequence and cursor milliseconds.
+- `TickShockOrderFillState` adds request/order/position tickets, symbol, Magic,
+  direction, seen deals, duplicate/rejection counters and distinct weighted
+  entry/exit aggregates. It remains outside the order-free research EA.
+- scenario enums distinguish invalid direction, tick size, RR, risk, target
+  build and commission. Direction zero serializes as `NONE`.
+
+No detector threshold, RR, stop/delay/spread grid, maximum hold, ring/grid cap,
+or scenario index formula changed.

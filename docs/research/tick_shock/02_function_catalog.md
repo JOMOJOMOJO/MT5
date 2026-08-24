@@ -1,9 +1,9 @@
-# Tick-shock function catalog (As-Is through Step 10 current-source rollup)
+# Tick-shock function catalog (As-Is through Step 12 current-source rollup)
 
-- scope: Step 2 As-Is catalog, Step 4 modules, Step 9 reconciliation, and Step 10 production-callable seams
+- scope: Step 2 As-Is catalog, Step 4/10 modules, Step 9 reconciliation, and Step 12 integrity functions
 - extraction: multiline function-definition regex plus brace-balanced body scan
-- mechanically extracted current functions: 253
-- cataloged current functions: 253 (Step 10 removes four EA-local definitions and adds 41 module/facade/adapter definitions)
+- mechanically extracted current functions: 268
+- cataloged current functions: 268 (253 Step 10 functions plus 15 Step 12 integrity functions)
 - count difference: 0
 
 The catalog is As-Is documentation, not a claim that the implementation is causally validated. G:R/G:W list global/input/constant dependencies detected in the function body. Mutable reference parameters are reported under struct side effects. Pure means deterministic with no detected global, MQL built-in, file, or mutable-reference dependency; this is a deliberately conservative lexical label, so deterministic helpers using MathAbs or formatting APIs can appear impure. Stateful deterministic means mutation is limited to supplied data. The authoritative extraction candidates are listed in 02_refactor_targets.md.
@@ -429,6 +429,35 @@ account currency per one lot; counts, indices and masks are unitless.
 | S10-RG-001..005 / `TickShockRing.mqh` | `TSRingReset`; `TSRingOldestIndex`; `TSRingReserveWrite`; `TSRingDropOldest`; `TSRingIndexFromNewest` | Generic bounded-ring cursor operations; indices/counts. | Reset/reserve/drop mutate explicit state; no globals. | tick/grid/sample add/find paths / constructible fixture. | Invalid capacity/index returns -1/false. |
 | S10-FC-001..007 / `TickShockEngine.mqh` | `TSEngineLinearPercentile`; `TSEngineHistogramPercentile`; `TSEngineRobustStatistics`; `TSEngineDirectionalEfficiency`; `TSEngineBaselineReadiness`; `TSEngineCommissionFromKnownLoss`; `TSEngineRegisterResearchEvent` | Stable production-callable facades with the same arguments/results as core. | Only supplied result/context references mutate; no facade globals. | EA paths above / Step 10 detector, execution and merge harnesses. | Tests call the production implementation; expected CSV stays independent. |
 | S10-AD-001 / `TickShockMt5Adapter.mqh` | `TSMt5CommissionResult(direction,symbol,entry,sl,commission_amount,gross_r,result)` | `OrderCalcProfit` one-lot loss then explicit commission result; bool. | MT5 read plus result mutation; no file/global mutation. | `TSRCommissionR` / harness uses shared downstream builder with oracle loss. | Adapter integration boundary; Buy/Sell selected by direction. |
+
+## Step 12 current-source additions
+
+Mechanical source: `reports/qa/tick_shock/step12_function_extraction.csv`.
+The same extractor reports 253 functions at Step 10 commit `f335fbb` and 268
+now; every added definition is cataloged below.
+
+| ID / file | Function signature | Responsibility; arguments and units; return | Globals / side effects / I/O | Production caller / test caller | Preconditions / postconditions / direction / time / rejection / testability |
+|---|---|---|---|---|---|
+| S12-MT-001 / `TickShockMetrics.mqh` | `bool TSBuildCommissionResultWithProvenance(bool calculation_success,double one_lot_profit_or_loss,double commission_amount,double gross_r,string symbol,string source,TickShockCommissionResult &result)` | Fail-closed commission-to-R; money and R inputs; bool valid. | No globals/I/O; updates result including reason/symbol/source. | old builder and engine/MT5 facades / TS-COMM-002..004. | Explicit zero only; nonzero calc failure rejected; direction-neutral; pure fixture unit. |
+| S12-FC-001 / `TickShockEngine.mqh` | `bool TSEngineCommissionWithProvenance(...,string symbol,string source,TickShockCommissionResult &result)` | Stable production facade. | No globals/I/O; supplied result only. | EA `TSRCommissionR` / integrity harness. | Same builder postconditions; production-path integration. |
+| S12-MG-001 / `TickShockMergeSequencer.mqh` | `string TSPendingStatusName(ENUM_TS_PENDING_STATUS status)` | Serialize pending status. | Pure. | summary/tests. | Deterministic fallback `OK`; direct unit. |
+| S12-MG-002 / same | `bool TSObserveCopyPageProgress(TickShockPendingRepository &repository,long before_time,int before_count,long after_time,int after_count,int copied_count,int requested_count,TickShockCursorProgress &result)` | Detect saturated same-ms page without cursor progress; ms/count; bool. | Mutates explicit repository/result. | EA collector / TS-CURSOR-001. | Full page plus equal cursor -> validation invalid; stateful deterministic. |
+| S12-MG-003 / same | `bool TSMergeObserveFrontier(TickShockPendingRepository &repository,long now_msc,const long &frontiers[],long stale_after_ms)` | Observe stale/missing frontier without changing release. | Mutates diagnostics only. | EA dispatcher / TS-WATERMARK-001..002. | Milliseconds; stale/missing fail closed; symbol symmetric. |
+| S12-MG-004 / same | `string TSValidationStatus(bool invalid)` | Convert integrity flag to validation label. | Pure. | EA summary/harness. | Direct unit. |
+| S12-AD-001 / `TickShockMt5Adapter.mqh` | `string TSMt5RunIdentityFingerprint(const TickShockRunIdentity &identity)` | Canonical period/model/broker/build/commit/EX5/schema/config identity. | Read-only explicit struct. | EA metadata / TS-CSV-005. | Deterministic unit. |
+| S12-AD-002 / same | `int TSMt5OpenCsv(string folder,string path,string header,string run_id,string metadata_hash,const TickShockCsvOpenRequest &request,ENUM_TS_CSV_OPEN_STATUS &status)` | Fresh/resume and exclusive-writer open. | File I/O, status mutation. | EA logs and compatibility wrapper / TS-CSV-003/004/006. | Fresh collision rejected; resume needs checkpoint/event/cursor; adapter integration. |
+| S12-OL-001 / `TickShockOrderLifecycle.mqh` | `void TSConfigureOrderIdentity(TickShockOrderFillState &state,ulong request_ticket,ulong order_ticket,ulong position_ticket,string symbol,long magic,int direction)` | Bind lifecycle identity. | Explicit state mutation. | order adapter / TS-ORDER-005. | Exact later match; deterministic. |
+| S12-OL-002 / same | `bool TSOrderDealSeen(const TickShockOrderFillState &state,ulong deal_ticket)` | Query deal dedup set. | Read-only. | TSApplyOrderDeal / TS-ORDER-004/007. | Ticket is idempotency key. |
+| S12-OL-003 / same | `void TSRememberOrderDeal(TickShockOrderFillState &state,ulong deal_ticket)` | Retain accepted ticket. | Dynamic-array mutation. | TSApplyOrderDeal / indirect tests. | After identity/type validation. |
+| S12-OL-004 / same | `bool TSOrderIdentityMatches(const TickShockOrderFillState &state,ulong request_ticket,ulong order_ticket,ulong position_ticket,string symbol,long magic,int direction)` | Validate full deal identity. | Read-only. | TSApplyOrderDeal / TS-ORDER-005. | Long/Short exact; direct unit. |
+| S12-OL-005 / same | `bool TSApplyOrderDeal(TickShockOrderFillState &state,ulong deal_ticket,ulong request_ticket,ulong order_ticket,ulong position_ticket,string symbol,long magic,int direction,ENUM_DEAL_ENTRY entry_kind,double deal_volume,double deal_price)` | Idempotent entry/exit weighted aggregation. | State mutation only; no orders. | order harness / TS-ORDER-004..007. | Positive price/volume and identity; IN/OUT separate. |
+| S12-OL-006 / same | `void TSRestoreOrderSnapshot(const TickShockOrderFillState &snapshot,TickShockOrderFillState &state)` | Restore ledger and seen tickets. | Explicit copy. | restart adapter / TS-ORDER-007. | Replay stays idempotent. |
+| S12-SC-001 / `TickShockScenarioEngine.mqh` | `ENUM_TS_SCENARIO_STATUS TSScenarioRequestStatus(const TickShockExecutionRequest &request)` | Typed direction/tick/RR/risk/spread validation. | Pure. | scenario builder / TS-STATUS-002. | Distinct enum before price construction; Long/Short symmetric. |
+
+Existing definitions updated without changing function count: `TSConfigValid`,
+`TSBuildCommissionResult`, `TSMt5OpenAppendCsv`,
+`TSScenarioStatusFromFeasibility`, and `TSRRefreshBaseline` (unused `mid`
+argument removed).
 
 Step 10 harness-only parsing/comparison helpers are outside this production
 catalog. They read immutable fixture/expected CSVs and invoke the facades; they

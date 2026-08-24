@@ -1,6 +1,7 @@
 #ifndef TICK_SHOCK_METRICS_MQH
 #define TICK_SHOCK_METRICS_MQH
 
+#include "TickShockTypes.mqh"
 #include "TickShockBaseline.mqh"
 
 struct TickShockEfficiencyResult
@@ -13,7 +14,12 @@ struct TickShockEfficiencyResult
 
 struct TickShockCommissionResult
   {
+   bool valid;
    bool calculation_success;
+   ENUM_TS_COMMISSION_STATUS status;
+   string reason;
+   string symbol;
+   string source;
    double one_lot_sl_loss;
    double commission_amount;
    double commission_r;
@@ -34,18 +40,32 @@ bool TSComputeDirectionalEfficiency(const double &mids[],const int count,TickSho
    return result.valid;
   }
 
-bool TSBuildCommissionResult(const bool calculation_success,const double one_lot_profit_or_loss,const double commission_amount,const double gross_r,TickShockCommissionResult &result)
+bool TSBuildCommissionResultWithProvenance(const bool calculation_success,const double one_lot_profit_or_loss,const double commission_amount,const double gross_r,const string symbol,const string source,TickShockCommissionResult &result)
   {
    ZeroMemory(result);
    result.calculation_success=calculation_success;
+   result.symbol=symbol;result.source=source;
    result.one_lot_sl_loss=MathAbs(one_lot_profit_or_loss);
-   result.commission_amount=MathMax(0.0,commission_amount);
+   result.commission_amount=commission_amount;
    result.gross_r=gross_r;
-   if(!calculation_success || result.one_lot_sl_loss<=0.0 || one_lot_profit_or_loss>=0.0) return false;
+   if(!MathIsValidNumber(commission_amount) || commission_amount<0.0)
+     {result.status=TS_COMMISSION_INVALID_AMOUNT;result.reason="INVALID_COMMISSION_AMOUNT";return false;}
+   if(commission_amount==0.0)
+     {result.valid=true;result.status=TS_COMMISSION_EXPLICIT_ZERO;result.reason="EXPLICIT_ZERO";result.net_r=gross_r;return MathIsValidNumber(gross_r);}
+   if(!calculation_success)
+     {result.status=TS_COMMISSION_CALCULATION_FAILED;result.reason="CALCULATION_FAILED";return false;}
+   if(result.one_lot_sl_loss<=0.0 || one_lot_profit_or_loss>=0.0 || !MathIsValidNumber(result.one_lot_sl_loss))
+     {result.status=TS_COMMISSION_INVALID_LOSS;result.reason="INVALID_ONE_LOT_SL_LOSS";return false;}
    result.commission_r=result.commission_amount/result.one_lot_sl_loss;
    result.net_r=result.gross_r-result.commission_r;
    result.applications=result.commission_amount>0.0?1:0;
-   return MathIsValidNumber(result.commission_r) && MathIsValidNumber(result.net_r);
+   result.valid=MathIsValidNumber(result.commission_r) && MathIsValidNumber(result.net_r);
+   result.status=result.valid?TS_COMMISSION_OK:TS_COMMISSION_INVALID_LOSS;
+   result.reason=result.valid?"OK":"INVALID_COMMISSION_R";
+   return result.valid;
   }
+
+bool TSBuildCommissionResult(const bool calculation_success,const double one_lot_profit_or_loss,const double commission_amount,const double gross_r,TickShockCommissionResult &result)
+  { return TSBuildCommissionResultWithProvenance(calculation_success,one_lot_profit_or_loss,commission_amount,gross_r,"","CONFIGURED_ROUND_TURN",result); }
 
 #endif

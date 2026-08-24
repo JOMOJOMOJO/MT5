@@ -18,6 +18,7 @@ struct TickShockSymbolClusterClock
 
 struct TickShockEventRegistration
   {
+   ENUM_TS_EVENT_REGISTRATION_STATUS status;
    bool accepted;
    bool duplicate;
    int slot;
@@ -40,6 +41,8 @@ struct TickShockEventEngineContext
    long market_overlap_events;
    long duplicate_events;
    long event_rows;
+   long pool_exhaustions;
+   bool validation_invalid;
   };
 
 void TSResetSymbolClusterClock(TickShockSymbolClusterClock &clock)
@@ -60,6 +63,8 @@ void TSResetEventEngine(TickShockEventEngineContext &context,const int slot_capa
    context.market_overlap_events=0;
    context.duplicate_events=0;
    context.event_rows=0;
+   context.pool_exhaustions=0;
+   context.validation_invalid=false;
   }
 
 bool TSEventKeyEqual(const TickShockEventKey &left,const TickShockEventKey &right)
@@ -83,6 +88,7 @@ bool TSRegisterResearchEvent(TickShockEventEngineContext &context,
                              TickShockEventRegistration &registration)
   {
    ZeroMemory(registration);
+   registration.status=TS_EVENT_REGISTRATION_INVALID_KEY;
    registration.slot=-1;
    if(key.symbol_index<0 || key.detector_window_ms<=0 || key.detection_msc<=0) return false;
    for(int i=0;i<context.slot_capacity;++i)
@@ -90,11 +96,13 @@ bool TSRegisterResearchEvent(TickShockEventEngineContext &context,
         {
          ++context.duplicate_events;
          registration.duplicate=true;
+         registration.status=TS_EVENT_REGISTRATION_DUPLICATE;
          return false;
         }
    for(int i=0;i<context.slot_capacity;++i)
       if(!context.slot_active[i]) {registration.slot=i;break;}
-   if(registration.slot<0) return false;
+   if(registration.slot<0)
+     {++context.pool_exhaustions;context.validation_invalid=true;registration.status=TS_EVENT_REGISTRATION_POOL_EXHAUSTED;return false;}
    context.slot_active[registration.slot]=true;
    context.slot_keys[registration.slot]=key;
    registration.event_sequence=++context.event_sequence;
@@ -115,6 +123,7 @@ bool TSRegisterResearchEvent(TickShockEventEngineContext &context,
                                                                  cluster_window_ms,registration.market_overlap);
    if(registration.market_overlap) ++context.market_overlap_events;
    registration.accepted=true;
+   registration.status=TS_EVENT_REGISTRATION_ACCEPTED;
    return true;
   }
 

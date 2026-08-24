@@ -22,7 +22,7 @@ def main() -> int:
     args = parser.parse_args()
     root = args.repo_root.resolve()
     tests_dir = root / "tests" / "tick_shock" / "python"
-    step = "step05" if args.phase == "pre-fix" else ("step10" if args.phase == "step10" else ("step11" if args.phase == "step11" else "step06"))
+    step = "step05" if args.phase == "pre-fix" else ("step10" if args.phase == "step10" else ("step11" if args.phase == "step11" else "step12"))
     log_path = root / "reports" / "tests" / "tick_shock" / f"{step}_python_tests.log"
     log_path.parent.mkdir(parents=True, exist_ok=True)
     test_env = os.environ.copy()
@@ -38,7 +38,7 @@ def main() -> int:
         return proc.returncode
 
     registry = read_csv(root / "tests" / "tick_shock" / "spec" / "test_cases.csv")
-    raw_name = "raw" if args.phase == "pre-fix" else ("step10_raw" if args.phase == "step10" else ("step11_raw" if args.phase == "step11" else "step06_raw"))
+    raw_name = "raw" if args.phase == "pre-fix" else ("step10_raw" if args.phase == "step10" else ("step11_raw" if args.phase == "step11" else "step12_raw"))
     raw_dir = root / "reports" / "tests" / "tick_shock" / raw_name
     observations = {}
     for path in sorted(raw_dir.glob("*.csv")):
@@ -134,7 +134,7 @@ def main() -> int:
             "evidence_path": obs.get("evidence_path", ""),
         })
 
-    filename = "step05_pre_fix_results.csv" if args.phase == "pre-fix" else ("step10_post_refactor_results.csv" if args.phase == "step10" else ("step11_pre_fix_results.csv" if args.phase == "step11" else "step06_post_fix_results.csv"))
+    filename = "step05_pre_fix_results.csv" if args.phase == "pre-fix" else ("step10_post_refactor_results.csv" if args.phase == "step10" else ("step11_pre_fix_results.csv" if args.phase == "step11" else "step12_post_fix_results.csv"))
     result_path = root / "reports" / "tests" / "tick_shock" / filename
     with result_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(out_rows[0]))

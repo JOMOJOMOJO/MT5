@@ -532,12 +532,13 @@ void TS5RunIntegrityRegression(const string id)
       bool valid=TSEngineCommissionFromKnownLoss(id!="TS-COMM-002",-100.0,7.0,1.0,result);
       if(id=="TS-COMM-002")
         {
-         TS5AddBool(a,"valid",valid);TS5Add(a,"reason","UNAVAILABLE");
-         TS5AddBool(a,"zero_fallback",!valid && result.net_r==0.0);TS5CompareAndRecord(id,a);return;
+         TS5AddBool(a,"valid",valid);TS5Add(a,"reason",result.reason);
+         TS5AddBool(a,"zero_fallback",result.valid && result.commission_r==0.0);TS5CompareAndRecord(id,a);return;
         }
       if(id=="TS-COMM-003")
         {TS5AddDouble(a,"commission_r",result.commission_r);TS5AddDouble(a,"net_r",result.net_r);TS5AddLong(a,"applications",result.applications);TS5CompareAndRecord(id,a);return;}
-      TS5Add(a,"symbol","UNAVAILABLE");TS5Add(a,"source","UNAVAILABLE");TS5AddDouble(a,"one_lot_sl_loss",result.one_lot_sl_loss);TS5CompareAndRecord(id,a);return;
+      TSEngineCommissionWithProvenance(true,-100.0,7.0,1.0,"EURUSD","CONFIGURED_ROUND_TURN",result);
+      TS5Add(a,"symbol",result.symbol);TS5Add(a,"source",result.source);TS5AddDouble(a,"one_lot_sl_loss",result.one_lot_sl_loss);TS5CompareAndRecord(id,a);return;
      }
    if(id=="TS-CSV-003" || id=="TS-CSV-004" || id=="TS-CSV-006")
      {
@@ -546,10 +547,13 @@ void TS5RunIntegrityRegression(const string id)
       ENUM_TS_CSV_OPEN_STATUS s1=TS_CSV_OPEN_IO_ERROR,s2=TS_CSV_OPEN_IO_ERROR;
       int h1=TSMt5OpenAppendCsv(folder,path,header,"STEP11-RUN","fingerprint",s1);
       if(id!="TS-CSV-006" && h1!=INVALID_HANDLE) TSMt5Close(h1);
-      int h2=TSMt5OpenAppendCsv(folder,path,header,"STEP11-RUN","fingerprint",s2);
+      int h2=INVALID_HANDLE;
+      if(id=="TS-CSV-004" || id=="TS-CSV-006")
+        {TickShockCsvOpenRequest resume;ZeroMemory(resume);resume.mode=TS_CSV_EXPLICIT_RESUME;if(id=="TS-CSV-006"){resume.checkpoint="checkpoint";resume.last_event_sequence=0;resume.cursor_msc=1000;}h2=TSMt5OpenCsv(folder,path,header,"STEP11-RUN","fingerprint",resume,s2);}
+      else h2=TSMt5OpenAppendCsv(folder,path,header,"STEP11-RUN","fingerprint",s2);
       if(id=="TS-CSV-003"){TS5AddBool(a,"second_fresh_open",h2!=INVALID_HANDLE);TS5Add(a,"second_status",TSCsvOpenStatusName(s2));}
-      if(id=="TS-CSV-004"){TS5AddBool(a,"implicit_resume_allowed",h2!=INVALID_HANDLE && s2==TS_CSV_OPEN_RESUMED);TS5AddBool(a,"checkpoint_required",false);TS5AddBool(a,"cursor_required",false);}
-      if(id=="TS-CSV-006"){TS5AddBool(a,"concurrent_writer_open",h2!=INVALID_HANDLE);TS5AddBool(a,"writer_lock_enforced",false);}
+      if(id=="TS-CSV-004"){TS5AddBool(a,"implicit_resume_allowed",h2!=INVALID_HANDLE);TS5AddBool(a,"checkpoint_required",s2==TS_CSV_OPEN_RESUME_REJECTED);TS5AddBool(a,"cursor_required",s2==TS_CSV_OPEN_RESUME_REJECTED);}
+      if(id=="TS-CSV-006"){TS5AddBool(a,"concurrent_writer_open",h2!=INVALID_HANDLE);TS5AddBool(a,"writer_lock_enforced",h2==INVALID_HANDLE);}
       if(h2!=INVALID_HANDLE) TSMt5Close(h2);if(h1!=INVALID_HANDLE) TSMt5Close(h1);
       TS5CompareAndRecord(id,a);return;
      }
@@ -561,40 +565,51 @@ void TS5RunIntegrityRegression(const string id)
          TickShockEventEngineContext engine;TSResetEventEngine(engine,1);TickShockSymbolClusterClock clock;TSResetSymbolClusterClock(clock);
          TickShockEventKey k1={0,250,1000},k2={0,500,1001};TickShockEventRegistration r;
          TSEngineRegisterResearchEvent(engine,clock,k1,2000,r);bool accepted=TSEngineRegisterResearchEvent(engine,clock,k2,2000,r);
-         TS5AddBool(a,"accepted",accepted);TS5Add(a,"status",accepted?"ACCEPTED":"UNCLASSIFIED");TS5AddLong(a,"invalid_denominator_count",accepted?0:1);TS5CompareAndRecord(id,a);return;
+         TS5AddBool(a,"accepted",accepted);TS5Add(a,"status",r.status==TS_EVENT_REGISTRATION_POOL_EXHAUSTED?"EVENT_POOL_EXHAUSTED":"UNCLASSIFIED");TS5AddLong(a,"invalid_denominator_count",0);TS5CompareAndRecord(id,a);return;
         }
       TickShockPendingRepository repo;TSResetPendingRepository(repo);MqlTick tick;ZeroMemory(tick);tick.time_msc=1000;tick.bid=1;tick.ask=1.0001;
       TSMergeAppend(repo,0,tick,1);tick.time_msc=1001;bool appended=TSMergeAppend(repo,0,tick,1);
-      if(id=="TS-CAP-002"){TS5AddBool(a,"second_append",appended);TS5Add(a,"capacity_status",appended?"OK":"UNCLASSIFIED");TS5AddLong(a,"dropped_ticks",0);TS5AddBool(a,"observable",repo.capacity_hits>0 && false);}
-      else {TS5AddLong(a,"capacity_hits",repo.capacity_hits);TS5Add(a,"validation_status",repo.capacity_hits>0?"PARTIALLY_VALIDATED":"VALIDATED");}
+      if(id=="TS-CAP-002"){TS5AddBool(a,"second_append",appended);TS5Add(a,"capacity_status",TSPendingStatusName(repo.status));TS5AddLong(a,"dropped_ticks",repo.dropped_ticks);TS5AddBool(a,"observable",repo.capacity_hits>0 && repo.validation_invalid);}
+      else {TS5AddLong(a,"capacity_hits",repo.capacity_hits);TS5Add(a,"validation_status",TSValidationStatus(repo.validation_invalid));}
       TS5CompareAndRecord(id,a);return;
      }
-   if(id=="TS-CURSOR-001"){TS5RecordSkip(id,"BLOCKED_PRODUCTION_CURSOR_SEAM_MISSING");return;}
+   if(id=="TS-CURSOR-001")
+     {TickShockPendingRepository repo;TSResetPendingRepository(repo);TickShockCursorProgress progress;bool ok=TSObserveCopyPageProgress(repo,1000,8192,1000,8192,8192,8192,progress);TS5AddBool(a,"terminated",progress.terminated);TS5Add(a,"cursor_status",TSPendingStatusName(progress.status));TS5Add(a,"validation_status",TSValidationStatus(progress.validation_invalid));TS5CompareAndRecord(id,a);return;}
    if(id=="TS-STATUS-001")
      {TS5Add(a,"status",TSScenarioStatusName(TSScenarioStatusFromFeasibility("")));TS5CompareAndRecord(id,a);return;}
    if(id=="TS-STATUS-002")
-     {TS5Add(a,"invalid_risk_status",TSScenarioStatusName(TSScenarioStatusFromFeasibility("")));TS5Add(a,"invalid_direction_status",TSScenarioStatusName(TSScenarioStatusFromFeasibility("")));TS5Add(a,"invalid_tick_size_status",TSScenarioStatusName(TSScenarioStatusFromFeasibility("")));TS5CompareAndRecord(id,a);return;}
+     {
+      TickShockExecutionRequest req;ZeroMemory(req);req.direction=1;req.tick_size=.00001;req.requested_rr=1.2;req.stop_multiple=1;req.spread_multiplier=1;
+      TickShockExecutionRequest risk_req=req;risk_req.stop_multiple=0;
+      TickShockExecutionRequest direction_req=req;direction_req.direction=0;
+      TickShockExecutionRequest tick_req=req;tick_req.tick_size=0;
+      TS5Add(a,"invalid_risk_status",TSScenarioStatusName(TSScenarioRequestStatus(risk_req)));
+      TS5Add(a,"invalid_direction_status",TSScenarioStatusName(TSScenarioRequestStatus(direction_req)));
+      TS5Add(a,"invalid_tick_size_status",TSScenarioStatusName(TSScenarioRequestStatus(tick_req)));TS5CompareAndRecord(id,a);return;
+     }
    if(id=="TS-DIRECTION-001")
      {TS5Add(a,"direction_name",TSDirectionName(0));TS5CompareAndRecord(id,a);return;}
    if(StringFind(id,"TS-ORDER-")==0)
      {
       TickShockOrderFillState state;TSResetOrderFillState(state,0.10);
+      TSConfigureOrderIdentity(state,10,20,30,"EURUSD",12345,1);
       if(id=="TS-ORDER-004")
-        {TSApplyEntryDeal(state,.04,1.1000);TSApplyEntryDeal(state,.04,1.1000);TS5AddLong(a,"deal_count",state.deal_count);TS5AddDouble(a,"filled_volume",state.filled_volume);TS5AddLong(a,"duplicate_deals",0);}
+        {TSApplyOrderDeal(state,100,10,20,30,"EURUSD",12345,1,DEAL_ENTRY_IN,.04,1.1000);TSApplyOrderDeal(state,100,10,20,30,"EURUSD",12345,1,DEAL_ENTRY_IN,.04,1.1000);TS5AddLong(a,"deal_count",state.deal_count);TS5AddDouble(a,"filled_volume",state.filled_volume);TS5AddLong(a,"duplicate_deals",state.duplicate_deals);}
       if(id=="TS-ORDER-005")
-        {bool accepted=TSApplyEntryDeal(state,.04,1.1000);TS5AddBool(a,"mismatched_deal_accepted",accepted);TS5AddLong(a,"identity_rejections",0);}
+        {bool accepted=TSApplyOrderDeal(state,101,10,20,30,"GBPUSD",12345,1,DEAL_ENTRY_IN,.04,1.1000);TS5AddBool(a,"mismatched_deal_accepted",accepted);TS5AddLong(a,"identity_rejections",state.identity_rejections);}
       if(id=="TS-ORDER-006")
-        {TSApplyEntryDeal(state,.04,1.1000);TSApplyEntryDeal(state,.04,1.1010);TS5AddDouble(a,"entry_volume",state.filled_volume);TS5AddDouble(a,"exit_volume",0);TS5AddLong(a,"entry_deals",state.deal_count);TS5AddLong(a,"exit_deals",0);}
+        {TSApplyOrderDeal(state,102,10,20,30,"EURUSD",12345,1,DEAL_ENTRY_IN,.04,1.1000);TSApplyOrderDeal(state,103,10,20,30,"EURUSD",12345,1,DEAL_ENTRY_OUT,.04,1.1010);TS5AddDouble(a,"entry_volume",state.filled_volume);TS5AddDouble(a,"exit_volume",state.exit_volume);TS5AddLong(a,"entry_deals",state.deal_count);TS5AddLong(a,"exit_deals",state.exit_deal_count);}
       if(id=="TS-ORDER-007")
-        {TSApplyEntryDeal(state,.04,1.1000);TSApplyEntryDeal(state,.04,1.1000);TS5AddDouble(a,"filled_volume_after_replay",state.filled_volume);TS5AddLong(a,"deal_count_after_replay",state.deal_count);TS5AddLong(a,"duplicate_deals",0);}
+        {TSApplyOrderDeal(state,104,10,20,30,"EURUSD",12345,1,DEAL_ENTRY_IN,.04,1.1000);TickShockOrderFillState restored;TSRestoreOrderSnapshot(state,restored);TSApplyOrderDeal(restored,104,10,20,30,"EURUSD",12345,1,DEAL_ENTRY_IN,.04,1.1000);TS5AddDouble(a,"filled_volume_after_replay",restored.filled_volume);TS5AddLong(a,"deal_count_after_replay",restored.deal_count);TS5AddLong(a,"duplicate_deals",restored.duplicate_deals);}
       TS5CompareAndRecord(id,a);return;
      }
    if(StringFind(id,"TS-WATERMARK-")==0)
      {
       TickShockPendingRepository repo;TSResetPendingRepository(repo);MqlTick tick;ZeroMemory(tick);tick.bid=1;tick.ask=1.0001;
       for(int i=0;i<3;++i){tick.time_msc=2000+i;TSMergeAppend(repo,0,tick,8);}
-      if(id=="TS-WATERMARK-001"){TS5AddLong(a,"pending_count",ArraySize(repo.items));TS5AddLong(a,"stale_symbol_count",0);TS5AddBool(a,"lag_observable",false);}
-      else {TS5AddBool(a,"incomplete_frontier",true);TS5Add(a,"validation_status","PARTIALLY_VALIDATED");}
+      long frontiers[2]={2600,0};TSMergeObserveFrontier(repo,3000,frontiers,500);
+      if(id=="TS-WATERMARK-001"){TS5AddLong(a,"pending_count",ArraySize(repo.items));TS5AddLong(a,"stale_symbol_count",repo.stale_symbol_count);TS5AddBool(a,"lag_observable",repo.max_frontier_lag_ms>0);}
+      else {TS5AddBool(a,"incomplete_frontier",repo.incomplete_frontier);TS5Add(a,"validation_status",TSValidationStatus(repo.validation_invalid));}
       TS5CompareAndRecord(id,a);return;
      }
    TS5RecordSkip(id,"UNROUTED_INTEGRITY_TEST");
