@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+incomplete_frontier,true,0,bool,one symbol unverified
+validation_status,VALIDATION_INVALID,0,enum,fail closed
+fatal_reason,INCOMPLETE_GLOBAL_FRONTIER,0,enum,root cause

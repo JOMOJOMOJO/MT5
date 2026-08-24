@@ -48,10 +48,12 @@ def main() -> int:
         Path("mql/Include/TickShock/TickShockTypes.mqh"),
         Path("scripts/compile.ps1"),
         Path("scripts/backtest.ps1"),
-        Path("reports/tests/tick_shock/step13_order_observation/ExpectedValue_TickShock_OrderReachability_step13.set"),
-        Path("reports/tests/tick_shock/step13_order_observation/tester_config.ini"),
         Path("tests/tick_shock/spec/test_cases.csv"),
     ]
+    for generated_name in ("ExpectedValue_TickShock_OrderReachability_step14r.set", "tester_config.ini"):
+        generated_path = output / generated_name
+        if not generated_path.exists():
+            raise FileNotFoundError(generated_path)
     lines = [
         f"base_commit={head}",
         "working_tree_source_change=mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5",
@@ -70,6 +72,9 @@ def main() -> int:
         if not absolute.exists():
             raise FileNotFoundError(absolute)
         lines.append(f"{sha256(absolute)}  {path.as_posix()}")
+    for generated_name in ("ExpectedValue_TickShock_OrderReachability_step14r.set", "tester_config.ini"):
+        generated_path = output / generated_name
+        lines.append(f"{sha256(generated_path)}  {generated_path.relative_to(repo).as_posix()}")
     for label, path in (("terminal64.exe", args.terminal), ("MetaEditor64.exe", args.metaeditor)):
         if not path.exists():
             raise FileNotFoundError(path)

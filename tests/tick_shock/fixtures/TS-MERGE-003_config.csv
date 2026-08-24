@@ -1,0 +1,9 @@
+key,value,unit,note
+now_msc,3000,ms,causal dispatcher time
+eurusd_last_quote_msc,3000,ms,fresh quote
+gbpusd_last_quote_msc,1000,ms,quiet stale quote
+eurusd_read_through_msc,3000,ms,history verified
+gbpusd_read_through_msc,3000,ms,empty range verified
+stale_after_ms,500,ms,quote freshness only
+oracle_source,docs/research/tick_shock/11_test_oracle_addendum.md,path,independent contract extended by Step 14R
+production_function_used_for_expected,false,bool,mandatory

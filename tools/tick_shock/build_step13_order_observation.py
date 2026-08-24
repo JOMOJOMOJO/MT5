@@ -64,7 +64,9 @@ def main() -> int:
         "terminal_error", "retcode", "external", "comment", "margin", "margin_free",
         "order", "deal", "request_id", "position", "symbol", "magic", "requested_volume",
         "deal_volume", "filled_volume", "remaining_volume", "volume", "filling_mode",
-        "deal_type", "deal_entry", "deal_reason", "price", "profit", "commission", "fee",
+        "operation_id", "deal_order", "entry_request_id", "exit_request_id", "entry_order",
+        "exit_order", "linked_to_entry_request", "request_id_status", "deal_type", "deal_entry",
+        "deal_reason", "price", "profit", "commission", "fee",
         "swap", "commission_source", "signal", "request", "fill", "close", "exit_reason",
         "detail",
     ]
@@ -170,6 +172,17 @@ def main() -> int:
     partial = next((row for row in test_rows if row["phase"] == "actual_partial_fill_observation"), None)
     actual_restart = next((row for row in test_rows if row["phase"] == "actual_process_restart"), None)
     env = next((details(row["detail"]) for row in rows if row["record_type"] == "ENV"), {})
+    observed_magic = next((details(row["detail"]).get("magic", "UNAVAILABLE") for row in rows if "magic=" in row.get("detail", "")), "UNAVAILABLE")
+    observed_volume = next((details(row["detail"]).get("requested_volume", details(row["detail"]).get("volume", "UNAVAILABLE")) for row in rows if "volume=" in row.get("detail", "")), "UNAVAILABLE")
+    time_identity = [row for row in deal_rows if row["phase"] == "TIME_EXIT_FILL"]
+    time_identity_ok = len(time_identity) == 2 and all(
+        str(row.get("request_id", "")) not in {"", "0"}
+        and str(row.get("exit_request_id", "")) == str(row.get("request_id", ""))
+        and str(row.get("entry_request_id", "")) != str(row.get("request_id", ""))
+        and str(row.get("linked_to_entry_request", "")).lower() == "false"
+        and str(row.get("deal_order", "")) == str(row.get("exit_order", ""))
+        for row in time_identity
+    )
     all_commission_zero = bool(commission_rows) and all(
         row["observation_status"] == "OBSERVED_ZERO" for row in commission_rows
     )
@@ -184,6 +197,7 @@ def main() -> int:
         {"check": "server_sl_long_short", "expected": "2 PASS", "actual": f"{sum(row['result'] == 'PASS' for row in server_sl)} PASS", "status": "PASS" if len(server_sl) == 2 and all(row["result"] == "PASS" for row in server_sl) else "NOT_OBSERVED"},
         {"check": "server_tp_long_short", "expected": "2 PASS", "actual": f"{sum(row['result'] == 'PASS' for row in server_tp)} PASS", "status": "PASS" if len(server_tp) == 2 and all(row["result"] == "PASS" for row in server_tp) else "NOT_OBSERVED"},
         {"check": "expert_time_close_long_short", "expected": "2 PASS", "actual": f"{sum(row['result'] == 'PASS' for row in time_exit)} PASS", "status": "PASS" if len(time_exit) == 2 and all(row["result"] == "PASS" for row in time_exit) else "NOT_OBSERVED"},
+        {"check": "expert_time_close_operation_identity", "expected": "2 distinct exit requests matched by deal order", "actual": f"rows={len(time_identity)};valid={sum(1 for row in time_identity if str(row.get('linked_to_entry_request', '')).lower() == 'false')}", "status": "PASS" if time_identity_ok else "FAIL"},
         {"check": "commission_deal_fields", "expected": "12 observed", "actual": f"{len(commission_rows)} observed; {'zero' if all_commission_zero else 'nonzero'}", "status": "OBSERVED_ZERO" if all_commission_zero else "OBSERVED_NONZERO"},
         {"check": "partial_fill", "expected": "observe if market supplies", "actual": partial["result"] if partial else "NOT_OBSERVED", "status": "NOT_OBSERVED" if not partial or partial["result"] == "SKIP" else "PASS"},
         {"check": "actual_process_restart", "expected": "observe only if injected", "actual": actual_restart["result"] if actual_restart else "NOT_OBSERVED", "status": "NOT_OBSERVED" if not actual_restart or actual_restart["result"] == "SKIP" else "PASS"},
@@ -200,7 +214,7 @@ def main() -> int:
 - Symbol/period: {env.get('symbol', 'UNAVAILABLE')} / {env.get('period', 'UNAVAILABLE')}
 - Account currency/trade mode: {env.get('account_currency', 'UNAVAILABLE')} / {env.get('account_trade_mode', 'UNAVAILABLE')}
 - Tester guard: `MQL_TESTER=true`; normal chart, demo, and live execution are rejected in `OnInit`.
-- Test volume/Magic: 0.01 / 26082413
+- Test volume/Magic: {observed_volume} / {observed_magic}
 - Model/period under test: real ticks (model 4), 2025-03-03 through 2025-03-07.
 
 ## Result counts
@@ -224,6 +238,7 @@ def main() -> int:
 | server SL Long/Short | {'OBSERVED_PASS' if len(server_sl) == 2 and all(row['result'] == 'PASS' for row in server_sl) else 'NOT_OBSERVED'} | deal reason SL |
 | server TP Long/Short | {'OBSERVED_PASS' if len(server_tp) == 2 and all(row['result'] == 'PASS' for row in server_tp) else 'NOT_OBSERVED'} | deal reason TP |
 | expert time close Long/Short | {'OBSERVED_PASS' if len(time_exit) == 2 and all(row['result'] == 'PASS' for row in time_exit) else 'NOT_OBSERVED'} | deal reason EXPERT |
+| expert time-close operation identity | {'OBSERVED_PASS' if time_identity_ok else 'FAIL'} | exit request differs from entry request and matches DEAL_ORDER for Long/Short |
 | position fields | {'OBSERVED_PASS' if len(recoveries) == 6 and all(row['result'] == 'PASS' for row in recoveries) else 'NOT_OBSERVED'} | symbol, Magic, direction, volume, time, SL, TP |
 | simulated restart snapshot replay | {'OBSERVED_PASS' if len(restart_snapshots) == 2 and all(row['result'] == 'PASS' for row in restart_snapshots) else 'FAIL'} | Long and Short duplicate deal replay rejected |
 | actual process restart | {actual_restart['result'] if actual_restart else 'NOT_OBSERVED'} | separate process restart was not injected |

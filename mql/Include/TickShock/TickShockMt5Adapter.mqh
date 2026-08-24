@@ -33,6 +33,14 @@ int TSMt5CopyInfoTicks(const string symbol,MqlTick &ticks[],const ulong from_msc
    return CopyTicks(symbol,ticks,COPY_TICKS_INFO,from_msc,count);
   }
 
+bool TSMt5SeriesSynchronized(const string symbol)
+  {
+   long synchronized=0;
+   ResetLastError();
+   if(!SeriesInfoInteger(symbol,PERIOD_M1,SERIES_SYNCHRONIZED,synchronized)) return false;
+   return synchronized!=0;
+  }
+
 bool TSMt5VisibleQuote(const string symbol,MqlTick &tick)
   {
    return SymbolInfoTick(symbol,tick);

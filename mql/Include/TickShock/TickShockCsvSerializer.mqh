@@ -3,6 +3,14 @@
 
 #include "TickShockTypes.mqh"
 
+string TSCommissionEvidenceStatusName(const ENUM_TS_COMMISSION_EVIDENCE_STATUS status)
+  {
+   if(status==TS_COMMISSION_TESTER_OBSERVED_ZERO) return "TESTER_OBSERVED_ZERO";
+   if(status==TS_COMMISSION_EXPLICIT_SCENARIO_ASSUMPTION) return "EXPLICIT_SCENARIO_ASSUMPTION";
+   if(status==TS_COMMISSION_BROKER_VERIFIED) return "BROKER_VERIFIED";
+   return "UNAVAILABLE";
+  }
+
 string TSCsvOpenStatusName(const ENUM_TS_CSV_OPEN_STATUS status)
   {
    if(status==TS_CSV_OPEN_CREATED) return "CREATED";

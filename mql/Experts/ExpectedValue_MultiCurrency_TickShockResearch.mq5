@@ -10,7 +10,7 @@
 
 // Research-only EA.  This file contains no OrderCheck/OrderSend call.
 // IDEAL_EVENT_STUDY is event-time research only.  REALIZABLE_EA includes the
-// actual global-watermark recognition time and is the only formal edge mode.
+// actual global-watermark recognition time and is the only formal analysis mode.
 
 input string InpSymbols = "EURUSD,GBPUSD,USDJPY,AUDUSD,USDCAD,USDCHF";
 input int InpGridMs = 250;
@@ -38,6 +38,9 @@ input double InpShadowSlippageTicks = 1.0;
 input double InpShadowExitSlippageTicks = 1.0;
 input double InpCommissionPerLotRoundTurn = 0.0;
 input string InpCommissionSource = "ORDER_HARNESS_REQUIRED";
+input ENUM_TS_COMMISSION_EVIDENCE_STATUS InpCommissionEvidenceStatus = TS_COMMISSION_EVIDENCE_UNAVAILABLE;
+input string InpCommissionSymbolScope = "ALL_CONFIGURED_SYMBOLS";
+input string InpCommissionUnit = "ACCOUNT_CURRENCY_PER_LOT_ROUND_TURN";
 input ENUM_TS_RESEARCH_EXECUTION_MODE InpExecutionMode = REALIZABLE_EA;
 input int InpSubmitLatencyMs = 0;
 input int InpTokyoStartHour = 0;
@@ -86,7 +89,7 @@ input int InpDebugMaxMessages = 200;
 #define TSR_GATE_MASK_COUNT 64
 
 const string TSR_NAME = "ExpectedValue_MultiCurrency_TickShockResearch";
-const string TSR_SOURCE_REVISION = "step06_causal_execution_20260823";
+const string TSR_IMPLEMENTATION_SCHEMA = "tickshock-research-step14r-v1";
 const int TSR_CHECKPOINT_SECONDS[TSR_CHECKPOINT_COUNT] = {5,10,20,30,60,120};
 const int TSR_DETECTOR_MS[TSR_DETECTOR_COUNT] = {250,500,1000};
 const int TSR_DELAY_MS[TSR_DELAY_COUNT] = {0,100,250};
@@ -285,6 +288,7 @@ struct TSRSymbolContext
    int filling_mode;
    long last_time_msc;
    int processed_at_last_msc;
+   TickShockSymbolFrontierState frontier;
    long duplicate_ticks_skipped;
    long ticks_processed;
    TSRShortTick ticks[];
@@ -427,7 +431,7 @@ string TSRRunMetadataFingerprint()
    identity.period=InpResearchPeriod;identity.model=InpTesterModel;
    identity.broker_server=AccountInfoString(ACCOUNT_SERVER);identity.terminal_build=(long)TerminalInfoInteger(TERMINAL_BUILD);
    identity.source_commit=InpSourceCommit;identity.ex5_hash=InpEx5Hash;identity.schema=InpSchemaVersion;
-   identity.config="source_revision="+TSR_SOURCE_REVISION;
+    identity.config="implementation_schema="+TSR_IMPLEMENTATION_SCHEMA;
    string value=TSMt5RunIdentityFingerprint(identity);
    value+="|symbols="+InpSymbols;
    value+="|grid_ms="+IntegerToString(InpGridMs);
@@ -455,6 +459,9 @@ string TSRRunMetadataFingerprint()
    value+="|exit_slippage_ticks="+DoubleToString(InpShadowExitSlippageTicks,8);
    value+="|commission="+DoubleToString(InpCommissionPerLotRoundTurn,8);
    value+="|commission_source="+InpCommissionSource;
+   value+="|commission_evidence_status="+TSCommissionEvidenceStatusName(InpCommissionEvidenceStatus);
+   value+="|commission_symbol_scope="+InpCommissionSymbolScope;
+   value+="|commission_unit="+InpCommissionUnit;
    value+="|execution_mode="+TSRExecutionModeName();
    value+="|submit_latency_ms="+IntegerToString(InpSubmitLatencyMs);
    value+="|sessions="+IntegerToString(InpTokyoStartHour)+"-"+IntegerToString(InpTokyoEndHour)+"/"+
@@ -970,6 +977,7 @@ bool TSRInitializeSymbol(TSRSymbolContext &context,const string symbol)
    context.stops_level=spec.stops_level;
    context.freeze_level=spec.freeze_level;
    context.filling_mode=spec.filling_mode;
+   TSResetSymbolFrontier(context.frontier);
    ArrayResize(context.ticks,TSR_TICK_CAPACITY);
    ArrayResize(context.grid,TSR_GRID_CAPACITY);
    ArrayResize(context.samples250,TSRSampleCapacity(0));
@@ -1742,9 +1750,13 @@ void TSRProcessOneTick(const int symbol_index,const MqlTick &source,const long p
    TSRReleaseWrittenEvents();
   }
 
-void TSRCollectSymbolTicks(const int symbol_index,TickShockPendingRepository &repository)
+void TSRCollectSymbolTicks(const int symbol_index,TickShockPendingRepository &repository,
+                           const long requested_to_msc,const bool final_drain=false)
   {
-   int loops=0;
+   int loops=0;bool exhausted=false;bool last_page_full=false;
+   long cycle_from=g_symbols[symbol_index].last_time_msc;
+   bool synchronized=TSMt5SeriesSynchronized(g_symbols[symbol_index].symbol);
+   TSFrontierBeginReadCycle(g_symbols[symbol_index].frontier,cycle_from,requested_to_msc,synchronized,final_drain);
    while(loops<64)
      {
       ++loops;
@@ -1753,11 +1765,13 @@ void TSRCollectSymbolTicks(const int symbol_index,TickShockPendingRepository &re
       int requested=g_symbols[symbol_index].last_time_msc>0?TSR_MAX_COPY_TICKS:1;
       ResetLastError();
       int count=TSMt5CopyInfoTicks(g_symbols[symbol_index].symbol,copied,from_msc,(uint)requested);
-      if(count<=0)
-        {
-         int err=GetLastError();
-         if(err!=0) TSRDebug(g_symbols[symbol_index].symbol,"CopyTicks failed err="+IntegerToString(err));
-         return;
+       if(count<=0)
+         {
+          int err=GetLastError();
+          TSFrontierObserveCopyPage(g_symbols[symbol_index].frontier,count,requested,err,
+                                    g_symbols[symbol_index].last_time_msc,true);
+          if(err!=0) TSRDebug(g_symbols[symbol_index].symbol,"CopyTicks failed err="+IntegerToString(err));
+          return;
         }
       long before_time=g_symbols[symbol_index].last_time_msc;
       int before_count=g_symbols[symbol_index].processed_at_last_msc;
@@ -1788,10 +1802,20 @@ void TSRCollectSymbolTicks(const int symbol_index,TickShockPendingRepository &re
          ++g_symbols[symbol_index].processed_at_last_msc;
          ++collected;
         }
-      if(count<requested) break;
-      TickShockCursorProgress cursor_progress;
-      if(!TSObserveCopyPageProgress(repository,before_time,before_count,g_symbols[symbol_index].last_time_msc,
-                                    g_symbols[symbol_index].processed_at_last_msc,count,requested,cursor_progress)) return;
+       exhausted=count<requested;last_page_full=!exhausted;
+       TSFrontierObserveCopyPage(g_symbols[symbol_index].frontier,count,requested,0,
+                                 g_symbols[symbol_index].last_time_msc,exhausted);
+       if(exhausted) break;
+       TickShockCursorProgress cursor_progress;
+       if(!TSObserveCopyPageProgress(repository,before_time,before_count,g_symbols[symbol_index].last_time_msc,
+                                    g_symbols[symbol_index].processed_at_last_msc,count,requested,cursor_progress))
+         {TSFrontierObserveCursorStall(g_symbols[symbol_index].frontier);return;}
+      }
+   if(loops>=64 && last_page_full)
+     {
+      TSFrontierObservePageLimit(g_symbols[symbol_index].frontier);
+      repository.validation_invalid=true;
+      if(repository.fatal_reason=="") repository.fatal_reason="COPY_PAGE_LIMIT_REACHED";
      }
   }
 
@@ -1844,7 +1868,7 @@ void TSRProcessMergedPrefix(const int count,const long processing_msc)
 void TSRDispatcher()
   {
    long processing_msc=TSRProcessingMsc();
-   for(int i=0;i<ArraySize(g_symbols);++i) TSRCollectSymbolTicks(i,g_pending_repository);
+   for(int i=0;i<ArraySize(g_symbols);++i) TSRCollectSymbolTicks(i,g_pending_repository,processing_msc,false);
    int count=ArraySize(g_pending_repository.items);
    TSMergeSortPending(g_pending_repository);
 
@@ -1854,14 +1878,11 @@ void TSRDispatcher()
    // another tick sharing the same time_msc cannot arrive after release.
    long watermark=0;
    bool ready=ArraySize(g_symbols)>0;
-   long frontiers[];ArrayResize(frontiers,ArraySize(g_symbols));
+   TickShockSymbolFrontierState frontiers[];ArrayResize(frontiers,ArraySize(g_symbols));
    for(int i=0;i<ArraySize(g_symbols);++i)
-     {
-      frontiers[i]=g_symbols[i].last_time_msc;
-      if(g_symbols[i].last_time_msc<=0) { ready=false; break; }
-      if(watermark==0 || g_symbols[i].last_time_msc<watermark) watermark=g_symbols[i].last_time_msc;
-     }
-   TSMergeObserveFrontier(g_pending_repository,processing_msc,frontiers,InpMaxQuoteAgeMs);
+      frontiers[i]=g_symbols[i].frontier;
+   ready=ready && TSMergeObserveReadThroughFrontier(g_pending_repository,processing_msc,frontiers,InpMaxQuoteAgeMs,watermark);
+   for(int i=0;i<ArraySize(g_symbols);++i) g_symbols[i].frontier=frontiers[i];
 
    int released=ready?TSMergeReleasableCount(g_pending_repository,watermark):0;
    if(released>0) TSRProcessMergedPrefix(released,processing_msc);
@@ -1871,11 +1892,21 @@ void TSRDispatcher()
 
 void TSRFlushPendingTicks()
   {
-   int count=ArraySize(g_pending_repository.items);
-   TSMergeSortPending(g_pending_repository);
    long processing_msc=TSRProcessingMsc();
-   TSRProcessMergedPrefix(count,processing_msc);
-   ArrayResize(g_pending_repository.items,0);
+   for(int i=0;i<ArraySize(g_symbols);++i) TSRCollectSymbolTicks(i,g_pending_repository,processing_msc,true);
+   TSMergeSortPending(g_pending_repository);
+   TickShockSymbolFrontierState frontiers[];ArrayResize(frontiers,ArraySize(g_symbols));
+   for(int i=0;i<ArraySize(g_symbols);++i) frontiers[i]=g_symbols[i].frontier;
+   long watermark=0;bool complete=TSMergeObserveReadThroughFrontier(g_pending_repository,processing_msc,frontiers,InpMaxQuoteAgeMs,watermark);
+   for(int i=0;i<ArraySize(g_symbols);++i) g_symbols[i].frontier=frontiers[i];
+   int released=complete?TSMergeFinalReleasableCount(g_pending_repository,watermark):0;
+   if(released>0) TSRProcessMergedPrefix(released,processing_msc);
+   if(released>0) TSMergeRemovePrefix(g_pending_repository,released);
+   if(ArraySize(g_pending_repository.items)>0)
+     {
+      g_pending_repository.incomplete_frontier=true;g_pending_repository.validation_invalid=true;
+      if(g_pending_repository.fatal_reason=="") g_pending_repository.fatal_reason="FINAL_DRAIN_INCOMPLETE";
+     }
   }
 
 void TSRSummaryRow(const string record_type,const string key,const long events,const long raw,const long ticks,
@@ -1892,6 +1923,19 @@ void TSRSummaryRow(const string record_type,const string key,const long events,c
    TSMt5WriteLine(g_summary_file,line);
   }
 
+string TSRFrontierAffectedSymbols(const bool incomplete_only)
+  {
+   string result="";
+   for(int i=0;i<ArraySize(g_symbols);++i)
+     {
+      bool affected=incomplete_only?(g_symbols[i].frontier.read_through_msc<=0 || g_symbols[i].frontier.current_read_incomplete):g_symbols[i].frontier.ever_stale;
+      if(!affected) continue;
+      if(result!="") result+="|";
+      result+=g_symbols[i].symbol;
+     }
+   return result==""?"NONE":result;
+  }
+
 void TSRWriteSummary()
   {
    long all_valid=0,all_invalid=0;
@@ -1903,8 +1947,14 @@ void TSRWriteSummary()
       all_sum_r+=g_scenario_sum_r[i];
      }
    bool validation_invalid=g_event_engine.validation_invalid || g_pending_repository.validation_invalid;
+   bool formal_analysis_eligible=InpExecutionMode==REALIZABLE_EA && !validation_invalid;
+   string execution_status=(InpExecutionMode==REALIZABLE_EA && g_entry_before_eligible==0 && g_entry_before_processing==0 && g_stale_detection_fills==0 && g_pending_repository.order_violations==0)?"EXECUTION_MODEL_CAUSALLY_VALIDATED_FOR_SHADOW_REPLAY":"EXECUTION_MODEL_NOT_CAUSALLY_VALIDATED";
+   string cost_status=InpCommissionEvidenceStatus==TS_COMMISSION_BROKER_VERIFIED?"COST_MODEL_COMPLETE":"COST_MODEL_INCOMPLETE";
    TSRSummaryRow("OVERALL","ALL",g_total_events,g_total_raw,g_total_ticks,all_valid,all_invalid,all_valid>0?all_sum_r/all_valid:0.0,
-                 "validation="+TSValidationStatus(validation_invalid)+";research_only=true;execution_mode="+TSRExecutionModeName()+";formal_edge_eligible="+TSRBool(InpExecutionMode==REALIZABLE_EA && !validation_invalid)+";market_clusters="+TSRLong(g_event_engine.market_cluster_clock.sequence)+";commission="+InpCommissionSource);
+                  "pipeline_validation="+(validation_invalid?"RESEARCH_PIPELINE_PARTIALLY_VALIDATED":"RESEARCH_PIPELINE_VALIDATED_FOR_MARCH_RESEARCH")+
+                  ";execution_status="+execution_status+";cost_status="+cost_status+";formal_analysis_eligible="+TSRBool(formal_analysis_eligible)+
+                  ";edge_status=EDGE_UNDETERMINED;production_eligible=false;research_only=true;execution_mode="+TSRExecutionModeName()+
+                  ";market_clusters="+TSRLong(g_event_engine.market_cluster_clock.sequence)+";commission_evidence_status="+TSCommissionEvidenceStatusName(InpCommissionEvidenceStatus));
    TSRSummaryRow("FUNNEL","valid_bursts",g_valid_bursts,0,0,0,0,0.0,TSRLong(g_valid_bursts));
    TSRSummaryRow("FUNNEL","valid_pullbacks",g_valid_pullbacks,0,0,0,0,0.0,TSRLong(g_valid_pullbacks));
    TSRSummaryRow("FUNNEL","reacceleration_signals",g_reacceleration_signals,0,0,0,0,0.0,TSRLong(g_reacceleration_signals));
@@ -1918,7 +1968,12 @@ void TSRWriteSummary()
       long symbol_events=0,symbol_raw=0;
       for(int d=0;d<TSR_DETECTOR_COUNT;++d) {symbol_events+=g_symbols[i].valid_events[d];symbol_raw+=g_symbols[i].raw_candidates[d];}
       TSRSummaryRow("SYMBOL",g_symbols[i].symbol,symbol_events,symbol_raw,g_symbols[i].ticks_processed,0,0,0.0,
-                    StringFormat("copy_duplicates=%I64d;m1_minutes_seen=%I64d",g_symbols[i].duplicate_ticks_skipped,g_symbols[i].m1_minutes_seen));
+                     StringFormat("copy_duplicates=%I64d;m1_minutes_seen=%I64d;last_quote_msc=%I64d;read_through_msc=%I64d;requested_from_msc=%I64d;requested_to_msc=%I64d;last_returned_count=%d;copy_pages=%I64d;last_copy_result=%d;last_copy_error=%d;history_synchronized=%s;stale_episodes=%I64d;max_stale_ms=%I64d;quiet_ranges=%I64d;read_failures=%I64d;cursor_stalls=%I64d;page_limits=%I64d;final_drains=%I64d;root_cause=%s",
+                                  g_symbols[i].duplicate_ticks_skipped,g_symbols[i].m1_minutes_seen,g_symbols[i].frontier.last_quote_msc,g_symbols[i].frontier.read_through_msc,
+                                  g_symbols[i].frontier.requested_from_msc,g_symbols[i].frontier.requested_to_msc,g_symbols[i].frontier.last_returned_count,g_symbols[i].frontier.page_count,
+                                  g_symbols[i].frontier.last_copy_result,g_symbols[i].frontier.last_copy_error,TSRBool(g_symbols[i].frontier.history_synchronized),g_symbols[i].frontier.stale_episode_count,
+                                  g_symbols[i].frontier.max_stale_ms,g_symbols[i].frontier.quiet_range_count,g_symbols[i].frontier.read_failure_count,g_symbols[i].frontier.cursor_stall_count,
+                                  g_symbols[i].frontier.page_limit_count,g_symbols[i].frontier.final_drain_count,g_symbols[i].frontier.last_root_cause));
       for(int d=0;d<TSR_DETECTOR_COUNT;++d)
         {
          string prefix=g_symbols[i].symbol+":w"+IntegerToString(TSR_DETECTOR_MS[d]);
@@ -1977,7 +2032,12 @@ void TSRWriteSummary()
    TSRSummaryRow("BUFFER","tick_retention",0,0,0,0,0,0.0,"older_than_5000ms_or_capacity_8192");
    TSRSummaryRow("BUFFER","active_event_slots_max",0,0,0,0,0,0.0,IntegerToString(TSR_MAX_ACTIVE_EVENTS));
    TSRSummaryRow("BUFFER","global_pending_ticks",0,0,0,0,0,0.0,StringFormat("capacity=%d;max_observed=%I64d;capacity_hits=%I64d",TSR_PENDING_CAPACITY,g_pending_repository.max_observed,g_pending_repository.capacity_hits));
-   TSRSummaryRow("INTEGRITY","fail_closed",0,0,0,0,0,0.0,StringFormat("validation=%s;event_pool_exhaustions=%I64d;pending_capacity_hits=%I64d;dropped_ticks=%I64d;cursor_stalls=%I64d;stale_symbols=%d;max_frontier_lag_ms=%I64d;incomplete_frontier=%s;fatal_reason=%s",TSValidationStatus(validation_invalid),g_event_engine.pool_exhaustions,g_pending_repository.capacity_hits,g_pending_repository.dropped_ticks,g_pending_repository.cursor_stalls,g_pending_repository.stale_symbol_count,g_pending_repository.max_frontier_lag_ms,TSRBool(g_pending_repository.incomplete_frontier),g_pending_repository.fatal_reason));
+    TSRSummaryRow("INTEGRITY","fail_closed",0,0,0,0,0,0.0,StringFormat("validation=%s;current_state=%s;ever_failure=%s;event_pool_exhaustions=%I64d;pending_capacity_hits=%I64d;dropped_ticks=%I64d;cursor_stalls=%I64d;current_stale_symbols=%d;ever_stale_symbols=%d;stale_instances=%I64d;max_quote_stale_ms=%I64d;incomplete_frontier=%s;incomplete_frontier_instances=%I64d;read_failures=%I64d;quiet_ranges=%I64d;copy_pages=%I64d;final_drains=%I64d;root_cause=%s;affected_symbols=%s;stale_symbols=%s",
+                  TSValidationStatus(validation_invalid),g_pending_repository.incomplete_frontier?"INCOMPLETE":"COMPLETE",TSRBool(validation_invalid),g_event_engine.pool_exhaustions,
+                  g_pending_repository.capacity_hits,g_pending_repository.dropped_ticks,g_pending_repository.cursor_stalls,g_pending_repository.stale_symbol_count,g_pending_repository.ever_stale_symbol_count,
+                  g_pending_repository.stale_instances,g_pending_repository.max_frontier_lag_ms,TSRBool(g_pending_repository.incomplete_frontier),g_pending_repository.incomplete_frontier_instances,
+                  g_pending_repository.read_failures,g_pending_repository.quiet_ranges,g_pending_repository.copy_pages,g_pending_repository.final_drains,
+                  g_pending_repository.fatal_reason,TSRFrontierAffectedSymbols(true),TSRFrontierAffectedSymbols(false)));
    TSRSummaryRow("BUFFER","same_millisecond_groups",0,0,0,0,0,0.0,StringFormat("groups=%I64d;ticks=%I64d;max_group=%I64d",g_pending_repository.same_msc_groups,g_pending_repository.same_msc_ticks,g_pending_repository.max_same_msc_group));
    TSRSummaryRow("LOG_POLICY","tick_or_grid_csv",0,0,0,0,0,0.0,"disabled");
    TSRSummaryRow("MODEL","return_definition",0,0,0,0,0,0.0,"independent_250_500_1000ms_detectors;signal_and_baseline_use_same_absolute_mid Move;rolling half-tick histogram;exclude_2000ms;log returns diagnostic only");
@@ -1987,8 +2047,9 @@ void TSRWriteSummary()
    TSRSummaryRow("MODEL","spread_stress",0,0,0,0,0,0.0,"BidAsk widened around Mid;absolute risk distance fixed from unstressed spread for paired spread scenarios");
    TSRSummaryRow("MODEL","exit_execution",0,0,0,0,0,0.0,"TP_limit_at_barrier;SL_first_tradable_side_plus_adverse_slippage;TIME_current_tradable_side");
    TSRSummaryRow("MODEL","protective_distance",0,0,0,0,0,0.0,"StopsLevel checked from current stressed Bid/Ask;FreezeLevel recorded separately as modification diagnostic;TP rounded outward so realized_rr>=requested_rr");
-   TSRSummaryRow("MODEL","global_merge",0,0,0,0,0,0.0,StringFormat("order_violations=%I64d;max_pending=%I64d;pending_at_summary=%d",g_pending_repository.order_violations,g_pending_repository.max_observed,ArraySize(g_pending_repository.items)));
-   TSRSummaryRow("MODEL","commission",0,0,0,0,0,0.0,DoubleToString(InpCommissionPerLotRoundTurn,4)+":"+InpCommissionSource);
+    TSRSummaryRow("MODEL","global_merge",0,0,0,0,0,0.0,StringFormat("semantics=min_read_through_msc;quote_freshness_separate=true;order_violations=%I64d;max_pending=%I64d;pending_at_summary=%d",g_pending_repository.order_violations,g_pending_repository.max_observed,ArraySize(g_pending_repository.items)));
+    TSRSummaryRow("MODEL","provenance",0,0,0,0,0,0.0,"implementation_schema="+TSR_IMPLEMENTATION_SCHEMA+";git_commit="+InpSourceCommit+";ex5_hash="+InpEx5Hash+";schema="+InpSchemaVersion+";tester_period="+InpResearchPeriod+";tester_model="+InpTesterModel+";build_timestamp=UNAVAILABLE;build_timestamp_reason=not_injected_by_compile_script");
+    TSRSummaryRow("MODEL","commission",0,0,0,0,0,0.0,StringFormat("amount_round_turn=%.8f;evidence_status=%s;source=%s;symbol_scope=%s;unit=%s;formal_net_expectancy=%s",InpCommissionPerLotRoundTurn,TSCommissionEvidenceStatusName(InpCommissionEvidenceStatus),InpCommissionSource,InpCommissionSymbolScope,InpCommissionUnit,InpCommissionEvidenceStatus==TS_COMMISSION_BROKER_VERIFIED?"AVAILABLE":"UNAVAILABLE"));
    TSMt5Flush(g_summary_file);
   }
 

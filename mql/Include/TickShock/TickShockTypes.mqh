@@ -109,6 +109,14 @@ enum ENUM_TS_COMMISSION_STATUS
    TS_COMMISSION_INVALID_AMOUNT
   };
 
+enum ENUM_TS_COMMISSION_EVIDENCE_STATUS
+  {
+   TS_COMMISSION_EVIDENCE_UNAVAILABLE=0,
+   TS_COMMISSION_TESTER_OBSERVED_ZERO,
+   TS_COMMISSION_EXPLICIT_SCENARIO_ASSUMPTION,
+   TS_COMMISSION_BROKER_VERIFIED
+  };
+
 enum ENUM_TS_CSV_RUN_MODE
   {
    TS_CSV_FRESH_RUN=0,
@@ -236,6 +244,14 @@ struct TickShockOrderFillState
    ulong request_ticket;
    ulong order_ticket;
    ulong position_ticket;
+   ulong position_identifier;
+   ulong last_deal_order_ticket;
+   ulong entry_request_ticket;
+   ulong exit_request_ticket;
+   ulong entry_order_ticket;
+   ulong exit_order_ticket;
+   long entry_operation_id;
+   long exit_operation_id;
    string symbol;
    long magic;
    int direction;

@@ -64,7 +64,15 @@ ulong g_entry_deal=0;
 ulong g_exit_deal=0;
 uint g_order_retcode=0;
 uint g_order_retcode_external=0;
-uint g_request_id=0;
+uint g_entry_request_id=0;
+uint g_exit_request_id=0;
+ulong g_exit_order=0;
+long g_entry_operation_id=0;
+long g_exit_operation_id=0;
+bool g_pending_exit_identity=false;
+ulong g_pending_exit_deal=0;
+ulong g_pending_exit_order=0;
+ulong g_pending_exit_position=0;
 ENUM_DEAL_REASON g_exit_reason=DEAL_REASON_CLIENT;
 bool g_recovery_observed=false;
 bool g_cleanup_after_skip=false;
@@ -194,7 +202,9 @@ void ResetCycle()
    g_exit_deal=0;
    g_order_retcode=0;
    g_order_retcode_external=0;
-   g_request_id=0;
+   g_entry_request_id=0;g_exit_request_id=0;g_exit_order=0;
+   g_entry_operation_id=(long)g_cycle*2+1;g_exit_operation_id=(long)g_cycle*2+2;
+   g_pending_exit_identity=false;g_pending_exit_deal=0;g_pending_exit_order=0;g_pending_exit_position=0;
    g_exit_reason=DEAL_REASON_CLIENT;
    g_recovery_observed=false;
    g_cleanup_after_skip=false;
@@ -260,8 +270,9 @@ bool SendEntry()
    int send_terminal_error=GetLastError();
    g_order_retcode=result.retcode;
    g_order_retcode_external=result.retcode_external;
-   g_request_id=result.request_id;
+   g_entry_request_id=result.request_id;
    g_entry_order=result.order;
+   TSConfigureOrderIdentity(g_order_fill_state,result.request_id,result.order,0,request.symbol,request.magic,g_direction);
    bool accepted=sent && (result.retcode==TRADE_RETCODE_DONE || result.retcode==TRADE_RETCODE_PLACED || result.retcode==TRADE_RETCODE_DONE_PARTIAL);
    if(result.retcode==TRADE_RETCODE_DONE_PARTIAL) g_partial_fill_observed=true;
    WriteRow("ORDER",DirectionName(),PlanName()+"_ENTRY_SEND",accepted?"PASS":"FAIL",StringFormat("bool=%s;terminal_error=%d;retcode=%u;external=%u;order=%I64u;deal=%I64u;request_id=%u;symbol=%s;magic=%I64d;requested_volume=%.2f;filling_mode=%d",sent?"true":"false",send_terminal_error,result.retcode,result.retcode_external,result.order,result.deal,result.request_id,request.symbol,request.magic,g_entry_fill.requested_volume,(int)request.type_filling));
@@ -297,6 +308,26 @@ bool SendTimeOrCleanupClose()
    bool sent=OrderSend(request,result);
    int send_terminal_error=GetLastError();
    bool accepted=sent && (result.retcode==TRADE_RETCODE_DONE || result.retcode==TRADE_RETCODE_PLACED || result.retcode==TRADE_RETCODE_DONE_PARTIAL);
+   if(accepted)
+     {
+      g_exit_request_id=result.request_id;
+      g_exit_order=result.order;
+      bool attached=TSAttachExitOperationIdentity(g_order_fill_state,result.request_id,result.order,g_exit_operation_id);
+      if(!attached)
+        {
+         WriteRow("IDENTITY",DirectionName(),"TIME_EXIT_IDENTITY_ATTACH","FAIL",StringFormat("operation_id=%I64d;request_id=%u;order=%I64u;pending_deal=%I64u;pending_order=%I64u;identity_rejections=%d",g_exit_operation_id,result.request_id,result.order,g_pending_exit_deal,g_pending_exit_order,g_order_fill_state.identity_rejections));
+         ++g_failed;
+        }
+      else if(g_pending_exit_identity)
+        {
+         bool order_matches=g_pending_exit_order==result.order;
+         bool linked_to_entry=result.request_id!=0 && result.request_id==g_entry_request_id;
+         string identity_result=order_matches && !linked_to_entry?"PASS":"FAIL";
+         WriteRow("IDENTITY",DirectionName(),"TIME_EXIT_IDENTITY_RECONCILED",identity_result,StringFormat("operation_id=%I64d;exit_request_id=%u;exit_order=%I64u;deal=%I64u;deal_order=%I64u;position=%I64u;entry_request_id=%u;linked_to_entry_request=%s;order_matches=%s",g_exit_operation_id,result.request_id,result.order,g_pending_exit_deal,g_pending_exit_order,g_pending_exit_position,g_entry_request_id,linked_to_entry?"true":"false",order_matches?"true":"false"));
+         if(identity_result=="FAIL") ++g_failed;
+         g_pending_exit_identity=false;
+        }
+     }
    WriteRow("ORDER",DirectionName(),g_cleanup_after_skip?"CLEANUP_SEND":"TIME_CLOSE_SEND",accepted?"PASS":"FAIL",StringFormat("bool=%s;terminal_error=%d;retcode=%u;external=%u;order=%I64u;deal=%I64u;request_id=%u;symbol=%s;magic=%I64d;volume=%.2f;position=%I64u;filling_mode=%d",sent?"true":"false",send_terminal_error,result.retcode,result.retcode_external,result.order,result.deal,result.request_id,request.symbol,request.magic,request.volume,request.position,(int)request.type_filling));
    if(!g_cleanup_after_skip) Assess(CycleName()+"_TimeClose_OrderSend",accepted?"PASS":"FAIL",StringFormat("retcode=%u",result.retcode));
    return accepted;
@@ -517,7 +548,11 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &
    double swap=HistoryDealGetDouble(trans.deal,DEAL_SWAP);
    double profit=HistoryDealGetDouble(trans.deal,DEAL_PROFIT);
    ENUM_DEAL_REASON reason=(ENUM_DEAL_REASON)HistoryDealGetInteger(trans.deal,DEAL_REASON);
-   bool applied=TSApplyOrderDeal(g_order_fill_state,trans.deal,0,0,position_id,deal_symbol,deal_magic,g_direction,entry,volume,price);
+    bool is_entry=entry==DEAL_ENTRY_IN;
+   uint callback_request_id=result.request_id;
+   uint operation_request=is_entry?(callback_request_id>0?callback_request_id:g_entry_request_id):
+      ((reason==DEAL_REASON_EXPERT && g_plan==H_EXIT_TIME && g_exit_order==deal_order)?g_exit_request_id:0);
+    bool applied=TSApplyOrderDeal(g_order_fill_state,trans.deal,operation_request,deal_order,position_id,deal_symbol,deal_magic,g_direction,entry,volume,price);
    if(!applied)
      {
       WriteRow("DEAL",DirectionName(),PlanName()+"_REJECTED_BY_PRODUCTION_STATE","FAIL",StringFormat("deal=%I64u;order=%I64u;position=%I64u;symbol=%s;magic=%I64d;entry=%d;type=%d;duplicates=%d;identity_rejections=%d",trans.deal,deal_order,position_id,deal_symbol,deal_magic,(int)entry,(int)deal_type,g_order_fill_state.duplicate_deals,g_order_fill_state.identity_rejections));
@@ -543,16 +578,25 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &
       g_last_entry_position_ticket=position_id;
       g_last_entry_deal_volume=volume;
       g_last_entry_deal_price=price;
-      WriteRow("DEAL",DirectionName(),PlanName()+"_ENTRY_FILL","OBSERVED",StringFormat("deal=%I64u;order=%I64u;position=%I64u;request_id=%u;symbol=%s;magic=%I64d;deal_type=%d;deal_entry=%d;deal_reason=%d;account_currency=%s;commission_source=MT5_STRATEGY_TESTER_HISTORY_DEAL_FIELDS;requested_volume=%.2f;deal_volume=%.2f;filled_volume=%.2f;remaining_volume=%.2f;price=%.8f;commission=%.8f;fee=%.8f;swap=%.8f;profit=%.8f",trans.deal,deal_order,position_id,g_request_id,deal_symbol,deal_magic,(int)deal_type,(int)entry,(int)reason,AccountInfoString(ACCOUNT_CURRENCY),g_entry_fill.requested_volume,volume,g_entry_fill.filled_volume,RemainingVolume(g_entry_fill),price,commission,fee,swap,profit));
+       WriteRow("DEAL",DirectionName(),PlanName()+"_ENTRY_FILL","OBSERVED",StringFormat("operation_id=%I64d;deal=%I64u;deal_order=%I64u;position=%I64u;request_id=%u;symbol=%s;magic=%I64d;deal_type=%d;deal_entry=%d;deal_reason=%d;account_currency=%s;commission_source=MT5_STRATEGY_TESTER_HISTORY_DEAL_FIELDS;requested_volume=%.2f;deal_volume=%.2f;filled_volume=%.2f;remaining_volume=%.2f;price=%.8f;commission=%.8f;fee=%.8f;swap=%.8f;profit=%.8f",g_entry_operation_id,trans.deal,deal_order,position_id,operation_request,deal_symbol,deal_magic,(int)deal_type,(int)entry,(int)reason,AccountInfoString(ACCOUNT_CURRENCY),g_entry_fill.requested_volume,volume,g_entry_fill.filled_volume,RemainingVolume(g_entry_fill),price,commission,fee,swap,profit));
      }
    else if(entry==DEAL_ENTRY_OUT || entry==DEAL_ENTRY_INOUT || entry==DEAL_ENTRY_OUT_BY)
      {
+      if(reason==DEAL_REASON_EXPERT && g_plan==H_EXIT_TIME && operation_request==0)
+        {
+         g_pending_exit_identity=true;
+         g_pending_exit_deal=trans.deal;
+         g_pending_exit_order=deal_order;
+         g_pending_exit_position=position_id;
+        }
       g_exit_volume+=volume;
       g_exit_value+=volume*price;
       g_close_msc=time_msc;
       g_exit_deal=trans.deal;
       g_exit_reason=reason;
-      WriteRow("DEAL",DirectionName(),PlanName()+"_EXIT_FILL","OBSERVED",StringFormat("deal=%I64u;order=%I64u;position=%I64u;request_id=%u;symbol=%s;magic=%I64d;deal_type=%d;deal_entry=%d;deal_reason=%d;account_currency=%s;commission_source=MT5_STRATEGY_TESTER_HISTORY_DEAL_FIELDS;volume=%.2f;aggregated_exit_volume=%.2f;price=%.8f;commission=%.8f;fee=%.8f;swap=%.8f;profit=%.8f",trans.deal,deal_order,position_id,g_request_id,deal_symbol,deal_magic,(int)deal_type,(int)entry,(int)reason,AccountInfoString(ACCOUNT_CURRENCY),volume,g_exit_volume,price,commission,fee,swap,profit));
+       uint effective_entry_request=(uint)g_order_fill_state.entry_request_ticket;
+      string request_status=operation_request>0?"BOUND":"PENDING_SEND_RESULT_OR_SERVER_EXIT";
+      WriteRow("DEAL",DirectionName(),PlanName()+"_EXIT_FILL","OBSERVED",StringFormat("operation_id=%I64d;deal=%I64u;deal_order=%I64u;position=%I64u;request_id=%u;request_id_status=%s;entry_request_id=%u;exit_request_id=%u;entry_order=%I64u;exit_order=%I64u;linked_to_entry_request=%s;symbol=%s;magic=%I64d;deal_type=%d;deal_entry=%d;deal_reason=%d;account_currency=%s;commission_source=MT5_STRATEGY_TESTER_HISTORY_DEAL_FIELDS;volume=%.2f;aggregated_exit_volume=%.2f;price=%.8f;commission=%.8f;fee=%.8f;swap=%.8f;profit=%.8f",g_exit_operation_id,trans.deal,deal_order,position_id,operation_request,request_status,effective_entry_request,operation_request,g_order_fill_state.entry_order_ticket,deal_order,(operation_request!=0 && operation_request==effective_entry_request)?"true":"false",deal_symbol,deal_magic,(int)deal_type,(int)entry,(int)reason,AccountInfoString(ACCOUNT_CURRENCY),volume,g_exit_volume,price,commission,fee,swap,profit));
      }
   }
 

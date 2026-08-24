@@ -7,8 +7,11 @@ import argparse
 import csv
 import hashlib
 import math
+import os
 import re
 import statistics
+import sys
+import tempfile
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -21,6 +24,32 @@ STRATEGIES = (
     "pullback_continuation",
     "failed_shock_reversal",
 )
+REQUIRED_RUN_FILES = (
+    "events.csv", "summary.csv", "symbol_specs.csv", "tick_quality.csv", "trades.csv",
+    "events.csv.runmeta", "summary.csv.runmeta", "symbol_specs.csv.runmeta", "trades.csv.runmeta",
+    "source_hashes.txt", "tester_config.ini",
+)
+EVENT_REQUIRED = {
+    "event_id", "execution_mode", "symbol", "direction", "detector_window_ms", "symbol_cluster_id",
+    "market_cluster_id", "detection_time_msc", "detection_grid_msc", "detection_quote_msc",
+    "detection_quote_age_ms", "signal_processing_msc", "scenario_grid_encoding", "scenario_grid",
+}
+SUMMARY_REQUIRED = {
+    "run_id", "record_type", "key", "events", "raw_candidates", "ticks", "scenario_valid",
+    "scenario_invalid", "scenario_expectancy_r", "event_csv_rows", "trade_csv_rows", "value",
+}
+SPEC_REQUIRED = {"run_id", "symbol", "tick_size", "stops_level", "freeze_level", "volume_min", "volume_step"}
+QUALITY_REQUIRED = {"symbol", "ea_m1_minutes_seen", "status", "evidence"}
+EVENT_ENUMS = {
+    "execution_mode": {"IDEAL_EVENT_STUDY", "REALIZABLE_EA"},
+    "direction": {"LONG", "SHORT"},
+}
+SCENARIO_STATUSES = VALID_STATUSES | {
+    "NO_SIGNAL", "PENDING_ENTRY_QUOTE", "ACTIVE", "INVALID_STALE_QUOTE", "INVALID_SPREAD",
+    "INVALID_BROKER_STOP", "INVALID_BROKER_TARGET", "INVALID_PRICE", "INVALID_RISK_DISTANCE",
+    "INVALID_RISK", "INVALID_DIRECTION", "INVALID_TICK_SIZE", "INVALID_RR", "INVALID_TARGET_BUILD",
+    "INVALID_COMMISSION", "INCOMPLETE_END_OF_RUN",
+}
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -90,6 +119,198 @@ def parse_set(path: Path) -> dict[str, str]:
             key, value = line.split("=", 1)
             output[key.strip()] = value.strip()
     return output
+
+
+def _require_columns(path: Path, rows: list[dict[str, str]], required: set[str]) -> None:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        header = next(csv.reader(handle), [])
+    missing = sorted(required - set(header))
+    if missing:
+        raise ValueError(f"{path}: missing required columns {missing}")
+    if not rows and path.name != "trades.csv":
+        raise ValueError(f"{path}: truncated or empty evidence")
+
+
+def _strict_int(value: str, label: str, *, allow_blank: bool = False) -> int:
+    if value == "":
+        if allow_blank:
+            return 0
+        raise ValueError(f"{label}: blank integer")
+    if not re.fullmatch(r"-?\d+", value):
+        raise ValueError(f"{label}: non-integer {value!r}")
+    return int(value)
+
+
+def _strict_float(value: str, label: str, *, allow_blank: bool = False) -> float:
+    if value == "":
+        if allow_blank:
+            return math.nan
+        raise ValueError(f"{label}: blank number")
+    try:
+        number = float(value)
+    except ValueError as exc:
+        raise ValueError(f"{label}: nonnumeric {value!r}") from exc
+    if not math.isfinite(number):
+        raise ValueError(f"{label}: non-finite {value!r}")
+    return number
+
+
+def _read_hash_manifest(path: Path) -> dict[str, str]:
+    result: dict[str, str] = {}
+    for line_number, line in enumerate(path.read_text(encoding="utf-8-sig").splitlines(), 1):
+        if "|" not in line:
+            raise ValueError(f"{path}:{line_number}: malformed hash record")
+        key, value = line.split("|", 1)
+        if not key or not value or key in result:
+            raise ValueError(f"{path}:{line_number}: blank or duplicate hash key")
+        result[key] = value
+    return result
+
+
+def strict_validate_run(run_dir: Path, repo_root: Path) -> None:
+    if not run_dir.is_dir():
+        raise ValueError(f"missing run directory: {run_dir}")
+    missing = [name for name in REQUIRED_RUN_FILES if not (run_dir / name).is_file()]
+    set_paths = sorted(run_dir.glob("*.set"))
+    if len(set_paths) != 1:
+        missing.append(f"exactly_one_set(found={len(set_paths)})")
+    if missing:
+        raise ValueError(f"{run_dir}: missing required evidence {missing}")
+
+    events = read_csv(run_dir / "events.csv")
+    summary = read_csv(run_dir / "summary.csv")
+    specs = read_csv(run_dir / "symbol_specs.csv")
+    quality = read_csv(run_dir / "tick_quality.csv")
+    trades = read_csv(run_dir / "trades.csv")
+    _require_columns(run_dir / "events.csv", events, EVENT_REQUIRED)
+    _require_columns(run_dir / "summary.csv", summary, SUMMARY_REQUIRED)
+    _require_columns(run_dir / "symbol_specs.csv", specs, SPEC_REQUIRED)
+    _require_columns(run_dir / "tick_quality.csv", quality, QUALITY_REQUIRED)
+
+    event_ids: set[str] = set()
+    spec_symbols = {row["symbol"] for row in specs}
+    if len(spec_symbols) != len(specs):
+        raise ValueError(f"{run_dir}: duplicate symbol specification")
+    for row_number, row in enumerate(events, 2):
+        label = f"{run_dir / 'events.csv'}:{row_number}"
+        event_id = row["event_id"]
+        if not event_id or event_id in event_ids:
+            raise ValueError(f"{label}: blank or duplicate event_id {event_id!r}")
+        event_ids.add(event_id)
+        if row["symbol"] not in spec_symbols:
+            raise ValueError(f"{label}: orphan symbol {row['symbol']!r}")
+        for field, allowed in EVENT_ENUMS.items():
+            if row[field] not in allowed:
+                raise ValueError(f"{label}: unknown {field} {row[field]!r}")
+        for field in ("detector_window_ms", "symbol_cluster_id", "market_cluster_id", "detection_time_msc",
+                      "detection_grid_msc", "detection_quote_msc", "detection_quote_age_ms", "signal_processing_msc"):
+            _strict_int(row[field], f"{label}:{field}")
+        for field, value in row.items():
+            if isinstance(value, str) and value.strip().lower() in {"nan", "+nan", "-nan", "inf", "+inf", "-inf", "infinity"}:
+                raise ValueError(f"{label}:{field}: non-finite token")
+        if not row["scenario_grid_encoding"] or not row["scenario_grid"]:
+            raise ValueError(f"{label}: blank scenario schema or grid")
+        seen_scenarios: set[tuple[object, ...]] = set()
+        for encoded in row["scenario_grid"].split(";"):
+            if not encoded:
+                continue
+            parsed = parse_scenario(encoded, row)
+            if parsed["status"] not in SCENARIO_STATUSES:
+                raise ValueError(f"{label}: unknown scenario status {parsed['status']!r}")
+            if parsed["key"] in seen_scenarios:
+                raise ValueError(f"{label}: duplicate scenario identity")
+            seen_scenarios.add(parsed["key"])
+
+    summary_keys: set[tuple[str, str]] = set()
+    for row_number, row in enumerate(summary, 2):
+        label = f"{run_dir / 'summary.csv'}:{row_number}"
+        key = (row["record_type"], row["key"])
+        if not all(key) or key in summary_keys:
+            raise ValueError(f"{label}: blank or duplicate summary identity {key}")
+        summary_keys.add(key)
+        for field in ("events", "raw_candidates", "ticks", "scenario_valid", "scenario_invalid", "event_csv_rows", "trade_csv_rows"):
+            _strict_int(row[field], f"{label}:{field}")
+        _strict_float(row["scenario_expectancy_r"], f"{label}:scenario_expectancy_r", allow_blank=True)
+
+    config = parse_set(set_paths[0])
+    run_id = config.get("InpRunId", "")
+    if not run_id or any(row.get("run_id") != run_id for row in summary + specs):
+        raise ValueError(f"{run_dir}: run_id reference mismatch")
+    if any(row.get("symbol") not in spec_symbols for row in quality):
+        raise ValueError(f"{run_dir}: tick_quality orphan symbol")
+    if trades and any(row.get("event_id") not in event_ids for row in trades if row.get("event_id")):
+        raise ValueError(f"{run_dir}: orphan trade event_id")
+
+    hashes = _read_hash_manifest(run_dir / "source_hashes.txt")
+    if hashes.get("source_commit") != config.get("InpSourceCommit"):
+        raise ValueError(f"{run_dir}: source commit hash mismatch")
+    ex5_entries = {k: v for k, v in hashes.items() if k.endswith("ExpectedValue_MultiCurrency_TickShockResearch.ex5")}
+    if len(ex5_entries) != 1 or next(iter(ex5_entries.values())) != config.get("InpEx5Hash"):
+        raise ValueError(f"{run_dir}: EX5 hash mismatch")
+    for relative in ("mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5", set_paths[0].name, "tester_config.ini"):
+        if relative not in hashes:
+            raise ValueError(f"{run_dir}: source hash missing {relative}")
+        path = (repo_root / relative) if relative.startswith("mql/") else (run_dir / relative)
+        if not path.is_file() or sha256(path) != hashes[relative]:
+            raise ValueError(f"{run_dir}: hash mismatch {relative}")
+    required_provenance = ("terminal_build", "broker_server", "source_commit")
+    if any(not hashes.get(field) for field in required_provenance):
+        raise ValueError(f"{run_dir}: incomplete source provenance")
+    fingerprints: set[str] = set()
+    for name in ("events.csv.runmeta", "summary.csv.runmeta", "symbol_specs.csv.runmeta", "trades.csv.runmeta"):
+        lines = (run_dir / name).read_text(encoding="utf-8-sig").splitlines()
+        if len(lines) < 3 or lines[0] != run_id:
+            raise ValueError(f"{run_dir / name}: truncated or run_id mismatch")
+        fingerprints.add(lines[1])
+    if len(fingerprints) != 1:
+        raise ValueError(f"{run_dir}: run metadata fingerprint mismatch")
+
+
+def strict_validate_baseline(run_dir: Path) -> None:
+    if not run_dir.is_dir():
+        raise ValueError(f"missing baseline directory: {run_dir}")
+    for name, required in (("events.csv", EVENT_REQUIRED), ("summary.csv", SUMMARY_REQUIRED)):
+        path = run_dir / name
+        if not path.is_file():
+            raise ValueError(f"missing baseline evidence: {path}")
+        _require_columns(path, read_csv(path), required)
+
+
+def atomic_write_text(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary = tempfile.mkstemp(prefix=path.name + ".", suffix=".tmp", dir=path.parent)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="") as handle:
+            handle.write(text)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    except Exception:
+        try:
+            os.unlink(temporary)
+        except FileNotFoundError:
+            pass
+        raise
+
+
+def atomic_write_csv(path: Path, rows: list[dict[str, object]], fieldnames: list[str] | None = None) -> None:
+    if not rows and not fieldnames:
+        raise ValueError(f"cannot write headerless empty CSV: {path}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary = tempfile.mkstemp(prefix=path.name + ".", suffix=".tmp", dir=path.parent)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="") as handle:
+            names = fieldnames or list(rows[0])
+            writer = csv.DictWriter(handle, fieldnames=names)
+            writer.writeheader();writer.writerows(rows)
+            handle.flush();os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    except Exception:
+        try:
+            os.unlink(temporary)
+        except FileNotFoundError:
+            pass
+        raise
 
 
 def parse_scenario(encoded: str, event: dict[str, str]) -> dict[str, object]:
@@ -512,7 +733,7 @@ def analyze_run(run_dir: Path) -> dict[str, object]:
     add_invariant(
         "run integrity status is VALIDATION_OK",
         1,
-        0 if validation_status == "VALIDATION_OK" else 1,
+        0 if validation_status == "VALIDATED" else 1,
         integrity_row.get("value", ""),
         "DATA_INTEGRITY",
     )
@@ -529,11 +750,9 @@ def analyze_run(run_dir: Path) -> dict[str, object]:
             integrity_row.get("value", ""),
             "DATA_INTEGRITY",
         )
-    frontier_violations = to_int(integrity.get("stale_symbols"))
-    if integrity.get("incomplete_frontier", "false").lower() == "true":
-        frontier_violations += 1
+    frontier_violations = 1 if integrity.get("incomplete_frontier", "false").lower() == "true" else 0
     add_invariant(
-        "global frontier complete with no stale symbols",
+        "global read-through frontier complete (quote staleness is diagnostic)",
         1,
         frontier_violations,
         integrity_row.get("value", ""),
@@ -656,7 +875,7 @@ def write_run_reports(analysis: dict[str, object]) -> None:
     overall = analysis["overall"]
     formal = (
         mode == "REALIZABLE_EA"
-        and analysis["validation_status"] == "VALIDATION_OK"
+        and analysis["validation_status"] == "VALIDATED"
         and analysis["formal_violations"] == 0
     )
     eligibility_label = (
@@ -722,7 +941,7 @@ def write_run_reports(analysis: dict[str, object]) -> None:
         "",
         f"Generated fallback was observed for {len(generated)} symbol(s): {', '.join(row['symbol'] for row in generated) or 'none'}.",
     ]
-    (run_dir / "reconciliation.md").write_text("\n".join(reconciliation_lines) + "\n", encoding="utf-8")
+    atomic_write_text(run_dir / "reconciliation.md", "\n".join(reconciliation_lines) + "\n")
 
     cluster_means = analysis["cluster_means"]
     summary_lines = [
@@ -735,7 +954,7 @@ def write_run_reports(analysis: dict[str, object]) -> None:
         "- Period: 2025-03-01 through 2025-04-01",
         "- Model: MT5 real ticks (model 4), VantageTradingLtd-Live Build 6140",
         "- RR: 1.2; thresholds and stop grid unchanged; research-only and no orders",
-        f"- Formal edge eligibility: {eligibility_label}",
+        f"- Formal analysis eligibility: {eligibility_label}",
         "",
         "## Result",
         "",
@@ -826,7 +1045,7 @@ def write_run_reports(analysis: dict[str, object]) -> None:
         "",
         "REALIZABLE_EA is the only formal feasibility input. IDEAL_EVENT_STUDY exists only to quantify event-time/processing-time differences. A fail-closed integrity status makes the run unusable for formal edge inference even when the causal clocks pass. No strategy cell was selected and no edge claim is made.",
     ]
-    (run_dir / "summary.md").write_text("\n".join(summary_lines) + "\n", encoding="utf-8")
+    atomic_write_text(run_dir / "summary.md", "\n".join(summary_lines) + "\n")
 
 
 def baseline_metrics(baseline_dir: Path) -> dict[str, object]:
@@ -968,16 +1187,10 @@ def write_comparison(
     comparison_dir.mkdir(parents=True, exist_ok=True)
     baseline = baseline_metrics(baseline_dir)
     rows = comparison_rows(baseline, ideal, realizable)
-    with (comparison_dir / "comparison.csv").open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
-        writer.writeheader()
-        writer.writerows(rows)
+    atomic_write_csv(comparison_dir / "comparison.csv", rows)
 
     invariant_rows = ideal["invariants"] + realizable["invariants"]
-    with (comparison_dir / "causal_invariants.csv").open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(invariant_rows[0]))
-        writer.writeheader()
-        writer.writerows(invariant_rows)
+    atomic_write_csv(comparison_dir / "causal_invariants.csv", invariant_rows)
 
     formal_violations = realizable["formal_violations"]
     feasibility = len(realizable["valid"]) > 0 and realizable["market_clusters"] > 0 and formal_violations == 0
@@ -1130,16 +1343,13 @@ def write_comparison(
         "",
         "The causal execution model passes this March replay and now produces broker-feasible shadow outcomes. Research should continue at the next review step, but this evidence does not yet justify automatically starting long OOS: the formal independent sample is 15 market clusters and actual commission/order lifecycle evidence is incomplete. There is no basis for promotion, optimization, or a positive-edge claim.",
     ]
-    (comparison_dir / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    atomic_write_text(comparison_dir / "summary.md", "\n".join(lines) + "\n")
 
 
 def write_csv_rows(path: Path, rows: list[dict[str, object]]) -> None:
     if not rows:
         raise ValueError(f"no rows for {path}")
-    with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
-        writer.writeheader()
-        writer.writerows(rows)
+    atomic_write_csv(path, rows)
 
 
 def write_step14_outputs(
@@ -1317,7 +1527,8 @@ def write_step14_outputs(
 
     regression_failures = sum(row["status"] == "FAIL" for row in regression_rows)
     tick_quality_failures = sum(row["status"] == "FAIL" for row in tick_rows)
-    cost_model_complete = "LIVE_UNVALIDATED" not in realizable["config"].get("InpCommissionSource", "")
+    commission_status = realizable["config"].get("InpCommissionEvidenceStatus", "0")
+    cost_model_complete = commission_status in {"3", "TS_COMMISSION_BROKER_VERIFIED"}
     causal_status = (
         "EXECUTION_MODEL_CAUSALLY_VALIDATED_FOR_SHADOW_REPLAY"
         if realizable["causal_violations"] == 0
@@ -1412,7 +1623,7 @@ def write_step14_outputs(
         "",
         "The March event funnel and scenario grid are exact Step 7 regressions, and the REALIZABLE causal execution clocks have zero violations. However, Step 12 correctly invalidated both runs when three symbols became stale under the global watermark, and actual live commission remains unobserved. This run cannot establish deployable feasibility or edge. Do not start long OOS, optimization, or positive-cell selection. The next gate is to diagnose and separately validate the stale/global-frontier policy without changing strategy thresholds.",
     ]
-    (comparison_dir / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    atomic_write_text(comparison_dir / "summary.md", "\n".join(lines) + "\n")
 
 
 def main() -> int:
@@ -1423,16 +1634,24 @@ def main() -> int:
     parser.add_argument("--comparison-dir", type=Path, required=True)
     args = parser.parse_args()
 
-    ideal = analyze_run(args.ideal_dir)
-    realizable = analyze_run(args.realizable_dir)
-    if ideal["mode"] != "IDEAL_EVENT_STUDY":
-        raise ValueError(f"ideal directory contains {ideal['mode']}")
-    if realizable["mode"] != "REALIZABLE_EA":
-        raise ValueError(f"realizable directory contains {realizable['mode']}")
-    write_run_reports(ideal)
-    write_run_reports(realizable)
-    write_comparison(args.baseline_dir, ideal, realizable, args.comparison_dir)
-    write_step14_outputs(args.baseline_dir, ideal, realizable, args.comparison_dir)
+    try:
+        repo_root = Path(__file__).resolve().parents[2]
+        strict_validate_run(args.ideal_dir, repo_root)
+        strict_validate_run(args.realizable_dir, repo_root)
+        strict_validate_baseline(args.baseline_dir)
+        ideal = analyze_run(args.ideal_dir)
+        realizable = analyze_run(args.realizable_dir)
+        if ideal["mode"] != "IDEAL_EVENT_STUDY":
+            raise ValueError(f"ideal directory contains {ideal['mode']}")
+        if realizable["mode"] != "REALIZABLE_EA":
+            raise ValueError(f"realizable directory contains {realizable['mode']}")
+        write_run_reports(ideal)
+        write_run_reports(realizable)
+        write_comparison(args.baseline_dir, ideal, realizable, args.comparison_dir)
+        write_step14_outputs(args.baseline_dir, ideal, realizable, args.comparison_dir)
+    except Exception as exc:
+        print(f"STRICT_RECONCILIATION_FAILED: {exc}", file=sys.stderr)
+        return 2
     print(
         f"ideal_events={len(ideal['events'])} realizable_events={len(realizable['events'])} "
         f"market_clusters={realizable['market_clusters']} causal_violations={realizable['causal_violations']} "

@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+applied_before_send_result,true,0,bool,deal accepted from observed identity
+bound_order_ticket,20,0,id,deal binds order
+bound_position_ticket,30,0,id,deal binds position
+final_request_ticket,10,0,id,send result attaches request
+identity_rejections,0,0,count,no reorder rejection

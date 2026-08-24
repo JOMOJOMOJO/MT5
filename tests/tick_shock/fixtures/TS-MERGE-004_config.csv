@@ -1,0 +1,6 @@
+key,value,unit,note
+now_msc,3000,ms,dispatcher time
+eurusd_read_through_msc,3000,ms,complete
+gbpusd_read_through_msc,0,ms,unavailable
+oracle_source,docs/research/tick_shock/11_test_oracle_addendum.md,path,independent contract extended by Step 14R
+production_function_used_for_expected,false,bool,mandatory

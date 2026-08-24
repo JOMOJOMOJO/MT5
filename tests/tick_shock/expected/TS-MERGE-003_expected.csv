@@ -1,0 +1,7 @@
+field,expected_value,tolerance,unit,note
+watermark_msc,3000,0,ms,min read-through not min quote
+stale_quote_symbols,1,0,count,diagnostic only
+incomplete_frontier,false,0,bool,quiet range is complete
+validation_status,VALIDATED,0,enum,staleness alone is not data loss
+fatal_reason,__BLANK__,0,text,no fatal root cause
+released_count,2,0,count,both pending ticks are causally releasable

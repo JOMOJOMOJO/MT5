@@ -1,0 +1,7 @@
+field,expected_value,tolerance,unit,note
+failed_closed_before_recovery,true,0,bool,unverified range is rejected
+complete_after_recovery,true,0,bool,later complete read verifies the same range
+watermark_msc,3000,0,ms,min recovered read-through
+historical_read_failures,1,0,count,attempt failure remains diagnostic
+validation_status,VALIDATED,0,enum,no unresolved evidence gap remains
+fatal_reason,__BLANK__,0,text,recoverable root cause is cleared

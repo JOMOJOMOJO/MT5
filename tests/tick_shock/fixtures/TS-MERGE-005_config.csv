@@ -1,0 +1,3 @@
+key,value,unit,note
+first_read_status,COPY_TICKS_FAILED,enum,transient read failure is fail closed before recovery
+recovered_read_through_msc,3000,ms,later complete read proves the requested range

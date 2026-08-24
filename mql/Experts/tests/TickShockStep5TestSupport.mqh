@@ -376,6 +376,38 @@ void TS5RunMerge(const string id)
       TickShockEventRegistration first,second;if(TSEngineRegisterResearchEvent(engine,symbol,key,2000,first))TSRecordEventRow(engine);TSEngineRegisterResearchEvent(engine,symbol,key,2000,second);
       TS5AddLong(a,"event_rows",engine.event_rows);TS5AddLong(a,"duplicate_events",engine.duplicate_events);TS5AddLong(a,"duplicate_order_or_signal",0);TS5CompareAndRecord(id,a);return;
      }
+   if(id=="TS-MERGE-003")
+     {
+      TickShockPendingRepository repo;TSResetPendingRepository(repo);MqlTick quote;ZeroMemory(quote);quote.bid=1.0;quote.ask=1.0001;
+      quote.time_msc=1500;TSMergeAppend(repo,0,quote,8);quote.time_msc=2500;TSMergeAppend(repo,0,quote,8);
+      TickShockSymbolFrontierState frontiers[2];TSResetSymbolFrontier(frontiers[0]);TSResetSymbolFrontier(frontiers[1]);
+      frontiers[0].last_quote_msc=3000;frontiers[0].read_through_msc=3000;
+      frontiers[1].last_quote_msc=1000;frontiers[1].read_through_msc=3000;
+      long watermark=0;bool complete=TSMergeObserveReadThroughFrontier(repo,3000,frontiers,500,watermark);
+      TS5AddLong(a,"watermark_msc",watermark);TS5AddLong(a,"stale_quote_symbols",repo.stale_symbol_count);
+      TS5AddBool(a,"incomplete_frontier",repo.incomplete_frontier);TS5Add(a,"validation_status",TSValidationStatus(repo.validation_invalid));
+      TS5Add(a,"fatal_reason",repo.fatal_reason==""?"__BLANK__":repo.fatal_reason);TS5AddLong(a,"released_count",TSMergeReleasableCount(repo,watermark));
+      TS5CompareAndRecord(id,a);return;
+     }
+   if(id=="TS-MERGE-004")
+     {
+      TickShockPendingRepository repo;TSResetPendingRepository(repo);TickShockSymbolFrontierState frontiers[2];TSResetSymbolFrontier(frontiers[0]);TSResetSymbolFrontier(frontiers[1]);
+      frontiers[0].last_quote_msc=3000;frontiers[0].read_through_msc=3000;long watermark=0;TSMergeObserveReadThroughFrontier(repo,3000,frontiers,500,watermark);
+      TS5AddBool(a,"incomplete_frontier",repo.incomplete_frontier);TS5Add(a,"validation_status",TSValidationStatus(repo.validation_invalid));
+      TS5Add(a,"fatal_reason",repo.fatal_reason);TS5CompareAndRecord(id,a);return;
+     }
+   if(id=="TS-MERGE-005")
+     {
+      TickShockPendingRepository repo;TSResetPendingRepository(repo);TickShockSymbolFrontierState frontiers[2];TSResetSymbolFrontier(frontiers[0]);TSResetSymbolFrontier(frontiers[1]);
+      frontiers[0].last_quote_msc=3000;frontiers[0].read_through_msc=3000;
+      frontiers[1].last_quote_msc=1000;frontiers[1].read_through_msc=1000;frontiers[1].current_read_incomplete=true;frontiers[1].read_failure_count=1;frontiers[1].last_root_cause="COPY_TICKS_FAILED";
+      long watermark=0;TSMergeObserveReadThroughFrontier(repo,3000,frontiers,500,watermark);bool failed_closed_before_recovery=repo.validation_invalid;
+      frontiers[1].read_through_msc=3000;frontiers[1].current_read_incomplete=false;frontiers[1].last_root_cause="";
+      bool complete=TSMergeObserveReadThroughFrontier(repo,3000,frontiers,500,watermark);
+      TS5AddBool(a,"failed_closed_before_recovery",failed_closed_before_recovery);TS5AddBool(a,"complete_after_recovery",complete);
+      TS5AddLong(a,"watermark_msc",watermark);TS5AddLong(a,"historical_read_failures",repo.read_failures);
+      TS5Add(a,"validation_status",TSValidationStatus(repo.validation_invalid));TS5Add(a,"fatal_reason",repo.fatal_reason==""?"__BLANK__":repo.fatal_reason);TS5CompareAndRecord(id,a);return;
+     }
    if(id=="TS-MERGE-001" || id=="TS-MERGE-002")
      {TSResearchSignalClock signal;TSResetResearchSignalClock(signal);TSRegisterResearchSignal(signal,1,1000,1600);TSResearchEntryClock entry;TSResetResearchEntryClock(entry);for(int i=0;i<ArraySize(ticks);++i)if(ticks[i].symbol=="EURUSD")TSResearchTryEntryClock(signal,REALIZABLE_EA,0,0,ticks[i].time_msc,entry);if(id=="TS-MERGE-001"){TS5AddLong(a,"entry_eligible_msc",entry.eligible_msc);TS5AddLong(a,"entry_quote_msc",entry.quote_msc);TS5AddLong(a,"global_order_violation",0);TS5AddLong(a,"entry_before_processing",entry.quote_msc<1600?1:0);}else{TS5AddBool(a,"released_before_slow_frontier",false);TS5AddLong(a,"merge_lag_ms",600);TS5AddLong(a,"entry_quote_msc",entry.quote_msc);TS5AddLong(a,"entry_before_processing",entry.quote_msc<1600?1:0);}TS5CompareAndRecord(id,a);return;}
    TS5RecordSkip(id,"PRODUCTION_SEAM_NOT_EXTRACTED");
@@ -601,6 +633,10 @@ void TS5RunIntegrityRegression(const string id)
         {TSApplyOrderDeal(state,102,10,20,30,"EURUSD",12345,1,DEAL_ENTRY_IN,.04,1.1000);TSApplyOrderDeal(state,103,10,20,30,"EURUSD",12345,1,DEAL_ENTRY_OUT,.04,1.1010);TS5AddDouble(a,"entry_volume",state.filled_volume);TS5AddDouble(a,"exit_volume",state.exit_volume);TS5AddLong(a,"entry_deals",state.deal_count);TS5AddLong(a,"exit_deals",state.exit_deal_count);}
       if(id=="TS-ORDER-007")
         {TSApplyOrderDeal(state,104,10,20,30,"EURUSD",12345,1,DEAL_ENTRY_IN,.04,1.1000);TickShockOrderFillState restored;TSRestoreOrderSnapshot(state,restored);TSApplyOrderDeal(restored,104,10,20,30,"EURUSD",12345,1,DEAL_ENTRY_IN,.04,1.1000);TS5AddDouble(a,"filled_volume_after_replay",restored.filled_volume);TS5AddLong(a,"deal_count_after_replay",restored.deal_count);TS5AddLong(a,"duplicate_deals",restored.duplicate_deals);}
+      if(id=="TS-ORDER-008")
+        {bool applied=TSApplyOrderDeal(state,105,0,20,30,"EURUSD",12345,1,DEAL_ENTRY_IN,.10,1.1000);TS5AddBool(a,"applied",applied);TS5AddDouble(a,"filled_volume",state.filled_volume);TS5AddLong(a,"request_ticket",(long)state.request_ticket);TS5AddLong(a,"order_ticket",(long)state.order_ticket);TS5AddLong(a,"identity_rejections",state.identity_rejections);}
+      if(id=="TS-ORDER-009")
+        {TickShockOrderFillState reordered;TSResetOrderFillState(reordered,.10);bool applied=TSApplyOrderDeal(reordered,106,0,20,30,"EURUSD",12345,1,DEAL_ENTRY_IN,.10,1.1000);ulong bound_order=reordered.order_ticket;ulong bound_position=reordered.position_ticket;TSConfigureOrderIdentity(reordered,10,20,30,"EURUSD",12345,1);TS5AddBool(a,"applied_before_send_result",applied);TS5AddLong(a,"bound_order_ticket",(long)bound_order);TS5AddLong(a,"bound_position_ticket",(long)bound_position);TS5AddLong(a,"final_request_ticket",(long)reordered.request_ticket);TS5AddLong(a,"identity_rejections",reordered.identity_rejections);}
       TS5CompareAndRecord(id,a);return;
      }
    if(StringFind(id,"TS-WATERMARK-")==0)

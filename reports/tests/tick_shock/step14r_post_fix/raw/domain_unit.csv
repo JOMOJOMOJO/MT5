@@ -1,0 +1,7 @@
+test_id,observed,expected,actual,difference,evidence_path
+TS-TIME-002,MATCH,entry_eligible_msc=1000;signal_tick_accepted=false;entry_quote_msc=1001,entry_eligible_msc=1000;entry_quote_msc=1001;signal_tick_accepted=false,,domain_unit.csv
+TS-TIME-003,MATCH,entry_eligible_msc=1100;quote_1099_accepted=false;quote_1100_accepted=true;entry_quote_msc=1100,entry_eligible_msc=1100;entry_quote_msc=1100;quote_1099_accepted=false;quote_1100_accepted=true,,domain_unit.csv
+TS-TIME-004,MATCH,entry_eligible_msc=1250;quote_1249_accepted=false;quote_1250_accepted=true;entry_quote_msc=1250,entry_eligible_msc=1250;entry_quote_msc=1250;quote_1249_accepted=false;quote_1250_accepted=true,,domain_unit.csv
+TS-TIME-005,MATCH,event_due_msc=1100;processing_due_msc=1250;entry_eligible_msc=1250;entry_quote_msc=1250,entry_eligible_msc=1250;entry_quote_msc=1250;event_due_msc=1100;processing_due_msc=1250,,domain_unit.csv
+TS-TIME-006,MATCH,entry_eligible_msc=1250;entry_quote_msc=1251;forbidden_entry_quote_msc=1250,entry_eligible_msc=1250;entry_quote_msc=1251;forbidden_entry_quote_msc=1250,,domain_unit.csv
+TS-CSV-001,MATCH,silent_append_allowed=false;second_attempt_status=RUN_ID_COLLISION;mixed_event_rows=0;header_count_per_file=1,silent_append_allowed=false;second_attempt_status=RUN_ID_COLLISION;mixed_event_rows=0;header_count_per_file=1,,domain_unit.csv

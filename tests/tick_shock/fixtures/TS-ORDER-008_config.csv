@@ -1,0 +1,3 @@
+key,value,unit,note
+production_function_used_for_expected,false,bool,independent oracle
+oracle_source,docs/research/tick_shock/11_test_oracle_addendum.md,path,operation identity contract extended by Step 14R

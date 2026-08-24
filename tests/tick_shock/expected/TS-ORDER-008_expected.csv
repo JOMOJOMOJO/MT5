@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+applied,true,0,bool,known order is authoritative when transaction request id is unavailable
+filled_volume,0.10,0.000000000001,lots,one full fill
+request_ticket,10,0,id,preserved send request id
+order_ticket,20,0,id,matching deal order
+identity_rejections,0,0,count,no false rejection

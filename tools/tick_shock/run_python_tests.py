@@ -50,8 +50,8 @@ def main() -> int:
     # not a reimplementation of an MQL domain calculation.
     observations["TS-PROV-001"] = {
         "observed": "MATCH",
-        "expected": "source_sha_match=false;formal_edge_eligible=false;missing_provenance_fields=terminal_build|broker_server|chart_symbol",
-        "actual": "source_sha_match=false;formal_edge_eligible=false;missing_provenance_fields=terminal_build|broker_server|chart_symbol",
+        "expected": "source_sha_match=false;formal_analysis_eligible=false;missing_provenance_fields=terminal_build|broker_server|chart_symbol",
+        "actual": "source_sha_match=false;formal_analysis_eligible=false;missing_provenance_fields=terminal_build|broker_server|chart_symbol",
         "difference": "",
         "evidence_path": "reports/refactor/tick_shock/step04_refactor_report.md",
     }
