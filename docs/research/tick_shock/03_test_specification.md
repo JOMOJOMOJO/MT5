@@ -217,6 +217,23 @@ current_expected_statusはStep 3時点の予測であり実行結果ではない
 6. Strategy Testerの未観測項目はSKIP/NOT_OBSERVEDで、PASS countに含めない。
 7. test runnerはexpectedを更新しない。変更は仕様review commitでのみ行う。
 
+## Step 11 addendum
+
+Step 11 adds 26 immutable test identities. `TS-KD-015` through `TS-KD-021`
+cover full configuration validation, fail-closed commission, run identity and
+exclusive writers, capacity/cursor integrity, typed status and direction,
+idempotent order lifecycle, and watermark observability. Expected failures are
+XFAIL only when the production-path observation differs from the independent
+oracle. A missing deterministic production seam is `BLOCKED`, not `SKIP`.
+Actual terminal-only observations remain `SKIP/NOT_OBSERVED` and never count as
+PASS.
+
+All new cases use `tests/tick_shock/fixtures/<Test ID>_{ticks,config}.csv` and
+`tests/tick_shock/expected/<Test ID>_expected.csv`. Boundaries 999/1000/1001 ms,
+blank sentinels, zero sentinels, and field-specific tolerances are explicit.
+The oracle is `docs/research/tick_shock/11_test_oracle_addendum.md`; production
+functions are not called to generate expected values.
+
 ## Step 4/5境界
 
 Step 4はproduction behaviorを注入可能なmodule/adapterへ抽出する。Step 5はこの仕様をコード化する。Step 4でテストを通すためにthresholdやfixture/expectedを変更してはならない。既知bugを直す場合は対応Defect IDとXFAILを個別commitで解消し、XPASS理由をreviewする。

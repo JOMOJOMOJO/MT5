@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+deal_count,1,0,count,unique entry deals
+filled_volume,0.04,0.000000000001,lots,no duplicate fill
+duplicate_deals,1,0,count,replay observed

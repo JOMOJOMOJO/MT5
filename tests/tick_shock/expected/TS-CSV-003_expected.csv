@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+second_fresh_open,false,0,bool,no implicit append
+second_status,FRESH_RUN_COLLISION,0,enum,existing identity rejected

@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+invalid_mode_valid,false,0,bool,unknown enum invalid
+nan_valid,false,0,bool,NaN invalid
+infinity_valid,false,0,bool,Infinity invalid

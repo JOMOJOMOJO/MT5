@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+mismatched_deal_accepted,false,0,bool,identity mismatch rejected
+identity_rejections,1,0,count,rejection observed

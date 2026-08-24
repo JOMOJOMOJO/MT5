@@ -100,6 +100,22 @@
 - TS-KD-013: TS-PROV-001
 - TS-KD-014: TS-MERGE-002
 
+## Step 11 traceability addendum
+
+| Requirement | Production function / path | Defect | Tests | Layer | Fix step |
+|---|---|---|---|---|---|
+| REQ-CONFIG-001 | `TSConfigValid` | TS-KD-015 | TS-CONFIG-001..005 | production-path integration | 12 |
+| REQ-CONFIG-002 | EA `OnInit` | TS-KD-015 | TS-CONFIG-006 | source contract plus compile | 12 |
+| REQ-COMM-001 | `TSBuildCommissionResult`, `TSMt5CommissionResult` | TS-KD-016 | TS-COMM-002..004 | production-path integration | 12 |
+| REQ-RUN-001 | `TSRRunMetadataFingerprint`, `TSMt5OpenAppendCsv` | TS-KD-017 | TS-CSV-003..006 | production-path/source contract | 12 |
+| REQ-INTEGRITY-001 | `TSRegisterResearchEvent`, `TSMergeAppend`, CopyTicks cursor | TS-KD-018 | TS-CAP-001..003, TS-CURSOR-001 | production-path integration | 12 |
+| REQ-STATUS-001 | `TSScenarioStatusFromFeasibility`, `TSDirectionName` | TS-KD-019 | TS-STATUS-001..002, TS-DIRECTION-001 | unit/production function | 12 |
+| REQ-ORDER-006 | `TSApplyEntryDeal`, lifecycle snapshot | TS-KD-020 | TS-ORDER-004..007 | production-path integration | 12 |
+| REQ-WATERMARK-001 | `TickShockPendingRepository`, global frontier diagnostics | TS-KD-021 | TS-WATERMARK-001..002 | production-path integration | 12 |
+
+Every Test ID maps one-to-one to its registry row, fixture/config pair, expected
+file, raw observation row, and `step11_pre_fix_results.csv` evidence row.
+
 ## Change-control boundary
 
 A Function ID may change location/name in Step 4, but the Requirement ID, Test ID, fixture path, expected path, and independent numeric outcome remain stable. Traceability is updated only to point at the extracted equivalent. If a desired defect correction changes an expected value, it requires a reviewed specification change separate from production implementation.

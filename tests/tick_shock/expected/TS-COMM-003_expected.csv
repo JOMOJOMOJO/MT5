@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+commission_r,0.07,0.000000000001,R,seven over one hundred
+net_r,0.93,0.000000000001,R,deduct once
+applications,1,0,count,single application

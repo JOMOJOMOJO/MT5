@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+implicit_resume_allowed,false,0,bool,resume is explicit
+checkpoint_required,true,0,bool,checkpoint mandatory
+cursor_required,true,0,bool,cursor mandatory

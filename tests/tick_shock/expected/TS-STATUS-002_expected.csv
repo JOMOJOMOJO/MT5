@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+invalid_risk_status,INVALID_RISK,0,enum,distinct
+invalid_direction_status,INVALID_DIRECTION,0,enum,distinct
+invalid_tick_size_status,INVALID_TICK_SIZE,0,enum,distinct

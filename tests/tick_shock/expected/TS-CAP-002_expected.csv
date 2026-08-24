@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+second_append,false,0,bool,capacity rejected
+capacity_status,PENDING_TICK_CAPACITY_EXHAUSTED,0,enum,distinct status
+dropped_ticks,1,0,count,observed loss
+observable,true,0,bool,not silent

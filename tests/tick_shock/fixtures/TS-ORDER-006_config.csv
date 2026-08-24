@@ -1,0 +1,5 @@
+key,value,unit,note
+production_function_used_for_expected,false,bool,independent oracle
+oracle_source,docs/research/tick_shock/11_test_oracle_addendum.md,path,Step 11 oracle
+blank_sentinel,__BLANK__,text,blank and zero are distinct
+zero_sentinel,0,count,blank and zero are distinct

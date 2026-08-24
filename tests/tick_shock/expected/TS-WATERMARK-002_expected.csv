@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+incomplete_frontier,true,0,bool,diagnostic
+validation_status,VALIDATION_INVALID,0,enum,fail closed

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import os
 import sys
 from pathlib import Path
 
@@ -15,7 +16,9 @@ def read_csv(path: Path):
 
 def raw_observations():
     rows = {}
-    raw_dir = ROOT / "reports" / "tests" / "tick_shock" / "raw"
+    phase = os.environ.get("TICK_SHOCK_TEST_PHASE", "pre-fix")
+    raw_name = {"pre-fix": "raw", "post-fix": "step06_raw", "step10": "step10_raw", "step11": "step11_raw"}.get(phase, "raw")
+    raw_dir = ROOT / "reports" / "tests" / "tick_shock" / raw_name
     for path in sorted(raw_dir.glob("*.csv")):
         for row in read_csv(path):
             test_id = row.get("test_id")

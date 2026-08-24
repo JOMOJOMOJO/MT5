@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+pending_count,3,0,count,unchanged release semantics
+stale_symbol_count,1,0,count,observable
+lag_observable,true,0,bool,diagnostic

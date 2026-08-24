@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+config_valid,false,0,bool,negative commission is invalid

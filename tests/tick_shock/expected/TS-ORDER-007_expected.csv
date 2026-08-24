@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+filled_volume_after_replay,0.04,0.000000000001,lots,idempotent
+deal_count_after_replay,1,0,count,idempotent
+duplicate_deals,1,0,count,replay observed

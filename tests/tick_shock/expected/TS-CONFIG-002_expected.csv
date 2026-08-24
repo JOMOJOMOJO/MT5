@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+negative_entry_valid,false,0,bool,negative entry slippage is invalid
+negative_exit_valid,false,0,bool,negative exit slippage is invalid

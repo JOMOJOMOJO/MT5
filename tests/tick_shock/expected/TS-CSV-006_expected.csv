@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+concurrent_writer_open,false,0,bool,exclusive writer
+writer_lock_enforced,true,0,bool,lock evidence

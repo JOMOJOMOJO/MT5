@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+symbol,EURUSD,0,text,provenance
+source,CONFIGURED_ROUND_TURN,0,enum,provenance
+one_lot_sl_loss,100,0.000000000001,account_currency,absolute loss

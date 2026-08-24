@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+entry_volume,0.04,0.000000000001,lots,entry aggregate
+exit_volume,0.04,0.000000000001,lots,exit aggregate
+entry_deals,1,0,count,separate
+exit_deals,1,0,count,separate

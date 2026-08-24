@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+terminated,true,0,bool,no infinite retrieval
+cursor_status,SAME_MSC_PAGE_SATURATED,0,enum,distinct status
+validation_status,VALIDATION_INVALID,0,enum,fail closed

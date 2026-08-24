@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+accepted,false,0,bool,pool is full
+status,EVENT_POOL_EXHAUSTED,0,enum,distinct status
+invalid_denominator_count,0,0,count,not a math failure

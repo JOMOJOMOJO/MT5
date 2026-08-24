@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+identity_fields_complete,true,0,bool,all identity dimensions included
+missing_fields,,0,text,blank means none missing

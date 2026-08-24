@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+config_valid,false,0,bool,min_efficiency greater than one is invalid

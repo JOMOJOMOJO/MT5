@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+valid,false,0,bool,failed calculation invalid
+reason,CALCULATION_FAILED,0,enum,explicit reason
+zero_fallback,false,0,bool,nonzero commission cannot become zero
