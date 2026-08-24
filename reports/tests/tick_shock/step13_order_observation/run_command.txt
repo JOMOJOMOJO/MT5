@@ -1,0 +1,1 @@
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/backtest.ps1 -TerminalPath "C:\Program Files\XMTrading MT5 - 2\terminal64.exe" -ConfigPath reports/tests/tick_shock/step13_order_observation/tester_config.ini -TimeoutSeconds 900 -RestartExisting -AllowTerminalAlgoTrading

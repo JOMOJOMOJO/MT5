@@ -1,0 +1,92 @@
+﻿CS	0	19:19:59.932	Startup	MetaTester 5 build 6140, 21 Aug 2026
+CS	0	19:19:59.933	Startup	Windows 11 build 26200, 6 x Intel Core i5-8500  @ 3.00GHz, AVX2, 3 / 15 Gb memory, 245 / 475 Gb disk, UAC, GMT+9
+CS	0	19:19:59.934	Server	MetaTester 5 started on 127.0.0.1:3000
+CS	0	19:19:59.936	Startup	cloud network mode is off
+CS	0	19:19:59.936	Startup	initialization finished
+CS	0	19:20:00.087	127.0.0.1	login (build 6140)
+CS	0	19:20:00.099	Network	39672 bytes of account info loaded
+CS	0	19:20:00.099	Network	1478 bytes of tester parameters loaded
+CS	0	19:20:00.099	Network	4804 bytes of input parameters loaded
+CS	0	19:20:00.100	Network	5906 bytes of symbols list loaded (1272 symbols)
+CS	0	19:20:00.100	Tester	expert file added: Experts\dev\mql\Experts\tests\ExpectedValue_TickShock_OrderReachabilityHarness.ex5. 43824 bytes loaded
+CS	0	19:20:00.104	Tester	3396 Mb available, 42 blocks set for ticks generating
+CS	0	19:20:00.104	Tester	initial deposit 10000.00 USD, leverage 1:100
+CS	0	19:20:00.104	Tester	successfully initialized
+CS	0	19:20:00.104	Network	51 Kb of total initialization data received
+CS	0	19:20:00.105	Tester	Intel Core i5-8500  @ 3.00GHz, 16212 MB
+CS	0	19:20:00.111	Symbols	EURUSD: symbol to be synchronized
+CS	0	19:20:00.112	Symbols	EURUSD: symbol synchronized, 3720 bytes of symbol info received
+CS	0	19:20:00.393	History	EURUSD: load 27 bytes of history data to synchronize in 0:00:00.000
+CS	0	19:20:00.393	History	EURUSD: history synchronized from 2023.01.02 to 2026.08.14
+CS	0	19:20:00.394	Ticks	EURUSD: ticks synchronization started
+CS	0	19:20:00.395	Ticks	EURUSD: load 34 bytes of tick data to synchronize in 0:00:00.000
+CS	0	19:20:00.395	Ticks	EURUSD: history ticks synchronized from 2024.01.02 to 2026.08.13
+CS	0	19:20:00.446	History	EURUSD,M1: history cache allocated for 440350 bars and contains 434176 bars from 2024.01.02 00:00 to 2025.02.28 23:56
+CS	0	19:20:00.446	History	EURUSD,M1: history begins from 2024.01.02 00:00
+CS	0	19:20:00.458	Tester	EURUSD,M1 (VantageTradingLtd-Live): generating based on real ticks
+CS	0	19:20:00.458	Tester	EURUSD,M1: testing of Experts\dev\mql\Experts\tests\ExpectedValue_TickShock_OrderReachabilityHarness.ex5 from 2025.03.03 00:00 to 2025.03.07 00:00 started with inputs:
+CS	0	19:20:00.458	Tester	  InpMagicNumber=26082413
+CS	0	19:20:00.458	Tester	  InpVolume=0.01
+CS	0	19:20:00.458	Tester	  InpWaitTicksBeforeTimeClose=5
+CS	0	19:20:00.458	Tester	  InpBarrierTimeoutTicks=20000
+CS	0	19:20:00.458	Tester	  InpBarrierDistanceTicks=2
+CS	0	19:20:00.458	Tester	  InpFarBarrierTicks=1000
+CS	0	19:20:00.458	Tester	  InpEarliestServerHour=8
+CS	0	19:20:00.458	Tester	  InpRunId=tickshock_step13_order_observation_20260824
+CS	0	19:20:00.458	Tester	  InpLogFolder=tick_shock_step13_order_observation
+CS	0	19:20:00.498	Ticks	EURUSD : real ticks begin from 2024.01.02 00:00:00
+CS	0	19:20:00.503	Trade	2025.03.03 08:00:00   market buy 0.01 EURUSD sl: 1.04116 tp: 1.05136 (1.04136 / 1.04154)
+CS	0	19:20:00.503	Trades	2025.03.03 08:00:00   deal #2 buy 0.01 EURUSD at 1.04154 done (based on order #2)
+CS	0	19:20:00.503	Trade	2025.03.03 08:00:00   deal performed [#2 buy 0.01 EURUSD at 1.04154]
+CS	0	19:20:00.503	Trade	2025.03.03 08:00:00   order performed buy 0.01 at 1.04154 [#2 buy 0.01 EURUSD at 1.04154]
+CS	0	19:20:00.503	Trade	2025.03.03 08:20:58   stop loss triggered #2 buy 0.01 EURUSD 1.04154 sl: 1.04116 tp: 1.05136 [#3 sell 0.01 EURUSD at 1.04116]
+CS	0	19:20:00.503	Trades	2025.03.03 08:20:58   deal #3 sell 0.01 EURUSD at 1.04116 done (based on order #3)
+CS	0	19:20:00.503	Trade	2025.03.03 08:20:58   deal performed [#3 sell 0.01 EURUSD at 1.04116]
+CS	0	19:20:00.503	Trade	2025.03.03 08:20:58   order performed sell 0.01 at 1.04116 [#3 sell 0.01 EURUSD at 1.04116]
+CS	0	19:20:00.503	Trade	2025.03.03 08:20:59   market buy 0.01 EURUSD sl: 1.03115 tp: 1.04135 (1.04115 / 1.04133)
+CS	0	19:20:00.503	Trades	2025.03.03 08:20:59   deal #4 buy 0.01 EURUSD at 1.04133 done (based on order #4)
+CS	0	19:20:00.503	Trade	2025.03.03 08:20:59   deal performed [#4 buy 0.01 EURUSD at 1.04133]
+CS	0	19:20:00.503	Trade	2025.03.03 08:20:59   order performed buy 0.01 at 1.04133 [#4 buy 0.01 EURUSD at 1.04133]
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:12   take profit triggered #4 buy 0.01 EURUSD 1.04133 sl: 1.03115 tp: 1.04135 [#5 sell 0.01 EURUSD at 1.04135]
+CS	0	19:20:00.504	Trades	2025.03.03 08:24:12   deal #5 sell 0.01 EURUSD at 1.04137 done (based on order #5)
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:12   deal performed [#5 sell 0.01 EURUSD at 1.04137]
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:12   order performed sell 0.01 at 1.04137 [#5 sell 0.01 EURUSD at 1.04135]
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:13   market buy 0.01 EURUSD sl: 1.03131 tp: 1.05131 (1.04131 / 1.04149)
+CS	0	19:20:00.504	Trades	2025.03.03 08:24:13   deal #6 buy 0.01 EURUSD at 1.04149 done (based on order #6)
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:13   deal performed [#6 buy 0.01 EURUSD at 1.04149]
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:13   order performed buy 0.01 at 1.04149 [#6 buy 0.01 EURUSD at 1.04149]
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:24   market sell 0.01 EURUSD, close #6 (1.04134 / 1.04152)
+CS	0	19:20:00.504	Trades	2025.03.03 08:24:24   deal #7 sell 0.01 EURUSD at 1.04134 done (based on order #7)
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:24   deal performed [#7 sell 0.01 EURUSD at 1.04134]
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:24   order performed sell 0.01 at 1.04134 [#7 sell 0.01 EURUSD at 1.04134]
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:25   market sell 0.01 EURUSD sl: 1.04170 tp: 1.03150 (1.04132 / 1.04150)
+CS	0	19:20:00.504	Trades	2025.03.03 08:24:25   deal #8 sell 0.01 EURUSD at 1.04132 done (based on order #8)
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:25   deal performed [#8 sell 0.01 EURUSD at 1.04132]
+CS	0	19:20:00.504	Trade	2025.03.03 08:24:25   order performed sell 0.01 at 1.04132 [#8 sell 0.01 EURUSD at 1.04132]
+CS	0	19:20:00.507	Trade	2025.03.03 11:13:33   stop loss triggered #8 sell 0.01 EURUSD 1.04132 sl: 1.04170 tp: 1.03150 [#9 buy 0.01 EURUSD at 1.04170]
+CS	0	19:20:00.507	Trades	2025.03.03 11:13:33   deal #9 buy 0.01 EURUSD at 1.04171 done (based on order #9)
+CS	0	19:20:00.507	Trade	2025.03.03 11:13:33   deal performed [#9 buy 0.01 EURUSD at 1.04171]
+CS	0	19:20:00.507	Trade	2025.03.03 11:13:33   order performed buy 0.01 at 1.04171 [#9 buy 0.01 EURUSD at 1.04170]
+CS	0	19:20:00.507	Trade	2025.03.03 11:13:36   market sell 0.01 EURUSD sl: 1.05168 tp: 1.04148 (1.04150 / 1.04168)
+CS	0	19:20:00.507	Trades	2025.03.03 11:13:36   deal #10 sell 0.01 EURUSD at 1.04150 done (based on order #10)
+CS	0	19:20:00.507	Trade	2025.03.03 11:13:36   deal performed [#10 sell 0.01 EURUSD at 1.04150]
+CS	0	19:20:00.507	Trade	2025.03.03 11:13:36   order performed sell 0.01 at 1.04150 [#10 sell 0.01 EURUSD at 1.04150]
+CS	0	19:20:00.507	Trade	2025.03.03 11:19:10   take profit triggered #10 sell 0.01 EURUSD 1.04150 sl: 1.05168 tp: 1.04148 [#11 buy 0.01 EURUSD at 1.04148]
+CS	0	19:20:00.507	Trades	2025.03.03 11:19:10   deal #11 buy 0.01 EURUSD at 1.04147 done (based on order #11)
+CS	0	19:20:00.507	Trade	2025.03.03 11:19:10   deal performed [#11 buy 0.01 EURUSD at 1.04147]
+CS	0	19:20:00.507	Trade	2025.03.03 11:19:10   order performed buy 0.01 at 1.04147 [#11 buy 0.01 EURUSD at 1.04148]
+CS	0	19:20:00.507	Trade	2025.03.03 11:19:12   market sell 0.01 EURUSD sl: 1.05144 tp: 1.03144 (1.04126 / 1.04144)
+CS	0	19:20:00.507	Trades	2025.03.03 11:19:12   deal #12 sell 0.01 EURUSD at 1.04126 done (based on order #12)
+CS	0	19:20:00.507	Trade	2025.03.03 11:19:12   deal performed [#12 sell 0.01 EURUSD at 1.04126]
+CS	0	19:20:00.507	Trade	2025.03.03 11:19:12   order performed sell 0.01 at 1.04126 [#12 sell 0.01 EURUSD at 1.04126]
+CS	0	19:20:00.507	Trade	2025.03.03 11:19:15   market buy 0.01 EURUSD, close #12 (1.04128 / 1.04146)
+CS	0	19:20:00.507	Trades	2025.03.03 11:19:15   deal #13 buy 0.01 EURUSD at 1.04146 done (based on order #13)
+CS	0	19:20:00.507	Trade	2025.03.03 11:19:15   deal performed [#13 buy 0.01 EURUSD at 1.04146]
+CS	0	19:20:00.507	Trade	2025.03.03 11:19:15   order performed buy 0.01 at 1.04146 [#13 buy 0.01 EURUSD at 1.04146]
+CS	0	19:20:00.540	Tester	final balance 9998.95 USD
+CS	0	19:20:00.541	Tester	OnTester result 1
+CS	0	19:20:00.549	Tester	EURUSD,M1: 346174 ticks, 5752 bars generated. Environment synchronized in 0:00:00.018. Test passed in 0:00:00.442 (including ticks preprocessing 0:00:00.047).
+CS	0	19:20:00.549	Tester	EURUSD,M1: total time from login to stop testing 0:00:00.460 (including 0:00:00.018 for history data synchronization)
+CS	0	19:20:00.549	Tester	90 Mb memory used including 25 Mb of history data, 64 Mb of tick data
+CS	0	19:20:00.549	Tester	log file "C:\Users\windows\AppData\Roaming\MetaQuotes\Tester\D232275B22422903BD477FB48B858FBA\Agent-127.0.0.1-3000\logs\20260824.log" written
+CS	0	19:20:00.549	Tester	test Experts\dev\mql\Experts\tests\ExpectedValue_TickShock_OrderReachabilityHarness.ex5 on EURUSD,M1 thread finished

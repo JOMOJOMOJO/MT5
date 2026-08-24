@@ -1,0 +1,18 @@
+test_id,observation_status,evidence_path,reason
+TS-ORDER-001,OBSERVED_PASS,reports/tests/tick_shock/step13_order_observation/order_observations.csv,Six 0.01-lot entry requests were each fully filled by one tester deal.
+TS-ORDER-002,NOT_OBSERVED,reports/tests/tick_shock/step13_order_observation/order_observations.csv,No entry required multiple deals.
+TS-PARTIAL-001,NOT_OBSERVED,reports/tests/tick_shock/step13_order_observation/raw_order_reachability.csv,No DONE_PARTIAL or multiple-entry-deal fill occurred.
+TS-ORDER-003,NOT_OBSERVED,reports/tests/tick_shock/step13_order_observation/raw_order_reachability.csv,No residual entry volume required cancellation.
+TS-SERVER-SL-LONG-001,OBSERVED_PASS,reports/tests/tick_shock/step13_order_observation/order_observations.csv,Long exit deal carried DEAL_REASON_SL.
+TS-SERVER-SL-SHORT-001,OBSERVED_PASS,reports/tests/tick_shock/step13_order_observation/order_observations.csv,Short exit deal carried DEAL_REASON_SL.
+TS-SERVER-TP-LONG-001,OBSERVED_PASS,reports/tests/tick_shock/step13_order_observation/order_observations.csv,Long exit deal carried DEAL_REASON_TP.
+TS-SERVER-TP-SHORT-001,OBSERVED_PASS,reports/tests/tick_shock/step13_order_observation/order_observations.csv,Short exit deal carried DEAL_REASON_TP.
+TS-TIME-CLOSE-LONG-001,OBSERVED_PASS,reports/tests/tick_shock/step13_order_observation/order_observations.csv,Long time close carried DEAL_REASON_EXPERT.
+TS-TIME-CLOSE-SHORT-001,OBSERVED_PASS,reports/tests/tick_shock/step13_order_observation/order_observations.csv,Short time close carried DEAL_REASON_EXPERT.
+TS-POSITION-001,OBSERVED_PASS,reports/tests/tick_shock/step13_order_observation/position_recovery.csv,Six open tester positions exposed symbol Magic direction volume time SL and TP.
+TS-RESTART-001,NOT_OBSERVED,reports/tests/tick_shock/step13_order_observation/position_recovery.csv,No actual terminal process restart was injected.
+TS-RESTART-002,SIMULATED_PASS,reports/tests/tick_shock/step13_order_observation/position_recovery.csv,Long and Short state snapshots were restored in-process; this is not an actual process restart.
+TS-ORDER-004,SIMULATED_PASS,reports/tests/tick_shock/step13_order_observation/position_recovery.csv,Replayed entry deal tickets were rejected without changing aggregate volume.
+TS-ORDER-005,DETERMINISTIC_ONLY,reports/tests/tick_shock/step12_post_fix_results.csv,No mismatched live tester deal was manufactured.
+TS-ORDER-006,OBSERVED_PASS,reports/tests/tick_shock/step13_order_observation/order_observations.csv,Six entry and six exit tester deals remained separately classified.
+TS-ORDER-007,SIMULATED_PASS,reports/tests/tick_shock/step13_order_observation/position_recovery.csv,Restored snapshot rejected previously seen deals idempotently.

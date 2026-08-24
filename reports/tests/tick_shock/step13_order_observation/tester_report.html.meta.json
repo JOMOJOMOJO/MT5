@@ -1,0 +1,32 @@
+﻿{
+    "generated_at":  "2026-08-24T19:20:02.5739844+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\tests\\tick_shock\\step13_order_observation\\tester_config.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpD696.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpD696.ini"
+               },
+    "tester":  {
+                   "symbol":  "EURUSD",
+                   "period":  "M1",
+                   "from_date":  "2025.03.03",
+                   "to_date":  "2025.03.07",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\tests\\tick_shock\\step13_order_observation\\tester_report.html"
+               },
+    "preset":  {
+                   "name":  "ExpectedValue_TickShock_OrderReachability_step13.set",
+                   "expert_parameters_name":  "ExpectedValue_TickShock_OrderReachabilityHarness.set",
+                   "source":  "reports\\tests\\tick_shock\\step13_order_observation\\ExpectedValue_TickShock_OrderReachability_step13.set",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\tests\\tick_shock\\step13_order_observation\\ExpectedValue_TickShock_OrderReachability_step13.set",
+                   "parameters":  {
+                                      "InpMagicNumber":  "26082413",
+                                      "InpVolume":  "0.01",
+                                      "InpWaitTicksBeforeTimeClose":  "5",
+                                      "InpBarrierTimeoutTicks":  "20000",
+                                      "InpBarrierDistanceTicks":  "2",
+                                      "InpFarBarrierTicks":  "1000",
+                                      "InpEarliestServerHour":  "8",
+                                      "InpRunId":  "tickshock_step13_order_observation_20260824",
+                                      "InpLogFolder":  "tick_shock_step13_order_observation"
+                                  }
+               }
+}

@@ -1,0 +1,14 @@
+check,expected,actual,status
+harness_test_failures,0,0,PASS
+completed_lifecycle_cycles,6,6,PASS
+order_checks,8,8,PASS
+order_sends,8,8,PASS
+entry_deals,6,6,PASS
+exit_deals,6,6,PASS
+server_sl_long_short,2 PASS,2 PASS,PASS
+server_tp_long_short,2 PASS,2 PASS,PASS
+expert_time_close_long_short,2 PASS,2 PASS,PASS
+commission_deal_fields,12 observed,12 observed; zero,OBSERVED_ZERO
+partial_fill,observe if market supplies,SKIP,NOT_OBSERVED
+actual_process_restart,observe only if injected,SKIP,NOT_OBSERVED
+harness_owned_positions_at_end,0,0,PASS

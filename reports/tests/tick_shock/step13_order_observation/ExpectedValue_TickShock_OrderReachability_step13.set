@@ -1,0 +1,9 @@
+InpMagicNumber=26082413
+InpVolume=0.01
+InpWaitTicksBeforeTimeClose=5
+InpBarrierTimeoutTicks=20000
+InpBarrierDistanceTicks=2
+InpFarBarrierTicks=1000
+InpEarliestServerHour=8
+InpRunId=tickshock_step13_order_observation_20260824
+InpLogFolder=tick_shock_step13_order_observation
