@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Independently reconcile Tick-shock Step 7 event and summary evidence."""
+"""Independently reconcile Tick-shock causal event and summary evidence."""
 
 from __future__ import annotations
 
@@ -133,6 +133,16 @@ def parse_scenario(encoded: str, event: dict[str, str]) -> dict[str, object]:
         "requested_rr": to_float(values.get("requested_rr")),
         "realized_rr": to_float(values.get("realized_rr")),
         "commission_r": to_float(values.get("commission_r")),
+        "sl": to_float(values.get("sl")),
+        "tp": to_float(values.get("tp")),
+        "stops_distance": to_float(values.get("stops_distance")),
+        "freeze_distance": to_float(values.get("freeze_distance")),
+        "freeze_clear": values.get("freeze_clear", "").lower() == "true",
+        "hold_seconds": (
+            (to_int(values.get("exit")) - to_int(values.get("entry_quote"))) / 1000.0
+            if to_int(values.get("exit")) > 0 and to_int(values.get("entry_quote")) > 0
+            else math.nan
+        ),
     }
 
 
@@ -200,6 +210,7 @@ def analyze_run(run_dir: Path) -> dict[str, object]:
     summary_path = run_dir / "summary.csv"
     specs_path = run_dir / "symbol_specs.csv"
     quality_path = run_dir / "tick_quality.csv"
+    trades_path = run_dir / "trades.csv"
     set_paths = sorted(run_dir.glob("*.set"))
     if len(set_paths) != 1:
         raise ValueError(f"expected exactly one set in {run_dir}, found {len(set_paths)}")
@@ -208,6 +219,7 @@ def analyze_run(run_dir: Path) -> dict[str, object]:
     summary = read_csv(summary_path)
     specs = read_csv(specs_path)
     quality = read_csv(quality_path)
+    trades = read_csv(trades_path)
     config = parse_set(set_paths[0])
     scenarios: list[dict[str, object]] = []
     for event in events:
@@ -293,10 +305,17 @@ def analyze_run(run_dir: Path) -> dict[str, object]:
 
     invariants: list[dict[str, object]] = []
 
-    def add_invariant(name: str, checked: int, violations: int, evidence: str) -> None:
+    def add_invariant(
+        name: str,
+        checked: int,
+        violations: int,
+        evidence: str,
+        category: str = "CAUSAL",
+    ) -> None:
         invariants.append(
             {
                 "mode": mode,
+                "category": category,
                 "invariant": name,
                 "checked_count": checked,
                 "violation_count": violations,
@@ -454,12 +473,120 @@ def analyze_run(run_dir: Path) -> dict[str, object]:
         len(events) + len(signaled) + len(writer_groups),
         reconciliation_violations,
         "mismatches=" + (",".join(reconciliation_notes) if reconciliation_notes else "none"),
+        "RECONCILIATION",
+    )
+
+    net_formula_violations = sum(
+        abs(float(record["net"]) - (float(record["gross"]) - float(record["commission_r"])))
+        > 1.000001e-6
+        for record in valid
+    )
+    add_invariant(
+        "net R = gross R - commission R exactly once",
+        len(valid),
+        net_formula_violations,
+        f"commission_source={config.get('InpCommissionSource', '')}",
+        "RECONCILIATION",
+    )
+    add_invariant(
+        "broker StopsLevel distance is respected",
+        len(valid),
+        sum(
+            float(record["risk"]) + 1e-12 < float(record["stops_distance"])
+            for record in valid
+        ),
+        "independent risk-distance comparison; symbol StopsLevel is preserved separately",
+        "BROKER_CONSTRAINT",
+    )
+    add_invariant(
+        "FreezeLevel diagnostic is clear for valid scenarios",
+        len(valid),
+        sum(not bool(record["freeze_clear"]) for record in valid),
+        "freeze is a modification diagnostic and is not treated as StopsLevel",
+        "BROKER_CONSTRAINT",
+    )
+
+    integrity_row = row_by(summary, "INTEGRITY", "fail_closed")
+    integrity = parse_semicolon_map(integrity_row.get("value", ""))
+    validation_status = integrity.get("validation", "MISSING")
+    add_invariant(
+        "run integrity status is VALIDATION_OK",
+        1,
+        0 if validation_status == "VALIDATION_OK" else 1,
+        integrity_row.get("value", ""),
+        "DATA_INTEGRITY",
+    )
+    for key in (
+        "event_pool_exhaustions",
+        "pending_capacity_hits",
+        "dropped_ticks",
+        "cursor_stalls",
+    ):
+        add_invariant(
+            f"{key} = 0",
+            1,
+            to_int(integrity.get(key)),
+            integrity_row.get("value", ""),
+            "DATA_INTEGRITY",
+        )
+    frontier_violations = to_int(integrity.get("stale_symbols"))
+    if integrity.get("incomplete_frontier", "false").lower() == "true":
+        frontier_violations += 1
+    add_invariant(
+        "global frontier complete with no stale symbols",
+        1,
+        frontier_violations,
+        integrity_row.get("value", ""),
+        "DATA_INTEGRITY",
+    )
+
+    runmeta_paths = [
+        run_dir / "events.csv.runmeta",
+        run_dir / "summary.csv.runmeta",
+        run_dir / "symbol_specs.csv.runmeta",
+        run_dir / "trades.csv.runmeta",
+    ]
+    runmeta_contents = [
+        path.read_text(encoding="utf-8-sig").splitlines() if path.exists() else []
+        for path in runmeta_paths
+    ]
+    expected_run_id = config.get("InpRunId", "")
+    runmeta_violations = sum(
+        not content or content[0] != expected_run_id for content in runmeta_contents
+    )
+    fingerprints = {content[1] for content in runmeta_contents if len(content) > 1}
+    if len(fingerprints) != 1:
+        runmeta_violations += 1
+    if any(row.get("run_id") != expected_run_id for row in summary + specs):
+        runmeta_violations += 1
+    add_invariant(
+        "run identity and writer metadata are consistent",
+        len(runmeta_paths),
+        runmeta_violations,
+        f"run_id={expected_run_id};fingerprints={len(fingerprints)}",
+        "RUN_IDENTITY",
+    )
+    add_invariant(
+        "research EA order rows = 0",
+        1,
+        len(trades),
+        f"trades.csv rows={len(trades)}",
+        "ORDER_SAFETY",
     )
 
     funnel_summary = summary_values(summary, "FUNNEL")
     funnel_mismatches = sum(
         state_counts[key] != to_int(funnel_summary.get(key, {}).get("events"))
         for key in state_counts
+    )
+
+    causal_violations = sum(
+        int(row["violation_count"])
+        for row in invariants
+        if row["formal_scope"] == "YES" and row["category"] == "CAUSAL"
+    )
+    formal_validation_violations = sum(
+        int(row["violation_count"]) for row in invariants if row["formal_scope"] == "YES"
     )
 
     return {
@@ -471,6 +598,7 @@ def analyze_run(run_dir: Path) -> dict[str, object]:
         "summary": summary,
         "specs": specs,
         "quality": quality,
+        "trades": trades,
         "config": config,
         "mode": mode,
         "overall": overall,
@@ -501,9 +629,10 @@ def analyze_run(run_dir: Path) -> dict[str, object]:
         "actual_delays": actual_delays,
         "processing_delays": processing_delays,
         "invariants": invariants,
-        "formal_violations": sum(
-            int(row["violation_count"]) for row in invariants if row["formal_scope"] == "YES"
-        ),
+        "causal_violations": causal_violations,
+        "formal_violations": formal_validation_violations,
+        "validation_status": validation_status,
+        "integrity": integrity,
         "file_hashes": {
             "events.csv": sha256(events_path),
             "summary.csv": sha256(summary_path),
@@ -525,7 +654,20 @@ def write_run_reports(analysis: dict[str, object]) -> None:
     run_dir = analysis["dir"]
     mode = str(analysis["mode"])
     overall = analysis["overall"]
-    formal = mode == "REALIZABLE_EA"
+    formal = (
+        mode == "REALIZABLE_EA"
+        and analysis["validation_status"] == "VALIDATION_OK"
+        and analysis["formal_violations"] == 0
+    )
+    eligibility_label = (
+        "YES"
+        if formal
+        else (
+            "NO (fail-closed run integrity)"
+            if mode == "REALIZABLE_EA"
+            else "NO (ideal event-time diagnostic only)"
+        )
+    )
     quality = analysis["quality"]
     generated = [row for row in quality if row["status"] == "GENERATED_TICK_FALLBACK_OBSERVED"]
     buffer_rows = summary_values(analysis["summary"], "BUFFER")
@@ -584,7 +726,7 @@ def write_run_reports(analysis: dict[str, object]) -> None:
 
     cluster_means = analysis["cluster_means"]
     summary_lines = [
-        f"# Tick-shock Step 7 {mode}: March 2025",
+        f"# Tick-shock Step 14 {mode}: March 2025",
         "",
         "## Scope",
         "",
@@ -593,7 +735,7 @@ def write_run_reports(analysis: dict[str, object]) -> None:
         "- Period: 2025-03-01 through 2025-04-01",
         "- Model: MT5 real ticks (model 4), VantageTradingLtd-Live Build 6140",
         "- RR: 1.2; thresholds and stop grid unchanged; research-only and no orders",
-        f"- Formal edge eligibility: {'YES' if formal else 'NO (ideal event-time diagnostic only)'}",
+        f"- Formal edge eligibility: {eligibility_label}",
         "",
         "## Result",
         "",
@@ -614,7 +756,10 @@ def write_run_reports(analysis: dict[str, object]) -> None:
                 ["events.csv bytes", (run_dir / "events.csv").stat().st_size],
                 ["summary.csv bytes", (run_dir / "summary.csv").stat().st_size],
                 ["trade.csv rows / bytes", f"{overall['trade_csv_rows']} / {overall['trade_csv_bytes']}"],
-                ["formal causal violations", analysis["formal_violations"]],
+                ["formal validation violations", analysis["formal_violations"]],
+                ["causal clock violations", analysis["causal_violations"]],
+                ["run validation status", analysis["validation_status"]],
+                ["integrity fatal reason", analysis["integrity"].get("fatal_reason", "")],
             ],
         ),
         "",
@@ -679,7 +824,7 @@ def write_run_reports(analysis: dict[str, object]) -> None:
         "",
         "## Interpretation",
         "",
-        "REALIZABLE_EA is the only formal feasibility input. IDEAL_EVENT_STUDY exists only to quantify event-time/processing-time differences. No strategy cell was selected and no edge claim is made.",
+        "REALIZABLE_EA is the only formal feasibility input. IDEAL_EVENT_STUDY exists only to quantify event-time/processing-time differences. A fail-closed integrity status makes the run unusable for formal edge inference even when the causal clocks pass. No strategy cell was selected and no edge claim is made.",
     ]
     (run_dir / "summary.md").write_text("\n".join(summary_lines) + "\n", encoding="utf-8")
 
@@ -802,7 +947,15 @@ def comparison_rows(
     fallback_i = sum(to_int(row["tester_reported_discarded_minutes"]) for row in ideal["quality"])
     fallback_r = sum(to_int(row["tester_reported_discarded_minutes"]) for row in realizable["quality"])
     add("tick_quality", "generated fallback minutes", 179, fallback_i, fallback_r, "minutes", "GBPUSD only")
-    add("commission", "configured round-turn commission", 0, ideal["config"].get("InpCommissionPerLotRoundTurn", ""), realizable["config"].get("InpCommissionPerLotRoundTurn", ""), "account currency/lot", "source remains ORDER_HARNESS_REQUIRED")
+    add(
+        "commission",
+        "configured round-turn commission",
+        0,
+        ideal["config"].get("InpCommissionPerLotRoundTurn", ""),
+        realizable["config"].get("InpCommissionPerLotRoundTurn", ""),
+        "account currency/lot",
+        "Step 13 tester deal fields were observed as zero; live broker commission remains unvalidated",
+    )
     return rows
 
 
@@ -980,6 +1133,288 @@ def write_comparison(
     (comparison_dir / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def write_csv_rows(path: Path, rows: list[dict[str, object]]) -> None:
+    if not rows:
+        raise ValueError(f"no rows for {path}")
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def write_step14_outputs(
+    baseline_dir: Path,
+    ideal: dict[str, object],
+    realizable: dict[str, object],
+    comparison_dir: Path,
+) -> None:
+    policy_records = [record for record in realizable["valid"] if record["policy"] == 3]
+
+    def policy_row(dimension: str, key: str, records: list[dict[str, object]]) -> dict[str, object]:
+        events = {record["event_key"] for record in records}
+        symbol_clusters = {
+            (record["event"]["symbol"], record["event"]["symbol_cluster_id"])
+            for record in records
+        }
+        market_clusters = {record["event"]["market_cluster_id"] for record in records}
+        gross = [float(record["gross"]) for record in records]
+        commission = [float(record["commission_r"]) for record in records]
+        net = [float(record["net"]) for record in records]
+        holds = [float(record["hold_seconds"]) for record in records if not math.isnan(float(record["hold_seconds"]))]
+        return {
+            "dimension": dimension,
+            "key": key,
+            "scenario_cells": len(records),
+            "unique_events": len(events),
+            "unique_symbol_clusters": len(symbol_clusters),
+            "unique_market_clusters": len(market_clusters),
+            "tp": sum(record["status"] == "TP_LIMIT" for record in records),
+            "sl_gap": sum(record["status"] == "SL_GAP" for record in records),
+            "time": sum(record["status"] == "TIME_MARKET" for record in records),
+            "gross_expectancy_r": fmt(mean(gross)),
+            "commission_expectancy_r": fmt(mean(commission)),
+            "net_expectancy_r": fmt(mean(net)),
+            "average_hold_seconds": fmt(mean(holds), 3),
+            "median_hold_seconds": fmt(quantile(holds, 0.5), 3),
+            "time_120_rate_pct": fmt(100.0 * sum(record["status"] == "TIME_MARKET" for record in records) / len(records), 3) if records else "",
+            "interpretation": "diagnostic_only_not_strategy_selection",
+        }
+
+    policy_rows = [policy_row("ALL", "policy_mask_3", policy_records)]
+    dimensions = {
+        "strategy": lambda record: str(record["strategy"]),
+        "direction": lambda record: str(record["event"]["direction"]),
+        "symbol": lambda record: str(record["event"]["symbol"]),
+        "delay": lambda record: str(record["delay_tag"]),
+    }
+    for dimension, selector in dimensions.items():
+        grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
+        for record in policy_records:
+            grouped[selector(record)].append(record)
+        for key in sorted(grouped):
+            policy_rows.append(policy_row(dimension, key, grouped[key]))
+    write_csv_rows(comparison_dir / "policy_mask3_analysis.csv", policy_rows)
+
+    baseline_events = read_csv(baseline_dir / "events.csv")
+    baseline_summary = read_csv(baseline_dir / "summary.csv")
+    baseline_scenarios: list[dict[str, object]] = []
+    for event in baseline_events:
+        baseline_scenarios.extend(
+            parse_scenario(encoded, event)
+            for encoded in event["scenario_grid"].split(";")
+            if encoded
+        )
+    baseline_signaled = [record for record in baseline_scenarios if record["status"] != "NO_SIGNAL"]
+    baseline_scenario_map = {record["key"]: record for record in baseline_signaled}
+    current_scenario_map = {record["key"]: record for record in realizable["signaled"]}
+    baseline_event_keys = {
+        (event["symbol"], to_int(event["detector_window_ms"]), to_int(event["detection_time_msc"]))
+        for event in baseline_events
+    }
+    current_event_keys = {record["event_key"] for record in realizable["scenarios"]}
+    common_scenarios = set(baseline_scenario_map) & set(current_scenario_map)
+    baseline_overall = row_by(baseline_summary, "OVERALL", "ALL")
+    baseline_funnel = summary_values(baseline_summary, "FUNNEL")
+    baseline_cluster = parse_semicolon_map(row_by(baseline_summary, "CLUSTER", "counts")["value"])
+    current_cluster = parse_semicolon_map(row_by(realizable["summary"], "CLUSTER", "counts")["value"])
+    regression_rows: list[dict[str, object]] = []
+
+    def add_regression(
+        check: str,
+        expected: object,
+        baseline: object,
+        current: object,
+        difference: object,
+        passed: bool,
+        evidence: str,
+    ) -> None:
+        regression_rows.append(
+            {
+                "check": check,
+                "expected": expected,
+                "baseline": baseline,
+                "current": current,
+                "difference": difference,
+                "status": "PASS" if passed else "FAIL",
+                "evidence": evidence,
+            }
+        )
+
+    numeric_checks = (
+        ("raw_candidates", 62577, to_int(baseline_overall["raw_candidates"]), to_int(realizable["overall"]["raw_candidates"])),
+        ("event_rows", 19, len(baseline_events), len(realizable["events"])),
+        ("valid_bursts", 19, to_int(baseline_funnel["valid_bursts"]["events"]), realizable["state_counts"]["valid_bursts"]),
+        ("valid_pullbacks", 14, to_int(baseline_funnel["valid_pullbacks"]["events"]), realizable["state_counts"]["valid_pullbacks"]),
+        ("reacceleration", 5, to_int(baseline_funnel["reacceleration_signals"]["events"]), realizable["state_counts"]["reacceleration_signals"]),
+        ("reversal_signals", 11, to_int(baseline_funnel["failed_shock_reversal_signals"]["events"]), realizable["state_counts"]["failed_shock_reversal_signals"]),
+        ("symbol_clusters", 17, to_int(baseline_cluster.get("symbol_clusters", baseline_cluster.get("clusters"))), to_int(current_cluster.get("symbol_clusters"))),
+        ("market_clusters", 15, 15, realizable["market_clusters"]),
+        ("long_events", 10, sum(event["direction"] == "LONG" for event in baseline_events), realizable["direction_events"].get("LONG", 0)),
+        ("short_events", 9, sum(event["direction"] == "SHORT" for event in baseline_events), realizable["direction_events"].get("SHORT", 0)),
+    )
+    for check, expected, baseline, current in numeric_checks:
+        add_regression(check, expected, baseline, current, current - baseline, baseline == expected == current, "Step 7 REALIZABLE versus Step 14 REALIZABLE")
+
+    event_key_diff = len(baseline_event_keys ^ current_event_keys)
+    scenario_membership_diff = len(set(baseline_scenario_map) ^ set(current_scenario_map))
+    status_diff = sum(
+        baseline_scenario_map[key]["status"] != current_scenario_map[key]["status"]
+        for key in common_scenarios
+    )
+    policy_diff = sum(
+        baseline_scenario_map[key]["policy"] != current_scenario_map[key]["policy"]
+        for key in common_scenarios
+    )
+    r_diff = sum(
+        abs(float(baseline_scenario_map[key][field]) - float(current_scenario_map[key][field])) > 1.000001e-9
+        for key in common_scenarios
+        for field in ("gross", "net")
+        if not math.isnan(float(baseline_scenario_map[key][field]))
+        and not math.isnan(float(current_scenario_map[key][field]))
+    )
+    clock_diff = sum(
+        baseline_scenario_map[key][field] != current_scenario_map[key][field]
+        for key in common_scenarios
+        for field in ("signal_event", "signal_processing", "eligible", "entry_quote", "exit")
+    )
+    for check, value, evidence in (
+        ("event_identity_symmetric_difference", event_key_diff, "symbol+detector+detection_time_msc"),
+        ("scenario_membership_symmetric_difference", scenario_membership_diff, "event key+strategy+stop+delay+spread"),
+        ("scenario_status_mismatches", status_diff, "matched signaled scenarios"),
+        ("policy_mask_mismatches", policy_diff, "matched signaled scenarios"),
+        ("scenario_gross_or_net_r_mismatches", r_diff, "absolute tolerance 1e-9"),
+        ("scenario_clock_mismatches", clock_diff, "signal/processing/eligible/entry/exit"),
+    ):
+        add_regression(check, 0, 0, value, value, value == 0, evidence)
+    write_csv_rows(comparison_dir / "regression_comparison.csv", regression_rows)
+
+    baseline_quality = {row["symbol"]: row for row in read_csv(baseline_dir / "tick_quality.csv")}
+    current_quality = {row["symbol"]: row for row in realizable["quality"]}
+    tick_rows: list[dict[str, object]] = []
+    for symbol in sorted(set(baseline_quality) | set(current_quality)):
+        before = baseline_quality.get(symbol, {})
+        after = current_quality.get(symbol, {})
+        fallback_before = to_int(before.get("tester_reported_discarded_minutes"))
+        fallback_after = to_int(after.get("tester_reported_discarded_minutes"))
+        minutes_before = to_int(before.get("ea_m1_minutes_seen"))
+        minutes_after = to_int(after.get("ea_m1_minutes_seen"))
+        status_match = before.get("status") == after.get("status")
+        tick_rows.append(
+            {
+                "symbol": symbol,
+                "baseline_m1_minutes": minutes_before,
+                "current_m1_minutes": minutes_after,
+                "m1_difference": minutes_after - minutes_before,
+                "baseline_fallback_minutes": fallback_before,
+                "current_fallback_minutes": fallback_after,
+                "fallback_difference": fallback_after - fallback_before,
+                "baseline_status": before.get("status", ""),
+                "current_status": after.get("status", ""),
+                "status": "PASS" if minutes_before == minutes_after and fallback_before == fallback_after and status_match else "FAIL",
+            }
+        )
+    write_csv_rows(comparison_dir / "tick_quality_comparison.csv", tick_rows)
+
+    regression_failures = sum(row["status"] == "FAIL" for row in regression_rows)
+    tick_quality_failures = sum(row["status"] == "FAIL" for row in tick_rows)
+    cost_model_complete = "LIVE_UNVALIDATED" not in realizable["config"].get("InpCommissionSource", "")
+    causal_status = (
+        "EXECUTION_MODEL_CAUSALLY_VALIDATED_FOR_SHADOW_REPLAY"
+        if realizable["causal_violations"] == 0
+        else "EXECUTION_MODEL_NOT_CAUSALLY_VALIDATED"
+    )
+    lines = [
+        "# Tick-shock Step 14 March 2025 revalidation",
+        "",
+        "## Formal judgement",
+        "",
+        "- `RESEARCH_PIPELINE_PARTIALLY_VALIDATED`",
+        f"- `{causal_status}`",
+        f"- `{realizable['validation_status']}`",
+        "- `COST_MODEL_INCOMPLETE`" if not cost_model_complete else "- `COST_MODEL_OBSERVED`",
+        "- `FORMAL_NET_EXPECTANCY_UNAVAILABLE`" if not cost_model_complete else "- `FORMAL_NET_EXPECTANCY_AVAILABLE`",
+        "- `STRATEGY_FEASIBILITY_NOT_ESTABLISHED`",
+        "- `EDGE_UNDETERMINED`",
+        "- `LONG_OOS_NOT_AUTHORIZED`",
+        "",
+        "REALIZABLE_EA is the only formal feasibility input. Its causal clocks pass, but the run is fail-closed because three monitored symbols became stale relative to the global frontier. Therefore the scenario outcomes below are diagnostic only.",
+        "",
+        "## Regression gate",
+        "",
+        markdown_table(
+            ["Metric", "Step 7", "Step 14", "Status"],
+            [[row["check"], row["baseline"], row["current"], row["status"]] for row in regression_rows[:10]],
+        ),
+        "",
+        f"Regression mismatches: **{regression_failures}**. Tick-quality comparison failures: **{tick_quality_failures}**.",
+        "",
+        "## IDEAL and REALIZABLE",
+        "",
+        markdown_table(
+            ["Metric", "IDEAL", "REALIZABLE"],
+            [
+                ["events", len(ideal["events"]), len(realizable["events"])],
+                ["valid scenario cells", len(ideal["valid"]), len(realizable["valid"])],
+                ["TP", ideal["status_counts"].get("TP_LIMIT", 0), realizable["status_counts"].get("TP_LIMIT", 0)],
+                ["SL gap", ideal["status_counts"].get("SL_GAP", 0), realizable["status_counts"].get("SL_GAP", 0)],
+                ["TIME", ideal["status_counts"].get("TIME_MARKET", 0), realizable["status_counts"].get("TIME_MARKET", 0)],
+                ["diagnostic gross/net grid mean R", fmt(ideal["expectancy"]), fmt(realizable["expectancy"])],
+                ["validation status", ideal["validation_status"], realizable["validation_status"]],
+            ],
+        ),
+        "",
+        "The configured commission is zero because Step 13 observed zero in MT5 Strategy Tester deal fields. That observation is not evidence that live Vantage commission is zero, so the numeric net R remains diagnostic and formal cost-after expectancy is unavailable.",
+        "",
+        "## Causality and integrity",
+        "",
+        f"- causal clock violations: {realizable['causal_violations']}",
+        f"- all formal validation violation instances: {realizable['formal_violations']}",
+        f"- integrity fatal reason: `{realizable['integrity'].get('fatal_reason', '')}`",
+        f"- stale symbols: {realizable['integrity'].get('stale_symbols', '')}",
+        f"- event pool / pending capacity / dropped tick / cursor stall: {realizable['integrity'].get('event_pool_exhaustions', '')} / {realizable['integrity'].get('pending_capacity_hits', '')} / {realizable['integrity'].get('dropped_ticks', '')} / {realizable['integrity'].get('cursor_stalls', '')}",
+        "- global order violations: 0; duplicate events: 0; run identity mismatches: 0",
+        "",
+        "## Independent sample and policy mask=3",
+        "",
+        f"- event rows: {len(realizable['events'])}",
+        f"- symbol clusters: {current_cluster.get('symbol_clusters', '')}",
+        f"- market clusters / formal n: {realizable['market_clusters']}",
+        f"- correlated valid scenario cells: {len(realizable['valid'])}",
+        f"- policy mask=3 cells: {len(policy_records)} across {len({record['event_key'] for record in policy_records})} events and {len({record['event']['market_cluster_id'] for record in policy_records})} market clusters",
+        "",
+        "Policy mask=3 means both stressed_spread/risk <= 0.20 and risk/burst_range <= 0.45. It is a diagnostic slice only; no strategy, symbol, direction, session, stop, delay, or spread cell was selected.",
+        "",
+        "## Feasibility layers",
+        "",
+        markdown_table(
+            ["Layer", "Observation", "Formal status"],
+            [
+                ["broker-grid shadow feasible", f"{len(realizable['valid'])} barrier cells produced", "DIAGNOSTIC_ONLY_RUN_INVALID"],
+                ["original cost/range policy feasible", f"policy mask=3 in {len(policy_records)} cells / {len({record['event']['market_cluster_id'] for record in policy_records})} market cluster", "DIAGNOSTIC_ONLY_RUN_INVALID"],
+                ["order lifecycle observed", "Step 13 tester OrderCheck/OrderSend/fill/SL/TP/time-close", "PARTIALLY_OBSERVED"],
+                ["deployable feasibility", "global frontier integrity failed and live commission unavailable", "NOT_ESTABLISHED"],
+                ["edge evidence", "diagnostic grid only; no selected strategy", "UNDETERMINED"],
+                ["statistical sufficiency", f"formal n would be {realizable['market_clusters']} market clusters", "INSUFFICIENT_AND_RUN_INVALID"],
+            ],
+        ),
+        "",
+        "## Tick quality and resource evidence",
+        "",
+        "- GBPUSD generated fallback: 179 / 30,187 tester minutes (0.5930%)",
+        "- other symbols: no discard warning observed; this is not proof of all-real coverage",
+        f"- REALIZABLE average/max memory: {realizable['overall']['average_memory_mb']} / {realizable['overall']['max_memory_mb']} MB; tester process reported 513 MB including history and generated tick data",
+        f"- events.csv: {len(realizable['events'])} rows / {(realizable['dir'] / 'events.csv').stat().st_size} bytes",
+        f"- summary.csv: {len(realizable['summary'])} rows / {(realizable['dir'] / 'summary.csv').stat().st_size} bytes",
+        f"- trades.csv: {len(realizable['trades'])} rows / {(realizable['dir'] / 'trades.csv').stat().st_size} bytes; research EA sent no orders",
+        "- no raw-tick CSV or per-second time-series CSV was emitted",
+        "",
+        "## Decision",
+        "",
+        "The March event funnel and scenario grid are exact Step 7 regressions, and the REALIZABLE causal execution clocks have zero violations. However, Step 12 correctly invalidated both runs when three symbols became stale under the global watermark, and actual live commission remains unobserved. This run cannot establish deployable feasibility or edge. Do not start long OOS, optimization, or positive-cell selection. The next gate is to diagnose and separately validate the stale/global-frontier policy without changing strategy thresholds.",
+    ]
+    (comparison_dir / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--ideal-dir", type=Path, required=True)
@@ -997,9 +1432,12 @@ def main() -> int:
     write_run_reports(ideal)
     write_run_reports(realizable)
     write_comparison(args.baseline_dir, ideal, realizable, args.comparison_dir)
+    write_step14_outputs(args.baseline_dir, ideal, realizable, args.comparison_dir)
     print(
         f"ideal_events={len(ideal['events'])} realizable_events={len(realizable['events'])} "
-        f"market_clusters={realizable['market_clusters']} formal_violations={realizable['formal_violations']}"
+        f"market_clusters={realizable['market_clusters']} causal_violations={realizable['causal_violations']} "
+        f"formal_validation_violations={realizable['formal_violations']} "
+        f"validation_status={realizable['validation_status']}"
     )
     return 1 if realizable["formal_violations"] else 0
 

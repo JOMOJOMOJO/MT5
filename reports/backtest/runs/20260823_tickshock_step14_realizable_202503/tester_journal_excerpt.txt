@@ -1,0 +1,18 @@
+Source: C:\Users\windows\AppData\Roaming\MetaQuotes\Tester\D232275B22422903BD477FB48B858FBA\Agent-127.0.0.1-3000\logs\20260824.log
+Extracted for run: tickshock_step14_realizable_202503
+
+19:45:15.697 Tester InpExecutionMode=1
+19:45:15.697 Tester InpCommissionPerLotRoundTurn=0.0
+19:45:15.697 Tester InpCommissionSource=STEP13_TESTER_DEAL_FIELDS_OBSERVED_ZERO_LIVE_UNVALIDATED
+19:45:15.697 Tester InpRunId=tickshock_step14_realizable_202503
+19:45:21.643 EA initialized research_only symbols=6 grid_ms=250 detectors=250,500,1000 execution_mode=REALIZABLE_EA submit_latency_ms=0
+19:45:21.931 Ticks GBPUSD: real ticks discarded for 179 minutes out of 1438 total minute bars within a day
+19:45:21.951 Ticks GBPUSD: 2025.03.01 00:00 - 2025.04.01 00:00 real ticks discarded for 179 minutes of 30187 total minute bars, every tick generation used
+19:51:34.438 Tester final balance 10000.00 USD
+19:51:34.452 EA deinitialized reason=1 events=19 rows=19
+19:51:34.471 Tester EURUSD,M1: 1364080 ticks, 30192 bars generated. Test passed in 0:06:18.834.
+19:51:34.471 Tester 10587807 total ticks for all symbols
+19:51:34.471 Tester 513 Mb memory used including 40 Mb of history data, 256 Mb of tick data
+
+Tester report metadata: EURUSD,M1; VantageTradingLtd-Live Build 6140; 2025.03.01 through 2025.04.01; model 4; USD 10,000; leverage 1:100.
+Absence of a discard warning is NO_DISCARD_WARNING_OBSERVED, not proof that every quote was broker-recorded.

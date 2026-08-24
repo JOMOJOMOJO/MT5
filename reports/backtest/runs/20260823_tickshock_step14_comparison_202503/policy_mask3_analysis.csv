@@ -1,0 +1,8 @@
+dimension,key,scenario_cells,unique_events,unique_symbol_clusters,unique_market_clusters,tp,sl_gap,time,gross_expectancy_r,commission_expectancy_r,net_expectancy_r,average_hold_seconds,median_hold_seconds,time_120_rate_pct,interpretation
+ALL,policy_mask_3,21,1,1,1,0,21,0,-1.180927,0.000000,-1.180927,0.556,0.491,0.000,diagnostic_only_not_strategy_selection
+strategy,post_burst_continuation,21,1,1,1,0,21,0,-1.180927,0.000000,-1.180927,0.556,0.491,0.000,diagnostic_only_not_strategy_selection
+direction,SHORT,21,1,1,1,0,21,0,-1.180927,0.000000,-1.180927,0.556,0.491,0.000,diagnostic_only_not_strategy_selection
+symbol,USDCAD,21,1,1,1,0,21,0,-1.180927,0.000000,-1.180927,0.556,0.491,0.000,diagnostic_only_not_strategy_selection
+delay,d0,7,1,1,1,0,7,0,-1.180927,0.000000,-1.180927,0.556,0.491,0.000,diagnostic_only_not_strategy_selection
+delay,d100,7,1,1,1,0,7,0,-1.180927,0.000000,-1.180927,0.556,0.491,0.000,diagnostic_only_not_strategy_selection
+delay,d250,7,1,1,1,0,7,0,-1.180927,0.000000,-1.180927,0.556,0.491,0.000,diagnostic_only_not_strategy_selection
