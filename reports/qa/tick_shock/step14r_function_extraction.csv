@@ -1,0 +1,281 @@
+path,line,function,arguments
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,98,TSRRequiredSampleCapacity,const int detector
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,104,TSRSampleCapacity,const int detector
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,383,TSRLoadCoreConfig,TickShockConfig &config
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,414,TSRLong,const long value
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,415,TSRDouble,"const double value,const int digits=10"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,420,TSRBool,const bool value
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,421,TSRDirection,const int direction
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,423,TSRExecutionModeName,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,428,TSRRunMetadataFingerprint,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,473,TSRStrategyName,const int strategy
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,481,TSRStopMultiple,const int index
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,486,TSRDetectorIndex,const int window_ms
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,492,TSRScenarioLocalIndex,"const int stop_index,const int delay_index,const int spread_index"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,497,TSRScenarioIndex,"const int strategy,const int stop_index,const int delay_index,const int spread_index"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,502,TSRExecutionGroupIndex,"const int strategy,const int delay_index,const int spread_index"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,507,TSRCsvAppend,"string &line,string value"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,512,TSRDebug,"const string symbol,const string message"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,519,TSRFileName,const string suffix
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,524,TSROpenCsv,"const string suffix,const string header"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,541,TSREventHeader,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,554,TSRSummaryHeader,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,559,TSROpenLogs,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,568,TSRCloseLogs,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,576,TSRPercentile,"double &values[],const int count,const double percentile"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,582,TSRMedian,"double &values[],const int count"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,587,TSROldestTick,const TSRSymbolContext &context
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,592,TSROldestGrid,const TSRSymbolContext &context
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,597,TSROldestSample,"const TSRSymbolContext &context,const int detector"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,603,TSRAddTick,"TSRSymbolContext &context,const MqlTick &source"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,621,TSRAddGrid,"TSRSymbolContext &context,const TSRGridPoint &point"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,627,TSRSetSample,"TSRSymbolContext &context,const int detector,const int index,const TSRSecondSample &sample"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,634,TSRGetSample,"const TSRSymbolContext &context,const int detector,const int index"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,641,TSRAddSample,"TSRSymbolContext &context,const int detector,const TSRSecondSample &sample"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,649,TSRFindGrid,"const TSRSymbolContext &context,const long time_msc,TSRGridPoint &point"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,665,TSRLogReturn,"const double newer,const double older,bool &valid"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,672,TSRPathEfficiency,"const TSRSymbolContext &context, const long start_msc, const long end_msc, const double start_mid, const double end_mid, double &efficiency"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,702,TSRPreSkipIndex,const string reason
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,717,TSRCountPreSkip,"const int symbol_index,const string reason"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,725,TSRFindSampleAt,"const TSRSymbolContext &context,const int detector,const long target_msc,TSRSecondSample &sample"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,740,TSRClampedBin,"const double value,const double unit,const int bins,bool &overflow"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,749,TSRAdjustMoveTickHistogram,"TSRSymbolContext &context,const int detector,const TSRSecondSample &sample,const int delta"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,769,TSRAdjustSpreadHistogram,"TSRSymbolContext &context,const int detector,const TSRSecondSample &sample,const int delta"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,781,TSRHistogramPercentile,"const int &hist[],const int offset,const int max_bin,const int count,const double percentile"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,786,TSRHistogramMadBins,"const TSRSymbolContext &context,const int detector,const double median_bin,const int count"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,804,TSRRebuildBaselineHistograms,"TSRSymbolContext &context,const int detector,const long boundary_msc"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,830,TSRRefreshBaseline,"TSRSymbolContext &context,const int detector,const long boundary_msc"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,882,TSRSessionLabel,const long time_msc
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,896,TSRTrend,"const int symbol_index,const ENUM_TIMEFRAMES timeframe"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,904,TSRAlignment,"const int direction,const string m15,const string h1"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,917,TSRResetScenario,TSRScenario &scenario
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,954,TSRContainsSymbol,"const string symbol,const int upto"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,960,TSRInitializeSymbol,"TSRSymbolContext &context,const string symbol"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1001,TSRParseSymbols,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1021,TSRWriteSymbolSpecs,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1036,TSRNormalizeNearest,"const int symbol_index,const double price"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1043,TSRNormalizeStopOutward,"const int symbol_index,const int direction,const double price"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1048,TSRCommissionR,"const int symbol_index,const int direction,const double entry,const double sl,double &commission_r,string &reason"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1062,TSRRegisterStrategySignal,"TSREvent &event, const int strategy, const int direction, const long signal_event_msc, const long signal_processing_msc, const double signal_bid, const double signal_ask"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1107,TSRInvalidateScenario,"TSRScenario &scenario,const ENUM_TS_SCENARIO_STATUS reason"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1115,TSRNormalizeEntryAdverse,"const int symbol_index,const int direction,const double price"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1120,TSRKnownPolicyRange,"const TSREvent &event,const int strategy"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1126,TSRTryStartScenario,"TSREvent &event,const int scenario_index,const TSRShortTick &tick"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1190,TSRTryStartScenarioGroup,"TSREvent &event,const int strategy,const int delay_index,const int spread_index,const TSRShortTick &tick"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1203,TSRAdvanceScenario,"TSREvent &event,const int scenario_index,const TSRShortTick &tick"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1233,TSRAdvanceScenarioGroup,"TSREvent &event,const int strategy,const int delay_index,const int spread_index,const TSRShortTick &tick"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1255,TSRUpdateCheckpoints,"TSREvent &event,const TSRShortTick &tick"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1298,TSRAllScenariosDone,const TSREvent &event
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1305,TSRMarkUnsignaledDone,TSREvent &event
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1327,TSRProcessEventTick,"TSREvent &event,const TSRShortTick &tick,const long processing_msc"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1398,TSRCanWriteEvent,const TSREvent &event
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1406,TSRDetectShock,"TSRSymbolContext &context, const int symbol_index, const int detector, const TSRSecondSample &sample, const TSRGridPoint &point, const long processing_msc"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1541,TSRCloseGridBoundary,"TSRSymbolContext &context,const int symbol_index,const long boundary_msc,const long processing_msc"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1589,TSRAdvanceGridBeforeTick,"TSRSymbolContext &context,const int symbol_index,const long tick_msc,const long processing_msc"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1599,TSRAdvanceGridAtTick,"TSRSymbolContext &context,const int symbol_index,const long tick_msc,const long processing_msc"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1608,TSRWriteEvent,TSREvent &event
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1715,TSRReleaseWrittenEvents,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1726,TSRProcessOneTick,"const int symbol_index,const MqlTick &source,const long processing_msc,const bool close_equal_boundary"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1753,TSRCollectSymbolTicks,"const int symbol_index,TickShockPendingRepository &repository, const long requested_to_msc,const bool final_drain=false"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1822,TSRProcessingMsc,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1833,TSRSampleMemory,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1842,TSRProcessMergedPrefix,"const int count,const long processing_msc"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1868,TSRDispatcher,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1893,TSRFlushPendingTicks,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1912,TSRSummaryRow,"const string record_type,const string key,const long events,const long raw,const long ticks, const long valid,const long invalid,const double expectancy,const string value"
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1926,TSRFrontierAffectedSymbols,const bool incomplete_only
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,1939,TSRWriteSummary,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,2056,TSRFlushIncompleteEvents,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,2081,TSRReleaseSymbols,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,2092,OnInit,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,2128,OnDeinit,const int reason
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,2139,OnTick,
+mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,2144,OnTimer,
+mql/Experts/tests/ExpectedValue_TickShock_ResearchReachabilityHarness.mq5,14,Record,"const int id,const string name,const bool passed,const string detail"
+mql/Experts/tests/ExpectedValue_TickShock_ResearchReachabilityHarness.mq5,20,Almost,"const double left,const double right,const double tolerance=1e-9"
+mql/Experts/tests/ExpectedValue_TickShock_ResearchReachabilityHarness.mq5,25,ReplayFirstEntry,"const TSResearchSignalClock &signal, const ENUM_TS_RESEARCH_EXECUTION_MODE mode, const int delay_ms, const int submit_latency_ms, const long &quote_times[], long &eligible_msc"
+mql/Experts/tests/ExpectedValue_TickShock_ResearchReachabilityHarness.mq5,44,StatePath,const int direction
+mql/Experts/tests/ExpectedValue_TickShock_ResearchReachabilityHarness.mq5,61,RunTests,
+mql/Experts/tests/ExpectedValue_TickShock_ResearchReachabilityHarness.mq5,175,OnInit,
+mql/Experts/tests/ExpectedValue_TickShock_ResearchReachabilityHarness.mq5,189,OnDeinit,const int reason
+mql/Experts/tests/ExpectedValue_TickShock_ResearchReachabilityHarness.mq5,194,OnTick,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,93,DirectionName,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,95,PlanName,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,102,CycleName,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,107,WriteRow,"const string record_type,const string direction,const string phase,const string result,const string detail"
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,112,Assess,"const string name,const string result,const string detail"
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,121,ResetFillTracker,"HarnessFillTracker &tracker,const double requested_volume"
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,130,AddFill,"HarnessFillTracker &tracker,const double volume,const double price"
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,138,RemainingVolume,const HarnessFillTracker &tracker
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,143,FillResolved,"const HarnessFillTracker &tracker,const double tolerance"
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,148,AverageFill,const HarnessFillTracker &tracker
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,153,FillingMode,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,161,HarnessVolume,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,171,RoundDown,const double price
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,178,RoundUp,const double price
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,185,ResetCycle,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,221,BuildProtection,"const MqlTick &tick,double &sl,double &tp"
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,242,SendEntry,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,283,SendTimeOrCleanupClose,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,336,EntryResidualClosed,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,355,RecoverManagedPosition,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,369,ObserveSimulatedRestartSnapshot,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,389,AdvanceCycle,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,401,CompleteCycle,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,434,RunFillTrackerUnitTest,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,448,Almost,"const double left,const double right,const double tolerance"
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,453,OnInit,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,475,OnTick,
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,533,OnTradeTransaction,"const MqlTradeTransaction &trans,const MqlTradeRequest &request,const MqlTradeResult &result"
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,603,OnDeinit,const int reason
+mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5,618,OnTester,
+mql/Include/TickShock/TickShockBaseline.mqh,32,TSBaselineRequiredCapacity,"const int detector_window_ms,const int baseline_minutes,const int exclude_ms"
+mql/Include/TickShock/TickShockBaseline.mqh,39,TSBaselineLogicalCapacity,"const int detector_window_ms,const int baseline_minutes,const int exclude_ms,const int physical_cap"
+mql/Include/TickShock/TickShockBaseline.mqh,44,TSLinearPercentile,"double &values[],const int count,const double percentile,TickShockPercentileResult &result"
+mql/Include/TickShock/TickShockBaseline.mqh,61,TSHistogramPercentile,"const int &hist[],const int offset,const int max_bin,const int count,const double percentile"
+mql/Include/TickShock/TickShockBaseline.mqh,77,TSComputeRobustStatistics,"const double move,const double median_move,const double mad_move,const double noise_floor,TickShockRobustStatistics &result"
+mql/Include/TickShock/TickShockBaseline.mqh,90,TSEvaluateBaselineReadiness,"const int valid_samples,const int minimum_samples,TickShockBaselineReadiness &result"
+mql/Include/TickShock/TickShockClusterer.mqh,6,TSResetResearchClusterClock,TSResearchClusterClock &clock
+mql/Include/TickShock/TickShockClusterer.mqh,11,TSAssignResearchMarketCluster,"TSResearchClusterClock &clock,const long event_msc,const int cluster_window_ms,bool &overlap"
+mql/Include/TickShock/TickShockClusterer.mqh,26,TSAssignMarketCluster,"TSResearchClusterClock &clock,const long event_msc,const int cluster_window_ms,TickShockClusterAssignment &assignment"
+mql/Include/TickShock/TickShockClusterer.mqh,31,TSResearchFinalQuoteInSameMscGroup,"const long current_msc,const int current_symbol_index,const bool has_next,const long next_msc,const int next_symbol_index"
+mql/Include/TickShock/TickShockClusterer.mqh,37,TSChronologicalKeyLess,"const long left_time_msc,const int left_symbol_index,const int left_sequence, const long right_time_msc,const int right_symbol_index,const int right_sequence"
+mql/Include/TickShock/TickShockConfig.mqh,52,TSResetConfig,TickShockConfig &config
+mql/Include/TickShock/TickShockConfig.mqh,83,TSConfigValid,const TickShockConfig &config
+mql/Include/TickShock/TickShockConfig.mqh,108,TSSymbolSpecValid,const TickShockSymbolSpec &spec
+mql/Include/TickShock/TickShockCsvSerializer.mqh,6,TSCommissionEvidenceStatusName,const ENUM_TS_COMMISSION_EVIDENCE_STATUS status
+mql/Include/TickShock/TickShockCsvSerializer.mqh,14,TSCsvOpenStatusName,const ENUM_TS_CSV_OPEN_STATUS status
+mql/Include/TickShock/TickShockCsvSerializer.mqh,25,TSOrderEntryStateName,const ENUM_TS_ORDER_ENTRY_STATE state
+mql/Include/TickShock/TickShockCsvSerializer.mqh,32,TSScenarioStatusName,const ENUM_TS_SCENARIO_STATUS status
+mql/Include/TickShock/TickShockCsvSerializer.mqh,56,TSScenarioStatusFromExitReason,const string reason
+mql/Include/TickShock/TickShockCsvSerializer.mqh,64,TSScenarioStatusIsInvalid,const ENUM_TS_SCENARIO_STATUS status
+mql/Include/TickShock/TickShockCsvSerializer.mqh,77,TSDetectorRejectName,const ENUM_TS_DETECTOR_REJECT reject
+mql/Include/TickShock/TickShockCsvSerializer.mqh,88,TSBoolName,const bool value
+mql/Include/TickShock/TickShockCsvSerializer.mqh,93,TSDirectionName,const int direction
+mql/Include/TickShock/TickShockCsvSerializer.mqh,96,TSCsvAppendEscaped,"string &line,string value"
+mql/Include/TickShock/TickShockDetector.mqh,6,TSFixedLogMidReturn,"const double newer_mid,const double older_mid,double &result"
+mql/Include/TickShock/TickShockDetector.mqh,19,TSFixedMidMove,"const double newer_mid,const double older_mid,double &signed_move,double &absolute_move"
+mql/Include/TickShock/TickShockDetector.mqh,35,TSExactAnchorTime,"const long required_msc,const long available_msc"
+mql/Include/TickShock/TickShockDetector.mqh,40,TSDetectorBoundary,"const long boundary_msc,const int detector_window_ms"
+mql/Include/TickShock/TickShockDetector.mqh,45,TSRobustScaleWithNoiseFloor,"const double mad_absolute_move,const double noise_floor_move,bool &floored"
+mql/Include/TickShock/TickShockDetector.mqh,53,TSEvaluateDetectorGates,"const double move, const double percentile_threshold, const double robust_z, const double efficiency, const double move_spread_ratio, const double tick_intensity_ratio, const double spread_ratio, const TickShockConfig &config, TickShockDetectorResult &result"
+mql/Include/TickShock/TickShockDetector.mqh,82,TSShockConditionsPass,"const double move, const double percentile_threshold, const double robust_z, const double efficiency, const double move_spread_ratio, const double tick_intensity_ratio, const double spread_ratio, const double min_robust_z, const double min_efficiency, const double min_move_spread_ratio, const double min_tick_intensity_ratio, const double max_spread_ratio, string &reason"
+mql/Include/TickShock/TickShockDetector.mqh,106,TSResearchExactLogReturn,"const long event_msc, const double event_mid, const int window_ms, const long anchor_msc, const double anchor_mid, double &result"
+mql/Include/TickShock/TickShockEngine.mqh,11,TSBuildQuote,"const string symbol, const int symbol_index, const int sequence, const long time_msc, const long processing_msc, const double bid, const double ask, const bool real_tick, TickShockQuote &quote"
+mql/Include/TickShock/TickShockEngine.mqh,34,TSEngineStartBurst,"TickShockMachine &machine, const int direction, const long detection_msc, const double start_mid, const double current_mid"
+mql/Include/TickShock/TickShockEngine.mqh,43,TSEngineAdvanceState,"TickShockMachine &machine, const TickShockQuote &quote, const TickShockConfig &config, TickShockStateResult &result"
+mql/Include/TickShock/TickShockEngine.mqh,60,TSEngineEvaluateDetector,"const double move, const double percentile_threshold, const double robust_z, const double efficiency, const double move_spread_ratio, const double tick_intensity_ratio, const double spread_ratio, const TickShockConfig &config, TickShockDetectorResult &result"
+mql/Include/TickShock/TickShockEngine.mqh,75,TSEngineLinearPercentile,"double &values[],const int count,const double percentile,TickShockPercentileResult &result"
+mql/Include/TickShock/TickShockEngine.mqh,80,TSEngineHistogramPercentile,"const int &hist[],const int offset,const int max_bin,const int count,const double percentile"
+mql/Include/TickShock/TickShockEngine.mqh,85,TSEngineRobustStatistics,"const double move,const double median_move,const double mad_move,const double noise_floor,TickShockRobustStatistics &result"
+mql/Include/TickShock/TickShockEngine.mqh,90,TSEngineDirectionalEfficiency,"const double &mids[],const int count,TickShockEfficiencyResult &result"
+mql/Include/TickShock/TickShockEngine.mqh,95,TSEngineBaselineReadiness,"const int valid_samples,const int minimum_samples,TickShockBaselineReadiness &result"
+mql/Include/TickShock/TickShockEngine.mqh,100,TSEngineCommissionFromKnownLoss,"const bool calculation_success,const double one_lot_profit_or_loss,const double commission_amount,const double gross_r,TickShockCommissionResult &result"
+mql/Include/TickShock/TickShockEngine.mqh,105,TSEngineCommissionWithProvenance,"const bool calculation_success,const double one_lot_profit_or_loss,const double commission_amount,const double gross_r,const string symbol,const string source,TickShockCommissionResult &result"
+mql/Include/TickShock/TickShockEngine.mqh,108,TSEngineRegisterResearchEvent,"TickShockEventEngineContext &context, TickShockSymbolClusterClock &symbol_clock, const TickShockEventKey &key, const int cluster_window_ms, TickShockEventRegistration &registration"
+mql/Include/TickShock/TickShockEngine.mqh,117,TSEngineBuildScenarioEntry,"const TickShockExecutionRequest &request,TickShockExecutionResult &result"
+mql/Include/TickShock/TickShockEventEngine.mqh,48,TSResetSymbolClusterClock,TickShockSymbolClusterClock &clock
+mql/Include/TickShock/TickShockEventEngine.mqh,53,TSResetEventEngine,"TickShockEventEngineContext &context,const int slot_capacity"
+mql/Include/TickShock/TickShockEventEngine.mqh,70,TSEventKeyEqual,"const TickShockEventKey &left,const TickShockEventKey &right"
+mql/Include/TickShock/TickShockEventEngine.mqh,77,TSReleaseEventSlot,"TickShockEventEngineContext &context,const int slot"
+mql/Include/TickShock/TickShockEventEngine.mqh,84,TSRegisterResearchEvent,"TickShockEventEngineContext &context, TickShockSymbolClusterClock &symbol_clock, const TickShockEventKey &key, const int cluster_window_ms, TickShockEventRegistration &registration"
+mql/Include/TickShock/TickShockEventEngine.mqh,130,TSRecordEventRow,TickShockEventEngineContext &context
+mql/Include/TickShock/TickShockExecutionModel.mqh,7,TSResetResearchSignalClock,TSResearchSignalClock &clock
+mql/Include/TickShock/TickShockExecutionModel.mqh,15,TSResetResearchEntryClock,TSResearchEntryClock &clock
+mql/Include/TickShock/TickShockExecutionModel.mqh,22,TSRegisterResearchSignal,"TSResearchSignalClock &clock, const int direction, const long signal_event_msc, const long signal_processing_msc"
+mql/Include/TickShock/TickShockExecutionModel.mqh,35,TSResearchEntryEligibleMsc,"const ENUM_TS_RESEARCH_EXECUTION_MODE mode, const long signal_event_msc, const long signal_processing_msc, const int requested_delay_ms, const int submit_latency_ms"
+mql/Include/TickShock/TickShockExecutionModel.mqh,47,TSResearchTryEntryClock,"const TSResearchSignalClock &signal, const ENUM_TS_RESEARCH_EXECUTION_MODE mode, const int requested_delay_ms, const int submit_latency_ms, const long real_quote_msc, TSResearchEntryClock &entry"
+mql/Include/TickShock/TickShockExecutionModel.mqh,64,TSResearchEntryInvariant,"const TSResearchSignalClock &signal, const ENUM_TS_RESEARCH_EXECUTION_MODE mode, const int requested_delay_ms, const int submit_latency_ms, const TSResearchEntryClock &entry"
+mql/Include/TickShock/TickShockExecutionModel.mqh,78,TSRoundResearchTargetOutward,"const int direction,const double raw_target,const double tick_size,const int digits"
+mql/Include/TickShock/TickShockExecutionModel.mqh,87,TSRoundEntryAdverse,"const int direction,const double raw_entry,const double tick_size,const int digits"
+mql/Include/TickShock/TickShockExecutionModel.mqh,96,TSRoundStopOutward,"const int direction,const double raw_stop,const double tick_size,const int digits"
+mql/Include/TickShock/TickShockExecutionModel.mqh,105,TSBuildResearchTarget,"const int direction, const double entry, const double risk_distance, const double requested_rr, const double tick_size, const int digits, double &target, double &realized_rr"
+mql/Include/TickShock/TickShockExecutionModel.mqh,125,TSProtectiveOrderDistanceFeasible,"const int direction, const double current_bid, const double current_ask, const double sl, const double tp, const double stops_distance, string &reason"
+mql/Include/TickShock/TickShockExecutionModel.mqh,147,TSProtectiveFreezeDistanceClear,"const int direction, const double current_bid, const double current_ask, const double sl, const double tp, const double freeze_distance"
+mql/Include/TickShock/TickShockExecutionModel.mqh,159,TSRiskConditionsPass,"const double spread,const double risk_distance,const double burst_range,string &reason"
+mql/Include/TickShock/TickShockExecutionModel.mqh,168,TSBarrierBrokerFeasibility,"const double risk_distance,const double target_distance,const double broker_min_distance,string &reason"
+mql/Include/TickShock/TickShockExecutionModel.mqh,179,TSResearchPolicyMask,"const double stressed_spread,const double risk_distance,const double known_range"
+mql/Include/TickShock/TickShockExecutionModel.mqh,187,TSSelectHighestScore,"const double &scores[],const int count"
+mql/Include/TickShock/TickShockExecutionModel.mqh,195,TSHardTimeExpired,"const long entry_msc,const long now_msc,const int max_hold_seconds"
+mql/Include/TickShock/TickShockExecutionModel.mqh,200,TSExecutionDueMsc,"const long signal_msc,const int requested_delay_ms"
+mql/Include/TickShock/TickShockExecutionModel.mqh,205,TSResolveShadowExit,"const int direction, const double entry, const double sl, const double tp, const double exit_price, const long entry_msc, const long now_msc, const int max_hold_seconds, double &result_r, string &reason"
+mql/Include/TickShock/TickShockExecutionModel.mqh,231,TSResolveShadowExitWithGap,"const int direction, const double entry, const double sl, const double tp, const double tradable_exit_price, const double adverse_exit_slippage, const long entry_msc, const long now_msc, const int max_hold_seconds, double &fill_price, double &gross_r, double &stop_gap, string &reason"
+mql/Include/TickShock/TickShockGrid.mqh,13,TSGridReset,TickShockGridRuntime &state
+mql/Include/TickShock/TickShockGrid.mqh,18,TSGridObserveQuote,"TickShockGridRuntime &state,const long time_msc,const double bid,const double ask,const int grid_ms"
+mql/Include/TickShock/TickShockGrid.mqh,28,TSGridAdvanceBoundary,"TickShockGridRuntime &state,const int grid_ms"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,71,TSResetPendingRepository,TickShockPendingRepository &repository
+mql/Include/TickShock/TickShockMergeSequencer.mqh,90,TSResetSymbolFrontier,TickShockSymbolFrontierState &state
+mql/Include/TickShock/TickShockMergeSequencer.mqh,98,TSFrontierBeginReadCycle,"TickShockSymbolFrontierState &state,const long from_msc,const long to_msc, const bool synchronized,const bool final_drain=false"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,116,TSFrontierObserveCopyPage,"TickShockSymbolFrontierState &state,const int copied_count,const int requested_count, const int copy_error,const long last_quote_msc,const bool exhausted"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,146,TSFrontierObserveCursorStall,TickShockSymbolFrontierState &state
+mql/Include/TickShock/TickShockMergeSequencer.mqh,152,TSFrontierObservePageLimit,TickShockSymbolFrontierState &state
+mql/Include/TickShock/TickShockMergeSequencer.mqh,158,TSMergeAppend,"TickShockPendingRepository &repository,const int symbol_index,const MqlTick &tick,const int capacity"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,171,TSPendingStatusName,const ENUM_TS_PENDING_STATUS status
+mql/Include/TickShock/TickShockMergeSequencer.mqh,179,TSObserveCopyPageProgress,"TickShockPendingRepository &repository, const long before_time,const int before_count, const long after_time,const int after_count, const int copied_count,const int requested_count, TickShockCursorProgress &result"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,195,TSMergeObserveFrontier,"TickShockPendingRepository &repository,const long now_msc,const long &frontiers[],const long stale_after_ms"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,209,TSMergeObserveReadThroughFrontier,"TickShockPendingRepository &repository,const long now_msc, TickShockSymbolFrontierState &states[],const long stale_after_ms,long &watermark"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,264,TSValidationStatus,const bool invalid
+mql/Include/TickShock/TickShockMergeSequencer.mqh,266,TSMergeLess,"const TickShockMergedTick &left,const TickShockMergedTick &right"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,272,TSMergeSort,"TickShockMergedTick &values[],int left,int right"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,290,TSMergeSortPending,TickShockPendingRepository &repository
+mql/Include/TickShock/TickShockMergeSequencer.mqh,296,TSMergeReleasableCount,"const TickShockPendingRepository &repository,const long watermark"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,307,TSMergeFinalReleasableCount,"const TickShockPendingRepository &repository,const long watermark"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,315,TSMergeObserveGroup,"TickShockPendingRepository &repository,const int group_size"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,323,TSMergeObserveProcessed,"TickShockPendingRepository &repository,const long tick_msc"
+mql/Include/TickShock/TickShockMergeSequencer.mqh,329,TSMergeRemovePrefix,"TickShockPendingRepository &repository,const int released"
+mql/Include/TickShock/TickShockMetrics.mqh,31,TSComputeDirectionalEfficiency,"const double &mids[],const int count,TickShockEfficiencyResult &result"
+mql/Include/TickShock/TickShockMetrics.mqh,43,TSBuildCommissionResultWithProvenance,"const bool calculation_success,const double one_lot_profit_or_loss,const double commission_amount,const double gross_r,const string symbol,const string source,TickShockCommissionResult &result"
+mql/Include/TickShock/TickShockMetrics.mqh,68,TSBuildCommissionResult,"const bool calculation_success,const double one_lot_profit_or_loss,const double commission_amount,const double gross_r,TickShockCommissionResult &result"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,7,TSMt5SelectSymbol,const string symbol
+mql/Include/TickShock/TickShockMt5Adapter.mqh,12,TSMt5LoadSymbolSpec,"const string symbol,TickShockSymbolSpec &spec"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,31,TSMt5CopyInfoTicks,"const string symbol,MqlTick &ticks[],const ulong from_msc,const uint count"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,36,TSMt5SeriesSynchronized,const string symbol
+mql/Include/TickShock/TickShockMt5Adapter.mqh,44,TSMt5VisibleQuote,"const string symbol,MqlTick &tick"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,49,TSMt5ServerNowMsc,
+mql/Include/TickShock/TickShockMt5Adapter.mqh,54,TSMt5MemoryUsedMb,
+mql/Include/TickShock/TickShockMt5Adapter.mqh,59,TSMt5CalcOneLotLoss,"const int direction,const string symbol,const double entry,const double sl,double &loss"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,65,TSMt5CommissionResult,"const int direction, const string symbol, const double entry, const double sl, const double commission_amount, const double gross_r, TickShockCommissionResult &result"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,78,TSMt5RunIdentityFingerprint,const TickShockRunIdentity &identity
+mql/Include/TickShock/TickShockMt5Adapter.mqh,85,TSMt5CreateTrendHandles,"const string symbol,int &ema20_m15,int &ema50_m15,int &ema20_h1,int &ema50_h1"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,95,TSMt5TrendLabel,"const string symbol,const ENUM_TIMEFRAMES timeframe,const int ema20,const int ema50"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,107,TSMt5ReleaseIndicator,const int handle
+mql/Include/TickShock/TickShockMt5Adapter.mqh,112,TSMt5ReadRunMetadata,"const string path,string &run_id,string &metadata_hash,string &header"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,124,TSMt5WriteRunMetadata,"const string path,const string run_id,const string metadata_hash,const string header"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,134,TSMt5ExistingCsvHeaderMatches,"const string path,const string expected_header"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,144,TSMt5OpenCsv,"const string folder, const string path, const string header, const string run_id, const string metadata_hash, const TickShockCsvOpenRequest &request, ENUM_TS_CSV_OPEN_STATUS &status"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,219,TSMt5OpenAppendCsv,"const string folder,const string path,const string header,const string run_id, const string metadata_hash,ENUM_TS_CSV_OPEN_STATUS &status"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,226,TSMt5WriteLine,"const int handle,const string line"
+mql/Include/TickShock/TickShockMt5Adapter.mqh,231,TSMt5Flush,const int handle
+mql/Include/TickShock/TickShockMt5Adapter.mqh,236,TSMt5Close,int &handle
+mql/Include/TickShock/TickShockMt5Adapter.mqh,244,TSMt5FileSize,const int handle
+mql/Include/TickShock/TickShockMt5Adapter.mqh,249,TSMt5RuntimeTickCount,
+mql/Include/TickShock/TickShockMt5Adapter.mqh,254,TSMt5StartTimer,const int milliseconds
+mql/Include/TickShock/TickShockMt5Adapter.mqh,259,TSMt5StopTimer,
+mql/Include/TickShock/TickShockMt5Adapter.mqh,264,TSMt5IsTester,
+mql/Include/TickShock/TickShockOrderLifecycle.mqh,6,TSResetOrderFillState,"TickShockOrderFillState &state,const double requested_volume"
+mql/Include/TickShock/TickShockOrderLifecycle.mqh,19,TSConfigureOrderIdentity,"TickShockOrderFillState &state,const ulong request_ticket,const ulong order_ticket, const ulong position_ticket,const string symbol,const long magic,const int direction"
+mql/Include/TickShock/TickShockOrderLifecycle.mqh,35,TSOrderDealSeen,"const TickShockOrderFillState &state,const ulong deal_ticket"
+mql/Include/TickShock/TickShockOrderLifecycle.mqh,38,TSRememberOrderDeal,"TickShockOrderFillState &state,const ulong deal_ticket"
+mql/Include/TickShock/TickShockOrderLifecycle.mqh,41,TSOrderIdentityMatches,"const TickShockOrderFillState &state,const ulong request_ticket,const ulong order_ticket, const ulong position_ticket,const string symbol,const long magic,const int direction"
+mql/Include/TickShock/TickShockOrderLifecycle.mqh,51,TSApplyOrderDeal,"TickShockOrderFillState &state,const ulong deal_ticket,const ulong request_ticket,const ulong order_ticket, const ulong position_ticket,const string symbol,const long magic,const int direction, const ENUM_DEAL_ENTRY entry_kind,const double deal_volume,const double deal_price"
+mql/Include/TickShock/TickShockOrderLifecycle.mqh,99,TSAttachExitOperationIdentity,"TickShockOrderFillState &state,const ulong request_ticket,const ulong order_ticket, const long operation_id"
+mql/Include/TickShock/TickShockOrderLifecycle.mqh,115,TSApplyEntryDeal,"TickShockOrderFillState &state,const double deal_volume,const double deal_price"
+mql/Include/TickShock/TickShockOrderLifecycle.mqh,138,TSResolveEntryRemainderCancel,"TickShockOrderFillState &state,const double cancelled_volume"
+mql/Include/TickShock/TickShockOrderLifecycle.mqh,152,TSRestoreOrderSnapshot,"const TickShockOrderFillState &snapshot,TickShockOrderFillState &state"
+mql/Include/TickShock/TickShockResearchEngine.mqh,18,TSResetDetectorCounters,TickShockDetectorCounters &counters
+mql/Include/TickShock/TickShockResearchEngine.mqh,23,TSObserveDetectorResult,"TickShockDetectorCounters &counters,const TickShockDetectorResult &result"
+mql/Include/TickShock/TickShockRing.mqh,11,TSRingReset,"TickShockRingState &state,const int capacity"
+mql/Include/TickShock/TickShockRing.mqh,18,TSRingOldestIndex,const TickShockRingState &state
+mql/Include/TickShock/TickShockRing.mqh,26,TSRingReserveWrite,TickShockRingState &state
+mql/Include/TickShock/TickShockRing.mqh,35,TSRingDropOldest,TickShockRingState &state
+mql/Include/TickShock/TickShockRing.mqh,42,TSRingIndexFromNewest,"const TickShockRingState &state,const int offset"
+mql/Include/TickShock/TickShockScenarioEngine.mqh,26,TSResetExecutionResult,TickShockExecutionResult &result
+mql/Include/TickShock/TickShockScenarioEngine.mqh,34,TSScenarioRequestStatus,const TickShockExecutionRequest &request
+mql/Include/TickShock/TickShockScenarioEngine.mqh,44,TSScenarioStatusFromFeasibility,const string reason
+mql/Include/TickShock/TickShockScenarioEngine.mqh,53,TSBuildScenarioEntry,"const TickShockExecutionRequest &request,TickShockExecutionResult &result"
+mql/Include/TickShock/TickShockStateMachine.mqh,6,TSReset,TickShockMachine &machine
+mql/Include/TickShock/TickShockStateMachine.mqh,25,TSStartBurst,"TickShockMachine &machine,const int direction,const long detection_msc,const double start_mid,const double current_mid"
+mql/Include/TickShock/TickShockStateMachine.mqh,37,TSRetracementPct,"const TickShockMachine &machine,const double current_mid"
+mql/Include/TickShock/TickShockStateMachine.mqh,46,TSAdvance,"TickShockMachine &machine, const long now_msc, const double mid, const int burst_quiet_ms, const int burst_max_ms, const double pullback_min_pct, const double pullback_max_pct, const double continuation_invalid_pct, const int pullback_wait_ms, const int reacceleration_confirm_ticks"
+mql/Include/TickShock/TickShockStateMachine.mqh,124,TSCooldownComplete,"const long now_msc,const long cooldown_until_msc"
+mql/Include/TickShock/TickShockStateMachine.mqh,129,TSDailyLossBlocked,"const double daily_result_r,const double daily_loss_limit_r"

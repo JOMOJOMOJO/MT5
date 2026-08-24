@@ -1,0 +1,5 @@
+gate,expected,actual,status,evidence_path
+deterministic_suite,FAIL=0;XFAIL=0;XPASS=0;BLOCKED=0,PASS=86;FAIL=0;XFAIL=0;XPASS=0;SKIP=9;BLOCKED=0,PASS,reports/tests/tick_shock/step14r_final/results.csv
+research_ea_and_all_harness_compile,12 targets;0 errors;0 warnings,targets=12;failures=0,PASS,reports/tests/tick_shock/step14r_order_observation_final/compile_results.csv
+fixture_expected_integrity,changed=0;missing=0,rows=51;changed=0;missing=0,PASS,reports/tests/tick_shock/step14r_order_observation_final/fixture_expected_integrity.csv
+research_ea_order_free,OrderCheck/OrderSend calls=0,OrderCheck/OrderSend calls=0,PASS,mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5

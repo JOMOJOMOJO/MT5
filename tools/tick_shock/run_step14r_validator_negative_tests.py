@@ -12,6 +12,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+csv.field_size_limit(64 * 1024 * 1024)
+
 
 CASES = (
     "missing_required_column", "blank_required_value", "nonnumeric_value", "nan_value", "infinity_value",
@@ -29,7 +31,7 @@ def copy_run(source: Path, destination: Path, repo_root: Path) -> None:
     names = [
         "events.csv", "summary.csv", "symbol_specs.csv", "tick_quality.csv", "trades.csv",
         "events.csv.runmeta", "summary.csv.runmeta", "symbol_specs.csv.runmeta", "trades.csv.runmeta",
-        "source_hashes.txt", "tester_config.ini",
+        "source_hashes.txt", "tester_config.ini", "executed_EA.ex5",
     ]
     set_path = next(source.glob("*.set"))
     for name in names:

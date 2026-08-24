@@ -530,3 +530,28 @@ false regardless of baseline profitability.
 All numeric expected values can be reproduced from this document and the
 fixture literals without executing production code. Boundary comparisons are
 explicit, price side is explicit, and absence is distinct from numeric zero.
+
+## Step 14R frontier and order-identity oracle
+
+For a requested CopyTicks range `[from_msc,to_msc]`, a successful exhausted
+read or a successful short/empty page proves `read_through_msc=to_msc` even
+when `last_quote_msc` does not change. The global release watermark is
+`min(read_through_msc)` over all symbols. Quote staleness remains
+`now_msc-last_quote_msc > max_quote_age_ms` and is a separate signal gate. A
+CopyTicks error, unsynchronized history, saturated same-ms cursor or page-limit
+exit proves no range and must not advance read-through.
+
+Example used by `TS-MERGE-003`: active symbol last quote/read-through are
+`3000/3000`; quiet symbol values are `1000/3000`. The watermark is 3000 and the
+active tick before 3000 is releasable. Stale-symbol diagnostics may increment,
+but the range is complete. `TS-MERGE-004` changes the quiet symbol to an
+incomplete CopyTicks error and expects no release. `TS-MERGE-005` first expects
+invalid while incomplete, then expects validated after the same range is
+causally reread through 3000; the historical read-failure count remains one.
+
+For order identity, entry and time-exit are different operations. If an entry
+deal with order 20/position 30 arrives before request 10 is consumed, it may
+bind order/position and later accept request 10 only when all identity fields
+match. An exit deal is matched by position/symbol/Magic/direction and its own
+exit order/request, not by the entry request. Replaying the same deal ticket
+does not alter volumes or weighted prices.

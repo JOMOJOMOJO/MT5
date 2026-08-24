@@ -1,0 +1,4 @@
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/backtest.ps1 -Config reports/tests/tick_shock/step14r_order_observation_final/tester_config.ini
+
+Scope: Strategy Tester only; ExpectedValue_TickShock_OrderReachabilityHarness; EURUSD M1; real ticks; 2025-03-03 through 2025-03-07.
+Safety: harness requires MQL_TESTER, uses Magic 26082514 and minimum volume 0.01, and verifies zero harness-owned positions at completion.

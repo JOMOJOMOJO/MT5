@@ -1,0 +1,14 @@
+test_id,observed,expected,actual,difference,evidence_path
+TS-ORDER-001,MATCH,filled_volume=0.10;remaining_volume=0;average_fill=1.1001;entry_resolved=true;next_state=WAIT_EXIT,filled_volume=0.100000000000;remaining_volume=0.000000000000;average_fill=1.100100000000;entry_resolved=true;next_state=WAIT_EXIT,,order_lifecycle.csv
+TS-ORDER-002,MATCH,deal_count=2;filled_volume=0.10;remaining_volume=0;average_fill=1.10012;closed_after_first_deal=false,deal_count=2;filled_volume=0.100000000000;remaining_volume=0.000000000000;average_fill=1.100120000000;closed_after_first_deal=false,,order_lifecycle.csv
+TS-PARTIAL-001,MATCH,remaining_after_deal_1=0.06;remaining_after_deal_2=0.03;remaining_after_deal_3=0;average_fill=1.10015;closed_after_first_deal=false,remaining_after_deal_1=0.060000000000;remaining_after_deal_2=0.030000000000;remaining_after_deal_3=0.000000000000;average_fill=1.100150000000;closed_after_first_deal=false,,order_lifecycle.csv
+TS-ORDER-003,MATCH,filled_volume=0.06;cancelled_volume=0.04;remaining_volume=0;entry_resolved=true;next_state=WAIT_EXIT,filled_volume=0.060000000000;cancelled_volume=0.040000000000;remaining_volume=0.000000000000;entry_resolved=true;next_state=WAIT_EXIT,,order_lifecycle.csv
+TS-SERVER-SL-LONG-001,SKIP,,SERVER_DEAL_NOT_OBSERVED,SERVER_DEAL_NOT_OBSERVED,order_lifecycle.csv
+TS-SERVER-SL-SHORT-001,SKIP,,SERVER_DEAL_NOT_OBSERVED,SERVER_DEAL_NOT_OBSERVED,order_lifecycle.csv
+TS-SERVER-TP-LONG-001,SKIP,,SERVER_DEAL_NOT_OBSERVED,SERVER_DEAL_NOT_OBSERVED,order_lifecycle.csv
+TS-SERVER-TP-SHORT-001,SKIP,,SERVER_DEAL_NOT_OBSERVED,SERVER_DEAL_NOT_OBSERVED,order_lifecycle.csv
+TS-TIME-CLOSE-LONG-001,SKIP,,ORDER_LIFECYCLE_NOT_OBSERVED,ORDER_LIFECYCLE_NOT_OBSERVED,order_lifecycle.csv
+TS-TIME-CLOSE-SHORT-001,SKIP,,ORDER_LIFECYCLE_NOT_OBSERVED,ORDER_LIFECYCLE_NOT_OBSERVED,order_lifecycle.csv
+TS-POSITION-001,SKIP,,ORDER_LIFECYCLE_NOT_OBSERVED,ORDER_LIFECYCLE_NOT_OBSERVED,order_lifecycle.csv
+TS-RESTART-001,SKIP,,PROCESS_RESTART_NOT_OBSERVED,PROCESS_RESTART_NOT_OBSERVED,order_lifecycle.csv
+TS-RESTART-002,SKIP,,PROCESS_RESTART_NOT_OBSERVED,PROCESS_RESTART_NOT_OBSERVED,order_lifecycle.csv

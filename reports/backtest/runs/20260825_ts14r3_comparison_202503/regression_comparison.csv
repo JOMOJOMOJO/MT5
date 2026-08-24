@@ -1,0 +1,17 @@
+check,expected,baseline,current,difference,status,evidence
+raw_candidates,62577,62577,62577,0,PASS,Step 7 REALIZABLE versus Step 14 REALIZABLE
+event_rows,19,19,19,0,PASS,Step 7 REALIZABLE versus Step 14 REALIZABLE
+valid_bursts,19,19,19,0,PASS,Step 7 REALIZABLE versus Step 14 REALIZABLE
+valid_pullbacks,14,14,14,0,PASS,Step 7 REALIZABLE versus Step 14 REALIZABLE
+reacceleration,5,5,5,0,PASS,Step 7 REALIZABLE versus Step 14 REALIZABLE
+reversal_signals,11,11,11,0,PASS,Step 7 REALIZABLE versus Step 14 REALIZABLE
+symbol_clusters,17,17,17,0,PASS,Step 7 REALIZABLE versus Step 14 REALIZABLE
+market_clusters,15,15,15,0,PASS,Step 7 REALIZABLE versus Step 14 REALIZABLE
+long_events,10,10,10,0,PASS,Step 7 REALIZABLE versus Step 14 REALIZABLE
+short_events,9,9,9,0,PASS,Step 7 REALIZABLE versus Step 14 REALIZABLE
+event_identity_symmetric_difference,0,0,0,0,PASS,symbol+detector+detection_time_msc
+scenario_membership_symmetric_difference,0,0,0,0,PASS,event key+strategy+stop+delay+spread
+scenario_status_mismatches,0,0,625,625,INTENTIONAL_EXECUTION_CHANGE,expected consequence of corrected read-through processing clock
+policy_mask_mismatches,0,0,190,190,INTENTIONAL_EXECUTION_CHANGE,expected consequence of corrected entry quote and risk clock
+scenario_gross_or_net_r_mismatches,0,0,10768,10768,INTENTIONAL_EXECUTION_CHANGE,expected consequence of corrected entry/exit quotes; absolute tolerance 1e-9
+scenario_clock_mismatches,0,0,22901,22901,INTENTIONAL_EXECUTION_CHANGE,expected correction from last-quote frontier to read-through frontier

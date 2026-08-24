@@ -234,6 +234,29 @@ blank sentinels, zero sentinels, and field-specific tolerances are explicit.
 The oracle is `docs/research/tick_shock/11_test_oracle_addendum.md`; production
 functions are not called to generate expected values.
 
+## Step 14R versioned coverage
+
+Step 14R adds five production-path tests without modifying the legacy
+`TS-MERGE-002` fixture:
+
+- `TS-MERGE-003`: a quiet symbol whose CopyTicks range is completely read must
+  not block another symbol merely because its last quote is old;
+- `TS-MERGE-004`: a true CopyTicks/history read failure blocks release and
+  invalidates formal output;
+- `TS-MERGE-005`: a transient failed range may recover only after the same
+  range is causally reread; diagnostic failure count remains nonzero;
+- `TS-ORDER-008`: matching DEAL-before-OrderSend-result transaction order is
+  accepted and reconciled without identity rejection;
+- `TS-ORDER-009`: entry and exit operations retain separate request/order/local
+  operation identity.
+
+The RED evidence must precede the production fix. GREEN requires fixture and
+expected values unchanged, compile 0/0 and the same production functions used
+by the EA/harness. `TS-MERGE-004` was already correct before the fix and is
+reported PASS rather than fabricated XFAIL. Actual partial fill and actual
+process restart remain SKIP/NOT_OBSERVED unless the terminal supplies those
+conditions.
+
 ## Step 4/5境界
 
 Step 4はproduction behaviorを注入可能なmodule/adapterへ抽出する。Step 5はこの仕様をコード化する。Step 4でテストを通すためにthresholdやfixture/expectedを変更してはならない。既知bugを直す場合は対応Defect IDとXFAILを個別commitで解消し、XPASS理由をreviewする。

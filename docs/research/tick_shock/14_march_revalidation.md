@@ -181,4 +181,12 @@ causal clock violationsは0であり、execution clock自体は`EXECUTION_MODEL_
 - `EDGE_UNDETERMINED`
 - `LONG_OOS_NOT_AUTHORIZED`
 
+## Step 14R supersession notice
+
+This Step 14 run is historical evidence. The global-frontier and order-identity
+audit superseded its promotion verdict. The current decision is in
+`docs/research/tick_shock/14r_pre_step15_remediation.md`; the authoritative
+reruns are the `20260825_ts14r3_*_202503` directories. Do not use the
+`VALIDATION_INVALID` line above as the current Step 14R result.
+
 長期OOSへは進まない。次のpromotion gateは、strategy thresholdを変えず、global watermarkのstale symbol／frontier fail-closed条件が「実データ欠損」なのか「現在の市場意味・監視定義による失効」なのかを別Stepで診断し、正式run integrityを`VALIDATION_OK`にできること、およびlive commissionの観測または明示的な保守cost modelを確定することである。

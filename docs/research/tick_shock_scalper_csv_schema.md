@@ -100,3 +100,31 @@ pending until either the requested volume is filled or the residual volume is
 confirmed cancelled. If any volume filled, the resolved next state is
 `WAIT_EXIT`; unobserved server SL/TP or restart behavior must remain SKIP rather
 than PASS.
+
+## Step 14R summary/provenance additions
+
+The event and scenario-grid columns are unchanged. `summary.csv` detail text
+adds schema-neutral structured diagnostics:
+
+- per symbol: `last_quote_msc`, `read_through_msc`, requested range, returned
+  count, page/copy error, history synchronization, quiet/read-failure/cursor/
+  page-limit/final-drain counters and last root cause;
+- integrity: current completeness, historical failure flag, affected symbols,
+  current/ever stale symbols, violation instances, read failures and final
+  drains;
+- global merge model: `semantics=min_read_through_msc` and
+  `quote_freshness_separate=true`;
+- provenance: implementation schema, Git commit, EX5 hash, CSV schema, tester
+  period/model and explicit build-timestamp availability;
+- commission: amount, evidence enum, source, symbol scope, unit and formal-net
+  availability.
+
+`formal_analysis_eligible` means only that a REALIZABLE run passed causal/data
+validation. It does not assert cost completeness, feasibility, edge or
+production eligibility. The allowed commission evidence states are
+`UNAVAILABLE`, `TESTER_OBSERVED_ZERO`, `EXPLICIT_SCENARIO_ASSUMPTION` and
+`BROKER_VERIFIED`; only the last can make this cost layer complete.
+
+Every authoritative Step 14R replay directory stores the exact executed binary
+as `executed_EA.ex5`. `source_hashes.txt`, the set file and tester config must
+all name the same EX5 SHA-256. Independent reconciliation rejects any mismatch.

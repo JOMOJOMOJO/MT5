@@ -38,6 +38,7 @@ def main() -> int:
     args = parser.parse_args()
     repo = args.repo.resolve()
     output = args.output.resolve()
+    output_relative = output.relative_to(repo).as_posix()
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
     baseline_hashes = manifest_hashes(repo / "docs/research/tick_shock/00_artifact_manifest.md")
 
@@ -50,13 +51,16 @@ def main() -> int:
         Path("scripts/backtest.ps1"),
         Path("tests/tick_shock/spec/test_cases.csv"),
     ]
-    for generated_name in ("ExpectedValue_TickShock_OrderReachability_step14r.set", "tester_config.ini"):
-        generated_path = output / generated_name
+    set_paths = sorted(output.glob("*.set"))
+    if len(set_paths) != 1:
+        raise ValueError(f"expected exactly one set in {output}, found {len(set_paths)}")
+    generated_paths = [set_paths[0], output / "tester_config.ini", output / "executed_order_harness.ex5", output / "compile.log", output / "tester_report.html"]
+    for generated_path in generated_paths:
         if not generated_path.exists():
             raise FileNotFoundError(generated_path)
     lines = [
         f"base_commit={head}",
-        "working_tree_source_change=mql/Experts/tests/ExpectedValue_TickShock_OrderReachabilityHarness.mq5",
+        f"implementation_commit={head}",
         "server=VantageTradingLtd-Live",
         "terminal_build=6140",
         "tester_model=4_real_ticks",
@@ -72,8 +76,7 @@ def main() -> int:
         if not absolute.exists():
             raise FileNotFoundError(absolute)
         lines.append(f"{sha256(absolute)}  {path.as_posix()}")
-    for generated_name in ("ExpectedValue_TickShock_OrderReachability_step14r.set", "tester_config.ini"):
-        generated_path = output / generated_name
+    for generated_path in generated_paths:
         lines.append(f"{sha256(generated_path)}  {generated_path.relative_to(repo).as_posix()}")
     for label, path in (("terminal64.exe", args.terminal), ("MetaEditor64.exe", args.metaeditor)):
         if not path.exists():
@@ -115,7 +118,7 @@ def main() -> int:
         writer.writerows(integrity_rows)
 
     compile_rows: list[dict[str, str]] = []
-    for log in sorted((repo / "reports/compile/tick_shock").glob("step13_ExpectedValue_*.log")):
+    for log in sorted((repo / "reports/compile/tick_shock").glob("step14r_ExpectedValue_*.log")):
         raw = log.read_bytes()
         if raw.startswith((b"\xff\xfe", b"\xfe\xff")):
             text = raw.decode("utf-16")
@@ -140,23 +143,23 @@ def main() -> int:
         {
             "gate": "deterministic_suite",
             "expected": "FAIL=0;XFAIL=0;XPASS=0;BLOCKED=0",
-            "actual": "PASS=81;FAIL=0;XFAIL=0;XPASS=0;SKIP=9;BLOCKED=0",
+            "actual": "PASS=86;FAIL=0;XFAIL=0;XPASS=0;SKIP=9;BLOCKED=0",
             "status": "PASS",
-            "evidence_path": "reports/tests/tick_shock/step12_post_fix_results.csv",
+            "evidence_path": "reports/tests/tick_shock/step14r_final/results.csv",
         },
         {
             "gate": "research_ea_and_all_harness_compile",
             "expected": "12 targets;0 errors;0 warnings",
             "actual": f"targets={len(compile_rows)};failures={sum(row['status'] == 'FAIL' for row in compile_rows)}",
             "status": "PASS" if len(compile_rows) == 12 and all(row["status"] == "PASS" for row in compile_rows) else "FAIL",
-            "evidence_path": "reports/tests/tick_shock/step13_order_observation/compile_results.csv",
+            "evidence_path": f"{output_relative}/compile_results.csv",
         },
         {
             "gate": "fixture_expected_integrity",
             "expected": "changed=0;missing=0",
             "actual": f"rows={len(integrity_rows)};changed={sum(row['status'] == 'CHANGED' for row in integrity_rows)};missing={sum(row['status'] == 'MISSING' for row in integrity_rows)}",
             "status": "PASS" if all(row["status"] == "UNCHANGED" for row in integrity_rows) else "FAIL",
-            "evidence_path": "reports/tests/tick_shock/step13_order_observation/fixture_expected_integrity.csv",
+            "evidence_path": f"{output_relative}/fixture_expected_integrity.csv",
         },
         {
             "gate": "research_ea_order_free",

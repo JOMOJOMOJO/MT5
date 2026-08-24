@@ -462,3 +462,34 @@ argument removed).
 Step 10 harness-only parsing/comparison helpers are outside this production
 catalog. They read immutable fixture/expected CSVs and invoke the facades; they
 do not duplicate the production formulas.
+
+## Step 14R current-source reconciliation
+
+Mechanical source:
+`reports/qa/tick_shock/step14r_function_extraction.csv`. The same extractor
+reports 268 definitions at Step 12 and 280 after Step 14R. The authoritative
+current count is 280 extracted definitions and 280 catalog entries. The
+research EA, all `mql/Include/TickShock/*.mqh`, two compatibility includes and
+the two original research/order reachability harnesses are in scope.
+
+| ID / file | Function signature | Responsibility; arguments/units; return | Globals / side effects | Production / test callers; pre/post/error |
+|---|---|---|---|---|
+| S14R-EA-001 / research EA | `void TSRCollectSymbolTicks(const int symbol_index,TickShockPendingRepository &repository,const long requested_to_msc,const bool final_drain=false)` | Read and paginate one symbol causally through requested ms; no return. | Reads MT5 history and symbol context; appends repository; updates explicit frontier/cursor diagnostics. | Dispatcher/final drain; synthetic frontier path is covered by TS-MERGE-003..005. Invalid history/copy/cursor/page limit leaves range incomplete. Signature supersedes the earlier two-argument form. |
+| S14R-EA-002 / research EA | `string TSRFrontierAffectedSymbols(const bool incomplete_only)` | Serialize symbols with current incomplete range or historical quote staleness. | Reads `g_symbols`; no mutation. | Summary writer / March reconciliation. Returns `NONE` when empty. |
+| S14R-OH-001 / order harness | `void ObserveSimulatedRestartSnapshot()` | Restore lifecycle snapshot and replay known deal to prove idempotency. | Updates harness counters/output only; no production order. | Harness state sequence / restart observation. Simulated, not actual process restart. |
+| S14R-CS-001 / CsvSerializer | `string TSCommissionEvidenceStatusName(const ENUM_TS_COMMISSION_EVIDENCE_STATUS status)` | Enum-to-string boundary for commission provenance. | Pure. | EA fingerprint/summary / serializer assertions. Unknown maps to `UNAVAILABLE`. |
+| S14R-MG-001 / MergeSequencer | `void TSResetSymbolFrontier(TickShockSymbolFrontierState &state)` | Zero quote/read-through/range/page/stale/final-drain state. | Explicit struct mutation only. | Symbol init / merge fixture. |
+| S14R-MG-002 / MergeSequencer | `void TSFrontierBeginReadCycle(TickShockSymbolFrontierState &state,const long from_msc,const long to_msc,const bool synchronized,const bool final_drain=false)` | Start one requested history range in ms and record synchronization/final-drain status. | Explicit state mutation. | Collector / TS-MERGE-003..005. Unsynchronized starts incomplete. |
+| S14R-MG-003 / MergeSequencer | `bool TSFrontierObserveCopyPage(TickShockSymbolFrontierState &state,const int copied_count,const int requested_count,const int copy_error,const long last_quote_msc,const bool exhausted)` | Record one page and advance read-through only when page/range completeness is proved; bool accepted. | Explicit frontier mutation. | Collector / TS-MERGE-003..005. Copy error returns false; short/empty successful page can close a quiet range. |
+| S14R-MG-004 / MergeSequencer | `void TSFrontierObserveCursorStall(TickShockSymbolFrontierState &state)` | Latch saturated same-ms no-progress failure. | Explicit state mutation. | Collector / cursor tests. Permanent integrity failure at repository layer. |
+| S14R-MG-005 / MergeSequencer | `void TSFrontierObservePageLimit(TickShockSymbolFrontierState &state)` | Latch pagination-limit failure. | Explicit state mutation. | Collector / integration. Permanent integrity failure. |
+| S14R-MG-006 / MergeSequencer | `bool TSMergeObserveReadThroughFrontier(TickShockPendingRepository &repository,const long now_msc,TickShockSymbolFrontierState &states[],const long stale_after_ms,long &watermark)` | Compute min read-through, separate quote-age diagnostics and decide current range completeness; bool complete. | Mutates explicit repository/frontier stale diagnostics and watermark; no EA globals. | Dispatcher/final drain / TS-MERGE-003..005. Recoverable reread clears only recoverable gap latch; loss/stall remains invalid. |
+| S14R-MG-007 / MergeSequencer | `int TSMergeFinalReleasableCount(const TickShockPendingRepository &repository,const long watermark)` | Count final-drain prefix at or before the proven watermark. | Pure repository read. | EA final drain / integration. Nonpositive watermark returns zero. |
+| S14R-AD-001 / Mt5Adapter | `bool TSMt5SeriesSynchronized(const string symbol)` | Query `SERIES_SYNCHRONIZED`; bool. | MT5 read only. | Collector / terminal integration. False blocks read-through advance. |
+| S14R-OL-001 / OrderLifecycle | `bool TSAttachExitOperationIdentity(TickShockOrderFillState &state,const ulong request_ticket,const ulong order_ticket,const long operation_id)` | Bind a separate exit operation after close send. | Explicit lifecycle mutation. | Order harness transaction adapter / TS-ORDER-009. Rejects zero/conflicting identity and increments rejection counter. |
+
+The Step 14R signature delta also makes `TSRCollectSymbolTicks` explicit about
+requested processing time/final drain; it is not an additional function. All
+time arguments are milliseconds; request/order/deal/position fields are MT5
+tickets; operation IDs and counters are unitless. Long/Short behavior is
+symmetric except for the existing price-side rules.

@@ -1,0 +1,5 @@
+check,baseline,current,mismatches,status
+event_identity_symmetric_difference,19,19,0,PASS
+event_domain_field_mismatches,19,19,0,PASS
+summary_identity_symmetric_difference,1186,1186,0,PASS
+summary_domain_field_mismatches,1185,1185,0,PASS

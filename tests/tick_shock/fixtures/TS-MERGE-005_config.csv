@@ -1,3 +1,5 @@
 key,value,unit,note
 first_read_status,COPY_TICKS_FAILED,enum,transient read failure is fail closed before recovery
 recovered_read_through_msc,3000,ms,later complete read proves the requested range
+oracle_source,docs/research/tick_shock/11_test_oracle_addendum.md,path,independent Step 14R recovery contract
+production_function_used_for_expected,false,bool,mandatory oracle provenance

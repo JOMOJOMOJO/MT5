@@ -80,3 +80,19 @@ Step 14 inputs are the summary, observation CSVs, tester journal/report,
 source hashes, symbol specifications, and this document. Step 12 results were
 not rewritten; observation upgrades are isolated in
 `observation_test_status.csv`.
+
+## Step 14R corrected observation
+
+The evidence above is retained as historical Step 13 evidence. Step 14R fixed
+the harness/lifecycle identity handoff and reran the same tester-only scope.
+The authoritative replacement is
+`reports/tests/tick_shock/step14r_order_observation_final/`.
+
+The rerun observed eight accepted OrderCheck and eight OrderSend calls, six
+full entries and six exits, Long/Short server SL, server TP and expert time
+close. For both time closes, the exit request is different from the entry
+request and matches the exit `DEAL_ORDER`. Twelve deal commission/fee/swap
+records were observed as zero. Partial fill and an actual process restart
+remain `NOT_OBSERVED`; simulated snapshot replay remains deterministic-only.
+No harness-owned position remained. The research EA still contains no
+OrderCheck/OrderSend path.

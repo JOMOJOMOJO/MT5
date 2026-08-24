@@ -429,3 +429,36 @@ the strict global-watermark release condition.
 
 No detector threshold, RR, stop/delay/spread grid, maximum hold, ring/grid cap,
 or scenario index formula changed.
+
+## Step 14R frontier, order and provenance state
+
+`TickShockSymbolFrontierState` is caller-owned per symbol. It separates
+`last_quote_msc` from `read_through_msc`, requested from/to milliseconds,
+returned/page/copy result and error, history synchronization, current
+incompleteness, historical read failure, quiet-range, cursor-stall, page-limit,
+final-drain, current/ever stale episode and root-cause fields. It is initialized
+by `TSResetSymbolFrontier`, updated only by collector/frontier functions and is
+directly injectable by the merge harness.
+
+`TickShockPendingRepository` retains the existing 65,536 tick cap and adds
+run-level aggregates for ever-stale symbols, stale instances, incomplete
+frontier instances, read failures, quiet ranges, copy pages and final drains.
+Quote staleness is diagnostic. Current incomplete read-through blocks release;
+unrecovered loss/stall/capacity failures remain validation-fatal.
+
+`TickShockOrderFillState` adds `position_identifier`, last deal-order ticket,
+separate entry/exit request and order tickets, and separate entry/exit local
+operation IDs. Its lifetime is one harness order lifecycle or restored
+snapshot. `TSApplyOrderDeal` updates the explicit state; the research EA neither
+owns this state nor sends an order.
+
+`ENUM_TS_COMMISSION_EVIDENCE_STATUS` has four values: unavailable,
+tester-observed zero, explicit scenario assumption and broker verified. New EA
+inputs also record symbol scope and unit. These values affect evidence/analysis
+eligibility only; they do not alter the scenario commission arithmetic.
+
+The implementation schema constant is `tickshock-research-step14r-v1`.
+Physical/logical capacities remain: detector sample physical 3,612; default
+logical 3,610/1,806/904 for 250/500/1,000ms; tick ring 8,192 with 5,000ms
+retention; grid 64; active event slots 64; pending repository 65,536; scenario
+grid 552 per event.

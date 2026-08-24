@@ -1,0 +1,10 @@
+dimension,key,scenario_cells,unique_events,unique_symbol_clusters,unique_market_clusters,tp,sl_gap,time,gross_expectancy_r,commission_expectancy_r,net_expectancy_r,average_hold_seconds,median_hold_seconds,time_120_rate_pct,interpretation
+ALL,policy_mask_3,12,2,2,2,2,10,0,-0.747207,0.000000,-0.747207,16.643,0.720,0.000,diagnostic_only_not_strategy_selection
+strategy,failed_shock_reversal,2,1,1,1,2,0,0,1.200000,0.000000,1.200000,95.462,95.462,0.000,diagnostic_only_not_strategy_selection
+strategy,post_burst_continuation,10,2,2,2,0,10,0,-1.136649,0.000000,-1.136649,0.879,0.605,0.000,diagnostic_only_not_strategy_selection
+direction,SHORT,12,2,2,2,2,10,0,-0.747207,0.000000,-0.747207,16.643,0.720,0.000,diagnostic_only_not_strategy_selection
+symbol,EURUSD,3,1,1,1,0,3,0,-1.033333,0.000000,-1.033333,1.631,1.631,0.000,diagnostic_only_not_strategy_selection
+symbol,USDCAD,9,1,1,1,2,7,0,-0.651832,0.000000,-0.651832,21.647,0.491,0.000,diagnostic_only_not_strategy_selection
+delay,d0,2,2,2,2,1,1,0,0.083333,0.000000,0.083333,48.547,48.547,0.000,diagnostic_only_not_strategy_selection
+delay,d100,2,2,2,2,1,1,0,0.083333,0.000000,0.083333,48.547,48.547,0.000,diagnostic_only_not_strategy_selection
+delay,d250,8,2,2,2,0,8,0,-1.162478,0.000000,-1.162478,0.691,0.491,0.000,diagnostic_only_not_strategy_selection

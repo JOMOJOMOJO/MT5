@@ -1,0 +1,2 @@
+run_id,symbol,digits,point,tick_size,tick_value,contract_size,volume_min,volume_max,volume_step,stops_level,freeze_level,filling_mode,result
+tickshock_step14r_order_observation_final_20260825,EURUSD,5,0.0000100000,0.0000100000,1.0000000000,100000.00,0.01000000,100.00000000,0.01000000,0,0,2,OBSERVED

@@ -124,6 +124,20 @@ REQ-STATUS-001, REQ-ORDER-006 and REQ-WATERMARK-001 now point to
 All 26 Step 11 additions are observable and PASS. No deterministic
 BLOCKED/FAIL/XFAIL/XPASS remains. Nine actual terminal-only cases retain SKIP.
 
+## Step 14R versioned requirements
+
+| Requirement | Production function / path | Test | Fixture / expected | RED evidence | GREEN evidence | Status |
+|---|---|---|---|---|---|---|
+| REQ-FRONTIER-002 quiet-range completeness | `TSFrontierBeginReadCycle`, `TSFrontierObserveCopyPage`, `TSMergeObserveReadThroughFrontier` | TS-MERGE-003 | `tests/tick_shock/fixtures/TS-MERGE-003_*`; `tests/tick_shock/expected/TS-MERGE-003_expected.csv` | `reports/tests/tick_shock/step14r_pre_fix/raw/multicurrency_merge.csv` | `reports/tests/tick_shock/step14r_final/raw/multicurrency_merge.csv` | PASS |
+| REQ-FRONTIER-003 true read failure is fail-closed | same | TS-MERGE-004 | `tests/tick_shock/fixtures/TS-MERGE-004_*`; `tests/tick_shock/expected/TS-MERGE-004_expected.csv` | test already passed before production fix | `reports/tests/tick_shock/step14r_final/raw/multicurrency_merge.csv` | PASS |
+| REQ-FRONTIER-004 transient failure recovery | same | TS-MERGE-005 | `tests/tick_shock/fixtures/TS-MERGE-005_*`; `tests/tick_shock/expected/TS-MERGE-005_expected.csv` | `reports/tests/tick_shock/step14r_transient_recovery_pre_fix/multicurrency_merge.csv` | `reports/tests/tick_shock/step14r_final/raw/multicurrency_merge.csv` | PASS |
+| REQ-ORDER-007 transaction reordering | `TSConfigureOrderIdentity`, `TSApplyOrderDeal` | TS-ORDER-008 | `tests/tick_shock/fixtures/TS-ORDER-008_*`; `tests/tick_shock/expected/TS-ORDER-008_expected.csv` | `reports/tests/tick_shock/step14r_pre_fix/raw/order_lifecycle.csv` | `reports/tests/tick_shock/step14r_final/raw/order_lifecycle.csv` | PASS |
+| REQ-ORDER-008 operation identity separation | `TSAttachExitOperationIdentity`, order harness transaction adapter | TS-ORDER-009 | `tests/tick_shock/fixtures/TS-ORDER-009_*`; `tests/tick_shock/expected/TS-ORDER-009_expected.csv` | `reports/tests/tick_shock/step14r_pre_fix/raw/order_lifecycle.csv` | deterministic GREEN plus `step14r_order_observation_final/order_observations.csv` | PASS / OBSERVED_PASS |
+
+`TS-MERGE-002` remains the obsolete legacy-watermark contract with its original
+fixture and hash. Step 14R does not rewrite it; the new tests carry the revised
+requirement explicitly.
+
 ## Change-control boundary
 
 A Function ID may change location/name in Step 4, but the Requirement ID, Test ID, fixture path, expected path, and independent numeric outcome remain stable. Traceability is updated only to point at the extracted equivalent. If a desired defect correction changes an expected value, it requires a reviewed specification change separate from production implementation.
