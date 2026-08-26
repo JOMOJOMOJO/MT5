@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+statistical_recorded,true,0,bool,tail event remains research evidence
+strategy_event_allocated,false,0,bool,failed diagnostics do not consume heavy scenario pool

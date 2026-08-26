@@ -44,6 +44,7 @@ TESTS = (
     ("TS15A-NOISE-001", "raw and pre-averaged estimator difference"),
     ("TS15A-STRICT-001", "STRICT_V0 exact legacy gates"),
     ("TS15A-PROV-001", "detector/schema/spec provenance"),
+    ("TS15A-SEPARATION-001", "statistical record is independent from strategy allocation"),
 )
 
 
@@ -208,6 +209,10 @@ def build() -> None:
     spec_hash=hashlib.sha256(SPEC.read_bytes()).hexdigest().upper()
     cases["TS15A-PROV-001"]=(base,cfg_rows([("expected_spec_sha256",spec_hash,"sha256","frozen spec")]),exp_rows([
         ("detector_count",4,0,"count","V0 plus three V1"),("default_detector","STRICT_V0",0,"label","default"),("feature_schema","tickshock-detector-feature-v1",0,"label","versioned"),("spec_sha256",spec_hash,0,"sha256","exact frozen spec")]))
+
+    cases["TS15A-SEPARATION-001"]=(base,cfg_rows([]),exp_rows([
+        ("statistical_recorded",True,0,"bool","tail event remains research evidence"),
+        ("strategy_event_allocated",False,0,"bool","failed diagnostics do not consume heavy scenario pool")]))
 
     if set(cases) != {test_id for test_id, _ in TESTS}:
         raise RuntimeError("case registry mismatch")

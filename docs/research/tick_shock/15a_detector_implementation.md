@@ -39,8 +39,8 @@ time.
 ## RED to GREEN
 
 - RED: 1 PASS / 23 XFAIL / 0 unexpected FAIL. The V1 include/API was absent.
-- GREEN detector contract: 24 PASS / 0 FAIL / 0 XFAIL / 0 XPASS / 0 SKIP.
-- Full deterministic suite: 110 PASS / 0 FAIL / 0 XFAIL / 0 XPASS / 9 SKIP.
+- GREEN detector contract: 25 PASS / 0 FAIL / 0 XFAIL / 0 XPASS / 0 SKIP.
+- Full deterministic suite: 111 PASS / 0 FAIL / 0 XFAIL / 0 XPASS / 9 SKIP.
   The nine SKIP rows remain terminal-only observations and were not promoted.
 - Compile: research EA and all 11 Tick-shock harnesses completed with
   0 errors / 0 warnings.
@@ -53,8 +53,14 @@ the source, fixture, expected, harness, and executable-specification hashes.
 
 V1 tail acceptance is recorded as `statistical_shock`. Efficiency, activity,
 liquidity, and cost feasibility are recorded independently and do not erase a
-statistical event. The unchanged downstream state machine determines whether
-a strategy signal is eventually present.
+statistical event. Statistical outcome tracking uses a bounded lightweight
+event record; the unchanged downstream state machine and 552-scenario grid are
+allocated only when the independent strategy diagnostics are also satisfied.
+This separation was added after the first V1 March attempt exhausted the heavy
+event pool 2,742 times. `TS15A-SEPARATION-001` now exercises the production
+eligibility function directly and proves that a tail event is retained without
+allocating a strategy event. This changes research storage, not the frozen tail
+formula, alpha, strategy gates, or strategy outcomes.
 
 ## Status boundary
 

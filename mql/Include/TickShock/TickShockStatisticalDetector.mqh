@@ -196,6 +196,11 @@ void TSV1SeparateDiagnostics(const bool statistical_shock,
                           result.activity_elevated && result.cost_feasible;
   }
 
+bool TSV1StrategyPathEligible(const TickShockV1Diagnostics &diagnostics)
+  {
+   return diagnostics.statistical_shock && diagnostics.strategy_signal;
+  }
+
 bool TSV1BipowerScale(const double &returns[],
                       const int count,
                       const double current_abs_return,
