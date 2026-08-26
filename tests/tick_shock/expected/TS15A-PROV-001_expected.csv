@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+detector_count,4,0,count,V0 plus three V1
+default_detector,STRICT_V0,0,label,default
+feature_schema,tickshock-detector-feature-v1,0,label,versioned
+spec_sha256,53DB75EEE4641D98F4917E74B9C26B84D07533CE8EA1A6689AF7F36BAAEA64EA,0,sha256,exact frozen spec

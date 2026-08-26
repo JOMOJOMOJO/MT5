@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+eligible_at_2999,false,0,bool,too early
+eligible_at_3000,true,0,bool,inclusive after exclusion

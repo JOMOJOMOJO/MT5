@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+exceedances,3,0,count,equal bin included
+raw_p,0.039603960396,1e-12,ratio,plus-one rank
+empirical_percentile,96.039603960396,1e-09,percent,one minus p

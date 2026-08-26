@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+candidate_time_msc,2000,0,ms,candidate
+confirmed,false,0,bool,reversal fails persistence
+signal_time_msc,0,0,ms,no signal

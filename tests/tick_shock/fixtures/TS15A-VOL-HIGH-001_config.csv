@@ -1,0 +1,4 @@
+key,value,unit,note
+returns,0.01|-0.01|0.012|-0.011|0.009|-0.01,ratio,local pool
+current_abs_return,0.005,ratio,candidate
+noise_return,1e-05,ratio,floor

@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+deduplicated_events,3,0,count,two horizons at 1000 become one
+symbol_clusters,2,0,count,3001 starts new cluster

@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+raw_abs_return,0.009950330853,1e-12,ratio,raw spike
+robust_abs_return,0.002496880199,1e-12,ratio,pre-averaged spike
+robust_smaller,true,0,bool,attenuation

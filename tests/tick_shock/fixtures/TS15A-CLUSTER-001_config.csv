@@ -1,0 +1,4 @@
+key,value,unit,note
+candidate_times,1000|1000|2999|3001,ms,multi horizon and boundary
+candidate_horizons,250|500|250|250,ms,same first boundary
+cluster_window_ms,2000,ms,fixed

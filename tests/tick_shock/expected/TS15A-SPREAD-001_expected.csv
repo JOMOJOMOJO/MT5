@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+abs_log_return,0.000000000000,1e-12,ratio,Mid unchanged
+statistical_shock,false,0,bool,zero return
+liquidity_normal,false,0,bool,spread ratio two
+cost_feasible,false,0,bool,zero move

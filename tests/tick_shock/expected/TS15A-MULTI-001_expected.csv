@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+adjusted_250,0.003000000000,1e-12,ratio,Holm
+adjusted_500,0.008000000000,1e-12,ratio,Holm
+adjusted_1000,0.020000000000,1e-12,ratio,Holm
+trigger_horizon_ms,250,0,ms,minimum adjusted p
+horizon_mask,3,0,mask,250 and 500

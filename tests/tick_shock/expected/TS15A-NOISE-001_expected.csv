@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+raw_mid,1.010000000000,1e-12,price,current
+robust_mid,1.002500000000,1e-12,price,causal pre-average
+estimators_distinct,true,0,bool,not copied

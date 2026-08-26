@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+valid_250,true,0,bool,exact 1750 anchor
+valid_500,false,0,bool,1501 is not 1500
+valid_1000,false,0,bool,999 is not 1000

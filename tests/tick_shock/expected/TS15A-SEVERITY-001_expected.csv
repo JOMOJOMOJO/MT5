@@ -1,0 +1,6 @@
+field,expected_value,tolerance,unit,note
+severity_0_010001,NONE,0,label,outside 99
+severity_0_010000,P990,0,label,inclusive 99
+severity_0_005000,P995,0,label,inclusive 99.5
+severity_0_001000_n49999,P995,0,label,99.9 sample insufficient
+severity_0_001000_n50000,P999,0,label,inclusive valid 99.9

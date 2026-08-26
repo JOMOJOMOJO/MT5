@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+accepted,true,0,bool,all inclusive
+gate_mask,63,0,mask,six gates
+default_detector,STRICT_V0,0,label,backward compatible

@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+quote_age_ms,501,0,ms,boundary minus source
+data_integrity_ok,false,0,bool,501 exceeds fixed 500
+statistical_shock,false,0,bool,fail closed

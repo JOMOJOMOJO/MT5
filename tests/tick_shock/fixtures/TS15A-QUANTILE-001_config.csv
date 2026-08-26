@@ -1,0 +1,4 @@
+key,value,unit,note
+histogram,0|0|2|3|0,count,bins
+current_bin,3,index,equal bin included
+calibration_count,100,count,includes unshown lower bins

@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+candidate_msc,2000,0,ms,preserved
+confirmed_msc,2250,0,ms,preserved
+signal_msc,2250,0,ms,confirmation

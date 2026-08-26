@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+bipower_variance,0.000000016996,1e-12,ratio,bipower
+local_sigma,0.000130368770,1e-12,ratio,low scale
+score,38.352743456095,1e-09,ratio,standardized

@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+bucket_0,0,0,index,midnight
+bucket_14399999,0,0,index,before boundary
+bucket_14400000,1,0,index,inclusive boundary
+bucket_86399999,5,0,index,last bucket

@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+ready_9999,false,0,bool,below
+ready_10000,true,0,bool,inclusive
+ready_10001,true,0,bool,above

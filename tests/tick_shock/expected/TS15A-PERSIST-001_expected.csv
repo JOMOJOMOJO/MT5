@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+candidate_time_msc,2000,0,ms,candidate
+confirmed,true,0,bool,retained move
+confirmed_time_msc,2250,0,ms,next grid
+signal_time_msc,2250,0,ms,no backdate
