@@ -16,6 +16,15 @@ class FixtureIntegrityTests(unittest.TestCase):
     def test_oracle_provenance_disallows_production_generated_expected(self):
         for path in sorted((ROOT / "tests/tick_shock/fixtures").glob("*_config.csv")):
             config = {row["key"]: row["value"] for row in read_csv(path)}
+            if path.name.startswith("TS15A-"):
+                # Step 15A freezes oracle provenance at the suite level so the
+                # calculation config remains a literal input-only fixture.
+                oracle = ROOT / "tools/tick_shock/step15a_independent_oracle.py"
+                spec = ROOT / "docs/research/tick_shock/15a_detector_test_spec.md"
+                self.assertTrue(oracle.is_file(), path.name)
+                self.assertTrue(spec.is_file(), path.name)
+                self.assertNotIn("TickShockStatisticalDetector", oracle.read_text(encoding="utf-8"), path.name)
+                continue
             self.assertEqual("false", config.get("production_function_used_for_expected"), path.name)
             self.assertIn(config.get("oracle_source"), {
                 "docs/research/tick_shock/03_test_oracle_calculation.md",

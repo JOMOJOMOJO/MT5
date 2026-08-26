@@ -1,6 +1,6 @@
 param(
     [int]$TimeoutSeconds = 120,
-    [ValidateSet("pre-fix","post-fix","step10","step11","step14r")]
+    [ValidateSet("pre-fix","post-fix","step10","step11","step14r","step15a")]
     [string]$Phase = "post-fix"
 )
 $ErrorActionPreference = "Stop"

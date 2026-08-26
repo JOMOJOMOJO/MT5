@@ -32,6 +32,8 @@ def main() -> int:
     parser.add_argument("--raw", type=Path)
     args = parser.parse_args()
     root = args.repo_root.resolve()
+    if args.raw is not None:
+        args.raw = args.raw.resolve()
     out_dir = root / "reports" / "tests" / "tick_shock" / f"step15a_{args.phase}"
     out_dir.mkdir(parents=True, exist_ok=True)
     registry = [row for row in read_csv(root / "tests" / "tick_shock" / "spec" / "test_cases.csv") if row["test_id"].startswith("TS15A-")]

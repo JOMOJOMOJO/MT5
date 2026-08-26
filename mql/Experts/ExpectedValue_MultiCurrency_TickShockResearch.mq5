@@ -7,12 +7,14 @@
 #include "..\Include\TickShock\TickShockEngine.mqh"
 #include "..\Include\TickShock\TickShockCsvSerializer.mqh"
 #include "..\Include\TickShock\TickShockMt5Adapter.mqh"
+#include "..\Include\TickShock\TickShockStatisticalCalibration.mqh"
 
 // Research-only EA.  This file contains no OrderCheck/OrderSend call.
 // IDEAL_EVENT_STUDY is event-time research only.  REALIZABLE_EA includes the
 // actual global-watermark recognition time and is the only formal analysis mode.
 
 input string InpSymbols = "EURUSD,GBPUSD,USDJPY,AUDUSD,USDCAD,USDCHF";
+input ENUM_TS_V1_DETECTOR InpDetectorVersion = STRICT_V0;
 input int InpGridMs = 250;
 input int InpBaselineMinutes = 15;
 input int InpBaselineExcludeMs = 2000;
@@ -89,7 +91,7 @@ input int InpDebugMaxMessages = 200;
 #define TSR_GATE_MASK_COUNT 64
 
 const string TSR_NAME = "ExpectedValue_MultiCurrency_TickShockResearch";
-const string TSR_IMPLEMENTATION_SCHEMA = "tickshock-research-step14r-v1";
+const string TSR_IMPLEMENTATION_SCHEMA = "tickshock-research-step15a-v1";
 const int TSR_CHECKPOINT_SECONDS[TSR_CHECKPOINT_COUNT] = {5,10,20,30,60,120};
 const int TSR_DETECTOR_MS[TSR_DETECTOR_COUNT] = {250,500,1000};
 const int TSR_DELAY_MS[TSR_DELAY_COUNT] = {0,100,250};
@@ -129,8 +131,39 @@ struct TSRGridPoint
    double bid;
    double ask;
    double mid;
+   double robust_mid;
+   bool robust_valid;
    int quote_age_ms;
    bool valid;
+  };
+
+struct TSRV1Candidate
+  {
+   bool active;
+   long candidate_msc;
+   int direction;
+   int trigger_horizon_index;
+   int horizon_mask;
+   TSRGridPoint candidate_point;
+   double anchor_mid;
+   double estimator_anchor_mid;
+   double raw_p[TSV1_HORIZON_COUNT];
+   double adjusted_p[TSV1_HORIZON_COUNT];
+   bool tail_valid[TSV1_HORIZON_COUNT];
+   double score[TSV1_HORIZON_COUNT];
+   double local_sigma[TSV1_HORIZON_COUNT];
+   int baseline_count[TSV1_HORIZON_COUNT];
+   int calibration_count[TSV1_HORIZON_COUNT];
+   int tod_bucket;
+   int volatility_regime;
+   double noise_return;
+   double efficiency;
+   int tick_count;
+   double tick_intensity_ratio;
+   double spread_median;
+   double move_spread_ratio;
+   double spread_ratio;
+   TickShockV1Diagnostics diagnostics;
   };
 
 struct TSRSecondSample
@@ -197,6 +230,23 @@ struct TSREvent
    bool symbol_overlap_event;
    bool market_overlap_event;
    int shock_gate_mask;
+   ENUM_TS_V1_DETECTOR detector_version;
+   long detector_candidate_msc;
+   long detector_confirmed_msc;
+   int detector_trigger_horizon_ms;
+   int detector_horizon_mask;
+   double detector_raw_p[TSV1_HORIZON_COUNT];
+   double detector_adjusted_p[TSV1_HORIZON_COUNT];
+   bool detector_tail_valid[TSV1_HORIZON_COUNT];
+   double detector_score;
+   double detector_local_sigma;
+   int detector_local_samples;
+   int detector_calibration_samples;
+   double detector_quantile_half_width;
+   int detector_tod_bucket;
+   int detector_volatility_regime;
+   double detector_noise_return;
+   TickShockV1Diagnostics detector_diagnostics;
    long detection_msc;
    long detection_grid_msc;
    long detection_quote_msc;
@@ -300,6 +350,8 @@ struct TSRSymbolContext
    TSRSecondSample samples1000[];
    TickShockRingState sample_ring[TSR_DETECTOR_COUNT];
    TickShockGridRuntime grid_runtime;
+   TickShockV1CalibrationContext v1_calibration;
+   TSRV1Candidate v1_pending_candidate;
    int ticks_since_window[TSR_DETECTOR_COUNT];
    long baseline_cache_msc[TSR_DETECTOR_COUNT];
    int baseline_samples[TSR_DETECTOR_COUNT];
@@ -337,6 +389,11 @@ struct TSRSymbolContext
    TickShockSymbolClusterClock symbol_cluster_clock;
    long m1_minutes_seen;
    long last_m1_minute;
+   long v1_boundary_count;
+   long v1_tail_ready_count;
+   long v1_statistical_candidates;
+   long v1_persistence_rejections;
+   long v1_integrity_rejections;
   };
 
 TSRSymbolContext g_symbols[];
@@ -374,6 +431,7 @@ int g_event_file = INVALID_HANDLE;
 int g_trade_file = INVALID_HANDLE;
 int g_summary_file = INVALID_HANDLE;
 int g_specs_file = INVALID_HANDLE;
+int g_features_file = INVALID_HANDLE;
 int g_debug_messages = 0;
 bool g_is_tester = false;
 double g_burst_spread_ratios[];
@@ -434,6 +492,8 @@ string TSRRunMetadataFingerprint()
     identity.config="implementation_schema="+TSR_IMPLEMENTATION_SCHEMA;
    string value=TSMt5RunIdentityFingerprint(identity);
    value+="|symbols="+InpSymbols;
+   value+="|detector_version="+TSV1DetectorName(InpDetectorVersion);
+   value+="|detector_spec_sha256="+TSV1SpecSha256();
    value+="|grid_ms="+IntegerToString(InpGridMs);
    value+="|baseline_minutes="+IntegerToString(InpBaselineMinutes);
    value+="|baseline_exclude_ms="+IntegerToString(InpBaselineExcludeMs);
@@ -556,13 +616,19 @@ string TSRSummaryHeader()
    return "run_id,record_type,key,events,raw_candidates,ticks,scenario_valid,scenario_invalid,scenario_expectancy_r,average_memory_mb,max_memory_mb,event_csv_rows,event_csv_bytes,trade_csv_rows,trade_csv_bytes,runtime_seconds,value";
   }
 
+string TSRDetectorFeatureHeader()
+  {
+   return "event_id,symbol,detector_version,feature_schema,spec_sha256,candidate_time_msc,confirmed_time_msc,trigger_horizon_ms,horizons_triggered_mask,raw_p_250,raw_p_500,raw_p_1000,adjusted_p_250,adjusted_p_500,adjusted_p_1000,empirical_percentile,severity,local_score,local_sigma,baseline_samples,tail_calibration_samples,quantile_half_width,time_of_day_bucket,volatility_regime,noise_return,efficiency,tick_intensity_ratio,move_spread_ratio,spread_ratio,quote_age_ms,statistical_shock,directional_burst,activity_elevated,liquidity_normal,cost_feasible,strategy_signal";
+  }
+
 bool TSROpenLogs()
   {
    g_event_file = TSROpenCsv("events", TSREventHeader());
    g_trade_file = TSROpenCsv("trades", "event_id,note");
    g_summary_file = TSROpenCsv("summary", TSRSummaryHeader());
    g_specs_file = TSROpenCsv("symbol_specs", "run_id,symbol,digits,point,tick_size,tick_value,contract_size,stops_level,freeze_level,volume_min,volume_max,volume_step,filling_mode,commission_per_lot_round_turn,commission_source");
-   return g_event_file!=INVALID_HANDLE && g_trade_file!=INVALID_HANDLE && g_summary_file!=INVALID_HANDLE && g_specs_file!=INVALID_HANDLE;
+   g_features_file = TSROpenCsv("detector_features",TSRDetectorFeatureHeader());
+   return g_event_file!=INVALID_HANDLE && g_trade_file!=INVALID_HANDLE && g_summary_file!=INVALID_HANDLE && g_specs_file!=INVALID_HANDLE && g_features_file!=INVALID_HANDLE;
   }
 
 void TSRCloseLogs()
@@ -571,6 +637,7 @@ void TSRCloseLogs()
    TSMt5Close(g_trade_file);
    TSMt5Close(g_summary_file);
    TSMt5Close(g_specs_file);
+   TSMt5Close(g_features_file);
   }
 
 double TSRPercentile(double &values[],const int count,const double percentile)
@@ -986,6 +1053,13 @@ bool TSRInitializeSymbol(TSRSymbolContext &context,const string symbol)
    TSRingReset(context.tick_ring,TSR_TICK_CAPACITY);
    TSRingReset(context.grid_ring,TSR_GRID_CAPACITY);
    TSGridReset(context.grid_runtime);
+   TSV1ResetCalibration(context.v1_calibration);
+   ZeroMemory(context.v1_pending_candidate);
+   context.v1_boundary_count=0;
+   context.v1_tail_ready_count=0;
+   context.v1_statistical_candidates=0;
+   context.v1_persistence_rejections=0;
+   context.v1_integrity_rejections=0;
    context.last_time_msc=0;context.processed_at_last_msc=0;
    TSResetSymbolClusterClock(context.symbol_cluster_clock);context.m1_minutes_seen=0;context.last_m1_minute=-1;
    for(int d=0;d<TSR_DETECTOR_COUNT;++d)
@@ -1538,6 +1612,229 @@ void TSRDetectShock(TSRSymbolContext &context,
    TSRDebug(context.symbol,"independent detector shock event="+g_events[slot].event_id);
   }
 
+int TSRV1TrailingTickCount(const TSRSymbolContext &context,const long start_msc,const long end_msc)
+  {
+   int count=0;
+   int oldest=TSROldestTick(context);
+   if(oldest<0) return 0;
+   for(int i=0;i<context.tick_ring.count;++i)
+     {
+      int index=(oldest+i)%TSR_TICK_CAPACITY;
+      if(context.ticks[index].time_msc>start_msc && context.ticks[index].time_msc<=end_msc) ++count;
+     }
+   return count;
+  }
+
+double TSRV1WilsonHalfWidth(const double p,const int count)
+  {
+   if(count<=0 || p<0.0 || p>1.0) return 0.0;
+   return 1.96*MathSqrt(p*(1.0-p)/(double)(count+1));
+  }
+
+bool TSRV1RegisterCandidateEvent(TSRSymbolContext &context,
+                                 const int symbol_index,
+                                 const TSRV1Candidate &candidate,
+                                 const TSRGridPoint &confirmed_point,
+                                 const long confirmed_msc,
+                                 const long processing_msc)
+  {
+   int trigger=candidate.trigger_horizon_index;
+   if(trigger<0 || trigger>=TSV1_HORIZON_COUNT || candidate.direction==0) return false;
+   TickShockEventKey event_key;
+   event_key.symbol_index=symbol_index;
+   event_key.detector_window_ms=TSV1_HORIZONS_MS[trigger];
+   event_key.detection_msc=confirmed_msc;
+   TickShockEventRegistration registration;
+   if(!TSEngineRegisterResearchEvent(g_event_engine,context.symbol_cluster_clock,event_key,2000,registration))
+     {
+      if(registration.status==TS_EVENT_REGISTRATION_POOL_EXHAUSTED)
+         PrintFormat("%s validation invalid: active event pool exhausted symbol=%s",TSR_NAME,context.symbol);
+      return false;
+     }
+   int slot=registration.slot;
+   TSREvent event;
+   ZeroMemory(event);
+   event.active=true;
+   for(int j=0;j<TSR_ALL_SCENARIOS;++j) TSRResetScenario(event.scenarios[j]);
+   event.symbol_index=symbol_index;
+   event.detector_version=InpDetectorVersion;
+   event.detector_window_ms=TSV1_HORIZONS_MS[trigger];
+   event.event_id=StringFormat("%s_%s_%s_w%d_%I64d_%I64d",InpRunId,context.symbol,TSV1DetectorName(InpDetectorVersion),event.detector_window_ms,confirmed_msc,registration.event_sequence);
+   event.direction=candidate.direction;
+   event.shock_gate_mask=0;
+   event.symbol_cluster_id=registration.symbol_cluster_id;
+   event.symbol_overlap_event=registration.symbol_overlap;
+   event.market_cluster_id=registration.market_cluster_id;
+   event.market_overlap_event=registration.market_overlap;
+   event.detector_candidate_msc=candidate.candidate_msc;
+   event.detector_confirmed_msc=confirmed_msc;
+   event.detector_trigger_horizon_ms=event.detector_window_ms;
+   event.detector_horizon_mask=candidate.horizon_mask;
+   for(int h=0;h<TSV1_HORIZON_COUNT;++h)
+     {
+      event.detector_raw_p[h]=candidate.raw_p[h];
+      event.detector_adjusted_p[h]=candidate.adjusted_p[h];
+      event.detector_tail_valid[h]=candidate.tail_valid[h];
+     }
+   event.detector_score=candidate.score[trigger];
+   event.detector_local_sigma=candidate.local_sigma[trigger];
+   event.detector_local_samples=candidate.baseline_count[trigger];
+   event.detector_calibration_samples=candidate.calibration_count[trigger];
+   event.detector_quantile_half_width=TSRV1WilsonHalfWidth(candidate.raw_p[trigger],candidate.calibration_count[trigger]);
+   event.detector_tod_bucket=candidate.tod_bucket;
+   event.detector_volatility_regime=candidate.volatility_regime;
+   event.detector_noise_return=candidate.noise_return;
+   event.detector_diagnostics=candidate.diagnostics;
+   event.detection_msc=confirmed_msc;
+   event.detection_grid_msc=confirmed_msc;
+   event.detection_quote_msc=confirmed_point.quote_msc;
+   event.detection_quote_age_ms=confirmed_point.quote_age_ms;
+   event.processing_msc=processing_msc;
+   event.decision_delay_ms=MathMax((long)0,processing_msc-confirmed_msc);
+   event.detection_bid=confirmed_point.bid;
+   event.detection_ask=confirmed_point.ask;
+   event.detection_mid=confirmed_point.mid;
+   event.shock_start_mid=candidate.anchor_mid;
+   event.detection_shock_range=MathAbs(confirmed_point.mid-candidate.anchor_mid);
+   TSRGridPoint diagnostic_anchor;
+   if(TSRFindGrid(context,confirmed_msc-250,diagnostic_anchor))
+      event.log_return_250_valid=TSResearchExactLogReturn(confirmed_msc,confirmed_point.mid,250,diagnostic_anchor.time_msc,diagnostic_anchor.mid,event.log_return_250);
+   if(TSRFindGrid(context,confirmed_msc-500,diagnostic_anchor))
+      event.log_return_500_valid=TSResearchExactLogReturn(confirmed_msc,confirmed_point.mid,500,diagnostic_anchor.time_msc,diagnostic_anchor.mid,event.log_return_500);
+   if(TSRFindGrid(context,confirmed_msc-1000,diagnostic_anchor))
+      event.log_return_1000_valid=TSResearchExactLogReturn(confirmed_msc,confirmed_point.mid,1000,diagnostic_anchor.time_msc,diagnostic_anchor.mid,event.log_return_1000);
+   event.percentile_threshold=0.0;
+   event.median_abs_return=0.0;
+   event.mad_abs_return=0.0;
+   event.robust_scale=candidate.local_sigma[trigger];
+   event.robust_scale_floored=candidate.local_sigma[trigger]<=candidate.noise_return+1e-15;
+   event.robust_z=candidate.score[trigger];
+   event.efficiency=candidate.efficiency;
+   event.tick_count=candidate.tick_count;
+   event.tick_intensity_ratio=candidate.tick_intensity_ratio;
+   event.spread=confirmed_point.ask-confirmed_point.bid;
+   event.spread_median=candidate.spread_median;
+   event.move_spread_ratio=candidate.move_spread_ratio;
+   event.quote_age_ms=confirmed_point.quote_age_ms;
+   event.baseline_samples=candidate.baseline_count[trigger];
+   event.detection_best_mid=confirmed_point.mid;
+   event.detection_worst_mid=confirmed_point.mid;
+   event.state_status="BURST_ACTIVE";
+   event.news_label="UNAVAILABLE";
+   event.m15_trend=TSRTrend(symbol_index,PERIOD_M15);
+   event.h1_trend=TSRTrend(symbol_index,PERIOD_H1);
+   event.htf_alignment=TSRAlignment(event.direction,event.m15_trend,event.h1_trend);
+   event.session=TSRSessionLabel(confirmed_msc);
+   TSEngineStartBurst(event.machine,event.direction,confirmed_msc,candidate.anchor_mid,confirmed_point.mid);
+   TSRRegisterStrategySignal(event,TSR_DETECTION_CONTINUATION,event.direction,confirmed_msc,processing_msc,confirmed_point.bid,confirmed_point.ask);
+   g_events[slot]=event;
+   ++g_total_events;
+   ++context.valid_events[trigger];
+   TSRDebug(context.symbol,"statistical detector event="+event.event_id);
+   return true;
+  }
+
+bool TSRV1BuildCandidate(TSRSymbolContext &context,
+                         const TSRGridPoint &point,
+                         const TickShockV1ReturnRecord &record,
+                         const double &raw_returns[],
+                         const bool &raw_valid[],
+                         const double &robust_returns[],
+                         const bool &robust_valid[],
+                         TSRV1Candidate &candidate)
+  {
+   ZeroMemory(candidate);
+   int estimator=InpDetectorVersion==TAIL_V1_RAW?0:1;
+   double p[TSV1_HORIZON_COUNT];bool valid[TSV1_HORIZON_COUNT];
+   ArrayInitialize(p,1.0);ArrayInitialize(valid,false);
+   for(int h=0;h<TSV1_HORIZON_COUNT;++h)
+     {
+      TickShockV1TailResult tail;int calibration_count=0;
+      if(TSV1CalibrationTail(context.v1_calibration,estimator,h,record,10000,tail,calibration_count))
+        {
+         p[h]=tail.raw_p;valid[h]=true;++context.v1_tail_ready_count;
+         if(tail.raw_p<=0.01){++g_total_raw;++context.raw_candidates[h];}
+        }
+      candidate.raw_p[h]=p[h];candidate.tail_valid[h]=valid[h];
+      int channel=TSV1Channel(estimator,h);
+      candidate.score[h]=record.score[channel];candidate.local_sigma[h]=record.local_sigma[channel];
+      candidate.baseline_count[h]=record.local_samples[channel];candidate.calibration_count[h]=calibration_count;
+     }
+   double adjusted[];TSV1HolmAdjust(p,valid,TSV1_HORIZON_COUNT,adjusted);
+   int trigger=TSV1TriggerIndex(adjusted,valid,TSV1_HORIZON_COUNT,0.01);
+   for(int h=0;h<TSV1_HORIZON_COUNT;++h) candidate.adjusted_p[h]=h<ArraySize(adjusted)?adjusted[h]:1.0;
+   if(trigger<0) return false;
+   TSRGridPoint anchor;
+   if(!TSRFindGrid(context,point.time_msc-TSV1_HORIZONS_MS[trigger],anchor)) return false;
+   double chosen_return=estimator==0?raw_returns[trigger]:robust_returns[trigger];
+   bool chosen_valid=estimator==0?raw_valid[trigger]:robust_valid[trigger];
+   if(!chosen_valid || chosen_return==0.0) return false;
+   candidate.active=true;
+   candidate.candidate_msc=point.time_msc;
+   candidate.direction=chosen_return>0.0?1:-1;
+   candidate.trigger_horizon_index=trigger;
+   candidate.horizon_mask=TSV1HorizonMask(adjusted,valid,TSV1_HORIZON_COUNT,0.01);
+   candidate.candidate_point=point;
+   candidate.anchor_mid=anchor.mid;
+   candidate.estimator_anchor_mid=estimator==0?anchor.mid:anchor.robust_mid;
+   candidate.tod_bucket=record.tod_bucket[TSV1Channel(estimator,trigger)];
+   candidate.volatility_regime=record.volatility_regime[TSV1Channel(estimator,trigger)];
+   candidate.noise_return=context.tick_size/MathMax(point.mid,context.tick_size);
+   candidate.tick_count=TSRV1TrailingTickCount(context,point.time_msc-TSV1_HORIZONS_MS[trigger],point.time_msc);
+   candidate.efficiency=0.0;
+   TSRPathEfficiency(context,point.time_msc-TSV1_HORIZONS_MS[trigger],point.time_msc,anchor.mid,point.mid,candidate.efficiency);
+   double median_ticks=context.baseline_median_ticks[trigger];
+   candidate.tick_intensity_ratio=median_ticks>0.0?candidate.tick_count/median_ticks:0.0;
+   candidate.spread_median=context.spread_median_5m[trigger];
+   double spread=point.ask-point.bid;
+   candidate.move_spread_ratio=spread>0.0?MathAbs(point.mid-anchor.mid)/spread:0.0;
+   candidate.spread_ratio=candidate.spread_median>0.0?spread/candidate.spread_median:0.0;
+   TSV1SeparateDiagnostics(true,candidate.efficiency,candidate.tick_intensity_ratio,candidate.move_spread_ratio,candidate.spread_ratio,candidate.diagnostics);
+   ++context.v1_statistical_candidates;
+   return true;
+  }
+
+void TSRV1EvaluateBoundary(TSRSymbolContext &context,
+                           const int symbol_index,
+                           const TSRGridPoint &point,
+                           const long processing_msc)
+  {
+   ++context.v1_boundary_count;
+   if(!point.valid || !TSV1QuoteIntegrity(point.time_msc,point.quote_msc,point.bid,point.ask,InpMaxQuoteAgeMs))
+     {++context.v1_integrity_rejections;return;}
+   double raw_returns[TSV1_HORIZON_COUNT],robust_returns[TSV1_HORIZON_COUNT];
+   bool raw_valid[TSV1_HORIZON_COUNT],robust_valid[TSV1_HORIZON_COUNT];
+   ArrayInitialize(raw_returns,0.0);ArrayInitialize(robust_returns,0.0);
+   ArrayInitialize(raw_valid,false);ArrayInitialize(robust_valid,false);
+   for(int h=0;h<TSV1_HORIZON_COUNT;++h)
+     {
+      TSRGridPoint anchor;
+      if(!TSRFindGrid(context,point.time_msc-TSV1_HORIZONS_MS[h],anchor)) continue;
+      raw_valid[h]=TSV1ExactLogReturn(point.time_msc,point.mid,TSV1_HORIZONS_MS[h],anchor.time_msc,anchor.mid,raw_returns[h]);
+      if(point.robust_valid && anchor.robust_valid)
+         robust_valid[h]=TSV1ExactLogReturn(point.time_msc,point.robust_mid,TSV1_HORIZONS_MS[h],anchor.time_msc,anchor.robust_mid,robust_returns[h]);
+     }
+   double noise_return=context.tick_size/MathMax(point.mid,context.tick_size);
+   TickShockV1ReturnRecord record;
+   TSV1ObserveBoundary(context.v1_calibration,point.time_msc,raw_returns,raw_valid,robust_returns,robust_valid,
+                       noise_return,InpBaselineMinutes,InpBaselineExcludeMs,InpMinBaselineSamples,record);
+
+   if(InpDetectorVersion==TAIL_V1_PERSISTENT && context.v1_pending_candidate.active)
+     {
+      TSRV1Candidate prior=context.v1_pending_candidate;
+      bool confirmed=point.time_msc==prior.candidate_msc+250 && point.robust_valid && prior.candidate_point.robust_valid &&
+                     TSV1PersistenceConfirmed(prior.direction,prior.estimator_anchor_mid,prior.candidate_point.robust_mid,point.robust_mid,0.50);
+      if(confirmed) TSRV1RegisterCandidateEvent(context,symbol_index,prior,point,point.time_msc,processing_msc);
+      else ++context.v1_persistence_rejections;
+      ZeroMemory(context.v1_pending_candidate);
+     }
+
+   TSRV1Candidate candidate;
+   if(!TSRV1BuildCandidate(context,point,record,raw_returns,raw_valid,robust_returns,robust_valid,candidate)) return;
+   if(InpDetectorVersion==TAIL_V1_PERSISTENT) context.v1_pending_candidate=candidate;
+   else TSRV1RegisterCandidateEvent(context,symbol_index,candidate,point,point.time_msc,processing_msc);
+  }
+
 void TSRCloseGridBoundary(TSRSymbolContext &context,const int symbol_index,const long boundary_msc,const long processing_msc)
   {
    TSRGridPoint point;
@@ -1546,8 +1843,13 @@ void TSRCloseGridBoundary(TSRSymbolContext &context,const int symbol_index,const
    point.bid=context.grid_runtime.bid;
    point.ask=context.grid_runtime.ask;
    point.mid=context.grid_runtime.mid;
+   point.robust_mid=0.0;
+   point.robust_valid=false;
    point.quote_age_ms=context.grid_runtime.quote_msc>0?(int)MathMax((long)0,boundary_msc-context.grid_runtime.quote_msc):2147483647;
    point.valid=context.grid_runtime.mid>0.0 && context.grid_runtime.ask>context.grid_runtime.bid && point.quote_age_ms<=InpMaxQuoteAgeMs;
+   TSRGridPoint robust_250,robust_500;
+   if(point.valid && TSRFindGrid(context,boundary_msc-250,robust_250) && TSRFindGrid(context,boundary_msc-500,robust_500))
+      point.robust_valid=TSV1CausalPreaverage(point.mid,robust_250.mid,robust_500.mid,point.robust_mid);
    TSRAddGrid(context,point);
    for(int detector=0;detector<TSR_DETECTOR_COUNT;++detector)
      {
@@ -1582,8 +1884,13 @@ void TSRCloseGridBoundary(TSRSymbolContext &context,const int symbol_index,const
       sample.spread=point.ask-point.bid;
       sample.quote_age_ms=point.quote_age_ms;
       TSRAddSample(context,detector,sample);
-      TSRDetectShock(context,symbol_index,detector,sample,point,processing_msc);
+      if(InpDetectorVersion==STRICT_V0)
+         TSRDetectShock(context,symbol_index,detector,sample,point,processing_msc);
+      else
+         TSRRefreshBaseline(context,detector,sample.end_msc);
      }
+   if(InpDetectorVersion!=STRICT_V0)
+      TSRV1EvaluateBoundary(context,symbol_index,point,processing_msc);
   }
 
 void TSRAdvanceGridBeforeTick(TSRSymbolContext &context,const int symbol_index,const long tick_msc,const long processing_msc)
@@ -1603,6 +1910,56 @@ void TSRAdvanceGridAtTick(TSRSymbolContext &context,const int symbol_index,const
       TSRCloseGridBoundary(context,symbol_index,context.grid_runtime.next_boundary_msc,processing_msc);
       TSGridAdvanceBoundary(context.grid_runtime,InpGridMs);
      }
+  }
+
+void TSRWriteDetectorFeature(const TSREvent &event)
+  {
+   if(g_features_file==INVALID_HANDLE) return;
+   ENUM_TS_V1_DETECTOR detector=event.detector_version;
+   long candidate_msc=event.detector_candidate_msc>0?event.detector_candidate_msc:event.detection_msc;
+   long confirmed_msc=event.detector_confirmed_msc>0?event.detector_confirmed_msc:event.detection_msc;
+   int trigger_horizon=event.detector_trigger_horizon_ms>0?event.detector_trigger_horizon_ms:event.detector_window_ms;
+   int trigger=TSRDetectorIndex(trigger_horizon);
+   TickShockV1Diagnostics diagnostics=event.detector_diagnostics;
+   if(detector==STRICT_V0)
+     {
+      diagnostics.statistical_shock=true;
+      diagnostics.directional_burst=(event.shock_gate_mask&(1<<2))!=0;
+      diagnostics.activity_elevated=(event.shock_gate_mask&(1<<3))!=0;
+      diagnostics.liquidity_normal=(event.shock_gate_mask&(1<<5))!=0;
+      diagnostics.cost_feasible=(event.shock_gate_mask&(1<<4))!=0 && diagnostics.liquidity_normal;
+     }
+   diagnostics.strategy_signal=false;
+   for(int s=0;s<TSR_STRATEGY_COUNT;++s) diagnostics.strategy_signal=diagnostics.strategy_signal || event.signal_started[s];
+   double empirical_percentile=0.0;
+   ENUM_TS_V1_SEVERITY severity=TSV1_SEVERITY_NONE;
+   if(detector!=STRICT_V0 && trigger>=0 && event.detector_tail_valid[trigger])
+     {
+      empirical_percentile=100.0*(1.0-event.detector_raw_p[trigger]);
+      severity=TSV1Severity(event.detector_adjusted_p[trigger],event.detector_calibration_samples);
+     }
+   string line="";
+   TSRCsvAppend(line,event.event_id);TSRCsvAppend(line,g_symbols[event.symbol_index].symbol);TSRCsvAppend(line,TSV1DetectorName(detector));
+   TSRCsvAppend(line,TSV1FeatureSchema());TSRCsvAppend(line,TSV1SpecSha256());TSRCsvAppend(line,TSRLong(candidate_msc));TSRCsvAppend(line,TSRLong(confirmed_msc));
+   int strict_mask=trigger>=0?(1<<trigger):0;
+   TSRCsvAppend(line,IntegerToString(trigger_horizon));TSRCsvAppend(line,IntegerToString(detector==STRICT_V0?strict_mask:event.detector_horizon_mask));
+   for(int h=0;h<TSV1_HORIZON_COUNT;++h) TSRCsvAppend(line,detector!=STRICT_V0 && event.detector_tail_valid[h]?TSRDouble(event.detector_raw_p[h],12):"");
+   for(int h=0;h<TSV1_HORIZON_COUNT;++h) TSRCsvAppend(line,detector!=STRICT_V0 && event.detector_tail_valid[h]?TSRDouble(event.detector_adjusted_p[h],12):"");
+   TSRCsvAppend(line,detector!=STRICT_V0?TSRDouble(empirical_percentile,8):"");TSRCsvAppend(line,detector!=STRICT_V0?TSV1SeverityName(severity):"LEGACY_STRICT");
+   TSRCsvAppend(line,detector!=STRICT_V0?TSRDouble(event.detector_score,10):TSRDouble(event.robust_z,10));
+   TSRCsvAppend(line,detector!=STRICT_V0?TSRDouble(event.detector_local_sigma,12):TSRDouble(event.robust_scale,12));
+   TSRCsvAppend(line,IntegerToString(detector!=STRICT_V0?event.detector_local_samples:event.baseline_samples));
+   TSRCsvAppend(line,detector!=STRICT_V0?IntegerToString(event.detector_calibration_samples):"");
+   TSRCsvAppend(line,detector!=STRICT_V0?TSRDouble(event.detector_quantile_half_width,12):"");
+   TSRCsvAppend(line,detector!=STRICT_V0?IntegerToString(event.detector_tod_bucket):IntegerToString(TSV1TimeOfDayBucket(event.detection_msc)));
+   TSRCsvAppend(line,detector!=STRICT_V0?TSV1VolatilityRegimeName((ENUM_TS_V1_VOLATILITY_REGIME)event.detector_volatility_regime):"LEGACY");
+   TSRCsvAppend(line,detector!=STRICT_V0?TSRDouble(event.detector_noise_return,12):"");
+   TSRCsvAppend(line,TSRDouble(event.efficiency,8));TSRCsvAppend(line,TSRDouble(event.tick_intensity_ratio,8));TSRCsvAppend(line,TSRDouble(event.move_spread_ratio,8));
+   TSRCsvAppend(line,event.spread_median>0.0?TSRDouble(event.spread/event.spread_median,8):"");TSRCsvAppend(line,IntegerToString(event.quote_age_ms));
+   TSRCsvAppend(line,TSRBool(diagnostics.statistical_shock));TSRCsvAppend(line,TSRBool(diagnostics.directional_burst));TSRCsvAppend(line,TSRBool(diagnostics.activity_elevated));
+   TSRCsvAppend(line,TSRBool(diagnostics.liquidity_normal));TSRCsvAppend(line,TSRBool(diagnostics.cost_feasible));TSRCsvAppend(line,TSRBool(diagnostics.strategy_signal));
+   TSMt5WriteLine(g_features_file,line);
+   TSMt5Flush(g_features_file);
   }
 
 void TSRWriteEvent(TSREvent &event)
@@ -1694,6 +2051,7 @@ void TSRWriteEvent(TSREvent &event)
    TSRCsvAppend(line,grid);
    TSMt5WriteLine(g_event_file,line);
    TSMt5Flush(g_event_file);
+   TSRWriteDetectorFeature(event);
    if(event.burst_end_msc>0) ++g_valid_bursts;
    if(burst_spread_ratio>0.0)
      {
@@ -1990,6 +2348,11 @@ void TSRWriteSummary()
                TSRSummaryRow("GATE_MASK",prefix+":mask="+IntegerToString(mask),0,0,0,0,0,0.0,TSRLong(g_symbols[i].gate_masks[d*TSR_GATE_MASK_COUNT+mask]));
          TSRSummaryRow("TICK_QUALITY",prefix,0,0,0,0,0,0.0,"generated_fallback_requires_tester_journal_parse;m1_minutes_seen="+TSRLong(g_symbols[i].m1_minutes_seen));
         }
+      TSRSummaryRow("STATISTICAL_DETECTOR",g_symbols[i].symbol,0,0,0,0,0,0.0,
+                    StringFormat("version=%s;boundaries=%I64d;tail_ready=%I64d;statistical_candidates=%I64d;persistence_rejections=%I64d;integrity_rejections=%I64d;calibration_observations=%I64d;local_ready=%I64d;histogram_overflow=%I64d;invalid_scale=%I64d",
+                                 TSV1DetectorName(InpDetectorVersion),g_symbols[i].v1_boundary_count,g_symbols[i].v1_tail_ready_count,g_symbols[i].v1_statistical_candidates,
+                                 g_symbols[i].v1_persistence_rejections,g_symbols[i].v1_integrity_rejections,g_symbols[i].v1_calibration.observations,
+                                 g_symbols[i].v1_calibration.local_ready,g_symbols[i].v1_calibration.histogram_overflow,g_symbols[i].v1_calibration.invalid_scale));
      }
    for(int strategy=0;strategy<TSR_STRATEGY_COUNT;++strategy)
       for(int w=0;w<TSR_STOP_COUNT;++w)
@@ -2040,6 +2403,8 @@ void TSRWriteSummary()
                   g_pending_repository.fatal_reason,TSRFrontierAffectedSymbols(true),TSRFrontierAffectedSymbols(false)));
    TSRSummaryRow("BUFFER","same_millisecond_groups",0,0,0,0,0,0.0,StringFormat("groups=%I64d;ticks=%I64d;max_group=%I64d",g_pending_repository.same_msc_groups,g_pending_repository.same_msc_ticks,g_pending_repository.max_same_msc_group));
    TSRSummaryRow("LOG_POLICY","tick_or_grid_csv",0,0,0,0,0,0.0,"disabled");
+   TSRSummaryRow("LOG_POLICY","detector_feature_csv",0,0,0,0,0,0.0,StringFormat("one_row_per_event;bytes=%I64d",TSMt5FileSize(g_features_file)));
+   TSRSummaryRow("MODEL","shock_detector",0,0,0,0,0,0.0,"version="+TSV1DetectorName(InpDetectorVersion)+";feature_schema="+TSV1FeatureSchema()+";spec_sha256="+TSV1SpecSha256()+";default=STRICT_V0");
    TSRSummaryRow("MODEL","return_definition",0,0,0,0,0,0.0,"independent_250_500_1000ms_detectors;signal_and_baseline_use_same_absolute_mid Move;rolling half-tick histogram;exclude_2000ms;log returns diagnostic only");
    TSRSummaryRow("MODEL","execution_mode",0,0,0,0,0,0.0,TSRExecutionModeName()+";formal_expectancy="+TSRBool(InpExecutionMode==REALIZABLE_EA));
    TSRSummaryRow("MODEL","execution_clock",0,0,0,0,0,0.0,"REALIZABLE_EA entry_eligible=max(signal_event+requested_delay,signal_processing+submit_latency);entry=first_strictly_later_same_symbol_real_tick;global_watermark_latency_included");
@@ -2093,12 +2458,18 @@ int OnInit()
   {
    g_is_tester=TSMt5IsTester();
    TSRLoadCoreConfig(g_core_config);
-   if(!TSConfigValid(g_core_config))
+   if(!TSConfigValid(g_core_config) || !TSV1DetectorValid(InpDetectorVersion))
      {PrintFormat("%s invalid configuration",TSR_NAME);return INIT_PARAMETERS_INCORRECT;}
    if(InpGridMs!=250 || InpBaselineExcludeMs<2000 ||
       InpMinBaselineSamples<=0 || InpMinBaselineSamples>TSR_SAMPLE_CAPACITY || InpRewardRisk<1.2 || InpMaxHoldSeconds<=0 || InpSubmitLatencyMs<0)
      {
       PrintFormat("%s invalid fixed-grid or feasibility inputs",TSR_NAME);
+      return INIT_PARAMETERS_INCORRECT;
+     }
+   if(InpDetectorVersion!=STRICT_V0 && (InpBaselineMinutes!=15 || InpBaselineExcludeMs!=2000 ||
+      InpMinBaselineSamples!=300 || InpMaxQuoteAgeMs!=500 || MathAbs(InpNoiseFloorTicks-1.0)>1e-12))
+     {
+      PrintFormat("%s statistical detector V1 requires frozen Step 15A constants",TSR_NAME);
       return INIT_PARAMETERS_INCORRECT;
      }
    for(int detector=0;detector<TSR_DETECTOR_COUNT;++detector)
@@ -2121,7 +2492,7 @@ int OnInit()
       PrintFormat("%s EventSetMillisecondTimer failed err=%d",TSR_NAME,GetLastError());
       TSRCloseLogs();TSRReleaseSymbols();return INIT_FAILED;
      }
-   PrintFormat("%s initialized research_only symbols=%d grid_ms=%d detectors=250,500,1000 execution_mode=%s submit_latency_ms=%d",TSR_NAME,ArraySize(g_symbols),InpGridMs,TSRExecutionModeName(),InpSubmitLatencyMs);
+   PrintFormat("%s initialized research_only symbols=%d grid_ms=%d detector=%s horizons=250,500,1000 execution_mode=%s submit_latency_ms=%d",TSR_NAME,ArraySize(g_symbols),InpGridMs,TSV1DetectorName(InpDetectorVersion),TSRExecutionModeName(),InpSubmitLatencyMs);
    return INIT_SUCCEEDED;
   }
 
