@@ -1,0 +1,5 @@
+key,value,unit,note
+detector_spec_sha256,53DB75EEE4641D98F4917E74B9C26B84D07533CE8EA1A6689AF7F36BAAEA64EA,sha256,frozen Step 15A detector contract
+execution_mode,REALIZABLE_EA,enum,causal production-path mode
+oracle_source,docs/research/tick_shock/15b_control_funnel_test_spec.md,path,predeclared before production implementation
+production_function_used_for_expected,false,bool,mandatory independent oracle

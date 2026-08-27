@@ -64,10 +64,17 @@ def main() -> int:
 
     for seq,(test_id,req,component,layer,direction,desc) in enumerate(CASES,1):
         fixture=ROOT/f"tests/tick_shock/fixtures/{test_id}_ticks.csv"
+        config=ROOT/f"tests/tick_shock/fixtures/{test_id}_config.csv"
         expected=ROOT/f"tests/tick_shock/expected/{test_id}_expected.csv"
         write(fixture,["sequence","symbol","time_msc","bid","ask","processing_msc","note"],[
             {"sequence":1,"symbol":"EURUSD","time_msc":1000,"bid":"1.0000","ask":"1.0002","processing_msc":1000,"note":f"{test_id} independent fixture start"},
             {"sequence":2,"symbol":"EURUSD","time_msc":1250,"bid":"1.0002","ask":"1.0004","processing_msc":1250,"note":desc},
+        ])
+        write(config,["key","value","unit","note"],[
+            {"key":"detector_spec_sha256","value":"53DB75EEE4641D98F4917E74B9C26B84D07533CE8EA1A6689AF7F36BAAEA64EA","unit":"sha256","note":"frozen Step 15A detector contract"},
+            {"key":"execution_mode","value":"REALIZABLE_EA","unit":"enum","note":"causal production-path mode"},
+            {"key":"oracle_source","value":"docs/research/tick_shock/15b_control_funnel_test_spec.md","unit":"path","note":"predeclared before production implementation"},
+            {"key":"production_function_used_for_expected","value":"false","unit":"bool","note":"mandatory independent oracle"},
         ])
         expectation=[]
         for item in desc.split(";"):
@@ -83,4 +90,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

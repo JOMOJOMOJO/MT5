@@ -63,7 +63,7 @@ string TSV1SpecSha256()
 
 string TSV1FeatureSchema()
   {
-   return "tickshock-detector-feature-v1";
+   return "tickshock-detector-feature-v2";
   }
 
 int TSV1DetectorCount()
