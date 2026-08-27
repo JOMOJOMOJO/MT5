@@ -1,0 +1,11 @@
+finding_id,severity,category,evidence_path,status,required_action
+TS15B-QA-001,INFO,identity,reports/analysis/tick_shock/step15b/detector_identity_regression.csv,PASS,none
+TS15B-QA-002,INFO,parameters,reports/analysis/tick_shock/step15b/parameter_diff.csv,PASS,none
+TS15B-QA-003,INFO,matched_control,reports/analysis/tick_shock/step15b/control_match_coverage.csv,PASS,retain exact matching in locked validation
+TS15B-QA-004,MEDIUM,strict_support,reports/analysis/tick_shock/step15b/control_match_coverage.csv,CONTROL_SUPPORT_INSUFFICIENT,do not infer STRICT_V0 matched effects
+TS15B-QA-005,INFO,primary_statistics,reports/analysis/tick_shock/step15b/multiple_testing_results.csv,PASS,validate PERSISTENT on locked data only after authorization
+TS15B-QA-006,HIGH,cost_model,docs/research/tick_shock/15b_control_funnel_results.md,COST_MODEL_INCOMPLETE,do not report formal net expectancy
+TS15B-QA-007,HIGH,strategy_edge,docs/research/tick_shock/15b_control_funnel_results.md,EDGE_UNDETERMINED,do not promote to production
+TS15B-QA-008,MEDIUM,fallback_overlap,reports/analysis/tick_shock/step15b/gbpusd_fallback_sensitivity.csv,NOT_OBSERVABLE,use aggregate and all-GBPUSD exclusion sensitivity only
+TS15B-QA-009,INFO,compile,reports/compile/tick_shock/step15b_research_ea.log,PASS,none
+TS15B-QA-010,INFO,tests,reports/tests/tick_shock/step15b_green/step15b_green_results.csv,PASS,retain frozen expected files
