@@ -1905,6 +1905,10 @@ void TSRV1AdvanceCounterfactualTracks(TSRSymbolContext &context,const TSRShortTi
       TSRV1StatisticalTrack track=context.v1_tracks[i];
       if(tick.time_msc<=track.confirmed_msc) continue;
       TS15CQueueResponseQuote(track.response,tick.time_msc,tick.bid,tick.ask);
+      // The response recorder may wait for the first quote at/after 120 s, but
+      // the existing strategy reachability/fill window must not be extended.
+      if(tick.time_msc>track.confirmed_msc+120000)
+        {context.v1_tracks[i]=track;continue;}
       for(int s=0;s<TSR_STRATEGY_COUNT;++s)
          if(track.counterfactual_reachable[s] && track.counterfactual_entry_msc[s]==0 && tick.time_msc>=track.counterfactual_eligible_msc[s])
             track.counterfactual_entry_msc[s]=tick.time_msc;

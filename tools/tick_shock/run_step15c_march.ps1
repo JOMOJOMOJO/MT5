@@ -1,8 +1,8 @@
 param([int]$TimeoutSeconds=1800)
 $ErrorActionPreference="Stop"
 $root=(Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
-$folder="20260828_ts15c_tail_v1_persistent_response_202503"
-$runId="ts15c_tail_v1_persistent_response_202503_20260828"
+$folder="20260828_ts15c_tail_v1_persistent_response_202503_r2"
+$runId="ts15c_tail_v1_persistent_response_202503_r2_20260828"
 $runDir=Join-Path $root "reports\backtest\runs\$folder"
 if(Test-Path $runDir){throw "Refusing to overwrite $runDir"}
 New-Item -ItemType Directory -Path $runDir|Out-Null
