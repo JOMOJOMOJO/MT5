@@ -50,15 +50,22 @@ def main() -> int:
     committed=subprocess.check_output(["git","-C",str(ROOT),"diff","--name-only",f"{BASE}..HEAD"],text=True).splitlines()
     status=subprocess.check_output(["git","-C",str(ROOT),"status","--porcelain"],text=True).splitlines()
     untracked=[line[3:] for line in status if line.startswith("?? ")]
-    relevant=[p for p in committed+untracked if ("15b" in p.lower() or "20260827_ts15b" in p)]
+    # Every committed path since the clean Step 15A base belongs to Step 15B,
+    # including generic production paths whose names do not contain "15b".
+    # Untracked selection remains narrow so refreshed historical compile logs
+    # cannot leak into the Step 15B inventory.
+    relevant=list(committed)+[p for p in untracked if ("15b" in p.lower() or "20260827_ts15b" in p)]
     relevant.extend(["docs/research/tick_shock/00_artifact_manifest.md","reports/qa/tick_shock/step15b_final_qa.md",
                      "reports/qa/tick_shock/step15b_final_qa_findings.csv","reports/tests/tick_shock/step15b_final_results.csv",
                      "reports/compile/tick_shock/step15b_compile_results.csv","tools/tick_shock/finalize_step15b.py"])
-    paths=sorted(set(relevant))
+    self_referential={"docs/research/tick_shock/00_artifact_manifest.md",
+                      "reports/research/tick_shock/step15b_changed_files.csv",
+                      "reports/research/tick_shock/step15b_output_hashes.csv"}
+    paths=sorted(set(relevant)-self_referential)
     inventory=[]
     for rel in paths:
         path=ROOT/rel
-        if not path.is_file() or rel.endswith("00_artifact_manifest.md"): continue
+        if not path.is_file(): continue
         inventory.append({"path":rel.replace("\\","/"),"classification":"step15b_source" if path.suffix.lower() in {".mq5",".mqh",".py",".ps1"} else "step15b_evidence",
                           "bytes":path.stat().st_size,"sha256":hashlib.sha256(path.read_bytes()).hexdigest().upper()})
     write(ROOT/"reports/research/tick_shock/step15b_changed_files.csv",list(inventory[0]),inventory)
