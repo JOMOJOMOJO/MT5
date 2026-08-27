@@ -1908,9 +1908,9 @@ void TSRV1AdvanceCounterfactualTracks(TSRSymbolContext &context,const TSRShortTi
       // Keep the historical state-transition observation at the terminal
       // boundary, but never allow the extended response-recorder lifetime to
       // create an entry after the existing 120-second strategy window.
-      bool strategy_entry_open=tick.time_msc<=track.confirmed_msc+120000;
       for(int s=0;s<TSR_STRATEGY_COUNT;++s)
-         if(strategy_entry_open && track.counterfactual_reachable[s] && track.counterfactual_entry_msc[s]==0 && tick.time_msc>=track.counterfactual_eligible_msc[s])
+         if(track.counterfactual_reachable[s] && track.counterfactual_signal_msc[s]<=track.confirmed_msc+120000 &&
+            track.counterfactual_entry_msc[s]==0 && tick.time_msc>=track.counterfactual_eligible_msc[s])
             track.counterfactual_entry_msc[s]=tick.time_msc;
       if(!track.counterfactual_terminal)
         {
