@@ -2,8 +2,10 @@ path,classification,action,reason
 docs/devlog/2026-08-27-tickshock-step15a-statistical-event-separation.md,research_document,commit,Step 15A source/test/document/development evidence
 docs/research/tick_shock/15a_detector_implementation.md,research_document,commit,Step 15A source/test/document/development evidence
 docs/research/tick_shock/15a_detector_test_spec.md,research_document,commit,Step 15A source/test/document/development evidence
+docs/research/tick_shock/15a_matched_control_spec.md,research_document,commit,Step 15A source/test/document/development evidence
 docs/research/tick_shock/15a_shock_definition_spec.md,research_document,commit,Step 15A source/test/document/development evidence
 docs/research/tick_shock/15a_shock_redefinition_preanalysis.md,research_document,commit,Step 15A source/test/document/development evidence
+docs/research/tick_shock/15a_shock_redefinition_results.md,research_document,commit,Step 15A source/test/document/development evidence
 mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5,production_or_harness_source,commit,Step 15A source/test/document/development evidence
 mql/Experts/tests/ExpectedValue_TickShock_DetectorHarness.mq5,production_or_harness_source,commit,Step 15A source/test/document/development evidence
 mql/Experts/tests/TickShockStep15ATestSupport.mqh,production_or_harness_source,commit,Step 15A source/test/document/development evidence
@@ -157,10 +159,20 @@ reports/compile/tick_shock/step15a_red_ExpectedValue_TickShock_DetectorHarness.l
 reports/compile/tick_shock/step15a_research_ea.log,generated_research_evidence,commit,Step 15A source/test/document/development evidence
 reports/qa/tick_shock/step15a_green_hashes.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
 reports/qa/tick_shock/step15a_red_hashes.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
+reports/research/tick_shock/step15a_cluster_bootstrap.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
+reports/research/tick_shock/step15a_detector_comparison.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
+reports/research/tick_shock/step15a_event_overlap.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
+reports/research/tick_shock/step15a_false_positive_calibration.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
+reports/research/tick_shock/step15a_matched_control_results.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
+reports/research/tick_shock/step15a_parameter_diff.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
+reports/research/tick_shock/step15a_severity_analysis.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
+reports/research/tick_shock/step15a_strategy_secondary_diagnostics.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
+reports/research/tick_shock/step15a_strict_regression.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
 reports/research/tick_shock/step15a_trial_registry.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
 reports/tests/tick_shock/step15a_green/independent_oracle_integrity.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
 reports/tests/tick_shock/step15a_green/python_tests.log,generated_research_evidence,commit,Step 15A source/test/document/development evidence
 reports/tests/tick_shock/step15a_green/raw/detector.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
+reports/tests/tick_shock/step15a_green/raw/detector_r2.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
 reports/tests/tick_shock/step15a_green/raw/domain_unit.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
 reports/tests/tick_shock/step15a_green/raw/execution.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
 reports/tests/tick_shock/step15a_green/raw/integrity_regression.csv,generated_research_evidence,commit,Step 15A source/test/document/development evidence
@@ -251,6 +263,7 @@ tests/tick_shock/fixtures/TS15A-VOL-LOW-001_config.csv,test_fixture_expected_or_
 tests/tick_shock/fixtures/TS15A-VOL-LOW-001_ticks.csv,test_fixture_expected_or_registry,commit,Step 15A source/test/document/development evidence
 tests/tick_shock/python/test_fixture_integrity.py,test_fixture_expected_or_registry,commit,Step 15A source/test/document/development evidence
 tests/tick_shock/spec/test_cases.csv,test_fixture_expected_or_registry,commit,Step 15A source/test/document/development evidence
+tools/tick_shock/analyze_step15a_march.py,research_tool,commit,Step 15A source/test/document/development evidence
 tools/tick_shock/build_step15a_final_evidence.py,research_tool,commit,Step 15A source/test/document/development evidence
 tools/tick_shock/build_step15a_hashes.py,research_tool,commit,Step 15A source/test/document/development evidence
 tools/tick_shock/run_all_tests.ps1,research_tool,commit,Step 15A source/test/document/development evidence
@@ -259,3 +272,4 @@ tools/tick_shock/run_python_tests.py,research_tool,commit,Step 15A source/test/d
 tools/tick_shock/run_step15a_detector_tests.py,research_tool,commit,Step 15A source/test/document/development evidence
 tools/tick_shock/run_step15a_march.ps1,research_tool,commit,Step 15A source/test/document/development evidence
 tools/tick_shock/step15a_independent_oracle.py,research_tool,commit,Step 15A source/test/document/development evidence
+tools/tick_shock/update_step15a_manifest.py,research_tool,commit,Step 15A source/test/document/development evidence
