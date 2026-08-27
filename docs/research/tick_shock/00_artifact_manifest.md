@@ -7,8 +7,8 @@
 - status: `STEP15A_DEVELOPMENT_COMPLETE_NO_CANDIDATE`
 - manifest_revision: `15A`
 - covered_steps: `01-15A`
-- last_audited_commit: `b109c5ea929746840a27db3d522b767bb99ddcc8`
-- last_updated_at: `2026-08-27T09:55:00+09:00`
+- last_audited_commit: `570407cb70540cc1bc53014f985f3f1615c268a8`
+- last_updated_at: `2026-08-27T10:00:00+09:00`
 
 Step 8 QA counted 393 artifact rows and 377 unique paths before its own four
 artifact rows were appended. The checked-in post-Step-8 state is therefore 397
@@ -1440,4 +1440,7 @@ result remains NOT_ESTIMABLE; no locked OOS is authorized.
 | TS-S15A-275 | 15A | `tools/tick_shock/step15a_independent_oracle.py` | research tool | statistical shock V1 development/regression | source | `DE6EAE8FCF40928A2C2ABDB3CE81B2C3F4A5EA2A72436982422D1184B7BD4E80` | yes | explicit control-recorder decision | COMPLETE | no locked OOS authorization | ec1a65d8a37d573161bb96b4e91ffdd49e51ccff |
 | TS-S15A-276 | 15A | `tools/tick_shock/update_step15a_manifest.py` | research tool | statistical shock V1 development/regression | source | `D164B6BE9F6F6B1430AA73C0BEB28FC5C80FCB0F43B3C8A225CA3D977CA360AB` | yes | explicit control-recorder decision | COMPLETE | no locked OOS authorization | b109c5ea929746840a27db3d522b767bb99ddcc8 |
 
-Step 15A appends 276 authoritative rows. The post-Step-15A rollup is 1317 rows and 1217 unique paths; artifact ID duplicates are zero.
+| TS-S15A-277 | 15A | `reports/research/tick_shock/step15a_changed_files.csv` | research evidence | final Step 15A path inventory excluding self-referential manifest | generated evidence | `AB22D22C443B17ADB5DB7B0BE97ECD0F2C39B90D00ECC07430D6BEAC0E2008C0` | yes | explicit control-recorder decision | COMPLETE | 274 paths; manifest intentionally excluded | 570407cb70540cc1bc53014f985f3f1615c268a8 |
+| TS-S15A-278 | 15A | `reports/research/tick_shock/step15a_output_hashes.csv` | research evidence | final Step 15A SHA-256 inventory excluding self-reference and manifest | generated evidence | `BCC6BE95116D0CD4C3A645636AC232CF9B95C681A8957B48568B6DD4359EE131` | yes | explicit control-recorder decision | COMPLETE | 274 paths; manifest intentionally excluded | 570407cb70540cc1bc53014f985f3f1615c268a8 |
+
+Step 15A appends 278 authoritative rows. The post-Step-15A rollup is 1319 rows and 1217 unique paths; artifact ID duplicates are zero.
