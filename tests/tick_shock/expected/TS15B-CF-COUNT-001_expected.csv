@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+clusters,2,0,value,independent predeclared oracle
+scenario_cells,1104,0,value,independent predeclared oracle
+potential_trades,2,0,value,independent predeclared oracle

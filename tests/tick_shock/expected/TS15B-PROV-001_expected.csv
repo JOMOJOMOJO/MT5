@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+spec_sha,53DB75EEE4641D98F4917E74B9C26B84D07533CE8EA1A6689AF7F36BAAEA64EA,exact,value,independent predeclared oracle
+schema,tickshock-detector-feature-v2,exact,value,independent predeclared oracle

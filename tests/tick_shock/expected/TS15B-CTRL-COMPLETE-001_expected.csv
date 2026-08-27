@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+complete_120s,1,0,value,independent predeclared oracle
+abs_return_1s,0.001,0,value,independent predeclared oracle

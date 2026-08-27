@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+production_mutations,0,0,value,independent predeclared oracle

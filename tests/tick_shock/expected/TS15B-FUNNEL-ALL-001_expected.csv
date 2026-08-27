@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+all_fail,ACTIVITY_ELEVATED|LIQUIDITY_NORMAL|COST_FEASIBLE,exact,value,independent predeclared oracle

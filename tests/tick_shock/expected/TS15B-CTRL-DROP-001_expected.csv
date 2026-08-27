@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+drops,1,0,value,independent predeclared oracle
+validation_invalid,1,0,value,independent predeclared oracle

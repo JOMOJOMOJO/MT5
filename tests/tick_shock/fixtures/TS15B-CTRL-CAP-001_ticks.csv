@@ -1,0 +1,3 @@
+sequence,symbol,time_msc,bid,ask,processing_msc,note
+1,EURUSD,1000,1.0000,1.0002,1000,TS15B-CTRL-CAP-001 independent fixture start
+2,EURUSD,1250,1.0002,1.0004,1250,capacity_hits=1;validation_invalid=1

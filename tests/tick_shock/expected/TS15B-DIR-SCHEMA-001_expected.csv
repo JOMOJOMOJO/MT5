@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+direction_column,present,exact,value,independent predeclared oracle

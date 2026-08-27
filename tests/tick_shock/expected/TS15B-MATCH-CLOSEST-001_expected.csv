@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+selected_id,C2,exact,value,independent predeclared oracle

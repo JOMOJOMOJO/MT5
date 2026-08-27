@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+direction,SHORT,exact,value,independent predeclared oracle
+signal_msc,1250,0,ms,independent predeclared oracle

@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+matched,2,0,value,independent predeclared oracle
+unique_controls,1,0,value,independent predeclared oracle
+reuse_count,1,0,value,independent predeclared oracle

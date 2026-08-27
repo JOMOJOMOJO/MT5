@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+input,4,0,value,independent predeclared oracle
+passed,1,0,value,independent predeclared oracle
+excluded,3,0,value,independent predeclared oracle
+reconciles,1,0,value,independent predeclared oracle

@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+boundary_mid,1.0003,0,value,independent predeclared oracle
+boundary_count,1,0,value,independent predeclared oracle

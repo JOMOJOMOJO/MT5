@@ -1,0 +1,3 @@
+field,expected_value,tolerance,unit,note
+matched,0,0,value,independent predeclared oracle
+reason,UNMATCHED_EXACT_KEY,exact,value,independent predeclared oracle

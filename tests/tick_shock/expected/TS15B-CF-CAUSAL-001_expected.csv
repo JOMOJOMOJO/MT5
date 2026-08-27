@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+entry_quote_msc,1600,0,ms,independent predeclared oracle
+eligible_msc,1600,0,ms,independent predeclared oracle
+causal,1,0,value,independent predeclared oracle

@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+eligible_minus120001,1,0,value,independent predeclared oracle
+eligible_minus120000,0,0,value,independent predeclared oracle
+eligible_plus120000,0,0,value,independent predeclared oracle
+eligible_plus120001,1,0,value,independent predeclared oracle
