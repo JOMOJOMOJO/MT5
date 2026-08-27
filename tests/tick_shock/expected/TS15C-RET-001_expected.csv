@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+continuation_return,0.000999500333,1e-9,log_return,continuation return follows shock sign

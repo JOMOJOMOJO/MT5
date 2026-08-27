@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+reversal_hit_msc,1900,0,msc,reversal first passage is timestamped

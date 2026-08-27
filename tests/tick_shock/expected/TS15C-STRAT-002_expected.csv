@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+entry_msc,1801,0,msc,post-burst entry starts after burst end

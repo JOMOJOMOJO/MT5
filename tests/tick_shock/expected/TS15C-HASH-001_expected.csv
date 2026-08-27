@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+hash_equal,true,0,bool,candidate hash is canonical and deterministic

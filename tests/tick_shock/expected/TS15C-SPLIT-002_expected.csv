@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+confirmation_reads,0,0,count,confirmation cannot be read during discovery

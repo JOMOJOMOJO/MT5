@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+rerun_equal,true,0,bool,identical input reruns identically

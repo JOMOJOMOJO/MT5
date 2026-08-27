@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+validation_status,VALIDATION_INVALID,0,enum,capacity and drop counters fail closed

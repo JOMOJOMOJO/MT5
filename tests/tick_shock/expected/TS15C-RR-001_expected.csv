@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+rr_values,0.8|1.0|1.2|1.5|2.0,1e-9,R,research RR grid is finite

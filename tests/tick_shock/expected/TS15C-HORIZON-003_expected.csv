@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+snapshot_mid,1.0003,1e-9,price,same-ms group closes on last quote

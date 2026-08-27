@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+timeout_r,0.25,1e-9,R,timeout R uses executable market side

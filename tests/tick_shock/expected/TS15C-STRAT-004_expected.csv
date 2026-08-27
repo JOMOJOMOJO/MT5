@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+entry_msc,2401,0,msc,reversal entry starts after invalidation

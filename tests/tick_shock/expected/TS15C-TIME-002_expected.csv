@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+entry_quote_msc,1251,0,msc,candidate-time entry backdate is rejected

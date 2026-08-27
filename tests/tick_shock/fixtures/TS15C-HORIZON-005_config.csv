@@ -1,0 +1,6 @@
+key,value
+test_id,TS15C-HORIZON-005
+candidate_msc,1000
+confirmed_msc,1250
+stale_limit_ms,1000
+episode_window_ms,120000

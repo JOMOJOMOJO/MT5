@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+future_read_count,0,0,count,future feature reads are rejected

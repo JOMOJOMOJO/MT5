@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+barrier_result,AMBIGUOUS,0,enum,same-tick two-sided hit is ambiguous

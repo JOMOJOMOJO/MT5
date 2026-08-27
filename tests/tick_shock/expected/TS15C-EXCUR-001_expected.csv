@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+mfe,0.0010,1e-9,price,directional MFE is online maximum

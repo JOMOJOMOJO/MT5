@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+strategy_status,NO_SIGNAL,0,enum,unreached signal remains no signal

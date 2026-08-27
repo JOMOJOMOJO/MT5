@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+entry_msc,2201,0,msc,pullback entry starts after pullback signal

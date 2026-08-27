@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+continuation_hit_msc,1700,0,msc,continuation first passage is timestamped

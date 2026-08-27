@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+outcome_status,CENSORED_END,0,enum,run-end outcome is censored

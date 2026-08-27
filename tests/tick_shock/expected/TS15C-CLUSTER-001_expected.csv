@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+representative_event,A,0,id,representative tie-break is deterministic

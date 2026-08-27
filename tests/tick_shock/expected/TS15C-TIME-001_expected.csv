@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+reference_msc,1250,0,msc,confirmed time is the tradable reference

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+snapshot_status,MISSING_END,0,enum,missing horizon is blank not zero

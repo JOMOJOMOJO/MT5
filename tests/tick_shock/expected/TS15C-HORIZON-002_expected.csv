@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+snapshot_msc,1601,0,msc,irregular ticks use first quote at or after target

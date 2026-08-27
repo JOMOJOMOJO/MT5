@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+long_exit_short_exit,1.0010|1.0012,1e-9,price,exit uses executable Bid Ask

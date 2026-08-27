@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+reachable_without_activity,true,0,bool,leave-one-gate-out is order independent

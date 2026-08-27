@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+same_episode,true,0,bool,overlapping windows share episode

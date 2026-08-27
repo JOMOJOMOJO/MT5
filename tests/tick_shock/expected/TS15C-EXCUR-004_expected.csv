@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+time_to_mae_ms,400,0,ms,time to MAE retains first maximum

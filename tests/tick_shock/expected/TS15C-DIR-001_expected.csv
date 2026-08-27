@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+long_sign_short_sign,1|-1,0,enum,LONG and SHORT signs are symmetric

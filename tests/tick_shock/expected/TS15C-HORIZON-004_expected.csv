@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+snapshot_status,STALE,0,enum,stale snapshot is explicit

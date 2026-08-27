@@ -1,0 +1,8 @@
+sequence,symbol,time_msc,bid,ask,processing_msc,note
+1,EURUSD,1000,1.0000,1.0002,1250,candidate quote
+2,EURUSD,1250,1.0001,1.0003,1250,confirmed signal tick
+3,EURUSD,1251,1.0002,1.0004,1251,first post-signal quote
+4,EURUSD,1601,1.0004,1.0006,1601,irregular horizon quote
+5,EURUSD,1700,1.0010,1.0012,1700,continuation barrier
+6,EURUSD,1900,0.9996,0.9998,1900,adverse excursion
+7,EURUSD,2100,0.9994,0.9996,2100,origin recross

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+entry_msc,1251,0,msc,detection continuation starts after confirm

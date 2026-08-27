@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+time_to_mfe_ms,700,0,ms,time to MFE retains first maximum

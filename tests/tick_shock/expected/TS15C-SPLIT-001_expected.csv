@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+split_counts,2190|1|1095,0,episodes,chronological split and purge are fixed

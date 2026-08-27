@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+gate_mask,183,0,bitmask,gate truth values serialize as bitmask

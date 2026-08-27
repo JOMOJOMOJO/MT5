@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+bid_ask,0.999875|1.000125,1e-9,price,spread stress expands Bid Ask around mid

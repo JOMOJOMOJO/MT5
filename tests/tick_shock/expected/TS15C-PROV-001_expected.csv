@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+provenance_status,MATCH,0,enum,schema and spec provenance are mandatory
