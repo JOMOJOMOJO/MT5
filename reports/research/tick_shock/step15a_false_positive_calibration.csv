@@ -1,0 +1,2 @@
+seed,families,calibration_samples_per_horizon,horizons,alpha,observed_family_rejection_rate,lower_gate,upper_gate,status,oracle
+20260826,100000,50000,3,0.01,0.00997000,0.00850000,0.01150000,PASS,independent_numpy_gaussian_abs_rank_holm

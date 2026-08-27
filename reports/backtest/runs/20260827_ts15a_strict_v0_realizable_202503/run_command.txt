@@ -1,0 +1,1 @@
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/backtest.ps1 -ConfigPath reports/backtest/runs/20260827_ts15a_strict_v0_realizable_202503/tester_config.ini -TimeoutSeconds 1800 -RestartExisting

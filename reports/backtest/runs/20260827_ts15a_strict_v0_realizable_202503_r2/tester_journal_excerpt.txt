@@ -1,0 +1,108 @@
+Source: C:\Users\windows\AppData\Roaming\MetaQuotes\Tester\D232275B22422903BD477FB48B858FBA\Agent-127.0.0.1-3000\logs\20260827.log
+Extracted for run: ts15a_strict_v0_realizable_202503_r2_20260827
+
+CS	0	00:56:45.418	Tester	  InpTokyoEndHour=9
+CS	0	00:56:45.418	Tester	  InpLondonStartHour=8
+CS	0	00:56:45.418	Tester	  InpLondonEndHour=17
+CS	0	00:56:45.418	Tester	  InpNewYorkStartHour=13
+CS	0	00:56:45.418	Tester	  InpNewYorkEndHour=22
+CS	0	00:56:45.418	Tester	  InpRunId=ts15a_strict_v0_realizable_202503_r2_20260827
+CS	0	00:56:45.418	Tester	  InpLogFolder=ts15a_strict_v0_realizable_202503_r2_20260827
+CS	0	00:56:45.418	Tester	  InpResumeRun=false
+CS	0	00:56:45.418	Tester	  InpResumeCheckpoint=
+CS	0	00:56:45.418	Tester	  InpResumeLastEventSequence=-1
+CS	0	00:56:45.418	Tester	  InpResumeCursorMsc=0
+CS	0	00:56:45.418	Tester	  InpResearchPeriod=2025-03-01_TO_2025-04-01
+CS	0	00:56:45.418	Tester	  InpTesterModel=REAL_TICKS_MODEL_4
+CS	0	00:56:45.418	Tester	  InpSourceCommit=ec1a65d8a37d573161bb96b4e91ffdd49e51ccff
+CS	0	00:56:45.418	Tester	  InpEx5Hash=97BF63EF929EDE4B16DEA68DC827A3606F7D802B7A07BF4859DE45FAC173EA46
+CS	0	00:56:45.418	Tester	  InpSchemaVersion=tickshock-event-v1+detector-feature-v1
+CS	0	00:56:45.418	Tester	  InpEnableDebug=false
+CS	0	00:56:45.418	Tester	  InpDebugSymbol=EURUSD
+CS	0	00:56:45.418	Tester	  InpDebugMaxMessages=200
+CS	0	00:56:45.460	History	EURUSD,M15: history cache allocated for 31118 bars and contains 28992 bars from 2024.01.02 00:00 to 2025.02.28 23:45
+CS	0	00:56:45.460	History	EURUSD,M15: history begins from 2024.01.02 00:00
+CS	0	00:56:45.490	History	EURUSD,H1: history cache allocated for 7780 bars and contains 7248 bars from 2024.01.02 00:00 to 2025.02.28 23:00
+CS	0	00:56:45.490	History	EURUSD,H1: history begins from 2024.01.02 00:00
+CS	0	00:56:45.490	Symbols	GBPUSD: symbol to be synchronized
+CS	0	00:56:45.490	Symbols	GBPUSD: symbol synchronized, 3720 bytes of symbol info received
+CS	0	00:56:45.617	History	GBPUSD: load 27 bytes of history data to synchronize in 0:00:00.116
+CS	0	00:56:45.617	History	GBPUSD: history synchronized from 2023.01.02 to 2026.08.14
+CS	0	00:56:45.620	Ticks	GBPUSD: ticks synchronization started
+CS	0	00:56:46.663	Ticks	GBPUSD: load 34 bytes of tick data to synchronize in 0:00:01.047
+CS	0	00:56:46.663	Ticks	GBPUSD: history ticks synchronized from 2024.01.02 to 2026.08.13
+CS	0	00:56:46.729	History	GBPUSD,M15: history cache allocated for 31118 bars and contains 28992 bars from 2024.01.02 00:00 to 2025.02.28 23:45
+CS	0	00:56:46.729	History	GBPUSD,M15: history begins from 2024.01.02 00:00
+CS	0	00:56:46.758	History	GBPUSD,H1: history cache allocated for 7780 bars and contains 7248 bars from 2024.01.02 00:00 to 2025.02.28 23:00
+CS	0	00:56:46.758	History	GBPUSD,H1: history begins from 2024.01.02 00:00
+CS	0	00:56:46.758	Symbols	USDJPY: symbol to be synchronized
+CS	0	00:56:46.759	Symbols	USDJPY: symbol synchronized, 3720 bytes of symbol info received
+CS	0	00:56:46.798	History	USDJPY: load 27 bytes of history data to synchronize in 0:00:00.000
+CS	0	00:56:46.798	History	USDJPY: history synchronized from 2023.01.02 to 2026.08.14
+CS	0	00:56:46.800	Ticks	USDJPY: ticks synchronization started
+CS	0	00:56:47.826	Ticks	USDJPY: load 34 bytes of tick data to synchronize in 0:00:01.031
+CS	0	00:56:47.826	Ticks	USDJPY: history ticks synchronized from 2024.01.02 to 2026.08.13
+CS	0	00:56:47.913	History	USDJPY,M15: history cache allocated for 31118 bars and contains 28992 bars from 2024.01.02 00:00 to 2025.02.28 23:45
+CS	0	00:56:47.913	History	USDJPY,M15: history begins from 2024.01.02 00:00
+CS	0	00:56:47.944	History	USDJPY,H1: history cache allocated for 7780 bars and contains 7248 bars from 2024.01.02 00:00 to 2025.02.28 23:00
+CS	0	00:56:47.944	History	USDJPY,H1: history begins from 2024.01.02 00:00
+CS	0	00:56:47.944	Symbols	AUDUSD: symbol to be synchronized
+CS	0	00:56:47.945	Symbols	AUDUSD: symbol synchronized, 3720 bytes of symbol info received
+CS	0	00:56:48.074	History	AUDUSD: load 27 bytes of history data to synchronize in 0:00:00.113
+CS	0	00:56:48.074	History	AUDUSD: history synchronized from 2023.01.02 to 2025.12.31
+CS	0	00:56:48.075	Ticks	AUDUSD: ticks synchronization started
+CS	0	00:56:49.114	Ticks	AUDUSD: load 34 bytes of tick data to synchronize in 0:00:01.047
+CS	0	00:56:49.114	Ticks	AUDUSD: history ticks synchronized from 2024.01.02 to 2025.12.30
+CS	0	00:56:49.163	History	AUDUSD,M15: history cache allocated for 31118 bars and contains 28992 bars from 2024.01.02 00:00 to 2025.02.28 23:45
+CS	0	00:56:49.163	History	AUDUSD,M15: history begins from 2024.01.02 00:00
+CS	0	00:56:49.191	History	AUDUSD,H1: history cache allocated for 7780 bars and contains 7248 bars from 2024.01.02 00:00 to 2025.02.28 23:00
+CS	0	00:56:49.191	History	AUDUSD,H1: history begins from 2024.01.02 00:00
+CS	0	00:56:49.191	Symbols	USDCAD: symbol to be synchronized
+CS	0	00:56:49.192	Symbols	USDCAD: symbol synchronized, 3720 bytes of symbol info received
+CS	0	00:56:49.301	History	USDCAD: load 27 bytes of history data to synchronize in 0:00:00.103
+CS	0	00:56:49.301	History	USDCAD: history synchronized from 2024.01.02 to 2025.04.01
+CS	0	00:56:49.302	Ticks	USDCAD: ticks synchronization started
+CS	0	00:56:50.348	Ticks	USDCAD: load 34 bytes of tick data to synchronize in 0:00:01.047
+CS	0	00:56:50.348	Ticks	USDCAD: history ticks synchronized from 2025.03.03 to 2025.03.31
+CS	0	00:56:50.387	History	USDCAD,M15: history cache allocated for 31118 bars and contains 28992 bars from 2024.01.02 00:00 to 2025.02.28 23:45
+CS	0	00:56:50.387	History	USDCAD,M15: history begins from 2024.01.02 00:00
+CS	0	00:56:50.416	History	USDCAD,H1: history cache allocated for 7780 bars and contains 7248 bars from 2024.01.02 00:00 to 2025.02.28 23:00
+CS	0	00:56:50.416	History	USDCAD,H1: history begins from 2024.01.02 00:00
+CS	0	00:56:50.416	Symbols	USDCHF: symbol to be synchronized
+CS	0	00:56:50.416	Symbols	USDCHF: symbol synchronized, 3720 bytes of symbol info received
+CS	0	00:56:50.536	History	USDCHF: load 27 bytes of history data to synchronize in 0:00:00.117
+CS	0	00:56:50.536	History	USDCHF: history synchronized from 2024.01.02 to 2025.04.01
+CS	0	00:56:50.536	Ticks	USDCHF: ticks synchronization started
+CS	0	00:56:51.572	Ticks	USDCHF: load 34 bytes of tick data to synchronize in 0:00:01.031
+CS	0	00:56:51.572	Ticks	USDCHF: history ticks synchronized from 2025.03.03 to 2025.03.31
+CS	0	00:56:51.607	History	USDCHF,M15: history cache allocated for 31118 bars and contains 28992 bars from 2024.01.02 00:00 to 2025.02.28 23:45
+CS	0	00:56:51.607	History	USDCHF,M15: history begins from 2024.01.02 00:00
+CS	0	00:56:51.636	History	USDCHF,H1: history cache allocated for 7780 bars and contains 7248 bars from 2024.01.02 00:00 to 2025.02.28 23:00
+CS	0	00:56:51.636	History	USDCHF,H1: history begins from 2024.01.02 00:00
+CS	0	00:56:51.644	ExpectedValue_MultiCurrency_TickShockResearch (EURUSD,M1)	2025.03.01 00:00:00   ExpectedValue_MultiCurrency_TickShockResearch initialized research_only symbols=6 grid_ms=250 detector=STRICT_V0 horizons=250,500,1000 execution_mode=REALIZABLE_EA submit_latency_ms=0
+CS	0	00:56:51.777	Ticks	AUDUSD : real ticks begin from 2024.01.02 00:00:00
+CS	0	00:56:51.889	Ticks	EURUSD : real ticks begin from 2024.01.02 00:00:00
+CS	3	00:56:51.982	Ticks	GBPUSD : 2025.03.24 23:59 - real ticks discarded for 179 minutes out of 1438 total minute bars within a day
+CS	3	00:56:51.982	Ticks	GBPUSD : 2025.03.24 23:59 - 6375 tick prices mismatch for 179 minute bars
+CS	0	00:56:52.007	Ticks	GBPUSD : real ticks begin from 2024.01.02 00:00:00
+CS	3	00:56:52.007	Ticks	GBPUSD : 2025.03.01 00:00 - 2025.04.01 00:00  real ticks discarded for 179 minutes of 30187 total minute bars, every tick generation used
+CS	3	00:56:52.007	Ticks	GBPUSD : 2025.03.01 00:00 - 2025.04.01 00:00  tick volumes not matched for 176 minute bars
+CS	3	00:56:52.007	Ticks	GBPUSD : 2025.03.01 00:00 - 2025.04.01 00:00  tick prices of 6375 ticks not matched for 179 minute bars
+CS	3	00:56:52.007	Ticks	GBPUSD : 2025.03.01 00:00 - 2025.04.01 00:00  last prices absent for 1435 minute bars, bid prices used
+CS	0	00:56:52.157	Ticks	USDCAD : real ticks begin from 2025.03.03 00:00:00
+CS	0	00:56:52.253	Ticks	USDCHF : real ticks begin from 2025.03.03 00:00:00
+CS	0	00:56:52.473	Ticks	USDJPY : real ticks begin from 2024.01.02 00:00:00
+CS	0	01:02:56.186	Tester	final balance 10000.00 USD
+CS	0	01:02:56.198	ExpectedValue_MultiCurrency_TickShockResearch (EURUSD,M1)	2025.03.31 23:57:59   ExpectedValue_MultiCurrency_TickShockResearch deinitialized reason=1 events=19 rows=19
+CS	0	01:02:56.222	Tester	EURUSD,M1: 1364080 ticks, 30192 bars generated. Environment synchronized in 0:00:00.021. Test passed in 0:06:10.900 (including ticks preprocessing 0:00:00.813).
+CS	0	01:02:56.222	Tester	EURUSD,M1: total time from login to stop testing 0:06:10.921 (including 0:00:05.657 for history data synchronization)
+CS	0	01:02:56.222	Tester	10587807 total ticks for all symbols
+CS	0	01:02:56.222	Tester	AUDUSD: generate 1629371 ticks in 0:00:00.125, passed to tester 1629371 ticks
+CS	0	01:02:56.222	Tester	EURUSD: generate 1364080 ticks in 0:00:00.109, passed to tester 1364080 ticks
+CS	0	01:02:56.222	Tester	GBPUSD: generate 1504580 ticks in 0:00:00.125, passed to tester 1504582 ticks
+CS	0	01:02:56.222	Tester	USDCAD: generate 1973153 ticks in 0:00:00.141, passed to tester 1973154 ticks
+CS	0	01:02:56.222	Tester	USDCHF: generate 1176977 ticks in 0:00:00.094, passed to tester 1176978 ticks
+CS	0	01:02:56.222	Tester	USDJPY: generate 2939646 ticks in 0:00:00.219, passed to tester 2939646 ticks
+CS	0	01:02:56.222	Tester	525 Mb memory used including 40 Mb of history data, 256 Mb of tick data
+CS	0	01:02:56.222	Tester	log file "C:\Users\windows\AppData\Roaming\MetaQuotes\Tester\D232275B22422903BD477FB48B858FBA\Agent-127.0.0.1-3000\logs\20260827.log" written
+CS	0	01:02:56.222	Tester	test Experts\dev\mql\Experts\ExpectedValue_MultiCurrency_TickShockResearch.ex5 on EURUSD,M1 thread finished

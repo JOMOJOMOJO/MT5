@@ -1,0 +1,11 @@
+comparison,baseline,strict_v0,status
+raw_candidates,62577,62577,MATCH
+event_rows,19,19,MATCH
+valid_pullbacks,14,14,MATCH
+reacceleration,5,5,MATCH
+reversal_signals,11,11,MATCH
+scenario_valid,7128,7128,MATCH
+scenario_invalid,324,324,MATCH
+scenario_expectancy_r,-0.299635,-0.299635,MATCH
+event_identity_set,19,19,MATCH
+event_metric_cells,361,mismatches=0,MATCH
