@@ -1,0 +1,9 @@
+detector,artifact,step15a_rows,step15b_rows,missing,added,changed,identity_mismatches,status
+STRICT_V0,detector_features.csv,19,19,0,0,0,0,PASS
+STRICT_V0,events.csv,19,19,0,0,0,0,PASS
+TAIL_V1_RAW,detector_features.csv,56674,56674,0,0,0,0,PASS
+TAIL_V1_RAW,events.csv,40,40,0,0,0,0,PASS
+TAIL_V1_NOISE_ROBUST,detector_features.csv,23825,23825,0,0,0,0,PASS
+TAIL_V1_NOISE_ROBUST,events.csv,10,10,0,0,0,0,PASS
+TAIL_V1_PERSISTENT,detector_features.csv,21799,21799,0,0,0,0,PASS
+TAIL_V1_PERSISTENT,events.csv,10,10,0,0,0,0,PASS

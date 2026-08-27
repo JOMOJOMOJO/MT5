@@ -1,0 +1,5 @@
+trial_id,detector,period,source_commit,status,purpose
+TS15B-01,STRICT_V0,2025-03-01/2025-04-01,0373fc717954eaf1ce51ae73749cb844a4c8d000,COMPLETED,predeclared matched-control and strategy-funnel replay
+TS15B-02,TAIL_V1_RAW,2025-03-01/2025-04-01,0373fc717954eaf1ce51ae73749cb844a4c8d000,COMPLETED,predeclared matched-control and strategy-funnel replay
+TS15B-03,TAIL_V1_NOISE_ROBUST,2025-03-01/2025-04-01,0373fc717954eaf1ce51ae73749cb844a4c8d000,COMPLETED,predeclared matched-control and strategy-funnel replay
+TS15B-04,TAIL_V1_PERSISTENT,2025-03-01/2025-04-01,0373fc717954eaf1ce51ae73749cb844a4c8d000,COMPLETED,predeclared matched-control and strategy-funnel replay
