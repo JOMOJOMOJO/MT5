@@ -200,6 +200,7 @@ struct TSRV1StatisticalTrack
    long counterfactual_eligible_msc[TSR_STRATEGY_COUNT];
    long counterfactual_entry_msc[TSR_STRATEGY_COUNT];
    bool counterfactual_terminal;
+   bool legacy_frozen;
    string status;
   };
 
@@ -1905,12 +1906,16 @@ void TSRV1AdvanceCounterfactualTracks(TSRSymbolContext &context,const TSRShortTi
       TSRV1StatisticalTrack track=context.v1_tracks[i];
       if(tick.time_msc<=track.confirmed_msc) continue;
       TS15CQueueResponseQuote(track.response,tick.time_msc,tick.bid,tick.ask);
-      // Keep the historical state-transition observation at the terminal
-      // boundary, but never allow the extended response-recorder lifetime to
-      // create an entry after the existing 120-second strategy window.
+      // The response recorder may outlive the legacy 120-second grid record.
+      // Once that legacy record is frozen, only response quotes may advance.
+      if(track.legacy_frozen)
+        {
+         context.v1_tracks[i]=track;
+         continue;
+        }
       for(int s=0;s<TSR_STRATEGY_COUNT;++s)
-         if(track.counterfactual_reachable[s] && track.counterfactual_signal_msc[s]<=track.confirmed_msc+120000 &&
-            track.counterfactual_entry_msc[s]==0 && tick.time_msc>=track.counterfactual_eligible_msc[s])
+         if(track.counterfactual_reachable[s] && track.counterfactual_entry_msc[s]==0 &&
+            tick.time_msc>=track.counterfactual_eligible_msc[s])
             track.counterfactual_entry_msc[s]=tick.time_msc;
       if(!track.counterfactual_terminal)
         {
@@ -1977,24 +1982,29 @@ void TSRV1AdvanceStatisticalTracks(TSRSymbolContext &context,const TSRGridPoint 
      {
       TSRV1StatisticalTrack track=context.v1_tracks[index];
       if(point.time_msc<=track.confirmed_msc){++index;continue;}
-      double signed_move=(point.mid-track.confirmed_point.mid)*(double)track.candidate.direction;
-      track.max_favorable_move=MathMax(track.max_favorable_move,signed_move);
-      track.max_adverse_move=MathMax(track.max_adverse_move,-signed_move);
-      if(track.last_mid>0.0 && point.mid>0.0)
+      if(!track.legacy_frozen)
         {
-         double increment=MathLog(point.mid/track.last_mid);
-         if(MathIsValidNumber(increment)) track.realized_variance+=increment*increment;
+         double signed_move=(point.mid-track.confirmed_point.mid)*(double)track.candidate.direction;
+         track.max_favorable_move=MathMax(track.max_favorable_move,signed_move);
+         track.max_adverse_move=MathMax(track.max_adverse_move,-signed_move);
+         if(track.last_mid>0.0 && point.mid>0.0)
+           {
+            double increment=MathLog(point.mid/track.last_mid);
+            if(MathIsValidNumber(increment)) track.realized_variance+=increment*increment;
+           }
+         track.tick_activity+=TSRV1TrailingTickCount(context,track.last_grid_msc,point.time_msc);
+         track.last_mid=point.mid;track.last_grid_msc=point.time_msc;
+         bool return_valid=false;double from_signal=TSRLogReturn(point.mid,track.confirmed_point.mid,return_valid);
+         for(int c=0;c<TSR_V1_FORWARD_CHECKPOINT_COUNT;++c)
+            if(!track.checkpoint_done[c] && point.time_msc>=track.confirmed_msc+(long)TSR_V1_FORWARD_SECONDS[c]*1000)
+              {track.checkpoint_done[c]=return_valid;track.abs_return[c]=return_valid?MathAbs(from_signal):0.0;}
+         double initial_range=MathMax(MathAbs(track.confirmed_point.mid-track.candidate.anchor_mid),g_symbols[track.symbol_index].tick_size);
+         track.quote_reversion_ratio=MathMax(0.0,-signed_move/initial_range);
+         track.final_spread_change=(point.ask-point.bid)-(track.confirmed_point.ask-track.confirmed_point.bid);
+         if(point.time_msc>=track.confirmed_msc+120000)
+            track.legacy_frozen=true;
         }
-      track.tick_activity+=TSRV1TrailingTickCount(context,track.last_grid_msc,point.time_msc);
-      track.last_mid=point.mid;track.last_grid_msc=point.time_msc;
-      bool return_valid=false;double from_signal=TSRLogReturn(point.mid,track.confirmed_point.mid,return_valid);
-      for(int c=0;c<TSR_V1_FORWARD_CHECKPOINT_COUNT;++c)
-         if(!track.checkpoint_done[c] && point.time_msc>=track.confirmed_msc+(long)TSR_V1_FORWARD_SECONDS[c]*1000)
-           {track.checkpoint_done[c]=return_valid;track.abs_return[c]=return_valid?MathAbs(from_signal):0.0;}
-      double initial_range=MathMax(MathAbs(track.confirmed_point.mid-track.candidate.anchor_mid),g_symbols[track.symbol_index].tick_size);
-      track.quote_reversion_ratio=MathMax(0.0,-signed_move/initial_range);
-      track.final_spread_change=(point.ask-point.bid)-(track.confirmed_point.ask-track.confirmed_point.bid);
-      bool done=point.time_msc>=track.confirmed_msc+120000 &&
+      bool done=track.legacy_frozen &&
                 track.response.snapshots[TS15C_HORIZON_COUNT-1].status!=TS15C_SNAPSHOT_PENDING;
       if(done)
         {
