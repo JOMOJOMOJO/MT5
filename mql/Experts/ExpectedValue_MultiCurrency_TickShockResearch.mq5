@@ -9,6 +9,7 @@
 #include "..\Include\TickShock\TickShockMt5Adapter.mqh"
 #include "..\Include\TickShock\TickShockStatisticalCalibration.mqh"
 #include "..\Include\TickShock\TickShockControlStudy.mqh"
+#include "..\Include\TickShock\TickShockEventResponse.mqh"
 
 // Research-only EA.  This file contains no OrderCheck/OrderSend call.
 // IDEAL_EVENT_STUDY is event-time research only.  REALIZABLE_EA includes the
@@ -191,6 +192,7 @@ struct TSRV1StatisticalTrack
    long tick_activity;
    double final_spread_change;
    double quote_reversion_ratio;
+   TickShockEventResponseState response;
    TickShockMachine counterfactual_machine;
    bool counterfactual_reachable[TSR_STRATEGY_COUNT];
    long counterfactual_signal_msc[TSR_STRATEGY_COUNT];
@@ -473,6 +475,7 @@ int g_features_file = INVALID_HANDLE;
 int g_controls_file = INVALID_HANDLE;
 int g_control_matches_file = INVALID_HANDLE;
 int g_funnel_file = INVALID_HANDLE;
+int g_event_response_file = INVALID_HANDLE;
 int g_debug_messages = 0;
 bool g_is_tester = false;
 double g_burst_spread_ratios[];
@@ -688,6 +691,27 @@ string TSRFunnelHeader()
    return "event_id,detector_version,market_cluster_id,market_overlap_event,symbol,direction,severity,trigger_horizon_ms,time_bucket,volatility_regime,statistical_shock,direction_available,directional_burst,activity_elevated,liquidity_normal,cost_feasible,common_strategy_eligible,detection_continuation_reachable,post_burst_continuation_reachable,pullback_continuation_reachable,failed_shock_reversal_reachable,strategy_signal,first_fail_reason,all_fail_reasons,candidate_msc,confirmed_msc,detection_entry_msc,post_burst_entry_msc,pullback_entry_msc,reversal_entry_msc,record_status";
   }
 
+string TSR15CResponseSpecSha256()
+  {
+   return "7C8572782B094175347DEDC489B9F2DD5154FE450C5F4FCD5B3921866AFD2DCC";
+  }
+
+string TSR15CEventResponseHeader()
+  {
+   string h="event_id,market_cluster_id,symbol,detector_id,candidate_time_msc,confirmed_time_msc,shock_direction,triggering_horizon,severity,run_id,schema_version,spec_hash,origin_mid,reference_bid,reference_ask,reference_mid,local_sigma,initial_shock_size,point,tick_size";
+   for(int i=0;i<TS15C_HORIZON_COUNT;++i)
+     {
+      int ms=TS15C_HORIZONS_MS[i];
+      h+=StringFormat(",h%d_status,h%d_boundary_msc,h%d_quote_msc,h%d_target_lag_ms,h%d_quote_age_ms,h%d_bid,h%d_ask,h%d_mid,h%d_raw_log_return,h%d_continuation_return,h%d_absolute_return,h%d_spread",ms,ms,ms,ms,ms,ms,ms,ms,ms,ms,ms,ms);
+     }
+   h+=",mfe,mae,time_to_mfe_ms,time_to_mae_ms,origin_recross_msc";
+   const string barrier_labels[TS15C_BARRIER_COUNT]={"05","10","20"};
+   for(int b=0;b<TS15C_BARRIER_COUNT;++b)
+      h+=StringFormat(",barrier_%s_result,barrier_%s_continuation_hit_msc,barrier_%s_reversal_hit_msc",barrier_labels[b],barrier_labels[b],barrier_labels[b]);
+   h+=",observations,drops,duplicates,censored,validation_status";
+   return h;
+  }
+
 bool TSROpenLogs()
   {
    g_event_file = TSROpenCsv("events", TSREventHeader());
@@ -698,8 +722,9 @@ bool TSROpenLogs()
    g_controls_file = TSROpenCsv("control_candidates",TSRControlHeader());
    g_control_matches_file = TSROpenCsv("control_matches",TSRControlMatchHeader());
    g_funnel_file = TSROpenCsv("strategy_funnel",TSRFunnelHeader());
+   g_event_response_file = TSROpenCsv("event_response",TSR15CEventResponseHeader());
    return g_event_file!=INVALID_HANDLE && g_trade_file!=INVALID_HANDLE && g_summary_file!=INVALID_HANDLE && g_specs_file!=INVALID_HANDLE && g_features_file!=INVALID_HANDLE &&
-          g_controls_file!=INVALID_HANDLE && g_control_matches_file!=INVALID_HANDLE && g_funnel_file!=INVALID_HANDLE;
+          g_controls_file!=INVALID_HANDLE && g_control_matches_file!=INVALID_HANDLE && g_funnel_file!=INVALID_HANDLE && g_event_response_file!=INVALID_HANDLE;
   }
 
 void TSRCloseLogs()
@@ -712,6 +737,7 @@ void TSRCloseLogs()
    TSMt5Close(g_controls_file);
    TSMt5Close(g_control_matches_file);
    TSMt5Close(g_funnel_file);
+   TSMt5Close(g_event_response_file);
   }
 
 double TSRPercentile(double &values[],const int count,const double percentile)
@@ -1803,6 +1829,39 @@ void TSR15BWriteStrictFunnel(const TSREvent &event)
    TSRCsvAppend(line,event.state_status);TSMt5WriteLine(g_funnel_file,line);TSMt5Flush(g_funnel_file);++g_funnel_rows;
   }
 
+void TSR15CWriteEventResponse(const TSRV1StatisticalTrack &track)
+  {
+   if(g_event_response_file==INVALID_HANDLE || InpDetectorVersion!=TAIL_V1_PERSISTENT) return;
+   const TickShockEventResponseState state=track.response;
+   const TSRV1Candidate candidate=track.candidate;
+   int trigger=candidate.trigger_horizon_index;
+   ENUM_TS_V1_SEVERITY severity=trigger>=0?TSV1Severity(candidate.adjusted_p[trigger],candidate.calibration_count[trigger]):TSV1_SEVERITY_NONE;
+   string line="";
+   TSRCsvAppend(line,candidate.statistical_event_id);TSRCsvAppend(line,TSRLong(candidate.statistical_market_cluster_id));
+   TSRCsvAppend(line,g_symbols[track.symbol_index].symbol);TSRCsvAppend(line,TSV1DetectorName(InpDetectorVersion));
+   TSRCsvAppend(line,TSRLong(candidate.candidate_msc));TSRCsvAppend(line,TSRLong(track.confirmed_msc));TSRCsvAppend(line,TS15BDirectionName(candidate.direction));
+   TSRCsvAppend(line,IntegerToString(TSV1_HORIZONS_MS[trigger]));TSRCsvAppend(line,TSV1SeverityName(severity));TSRCsvAppend(line,InpRunId);
+   TSRCsvAppend(line,"tickshock-event-response-v1");TSRCsvAppend(line,TSR15CResponseSpecSha256());TSRCsvAppend(line,TSRDouble(state.origin_mid));
+   TSRCsvAppend(line,TSRDouble(state.reference_bid));TSRCsvAppend(line,TSRDouble(state.reference_ask));TSRCsvAppend(line,TSRDouble(state.reference_mid));
+   TSRCsvAppend(line,TSRDouble(state.local_sigma,12));TSRCsvAppend(line,TSRDouble(state.initial_shock_size));TSRCsvAppend(line,TSRDouble(state.point));TSRCsvAppend(line,TSRDouble(state.tick_size));
+   for(int i=0;i<TS15C_HORIZON_COUNT;++i)
+     {
+      TickShockResponseSnapshot snapshot=state.snapshots[i];bool available=snapshot.status==TS15C_SNAPSHOT_VALID || snapshot.status==TS15C_SNAPSHOT_STALE;
+      TSRCsvAppend(line,TS15CSnapshotStatusName(snapshot.status));TSRCsvAppend(line,available?TSRLong(snapshot.boundary_msc):"");TSRCsvAppend(line,available?TSRLong(snapshot.quote_msc):"");
+      TSRCsvAppend(line,available?TSRLong(snapshot.target_lag_ms):"");TSRCsvAppend(line,available?IntegerToString(snapshot.quote_age_ms):"");
+      TSRCsvAppend(line,available?TSRDouble(snapshot.bid):"");TSRCsvAppend(line,available?TSRDouble(snapshot.ask):"");TSRCsvAppend(line,available?TSRDouble(snapshot.mid):"");
+      TSRCsvAppend(line,available?TSRDouble(snapshot.raw_log_return,12):"");TSRCsvAppend(line,available?TSRDouble(snapshot.continuation_return,12):"");
+      TSRCsvAppend(line,available?TSRDouble(snapshot.absolute_return,12):"");TSRCsvAppend(line,available?TSRDouble(snapshot.spread):"");
+     }
+   TSRCsvAppend(line,TSRDouble(state.mfe));TSRCsvAppend(line,TSRDouble(state.mae));TSRCsvAppend(line,TSRLong(state.time_to_mfe_ms));TSRCsvAppend(line,TSRLong(state.time_to_mae_ms));
+   TSRCsvAppend(line,state.origin_recross_msc>0?TSRLong(state.origin_recross_msc):"");
+   for(int b=0;b<TS15C_BARRIER_COUNT;++b)
+     {TSRCsvAppend(line,TS15CBarrierResultName(state.barrier_result[b]));TSRCsvAppend(line,state.continuation_hit_msc[b]>0?TSRLong(state.continuation_hit_msc[b]):"");TSRCsvAppend(line,state.reversal_hit_msc[b]>0?TSRLong(state.reversal_hit_msc[b]):"");}
+   TSRCsvAppend(line,TSRLong(state.observations));TSRCsvAppend(line,TSRLong(state.drops));TSRCsvAppend(line,TSRLong(state.duplicates));TSRCsvAppend(line,TSRBool(state.censored));
+   TSRCsvAppend(line,TS15CResponseValid(state)?"VALID":"VALIDATION_INVALID");
+   TSMt5WriteLine(g_event_response_file,line);TSMt5Flush(g_event_response_file);
+  }
+
 void TSRV1WriteStatisticalTrack(const TSRV1StatisticalTrack &track)
   {
    if(g_features_file==INVALID_HANDLE) return;
@@ -1845,6 +1904,7 @@ void TSRV1AdvanceCounterfactualTracks(TSRSymbolContext &context,const TSRShortTi
      {
       TSRV1StatisticalTrack track=context.v1_tracks[i];
       if(tick.time_msc<=track.confirmed_msc) continue;
+      TS15CQueueResponseQuote(track.response,tick.time_msc,tick.bid,tick.ask);
       for(int s=0;s<TSR_STRATEGY_COUNT;++s)
          if(track.counterfactual_reachable[s] && track.counterfactual_entry_msc[s]==0 && tick.time_msc>=track.counterfactual_eligible_msc[s])
             track.counterfactual_entry_msc[s]=tick.time_msc;
@@ -1894,6 +1954,8 @@ bool TSRV1RegisterStatisticalTrack(TSRSymbolContext &context,
    TSRV1StatisticalTrack track;ZeroMemory(track);
    track.candidate=candidate;track.symbol_index=symbol_index;track.confirmed_msc=confirmed_msc;track.confirmed_point=confirmed_point;
    track.last_mid=confirmed_point.mid;track.last_grid_msc=confirmed_msc;track.status="TRACKING";
+   TS15CArmResponse(track.response,candidate.candidate_msc,confirmed_msc,candidate.direction,candidate.anchor_mid,
+                    candidate.local_sigma[candidate.trigger_horizon_index],context.point,context.tick_size);
    TSEngineStartBurst(track.counterfactual_machine,candidate.direction,confirmed_msc,candidate.anchor_mid,confirmed_point.mid);
    TSR15BArmCounterfactual(track,TSR_DETECTION_CONTINUATION,confirmed_msc,confirmed_msc);
    int size=ArraySize(context.v1_tracks);ArrayResize(context.v1_tracks,size+1);context.v1_tracks[size]=track;
@@ -1928,10 +1990,11 @@ void TSRV1AdvanceStatisticalTracks(TSRSymbolContext &context,const TSRGridPoint 
       double initial_range=MathMax(MathAbs(track.confirmed_point.mid-track.candidate.anchor_mid),g_symbols[track.symbol_index].tick_size);
       track.quote_reversion_ratio=MathMax(0.0,-signed_move/initial_range);
       track.final_spread_change=(point.ask-point.bid)-(track.confirmed_point.ask-track.confirmed_point.bid);
-      bool done=point.time_msc>=track.confirmed_msc+120000;
+      bool done=point.time_msc>=track.confirmed_msc+120000 &&
+                track.response.snapshots[TS15C_HORIZON_COUNT-1].status!=TS15C_SNAPSHOT_PENDING;
       if(done)
         {
-         track.status="COMPLETE_120S";TSRV1WriteStatisticalTrack(track);
+         TS15CFinalizeResponse(track.response,false);track.status="COMPLETE_120S";TSR15CWriteEventResponse(track);TSRV1WriteStatisticalTrack(track);
          int last=ArraySize(context.v1_tracks)-1;
          if(index<last) context.v1_tracks[index]=context.v1_tracks[last];
          ArrayResize(context.v1_tracks,last);
@@ -1946,8 +2009,9 @@ void TSRV1FlushStatisticalTracks()
    for(int s=0;s<ArraySize(g_symbols);++s)
       for(int i=0;i<ArraySize(g_symbols[s].v1_tracks);++i)
         {
+         TS15CFinalizeResponse(g_symbols[s].v1_tracks[i].response,true);
          g_symbols[s].v1_tracks[i].status="INCOMPLETE_END_OF_RUN";
-         TSRV1WriteStatisticalTrack(g_symbols[s].v1_tracks[i]);
+         TSR15CWriteEventResponse(g_symbols[s].v1_tracks[i]);TSRV1WriteStatisticalTrack(g_symbols[s].v1_tracks[i]);
         }
    for(int s=0;s<ArraySize(g_symbols);++s) ArrayResize(g_symbols[s].v1_tracks,0);
   }
@@ -2793,6 +2857,7 @@ void TSRWriteSummary()
    TSRSummaryRow("BUFFER","tick_retention",0,0,0,0,0,0.0,"older_than_5000ms_or_capacity_8192");
    TSRSummaryRow("BUFFER","active_event_slots_max",0,0,0,0,0,0.0,IntegerToString(TSR_MAX_ACTIVE_EVENTS));
    TSRSummaryRow("BUFFER","statistical_tracks_per_symbol_max",0,0,0,0,0,0.0,IntegerToString(TSR_V1_TRACK_CAPACITY_PER_SYMBOL));
+   TSRSummaryRow("LOG_POLICY","event_response_csv",0,0,0,0,0,0.0,StringFormat("one_row_per_statistical_event;fixed_horizons=%d;all_tick_csv=false;bytes=%I64d",TS15C_HORIZON_COUNT,TSMt5FileSize(g_event_response_file)));
    TSRSummaryRow("BUFFER","global_pending_ticks",0,0,0,0,0,0.0,StringFormat("capacity=%d;max_observed=%I64d;capacity_hits=%I64d",TSR_PENDING_CAPACITY,g_pending_repository.max_observed,g_pending_repository.capacity_hits));
     TSRSummaryRow("INTEGRITY","fail_closed",0,0,0,0,0,0.0,StringFormat("validation=%s;current_state=%s;ever_failure=%s;event_pool_exhaustions=%I64d;pending_capacity_hits=%I64d;dropped_ticks=%I64d;cursor_stalls=%I64d;current_stale_symbols=%d;ever_stale_symbols=%d;stale_instances=%I64d;max_quote_stale_ms=%I64d;incomplete_frontier=%s;incomplete_frontier_instances=%I64d;read_failures=%I64d;quiet_ranges=%I64d;copy_pages=%I64d;final_drains=%I64d;root_cause=%s;affected_symbols=%s;stale_symbols=%s",
                   TSValidationStatus(validation_invalid),g_pending_repository.incomplete_frontier?"INCOMPLETE":"COMPLETE",TSRBool(validation_invalid),g_event_engine.pool_exhaustions,
