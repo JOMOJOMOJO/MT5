@@ -493,3 +493,25 @@ requested processing time/final drain; it is not an additional function. All
 time arguments are milliseconds; request/order/deal/position fields are MT5
 tickets; operation IDs and counters are unitless. Long/Short behavior is
 symmetric except for the existing price-side rules.
+
+## Step 15C additions
+
+The mechanically extracted scoped total is 316 definitions: the prior 280 plus
+36 Step 15C production/wiring/harness definitions. The production module is
+`mql/Include/TickShock/TickShockEventResponse.mqh`; all state is explicit and
+synthetic-input callable.
+
+| IDs | Signatures | Responsibility, units, return, side effects and callers |
+|---|---|---|
+| S15C-ER-001..003 | `string TS15CSnapshotStatusName(enum)`, `string TS15CBarrierResultName(enum)`, `int TS15CDirectionSign(int)` | Pure enum/direction serialization; no globals or I/O. EA serializer and harness call them. Invalid direction returns 0, never SHORT. |
+| S15C-ER-004 | `bool TS15CContinuationReturn(double start_mid,double end_mid,int direction,double &result)` | Pure signed log-return oracle in price units; returns false for invalid price/direction and clears result. EA response path and unit harness. |
+| S15C-ER-005..006 | `double TS15CEntryPrice(int direction,double bid,double ask)`, `double TS15CExitPrice(...)` | Pure Long Ask/Short Bid entry and opposite-side exit selection. Invalid direction returns zero. Harness tests Long/Short symmetry. |
+| S15C-ER-007 | `void TS15CStressSpread(double mid,double base_spread,double multiplier,double &bid,double &ask)` | Pure output mutation around fixed Mid; prices are absolute. Test/research helper only. |
+| S15C-ER-008..010 | `double TS15CTimeoutR(...)`, `long TS15CEligibleMsc(long signal_msc,long processing_msc,int delay_ms,int submit_latency_ms)`, `bool TS15CWindowOverlaps(long left_start,long right_start,long window_ms=120000)` | Pure execution-clock/timeout/episode helpers. Times are ms, risk is price distance. Invalid risk/direction gives zero R. Harness calls; eligibility uses max of causal clocks. |
+| S15C-ER-011..013 | `bool TS15CPreferRepresentative(...)`, `string TS15CCandidateCanonical(...)`, `bool TS15CProvenanceMatches(...)` | Pure deterministic representative tie-break, candidate serialization and schema/spec check. Analysis-contract harness callers; no I/O. |
+| S15C-ER-014..016 | `int TS15CGateMask(bool...)`, `bool TS15CLeaveOneGateOutReachable(int mask,int removed_bit,int required_mask=255)`, `ENUM_TS15C_BARRIER_RESULT TS15CResolveBarrierTouch(bool,bool)` | Pure gate/first-passage decisions. Same-tick two-sided touch returns ambiguous. Production response/harness callers. |
+| S15C-ER-017..020 | `void TS15CResetResponse(state&)`, `bool TS15CInitResponse(state&,...)`, `bool TS15CArmResponse(state&,...)`, `bool TS15CSetReferenceQuote(state&,long quote_msc,double bid,double ask)` | Explicit state initialization/arming/reference mutation. Times ms; prices absolute. No globals/API/I/O. EA track allocation and harness call identical functions; invalid causal clock/price/scale fails closed. |
+| S15C-ER-021..023 | `bool TS15CFlushPendingQuote(state&)`, `bool TS15CQueueResponseQuote(state&,long time_msc,double bid,double ask)`, `void TS15CUpdateSnapshot(state&,int index,long boundary_msc,long quote_msc,double bid,double ask,int quote_age_ms)` | Stateful same-ms grouping and fixed-horizon capture. Last quote in a millisecond wins; old/invalid data increments diagnostics. EA raw-tick path and production-path harness. No MT5 API or file I/O. |
+| S15C-ER-024..026 | `bool TS15CObserveResponse(state&,long boundary_msc,long quote_msc,double bid,double ask)`, `void TS15CFinalizeResponse(state&,bool end_of_run)`, `bool TS15CResponseValid(const state&)` | Online MFE/MAE, recross, first passage, censor finalization and fail-closed validation. Explicit state only; EA/harness callers. *(The module contains 26 production definitions; the first table range groups small pure helpers.)* |
+| S15C-EA-001..003 | `string TSR15CResponseSpecSha256()`, `string TSR15CEventResponseHeader()`, `void TSR15CWriteEventResponse(const TSRV1StatisticalTrack &track)` | EA wiring/provenance/one-row CSV serializer. Reads run inputs and track; writes only event-level response output and counters. No tick/second CSV. |
+| S15C-H-001..007 | EventResponse harness `OnInit/OnTick/OnDeinit`, `TS15CAddPair`, `TS15CBaseState`, `TS15CRunContract`, `TS15CRunAll` | Tester-only fixture reader and production-call harness. Globals/file I/O are confined to test evidence; `OnInit` rejects non-tester execution through the shared harness guard. |

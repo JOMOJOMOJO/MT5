@@ -25,6 +25,15 @@ class FixtureIntegrityTests(unittest.TestCase):
                 self.assertTrue(spec.is_file(), path.name)
                 self.assertNotIn("TickShockStatisticalDetector", oracle.read_text(encoding="utf-8"), path.name)
                 continue
+            if path.name.startswith("TS15C-"):
+                # Step 15C also freezes provenance at suite level. Its literal
+                # fixture configs contain only event-response inputs.
+                oracle = ROOT / "tools/tick_shock/step15c_independent_oracle.py"
+                spec = ROOT / "docs/research/tick_shock/15c_event_response_spec.md"
+                self.assertTrue(oracle.is_file(), path.name)
+                self.assertTrue(spec.is_file(), path.name)
+                self.assertNotIn("TickShockEventResponse", oracle.read_text(encoding="utf-8"), path.name)
+                continue
             self.assertEqual("false", config.get("production_function_used_for_expected"), path.name)
             self.assertIn(config.get("oracle_source"), {
                 "docs/research/tick_shock/03_test_oracle_calculation.md",

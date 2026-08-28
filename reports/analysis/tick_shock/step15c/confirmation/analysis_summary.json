@@ -1,0 +1,13 @@
+{
+  "partition": "INTERNAL_CONFIRMATION",
+  "event_rows": 4885,
+  "representative_clusters": 2894,
+  "episodes": 1095,
+  "future_reads": 0,
+  "backdates": 0,
+  "drops": 0,
+  "duplicates": 0,
+  "invalid_responses": 0,
+  "timezone_status": "TIMEZONE_MAPPING_NOT_VERIFIED",
+  "rr_grid_status": "NOT_EVALUABLE_WITH_FIXED_HORIZON_ONLY"
+}

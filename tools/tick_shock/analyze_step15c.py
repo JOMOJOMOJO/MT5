@@ -127,15 +127,20 @@ def analyze(run_dir:Path,out:Path,partition:str):
         for value,g in r.groupby(feature,dropna=False):
             y=num(g.h10000_continuation_return);cond.append({"partition":chosen,"feature":feature,"bucket":value,"events":len(g),"episodes":g.response_episode_id.nunique(),"mean_continuation_10s":y.mean(),"median_continuation_10s":y.median(),"positive_rate_10s":float((y>0).mean()),"raw_p":1.0})
     continuous=("local_score","local_sigma_feature","noise_return","efficiency","tick_intensity_ratio","move_spread_ratio","spread_ratio","quote_age_ms")
-    boundaries={}
+    boundary_path=(out/"discovery_bucket_boundaries.json") if partition=="discovery" else (out.parent/"discovery"/"discovery_bucket_boundaries.json")
+    if partition=="confirmation" and not boundary_path.exists():
+        raise SystemExit(f"missing frozen discovery boundaries: {boundary_path}")
+    boundaries={} if partition=="discovery" else json.loads(boundary_path.read_text(encoding="utf-8"))
     for feature in continuous:
-        vals=num(r[feature]);cuts=np.unique(vals.quantile([0,.25,.5,.75,1]).dropna().values);boundaries[feature]=cuts.tolist()
+        vals=num(r[feature])
+        cuts=np.unique(vals.quantile([0,.25,.5,.75,1]).dropna().values) if partition=="discovery" else np.asarray(boundaries[feature],dtype=float)
+        if partition=="discovery":boundaries[feature]=cuts.tolist()
         if len(cuts)<2:continue
         buckets=pd.cut(vals,cuts,include_lowest=True,duplicates="drop")
         for value,g in r.groupby(buckets,observed=True):
             y=num(g.h10000_continuation_return);cond.append({"partition":chosen,"feature":feature,"bucket":str(value),"events":len(g),"episodes":g.response_episode_id.nunique(),"mean_continuation_10s":y.mean(),"median_continuation_10s":y.median(),"positive_rate_10s":float((y>0).mean()),"raw_p":1.0})
     cdf=pd.DataFrame(cond);cdf["adjusted_p_bh"]=bh(cdf.raw_p.values) if len(cdf) else [];write(cdf,out/"conditional_bias_results.csv")
-    if partition=="discovery": (out/"discovery_bucket_boundaries.json").write_text(json.dumps(boundaries,indent=2),encoding="utf-8")
+    if partition=="discovery": boundary_path.write_text(json.dumps(boundaries,indent=2),encoding="utf-8")
     write(primary[["partition","outcome","raw_p","adjusted_p_holm","supported"]],out/"multiple_testing_results.csv")
     concentration=r.groupby("symbol",as_index=False).agg(market_clusters=("market_cluster_id","nunique"),episodes=("response_episode_id","nunique"),mean_continuation_10s=("h10000_continuation_return","mean"));write(concentration,out/"effect_concentration.csv")
     trial=pd.concat([primary.assign(trial_family="PRIMARY")[ ["outcome","trial_family","partition"] ],pd.DataFrame(rr)[["strategy","stop_multiple","rr","delay_ms","spread_multiplier","partition"]].assign(trial_family="RR_GRID")],ignore_index=True,sort=False);write(trial,out/"trial_registry.csv")

@@ -1,0 +1,9 @@
+removed_gate,baseline_reachable,reachable_without_gate,increment
+statistical_shock,3,3,0
+direction_available,3,3,0
+directional_burst,3,3,0
+activity_elevated,3,4,1
+liquidity_normal,3,3,0
+cost_feasible,3,526,523
+efficiency_gate,3,3,0
+persistence_gate,3,3,0

@@ -1,0 +1,7 @@
+partition,outcome,raw_p,adjusted_p_holm,supported
+INTERNAL_CONFIRMATION,continuation_return_1000ms,0.7737226277372263,1.0,False
+INTERNAL_CONFIRMATION,continuation_return_3000ms,0.2511748825117488,1.0,False
+INTERNAL_CONFIRMATION,continuation_return_10000ms,0.5337466253374663,1.0,False
+INTERNAL_CONFIRMATION,continuation_return_30000ms,0.4393560643935606,1.0,False
+INTERNAL_CONFIRMATION,continuation_return_120000ms,0.4727527247275273,1.0,False
+INTERNAL_CONFIRMATION,barrier_10_probability_difference,0.48295170482951705,1.0,False

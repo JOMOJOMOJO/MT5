@@ -1,9 +1,9 @@
 ﻿{
-    "generated_at":  "2026-08-28T01:58:14.4711709+09:00",
+    "generated_at":  "2026-08-29T01:28:32.5197029+09:00",
     "config":  {
                    "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\tests\\tick_shock\\configs\\step15c_event_response.ini",
-                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp6903.ini",
-                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp6903.ini"
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp57C6.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmp57C6.ini"
                },
     "tester":  {
                    "symbol":  "EURUSD",

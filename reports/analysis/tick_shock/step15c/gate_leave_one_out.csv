@@ -1,0 +1,17 @@
+partition,removed_gate,baseline_reachable,reachable_without_gate,increment
+DISCOVERY,statistical_shock,7,7,0
+DISCOVERY,direction_available,7,7,0
+DISCOVERY,directional_burst,7,7,0
+DISCOVERY,activity_elevated,7,22,15
+DISCOVERY,liquidity_normal,7,7,0
+DISCOVERY,cost_feasible,7,1694,1687
+DISCOVERY,efficiency_gate,7,7,0
+DISCOVERY,persistence_gate,7,7,0
+INTERNAL_CONFIRMATION,statistical_shock,3,3,0
+INTERNAL_CONFIRMATION,direction_available,3,3,0
+INTERNAL_CONFIRMATION,directional_burst,3,3,0
+INTERNAL_CONFIRMATION,activity_elevated,3,4,1
+INTERNAL_CONFIRMATION,liquidity_normal,3,3,0
+INTERNAL_CONFIRMATION,cost_feasible,3,526,523
+INTERNAL_CONFIRMATION,efficiency_gate,3,3,0
+INTERNAL_CONFIRMATION,persistence_gate,3,3,0

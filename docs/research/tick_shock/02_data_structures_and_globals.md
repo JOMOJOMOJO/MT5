@@ -462,3 +462,20 @@ Physical/logical capacities remain: detector sample physical 3,612; default
 logical 3,610/1,806/904 for 250/500/1,000ms; tick ring 8,192 with 5,000ms
 retention; grid 64; active event slots 64; pending repository 65,536; scenario
 grid 552 per event.
+
+## Step 15C event-response additions
+
+`TickShockResponseSnapshot` stores one causal horizon (target/boundary/real
+quote time in ms, quote age, Bid/Ask/Mid, raw/directional/absolute log return,
+spread and enum status). `TickShockEventResponseState` owns eleven snapshots,
+three local-sigma first-passage pairs, online MFE/MAE and hit times, origin
+recross, one pending same-ms quote, and drop/duplicate/censor/validation flags.
+It is embedded once per active `TSRV1StatisticalTrack`; no unbounded tick list is
+created. Constants are 11 horizons, 3 barriers, 1,000ms stale limit, and a
+120,000ms response window.
+
+`TSRV1StatisticalTrack.legacy_frozen` separates the original 120-second
+detector/funnel lifetime from response-recording completion. Once true, raw
+ticks update only the response state. This preserves Step 15B state, signal and
+fill behavior while allowing a stale terminal horizon to use its first later
+real quote. All fields are initialized by `ZeroMemory` plus `TS15CArmResponse`.
