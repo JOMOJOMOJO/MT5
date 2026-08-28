@@ -1,0 +1,15 @@
+artifact,baseline_rows,current_rows,missing,added,changed,mismatches,status
+detector_features.csv,21799,21799,0,0,0,0,PASS
+strategy_funnel.csv,21799,21799,0,0,0,0,PASS
+event_response.csv,21799,21799,0,0,0,0,PASS
+market_clusters,10245,10245,0,0,0,0,PASS
+detection_continuation_reachable,10245,10245,0,0,0,0,PASS
+post_burst_continuation_reachable,10245,10245,0,0,0,0,PASS
+pullback_continuation_reachable,1033,1033,0,0,0,0,PASS
+failed_shock_reversal_reachable,7282,7282,0,0,0,0,PASS
+post_burst_entry_msc,10244,10244,0,0,0,0,PASS
+reversal_entry_msc,7281,7281,0,0,0,0,PASS
+horizon_time_violations,0,0,0,0,0,0,PASS
+response_drops,0,0,0,0,0,0,PASS
+invalid_response_rows,0,0,0,0,0,0,PASS
+duplicate_response_events,0,0,0,0,0,0,PASS

@@ -77,7 +77,8 @@ def analyze(run_dir:Path,out:Path,partition:str):
     df=df.merge(funnel[[c for c in funnel.columns if c not in {"symbol","direction","severity","detector_version"}]],on=["event_id","market_cluster_id"],how="left",validate="one_to_one")
     df["confirmed_time_msc"]=num(df.confirmed_time_msc_feature).astype("int64");df["candidate_time_msc"]=num(df.candidate_time_msc_feature).astype("int64")
     reps=df.sort_values(["confirmed_time_msc","event_id"]).drop_duplicates("market_cluster_id",keep="first").copy();reps_order,ep,map_ep=episodes(reps)
-    df["response_episode_id"]=df.market_cluster_id.map(map_ep).astype(int);reps=reps.merge(reps_order[["event_id","response_episode_id"]],on="event_id",suffixes=("","_ep"));reps["response_episode_id"]=reps.response_episode_id_ep;reps.drop(columns=["response_episode_id_ep"],inplace=True)
+    df["response_episode_id"]=df.market_cluster_id.map(map_ep).astype(int)
+    reps["response_episode_id"]=reps.market_cluster_id.map(map_ep).astype(int)
     partition_map=ep.set_index("response_episode_id").partition.to_dict();df["partition"]=df.response_episode_id.map(partition_map);reps["partition"]=reps.response_episode_id.map(partition_map)
     chosen="DISCOVERY" if partition=="discovery" else "INTERNAL_CONFIRMATION";d=df[df.partition==chosen].copy();r=reps[reps.partition==chosen].copy();e=ep[ep.partition==chosen].copy()
     out.mkdir(parents=True,exist_ok=True)
@@ -94,6 +95,8 @@ def analyze(run_dir:Path,out:Path,partition:str):
     for _,x in d.iterrows():
         for label in ("05","10","20"):barrier.append({"event_id":x.event_id,"market_cluster_id":x.market_cluster_id,"response_episode_id":x.response_episode_id,"barrier_local_sigma":float(label)/10,"result":x[f"barrier_{label}_result"],"continuation_hit_msc":x[f"barrier_{label}_continuation_hit_msc"],"reversal_hit_msc":x[f"barrier_{label}_reversal_hit_msc"],"partition":x.partition})
     write(pd.DataFrame(barrier),out/"barrier_first_passage.csv");write(e,out/"response_episode_registry.csv")
+    for gate in ("statistical_shock","directional_burst","activity_elevated","liquidity_normal","cost_feasible"):
+        d[gate]=d[f"{gate}_x"]
     d["direction_available"]=d.direction.isin(["LONG","SHORT"]);d["efficiency_gate"]=num(d.efficiency)>=0.65;d["persistence_gate"]=True
     for name,_ in GATES:
         if name not in d:d[name]=False
@@ -107,6 +110,7 @@ def analyze(run_dir:Path,out:Path,partition:str):
     full=255;leave=[]
     for name,bit in GATES:leave.append({"removed_gate":name,"baseline_reachable":int((d.gate_mask==full).sum()),"reachable_without_gate":int(((d.gate_mask|bit)==full).sum()),"increment":int(((d.gate_mask|bit)==full).sum()-(d.gate_mask==full).sum())})
     write(pd.DataFrame(leave),out/"gate_leave_one_out.csv")
+    d["record_status"]=d["record_status_y"]
     reach_cols=["event_id","market_cluster_id","response_episode_id","symbol","partition","common_strategy_eligible","detection_continuation_reachable","post_burst_continuation_reachable","pullback_continuation_reachable","failed_shock_reversal_reachable","detection_entry_msc","post_burst_entry_msc","pullback_entry_msc","reversal_entry_msc","record_status"]
     write(d[reach_cols],out/"strategy_causal_reachability.csv")
     rr=[]
@@ -119,7 +123,7 @@ def analyze(run_dir:Path,out:Path,partition:str):
     primary=bootstrap_primary(r,ep,chosen);write(primary,out/"cluster_episode_bootstrap_results.csv")
     cond=[]
     r["server_hour"]=r.confirmed_time_msc.map(lambda x:datetime.utcfromtimestamp(x/1000).hour);r["weekday"]=r.confirmed_time_msc.map(lambda x:datetime.utcfromtimestamp(x/1000).weekday())
-    for feature in ("symbol","severity_feature","trigger_horizon_ms","volatility_regime_feature","server_hour","weekday"):
+    for feature in ("symbol","severity_feature","trigger_horizon_ms_x","volatility_regime_x","server_hour","weekday"):
         for value,g in r.groupby(feature,dropna=False):
             y=num(g.h10000_continuation_return);cond.append({"partition":chosen,"feature":feature,"bucket":value,"events":len(g),"episodes":g.response_episode_id.nunique(),"mean_continuation_10s":y.mean(),"median_continuation_10s":y.median(),"positive_rate_10s":float((y>0).mean()),"raw_p":1.0})
     continuous=("local_score","local_sigma_feature","noise_return","efficiency","tick_intensity_ratio","move_spread_ratio","spread_ratio","quote_age_ms")
