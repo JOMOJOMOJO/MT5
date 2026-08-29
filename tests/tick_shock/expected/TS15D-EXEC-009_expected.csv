@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+entry_status,NO_SIGNAL,0,value,independent frozen oracle

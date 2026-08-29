@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+trade_direction,SHORT,0,value,independent frozen oracle

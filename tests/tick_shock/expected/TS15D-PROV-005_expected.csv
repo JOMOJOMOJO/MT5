@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+current_claimed_v1,false,1e-9,value,independent frozen oracle

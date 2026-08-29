@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+frozen_expected_changed,false,1e-9,value,independent frozen oracle

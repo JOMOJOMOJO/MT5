@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+activity_ratio,2,0,value,independent frozen oracle

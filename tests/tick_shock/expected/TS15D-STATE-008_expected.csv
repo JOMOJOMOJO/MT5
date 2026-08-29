@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+equal_mid_updates,2,0,value,independent frozen oracle

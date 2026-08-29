@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+path_class,CLEAN_CONTINUATION,1e-9,value,independent frozen oracle

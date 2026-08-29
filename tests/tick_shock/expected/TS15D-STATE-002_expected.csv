@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+retracement_ratio,0.25,1e-9,value,independent frozen oracle

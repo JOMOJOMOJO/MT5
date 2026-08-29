@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+decision_quote_msc,4000,0,value,independent frozen oracle

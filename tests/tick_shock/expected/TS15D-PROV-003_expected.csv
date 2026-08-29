@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+migration_supported,true,1e-9,value,independent frozen oracle

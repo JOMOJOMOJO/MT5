@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+path_class,DEAD_OR_TIMEOUT,1e-9,value,independent frozen oracle

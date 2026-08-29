@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+signal_msc,2600,0,value,independent frozen oracle

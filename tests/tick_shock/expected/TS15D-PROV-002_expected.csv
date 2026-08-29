@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+current_schema,tickshock-detector-feature-v2,1e-9,value,independent frozen oracle

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+causal_breadth,2,0,value,independent frozen oracle

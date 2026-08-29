@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+unregistered_trials,0,0,value,independent frozen oracle

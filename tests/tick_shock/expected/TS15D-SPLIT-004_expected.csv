@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+validation_threshold_reads,0,0,value,independent frozen oracle

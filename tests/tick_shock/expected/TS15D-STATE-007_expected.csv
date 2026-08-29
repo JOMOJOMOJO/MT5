@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+directional_tick_imbalance,0.5,1e-9,value,independent frozen oracle
