@@ -10,6 +10,6 @@ test_scenario_rows_reconcile_to_overall (test_summary_reconciliation.SummaryReco
 test_synthetic_summary_fixture_matches_literal_expected (test_summary_reconciliation.SummaryReconciliationTests.test_synthetic_summary_fixture_matches_literal_expected) ... ok
 
 ----------------------------------------------------------------------
-Ran 10 tests in 0.267s
+Ran 10 tests in 0.784s
 
 OK

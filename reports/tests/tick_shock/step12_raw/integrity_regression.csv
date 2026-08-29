@@ -23,5 +23,7 @@ TS-ORDER-004,MATCH,deal_count=1;filled_volume=0.04;duplicate_deals=1,deal_count=
 TS-ORDER-005,MATCH,mismatched_deal_accepted=false;identity_rejections=1,mismatched_deal_accepted=false;identity_rejections=1,,integrity_regression.csv
 TS-ORDER-006,MATCH,entry_volume=0.04;exit_volume=0.04;entry_deals=1;exit_deals=1,entry_volume=0.040000000000;exit_volume=0.040000000000;entry_deals=1;exit_deals=1,,integrity_regression.csv
 TS-ORDER-007,MATCH,filled_volume_after_replay=0.04;deal_count_after_replay=1;duplicate_deals=1,filled_volume_after_replay=0.040000000000;deal_count_after_replay=1;duplicate_deals=1,,integrity_regression.csv
+TS-ORDER-008,MATCH,applied=true;filled_volume=0.10;request_ticket=10;order_ticket=20;identity_rejections=0,applied=true;filled_volume=0.100000000000;request_ticket=10;order_ticket=20;identity_rejections=0,,integrity_regression.csv
+TS-ORDER-009,MATCH,applied_before_send_result=true;bound_order_ticket=20;bound_position_ticket=30;final_request_ticket=10;identity_rejections=0,applied_before_send_result=true;bound_order_ticket=20;bound_position_ticket=30;final_request_ticket=10;identity_rejections=0,,integrity_regression.csv
 TS-WATERMARK-001,MATCH,pending_count=3;stale_symbol_count=1;lag_observable=true,pending_count=3;stale_symbol_count=1;lag_observable=true,,integrity_regression.csv
 TS-WATERMARK-002,MATCH,incomplete_frontier=true;validation_status=VALIDATION_INVALID,incomplete_frontier=true;validation_status=VALIDATION_INVALID,,integrity_regression.csv
