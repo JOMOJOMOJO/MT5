@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+checkpoint_900_status,AVAILABLE,0,text,frozen independent oracle

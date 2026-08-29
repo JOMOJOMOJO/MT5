@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+cross_symbol_future_reads,0,0,count,frozen independent oracle

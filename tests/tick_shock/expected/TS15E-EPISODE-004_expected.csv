@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+cooldown_release_msc,961000,0,ms,frozen independent oracle

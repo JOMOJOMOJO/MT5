@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+first_touch,AMBIGUOUS,0,text,frozen independent oracle

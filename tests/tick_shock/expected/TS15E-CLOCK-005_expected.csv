@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+availability,MISSING_WEEKEND,0,text,frozen independent oracle

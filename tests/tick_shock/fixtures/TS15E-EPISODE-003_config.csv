@@ -1,0 +1,8 @@
+key,value,unit,note
+case,TS15E-EPISODE-003,id,independent scenario
+horizon_ms,900000,ms,frozen
+quiet_ms,60000,ms,frozen
+m1_window,10,completed returns,no current M1
+fallback,false,bool,primary excludes fallback
+production_function_used_for_expected,false,bool,independent oracle
+oracle_source,docs/research/tick_shock/15e_shock_episode_spec.md,path,frozen before implementation

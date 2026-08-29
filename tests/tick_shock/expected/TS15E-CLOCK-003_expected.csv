@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+same_millisecond_ask,1.0005,1e-9,price,frozen independent oracle

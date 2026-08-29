@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+end_status,PURGED_END_OF_DATA,0,text,frozen independent oracle

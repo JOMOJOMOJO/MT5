@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+primary_inference,EXCLUDED_FALLBACK,0,text,frozen independent oracle
