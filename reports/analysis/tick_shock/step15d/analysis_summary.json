@@ -1,0 +1,22 @@
+{
+  "events": 21799,
+  "market_clusters": 10245,
+  "response_episodes_total": 3286,
+  "response_episodes_purged": 1,
+  "response_episodes_analyzed": 3285,
+  "checkpoint_rows": 112211,
+  "strategy_entries": {
+    "detection_time_continuation": 21799,
+    "post_burst_continuation": 21799,
+    "failed_shock_reversal": 15825,
+    "pullback_continuation": 2348
+  },
+  "path_classes": {
+    "FAILED_SHOCK_REVERSAL": 9695,
+    "CLEAN_CONTINUATION": 6576,
+    "DEAD_OR_TIMEOUT": 3746,
+    "PULLBACK_CONTINUATION": 1782
+  },
+  "promoted_candidates": 0,
+  "orders": 0
+}

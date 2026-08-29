@@ -1,0 +1,4 @@
+parameter,baseline,current,difference
+detector_and_strategy_parameters,STEP15C_FROZEN,STEP15C_FROZEN,0
+order_send_calls,0,0,0
+rr,1.2,1.2,0

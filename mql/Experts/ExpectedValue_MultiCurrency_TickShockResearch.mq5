@@ -1962,14 +1962,15 @@ void TSRV1WriteStatisticalTrack(const TSRV1StatisticalTrack &track)
    TSR15BWriteFunnel(track);
   }
 
-void TSR15BArmCounterfactual(TSRV1StatisticalTrack &track,const int strategy,const long signal_msc,const long processing_msc)
+void TSR15BArmCounterfactual(TSRV1StatisticalTrack &track,const int strategy,const long signal_msc,const long processing_msc,const long state_processing_msc=-1)
   {
    if(strategy<0 || strategy>=TSR_STRATEGY_COUNT || track.counterfactual_reachable[strategy]) return;
    track.counterfactual_reachable[strategy]=true;track.counterfactual_signal_msc[strategy]=signal_msc;
    track.counterfactual_processing_msc[strategy]=processing_msc;
    track.counterfactual_eligible_msc[strategy]=TSResearchEntryEligibleMsc(InpExecutionMode,signal_msc,processing_msc,0,InpSubmitLatencyMs);
    int direction=strategy==TSR_FAILED_SHOCK_REVERSAL?-track.candidate.direction:track.candidate.direction;
-   TS15DArmStrategy(track.state_response,strategy,direction,signal_msc,processing_msc,0,InpSubmitLatencyMs);
+   long causal_processing_msc=state_processing_msc>=0?state_processing_msc:processing_msc;
+   TS15DArmStrategy(track.state_response,strategy,direction,signal_msc,causal_processing_msc,0,InpSubmitLatencyMs);
   }
 
 void TSRV1AdvanceCounterfactualTracks(TSRSymbolContext &context,const TSRShortTick &tick,const long processing_msc)
@@ -2046,7 +2047,7 @@ bool TSRV1RegisterStatisticalTrack(TSRSymbolContext &context,
             MathAbs(confirmed_point.mid-candidate.anchor_mid),candidate.local_sigma[candidate.trigger_horizon_index],
             context.tick_size*MathMax(InpNoiseFloorTicks,0.0),candidate.tick_count);
    TSEngineStartBurst(track.counterfactual_machine,candidate.direction,confirmed_msc,candidate.anchor_mid,confirmed_point.mid);
-   TSR15BArmCounterfactual(track,TSR_DETECTION_CONTINUATION,confirmed_msc,processing_msc);
+   TSR15BArmCounterfactual(track,TSR_DETECTION_CONTINUATION,confirmed_msc,confirmed_msc,processing_msc);
    int size=ArraySize(context.v1_tracks);ArrayResize(context.v1_tracks,size+1);context.v1_tracks[size]=track;
    TS15BMarkShock(context.control_recorder,confirmed_msc);
    TSR15BMatchAndWrite(context,candidate.statistical_event_id,candidate.statistical_market_cluster_id,candidate.statistical_market_overlap,

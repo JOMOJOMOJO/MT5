@@ -28,11 +28,16 @@ partition. No policy candidate was carried forward.
 | Discovery | 16,913 | 7,350 | 2,190 |
 | Purge | 1 | 1 | 1 |
 | Internal confirmation | 4,885 | 2,894 | 1,095 |
-| Total | 21,799 | 10,245 | 3,286 plus one purged episode |
+| Total | 21,799 | 10,245 | 3,286 total: 3,285 analyzed + 1 purged |
 
 The split was frozen before response analysis. Candidate registry commit
 `db071af4` precedes the first confirmation read. The purge episode separates
 the overlapping 120-second windows.
+
+All symbol-level counts reported for Discovery plus Internal confirmation use
+the 21,798-row population labelled
+`ANALYZED_PARTITIONS_ONLY_EXCLUDING_PURGE`. The single purge row is retained
+separately and is not silently assigned to either analyzed partition.
 
 The r5 replay preserved all 21,799 Step 15B detector-feature rows and all
 21,799 strategy-funnel rows, excluding only run identity. Representative
