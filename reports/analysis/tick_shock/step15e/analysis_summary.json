@@ -1,0 +1,19 @@
+{
+  "events": 21799,
+  "market_clusters": 10245,
+  "episodes": 3151,
+  "completed": 3151,
+  "purged": 0,
+  "primary_episodes": 2734,
+  "fallback_excluded_episodes": 417,
+  "duplicate_episode_ids": 0,
+  "response_rows": 28359,
+  "entry_rows": 24578,
+  "behavior_mismatches": 0,
+  "parameter_differences": 0,
+  "candidate_count": 0,
+  "matched_control_status": "NOT_ESTIMABLE",
+  "orders": 0,
+  "formal_net": "UNAVAILABLE",
+  "server_timezone": "BROKER_SERVER_TIME;UTC_OFFSET_AND_DST_NOT_INJECTED"
+}

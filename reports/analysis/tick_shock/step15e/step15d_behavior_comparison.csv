@@ -1,0 +1,4 @@
+component,baseline_rows,step15e_rows,missing_rows,extra_rows,mismatches,status
+detector_event_identity,21799,21799,0,0,0,PASS
+step15d_path_identity,21799,21799,0,0,0,PASS
+market_clusters,10245,10245,0,0,0,PASS
