@@ -1,0 +1,4 @@
+target,status,errors,warnings,evidence_path
+STEP15D_EXISTING_15_TARGETS,PASS,0,0,reports/qa/tick_shock/step15d/step15d_compile_results.csv
+ExpectedValue_TickShock_MediumHorizonResponseHarness,PASS,0,0,reports/compile/tick_shock/step15e_green_MediumHorizonResponseHarness.log
+ExpectedValue_MultiCurrency_TickShockResearch,PASS,0,0,reports/compile/tick_shock/step15e_research_ea.log

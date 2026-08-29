@@ -1,0 +1,6 @@
+Step 15D baseline before Step 15E: PASS=248 FAIL=0 XFAIL=0 XPASS=0 SKIP=9 BLOCKED=0
+Step 15E deterministic production-path suite: PASS=28 FAIL=0 XFAIL=0 XPASS=0 SKIP=0 BLOCKED=0
+Combined deterministic/repository rollup: PASS=276 FAIL=0 XFAIL=0 XPASS=0 SKIP=9 BLOCKED=0
+Existing Python integrity suite after Step 15E registry extension: PASS=113 FAIL=0
+Step 15E independent oracle: rows=28 mismatches=0
+Compile: existing Step 15D targets=15 PASS; new Step 15E harness=1 PASS; errors=0 warnings=0

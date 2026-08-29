@@ -1,26 +1,31 @@
 #!/usr/bin/env python3
-"""Record Step 15E RED when the preregistered production API is absent."""
+"""Reconcile frozen Step 15E expected values with production observations."""
 from __future__ import annotations
 import argparse,csv
+from collections import Counter
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
-
+FIELDS=("test_id","requirement_id","defect_id","test_layer","status","expected","actual","difference","evidence_path")
+def read(path):
+    with Path(path).open(encoding='utf-8-sig',newline='') as h:return list(csv.DictReader(h))
+def expected(tid):return ';'.join(f"{r['field']}={r['expected_value']}" for r in read(ROOT/f'tests/tick_shock/expected/{tid}_expected.csv'))
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--phase',choices=('red','green'),required=True);a=ap.parse_args()
-    with (ROOT/'tests/tick_shock/spec/test_cases.csv').open(encoding='utf-8-sig',newline='') as h: cases=[r for r in csv.DictReader(h) if r['test_id'].startswith('TS15E-')]
-    module=ROOT/'mql/Include/TickShock/TickShockMediumHorizonResponse.mqh'
-    out=ROOT/f'reports/tests/tick_shock/step15e_{a.phase}';out.mkdir(parents=True,exist_ok=True)
-    rows=[]
+    ap=argparse.ArgumentParser();ap.add_argument('--phase',choices=('red','green'),required=True);ap.add_argument('--raw',type=Path);ap.add_argument('--compile-log',type=Path);a=ap.parse_args()
+    cases=[r for r in read(ROOT/'tests/tick_shock/spec/test_cases.csv') if r['test_id'].startswith('TS15E-')];raw={r['test_id']:r for r in read(a.raw)} if a.raw and a.raw.exists() else {}
+    out=ROOT/f'reports/tests/tick_shock/step15e_{a.phase}';out.mkdir(parents=True,exist_ok=True);rows=[]
     for c in cases:
-        with (ROOT/c['expected_path']).open(encoding='utf-8-sig',newline='') as h:e=next(csv.DictReader(h))
-        if a.phase=='red' and not module.exists(): status='XFAIL';actual='PRODUCTION_MEDIUM_HORIZON_API_ABSENT';diff=f"expected {e['field']}={e['expected_value']}; production module absent"
-        else: status='BLOCKED';actual='MQL_HARNESS_REQUIRED';diff='green phase requires compiled production-path harness'
-        rows.append({'test_id':c['test_id'],'requirement_id':c['requirement_id'],'defect_id':c['defect_id'],'test_layer':c['test_layer'],'status':status,'expected':f"{e['field']}={e['expected_value']}",'actual':actual,'difference':diff,'evidence_path':str(out.relative_to(ROOT)/'step15e_red_results.csv').replace('\\','/')})
-    result=out/f'step15e_{a.phase}_results.csv';fields=('test_id','requirement_id','defect_id','test_layer','status','expected','actual','difference','evidence_path')
-    with result.open('w',encoding='utf-8',newline='') as h:w=csv.DictWriter(h,fieldnames=fields);w.writeheader();w.writerows(rows)
-    report=out/f'step15e_{a.phase}_report.md';counts={s:sum(r['status']==s for r in rows) for s in ('PASS','FAIL','XFAIL','XPASS','SKIP','BLOCKED')}
-    report.write_text('# Step 15E pre-fix RED report\n\nThe 28 preregistered medium-horizon contracts were evaluated before production implementation.\n\n'+ '\n'.join(f'- {k}: {v}' for k,v in counts.items())+'\n\nExpected values come only from frozen CSV oracles. The observed RED is the missing production module/API; no strategy result was inspected.\n',encoding='utf-8')
-    print(counts)
-
-if __name__=='__main__':main()
+        tid=c['test_id'];exp=expected(tid)
+        if a.phase=='red':status='XFAIL';actual='PRODUCTION_MEDIUM_HORIZON_API_ABSENT';difference=f'expected {exp}; production module absent';evidence='reports/tests/tick_shock/step15e_red/step15e_red_results.csv'
+        else:
+            obs=raw.get(tid)
+            if not obs:status='FAIL';actual='NO_HARNESS_OBSERVATION';difference='missing production-path row'
+            else:status='PASS' if obs.get('observed')=='MATCH' else 'FAIL';actual=obs.get('actual','');difference=obs.get('difference','')
+            evidence=str(a.raw).replace('\\','/')
+        rows.append(dict(test_id=tid,requirement_id=c['requirement_id'],defect_id=c['defect_id'],test_layer=c['test_layer'],status=status,expected=exp,actual=actual,difference=difference,evidence_path=evidence))
+    result=out/f'step15e_{a.phase}_results.csv'
+    with result.open('w',encoding='utf-8',newline='') as h:w=csv.DictWriter(h,fieldnames=FIELDS);w.writeheader();w.writerows(rows)
+    counts=Counter(r['status'] for r in rows);report=out/f'step15e_{a.phase}_report.md';report.write_text(f'# Step 15E {a.phase.upper()} contracts\n\n'+'\n'.join(f'- {s}: {counts[s]}' for s in ('PASS','FAIL','XFAIL','XPASS','SKIP','BLOCKED'))+'\n\nThe MQL harness calls the same production module used by the research EA. Frozen expected files are independent.\n',encoding='utf-8')
+    print(' '.join(f'{s}={counts[s]}' for s in ('PASS','FAIL','XFAIL','XPASS','SKIP','BLOCKED')))
+    return 0 if a.phase=='red' or counts['FAIL']+counts['XFAIL']+counts['XPASS']+counts['BLOCKED']==0 else 1
+if __name__=='__main__':raise SystemExit(main())
