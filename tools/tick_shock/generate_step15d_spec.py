@@ -37,7 +37,7 @@ def main():
             for row in ((1,"EURUSD",1000,"1.0000","1.0002",1100,"confirmed"),(2,"EURUSD",1500,"1.0002","1.0004",1550,"checkpoint"),(3,"EURUSD",2000,"1.0001","1.0003",2050,"followup"),(4,"EURUSD",4000,"1.0004","1.0006",4050,"terminal")):w.writerow(row)
         cfg=fixture/f"{tid}_config.csv"
         with cfg.open("w",encoding="utf-8",newline="") as h:
-            w=csv.writer(h);w.writerow(("key","value","unit","note"));w.writerow(("case",slug,"label","independent scenario"));w.writerow(("confirmed_msc",1000,"ms","causal origin"));w.writerow(("direction",1,"sign","LONG"))
+            w=csv.writer(h);w.writerow(("key","value","unit","note"));w.writerow(("case",slug,"label","independent scenario"));w.writerow(("confirmed_msc",1000,"ms","causal origin"));w.writerow(("direction",1,"sign","LONG"));w.writerow(("production_function_used_for_expected","false","bool","oracle is independent"));w.writerow(("oracle_source","docs/research/tick_shock/15d_state_conditioned_response_spec.md","path","frozen before implementation"))
         exp=expected/f"{tid}_expected.csv"
         with exp.open("w",encoding="utf-8",newline="") as h:
             w=csv.writer(h);w.writerow(("field","expected_value","tolerance","unit","note"));w.writerow((field,value,"1e-9" if any(c in value for c in ".eE") else "0","value","independent frozen oracle"))

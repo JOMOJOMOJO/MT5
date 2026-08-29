@@ -1,0 +1,273 @@
+check_id,expected,actual,status
+case_count,64,64,PASS
+unique_test_ids,64,64,PASS
+TS15D-PROV-001:fixture_exists,True,True,PASS
+TS15D-PROV-001:expected_exists,True,True,PASS
+TS15D-PROV-001:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-PROV-001:oracle_nonblank,True,True,PASS
+TS15D-PROV-002:fixture_exists,True,True,PASS
+TS15D-PROV-002:expected_exists,True,True,PASS
+TS15D-PROV-002:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-PROV-002:oracle_nonblank,True,True,PASS
+TS15D-PROV-003:fixture_exists,True,True,PASS
+TS15D-PROV-003:expected_exists,True,True,PASS
+TS15D-PROV-003:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-PROV-003:oracle_nonblank,True,True,PASS
+TS15D-PROV-004:fixture_exists,True,True,PASS
+TS15D-PROV-004:expected_exists,True,True,PASS
+TS15D-PROV-004:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-PROV-004:oracle_nonblank,True,True,PASS
+TS15D-PROV-005:fixture_exists,True,True,PASS
+TS15D-PROV-005:expected_exists,True,True,PASS
+TS15D-PROV-005:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-PROV-005:oracle_nonblank,True,True,PASS
+TS15D-CLOCK-001:fixture_exists,True,True,PASS
+TS15D-CLOCK-001:expected_exists,True,True,PASS
+TS15D-CLOCK-001:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLOCK-001:oracle_nonblank,True,True,PASS
+TS15D-CLOCK-002:fixture_exists,True,True,PASS
+TS15D-CLOCK-002:expected_exists,True,True,PASS
+TS15D-CLOCK-002:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLOCK-002:oracle_nonblank,True,True,PASS
+TS15D-CLOCK-003:fixture_exists,True,True,PASS
+TS15D-CLOCK-003:expected_exists,True,True,PASS
+TS15D-CLOCK-003:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLOCK-003:oracle_nonblank,True,True,PASS
+TS15D-CLOCK-004:fixture_exists,True,True,PASS
+TS15D-CLOCK-004:expected_exists,True,True,PASS
+TS15D-CLOCK-004:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLOCK-004:oracle_nonblank,True,True,PASS
+TS15D-CLOCK-005:fixture_exists,True,True,PASS
+TS15D-CLOCK-005:expected_exists,True,True,PASS
+TS15D-CLOCK-005:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLOCK-005:oracle_nonblank,True,True,PASS
+TS15D-CLOCK-006:fixture_exists,True,True,PASS
+TS15D-CLOCK-006:expected_exists,True,True,PASS
+TS15D-CLOCK-006:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLOCK-006:oracle_nonblank,True,True,PASS
+TS15D-CLOCK-007:fixture_exists,True,True,PASS
+TS15D-CLOCK-007:expected_exists,True,True,PASS
+TS15D-CLOCK-007:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLOCK-007:oracle_nonblank,True,True,PASS
+TS15D-CLOCK-008:fixture_exists,True,True,PASS
+TS15D-CLOCK-008:expected_exists,True,True,PASS
+TS15D-CLOCK-008:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLOCK-008:oracle_nonblank,True,True,PASS
+TS15D-CLOCK-009:fixture_exists,True,True,PASS
+TS15D-CLOCK-009:expected_exists,True,True,PASS
+TS15D-CLOCK-009:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLOCK-009:oracle_nonblank,True,True,PASS
+TS15D-CLOCK-010:fixture_exists,True,True,PASS
+TS15D-CLOCK-010:expected_exists,True,True,PASS
+TS15D-CLOCK-010:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLOCK-010:oracle_nonblank,True,True,PASS
+TS15D-STATE-001:fixture_exists,True,True,PASS
+TS15D-STATE-001:expected_exists,True,True,PASS
+TS15D-STATE-001:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-001:oracle_nonblank,True,True,PASS
+TS15D-STATE-002:fixture_exists,True,True,PASS
+TS15D-STATE-002:expected_exists,True,True,PASS
+TS15D-STATE-002:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-002:oracle_nonblank,True,True,PASS
+TS15D-STATE-003:fixture_exists,True,True,PASS
+TS15D-STATE-003:expected_exists,True,True,PASS
+TS15D-STATE-003:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-003:oracle_nonblank,True,True,PASS
+TS15D-STATE-004:fixture_exists,True,True,PASS
+TS15D-STATE-004:expected_exists,True,True,PASS
+TS15D-STATE-004:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-004:oracle_nonblank,True,True,PASS
+TS15D-STATE-005:fixture_exists,True,True,PASS
+TS15D-STATE-005:expected_exists,True,True,PASS
+TS15D-STATE-005:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-005:oracle_nonblank,True,True,PASS
+TS15D-STATE-006:fixture_exists,True,True,PASS
+TS15D-STATE-006:expected_exists,True,True,PASS
+TS15D-STATE-006:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-006:oracle_nonblank,True,True,PASS
+TS15D-STATE-007:fixture_exists,True,True,PASS
+TS15D-STATE-007:expected_exists,True,True,PASS
+TS15D-STATE-007:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-007:oracle_nonblank,True,True,PASS
+TS15D-STATE-008:fixture_exists,True,True,PASS
+TS15D-STATE-008:expected_exists,True,True,PASS
+TS15D-STATE-008:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-008:oracle_nonblank,True,True,PASS
+TS15D-STATE-009:fixture_exists,True,True,PASS
+TS15D-STATE-009:expected_exists,True,True,PASS
+TS15D-STATE-009:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-009:oracle_nonblank,True,True,PASS
+TS15D-STATE-010:fixture_exists,True,True,PASS
+TS15D-STATE-010:expected_exists,True,True,PASS
+TS15D-STATE-010:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-010:oracle_nonblank,True,True,PASS
+TS15D-STATE-011:fixture_exists,True,True,PASS
+TS15D-STATE-011:expected_exists,True,True,PASS
+TS15D-STATE-011:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-011:oracle_nonblank,True,True,PASS
+TS15D-STATE-012:fixture_exists,True,True,PASS
+TS15D-STATE-012:expected_exists,True,True,PASS
+TS15D-STATE-012:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-012:oracle_nonblank,True,True,PASS
+TS15D-STATE-013:fixture_exists,True,True,PASS
+TS15D-STATE-013:expected_exists,True,True,PASS
+TS15D-STATE-013:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-STATE-013:oracle_nonblank,True,True,PASS
+TS15D-CLUSTER-001:fixture_exists,True,True,PASS
+TS15D-CLUSTER-001:expected_exists,True,True,PASS
+TS15D-CLUSTER-001:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLUSTER-001:oracle_nonblank,True,True,PASS
+TS15D-CLUSTER-002:fixture_exists,True,True,PASS
+TS15D-CLUSTER-002:expected_exists,True,True,PASS
+TS15D-CLUSTER-002:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLUSTER-002:oracle_nonblank,True,True,PASS
+TS15D-CLUSTER-003:fixture_exists,True,True,PASS
+TS15D-CLUSTER-003:expected_exists,True,True,PASS
+TS15D-CLUSTER-003:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLUSTER-003:oracle_nonblank,True,True,PASS
+TS15D-CLUSTER-004:fixture_exists,True,True,PASS
+TS15D-CLUSTER-004:expected_exists,True,True,PASS
+TS15D-CLUSTER-004:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLUSTER-004:oracle_nonblank,True,True,PASS
+TS15D-CLUSTER-005:fixture_exists,True,True,PASS
+TS15D-CLUSTER-005:expected_exists,True,True,PASS
+TS15D-CLUSTER-005:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLUSTER-005:oracle_nonblank,True,True,PASS
+TS15D-CLASS-001:fixture_exists,True,True,PASS
+TS15D-CLASS-001:expected_exists,True,True,PASS
+TS15D-CLASS-001:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLASS-001:oracle_nonblank,True,True,PASS
+TS15D-CLASS-002:fixture_exists,True,True,PASS
+TS15D-CLASS-002:expected_exists,True,True,PASS
+TS15D-CLASS-002:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLASS-002:oracle_nonblank,True,True,PASS
+TS15D-CLASS-003:fixture_exists,True,True,PASS
+TS15D-CLASS-003:expected_exists,True,True,PASS
+TS15D-CLASS-003:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLASS-003:oracle_nonblank,True,True,PASS
+TS15D-CLASS-004:fixture_exists,True,True,PASS
+TS15D-CLASS-004:expected_exists,True,True,PASS
+TS15D-CLASS-004:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLASS-004:oracle_nonblank,True,True,PASS
+TS15D-CLASS-005:fixture_exists,True,True,PASS
+TS15D-CLASS-005:expected_exists,True,True,PASS
+TS15D-CLASS-005:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLASS-005:oracle_nonblank,True,True,PASS
+TS15D-CLASS-006:fixture_exists,True,True,PASS
+TS15D-CLASS-006:expected_exists,True,True,PASS
+TS15D-CLASS-006:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLASS-006:oracle_nonblank,True,True,PASS
+TS15D-CLASS-007:fixture_exists,True,True,PASS
+TS15D-CLASS-007:expected_exists,True,True,PASS
+TS15D-CLASS-007:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-CLASS-007:oracle_nonblank,True,True,PASS
+TS15D-EXEC-001:fixture_exists,True,True,PASS
+TS15D-EXEC-001:expected_exists,True,True,PASS
+TS15D-EXEC-001:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-EXEC-001:oracle_nonblank,True,True,PASS
+TS15D-EXEC-002:fixture_exists,True,True,PASS
+TS15D-EXEC-002:expected_exists,True,True,PASS
+TS15D-EXEC-002:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-EXEC-002:oracle_nonblank,True,True,PASS
+TS15D-EXEC-003:fixture_exists,True,True,PASS
+TS15D-EXEC-003:expected_exists,True,True,PASS
+TS15D-EXEC-003:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-EXEC-003:oracle_nonblank,True,True,PASS
+TS15D-EXEC-004:fixture_exists,True,True,PASS
+TS15D-EXEC-004:expected_exists,True,True,PASS
+TS15D-EXEC-004:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-EXEC-004:oracle_nonblank,True,True,PASS
+TS15D-EXEC-005:fixture_exists,True,True,PASS
+TS15D-EXEC-005:expected_exists,True,True,PASS
+TS15D-EXEC-005:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-EXEC-005:oracle_nonblank,True,True,PASS
+TS15D-EXEC-006:fixture_exists,True,True,PASS
+TS15D-EXEC-006:expected_exists,True,True,PASS
+TS15D-EXEC-006:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-EXEC-006:oracle_nonblank,True,True,PASS
+TS15D-EXEC-007:fixture_exists,True,True,PASS
+TS15D-EXEC-007:expected_exists,True,True,PASS
+TS15D-EXEC-007:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-EXEC-007:oracle_nonblank,True,True,PASS
+TS15D-EXEC-008:fixture_exists,True,True,PASS
+TS15D-EXEC-008:expected_exists,True,True,PASS
+TS15D-EXEC-008:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-EXEC-008:oracle_nonblank,True,True,PASS
+TS15D-EXEC-009:fixture_exists,True,True,PASS
+TS15D-EXEC-009:expected_exists,True,True,PASS
+TS15D-EXEC-009:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-EXEC-009:oracle_nonblank,True,True,PASS
+TS15D-EXEC-010:fixture_exists,True,True,PASS
+TS15D-EXEC-010:expected_exists,True,True,PASS
+TS15D-EXEC-010:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-EXEC-010:oracle_nonblank,True,True,PASS
+TS15D-SPLIT-001:fixture_exists,True,True,PASS
+TS15D-SPLIT-001:expected_exists,True,True,PASS
+TS15D-SPLIT-001:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-SPLIT-001:oracle_nonblank,True,True,PASS
+TS15D-SPLIT-002:fixture_exists,True,True,PASS
+TS15D-SPLIT-002:expected_exists,True,True,PASS
+TS15D-SPLIT-002:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-SPLIT-002:oracle_nonblank,True,True,PASS
+TS15D-SPLIT-003:fixture_exists,True,True,PASS
+TS15D-SPLIT-003:expected_exists,True,True,PASS
+TS15D-SPLIT-003:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-SPLIT-003:oracle_nonblank,True,True,PASS
+TS15D-SPLIT-004:fixture_exists,True,True,PASS
+TS15D-SPLIT-004:expected_exists,True,True,PASS
+TS15D-SPLIT-004:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-SPLIT-004:oracle_nonblank,True,True,PASS
+TS15D-SPLIT-005:fixture_exists,True,True,PASS
+TS15D-SPLIT-005:expected_exists,True,True,PASS
+TS15D-SPLIT-005:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-SPLIT-005:oracle_nonblank,True,True,PASS
+TS15D-SPLIT-006:fixture_exists,True,True,PASS
+TS15D-SPLIT-006:expected_exists,True,True,PASS
+TS15D-SPLIT-006:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-SPLIT-006:oracle_nonblank,True,True,PASS
+TS15D-SPLIT-007:fixture_exists,True,True,PASS
+TS15D-SPLIT-007:expected_exists,True,True,PASS
+TS15D-SPLIT-007:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-SPLIT-007:oracle_nonblank,True,True,PASS
+TS15D-SPLIT-008:fixture_exists,True,True,PASS
+TS15D-SPLIT-008:expected_exists,True,True,PASS
+TS15D-SPLIT-008:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-SPLIT-008:oracle_nonblank,True,True,PASS
+TS15D-INTEGRITY-001:fixture_exists,True,True,PASS
+TS15D-INTEGRITY-001:expected_exists,True,True,PASS
+TS15D-INTEGRITY-001:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-INTEGRITY-001:oracle_nonblank,True,True,PASS
+TS15D-INTEGRITY-002:fixture_exists,True,True,PASS
+TS15D-INTEGRITY-002:expected_exists,True,True,PASS
+TS15D-INTEGRITY-002:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-INTEGRITY-002:oracle_nonblank,True,True,PASS
+TS15D-INTEGRITY-003:fixture_exists,True,True,PASS
+TS15D-INTEGRITY-003:expected_exists,True,True,PASS
+TS15D-INTEGRITY-003:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-INTEGRITY-003:oracle_nonblank,True,True,PASS
+TS15D-INTEGRITY-004:fixture_exists,True,True,PASS
+TS15D-INTEGRITY-004:expected_exists,True,True,PASS
+TS15D-INTEGRITY-004:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-INTEGRITY-004:oracle_nonblank,True,True,PASS
+TS15D-INTEGRITY-005:fixture_exists,True,True,PASS
+TS15D-INTEGRITY-005:expected_exists,True,True,PASS
+TS15D-INTEGRITY-005:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-INTEGRITY-005:oracle_nonblank,True,True,PASS
+TS15D-INTEGRITY-006:fixture_exists,True,True,PASS
+TS15D-INTEGRITY-006:expected_exists,True,True,PASS
+TS15D-INTEGRITY-006:chronological,"[1000, 1500, 2000, 4000]","[1000, 1500, 2000, 4000]",PASS
+TS15D-INTEGRITY-006:oracle_nonblank,True,True,PASS
+fixed_checkpoint_500,1500,1500,PASS
+fixed_checkpoint_1000,2000,2000,PASS
+fixed_checkpoint_3000,4000,4000,PASS
+entry_eligibility,1750,1750,PASS
+strict_post_signal_fill,False,False,PASS
+extension_ratio,0.5,0.5,PASS
+retracement_ratio,0.25,0.25,PASS
+directional_imbalance,0.5,0.5,PASS
+usd_sign_eurusd_long,-1,-1,PASS
+usd_sign_usdjpy_long,1,1,PASS
+purge_120s_equal,True,True,PASS
+candidate_budget,True,True,PASS
+frozen_expected_unchanged_since_red,True,True,PASS
+finite_log_anchor,True,True,PASS

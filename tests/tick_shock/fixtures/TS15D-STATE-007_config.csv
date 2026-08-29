@@ -2,3 +2,5 @@ key,value,unit,note
 case,IMBALANCE,label,independent scenario
 confirmed_msc,1000,ms,causal origin
 direction,1,sign,LONG
+production_function_used_for_expected,false,bool,oracle is independent
+oracle_source,docs/research/tick_shock/15d_state_conditioned_response_spec.md,path,frozen before implementation

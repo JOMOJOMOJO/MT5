@@ -39,6 +39,7 @@ class FixtureIntegrityTests(unittest.TestCase):
                 "docs/research/tick_shock/03_test_oracle_calculation.md",
                 "docs/research/tick_shock/11_test_oracle_addendum.md",
                 "docs/research/tick_shock/15b_control_funnel_test_spec.md",
+                "docs/research/tick_shock/15d_state_conditioned_response_spec.md",
             }, path.name)
 
 
