@@ -163,7 +163,20 @@ void TS15ARunCase(const string id)
    else if(id=="TS15A-PROV-001")
      {
       TS5AddLong(a,"detector_count",TSV1DetectorCount());TS5Add(a,"default_detector",TSV1DetectorName(STRICT_V0));
-      TS5Add(a,"feature_schema",TSV1FeatureSchema());TS5Add(a,"spec_sha256",TSV1SpecSha256());
+      TS5Add(a,"feature_schema",TSV1HistoricalFeatureSchema());TS5Add(a,"spec_sha256",TSV1SpecSha256());
+     }
+   else if(id=="TS15A-PROV-CURRENT-001")
+     {
+      TS5Add(a,"current_schema",TSV1FeatureSchema());
+      TS5Add(a,"historical_schema",TSV1HistoricalFeatureSchema());
+      TS5AddBool(a,"schemas_distinct",TSV1FeatureSchema()!=TSV1HistoricalFeatureSchema());
+     }
+   else if(id=="TS15A-PROV-MIGRATION-001")
+     {
+      TS5AddBool(a,"migration_supported",TSV1FeatureSchemaMigrationSupported(TSV1HistoricalFeatureSchema(),TSV1FeatureSchema()));
+      TS5Add(a,"added_columns",TSV1FeatureSchemaMigrationAddedColumns());
+      TS5Add(a,"meaning_changes",TSV1FeatureSchemaMigrationMeaningChanges());
+      TS5Add(a,"preserved_columns",TSV1FeatureSchemaMigrationPreservedColumns());
      }
    else if(id=="TS15A-SEPARATION-001")
      {
@@ -176,7 +189,7 @@ void TS15ARunCase(const string id)
 
 void TS15ARunAll()
   {
-   string ids[25]={"TS15A-RET-001","TS15A-MID-001","TS15A-SAMEMSC-001","TS15A-IRREG-001","TS15A-STALE-001","TS15A-SPREAD-001","TS15A-ANOMALY-001","TS15A-REVERSAL-001","TS15A-PERSIST-001","TS15A-VOL-HIGH-001","TS15A-VOL-LOW-001","TS15A-TOD-001","TS15A-EXCLUDE-001","TS15A-FUTURE-001","TS15A-CALIB-001","TS15A-QUANTILE-001","TS15A-SEVERITY-001","TS15A-MULTI-001","TS15A-CLUSTER-001","TS15A-CLOCK-001","TS15A-BACKDATE-001","TS15A-NOISE-001","TS15A-STRICT-001","TS15A-PROV-001","TS15A-SEPARATION-001"};
+   string ids[27]={"TS15A-RET-001","TS15A-MID-001","TS15A-SAMEMSC-001","TS15A-IRREG-001","TS15A-STALE-001","TS15A-SPREAD-001","TS15A-ANOMALY-001","TS15A-REVERSAL-001","TS15A-PERSIST-001","TS15A-VOL-HIGH-001","TS15A-VOL-LOW-001","TS15A-TOD-001","TS15A-EXCLUDE-001","TS15A-FUTURE-001","TS15A-CALIB-001","TS15A-QUANTILE-001","TS15A-SEVERITY-001","TS15A-MULTI-001","TS15A-CLUSTER-001","TS15A-CLOCK-001","TS15A-BACKDATE-001","TS15A-NOISE-001","TS15A-STRICT-001","TS15A-PROV-001","TS15A-PROV-CURRENT-001","TS15A-PROV-MIGRATION-001","TS15A-SEPARATION-001"};
    for(int i=0;i<ArraySize(ids);++i) TS15ARunCase(ids[i]);
   }
 

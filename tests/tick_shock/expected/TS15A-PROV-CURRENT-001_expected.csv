@@ -1,0 +1,4 @@
+field,expected_value,tolerance,unit,note
+current_schema,tickshock-detector-feature-v2,0,label,current writer
+historical_schema,tickshock-detector-feature-v1,0,label,frozen historical artifact
+schemas_distinct,true,0,bool,no identity conflation

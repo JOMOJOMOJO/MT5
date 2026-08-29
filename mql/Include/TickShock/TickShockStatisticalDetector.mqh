@@ -66,6 +66,37 @@ string TSV1FeatureSchema()
    return "tickshock-detector-feature-v2";
   }
 
+// Schema provenance is version-aware.  The frozen Step 15A evidence remains
+// a v1 artifact while current detector serialization is v2.  Keeping these
+// identities separate prevents a historical expected value from being
+// rewritten merely because the current writer gained a direction column.
+string TSV1HistoricalFeatureSchema()
+  {
+   return "tickshock-detector-feature-v1";
+  }
+
+bool TSV1FeatureSchemaMigrationSupported(const string from_schema,
+                                          const string to_schema)
+  {
+   return from_schema==TSV1HistoricalFeatureSchema() &&
+          to_schema==TSV1FeatureSchema();
+  }
+
+string TSV1FeatureSchemaMigrationAddedColumns()
+  {
+   return "direction";
+  }
+
+string TSV1FeatureSchemaMigrationMeaningChanges()
+  {
+   return "NONE";
+  }
+
+string TSV1FeatureSchemaMigrationPreservedColumns()
+  {
+   return "ALL_V1_COLUMNS";
+  }
+
 int TSV1DetectorCount()
   {
    return 4;

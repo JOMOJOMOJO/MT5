@@ -1,0 +1,5 @@
+field,expected_value,tolerance,unit,note
+migration_supported,true,0,bool,exact v1 to v2 lineage
+added_columns,direction,0,label,only added semantic field
+meaning_changes,NONE,0,label,no existing field meaning changed
+preserved_columns,ALL_V1_COLUMNS,0,label,v1 columns remain compatible
