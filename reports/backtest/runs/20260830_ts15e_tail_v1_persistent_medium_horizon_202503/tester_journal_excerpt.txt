@@ -1,39 +1,3 @@
-CS	0	01:29:38.018	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.019. Test passed in 0:00:00.168.
-CS	0	01:29:38.018	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:29:46.546	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.020. Test passed in 0:00:00.256.
-CS	0	01:29:46.546	Tester	59 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:29:54.666	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.027. Test passed in 0:00:00.201.
-CS	0	01:29:54.666	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:30:02.835	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.020. Test passed in 0:00:00.176.
-CS	0	01:30:02.835	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:30:10.881	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.026. Test passed in 0:00:00.096.
-CS	0	01:30:10.881	Tester	59 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:30:19.112	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.019. Test passed in 0:00:00.185.
-CS	0	01:30:19.112	Tester	59 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:30:27.167	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.024. Test passed in 0:00:00.098.
-CS	0	01:30:27.167	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:30:35.454	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.021. Test passed in 0:00:00.218.
-CS	0	01:30:35.454	Tester	59 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:44:44.857	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.017. Test passed in 0:00:00.504.
-CS	0	01:44:44.857	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:45:51.598	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.023. Test passed in 0:00:00.205.
-CS	0	01:45:51.598	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:46:00.287	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.025. Test passed in 0:00:00.654.
-CS	0	01:46:00.287	Tester	59 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:46:10.101	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.030. Test passed in 0:00:00.265.
-CS	0	01:46:10.101	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:46:18.195	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.019. Test passed in 0:00:00.236.
-CS	0	01:46:18.195	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:46:26.280	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Test passed in 0:00:00.140.
-CS	0	01:46:26.280	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:46:34.625	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.018. Test passed in 0:00:00.264.
-CS	0	01:46:34.625	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:46:42.737	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.019. Test passed in 0:00:00.161.
-CS	0	01:46:42.737	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:46:51.066	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.020. Test passed in 0:00:00.338.
-CS	0	01:46:51.066	Tester	59 Mb memory used including 25 Mb of history data, 64 Mb of tick data
-CS	0	01:48:16.635	Tester	EURUSD,M1: 5725 ticks, 1438 bars generated. Environment synchronized in 0:00:00.021. Test passed in 0:00:00.139.
-CS	0	01:48:16.635	Tester	58 Mb memory used including 25 Mb of history data, 64 Mb of tick data
 CS	0	01:50:55.395	Tester	  InpRunId=ts15e_medium_horizon_202503
 CS	3	01:51:04.106	Ticks	GBPUSD : 2025.03.24 23:59 - real ticks discarded for 179 minutes out of 1438 total minute bars within a day
 CS	3	01:51:04.106	Ticks	GBPUSD : 2025.03.24 23:59 - 6375 tick prices mismatch for 179 minute bars

@@ -479,3 +479,33 @@ detector/funnel lifetime from response-recording completion. Once true, raw
 ticks update only the response state. This preserves Step 15B state, signal and
 fill behavior while allowing a stale terminal horizon to use its first later
 real quote. All fields are initialized by `ZeroMemory` plus `TS15CArmResponse`.
+
+## Step 15E medium-horizon state
+
+The new state is explicit, bounded and embedded once per `TSRSymbolContext` as
+`TickShockMediumHorizonContext medium_horizon`. It is production-created and
+directly injectable by the Step 15E harness; no unbounded global tick history
+was added.
+
+| type | capacity / lifetime | contents and update ownership |
+|---|---|---|
+| `TickShock15EM1Point` | one completed M1 close | boundary ms, Mid and fallback flag; written by `TS15EStoreM1`. |
+| `TickShock15EM1State` | ring 16; latest 11 eligible closes feed 10 RMS returns | ring count/index and current incomplete close. `TS15EObserveMinuteQuote` closes it only after a later minute arrives. |
+| `TickShock15ECheckpoint` | 9 per episode | target/quote/processing ms, lag/age/status, Bid/Ask/Mid, normalized moves and MFE/MAE. Written once by `TS15ECapture`. |
+| `TickShock15EEntryPath` | 10 per episode: 5 clocks x 2 directions | causal signal/eligible/entry clocks, actual entry Bid/Ask and nine base/1.25x-spread outcomes. |
+| `TickShock15EEpisode` | one active/cooldown episode per symbol | anchor/label, repeat metrics, MFE/MAE/recross/variance, counters, fixed arrays and one same-ms pending quote. Active life is 900,000ms plus 60,000ms quiet cooldown; unfinished EOD state is purged. |
+| `TickShockMediumHorizonContext` | one per symbol for EA lifetime | M1 state, episode, monotonic sequence and completion/purge/cooldown counters; passed explicitly to domain functions. |
+
+Constants are `TS15E_CHECKPOINTS=9`, `TS15E_ENTRY_CLOCKS=5`,
+`TS15E_DIRECTIONS=2`, `TS15E_ENTRY_PATHS=10`, `TS15E_M1_CAPACITY=16`,
+`TS15E_HORIZON_MS=900000`, `TS15E_QUIET_MS=60000`, with checkpoint seconds
+`5,10,30,60,120,180,300,600,900`. Clocks use ms, Bid/Ask/moves use absolute
+symbol price, log/RMS is dimensionless, and severity/counts are unitless. The
+module calls no MT5 API and performs no file I/O.
+
+EA-only globals add three handles and row counters for
+`medium_horizon_episode_summary`, `medium_horizon_response`, and
+`medium_horizon_entry_comparison`. They live from `OnInit` to `OnDeinit`; only
+`TSR15EWritePending` serializes them. Schema is
+`tickshock-medium-horizon-response-v1`. No all-tick or one-second CSV global
+was added.

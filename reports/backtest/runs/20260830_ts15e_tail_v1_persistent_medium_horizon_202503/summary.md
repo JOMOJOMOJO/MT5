@@ -10,7 +10,7 @@ model for 2025-03-01 through 2025-04-01. It sent no orders.
 - source commit: `ce46a52204dae05dddff680bdc5f6d56907bb08e`
 - executed EX5 SHA-256: `B213011CEDA438767831044C3AD792569232A7E2197F92DE13CCE4728B53109E`
 - elapsed tester time: 574.985 seconds; journal wall time: 9m43.740s
-- total ticks: 10,587,809
+- EA summary ticks: 10,587,809; tester journal total ticks: 10,587,807
 - average / maximum reported memory: 29.579 / 30 MB
 - event CSV: 10 rows, 2,709,073 bytes (event-level research output)
 - trade CSV: 0 rows, 15 bytes (header only)
@@ -41,6 +41,9 @@ primary analysis. The remaining primary population is 2,734 episodes.
 The saved timestamps are broker-server timestamps. No verified UTC-offset/DST
 mapping was injected, so session tables are explicitly labelled server-hour
 diagnostics and are not represented as UTC sessions.
+
+The two-tick difference between the EA summary counter and tester journal is
+retained as an accounting-definition difference; neither value is rewritten.
 
 ## Interpretation boundary
 
