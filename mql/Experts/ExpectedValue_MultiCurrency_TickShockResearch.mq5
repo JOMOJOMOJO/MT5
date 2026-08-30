@@ -2783,8 +2783,7 @@ void TSRProcessOneTick(const int symbol_index,const MqlTick &source,const long p
       TSR15EWritePending(g_symbols[symbol_index]);
      }
    bool shock_active=g_symbols[symbol_index].medium_horizon.episode.mode!=TS15E_IDLE;
-   double control_usd=0.0;int control_pairs=0;TSR15FUsdFactorAt(time_msc,control_usd,control_pairs);
-   TS15FObserveControl(g_symbols[symbol_index].context_features,InpRunId,g_symbols[symbol_index].symbol,time_msc,processing_msc,tick.bid,tick.ask,shock_active,control_usd,control_pairs);
+   TS15FObserveControl(g_symbols[symbol_index].context_features,InpRunId,g_symbols[symbol_index].symbol,time_msc,processing_msc,tick.bid,tick.ask,shock_active);
    TSR15FCaptureAndWriteControl(g_symbols[symbol_index],time_msc,processing_msc,tick.bid,tick.ask);
    if(InpDetectorVersion!=STRICT_V0)
       TSRV1AdvanceCounterfactualTracks(g_symbols[symbol_index],tick,processing_msc);
