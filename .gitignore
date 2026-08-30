@@ -1,5 +1,6 @@
 *.ex5
 *.log
+reports/tests/tick_shock/tester/step15f_*
 *.pyc
 Thumbs.db
 .DS_Store
