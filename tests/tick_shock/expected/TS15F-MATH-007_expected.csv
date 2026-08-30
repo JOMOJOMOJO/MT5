@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+repeat_balance,0.5,1e-9,ratio,frozen independent oracle

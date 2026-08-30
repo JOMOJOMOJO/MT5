@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+completed_m1_close,1.0010,1e-9,price,frozen independent oracle

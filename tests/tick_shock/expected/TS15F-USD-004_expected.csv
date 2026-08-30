@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+checkpoint_msc,61000,0,ms,frozen independent oracle

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+trailing_return,0.009950330853,1e-9,log_return,frozen independent oracle

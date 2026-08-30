@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+eurusd_usd_sign,-1,0,sign,frozen independent oracle

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+control_anchor_msc,900000,0,ms,frozen independent oracle

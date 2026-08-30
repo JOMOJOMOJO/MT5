@@ -1,0 +1,11 @@
+{
+  "total_episodes": 3151,
+  "fallback_excluded": 417,
+  "primary_population": 2734,
+  "funnel_reconciled": true,
+  "unexplained_exclusions": 0,
+  "major_selection_bias_flags": 0,
+  "reversal_candidate_gate_passes": 0,
+  "step15e_status_change_required": false,
+  "verdict": "STEP15E_DIRECTION_AND_COVERAGE_AUDIT_PASSED"
+}

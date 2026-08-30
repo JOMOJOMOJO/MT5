@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+missing_policy,FAIL_CLOSED,0,text,frozen independent oracle

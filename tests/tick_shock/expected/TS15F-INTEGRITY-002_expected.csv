@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+deterministic_seed,20260831,0,seed,frozen independent oracle

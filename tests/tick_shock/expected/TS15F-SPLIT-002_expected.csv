@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+purge_ms,900000,0,ms,frozen independent oracle

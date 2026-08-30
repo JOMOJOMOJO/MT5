@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+daily_range_position,0.75,1e-9,ratio,frozen independent oracle

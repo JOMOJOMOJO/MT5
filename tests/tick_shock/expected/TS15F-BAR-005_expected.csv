@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+ema20,19.5,1e-9,value,frozen independent oracle

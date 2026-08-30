@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+usd_factor,0.2,1e-9,zscore,frozen independent oracle

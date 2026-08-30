@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+spread_atr_ratio,0.1,1e-9,ratio,frozen independent oracle

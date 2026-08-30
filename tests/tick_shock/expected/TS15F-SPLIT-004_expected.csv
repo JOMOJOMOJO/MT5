@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+training_only_bucket,true,0,bool,frozen independent oracle

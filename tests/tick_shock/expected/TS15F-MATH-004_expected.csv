@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+realized_volatility,0.01,1e-9,log_return,frozen independent oracle

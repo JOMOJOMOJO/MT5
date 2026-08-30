@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+future_breadth_reads,0,0,count,frozen independent oracle

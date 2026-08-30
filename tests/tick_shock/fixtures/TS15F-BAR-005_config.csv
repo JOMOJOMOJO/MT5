@@ -1,0 +1,6 @@
+key,value,unit,note
+case,TS15F-BAR-005,id,frozen
+feature_spec_hash,074C40B21F804CEDB414FA0C75DD1A101B7DF808F6254000B641C134C282B597,sha256,canonical registry
+model_family_hash,29A00C165566C46E7102D6B4C6AC14482DCA88E8F4ABAAB8B5DE2E388A60C338,sha256,finite family
+seed,20260831,seed,deterministic
+production_formula_used_for_expected,false,bool,independent oracle

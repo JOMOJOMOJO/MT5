@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+feature_spec_valid,true,0,bool,frozen independent oracle

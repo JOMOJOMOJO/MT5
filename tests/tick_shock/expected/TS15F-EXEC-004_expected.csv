@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+pseudo_direction,1,0,sign,frozen independent oracle

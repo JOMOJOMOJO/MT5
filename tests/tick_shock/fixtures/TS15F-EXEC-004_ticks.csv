@@ -1,0 +1,4 @@
+sequence,symbol,time_msc,bid,ask,processing_msc,note
+1,EURUSD,1000,1.0,1.0002,1010,causal quote
+2,EURUSD,61000,1.001,1.0012,61010,later minute closes prior
+3,USDJPY,61000,150.0,150.02,61011,causal USD peer

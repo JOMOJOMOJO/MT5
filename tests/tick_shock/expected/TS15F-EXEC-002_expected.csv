@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+reversal_return,0.0002,1e-9,price,frozen independent oracle

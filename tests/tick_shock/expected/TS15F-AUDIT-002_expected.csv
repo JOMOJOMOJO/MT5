@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+primary_funnel_total,2734,0,count,frozen independent oracle
