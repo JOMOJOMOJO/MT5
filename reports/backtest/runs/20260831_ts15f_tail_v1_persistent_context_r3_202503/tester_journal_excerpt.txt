@@ -1,0 +1,10 @@
+CS	0	23:48:53.373	Tester	  InpRunId=ts15f_context_r3_202503
+CS	3	23:48:59.686	Ticks	GBPUSD : 2025.03.24 23:59 - real ticks discarded for 179 minutes out of 1438 total minute bars within a day
+CS	3	23:48:59.686	Ticks	GBPUSD : 2025.03.24 23:59 - 6375 tick prices mismatch for 179 minute bars
+CS	3	23:48:59.706	Ticks	GBPUSD : 2025.03.01 00:00 - 2025.04.01 00:00  real ticks discarded for 179 minutes of 30187 total minute bars, every tick generation used
+CS	3	23:48:59.706	Ticks	GBPUSD : 2025.03.01 00:00 - 2025.04.01 00:00  tick volumes not matched for 176 minute bars
+CS	3	23:48:59.706	Ticks	GBPUSD : 2025.03.01 00:00 - 2025.04.01 00:00  last prices absent for 1435 minute bars, bid prices used
+CS	0	23:59:39.923	ExpectedValue_MultiCurrency_TickShockResearch (EURUSD,M1)	2025.03.31 23:57:59   ExpectedValue_MultiCurrency_TickShockResearch deinitialized reason=1 events=10 rows=10
+CS	0	23:59:39.962	Tester	EURUSD,M1: 1364080 ticks, 30192 bars generated. Environment synchronized in 0:00:00.036. Test passed in 0:10:46.655 (including ticks preprocessing 0:00:00.719).
+CS	0	23:59:39.962	Tester	10587807 total ticks for all symbols
+CS	0	23:59:39.962	Tester	501 Mb memory used including 40 Mb of history data, 256 Mb of tick data
