@@ -1,0 +1,7 @@
+decision_seconds,horizon_seconds,total_episodes,fallback_excluded,primary_population,valid_entry,valid_exit,partial_feature_rows,complete_feature_rows,reconciled
+60,300,3151,417,2734,1279,677,2,1277,True
+60,600,3151,417,2734,1279,675,2,1277,True
+60,900,3151,417,2734,1279,658,2,1277,True
+120,300,3151,417,2734,1244,682,1,1243,True
+120,600,3151,417,2734,1244,662,1,1243,True
+120,900,3151,417,2734,1244,659,1,1243,True

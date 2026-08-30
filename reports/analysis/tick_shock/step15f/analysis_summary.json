@@ -1,0 +1,28 @@
+{
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "pandas": "3.0.1",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "sklearn": "1.9.0",
+  "seed": 20260831,
+  "feature_spec_sha256": "074C40B21F804CEDB414FA0C75DD1A101B7DF808F6254000B641C134C282B597",
+  "feature_registry_file_sha256": "27A2ED91F2A3EE5A429D6EE3F3E94CC9F25796070CBD1EE5432F7E5CDA7AD173",
+  "model_family_sha256": "29A00C165566C46E7102D6B4C6AC14482DCA88E8F4ABAAB8B5DE2E388A60C338",
+  "trial_registry_file_sha256": "CF545CA15BB367FB9E2EDA4F04112C905182AB0BA769395CC96774F8A75B5201",
+  "run_id": "ts15f_context_r3_202503",
+  "source_commit": "26faf274b87b882745a9a62bfb521fea08d9bf7f",
+  "development_only": true,
+  "candidate_count": 0,
+  "behavior_mismatches": 0,
+  "parameter_differences": 0,
+  "production_orders": 0,
+  "status": [
+    "CAUSAL_CONTEXT_FEATURES_CHARACTERIZED_ON_DEVELOPMENT_DATA",
+    "NO_CONTEXT_RULE_HYPOTHESIS_FROZEN",
+    "COST_MODEL_INCOMPLETE",
+    "FORMAL_NET_EXPECTANCY_UNAVAILABLE",
+    "EDGE_UNDETERMINED",
+    "PRODUCTION_NOT_ELIGIBLE"
+  ]
+}

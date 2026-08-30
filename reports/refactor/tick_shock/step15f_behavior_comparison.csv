@@ -1,0 +1,7 @@
+component,baseline_rows,step15f_rows,missing_rows,extra_rows,mismatches,status
+detector_event_identity,21799,21799,0,0,0,PASS
+episode_identity,3151,3151,0,0,0,PASS
+path_identity,21799,21799,0,0,0,PASS
+strategy_funnel,21799,21799,0,0,0,PASS
+medium_horizon_response,28359,28359,0,0,0,PASS
+market_clusters,10245,10245,0,0,0,PASS
