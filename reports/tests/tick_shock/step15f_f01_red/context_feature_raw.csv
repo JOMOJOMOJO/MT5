@@ -35,4 +35,4 @@ TS15F-INTEGRITY-002,MATCH,deterministic_seed=20260831,deterministic_seed=2026083
 TS15F-INTEGRITY-003,MATCH,feature_spec_valid=true,feature_spec_valid=true,,context_feature.csv
 TS15F-INTEGRITY-004,MATCH,step15e_identity_mismatches=0,step15e_identity_mismatches=0,,context_feature.csv
 TS15F-INTEGRITY-005,MATCH,order_send_calls=0,order_send_calls=0,,context_feature.csv
-TS15F-INTEGRITY-006,MATCH,f01_available=true,f01_available=true,,context_feature.csv
+TS15F-INTEGRITY-006,MISMATCH,f01_available=true,f01_available=false,f01_available:true!=false,context_feature.csv

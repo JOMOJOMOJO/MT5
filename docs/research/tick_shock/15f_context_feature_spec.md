@@ -53,3 +53,12 @@ validated for that symbol and run.
 
 The implementation must preserve Step 15E episode/event/path/funnel identity,
 all strategy parameters and production order count zero.
+
+## Post-run implementation coverage guard
+
+`TS15F-INTEGRITY-006` exercises `TS15FBuildFeatures` end to end and requires
+F01 availability when completed M1 history and a positive ATR are present.
+This guards against relying on MQL argument evaluation order when a helper both
+returns a value and updates a validity flag. The expected value follows the
+preregistered F01 availability contract; it does not change the feature
+formula, period, threshold, model family or outcome.

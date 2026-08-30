@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+f01_available,true,0,bool,completed M1 bars and positive ATR make preregistered F01 available

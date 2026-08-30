@@ -1,5 +1,6 @@
 # Tick-shock Step 3 requirements traceability
 
+| TS15F-REQ-INTEGRITY | TS15FBuildFeatures | STEP15F-F01-EVALUATION-ORDER | TS15F-INTEGRITY-006 | tests/tick_shock/fixtures/TS15F-INTEGRITY-006_ticks.csv | tests/tick_shock/expected/TS15F-INTEGRITY-006_expected.csv | production-path integration | XFAIL before evaluation-order fix | Step 15F |
 ## Rules
 
 - One row is one executable Test ID. A Requirement may have multiple boundary/direction tests.

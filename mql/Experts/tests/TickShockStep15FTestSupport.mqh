@@ -46,8 +46,15 @@ void TS15FRunCase(const string id)
    else if(id=="TS15F-INTEGRITY-003")TS5AddBool(a,"feature_spec_valid",TS15FFeatureSpecHash()=="074C40B21F804CEDB414FA0C75DD1A101B7DF808F6254000B641C134C282B597");
    else if(id=="TS15F-INTEGRITY-004")TS5AddLong(a,"step15e_identity_mismatches",0);
    else if(id=="TS15F-INTEGRITY-005")TS5AddLong(a,"order_send_calls",0);
+   else if(id=="TS15F-INTEGRITY-006")
+     {
+      TickShock15FBarState s;TS15FTestState(s,1024);TickShock15FFeatureSnapshot snapshot;
+      long quote_msc=(long)1024*60000+1000;
+      TS15FBuildFeatures(s,quote_msc,quote_msc,quote_msc,1.1023,1.1025,1,2.0,.0010,.0002,250,1,1,0,false,.0001,.2,TS15FUsdSign("EURUSD"),6,snapshot);
+      TS5AddBool(a,"f01_available",snapshot.available[0]);
+     }
    TS5CompareAndRecord(id,a);
   }
 
-void TS15FRunAll(){string groups[7]={"AUDIT","BAR","MATH","USD","EXEC","SPLIT","INTEGRITY"};int counts[7]={3,8,7,4,4,5,5};for(int g=0;g<7;++g)for(int i=1;i<=counts[g];++i)TS15FRunCase(StringFormat("TS15F-%s-%03d",groups[g],i));}
+void TS15FRunAll(){string groups[7]={"AUDIT","BAR","MATH","USD","EXEC","SPLIT","INTEGRITY"};int counts[7]={3,8,7,4,4,5,6};for(int g=0;g<7;++g)for(int i=1;i<=counts[g];++i)TS15FRunCase(StringFormat("TS15F-%s-%03d",groups[g],i));}
 #endif

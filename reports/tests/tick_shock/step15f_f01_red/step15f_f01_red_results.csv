@@ -19,7 +19,7 @@ TS15F-INTEGRITY-002,TS15F-REQ-INTEGRITY,STEP15F-PRE-FIX,production_path_integrat
 TS15F-INTEGRITY-003,TS15F-REQ-INTEGRITY,STEP15F-PRE-FIX,production_path_integration,PASS,feature_spec_valid=true,feature_spec_valid=true,,reports/tests/tick_shock/step15f_green/raw/context_feature.csv
 TS15F-INTEGRITY-004,TS15F-REQ-INTEGRITY,STEP15F-PRE-FIX,production_path_integration,PASS,step15e_identity_mismatches=0,step15e_identity_mismatches=0,,reports/tests/tick_shock/step15f_green/raw/context_feature.csv
 TS15F-INTEGRITY-005,TS15F-REQ-INTEGRITY,STEP15F-PRE-FIX,production_path_integration,PASS,order_send_calls=0,order_send_calls=0,,reports/tests/tick_shock/step15f_green/raw/context_feature.csv
-TS15F-INTEGRITY-006,TS15F-REQ-INTEGRITY,STEP15F-F01-EVALUATION-ORDER,production_path_integration,PASS,f01_available=true,f01_available=true,,reports/tests/tick_shock/step15f_green/raw/context_feature.csv
+TS15F-INTEGRITY-006,TS15F-REQ-INTEGRITY,STEP15F-F01-EVALUATION-ORDER,production_path_integration,XFAIL,f01_available=true,f01_available=false,f01_available:true!=false,reports/tests/tick_shock/step15f_f01_red/context_feature_raw.csv
 TS15F-MATH-001,TS15F-REQ-MATH,STEP15F-PRE-FIX,production_path_integration,PASS,zero_atr_status=MISSING,zero_atr_status=MISSING,,reports/tests/tick_shock/step15f_green/raw/context_feature.csv
 TS15F-MATH-002,TS15F-REQ-MATH,STEP15F-PRE-FIX,production_path_integration,PASS,normalized_distance=1.5,normalized_distance=1.5,,reports/tests/tick_shock/step15f_green/raw/context_feature.csv
 TS15F-MATH-003,TS15F-REQ-MATH,STEP15F-PRE-FIX,production_path_integration,PASS,trailing_return=0.009950330853,trailing_return=0.009950330853,,reports/tests/tick_shock/step15f_green/raw/context_feature.csv
