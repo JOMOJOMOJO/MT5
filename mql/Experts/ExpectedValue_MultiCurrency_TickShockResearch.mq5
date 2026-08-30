@@ -12,6 +12,7 @@
 #include "..\Include\TickShock\TickShockEventResponse.mqh"
 #include "..\Include\TickShock\TickShockStateConditionedResponse.mqh"
 #include "..\Include\TickShock\TickShockMediumHorizonResponse.mqh"
+#include "..\Include\TickShock\TickShockContextFeatures.mqh"
 
 // Research-only EA.  This file contains no OrderCheck/OrderSend call.
 // IDEAL_EVENT_STUDY is event-time research only.  REALIZABLE_EA includes the
@@ -394,6 +395,7 @@ struct TSRSymbolContext
    TickShockV1CalibrationContext v1_calibration;
    TickShockControlRecorder control_recorder;
    TickShockMediumHorizonContext medium_horizon;
+   TickShockContextFeatureState context_features;
    TSRV1Candidate v1_pending_candidate;
    TSRV1StatisticalTrack v1_tracks[];
    TickShockSymbolClusterClock v1_stat_symbol_cluster_clock;
@@ -489,6 +491,10 @@ int g_strategy_first_passage_file = INVALID_HANDLE;
 int g_medium_episode_file = INVALID_HANDLE;
 int g_medium_response_file = INVALID_HANDLE;
 int g_medium_entry_file = INVALID_HANDLE;
+int g_context_feature_file = INVALID_HANDLE;
+int g_context_control_file = INVALID_HANDLE;
+long g_context_feature_rows = 0;
+long g_context_control_rows = 0;
 int g_debug_messages = 0;
 bool g_is_tester = false;
 double g_burst_spread_ratios[];
@@ -767,6 +773,22 @@ string TSR15EEntryHeader()
    return h+",schema_version";
   }
 
+string TSR15FFeatureHeader()
+  {
+   string h="episode_id,market_cluster_id,symbol,shock_direction,decision_seconds,target_msc,quote_msc,processing_msc,status,reason,usd_pair_count,usd_factor";
+   const string names[TS15F_FEATURES]={"ema20_distance_m1","ema50_distance_m1","ema20_slope_m1","ema50_slope_m1","ema_alignment_m1","ema_alignment_m5","ema_alignment_m15","shock_alignment_m5","shock_alignment_m15","return_1m","return_5m","return_15m","shock_pre_momentum_5m","trend_efficiency_15m","daily_range_position","atr14_m1","atr14_m5","atr14_m15","realized_vol_1m","realized_vol_5m","realized_vol_15m","short_long_vol_ratio","shock_pre_vol_ratio","volatility_percentile","entry_spread","spread_atr_ratio","spread_prevol_ratio","tick_activity","quote_age_ms","severity","initial_shock_spread_ratio","confirmation_delay_ms","repeat_count","repeat_direction_balance","origin_recross_available","usd_factor_alignment"};
+   for(int i=0;i<TS15F_FEATURES;++i)h+=","+names[i];
+   return h+",feature_spec_sha256,schema_version";
+  }
+
+string TSR15FControlHeader()
+  {
+   string h="control_id,symbol,anchor_msc,pseudo_direction,decision_seconds,target_msc,quote_msc,processing_msc,status,reason,entry_bid,entry_ask,usd_pair_count,usd_factor";
+   for(int i=0;i<TS15F_FEATURES;++i)h+=StringFormat(",f%02d",i+1);
+   for(int i=0;i<TS15F_OUTCOMES;++i)h+=StringFormat(",h%d_quote_msc,h%d_continuation,h%d_reversal,h%d_continuation_125x,h%d_reversal_125x",TS15F_OUTCOME_SECONDS[i],TS15F_OUTCOME_SECONDS[i],TS15F_OUTCOME_SECONDS[i],TS15F_OUTCOME_SECONDS[i],TS15F_OUTCOME_SECONDS[i]);
+   return h+",feature_spec_sha256,schema_version";
+  }
+
 bool TSROpenLogs()
   {
    g_event_file = TSROpenCsv("events", TSREventHeader());
@@ -786,11 +808,14 @@ bool TSROpenLogs()
    g_medium_episode_file = TSROpenCsv("medium_horizon_episode_summary",TSR15EEpisodeHeader());
    g_medium_response_file = TSROpenCsv("medium_horizon_response",TSR15EResponseHeader());
    g_medium_entry_file = TSROpenCsv("medium_horizon_entry_comparison",TSR15EEntryHeader());
+   g_context_feature_file = TSROpenCsv("episode_context_features",TSR15FFeatureHeader());
+   g_context_control_file = TSROpenCsv("matched_control_features",TSR15FControlHeader());
    return g_event_file!=INVALID_HANDLE && g_trade_file!=INVALID_HANDLE && g_summary_file!=INVALID_HANDLE && g_specs_file!=INVALID_HANDLE && g_features_file!=INVALID_HANDLE &&
           g_controls_file!=INVALID_HANDLE && g_control_matches_file!=INVALID_HANDLE && g_funnel_file!=INVALID_HANDLE && g_event_response_file!=INVALID_HANDLE &&
           g_decision_checkpoint_file!=INVALID_HANDLE && g_strategy_entry_feature_file!=INVALID_HANDLE && g_path_class_file!=INVALID_HANDLE &&
           g_causal_cluster_feature_file!=INVALID_HANDLE && g_strategy_first_passage_file!=INVALID_HANDLE &&
-          g_medium_episode_file!=INVALID_HANDLE && g_medium_response_file!=INVALID_HANDLE && g_medium_entry_file!=INVALID_HANDLE;
+          g_medium_episode_file!=INVALID_HANDLE && g_medium_response_file!=INVALID_HANDLE && g_medium_entry_file!=INVALID_HANDLE &&
+          g_context_feature_file!=INVALID_HANDLE && g_context_control_file!=INVALID_HANDLE;
   }
 
 void TSRCloseLogs()
@@ -812,6 +837,8 @@ void TSRCloseLogs()
    TSMt5Close(g_medium_episode_file);
    TSMt5Close(g_medium_response_file);
    TSMt5Close(g_medium_entry_file);
+   TSMt5Close(g_context_feature_file);
+   TSMt5Close(g_context_control_file);
   }
 
 double TSRPercentile(double &values[],const int count,const double percentile)
@@ -1230,6 +1257,7 @@ bool TSRInitializeSymbol(TSRSymbolContext &context,const string symbol)
    TSV1ResetCalibration(context.v1_calibration);
    TS15BResetRecorder(context.control_recorder);
    TS15EResetContext(context.medium_horizon);
+   TS15FResetContext(context.context_features);
    ZeroMemory(context.v1_pending_candidate);
    ArrayResize(context.v1_tracks,0);
    TSResetSymbolClusterClock(context.v1_stat_symbol_cluster_clock);
@@ -1968,9 +1996,62 @@ void TSR15DWriteStateResponse(const TSRV1StatisticalTrack &track)
 string TSR15EEntryClockName(const int value)
   {if(value==0)return "CONFIRMED";if(value==1)return "CONFIRMED_PLUS_30S";if(value==2)return "CONFIRMED_PLUS_60S";if(value==3)return "CONFIRMED_PLUS_120S";return "CAUSAL_STATE_TRANSITION";}
 
+bool TSR15FUsdFactorAt(const long decision_msc,double &factor,int &pairs)
+  {
+   double standardized[];int signs[];ArrayResize(standardized,0);ArrayResize(signs,0);
+   for(int i=0;i<ArraySize(g_symbols);++i)
+     {
+      TickShock15FBar all[],eligible[];TS15FChronologicalBars(g_symbols[i].context_features.bars,all);ArrayResize(eligible,0);
+      for(int j=0;j<ArraySize(all);++j)if(all[j].boundary_msc<=decision_msc){int n=ArraySize(eligible);ArrayResize(eligible,n+1);eligible[n]=all[j];}
+      int n=ArraySize(eligible);if(n<16||decision_msc-eligible[n-1].boundary_msc>60000)continue;double r5=0.0,rv15=0.0;
+      if(!TS15FTrailingReturn(eligible,5,r5)||!TS15FRealizedVol(eligible,15,rv15)||rv15<=0.0)continue;
+      int k=ArraySize(standardized);ArrayResize(standardized,k+1);ArrayResize(signs,k+1);standardized[k]=r5/rv15;signs[k]=TS15FUsdSign(g_symbols[i].symbol);
+     }
+   return TS15FUsdFactor(standardized,signs,factor,pairs);
+  }
+
+void TSR15FArmEpisode(TSRSymbolContext &context,const TSRV1Candidate &candidate)
+  {
+   TickShock15FEpisodeFeatures f;TS15FResetEpisode(f);TickShock15EEpisode e=context.medium_horizon.episode;
+   f.episode_id=e.episode_id;f.symbol=e.symbol;f.market_cluster_id=e.market_cluster_id;f.direction=e.direction;f.candidate_msc=candidate.candidate_msc;
+   f.severity_ordinal=(double)TSV1Severity(candidate.adjusted_p[candidate.trigger_horizon_index],candidate.calibration_count[candidate.trigger_horizon_index]);context.context_features.episode=f;
+  }
+
+void TSR15FCaptureEpisodeFeatures(TSRSymbolContext &context)
+  {
+   TickShock15EEpisode e=context.medium_horizon.episode;TickShock15FEpisodeFeatures f=context.context_features.episode;
+   if(e.episode_id==""||f.episode_id!=e.episode_id)return;const int checkpoints[TS15F_DECISIONS]={3,4};
+   for(int i=0;i<TS15F_DECISIONS;++i)
+     {
+      TickShock15ECheckpoint c=e.checkpoints[checkpoints[i]];if(!c.recorded||f.decisions[i].recorded)continue;double usd=0.0;int pairs=0;TSR15FUsdFactorAt(c.quote_msc,usd,pairs);
+      TS15FBuildFeatures(context.context_features.bars,c.target_msc,c.quote_msc,c.processing_msc,c.bid,c.ask,e.direction,f.severity_ordinal,e.initial_shock,e.anchor_ask-e.anchor_bid,e.anchor_msc-f.candidate_msc,e.repeat_count,e.same_direction_repeats,e.opposite_direction_repeats,e.first_origin_recross_msc>0&&e.first_origin_recross_msc<=c.quote_msc,e.pre_m1_rms,usd,TS15FUsdSign(e.symbol),pairs,f.decisions[i]);
+     }
+   context.context_features.episode=f;
+  }
+
+void TSR15FWriteEpisodeFeatures(TSRSymbolContext &context)
+  {
+   TickShock15FEpisodeFeatures f=context.context_features.episode;if(f.written||f.episode_id=="")return;
+   for(int i=0;i<TS15F_DECISIONS;++i){TickShock15FFeatureSnapshot s=f.decisions[i];string line="";TSRCsvAppend(line,f.episode_id);TSRCsvAppend(line,TSRLong(f.market_cluster_id));TSRCsvAppend(line,f.symbol);TSRCsvAppend(line,TSRDirection(f.direction));TSRCsvAppend(line,IntegerToString(TS15F_DECISION_SECONDS[i]));TSRCsvAppend(line,TSRLong(s.target_msc));TSRCsvAppend(line,s.recorded?TSRLong(s.quote_msc):"");TSRCsvAppend(line,s.recorded?TSRLong(s.processing_msc):"");TSRCsvAppend(line,s.valid?"AVAILABLE":"EXCLUDED");TSRCsvAppend(line,s.recorded?s.reason:"MISSING");TSRCsvAppend(line,IntegerToString(s.usd_pair_count));TSRCsvAppend(line,s.usd_pair_count>0?TSRDouble(s.usd_factor,12):"");for(int j=0;j<TS15F_FEATURES;++j)TSRCsvAppend(line,s.available[j]?TSRDouble(s.values[j],12):"");TSRCsvAppend(line,TS15FFeatureSpecHash());TSRCsvAppend(line,TS15FSchema());TSMt5WriteLine(g_context_feature_file,line);++g_context_feature_rows;}
+   TSMt5Flush(g_context_feature_file);f.written=true;context.context_features.episode=f;
+  }
+
+double TSR15FStressedMove(const int direction,const double entry_bid,const double entry_ask,const double exit_bid,const double exit_ask)
+  {double em=(entry_bid+entry_ask)*0.5,es=(entry_ask-entry_bid)*1.25,xm=(exit_bid+exit_ask)*0.5,xs=(exit_ask-exit_bid)*1.25;return TS15FContinuationReturn(direction,em-es*0.5,em+es*0.5,xm-xs*0.5,xm+xs*0.5);}
+
+void TSR15FCaptureAndWriteControl(TSRSymbolContext &context,const long quote_msc,const long processing_msc,const double bid,const double ask)
+  {
+   TickShock15FControl c=context.context_features.control;if(c.active)
+     for(int i=0;i<TS15F_DECISIONS;++i)if(!c.decisions[i].recorded&&quote_msc>=c.anchor_msc+(long)TS15F_DECISION_SECONDS[i]*1000){double usd=0.0;int pairs=0;TSR15FUsdFactorAt(quote_msc,usd,pairs);TS15FBuildFeatures(context.context_features.bars,c.anchor_msc+(long)TS15F_DECISION_SECONDS[i]*1000,quote_msc,processing_msc,bid,ask,c.pseudo_direction,0.0,0.0,c.anchor_ask-c.anchor_bid,0,0,0,0,false,0.0,usd,TS15FUsdSign(c.symbol),pairs,c.decisions[i]);}
+   context.context_features.control=c;c=context.context_features.control;if(!c.write_pending)return;
+   for(int d=0;d<TS15F_DECISIONS;++d){TickShock15FFeatureSnapshot s=c.decisions[d];string line="";TSRCsvAppend(line,c.control_id);TSRCsvAppend(line,c.symbol);TSRCsvAppend(line,TSRLong(c.anchor_msc));TSRCsvAppend(line,TSRDirection(c.pseudo_direction));TSRCsvAppend(line,IntegerToString(TS15F_DECISION_SECONDS[d]));TSRCsvAppend(line,TSRLong(s.target_msc));TSRCsvAppend(line,s.recorded?TSRLong(s.quote_msc):"");TSRCsvAppend(line,s.recorded?TSRLong(s.processing_msc):"");TSRCsvAppend(line,!c.invalid&&s.valid?"AVAILABLE":"EXCLUDED");TSRCsvAppend(line,c.invalid?c.reason:(s.recorded?s.reason:"MISSING"));TSRCsvAppend(line,s.recorded?TSRDouble(s.bid):"");TSRCsvAppend(line,s.recorded?TSRDouble(s.ask):"");TSRCsvAppend(line,IntegerToString(s.usd_pair_count));TSRCsvAppend(line,s.usd_pair_count>0?TSRDouble(s.usd_factor,12):"");for(int j=0;j<TS15F_FEATURES;++j)TSRCsvAppend(line,s.available[j]?TSRDouble(s.values[j],12):"");for(int h=0;h<TS15F_OUTCOMES;++h){bool valid=s.recorded&&c.outcome_valid[h]&&c.outcome_quote_msc[h]>s.quote_msc;double cont=valid?TS15FContinuationReturn(c.pseudo_direction,s.bid,s.ask,c.outcome_bid[h],c.outcome_ask[h]):0.0;double rev=valid?TS15FReversalReturn(c.pseudo_direction,s.bid,s.ask,c.outcome_bid[h],c.outcome_ask[h]):0.0;TSRCsvAppend(line,valid?TSRLong(c.outcome_quote_msc[h]):"");TSRCsvAppend(line,valid?TSRDouble(cont):"");TSRCsvAppend(line,valid?TSRDouble(rev):"");TSRCsvAppend(line,valid?TSRDouble(TSR15FStressedMove(c.pseudo_direction,s.bid,s.ask,c.outcome_bid[h],c.outcome_ask[h])):"");TSRCsvAppend(line,valid?TSRDouble(TSR15FStressedMove(-c.pseudo_direction,s.bid,s.ask,c.outcome_bid[h],c.outcome_ask[h])):"");}TSRCsvAppend(line,TS15FFeatureSpecHash());TSRCsvAppend(line,TS15FSchema());TSMt5WriteLine(g_context_control_file,line);++g_context_control_rows;}
+   TSMt5Flush(g_context_control_file);long sequence=context.context_features.control_sequence,completed=context.context_features.controls_completed,invalidated=context.context_features.controls_invalidated;TS15FResetControl(context.context_features.control);context.context_features.control_sequence=sequence;context.context_features.controls_completed=completed;context.context_features.controls_invalidated=invalidated;
+  }
+
 void TSR15EWritePending(TSRSymbolContext &context)
   {
    TickShock15EEpisode e=context.medium_horizon.episode;if(!e.write_pending)return;
+   TSR15FCaptureEpisodeFeatures(context);TSR15FWriteEpisodeFeatures(context);
    string validation=e.invalid||TS15EIntegrityViolations(e)>0?"VALIDATION_INVALID":"VALID";
    string status=e.purged?"PURGED_END_OF_DATA":"COMPLETE_900S";double avg_spread=e.quote_count>0?e.spread_sum/(double)e.quote_count:0.0;
    string line="";TSRCsvAppend(line,e.episode_id);TSRCsvAppend(line,e.anchor_event_id);TSRCsvAppend(line,TSRLong(e.market_cluster_id));TSRCsvAppend(line,e.symbol);TSRCsvAppend(line,TSRDirection(e.direction));TSRCsvAppend(line,TSRLong(e.anchor_msc));TSRCsvAppend(line,TSRLong(e.anchor_processing_msc));TSRCsvAppend(line,TSRDouble(e.anchor_bid));TSRCsvAppend(line,TSRDouble(e.anchor_ask));TSRCsvAppend(line,TSRDouble(e.anchor_mid));TSRCsvAppend(line,TSRDouble(e.initial_shock));TSRCsvAppend(line,TSRDouble(e.severity));TSRCsvAppend(line,e.pre_vol_valid?TSRDouble(e.pre_m1_rms,12):"");TSRCsvAppend(line,IntegerToString(e.pre_m1_count));TSRCsvAppend(line,e.pre_vol_valid?"AVAILABLE":"VOLATILITY_UNAVAILABLE");TSRCsvAppend(line,e.step15d_path_class);TSRCsvAppend(line,TSRBool(e.sr_clean));TSRCsvAppend(line,TSRBool(e.sr_rev));TSRCsvAppend(line,TSRLong(e.repeat_count));TSRCsvAppend(line,TSRLong(e.same_direction_repeats));TSRCsvAppend(line,TSRLong(e.opposite_direction_repeats));TSRCsvAppend(line,TSRDouble(e.max_repeat_severity));TSRCsvAppend(line,TSRLong(e.last_shock_msc));TSRCsvAppend(line,TSRDouble(e.mfe));TSRCsvAppend(line,TSRDouble(e.mae));TSRCsvAppend(line,TSRLong(e.time_to_mfe_ms));TSRCsvAppend(line,TSRLong(e.time_to_mae_ms));TSRCsvAppend(line,TSRLong(e.origin_recross_count));TSRCsvAppend(line,e.first_origin_recross_msc>0?TSRLong(e.first_origin_recross_msc):"");TSRCsvAppend(line,TSRDouble(MathSqrt(MathMax(0.0,e.realized_variance)),12));TSRCsvAppend(line,TSRLong(e.quote_count));TSRCsvAppend(line,TSRDouble(avg_spread));TSRCsvAppend(line,TSRLong(e.fallback_count));TSRCsvAppend(line,TSRLong(e.duplicates));TSRCsvAppend(line,TSRLong(e.drops));TSRCsvAppend(line,TSRLong(e.capacity_losses));TSRCsvAppend(line,TSRLong(e.future_reads));TSRCsvAppend(line,TSRLong(e.backdates));TSRCsvAppend(line,status);TSRCsvAppend(line,validation);TSRCsvAppend(line,TS15ESchema());TSMt5WriteLine(g_medium_episode_file,line);
@@ -2098,7 +2179,10 @@ bool TSRV1RegisterStatisticalTrack(TSRSymbolContext &context,
    TSR15BMatchAndWrite(context,candidate.statistical_event_id,candidate.statistical_market_cluster_id,candidate.statistical_market_overlap,
                        confirmed_msc,TSV1_HORIZONS_MS[candidate.trigger_horizon_index],InpDetectorVersion==TAIL_V1_RAW?0:1,candidate.volatility_regime);
    if(context.medium_horizon.episode.mode==TS15E_IDLE)
-      TS15EArmEpisode(context.medium_horizon,InpRunId,context.symbol,candidate.statistical_event_id,candidate.statistical_market_cluster_id,candidate.direction,confirmed_msc,processing_msc,confirmed_point.bid,confirmed_point.ask,context.point,context.tick_size,MathAbs(confirmed_point.mid-candidate.anchor_mid),candidate.score[candidate.trigger_horizon_index],false,InpSubmitLatencyMs);
+     {
+      if(TS15EArmEpisode(context.medium_horizon,InpRunId,context.symbol,candidate.statistical_event_id,candidate.statistical_market_cluster_id,candidate.direction,confirmed_msc,processing_msc,confirmed_point.bid,confirmed_point.ask,context.point,context.tick_size,MathAbs(confirmed_point.mid-candidate.anchor_mid),candidate.score[candidate.trigger_horizon_index],false,InpSubmitLatencyMs))
+         TSR15FArmEpisode(context,candidate);
+     }
    else
       TS15ERegisterRepeat(context.medium_horizon,candidate.direction,confirmed_msc,candidate.score[candidate.trigger_horizon_index]);
    return true;
@@ -2690,12 +2774,18 @@ void TSRProcessOneTick(const int symbol_index,const MqlTick &source,const long p
    ++g_total_ticks;
    TSRShortTick tick;
    tick.time_msc=time_msc;tick.bid=source.bid;tick.ask=source.ask;tick.mid=g_symbols[symbol_index].grid_runtime.mid;
+   TS15FObserveQuote(g_symbols[symbol_index].context_features.bars,time_msc,tick.bid,tick.ask,false);
    TS15EObserveMinuteQuote(g_symbols[symbol_index].medium_horizon.m1,time_msc,tick.mid,false);
    if(g_symbols[symbol_index].medium_horizon.episode.mode!=TS15E_IDLE)
      {
       TS15EQueueQuote(g_symbols[symbol_index].medium_horizon,time_msc,processing_msc,tick.bid,tick.ask,false,InpSubmitLatencyMs);
+      TSR15FCaptureEpisodeFeatures(g_symbols[symbol_index]);
       TSR15EWritePending(g_symbols[symbol_index]);
      }
+   bool shock_active=g_symbols[symbol_index].medium_horizon.episode.mode!=TS15E_IDLE;
+   double control_usd=0.0;int control_pairs=0;TSR15FUsdFactorAt(time_msc,control_usd,control_pairs);
+   TS15FObserveControl(g_symbols[symbol_index].context_features,InpRunId,g_symbols[symbol_index].symbol,time_msc,processing_msc,tick.bid,tick.ask,shock_active,control_usd,control_pairs);
+   TSR15FCaptureAndWriteControl(g_symbols[symbol_index],time_msc,processing_msc,tick.bid,tick.ask);
    if(InpDetectorVersion!=STRICT_V0)
       TSRV1AdvanceCounterfactualTracks(g_symbols[symbol_index],tick,processing_msc);
    for(int i=0;i<TSR_MAX_ACTIVE_EVENTS;++i)
@@ -3124,7 +3214,12 @@ void OnDeinit(const int reason)
    TSRFlushPendingTicks();
    TSRFlushIncompleteEvents();
    if(InpDetectorVersion!=STRICT_V0) TSRV1FlushStatisticalTracks();
-   for(int i=0;i<ArraySize(g_symbols);++i){TS15EFinalizeEndOfData(g_symbols[i].medium_horizon,InpSubmitLatencyMs);TSR15EWritePending(g_symbols[i]);}
+   for(int i=0;i<ArraySize(g_symbols);++i)
+     {
+      TS15EFinalizeEndOfData(g_symbols[i].medium_horizon,InpSubmitLatencyMs);TSR15FCaptureEpisodeFeatures(g_symbols[i]);TSR15EWritePending(g_symbols[i]);
+      if(g_symbols[i].context_features.control.active){g_symbols[i].context_features.control.active=false;g_symbols[i].context_features.control.invalid=true;g_symbols[i].context_features.control.write_pending=true;g_symbols[i].context_features.control.reason="END_OF_DATA";}
+      TSR15FCaptureAndWriteControl(g_symbols[i],0,0,0.0,0.0);
+     }
    TSRWriteSummary();
    PrintFormat("%s deinitialized reason=%d events=%I64d rows=%I64d",TSR_NAME,reason,g_total_events,g_event_rows);
    TSRCloseLogs();
