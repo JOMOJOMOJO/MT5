@@ -3,6 +3,7 @@
 reports/tests/tick_shock/tester/step15f_*
 reports/backtest/runs/20260831_ts15f_tail_v1_persistent_context_r2_202503/
 reports/backtest/runs/20260831_ts15f_tail_v1_persistent_context_r3_202503/
+reports/backtest/runs/20260831_ts15f_tail_v1_persistent_context_202503/
 *.pyc
 Thumbs.db
 .DS_Store

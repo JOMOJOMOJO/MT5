@@ -19,6 +19,7 @@ TS15F-INTEGRITY-002,tests/tick_shock/expected/TS15F-INTEGRITY-002_expected.csv,M
 TS15F-INTEGRITY-003,tests/tick_shock/expected/TS15F-INTEGRITY-003_expected.csv,MATCH,,True
 TS15F-INTEGRITY-004,tests/tick_shock/expected/TS15F-INTEGRITY-004_expected.csv,MATCH,,True
 TS15F-INTEGRITY-005,tests/tick_shock/expected/TS15F-INTEGRITY-005_expected.csv,MATCH,,True
+TS15F-INTEGRITY-006,tests/tick_shock/expected/TS15F-INTEGRITY-006_expected.csv,MATCH,,True
 TS15F-MATH-001,tests/tick_shock/expected/TS15F-MATH-001_expected.csv,MATCH,,True
 TS15F-MATH-002,tests/tick_shock/expected/TS15F-MATH-002_expected.csv,MATCH,,True
 TS15F-MATH-003,tests/tick_shock/expected/TS15F-MATH-003_expected.csv,MATCH,,True
