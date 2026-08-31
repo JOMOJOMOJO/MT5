@@ -1,6 +1,6 @@
 param(
     [int]$TimeoutSeconds = 120,
-    [ValidateSet("pre-fix","post-fix","step10","step11","step14r","step15a","step15f")]
+    [ValidateSet("pre-fix","post-fix","step10","step11","step14r","step15a","step15f","step15g")]
     [string]$Phase = "post-fix"
 )
 
@@ -22,13 +22,15 @@ $evidenceRaw = if ($Phase -eq "pre-fix") {
     Join-Path $repoRoot "reports\tests\tick_shock\step15a_green\raw"
 } elseif ($Phase -eq "step15f") {
     Join-Path $repoRoot "reports\tests\tick_shock\step15f_green\raw"
+} elseif ($Phase -eq "step15g") {
+    Join-Path $repoRoot "reports\tests\tick_shock\step15g_green\raw"
 } else {
     Join-Path $repoRoot "reports\tests\tick_shock\step12_raw"
 }
 $configRoot = Join-Path $repoRoot "reports\tests\tick_shock\configs"
 $compileRoot = Join-Path $repoRoot "reports\compile\tick_shock"
 $testerRoot = Join-Path $repoRoot "reports\tests\tick_shock\tester"
-$stepTag = if ($Phase -eq "pre-fix") { "step05" } elseif ($Phase -eq "step10") { "step10" } elseif ($Phase -eq "step11") { "step11" } elseif ($Phase -eq "step14r") { "step14r" } elseif ($Phase -eq "step15a") { "step15a" } elseif ($Phase -eq "step15f") { "step15f" } else { "step12" }
+$stepTag = if ($Phase -eq "pre-fix") { "step05" } elseif ($Phase -eq "step10") { "step10" } elseif ($Phase -eq "step11") { "step11" } elseif ($Phase -eq "step14r") { "step14r" } elseif ($Phase -eq "step15a") { "step15a" } elseif ($Phase -eq "step15f") { "step15f" } elseif ($Phase -eq "step15g") { "step15g" } else { "step12" }
 
 foreach ($path in @($commonFixtures,$commonExpected,$commonRaw,$evidenceRaw,$configRoot,$compileRoot,$testerRoot)) {
     New-Item -ItemType Directory -Force -Path $path | Out-Null
@@ -50,7 +52,8 @@ $harnesses = @(
     "EventResponse",
     "StateConditionedResponse",
     "MediumHorizonResponse",
-    "ContextFeature"
+    "ContextFeature",
+    "EconomicPath"
 )
 
 foreach ($name in $harnesses) {
@@ -72,6 +75,7 @@ foreach ($name in $harnesses) {
         "StateConditionedResponse" { "state_conditioned_response" }
         "MediumHorizonResponse" { "medium_horizon_response" }
         "ContextFeature" { "context_feature" }
+        "EconomicPath" { "economic_path" }
     }
     $commonResult = Join-Path $commonRaw "$suite.csv"
     if (Test-Path -LiteralPath $commonResult) { Remove-Item -LiteralPath $commonResult -Force }

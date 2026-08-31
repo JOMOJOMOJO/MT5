@@ -2,3 +2,5 @@ key,value
 test_contract,missing six-symbol commission
 expected_field,c1_status
 expected_value,FORMAL_NET_UNAVAILABLE
+production_function_used_for_expected,false
+oracle_source,docs/research/tick_shock/15g_economic_path_spec.md

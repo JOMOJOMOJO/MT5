@@ -18,7 +18,7 @@ CASES = [
     ("TS15G-ENTRY-001", "entry", "LONG", "entry_price", "1.0002", "long enters on Ask"),
     ("TS15G-ENTRY-002", "entry", "SHORT", "entry_price", "1.0000", "short enters on Bid"),
     ("TS15G-ENTRY-003", "entry", "BOTH", "entry_quote_msc", "1001", "first strictly later quote"),
-    ("TS15G-RISK-001", "risk", "BOTH", "risk_distance", "0.001", "max of ATR fraction, spread multiple, broker stop"),
+    ("TS15G-RISK-001", "risk", "BOTH", "risk_distance", "0.001", "max of ATR fraction / spread multiple / broker stop"),
     ("TS15G-RISK-002", "risk", "BOTH", "risk_source", "ATR14_M5", "ATR branch wins"),
     ("TS15G-RISK-003", "risk", "BOTH", "risk_source", "ENTRY_SPREAD", "spread branch wins"),
     ("TS15G-RISK-004", "risk", "BOTH", "risk_source", "BROKER_STOP", "broker stop branch wins"),
@@ -80,7 +80,7 @@ def main() -> None:
             {"sequence": "2", "symbol": "EURUSD", "time_msc": "1001", "bid": "1.0001", "ask": "1.0003", "processing_msc": "1001", "note": description},
         ]
         write_csv(FIX / f"{test_id}_ticks.csv", ["sequence", "symbol", "time_msc", "bid", "ask", "processing_msc", "note"], ticks)
-        config = [{"key": "test_contract", "value": description}, {"key": "expected_field", "value": field}, {"key": "expected_value", "value": expected}]
+        config = [{"key": "test_contract", "value": description}, {"key": "expected_field", "value": field}, {"key": "expected_value", "value": expected}, {"key": "production_function_used_for_expected", "value": "false"}, {"key": "oracle_source", "value": "docs/research/tick_shock/15g_economic_path_spec.md"}]
         write_csv(FIX / f"{test_id}_config.csv", ["key", "value"], config)
         write_csv(EXP / f"{test_id}_expected.csv", ["field", "expected_value", "tolerance", "unit", "note"], [{"field": field, "expected_value": expected, "tolerance": "1e-9" if expected.replace(".", "", 1).lstrip("-").isdigit() else "0", "unit": "contract", "note": description}])
         rows.append({

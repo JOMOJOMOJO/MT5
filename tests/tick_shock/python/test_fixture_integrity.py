@@ -42,6 +42,7 @@ class FixtureIntegrityTests(unittest.TestCase):
                 "docs/research/tick_shock/15d_state_conditioned_response_spec.md",
                 "docs/research/tick_shock/15e_shock_episode_spec.md",
                 "docs/research/tick_shock/15f_context_feature_spec.md",
+                "docs/research/tick_shock/15g_economic_path_spec.md",
             }, path.name)
 
 

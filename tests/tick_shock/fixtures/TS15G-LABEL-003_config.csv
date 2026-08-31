@@ -2,3 +2,5 @@ key,value
 test_contract,both actions succeed
 expected_field,episode_class
 expected_value,BOTH
+production_function_used_for_expected,false
+oracle_source,docs/research/tick_shock/15g_economic_path_spec.md

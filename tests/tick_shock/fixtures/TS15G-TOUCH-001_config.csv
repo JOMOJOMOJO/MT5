@@ -2,3 +2,5 @@ key,value
 test_contract,long TP first
 expected_field,result
 expected_value,TP_FIRST
+production_function_used_for_expected,false
+oracle_source,docs/research/tick_shock/15g_economic_path_spec.md

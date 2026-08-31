@@ -2,3 +2,5 @@ key,value
 test_contract,SL gap at first tradable quote
 expected_field,sl_fill_price
 expected_value,0.9985
+production_function_used_for_expected,false
+oracle_source,docs/research/tick_shock/15g_economic_path_spec.md

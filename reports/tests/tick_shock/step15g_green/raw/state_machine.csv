@@ -1,0 +1,11 @@
+test_id,observed,expected,actual,difference,evidence_path
+TS-STATE-LONG-001,MATCH,transition_1400=BURST_FROZEN;burst_range=0.0022;transition_1500=PULLBACK_VALID;transition_1700=REACCELERATION;signal_direction=1,transition_1400=BURST_FROZEN;transition_1500=PULLBACK_VALID;transition_1700=REACCELERATION;burst_range=0.002200000000;signal_direction=1,,state_machine.csv
+TS-STATE-SHORT-001,MATCH,transition_1400=BURST_FROZEN;burst_range=0.0032;transition_1500=PULLBACK_VALID;transition_1700=REACCELERATION;signal_direction=-1,transition_1400=BURST_FROZEN;transition_1500=PULLBACK_VALID;transition_1700=REACCELERATION;burst_range=0.003200000000;signal_direction=-1,,state_machine.csv
+TS-BURST-001,MATCH,action_1399=NONE;state_1399=BURST_ACTIVE;action_1400=BURST_FROZEN;burst_end_msc=1400,action_1100=NONE;action_1399=NONE;state_1399=BURST_ACTIVE;action_1400=BURST_FROZEN;burst_end_msc=1400,,state_machine.csv
+TS-BURST-002,MATCH,action_3999=NONE;action_4000=BURST_FROZEN;burst_end_msc=4000,action_3999=NONE;action_4000=BURST_FROZEN;burst_end_msc=4000,,state_machine.csv
+TS-PB-001,MATCH,action=NONE;state=WAIT_PULLBACK;pullback_msc=0,action=NONE;state=WAIT_PULLBACK;pullback_msc=0,,state_machine.csv
+TS-PB-002,MATCH,case_15_action=PULLBACK_VALID;case_35_action=PULLBACK_VALID;case_15_state=WAIT_REACCELERATION;case_35_state=WAIT_REACCELERATION,case_15_action=PULLBACK_VALID;case_15_state=WAIT_REACCELERATION;case_35_action=PULLBACK_VALID;case_35_state=WAIT_REACCELERATION,,state_machine.csv
+TS-PB-003,MATCH,action=NONE;state=WAIT_PULLBACK;too_deep_seen=true;continuation_signal=false,action=NONE;state=WAIT_PULLBACK;too_deep_seen=true;continuation_signal=false,,state_machine.csv
+TS-INVALID-001,MATCH,action=CONTINUATION_INVALIDATED;state=EXPIRED;continuation_invalidated_msc=3000;reversal_signal_basis=3000,action=CONTINUATION_INVALIDATED;state=EXPIRED;continuation_invalidated_msc=3000;reversal_signal_basis=3000,,state_machine.csv
+TS-TIMEOUT-001,MATCH,action_10999=NONE;action_11000=PULLBACK_TIMEOUT;state_11000=EXPIRED,action_10999=NONE;action_11000=PULLBACK_TIMEOUT;state_11000=EXPIRED,,state_machine.csv
+TS-NOREACCEL-001,MATCH,action_10999=NONE;action_11000=NO_REACCELERATION;state_11000=EXPIRED,action_10999=NONE;action_11000=NO_REACCELERATION;state_11000=EXPIRED,,state_machine.csv

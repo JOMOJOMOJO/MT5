@@ -2,3 +2,5 @@ key,value
 test_contract,same-ms ambiguity preserved
 expected_field,secondary_result
 expected_value,AMBIGUOUS_SAME_TICK
+production_function_used_for_expected,false
+oracle_source,docs/research/tick_shock/15g_economic_path_spec.md

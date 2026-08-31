@@ -2,3 +2,5 @@ key,value
 test_contract,stale quote excluded
 expected_field,stale_quote_status
 expected_value,INVALID_PATH
+production_function_used_for_expected,false
+oracle_source,docs/research/tick_shock/15g_economic_path_spec.md

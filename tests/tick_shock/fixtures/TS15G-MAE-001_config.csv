@@ -2,3 +2,5 @@ key,value
 test_contract,short executable MAE
 expected_field,mae
 expected_value,0.0007
+production_function_used_for_expected,false
+oracle_source,docs/research/tick_shock/15g_economic_path_spec.md
