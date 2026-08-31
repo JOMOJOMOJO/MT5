@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+outcome_feature_leakage,0,1e-9,contract,outcome features forbidden

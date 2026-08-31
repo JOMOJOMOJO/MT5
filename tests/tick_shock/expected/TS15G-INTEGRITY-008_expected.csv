@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+purge_ms,900000,1e-9,contract,purge covers maximum outcome

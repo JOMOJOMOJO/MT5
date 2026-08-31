@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+risk_source,BROKER_STOP,0,contract,broker stop branch wins

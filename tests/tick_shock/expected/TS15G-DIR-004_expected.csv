@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+action_direction,1,1e-9,contract,reversal after short shock

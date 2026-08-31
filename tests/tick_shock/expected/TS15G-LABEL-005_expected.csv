@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+episode_class,AMBIGUOUS,0,contract,ambiguous same-millisecond path

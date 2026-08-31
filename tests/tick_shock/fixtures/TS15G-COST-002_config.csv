@@ -1,0 +1,4 @@
+key,value
+test_contract,missing six-symbol commission
+expected_field,c1_status
+expected_value,FORMAL_NET_UNAVAILABLE

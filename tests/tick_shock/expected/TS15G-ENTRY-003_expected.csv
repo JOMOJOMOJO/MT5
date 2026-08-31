@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+entry_quote_msc,1001,1e-9,contract,first strictly later quote

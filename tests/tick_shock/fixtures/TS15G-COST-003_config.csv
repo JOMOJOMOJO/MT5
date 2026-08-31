@@ -1,0 +1,4 @@
+key,value
+test_contract,spread stress
+expected_field,stress_spread_multiple
+expected_value,1.25

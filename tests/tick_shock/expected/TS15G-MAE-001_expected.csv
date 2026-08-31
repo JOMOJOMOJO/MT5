@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+mae,0.0007,1e-9,contract,short executable MAE

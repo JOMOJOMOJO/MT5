@@ -1,0 +1,4 @@
+key,value
+test_contract,commission is deducted once
+expected_field,commission_deductions
+expected_value,1

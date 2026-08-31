@@ -1,0 +1,4 @@
+key,value
+test_contract,continuation only
+expected_field,episode_class
+expected_value,CONT_ONLY

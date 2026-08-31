@@ -1,0 +1,6 @@
+label_id,scope,definition,status
+TS15G-L-CONT,action,continuation C0 TP_FIRST at primary RR 1.2,FROZEN
+TS15G-L-REV,action,reversal C0 TP_FIRST at primary RR 1.2,FROZEN
+TS15G-L-CLASS,episode,"CONT_ONLY/REV_ONLY/BOTH/NEITHER/AMBIGUOUS/INVALID",FROZEN
+TS15G-L-C1,action,C0 plus documented commission/fee,COST_MODEL_INCOMPLETE
+TS15G-L-C2,action,1.25x spread plus documented commission/fee plus one-tick entry and exit stress,COST_MODEL_INCOMPLETE

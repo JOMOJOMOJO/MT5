@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+episode_class,BOTH,0,contract,both actions succeed

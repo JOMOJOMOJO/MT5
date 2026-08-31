@@ -1,0 +1,4 @@
+key,value
+test_contract,invalid path remains distinct
+expected_field,episode_class
+expected_value,INVALID

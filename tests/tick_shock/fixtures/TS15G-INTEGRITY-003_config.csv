@@ -1,0 +1,4 @@
+key,value
+test_contract,stale quote excluded
+expected_field,stale_quote_status
+expected_value,INVALID_PATH

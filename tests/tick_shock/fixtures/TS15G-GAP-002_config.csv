@@ -1,0 +1,4 @@
+key,value
+test_contract,SL gap at first tradable quote
+expected_field,sl_fill_price
+expected_value,0.9985

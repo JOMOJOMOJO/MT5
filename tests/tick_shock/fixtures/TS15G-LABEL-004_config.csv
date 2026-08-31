@@ -1,0 +1,4 @@
+key,value
+test_contract,neither action succeeds
+expected_field,episode_class
+expected_value,NEITHER

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+primary_result,SL_FIRST,0,contract,same-ms primary stop first

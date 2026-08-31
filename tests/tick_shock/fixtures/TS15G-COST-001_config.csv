@@ -1,0 +1,4 @@
+key,value
+test_contract,spread-only result
+expected_field,c0_status
+expected_value,AVAILABLE

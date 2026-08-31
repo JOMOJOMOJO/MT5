@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+c0_status,AVAILABLE,0,contract,spread-only result

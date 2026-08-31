@@ -1,0 +1,4 @@
+key,value
+test_contract,preprocessing is fold-local
+expected_field,training_only_preprocessing
+expected_value,true

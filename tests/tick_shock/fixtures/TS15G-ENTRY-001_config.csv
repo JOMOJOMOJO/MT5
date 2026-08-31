@@ -1,0 +1,4 @@
+key,value
+test_contract,long enters on Ask
+expected_field,entry_price
+expected_value,1.0002

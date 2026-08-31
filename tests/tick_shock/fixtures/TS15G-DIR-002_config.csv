@@ -1,0 +1,4 @@
+key,value
+test_contract,continuation short
+expected_field,action_direction
+expected_value,-1

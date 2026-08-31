@@ -1,0 +1,4 @@
+key,value
+test_contract,entry and exit tick stress
+expected_field,stress_slippage_ticks
+expected_value,1

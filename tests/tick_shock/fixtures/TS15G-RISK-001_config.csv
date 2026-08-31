@@ -1,0 +1,4 @@
+key,value
+test_contract,"max of ATR fraction, spread multiple, broker stop"
+expected_field,risk_distance
+expected_value,0.001

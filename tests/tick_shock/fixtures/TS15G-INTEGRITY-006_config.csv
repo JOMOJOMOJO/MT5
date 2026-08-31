@@ -1,0 +1,4 @@
+key,value
+test_contract,outcome features forbidden
+expected_field,outcome_feature_leakage
+expected_value,0

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+episode_class,NEITHER,0,contract,neither action succeeds

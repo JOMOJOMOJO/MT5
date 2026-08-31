@@ -1,0 +1,4 @@
+key,value
+test_contract,future reads forbidden
+expected_field,future_reads
+expected_value,0

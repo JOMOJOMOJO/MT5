@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+risk_distance,0.001,1e-9,contract,"max of ATR fraction, spread multiple, broker stop"

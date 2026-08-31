@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+episode_class,CONT_ONLY,0,contract,continuation only

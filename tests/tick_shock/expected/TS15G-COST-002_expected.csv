@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+c1_status,FORMAL_NET_UNAVAILABLE,0,contract,missing six-symbol commission

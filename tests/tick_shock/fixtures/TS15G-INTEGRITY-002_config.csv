@@ -1,0 +1,4 @@
+key,value
+test_contract,research EA remains order-free
+expected_field,production_order_calls
+expected_value,0

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+break_even_additional_cost_r,0.3,1e-9,contract,additional cost headroom

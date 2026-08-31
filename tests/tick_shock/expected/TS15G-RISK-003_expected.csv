@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+risk_source,ENTRY_SPREAD,0,contract,spread branch wins

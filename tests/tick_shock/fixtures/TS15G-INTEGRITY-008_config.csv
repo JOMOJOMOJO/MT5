@@ -1,0 +1,4 @@
+key,value
+test_contract,purge covers maximum outcome
+expected_field,purge_ms
+expected_value,900000

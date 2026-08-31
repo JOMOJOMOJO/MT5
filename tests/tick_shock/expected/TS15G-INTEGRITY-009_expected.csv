@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+training_only_preprocessing,true,0,contract,preprocessing is fold-local

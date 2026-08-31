@@ -1,0 +1,4 @@
+key,value
+test_contract,both actions succeed
+expected_field,episode_class
+expected_value,BOTH

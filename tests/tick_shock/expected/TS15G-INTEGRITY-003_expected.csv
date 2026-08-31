@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+stale_quote_status,INVALID_PATH,0,contract,stale quote excluded

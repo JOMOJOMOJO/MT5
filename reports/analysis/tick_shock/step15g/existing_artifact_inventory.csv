@@ -1,0 +1,8 @@
+artifact_path,available_fields,reconstruction_status,reason,action
+reports/backtest/runs/20260831_ts15f_tail_v1_persistent_context_r3_202503/episode_context_features.csv,"episode,symbol,cluster,decision quote,36 causal features",PARTIAL,"no complete post-entry quote path",reuse_features
+reports/backtest/runs/20260831_ts15f_tail_v1_persistent_context_r3_202503/matched_control_features.csv,"control decision quote,36 features,300/600/900 checkpoint returns",PARTIAL,"checkpoint returns cannot order arbitrary barrier touches",reuse_control_features
+reports/backtest/runs/20260831_ts15f_tail_v1_persistent_context_r3_202503/medium_horizon_episode_summary.csv,"MFE,MAE,hit times,integrity",INSUFFICIENT,"extrema do not identify ordering for new risk-scaled barriers",do_not_reconstruct
+reports/backtest/runs/20260831_ts15f_tail_v1_persistent_context_r3_202503/medium_horizon_response.csv,"fixed checkpoints and executable moves",INSUFFICIENT,"5/10/30/60/120/180/300/600/900 snapshots omit intervening quotes",do_not_reconstruct
+reports/backtest/runs/20260831_ts15f_tail_v1_persistent_context_r3_202503/strategy_executable_first_passage.csv,"older fixed 0.5/1.0/2.0 local-scale barriers",INCOMPATIBLE,"barrier definition and entry clocks differ from preregistered Step15G risk",do_not_relabel
+reports/backtest/runs/20260831_ts15f_tail_v1_persistent_context_r3_202503/symbol_specs.csv,"tick grid,StopsLevel,contract values",USABLE,"broker specification evidence",reuse_specs
+reports/backtest/runs/20260831_ts15f_tail_v1_persistent_context_r3_202503/tick_quality.csv,"per-symbol fallback treatment",USABLE,"GBPUSD fallback interval map unavailable",reuse_quality_gate

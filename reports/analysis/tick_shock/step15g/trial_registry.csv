@@ -1,0 +1,2 @@
+trial_id,registered_at,development_window,risk_atr_fraction,risk_spread_multiple,primary_rr,secondary_rr,horizons_seconds,cost_scenarios,label_spec_sha256,status
+TS15G-T01,2026-09-01T00:00:00+09:00,2025-03-01_TO_2025-04-01,0.25,4.0,1.2,"1.0;1.5;2.0","300;600;900","C0;C1;C2",0DDA57592D4B9067AD6CBC4386C257A1B4F6D8B81B7BFF6188B2919D1D10E072,PREREGISTERED_NO_OUTCOME_REVIEW

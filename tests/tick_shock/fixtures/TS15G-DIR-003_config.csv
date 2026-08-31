@@ -1,0 +1,4 @@
+key,value
+test_contract,reversal after long shock
+expected_field,action_direction
+expected_value,-1

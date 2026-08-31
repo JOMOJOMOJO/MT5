@@ -1,0 +1,4 @@
+key,value
+test_contract,first strictly later quote
+expected_field,entry_quote_msc
+expected_value,1001

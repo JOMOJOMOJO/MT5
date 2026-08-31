@@ -1,0 +1,4 @@
+key,value
+test_contract,broker stop branch wins
+expected_field,risk_source
+expected_value,BROKER_STOP

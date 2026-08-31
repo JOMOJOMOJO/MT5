@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+episode_class,REV_ONLY,0,contract,reversal only

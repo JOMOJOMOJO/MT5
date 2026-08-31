@@ -1,0 +1,4 @@
+key,value
+test_contract,reversal only
+expected_field,episode_class
+expected_value,REV_ONLY

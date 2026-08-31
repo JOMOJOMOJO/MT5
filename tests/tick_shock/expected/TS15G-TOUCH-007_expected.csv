@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+secondary_result,AMBIGUOUS_SAME_TICK,0,contract,same-ms ambiguity preserved

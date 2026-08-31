@@ -1,0 +1,4 @@
+key,value
+test_contract,short enters on Bid
+expected_field,entry_price
+expected_value,1.0000
