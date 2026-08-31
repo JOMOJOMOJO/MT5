@@ -1,0 +1,6 @@
+01:13:33 Tester InpRunId=ts15g_economic_path_r3_202503
+01:13:41 Ticks GBPUSD 2025.03.24 23:59 - real ticks discarded for 179 minutes out of 1438 total minute bars within a day
+01:13:41 Ticks GBPUSD 2025.03.01 00:00 - 2025.04.01 00:00 real ticks discarded for 179 minutes of 30187 total minute bars, every tick generation used
+01:25:09 Tester EURUSD,M1: 1364080 ticks, 30192 bars generated. Test passed in 0:11:36.630 (including ticks preprocessing 0:00:00.813)
+01:25:09 Tester 10587807 total ticks for all symbols
+01:25:09 Tester 501 Mb memory used including 40 Mb of history data, 256 Mb of tick data
