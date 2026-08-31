@@ -368,3 +368,4 @@ TS15G-INTEGRITY-008,TS15G-REQ-INTEGRITY,STEP15G-PRE-IMPLEMENTATION,production_pa
 TS15G-INTEGRITY-009,TS15G-REQ-INTEGRITY,STEP15G-PRE-IMPLEMENTATION,production_path_integration,PASS,training_only_preprocessing=true,training_only_preprocessing=true,,economic_path.csv
 TS15G-INTEGRITY-010,TS15G-REQ-INTEGRITY,STEP15G-PRE-IMPLEMENTATION,production_path_integration,PASS,step15f_identity_mismatches=0,step15f_identity_mismatches=0,,economic_path.csv
 TS15G-INTEGRITY-011,TS15G-REQ-INTEGRITY,STEP15G-PRE-IMPLEMENTATION,production_path_integration,PASS,lagged_path_status=TIMEOUT,lagged_path_status=TIMEOUT,,economic_path.csv
+TS15G-INTEGRITY-012,TS15G-REQ-INTEGRITY,STEP15G-PRE-IMPLEMENTATION,production_path_integration,PASS,rearm_same_subject=false,rearm_same_subject=false,,economic_path.csv

@@ -37,6 +37,7 @@ struct TickShock15GPath
 struct TickShock15GContext
   {
    bool active;bool write_pending;bool invalid;string subject_id;string subject_type;string symbol;long market_cluster_id;int shock_direction;long anchor_msc;
+   string last_written_subject_id;
    bool decision_armed[TS15G_DECISIONS];TickShock15GPath paths[TS15G_PATHS];long rows_written;long future_reads;long backdates;long fallback_quotes;long stale_quotes;
   };
 
@@ -56,6 +57,7 @@ int TS15GActionDirection(const int shock_direction,const ENUM_TS15G_ACTION actio
 
 void TS15GResetPath(TickShock15GPath &path){ZeroMemory(path);path.result=TS15G_PENDING;path.risk_source=TS15G_RISK_INVALID;}
 void TS15GResetContext(TickShock15GContext &context){ZeroMemory(context);for(int i=0;i<TS15G_PATHS;++i)TS15GResetPath(context.paths[i]);}
+void TS15GResetAfterWrite(TickShock15GContext &context){string completed=context.subject_id;TS15GResetContext(context);context.last_written_subject_id=completed;}
 
 bool TS15GRiskDistance(const double atr14_m5,const double entry_spread,const double broker_stop_distance,double &risk,ENUM_TS15G_RISK_SOURCE &source)
   {
@@ -76,7 +78,7 @@ bool TS15GBuildBarriers(TickShock15GPath &path)
 
 bool TS15GArmDecision(TickShock15GContext &context,const string subject_id,const string subject_type,const string symbol,const long market_cluster_id,const int shock_direction,const long anchor_msc,const int decision_index,const long signal_quote_msc,const long signal_processing_msc,const double atr14_m5,const double tick_size,const double broker_stop_distance)
   {
-   if(subject_id==""||symbol==""||shock_direction==0||anchor_msc<=0||decision_index<0||decision_index>=TS15G_DECISIONS||signal_quote_msc<=0||signal_processing_msc<signal_quote_msc||tick_size<=0.0)return false;
+   if(subject_id==""||symbol==""||shock_direction==0||anchor_msc<=0||decision_index<0||decision_index>=TS15G_DECISIONS||signal_quote_msc<=0||signal_processing_msc<signal_quote_msc||tick_size<=0.0||subject_id==context.last_written_subject_id)return false;
    if(!context.active){TS15GResetContext(context);context.active=true;context.subject_id=subject_id;context.subject_type=subject_type;context.symbol=symbol;context.market_cluster_id=market_cluster_id;context.shock_direction=shock_direction>0?1:-1;context.anchor_msc=anchor_msc;}
    if(context.subject_id!=subject_id||context.symbol!=symbol||context.shock_direction!=(shock_direction>0?1:-1)||context.decision_armed[decision_index])return false;
    for(int action=0;action<TS15G_ACTIONS;++action)for(int rr=0;rr<TS15G_RRS;++rr)for(int horizon=0;horizon<TS15G_HORIZONS;++horizon)

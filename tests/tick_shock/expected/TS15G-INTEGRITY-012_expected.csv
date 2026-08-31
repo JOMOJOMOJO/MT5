@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+rearm_same_subject,false,0,contract,a written subject cannot be re-armed during cooldown
