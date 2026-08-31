@@ -2059,7 +2059,7 @@ void TSR15GArmEpisodeDecisions(TSRSymbolContext &context)
      {
       TickShock15FFeatureSnapshot s=f.decisions[d];if(!s.recorded||context.economic_episode.decision_armed[d])continue;
       double atr=s.available[16]?s.values[16]:0.0;double broker=(double)context.stops_level*context.point;
-      TS15GArmDecision(context.economic_episode,f.episode_id,"SHOCK",f.symbol,f.market_cluster_id,f.direction,e.anchor_msc,d,s.quote_msc,s.processing_msc,atr,context.tick_size,broker);
+      if(TS15GArmDecision(context.economic_episode,f.episode_id,"SHOCK",f.symbol,f.market_cluster_id,f.direction,e.anchor_msc,d,s.quote_msc,s.processing_msc,atr,context.tick_size,broker)&&!s.valid)TS15GInvalidateDecision(context.economic_episode,d,"DECISION_"+s.reason);
      }
   }
 
@@ -2070,7 +2070,7 @@ void TSR15GArmControlDecisions(TSRSymbolContext &context)
      {
       TickShock15FFeatureSnapshot s=c.decisions[d];if(!s.recorded||context.economic_control.decision_armed[d])continue;
       double atr=s.available[16]?s.values[16]:0.0;double broker=(double)context.stops_level*context.point;
-      TS15GArmDecision(context.economic_control,c.control_id,"MATCHED_CONTROL",c.symbol,0,c.pseudo_direction,c.anchor_msc,d,s.quote_msc,s.processing_msc,atr,context.tick_size,broker);
+      if(TS15GArmDecision(context.economic_control,c.control_id,"MATCHED_CONTROL",c.symbol,0,c.pseudo_direction,c.anchor_msc,d,s.quote_msc,s.processing_msc,atr,context.tick_size,broker)&&!s.valid)TS15GInvalidateDecision(context.economic_control,d,"DECISION_"+s.reason);
      }
   }
 
@@ -3270,9 +3270,8 @@ void OnDeinit(const int reason)
    if(InpDetectorVersion!=STRICT_V0) TSRV1FlushStatisticalTracks();
    for(int i=0;i<ArraySize(g_symbols);++i)
      {
-      TS15EFinalizeEndOfData(g_symbols[i].medium_horizon,InpSubmitLatencyMs);TSR15FCaptureEpisodeFeatures(g_symbols[i]);TSR15GArmEpisodeDecisions(g_symbols[i]);TSR15GWriteContext(g_symbols[i].economic_episode,"END_OF_DATA");TSR15EWritePending(g_symbols[i]);
+      TS15EFinalizeEndOfData(g_symbols[i].medium_horizon,InpSubmitLatencyMs);TSR15FCaptureEpisodeFeatures(g_symbols[i]);TSR15GArmEpisodeDecisions(g_symbols[i]);TSR15EWritePending(g_symbols[i]);
       if(g_symbols[i].context_features.control.active){g_symbols[i].context_features.control.active=false;g_symbols[i].context_features.control.invalid=true;g_symbols[i].context_features.control.write_pending=true;g_symbols[i].context_features.control.reason="END_OF_DATA";}
-      TSR15GWriteContext(g_symbols[i].economic_control,"END_OF_DATA");
       TSR15FCaptureAndWriteControl(g_symbols[i],0,0,0.0,0.0);
      }
    TSRWriteSummary();

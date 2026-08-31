@@ -87,6 +87,9 @@ bool TS15GArmDecision(TickShock15GContext &context,const string subject_id,const
 void TS15GInvalidate(TickShock15GPath &path,const string reason)
   {path.done=true;path.result=TS15G_INVALID_PATH;path.invalid_reason=reason;}
 
+void TS15GInvalidateDecision(TickShock15GContext &context,const int decision_index,const string reason)
+  {for(int action=0;action<TS15G_ACTIONS;++action)for(int rr=0;rr<TS15G_RRS;++rr)for(int horizon=0;horizon<TS15G_HORIZONS;++horizon){int index=TS15GPathIndex(decision_index,action,rr,horizon);if(context.paths[index].armed)TS15GInvalidate(context.paths[index],reason);}}
+
 void TS15GFinalizePendingTouch(TickShock15GPath &path)
   {
    if(!path.pending_touch||path.done)return;path.exit_msc=path.pending_touch_msc;path.exit_bid=path.pending_bid;path.exit_ask=path.pending_ask;
@@ -101,10 +104,10 @@ void TS15GObservePath(TickShock15GPath &path,const long quote_msc,const long pro
    if(path.pending_touch&&quote_msc>path.pending_touch_msc){TS15GFinalizePendingTouch(path);if(path.done)return;}
    if(!path.entered)
      {
-      if(quote_msc<=path.signal_quote_msc||quote_msc<path.signal_processing_msc)return;if(processing_msc-quote_msc>TS15G_MAX_QUOTE_AGE_MS){TS15GInvalidate(path,"STALE_ENTRY_QUOTE");return;}if(fallback){path.fallback=true;TS15GInvalidate(path,"FALLBACK_ENTRY_QUOTE");return;}
+      if(quote_msc<=path.signal_quote_msc||quote_msc<path.signal_processing_msc)return;if(fallback){path.fallback=true;TS15GInvalidate(path,"FALLBACK_ENTRY_QUOTE");return;}
       path.entered=true;path.entry_quote_msc=quote_msc;path.entry_processing_msc=processing_msc;path.quote_age_ms=processing_msc-quote_msc;path.entry_bid=bid;path.entry_ask=ask;path.entry_spread=ask-bid;path.entry_price=path.direction>0?ask:bid;if(!TS15GBuildBarriers(path)){TS15GInvalidate(path,path.invalid_reason);return;}return;
      }
-   if(quote_msc<path.entry_quote_msc){TS15GInvalidate(path,"BACKDATE");return;}if(fallback){path.fallback=true;TS15GInvalidate(path,"FALLBACK_PATH_QUOTE");return;}if(processing_msc-quote_msc>TS15G_MAX_QUOTE_AGE_MS){TS15GInvalidate(path,"STALE_PATH_QUOTE");return;}path.quote_age_ms=MathMax(path.quote_age_ms,processing_msc-quote_msc);
+   if(quote_msc<path.entry_quote_msc){TS15GInvalidate(path,"BACKDATE");return;}if(fallback){path.fallback=true;TS15GInvalidate(path,"FALLBACK_PATH_QUOTE");return;}path.quote_age_ms=MathMax(path.quote_age_ms,processing_msc-quote_msc);
    double side=path.direction>0?bid:ask;double move=(side-path.entry_price)*(double)path.direction;if(move>path.mfe){path.mfe=move;path.time_to_mfe_ms=quote_msc-path.entry_quote_msc;}if(-move>path.mae){path.mae=-move;path.time_to_mae_ms=quote_msc-path.entry_quote_msc;}
    bool tp=path.direction>0?side>=path.tp:side<=path.tp;bool sl=path.direction>0?side<=path.sl:side>=path.sl;
    if(tp||sl){if(!path.pending_touch){path.pending_touch=true;path.pending_touch_msc=quote_msc;}if(quote_msc==path.pending_touch_msc){path.pending_tp=path.pending_tp||tp;path.pending_sl=path.pending_sl||sl;path.pending_bid=bid;path.pending_ask=ask;}return;}

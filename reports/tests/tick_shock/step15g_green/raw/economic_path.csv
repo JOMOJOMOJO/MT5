@@ -45,3 +45,4 @@ TS15G-INTEGRITY-007,MATCH,cluster_split_count=1,cluster_split_count=1,,economic_
 TS15G-INTEGRITY-008,MATCH,purge_ms=900000,purge_ms=900000,,economic_path.csv
 TS15G-INTEGRITY-009,MATCH,training_only_preprocessing=true,training_only_preprocessing=true,,economic_path.csv
 TS15G-INTEGRITY-010,MATCH,step15f_identity_mismatches=0,step15f_identity_mismatches=0,,economic_path.csv
+TS15G-INTEGRITY-011,MATCH,lagged_path_status=TIMEOUT,lagged_path_status=TIMEOUT,,economic_path.csv

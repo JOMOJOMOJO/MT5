@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+lagged_path_status,TIMEOUT,0,contract,post-entry merge lag is diagnostic not a path invalidator

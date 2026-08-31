@@ -57,6 +57,7 @@ CASES = [
     ("TS15G-INTEGRITY-008", "integrity", "BOTH", "purge_ms", "900000", "purge covers maximum outcome"),
     ("TS15G-INTEGRITY-009", "integrity", "BOTH", "training_only_preprocessing", "true", "preprocessing is fold-local"),
     ("TS15G-INTEGRITY-010", "integrity", "BOTH", "step15f_identity_mismatches", "0", "Step15F identity preserved"),
+    ("TS15G-INTEGRITY-011", "integrity", "BOTH", "lagged_path_status", "TIMEOUT", "post-entry merge lag is diagnostic not a path invalidator"),
 ]
 
 
