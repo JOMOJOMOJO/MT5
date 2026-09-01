@@ -1,0 +1,16 @@
+{
+  "run": "20260901_ts15g_economic_path_r3_202503",
+  "primary_rows": 9990,
+  "primary_subjects": 2228,
+  "primary_market_clusters": 2086,
+  "class_counts": {
+    "NEITHER": 8679,
+    "CONT_ONLY": 696,
+    "REV_ONLY": 615
+  },
+  "oof_rows": 32904,
+  "candidates": 0,
+  "cost_status": "COST_MODEL_INCOMPLETE",
+  "formal_net_expectancy": "UNAVAILABLE",
+  "status": "NO_ECONOMIC_PATH_HYPOTHESIS_FROZEN"
+}
