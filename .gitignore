@@ -19,3 +19,11 @@ reports/backtest/runs/**/presets/
 reports/backtest/runs/**/diagnostics.csv
 reports/backtest/runs/**/exit_simulation.csv
 reports/backtest/runs/**/summary.csv
+
+# Step 15G real-tick raw evidence is retained locally and represented by
+# committed compact tables plus SHA-256 manifests. Tester-rendered harness
+# reports are reproducible transient output.
+reports/backtest/runs/20260901_ts15g_economic_path_r1_202503/
+reports/backtest/runs/20260901_ts15g_economic_path_r2_202503/
+reports/backtest/runs/20260901_ts15g_economic_path_r3_202503/
+reports/tests/tick_shock/tester/step15g_*
