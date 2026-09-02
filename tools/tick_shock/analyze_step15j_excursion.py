@@ -60,8 +60,18 @@ def main():
     write(a.out_dir/'episode_excursion_dataset.csv',src)
     audit=[]
     for r in src:
-        audit.append({k:r.get(k,'') for k in ('episode_id','market_cluster_id','symbol','shock_direction','entry_spread','atr14_m5','spread_atr_t0','broker_stop_distance','existing_sl_distance','existing_tp_distance','existing_sl_atr','existing_tp_atr','existing_risk_source','status','analysis_ready','high_movement')})
+        row={k:r.get(k,'') for k in ('episode_id','market_cluster_id','symbol','shock_direction','entry_spread','atr14_m5','spread_atr_t0','broker_stop_distance','existing_sl_distance','existing_tp_distance','existing_sl_atr','existing_tp_atr','existing_risk_source','existing_continuation_result','existing_continuation_touch_msc','existing_reversal_result','existing_reversal_touch_msc','status','analysis_ready','high_movement')}
+        for t in TP:row[f'spread_over_tp_{t:.2f}']=f(r['entry_spread'])/(t*f(r['atr14_m5'])) if f(r['atr14_m5'])>0 else math.nan
+        row['spread_over_existing_sl']=f(r['entry_spread'])/f(r['existing_sl_distance']) if f(r['existing_sl_distance'])>0 else math.nan;audit.append(row)
     write(a.out_dir/'existing_sl_tp_geometry_audit.csv',audit)
+    bins=[(-math.inf,.25,'<0.25'),(.25,.5,'0.25-0.50'),(.5,.75,'0.50-0.75'),(.75,1.0,'0.75-1.00'),(1.0,1.5,'1.00-1.50'),(1.5,math.inf,'>=1.50')];gb=[]
+    for scope,sub0 in [('ALL',ready)]+[(s,[r for r in ready if r['symbol']==s]) for s in sorted({r['symbol'] for r in ready})]:
+     for lo,hi,label in bins:
+      sub=[r for r in sub0 if lo<=f(r['existing_sl_atr'])<hi]
+      for side in ('continuation','reversal'):
+       c=Counter(r[f'existing_{side}_result'] for r in sub);n=len(sub)
+       gb.append({'scope':scope,'sl_atr_bin':label,'side':side.upper(),'episode_count':n,'cluster_count':len({r['market_cluster_id'] for r in sub}),'tp_first_rate':c['TP_FIRST']/n if n else math.nan,'sl_first_rate':c['SL_FIRST']/n if n else math.nan,'timeout_rate':c['TIMEOUT']/n if n else math.nan,'mfe_atr_median':pct([r[f'h3600_{"cont" if side=="continuation" else "rev"}_mfe_atr'] for r in sub],50),'mae_atr_median':pct([r[f'h3600_{"cont" if side=="continuation" else "rev"}_mae_atr'] for r in sub],50)})
+    write(a.out_dir/'existing_sl_tp_geometry_bins.csv',gb)
     ready=[r for r in src if r['analysis_ready']=='TRUE'];pops={'ALL':ready,'HIGH_MOVEMENT':[r for r in ready if r['high_movement']=='TRUE'],'FILTER_OUT':[r for r in ready if r['high_movement']=='FALSE']}
     hs=[]
     for pop,sub in pops.items():

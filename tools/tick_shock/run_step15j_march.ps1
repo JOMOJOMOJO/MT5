@@ -1,7 +1,7 @@
 param([int]$TimeoutSeconds=2400)
 $ErrorActionPreference="Stop"
 $root=(Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
-$folder="20260902_ts15j_post_shock_excursion_r1_202503";$runId="ts15j_post_shock_excursion_r1_202503";$runDir=Join-Path $root "reports\backtest\runs\$folder"
+$folder="20260902_ts15j_post_shock_excursion_r2_202503";$runId="ts15j_post_shock_excursion_r2_202503";$runDir=Join-Path $root "reports\backtest\runs\$folder"
 if(Test-Path $runDir){throw "Refusing to overwrite $runDir"}
 New-Item -ItemType Directory -Path $runDir|Out-Null
 $source=Join-Path $root "mql\Experts\ExpectedValue_MultiCurrency_TickShockResearch.mq5";$log=Join-Path $root "reports\compile\tick_shock\step15j_march_research_ea.log"

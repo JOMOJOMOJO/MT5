@@ -20,6 +20,7 @@ struct TickShock15JRecord
    long entry_quote_msc;long entry_processing_msc;double entry_bid;double entry_ask;double entry_spread;
    double atr14_m5;double spread_atr_t0;double tick_activity_ratio;long atr_source_msc;long feature_source_msc;
    double tick_size;double broker_stop_distance;double existing_risk;double existing_tp_distance;ENUM_TS15G_RISK_SOURCE existing_source;
+   ENUM_TS15G_RESULT existing_continuation_result;ENUM_TS15G_RESULT existing_reversal_result;long existing_continuation_touch_msc;long existing_reversal_touch_msc;
    double continuation_mfe;double continuation_mae;double reversal_mfe;double reversal_mae;
    double continuation_mfe_h[TS15J_HORIZONS];double continuation_mae_h[TS15J_HORIZONS];
    double reversal_mfe_h[TS15J_HORIZONS];double reversal_mae_h[TS15J_HORIZONS];
@@ -34,7 +35,7 @@ struct TickShock15JPool
   {TickShock15JRecord records[TS15J_POOL_CAPACITY];long armed;long completed;long censored;long capacity_hits;long invalid_paths;};
 
 string TS15JSchema(){return "tickshock-post-shock-excursion-v1";}
-void TS15JResetRecord(TickShock15JRecord &r){ZeroMemory(r);r.existing_source=TS15G_RISK_INVALID;for(int i=0;i<TS15J_DISTANCES;++i){r.continuation_hit_ms[i]=-1;r.reversal_hit_ms[i]=-1;}}
+void TS15JResetRecord(TickShock15JRecord &r){ZeroMemory(r);r.existing_source=TS15G_RISK_INVALID;r.existing_continuation_result=TS15G_PENDING;r.existing_reversal_result=TS15G_PENDING;for(int i=0;i<TS15J_DISTANCES;++i){r.continuation_hit_ms[i]=-1;r.reversal_hit_ms[i]=-1;}}
 void TS15JResetPool(TickShock15JPool &p){ZeroMemory(p);for(int i=0;i<TS15J_POOL_CAPACITY;++i)TS15JResetRecord(p.records[i]);}
 
 bool TS15JArm(TickShock15JPool &pool,const string episode_id,const string event_id,const string symbol,const long cluster_id,const int direction,
@@ -74,6 +75,11 @@ void TS15JProcessQuote(TickShock15JRecord &r,const long quote_msc,const long pro
    if(fallback){++r.fallback_quotes;r.invalid=true;return;}
    ++r.quote_count;double cm=TS15JMove(r.shock_direction,r.entry_bid,r.entry_ask,bid,ask);double rm=TS15JMove(-r.shock_direction,r.entry_bid,r.entry_ask,bid,ask);
    r.continuation_mfe=MathMax(r.continuation_mfe,cm);r.continuation_mae=MathMax(r.continuation_mae,-cm);r.reversal_mfe=MathMax(r.reversal_mfe,rm);r.reversal_mae=MathMax(r.reversal_mae,-rm);
+   if(r.existing_risk>0.0&&r.existing_tp_distance>0.0)
+     {
+      if(r.existing_continuation_result==TS15G_PENDING){bool tp=cm>=r.existing_tp_distance,sl=-cm>=r.existing_risk;if(tp||sl){r.existing_continuation_result=tp&&sl?TS15G_AMBIGUOUS_SAME_TICK:(tp?TS15G_TP_FIRST:TS15G_SL_FIRST);r.existing_continuation_touch_msc=quote_msc;}}
+      if(r.existing_reversal_result==TS15G_PENDING){bool tp=rm>=r.existing_tp_distance,sl=-rm>=r.existing_risk;if(tp||sl){r.existing_reversal_result=tp&&sl?TS15G_AMBIGUOUS_SAME_TICK:(tp?TS15G_TP_FIRST:TS15G_SL_FIRST);r.existing_reversal_touch_msc=quote_msc;}}
+     }
    long elapsed=quote_msc-r.entry_quote_msc;
    for(int d=0;d<TS15J_DISTANCES;++d)
      {
@@ -84,7 +90,7 @@ void TS15JProcessQuote(TickShock15JRecord &r,const long quote_msc,const long pro
    for(int t=0;t<TS15J_TP_CANDIDATES;++t){int d=t+1;if(r.continuation_hit_ms[d]<0)r.continuation_pre_tp_mae[t]=MathMax(r.continuation_pre_tp_mae[t],-cm);if(r.reversal_hit_ms[d]<0)r.reversal_pre_tp_mae[t]=MathMax(r.reversal_pre_tp_mae[t],-rm);}
    for(int h=0;h<TS15J_HORIZONS;++h)if(!r.horizon_done[h]&&quote_msc>=r.t0_msc+(long)TS15J_HORIZON_SECONDS[h]*1000)
      {r.horizon_done[h]=true;r.horizon_quote_msc[h]=quote_msc;r.continuation_mfe_h[h]=r.continuation_mfe;r.continuation_mae_h[h]=r.continuation_mae;r.reversal_mfe_h[h]=r.reversal_mfe;r.reversal_mae_h[h]=r.reversal_mae;}
-   if(r.horizon_done[TS15J_HORIZONS-1]){r.complete=true;r.active=false;r.write_pending=true;}
+   if(r.horizon_done[TS15J_HORIZONS-1]){if(r.existing_continuation_result==TS15G_PENDING)r.existing_continuation_result=TS15G_TIMEOUT;if(r.existing_reversal_result==TS15G_PENDING)r.existing_reversal_result=TS15G_TIMEOUT;r.complete=true;r.active=false;r.write_pending=true;}
   }
 
 void TS15JFlushPending(TickShock15JRecord &r)
