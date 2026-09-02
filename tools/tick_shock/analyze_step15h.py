@@ -36,7 +36,15 @@ def ci_cluster(df,col):
 def load():
     s=pd.read_csv(RUN/'detection_time_snapshots.csv',low_memory=False);p=pd.read_csv(RUN/'detection_time_first_touch.csv',low_memory=False)
     q=p[(p.requested_delay_ms==0)&(p.horizon_seconds==900)].copy();d=s.merge(q,on=['episode_id','event_id','market_cluster_id','symbol','shock_direction','t0_msc'],validate='one_to_one',suffixes=('','_path'))
-    d['server_day']=pd.to_datetime(d.t0_msc,unit='ms',utc=True).dt.strftime('%Y-%m-%d');d['valid_path']=d.result.isin(['TP_FIRST','SL_FIRST','TIMEOUT'])
+    clock=pd.to_datetime(d.t0_msc,unit='ms',utc=True);d['server_day']=clock.dt.strftime('%Y-%m-%d');d['server_hour']=clock.dt.hour
+    def session(hour):
+        active=sum((0<=hour<9,8<=hour<17,13<=hour<22))
+        if active>1:return 'OVERLAP'
+        if 0<=hour<9:return 'TOKYO'
+        if 8<=hour<17:return 'LONDON'
+        if 13<=hour<22:return 'NEW_YORK'
+        return 'OTHER'
+    d['session']=d.server_hour.map(session);d['valid_path']=d.result.isin(['TP_FIRST','SL_FIRST','TIMEOUT'])
     d['primary_eligible']=d.symbol.ne('GBPUSD')&d.feature_status.eq('AVAILABLE')&d.valid_path&d.fallback_status.eq('CLEAN')
     d['target']=(d.c2_r>0).astype(int);d=d.replace([np.inf,-np.inf],np.nan)
     return s,p,d
@@ -91,12 +99,22 @@ def main():
     for f in FEATURES:availability.append(dict(feature=f,available=int(s[f'{f}_available'].astype(str).str.lower().eq('true').sum()),missing=int((~s[f'{f}_available'].astype(str).str.lower().eq('true')).sum()),future_source_reads=int((s[f'{f}_source_msc'].fillna(0)>s.t0_msc).sum())))
     write(pd.DataFrame(availability),OUT/'feature_availability.csv')
     write(d.groupby(['symbol','shock_direction','feature_status','result'],dropna=False).size().reset_index(name='episodes'),OUT/'episode_distribution.csv')
+    write(d.groupby(['symbol','session','feature_status','result'],dropna=False).size().reset_index(name='episodes'),OUT/'symbol_session_outcome.csv')
+    missing=[]
+    for symbol,g in s.groupby('symbol'):
+        for f in FEATURES:missing.append(dict(symbol=symbol,feature=f,rows=len(g),missing=int((~g[f'{f}_available'].astype(str).str.lower().eq('true')).sum())))
+    write(pd.DataFrame(missing),OUT/'feature_missingness_by_symbol.csv')
     td=p.assign(entry_delay_ms=p.entry_quote_msc-p.t0_msc).groupby(['requested_delay_ms','horizon_seconds','result'],dropna=False).agg(rows=('episode_id','size'),median_entry_delay_ms=('entry_delay_ms','median'),mean_c0_r=('c0_r','mean'),mean_c2_r=('c2_r','mean')).reset_index();write(td,OUT/'timing_and_outcome.csv')
     primary=d[d.primary_eligible].copy();fold_map={cluster:fold for fold,ids,_ in fs for cluster in ids};primary['fold']=primary.market_cluster_id.map(fold_map).fillna(-1).astype(int);primary['selected_policy']='NO_TRADE';primary['policy_action']='NO_TRADE';primary['policy_r']=0.0;primary['counterfactual_taken_c0_r']=primary.c0_r;primary['counterfactual_taken_c2_r']=primary.c2_r;primary['avoided_loss_r']=np.maximum(0.0,-primary.c2_r);primary['rejected_profit_r']=np.maximum(0.0,primary.c2_r)
-    compact_cols=['episode_id','event_id','market_cluster_id','symbol','shock_direction','candidate_msc','confirmed_msc','confirmed_quote_msc','processed_msc','t0_msc','t0_sequence','quote_age_ms','result','c0_r','c2_r','risk_distance','realized_rr','primary_eligible','server_day','fold','selected_policy','policy_action','policy_r','counterfactual_taken_c0_r','counterfactual_taken_c2_r','avoided_loss_r','rejected_profit_r']+FEATURES
+    compact_cols=['episode_id','event_id','market_cluster_id','symbol','shock_direction','candidate_msc','confirmed_msc','confirmed_quote_msc','processed_msc','t0_msc','t0_sequence','quote_age_ms','result','c0_r','c2_r','risk_distance','realized_rr','primary_eligible','server_day','server_hour','session','fold','selected_policy','policy_action','policy_r','counterfactual_taken_c0_r','counterfactual_taken_c2_r','avoided_loss_r','rejected_profit_r']+FEATURES
     write(primary[compact_cols],SHARE/'step15h_detection_time_episodes_compact.csv');write(comp,SHARE/'step15h_filter_policy_comparison.csv')
     checks=[('snapshots_equal_episodes',len(s),3151),('path_rows',len(p),len(s)*9),('duplicate_snapshot',int(s.duplicated('episode_id').sum()),0),('duplicate_paths',int(p.duplicated(['episode_id','requested_delay_ms','horizon_seconds']).sum()),0),('entry_before_processing',int((p.entry_quote_msc.notna()&(p.entry_quote_msc<p.signal_processing_msc)).sum()),0),('entry_not_after_signal_quote',int((p.entry_quote_msc.notna()&(p.entry_quote_msc<=p.signal_quote_msc)).sum()),0),('rr_below_1_2',int((p.realized_rr.notna()&(p.realized_rr<1.2-1e-9)).sum()),0),('future_feature_reads',sum(x['future_source_reads'] for x in availability),0),('trade_rows',max(0,sum(1 for _ in (RUN/'trades.csv').open(encoding='utf-8-sig'))-1),0)]
     qa=pd.DataFrame([dict(check=k,actual=a,expected=e,status='PASS' if a==e else 'FAIL') for k,a,e in checks]);write(qa,OUT/'qa_checks.csv')
+    def read_set(path):
+        return dict(line.split('=',1) for line in path.read_text(encoding='utf-8-sig').splitlines() if '=' in line)
+    prior=read_set(ROOT/'reports/backtest/runs/20260901_ts15g_economic_path_r3_202503/economic_path.set');current=read_set(RUN/'detection_time_continuation.set');ignored={'InpRunId','InpLogFolder','InpSourceCommit','InpEx5Hash','InpSchemaVersion'}
+    diffs=[dict(parameter=k,step15g=prior.get(k,''),step15h=current.get(k,''),status='FAIL') for k in sorted(set(prior)|set(current)) if k not in ignored and prior.get(k)!=current.get(k)]
+    write(pd.DataFrame(diffs,columns=['parameter','step15g','step15h','status']),ROOT/'reports/refactor/tick_shock/step15h_parameter_diff.csv')
     decision='NO_DETECTION_TIME_CONTINUATION_FILTER_SUPPORTED';support=len(primary)>=2500 and primary.market_cluster_id.nunique()>=2000
     if support and bool((comp.candidate_gate==True).any()):decision='DETECTION_TIME_CONTINUATION_FILTER_HYPOTHESIS_FROZEN_FOR_FUTURE_VALIDATION'
     registry=pd.DataFrame([dict(candidate_id='NONE' if decision.startswith('NO_') else 'TS15H-CANDIDATE-001',decision=decision,eligible_episodes=len(primary),market_clusters=primary.market_cluster_id.nunique(),support_gate=support,cost_status='COST_MODEL_INCOMPLETE',formal_net_expectancy='UNAVAILABLE',edge='EDGE_UNDETERMINED',production='PRODUCTION_NOT_ELIGIBLE')]);write(registry,OUT/'candidate_registry.csv')

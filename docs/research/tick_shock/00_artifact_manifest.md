@@ -2,13 +2,13 @@
 
 - artifact ID: `TS-STEP01-MANIFEST`
 - step: `01`
-- branch: `research/tickshock-step15g-economic-path-classification-20260901`
+- branch: `research/tickshock-step15h-detection-time-continuation-filter-20260902`
 - purpose: canonical source, tests, documentation, baseline/current evidence, and checkpoint artifacts
-- status: `STEP15G_DEVELOPMENT_ECONOMIC_PATHS_CHARACTERIZED_NO_HYPOTHESIS_FROZEN`
-- manifest_revision: `15G`
-- covered_steps: `01-15G`
+- status: `STEP15H_NO_DETECTION_TIME_CONTINUATION_FILTER_SUPPORTED`
+- manifest_revision: `15H`
+- covered_steps: `01-15H`
 - last_audited_commit: `SELF`
-- last_updated_at: `2026-09-02T00:00:00+09:00`
+- last_updated_at: `2026-09-02T23:59:00+09:00`
 
 Step 8 QA counted 393 artifact rows and 377 unique paths before its own four
 artifact rows were appended. The checked-in post-Step-8 state is therefore 397
@@ -3522,3 +3522,39 @@ Step 15G appends 265 current source, deterministic-test, formal-run, analysis, c
 | TS-S15G-0263 | 15G | `tools/tick_shock/run_step15g_march.ps1` | source | Step 15G economic path classification | source | `6EB4B564D515A1C7E70CB6C224CE7B6CD19C09BBECD313E8C52CB00E6A9EFA1C` | yes | stop after Step 15G | COMPLETE | March development only | e9c2968660288c12af03dba770e519c8d012e010 |
 | TS-S15G-0264 | 15G | `tools/tick_shock/run_step15g_tests.py` | source | Step 15G economic path classification | source | `FFC593DB9498D24C86AB77A71472FE1EC99B36C3EBEE82B0EECB4EB3F2C082C1` | yes | stop after Step 15G | COMPLETE | March development only | 8b8f85508ffe9fb4bbe474e0fd0636f5acf1ea4e |
 | TS-S15G-0265 | 15G | `tools/tick_shock/step15g_independent_oracle.py` | source | Step 15G economic path classification | source | `EA1244FE4DE6221859D9BCCCC49010FEB539D7A00919C30672315BA9D37B0DCF` | yes | stop after Step 15G | COMPLETE | March development only | 8b8f85508ffe9fb4bbe474e0fd0636f5acf1ea4e |
+
+## Step 15H rollup
+
+Step 15H adds a preregistered causal t0 snapshot, immediate-continuation first-touch paths, 46 RED/GREEN specifications, a March development run, and OOF policy evidence. Large run artifacts above 50 MB are retained locally and indexed by SHA-256 rather than committed. Artifact ID duplicates remain zero.
+
+| artifact ID | step | artifact path | type | purpose | source/generated | SHA-256 | commit | next step | status | note | owning_commit |
+|---|---:|---|---|---|---|---|---|---|---|---|---|
+| TS-S15H-0001 | 15H | `mql/Include/TickShock/TickShockDetectionTimeContinuation.mqh` | module | causal t0 feature and path engine | source | `FD2F066E881037FF51D4EFB4DD82DC5F91F0C283976977D6D6F1C7D462E4C397` | yes | stop after Step 15H | COMPLETE | research only | a12e72ade081a544fe02f417009fbf499503ca8b |
+| TS-S15H-0002 | 15H | `mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5` | EA | production wiring | source | `5CB3D3ED0A8B0097BFC3F1284AB511B29CE05793D902DC7F4A937A14ECE9FA73` | yes | stop after Step 15H | COMPLETE | no orders | a12e72ade081a544fe02f417009fbf499503ca8b |
+| TS-S15H-0003 | 15H | `mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.ex5` | executable | accepted formal run binary | generated evidence | `E2DA06EEDDC2119C7B52CA539CB0917A76553BAE443F4BD5FC8CE94A6F7878E9` | yes | stop after Step 15H | COMPLETE | exact accepted binary | fdedb42b42ae4e202f94be4808631b116409bb48 |
+| TS-S15H-0004 | 15H | `mql/Experts/tests/ExpectedValue_TickShock_DetectionTimeContinuationHarness.mq5` | harness | production-path tests | source | `72AF0AFB121AE45698B72FA36A133816D9CF02924339C28F03826A95F738ECD6` | yes | stop after Step 15H | COMPLETE | 46 PASS | a12e72ade081a544fe02f417009fbf499503ca8b |
+| TS-S15H-0005 | 15H | `mql/Experts/tests/TickShockStep15HTestSupport.mqh` | test support | fixture execution | source | `2B71B0CD24115EF6D4F4C22595F77311B0413778425594A5041A741E99B0DECF` | yes | stop after Step 15H | COMPLETE | production functions called | a12e72ade081a544fe02f417009fbf499503ca8b |
+| TS-S15H-0006 | 15H | `docs/research/tick_shock/15h_detection_time_continuation_preanalysis.md` | specification | preregistration | source | `46349C0945922DD0BFB17EE0B3BD92E73D7B3F62E95B78ECDB56154244D5B298` | yes | stop after Step 15H | COMPLETE | frozen before implementation | 7c35edef0e4ed9e63dc2d1e73787c12ea97bd4af |
+| TS-S15H-0007 | 15H | `docs/research/tick_shock/15h_detection_time_continuation_spec.md` | specification | clocks, features, models and gates | source | `0539507225BC7054883EB113E2ACF59EC1C13A8BFD35EAD53AC92975F86A4C67` | yes | stop after Step 15H | COMPLETE | March development only | 7c35edef0e4ed9e63dc2d1e73787c12ea97bd4af |
+| TS-S15H-0008 | 15H | `docs/research/tick_shock/15h_detection_time_continuation_results.md` | report | final results | generated evidence | `3ACA81F91CF86C3629A4EFE824112839518D932540C26E991EB84F1B4006000A` | yes | stop after Step 15H | COMPLETE | no candidate frozen | fdedb42b42ae4e202f94be4808631b116409bb48 |
+| TS-S15H-0009 | 15H | `docs/research/tick_shock/15h_continuation_filter_candidate_registry.md` | registry | accepted hypothesis registry | generated evidence | `6342A65F47F03D679A8951F615CF4BBE95DAB26DAFF410FF4FE531349B1DE171` | yes | stop after Step 15H | COMPLETE | candidate NONE | fdedb42b42ae4e202f94be4808631b116409bb48 |
+| TS-S15H-0010 | 15H | `reports/qa/tick_shock/step15h_final_qa.md` | QA | final gate | generated evidence | `133BD02951E8A76E3680C7A48836B0E82FCCDA6E3939DD51DAFE9932AACE99E9` | yes | stop after Step 15H | COMPLETE | causal violations 0 | SELF |
+| TS-S15H-0011 | 15H | `reports/backtest/runs/20260902_ts15h_detection_time_continuation_r1_202503/summary.md` | run summary | accepted formal run | generated evidence | `B8939B5EB183467A8E985FDBAB93CBC4E8CF5234EABB3F68B68FCC3477E21846` | yes | stop after Step 15H | COMPLETE | source a12e72ad | SELF |
+| TS-S15H-0012 | 15H | `reports/backtest/runs/20260902_ts15h_detection_time_continuation_r1_202503/detection_time_snapshots.csv` | evidence | t0 snapshot | generated evidence | `FBD754C6325C2FE72B9410E4BC4647717E980834638E05EDD14FD0A5788A1F5F` | yes | stop after Step 15H | COMPLETE | 3151 rows | fdedb42b42ae4e202f94be4808631b116409bb48 |
+| TS-S15H-0013 | 15H | `reports/backtest/runs/20260902_ts15h_detection_time_continuation_r1_202503/detection_time_first_touch.csv` | evidence | immediate continuation paths | generated evidence | `B2667BEBFE48BBE83588DDA917578EEF3261A4FD3B29BA3E1E416CCACD6C5203` | yes | stop after Step 15H | COMPLETE | 28359 rows | fdedb42b42ae4e202f94be4808631b116409bb48 |
+| TS-S15H-0014 | 15H | `reports/analysis/tick_shock/step15h/filter_policy_comparison.csv` | analysis | policy values and CI | generated evidence | `B942F84071FFE0AA99F25FF846AADBE3A7BA69F5CE66B77138C872974B7C1EA3` | yes | stop after Step 15H | COMPLETE | C2 primary | fdedb42b42ae4e202f94be4808631b116409bb48 |
+| TS-S15H-0015 | 15H | `reports/analysis/tick_shock/step15h/oof_predictions.csv` | analysis | five-fold OOF | generated evidence | `D9E13DE8D63CA55D2C40627895E90B0316B133D12755E8278205867E39CDE38F` | yes | stop after Step 15H | COMPLETE | development WF only | fdedb42b42ae4e202f94be4808631b116409bb48 |
+| TS-S15H-0016 | 15H | `reports/tests/tick_shock/step15h_red/step15h_red_results.csv` | RED evidence | pre-implementation failure | generated evidence | `F7AF4120916A64C26925AD5C6D369AAF74624FAD7D9F83F08285C12C391BE5DE` | yes | stop after Step 15H | COMPLETE | 46 XFAIL | 7c35edef0e4ed9e63dc2d1e73787c12ea97bd4af |
+| TS-S15H-0017 | 15H | `reports/tests/tick_shock/step15h_green/step15h_green_results.csv` | GREEN evidence | production-path verification | generated evidence | `0A7CC6CBB8C31E780ADBB44AEE919BC9FD671E077BBE2AD56C16A8C5C58A1B1F` | yes | stop after Step 15H | COMPLETE | 46 PASS | a12e72ade081a544fe02f417009fbf499503ca8b |
+| TS-S15H-0018 | 15H | `reports/tests/tick_shock/step15h_green/independent_oracle.csv` | oracle | independent arithmetic | generated evidence | `2F619843BAAEAEEED4B6D23418ADB10E4DA7BC5D025C59B5B9E0F3894AA369F7` | yes | stop after Step 15H | COMPLETE | 8 PASS | a12e72ade081a544fe02f417009fbf499503ca8b |
+| TS-S15H-0019 | 15H | `reports/refactor/tick_shock/step15h_behavior_comparison.csv` | regression | Step 15G preservation | generated evidence | `BFA3CDBED375E69B74078E21E64553B126D581D152F3FB3D51F1ABA10CA08EBA` | yes | stop after Step 15H | COMPLETE | semantic differences 0 | fdedb42b42ae4e202f94be4808631b116409bb48 |
+| TS-S15H-0020 | 15H | `reports/share/tick_shock/step15h/step15h_detection_time_episodes_compact.csv` | share evidence | one primary episode per row | generated evidence | `449D51DB39F9F6F41C821F416505B9A5F7B56487EEEAB414766FED535CFF9627` | yes | stop after Step 15H | COMPLETE | 1818 rows | SELF |
+| TS-S15H-0021 | 15H | `reports/share/tick_shock/step15h/step15h_filter_policy_comparison.csv` | share evidence | policy comparison | generated evidence | `B942F84071FFE0AA99F25FF846AADBE3A7BA69F5CE66B77138C872974B7C1EA3` | yes | stop after Step 15H | COMPLETE | no supported filter | fdedb42b42ae4e202f94be4808631b116409bb48 |
+| TS-S15H-0022 | 15H | `reports/share/tick_shock/step15h/step15h_data_dictionary.md` | share document | compact schema | generated evidence | `5C51B835635005C5D6EEE299785053C81D5CE24CE18FB89A3059B98BF1ACFC70` | yes | stop after Step 15H | COMPLETE | development data warning | fdedb42b42ae4e202f94be4808631b116409bb48 |
+| TS-S15H-0023 | 15H | `tools/tick_shock/analyze_step15h.py` | analysis tool | preregistered OOF analysis | source | `2284F6DF93BC8A3D09F3637DEAE18BF345A3408E29C29E2A4DF333B2D528827B` | yes | stop after Step 15H | COMPLETE | deterministic seed 1502 | SELF |
+| TS-S15H-0024 | 15H | `tools/tick_shock/run_step15h_march.ps1` | run tool | formal March tester run | source | `AC4B8EA951B8289805A27BDA7BA0D6CC8EEBBD85824E8F3383FC1C172166B5F1` | yes | stop after Step 15H | COMPLETE | unique RunId | fdedb42b42ae4e202f94be4808631b116409bb48 |
+| TS-S15H-0025 | 15H | `tests/tick_shock/spec/test_cases.csv` | registry | Step 15H test registry | source | `FEB7C1B9684B1A5995C4A2DBCDE998D940EE6D871CFAE85E6680207FDD1F6690` | yes | stop after Step 15H | COMPLETE | 46 Step 15H tests appended | 7c35edef0e4ed9e63dc2d1e73787c12ea97bd4af |
+| TS-S15H-0026 | 15H | `tools/tick_shock/run_mql_harnesses.ps1` | runner | Step 15H harness phase | source | `0F78DC42B0AF9ECAED2B0B293938EBC96D4B5FE41CFABF608B0D611F4701A17F` | yes | stop after Step 15H | COMPLETE | 15 harness targets | a12e72ade081a544fe02f417009fbf499503ca8b |
+| TS-S15H-0027 | 15H | `mql/Experts/tests/ExpectedValue_TickShock_EconomicPathHarness.ex5` | executable | transient local harness build | generated evidence | `91374B5CFE4758717A8C4C31F70233B73024D3A34EA0D3F658B4680C3B80A3ED` | no | stop after Step 15H | LOCAL_GENERATED | source compile log is authoritative | SELF |
+| TS-S15H-0028 | 15H | `reports/qa/tick_shock/step15h_final_qa.md` | QA | final gate corrected rollup | generated evidence | `8158E7E9179ED3BF185A5325C7A0F351E152343703AC33D97DA3C7BC4ED5E4F0` | yes | stop after Step 15H | COMPLETE | manifest counts included | SELF |
+| TS-S15H-0029 | 15H | `reports/backtest/runs/20260902_ts15h_detection_time_continuation_r1_202503/tester_journal_excerpt.txt` | journal | formal tester evidence | generated evidence | `4695349195FEFBE5702752758F6802AFAAC4B0CBBA36904BC7C15D3D40F71591` | yes | stop after Step 15H | COMPLETE | runtime 11m43.882s | SELF |

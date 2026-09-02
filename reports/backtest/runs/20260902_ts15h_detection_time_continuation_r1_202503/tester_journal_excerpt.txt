@@ -1,0 +1,8 @@
+2026.09.02 14:09:05.362 Tester InpRunId=ts15h_detection_time_continuation_r1_202503
+2026.09.02 14:09:05.362 Tester InpLogFolder=ts15h_detection_time_continuation_r1_202503
+2026.09.02 14:09:05.362 Tester InpResumeRun=false
+2026.09.02 14:09:14.217 ExpectedValue_MultiCurrency_TickShockResearch (EURUSD,M1) initialized research_only symbols=6 grid_ms=250 detector=TAIL_V1_PERSISTENT horizons=250,500,1000 execution_mode=REALIZABLE_EA submit_latency_ms=0
+2026.09.02 14:20:48.844 Tester final balance 10000.00 USD
+2026.09.02 14:20:48.857 ExpectedValue_MultiCurrency_TickShockResearch (EURUSD,M1) deinitialized reason=1 events=10 rows=10
+2026.09.02 14:20:48.890 Tester EURUSD,M1: 1364080 ticks, 30192 bars generated. Test passed in 0:11:43.882 (including ticks preprocessing 0:00:00.813).
+Source: %APPDATA%/MetaQuotes/Tester/D232275B22422903BD477FB48B858FBA/Agent-127.0.0.1-3000/logs/20260902.log lines 1135-1224.
