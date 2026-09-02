@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+entry_quote_msc,1601,1e-9,contract,entry_quote_msc=1601

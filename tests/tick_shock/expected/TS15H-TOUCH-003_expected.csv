@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+primary,SL_FIRST,1e-9,contract,primary=SL_FIRST;secondary=AMBIGUOUS_SAME_TICK

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+signal_msc,1500,1e-9,contract,signal_msc=1500;t0_msc=1600

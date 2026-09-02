@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+t0_msc,1600,1e-9,contract,t0_msc=1600;backdates=0

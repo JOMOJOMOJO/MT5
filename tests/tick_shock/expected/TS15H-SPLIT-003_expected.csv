@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+outer_feature_fit_reads,0,1e-9,contract,outer_feature_fit_reads=0

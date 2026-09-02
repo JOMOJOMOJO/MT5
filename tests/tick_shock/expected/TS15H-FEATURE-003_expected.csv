@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+availability,EXCLUDED,1e-9,contract,availability=EXCLUDED;reason=UNCONFIRMED_BAR

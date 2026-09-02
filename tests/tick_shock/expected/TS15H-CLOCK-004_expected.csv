@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+eligible_msc,1700,1e-9,contract,eligible_msc=1700;entry_quote_msc=1701

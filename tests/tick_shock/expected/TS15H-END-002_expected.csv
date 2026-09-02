@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+rearm,false,1e-9,contract,rearm=false

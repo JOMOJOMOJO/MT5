@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+eur_ratio,0.5,1e-9,contract,eur_ratio=0.5;jpy_ratio=0.5

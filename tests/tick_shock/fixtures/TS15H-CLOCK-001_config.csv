@@ -1,0 +1,4 @@
+key,value
+description,candidate_confirmed_processed_t0_distinct
+oracle,independent_contract
+spec,docs/research/tick_shock/15h_detection_time_continuation_spec.md

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+outcome_status,UNAVAILABLE,1e-9,contract,outcome_status=UNAVAILABLE;label=

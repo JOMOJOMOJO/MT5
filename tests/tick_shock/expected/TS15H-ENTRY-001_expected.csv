@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+long_entry,1.0002,1e-9,contract,long_entry=1.0002;short_entry=1.0000

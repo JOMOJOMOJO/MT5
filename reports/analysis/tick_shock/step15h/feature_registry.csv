@@ -1,0 +1,13 @@
+feature_id,name,formula,family,unit,missing_policy,source_clock,future_input,registered
+H01,spread_atr5,(ask-bid)/completed_M5_ATR14,LIQUIDITY,ratio,required,<=t0,false,true
+H02,tick_activity_ratio,detector_tick_count/baseline_tick_count_median,LIQUIDITY,ratio,required,<=t0,false,true
+H03,pre_return_5m_dir_atr,direction*(last_completed_M1_close-close_5_completed_M1_ago)/ATR5,PRE_CONTEXT,ratio,required,<=t0,false,true
+H04,m5_ema20_slope_dir_atr,direction*(M5_EMA20[1]-M5_EMA20[4])/ATR5,PRE_CONTEXT,ratio,required,<=t0,false,true
+H05,m15_alignment_dir,direction*sign(M15_EMA20[1]-M15_EMA50[1]),PRE_CONTEXT,ordinal,required,<=t0,false,true
+H06,pre_extension_15m_dir_atr,direction*(last_completed_M1_close-close_15_completed_M1_ago)/ATR15,PRE_CONTEXT,ratio,required,<=t0,false,true
+H07,day_range_position_dir,direction*(2*(t0_mid-known_day_low)/(known_day_high-known_day_low)-1),PRE_CONTEXT,ratio,required,<=t0,false,true
+H08,detection_efficiency,production detector directional_efficiency at confirmation,DETECTION_SHAPE,ratio,required,<=t0,false,true
+H09,severity,production detector local severity at confirmation,DETECTION_SHAPE,ratio,required,<=t0,false,true
+H10,confirmation_retention,direction*(confirmed_mid-candidate_anchor_mid)/candidate_abs_move,DETECTION_SHAPE,ratio,required,<=t0,false,true
+H11,spread_efficiency_interaction,H01*H08,INTERACTION,ratio,derived,<=t0,false,true
+H12,flow_efficiency_interaction,H03*H08,INTERACTION,ratio,derived,<=t0,false,true

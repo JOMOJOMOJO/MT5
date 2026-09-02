@@ -1,0 +1,4 @@
+key,value
+description,no_trade_zero
+oracle,independent_contract
+spec,docs/research/tick_shock/15h_detection_time_continuation_spec.md

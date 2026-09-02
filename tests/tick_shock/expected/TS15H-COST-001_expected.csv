@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+stress_spread_multiple,1.25,1e-9,contract,stress_spread_multiple=1.25;double_count=0

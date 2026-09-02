@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+avoided_loss_r,1,1e-9,contract,avoided_loss_r=1;rejected_profit_r=1.2

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+validation_status,VALIDATION_INVALID,1e-9,contract,validation_status=VALIDATION_INVALID

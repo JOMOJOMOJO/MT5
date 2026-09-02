@@ -1,0 +1,4 @@
+key,value
+description,end_data_single_write
+oracle,independent_contract
+spec,docs/research/tick_shock/15h_detection_time_continuation_spec.md

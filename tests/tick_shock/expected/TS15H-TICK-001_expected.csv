@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+t0_sequence,3,1e-9,contract,t0_sequence=3;t0_bid=1.0002;t0_ask=1.0004

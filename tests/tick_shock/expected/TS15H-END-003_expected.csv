@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+duplicate_rows,0,1e-9,contract,duplicate_rows=0

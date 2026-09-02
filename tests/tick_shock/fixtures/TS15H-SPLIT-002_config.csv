@@ -1,0 +1,4 @@
+key,value
+description,purge_900s
+oracle,independent_contract
+spec,docs/research/tick_shock/15h_detection_time_continuation_spec.md

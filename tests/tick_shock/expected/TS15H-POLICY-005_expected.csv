@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+fold_status,INSUFFICIENT_SUPPORT,1e-9,contract,fold_status=INSUFFICIENT_SUPPORT

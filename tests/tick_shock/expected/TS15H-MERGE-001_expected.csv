@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+entry_before_processing,0,1e-9,contract,entry_before_processing=0

@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+future_feature_reads,0,1e-9,contract,future_feature_reads=0

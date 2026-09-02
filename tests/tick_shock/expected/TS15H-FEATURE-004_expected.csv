@@ -1,0 +1,2 @@
+field,expected_value,tolerance,unit,note
+future_pivot_inputs,0,1e-9,contract,future_pivot_inputs=0
