@@ -1,0 +1,9 @@
+check,expected,actual,tolerance,status
+t0_processing_clock,1600,1600,0.0,PASS
+eligible_delay_0,1600,1600,0.0,PASS
+eligible_delay_100,1700,1700,0.0,PASS
+eligible_delay_250,1850,1850,0.0,PASS
+horizon_from_t0,901600,901600,0.0,PASS
+risk_distance,0.001,0.001,1e-12,PASS
+rr_outward_min,1.2,1.2000000000000899,1e-12,PASS
+policy_value,0.1,0.10000000000000002,1e-12,PASS

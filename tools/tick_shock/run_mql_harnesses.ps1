@@ -1,6 +1,6 @@
 param(
     [int]$TimeoutSeconds = 120,
-    [ValidateSet("pre-fix","post-fix","step10","step11","step14r","step15a","step15f","step15g")]
+    [ValidateSet("pre-fix","post-fix","step10","step11","step14r","step15a","step15f","step15g","step15h")]
     [string]$Phase = "post-fix"
 )
 
@@ -24,13 +24,15 @@ $evidenceRaw = if ($Phase -eq "pre-fix") {
     Join-Path $repoRoot "reports\tests\tick_shock\step15f_green\raw"
 } elseif ($Phase -eq "step15g") {
     Join-Path $repoRoot "reports\tests\tick_shock\step15g_green\raw"
+} elseif ($Phase -eq "step15h") {
+    Join-Path $repoRoot "reports\tests\tick_shock\step15h_green\raw"
 } else {
     Join-Path $repoRoot "reports\tests\tick_shock\step12_raw"
 }
 $configRoot = Join-Path $repoRoot "reports\tests\tick_shock\configs"
 $compileRoot = Join-Path $repoRoot "reports\compile\tick_shock"
 $testerRoot = Join-Path $repoRoot "reports\tests\tick_shock\tester"
-$stepTag = if ($Phase -eq "pre-fix") { "step05" } elseif ($Phase -eq "step10") { "step10" } elseif ($Phase -eq "step11") { "step11" } elseif ($Phase -eq "step14r") { "step14r" } elseif ($Phase -eq "step15a") { "step15a" } elseif ($Phase -eq "step15f") { "step15f" } elseif ($Phase -eq "step15g") { "step15g" } else { "step12" }
+$stepTag = if ($Phase -eq "pre-fix") { "step05" } elseif ($Phase -eq "step10") { "step10" } elseif ($Phase -eq "step11") { "step11" } elseif ($Phase -eq "step14r") { "step14r" } elseif ($Phase -eq "step15a") { "step15a" } elseif ($Phase -eq "step15f") { "step15f" } elseif ($Phase -eq "step15g") { "step15g" } elseif ($Phase -eq "step15h") { "step15h" } else { "step12" }
 
 foreach ($path in @($commonFixtures,$commonExpected,$commonRaw,$evidenceRaw,$configRoot,$compileRoot,$testerRoot)) {
     New-Item -ItemType Directory -Force -Path $path | Out-Null
@@ -53,7 +55,8 @@ $harnesses = @(
     "StateConditionedResponse",
     "MediumHorizonResponse",
     "ContextFeature",
-    "EconomicPath"
+    "EconomicPath",
+    "DetectionTimeContinuation"
 )
 
 foreach ($name in $harnesses) {
@@ -76,6 +79,7 @@ foreach ($name in $harnesses) {
         "MediumHorizonResponse" { "medium_horizon_response" }
         "ContextFeature" { "context_feature" }
         "EconomicPath" { "economic_path" }
+        "DetectionTimeContinuation" { "detection_time_continuation" }
     }
     $commonResult = Join-Path $commonRaw "$suite.csv"
     if (Test-Path -LiteralPath $commonResult) { Remove-Item -LiteralPath $commonResult -Force }
