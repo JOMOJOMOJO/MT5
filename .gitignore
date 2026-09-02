@@ -27,3 +27,26 @@ reports/backtest/runs/20260901_ts15g_economic_path_r1_202503/
 reports/backtest/runs/20260901_ts15g_economic_path_r2_202503/
 reports/backtest/runs/20260901_ts15g_economic_path_r3_202503/
 reports/tests/tick_shock/tester/step15g_*
+
+# Step 12/15H harness reruns generate phase-specific copies of already
+# committed deterministic evidence. Keep the canonical result rollups and
+# compile logs in git; keep these reproducible runner products local.
+reports/tests/tick_shock/configs/step12_*.ini
+reports/tests/tick_shock/configs/step15h_*.ini
+reports/tests/tick_shock/step12_raw/
+reports/tests/tick_shock/step15h_green/raw/
+reports/tests/tick_shock/tester/step12_*
+reports/tests/tick_shock/tester/step15h_*
+reports/tests/tick_shock/tester/step15j_*
+
+# Step 15H/15J raw and superseded runs are retained locally. Their compact
+# registered evidence, hashes, QA summaries, and formal r2 output are tracked.
+reports/backtest/runs/20260902_ts15h_detection_time_continuation_r1_202503/decision_checkpoint_features.csv
+reports/backtest/runs/20260902_ts15h_detection_time_continuation_r1_202503/economic_first_touch.csv
+reports/backtest/runs/20260902_ts15h_detection_time_continuation_r1_202503/event_response.csv
+reports/backtest/runs/20260902_ts15j_post_shock_excursion_r1_202503/
+reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/detector_features.csv
+reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/detector_features.csv.runmeta
+reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/medium_horizon_episode_summary.csv
+reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/medium_horizon_episode_summary.csv.runmeta
+reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/tester_report*.png
