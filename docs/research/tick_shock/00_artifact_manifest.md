@@ -2,11 +2,11 @@
 
 - artifact ID: `TS-STEP01-MANIFEST`
 - step: `01`
-- branch: `research/tickshock-step15i-high-movement-direction-study-20260902`
+- branch: `research/tickshock-step15j-post-shock-excursion-20260902`
 - purpose: canonical source, tests, documentation, baseline/current evidence, and checkpoint artifacts
-- status: `STEP15I_HIGH_MOVEMENT_SUPPORTED_DIRECTION_UNDETERMINED`
-- manifest_revision: `15I`
-- covered_steps: `01-15I`
+- status: `STEP15J_GEOMETRY_NOT_READY_PRODUCTION_NOT_ELIGIBLE`
+- manifest_revision: `15J`
+- covered_steps: `01-15J`
 - last_audited_commit: `SELF`
 - last_updated_at: `2026-09-02T20:00:00+09:00`
 
@@ -3587,3 +3587,46 @@ Step 15I separates movement-opportunity selection from direction prediction. It 
 | TS-S15I-0020 | 15I | `reports/analysis/tick_shock/step15i/regression_summary.csv` | QA | compile and regression rollup | generated evidence | `C31091870C1171BC2F72621C04E430553CCE502F9247BE0A1717482CAB7E7464` | yes | gate | COMPLETE | 407 PASS / 9 terminal-only SKIP | SELF |
 | TS-S15I-0021 | 15I | `reports/analysis/tick_shock/step15i/trial_registry.csv` | registry | frozen primary trial values | generated evidence | `92F44FDCE76BAD05CF815A6CD171E93ADAE4365064F798E428D26DD78B6D69A4` | yes | reproducibility | COMPLETE | development-only trial | SELF |
 | TS-S15I-0022 | 15I | `reports/analysis/tick_shock/step15i/source_hashes.csv` | provenance | formal input hashes | generated evidence | `D3AAB97E52F303A0D7637341E01A53C6E194A8F0CC62411BF3E9599CABAD584D` | yes | reproducibility | COMPLETE | Step 15G inputs and preregistration | SELF |
+
+## Step 15J rollup
+
+Step 15J adds a bounded, research-only 60-minute executable excursion recorder. The existing detector, 900-second episode construction, strategy definitions, RR, watermark, and order-free design remain unchanged. The r1 run exposed missing existing-barrier first-touch evidence and is not registered as formal evidence; r2 is the formal run.
+
+| artifact ID | step | artifact path | type | purpose | source/generated | SHA-256 | commit | next step | status | note | owning_commit |
+|---|---:|---|---|---|---|---|---|---|---|---|---|
+| TS-S15J-0001 | 15J | `docs/research/tick_shock/15j_post_shock_excursion_preanalysis.md` | specification | frozen clocks, horizons, distances and oracle | source | `3E413740C60744521BABBF787826736B482411E116066453F3E13CC22118C94F` | yes | geometry conversion study | COMPLETE | committed before outcomes | 719a6744 |
+| TS-S15J-0002 | 15J | `docs/research/tick_shock/15j_post_shock_excursion_tp_sl_holding_results.md` | report | final geometry and holding verdict | generated evidence | `8E500B8BD45E6E9200731FF7717006D1D6FBABD3F0377156403E08C172C3FD08` | yes | geometry conversion study | COMPLETE | production not eligible | SELF |
+| TS-S15J-0003 | 15J | `docs/devlog/2026-09-02-tickshock-step15j-excursion-geometry.md` | devlog | durable research decision | generated evidence | `1EDB54A15AD2795C7F0C75A8EB354B6565DB8C5CEF9AF16D35C0AFF6ED77002C` | yes | research routing | COMPLETE | no entry change | SELF |
+| TS-S15J-0004 | 15J | `mql/Include/TickShock/TickShockPostShockExcursion.mqh` | production research module | bounded causal path recorder | source | `C6368649053D1410EF71093D89E1CFF93D1ACAFD8BD9C559D35A4F277FDD3DB9` | yes | regression | COMPLETE | 8 slots per symbol | 10589ea4 |
+| TS-S15J-0005 | 15J | `mql/Experts/ExpectedValue_MultiCurrency_TickShockResearch.mq5` | research EA | wire recorder and event-level serializer | source | `5B44518280D42ECD9BBA56A0614C89BBD7CE8EB1E33CA8A56D48D52B480164FC` | yes | regression | COMPLETE | version 4.11; orders 0 | 10589ea4 |
+| TS-S15J-0006 | 15J | `mql/Experts/tests/ExpectedValue_TickShock_PostShockExcursionHarness.mq5` | harness | production-path deterministic checks | source | `ABA9A22024F3A0A75B872BBEAF6E4B4A8FE7C0CCE962E42DAAEB69A8164B9FA5` | yes | regression | COMPLETE | 6 PASS | c916792d |
+| TS-S15J-0007 | 15J | `tools/tick_shock/run_step15j_march.ps1` | runner | formal March MT5 run | source | `FCB6261DE50307AD09DA29F21E83A9772C1F130C6DE9A97E2C5D97427D8FB127` | yes | reproducibility | COMPLETE | unique r2 RunId | 10589ea4 |
+| TS-S15J-0008 | 15J | `tools/tick_shock/analyze_step15j_excursion.py` | analysis tool | horizon, hit, geometry and funnel summaries | source | `D682F1A6A3DF3CEF709508C98FCED585C26EE9E5B978163ABFABBB0A7675D2BC` | yes | reproducibility | COMPLETE | coarse candidates only | SELF |
+| TS-S15J-0009 | 15J | `tools/tick_shock/step15j_independent_oracle.py` | oracle | independent headline recomputation | source | `476A0AB489042AE752C5D562EC9C494F3C4CD29B6C1A54BE5FF6C7405D05A05B` | yes | QA | COMPLETE | 23 PASS | SELF |
+| TS-S15J-0010 | 15J | `tools/tick_shock/prepare_step15j_evidence.py` | evidence tool | journal and tick-quality extraction | source | `642635BD5B4BA70F2097B6750255D9532C65E88872A00C2DB1D29D8B26C56619` | yes | reproducibility | COMPLETE | exact 179/30187 warning | SELF |
+| TS-S15J-0011 | 15J | `reports/tests/tick_shock/step15j_validation.md` | QA report | compile, regression and harness rollup | generated evidence | `3D69840B4F338195A763A745DB6B81D410B7FA8A6647BFD4E6ED08D366FE2BC6` | yes | gate | COMPLETE | 407 PASS plus 6 harness PASS | SELF |
+| TS-S15J-0012 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/summary.md` | run summary | formal conditions and counts | generated evidence | `8086BC378A87005E5E7F0412A9C8F533254D9C983E76F31065FBDA966F84B54C` | yes | analysis | COMPLETE | 3151 episodes | SELF |
+| TS-S15J-0013 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/post_shock_excursion.csv` | raw compact evidence | one row per episode | generated evidence | `120CA25CAFFDC0D8B3A972BEEB7BCCA13789026ED96A3F1FAA8FE5F9B5F83BB3` | yes | analysis | COMPLETE | 3151 rows; no tick CSV | SELF |
+| TS-S15J-0014 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/summary.csv` | run evidence | EA counters and invariants | generated evidence | `F5D3D84E9FD3D3B0B558E569761D8E80ECC473B2BC83F127E98AA73F4F7703BD` | yes | QA | COMPLETE | capacity hits 0 | SELF |
+| TS-S15J-0015 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/tick_quality.csv` | quality evidence | generated fallback disclosure | generated evidence | `9EA7CF0B9973DD6E9CAD2DF5E5B3F4F0A9AD4DCC92CC09453640521A76C04620` | yes | QA | PARTIAL | GBPUSD excluded | SELF |
+| TS-S15J-0016 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/tester_journal_excerpt.txt` | journal | runtime, ticks, memory and fallback | generated evidence | `A74E8FD3AA1A428B3874EF000F022FED84E168F6B20FCD9E2F0765CD5B988F07` | yes | QA | COMPLETE | runtime 11m42.480s | SELF |
+| TS-S15J-0017 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/source_hashes.txt` | provenance | source, EX5, module, terminal hashes | generated evidence | `97F5A9328EA0848DC6A162CC851CA2DCBF70B8A6F9A5909BD25AE0F28E5C9C04` | yes | reproducibility | COMPLETE | source commit 10589ea4 | SELF |
+| TS-S15J-0018 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/compile.log` | compile log | executed EA build evidence | generated evidence | `8DF756357C7538FFCFCFB8EB730A49BB981FB6F2F2D7C977D56E3C7AA94C4613` | yes | QA | COMPLETE | 0 errors / 0 warnings | SELF |
+| TS-S15J-0019 | 15J | `reports/analysis/tick_shock/step15j/episode_excursion_dataset.csv` | dataset | enriched episode-level path | generated evidence | `B7909D0BC3D5D20B06043CA5AB571E98DE64765403531BB3657DD52F4C032C9F` | yes | future conversion | COMPLETE | 3151 rows | SELF |
+| TS-S15J-0020 | 15J | `reports/analysis/tick_shock/step15j/existing_sl_tp_geometry_audit.csv` | analysis | episode geometry audit | generated evidence | `DDE2895D1C04A7BAEBDA9CAE295AF4B1F6B8047CF4014808650CE30FA0A2E23A` | yes | verdict | COMPLETE | spread-dominated 2732/2732 | SELF |
+| TS-S15J-0021 | 15J | `reports/analysis/tick_shock/step15j/existing_sl_tp_geometry_bins.csv` | analysis | SL/ATR bin first touch | generated evidence | `2986B55EA2B81780E2871FB0B8811D99AE35E64E7812AC2DD60AEB0FDCCFE513` | yes | verdict | COMPLETE | causal first-touch | SELF |
+| TS-S15J-0022 | 15J | `reports/analysis/tick_shock/step15j/horizon_excursion_summary.csv` | analysis | MFE/MAE distribution by horizon | generated evidence | `6C5FEA184C32B116621EB5D5431485145B55868183F3F939EBC5845AC50BC877` | yes | holding study | COMPLETE | 30s to 60m | SELF |
+| TS-S15J-0023 | 15J | `reports/analysis/tick_shock/step15j/distance_time_to_hit.csv` | analysis | ATR distance hit timing | generated evidence | `D132AEC35926172AC4169ADB55F335880FC18EE6F6BC2946655652D3F0437F3B` | yes | TP study | COMPLETE | 0.10 to 1.50 ATR | SELF |
+| TS-S15J-0024 | 15J | `reports/analysis/tick_shock/step15j/pre_tp_mae_summary.csv` | analysis | adverse path before TP | generated evidence | `734AA564875C18DBECFF6530C3A7297390C50A2B2C71EC1F86651AB39863D42A` | yes | SL study | COMPLETE | 0.20 to 0.50 ATR | SELF |
+| TS-S15J-0025 | 15J | `reports/analysis/tick_shock/step15j/symbol_excursion_summary.csv` | analysis | symbol robustness | generated evidence | `62767C124D861E7A4274E96BBFBB6AD11A0FEFC25B828753130941DA261D5DBF` | yes | robustness | COMPLETE | GBPUSD excluded | SELF |
+| TS-S15J-0026 | 15J | `reports/analysis/tick_shock/step15j/session_excursion_summary.csv` | analysis | session diagnostics | generated evidence | `D89DC54EC9A57902E82659BDCB7C5AD5F8E5E0B6D50151B83D60A0AF52E9749D` | yes | diagnostics | COMPLETE | no session filter | SELF |
+| TS-S15J-0027 | 15J | `reports/analysis/tick_shock/step15j/population_funnel.csv` | funnel | detector to high-movement counts | generated evidence | `FBBF3299FFD168FE0545916F49D29FA350BC2D50DA82F43314881F1AE70D2098` | yes | QA | COMPLETE | 21799 to 3151 to 185 | SELF |
+| TS-S15J-0028 | 15J | `reports/analysis/tick_shock/step15j/qa_checks.csv` | QA | causal and integrity invariants | generated evidence | `D961C3B1C55C1FDC2CAE60C3833F25741142FC40E1F398523ED960D7FD1BAA75` | yes | gate | COMPLETE | all checks PASS | SELF |
+| TS-S15J-0029 | 15J | `reports/analysis/tick_shock/step15j/independent_oracle.csv` | oracle | independent counts and distributions | generated evidence | `75CCFD43F7700E066BC42BC069A7417ABCB47878E1402D279C9E57B4CB95E096` | yes | gate | COMPLETE | 23 PASS | SELF |
+| TS-S15J-0030 | 15J | `tools/tick_shock/compare_step15j_behavior.py` | comparison tool | Step 15H behavior preservation | source | `04EEB7970A27DC68BB240DC4B5399C934AAFDBE74750AD397F82D3317B9D82B4` | yes | regression | COMPLETE | identity fields excluded | SELF |
+| TS-S15J-0031 | 15J | `reports/analysis/tick_shock/step15j/behavior_comparison.csv` | regression | detector and episode equality | generated evidence | `F77518179BA187D6598673B6A4B5557EFCFCCB952324EAF939CF3FEFC07DA699` | yes | gate | COMPLETE | mismatch rows 0 | SELF |
+| TS-S15J-0032 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/symbol_specs.csv` | run evidence | broker symbol specification snapshot | generated evidence | `D377FA628FA872CF364F85CA98A733C1292EEB4A575FA4ED4D5F7C22DB12AEF5` | yes | reproducibility | COMPLETE | six configured symbols | SELF |
+| TS-S15J-0033 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/tester_config.ini` | run configuration | exact Strategy Tester configuration | generated evidence | `795EB7DA25298DEDE4E195F67BE1B487CDB7B580C077B9D9FE0D1F35CFE0C811` | yes | reproducibility | COMPLETE | EURUSD M1 real ticks | SELF |
+| TS-S15J-0034 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/post_shock_excursion.set` | preset | frozen Step 15J inputs | generated evidence | `828E20FD1822CEC10DD434A1C2D11174B248269E07A60D07B5D6EFEF81C6F8EB` | yes | reproducibility | COMPLETE | thresholds unchanged | SELF |
+| TS-S15J-0035 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/tester_report.html` | tester report | MT5 run evidence | generated evidence | `056CE148640D438DC81FAB0158BA2DE161EAB55A8651A1B7E1424392DD72204C` | yes | reproducibility | COMPLETE | orders and trades zero | SELF |
+| TS-S15J-0036 | 15J | `reports/backtest/runs/20260902_ts15j_post_shock_excursion_r2_202503/run_command.txt` | command evidence | exact formal-run invocation | generated evidence | `21F8A039951964BD0926512FEDE419A12ED2D58AC2C77F9C872780991D12BE6C` | yes | reproducibility | COMPLETE | runner command captured | SELF |

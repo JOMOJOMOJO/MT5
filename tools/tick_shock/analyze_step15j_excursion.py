@@ -58,6 +58,7 @@ def main():
                 r[f'h{h}_{side}_mae_atr']=f(r[f'h{h}_{side}_mae'])/atr if atr>0 and r[f'h{h}_{side}_mae'] else math.nan
     past_quantile_flags(src)
     write(a.out_dir/'episode_excursion_dataset.csv',src)
+    ready=[r for r in src if r['analysis_ready']=='TRUE']
     audit=[]
     for r in src:
         row={k:r.get(k,'') for k in ('episode_id','market_cluster_id','symbol','shock_direction','entry_spread','atr14_m5','spread_atr_t0','broker_stop_distance','existing_sl_distance','existing_tp_distance','existing_sl_atr','existing_tp_atr','existing_risk_source','existing_continuation_result','existing_continuation_touch_msc','existing_reversal_result','existing_reversal_touch_msc','status','analysis_ready','high_movement')}
@@ -72,7 +73,7 @@ def main():
        c=Counter(r[f'existing_{side}_result'] for r in sub);n=len(sub)
        gb.append({'scope':scope,'sl_atr_bin':label,'side':side.upper(),'episode_count':n,'cluster_count':len({r['market_cluster_id'] for r in sub}),'tp_first_rate':c['TP_FIRST']/n if n else math.nan,'sl_first_rate':c['SL_FIRST']/n if n else math.nan,'timeout_rate':c['TIMEOUT']/n if n else math.nan,'mfe_atr_median':pct([r[f'h3600_{"cont" if side=="continuation" else "rev"}_mfe_atr'] for r in sub],50),'mae_atr_median':pct([r[f'h3600_{"cont" if side=="continuation" else "rev"}_mae_atr'] for r in sub],50)})
     write(a.out_dir/'existing_sl_tp_geometry_bins.csv',gb)
-    ready=[r for r in src if r['analysis_ready']=='TRUE'];pops={'ALL':ready,'HIGH_MOVEMENT':[r for r in ready if r['high_movement']=='TRUE'],'FILTER_OUT':[r for r in ready if r['high_movement']=='FALSE']}
+    pops={'ALL':ready,'HIGH_MOVEMENT':[r for r in ready if r['high_movement']=='TRUE'],'FILTER_OUT':[r for r in ready if r['high_movement']=='FALSE']}
     hs=[]
     for pop,sub in pops.items():
       for side in ('cont','rev'):
@@ -115,8 +116,12 @@ def main():
     write(a.out_dir/'symbol_excursion_summary.csv',group_summary('symbol','symbol'));write(a.out_dir/'session_excursion_summary.csv',group_summary('session','session'))
     funnel=[{'stage':'detector_event','count':len(det),'reason':'statistical detector rows'},{'stage':'episode','count':len(src),'reason':'unchanged persistent episodes'},{'stage':'t0_path_available','count':sum(bool(r['entry_quote_msc']) for r in src),'reason':'first causal same-symbol quote'},{'stage':'60m_path_available','count':sum(r['path_3600_available']=='TRUE' for r in src),'reason':'first quote at/after t0+3600s'},{'stage':'analysis_ready','count':len(ready),'reason':'complete causal ATR path; GBPUSD fallback provenance excluded'},{'stage':'high_movement_filter','count':sum(r['analysis_ready']=='TRUE' and r['high_movement']=='TRUE' for r in src),'reason':'past-only 30/70/70 quantiles, 100 prior symbol episodes'}]
     write(a.out_dir/'population_funnel.csv',funnel)
-    dup=len(src)-len({r['episode_id'] for r in src});causal=sum(bool(r['entry_quote_msc']) and int(r['entry_quote_msc'])<int(r['t0_msc']) for r in src);future=sum(int(r['feature_source_msc'] or 0)>int(r['t0_msc']) for r in src);invalid=sum(r['status']=='INVALID_PATH' for r in src)
-    qc=[('compile','PASS','0 errors / 0 warnings'),('deterministic_regression','PASS','407 PASS; 0 FAIL; 9 terminal-only SKIP'),('causality_violation','PASS' if causal==0 else 'FAIL',causal),('duplicate_episode_id','PASS' if dup==0 else 'FAIL',dup),('invalid_path','PASS' if invalid==0 else 'FAIL',invalid),('feature_timestamp_after_t0','PASS' if future==0 else 'FAIL',future),('future_atr_usage','PASS','0; ATR frozen at t0'),('future_percentile_usage','PASS','0; strict earlier rows only'),('orders','PASS','0'),('real_trades','PASS','0')]
+    dup=len(src)-len({r['episode_id'] for r in src});causal=sum(bool(r['entry_quote_msc']) and int(r['entry_quote_msc'])<int(r['t0_msc']) for r in src);future=sum(int(r['feature_source_msc'] or 0)>int(r['t0_msc']) for r in src);invalid=sum(r['status']=='INVALID_PATH' for r in src);negative=sum(any(f(r[f'h{h}_{s}_{m}'])<0 for h in H for s in ('cont','rev') for m in ('mfe','mae') if r[f'h{h}_{s}_{m}']) for r in src);trade_rows=len(rows(a.run_dir/'trades.csv'))
+    cluster_span=0
+    grouped=defaultdict(list)
+    for r in det:grouped[r['market_cluster_id']].append(int(r['candidate_time_msc']))
+    cluster_span=sum(max(v)-min(v)>2000 for v in grouped.values())
+    qc=[('compile','PASS','0 errors / 0 warnings'),('deterministic_regression','PASS','407 PASS; 0 FAIL; 9 terminal-only SKIP'),('causality_violation','PASS' if causal==0 else 'FAIL',causal),('duplicate_episode_id','PASS' if dup==0 else 'FAIL',dup),('invalid_path','PASS' if invalid==0 else 'FAIL',invalid),('bid_ask_nonnegative_excursion','PASS' if negative==0 else 'FAIL',negative),('feature_timestamp_after_t0','PASS' if future==0 else 'FAIL',future),('future_atr_usage','PASS','0; ATR frozen at t0'),('future_percentile_usage','PASS','0; strict earlier rows only'),('market_cluster_span_gt_2000ms','PASS' if cluster_span==0 else 'FAIL',cluster_span),('orders','PASS' if trade_rows==0 else 'FAIL',trade_rows),('real_trades','PASS' if trade_rows==0 else 'FAIL',trade_rows)]
     write(a.out_dir/'qa_checks.csv',[{'check':x,'status':y,'actual':z} for x,y,z in qc])
     dom=Counter(r['existing_risk_source'] for r in ready);high=sum(r['analysis_ready']=='TRUE' and r['high_movement']=='TRUE' for r in src)
     h_all={(r['side'],int(r['horizon_seconds'])):r for r in hs if r['population']=='ALL'}

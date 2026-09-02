@@ -1,0 +1,7 @@
+CS	0	21:24:53.356	Tester	  InpRunId=ts15j_post_shock_excursion_r2_202503
+CS	3	21:24:59.666	Ticks	GBPUSD : 2025.03.24 23:59 - real ticks discarded for 179 minutes out of 1438 total minute bars within a day
+CS	3	21:24:59.687	Ticks	GBPUSD : 2025.03.01 00:00 - 2025.04.01 00:00  real ticks discarded for 179 minutes of 30187 total minute bars, every tick generation used
+CS	0	21:36:35.755	ExpectedValue_MultiCurrency_TickShockResearch (EURUSD,M1)	2025.03.31 23:57:59   ExpectedValue_MultiCurrency_TickShockResearch deinitialized reason=1 events=10 rows=10
+CS	0	21:36:35.779	Tester	EURUSD,M1: 1364080 ticks, 30192 bars generated. Environment synchronized in 0:00:00.025. Test passed in 0:11:42.480 (including ticks preprocessing 0:00:00.719).
+CS	0	21:36:35.779	Tester	10587807 total ticks for all symbols
+CS	0	21:36:35.779	Tester	502 Mb memory used including 40 Mb of history data, 256 Mb of tick data

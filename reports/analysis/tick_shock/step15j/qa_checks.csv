@@ -1,0 +1,13 @@
+check,status,actual
+compile,PASS,0 errors / 0 warnings
+deterministic_regression,PASS,407 PASS; 0 FAIL; 9 terminal-only SKIP
+causality_violation,PASS,0
+duplicate_episode_id,PASS,0
+invalid_path,PASS,0
+bid_ask_nonnegative_excursion,PASS,0
+feature_timestamp_after_t0,PASS,0
+future_atr_usage,PASS,0; ATR frozen at t0
+future_percentile_usage,PASS,0; strict earlier rows only
+market_cluster_span_gt_2000ms,PASS,0
+orders,PASS,0
+real_trades,PASS,0

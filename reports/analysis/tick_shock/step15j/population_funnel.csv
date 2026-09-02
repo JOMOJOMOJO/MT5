@@ -1,0 +1,7 @@
+stage,count,reason
+detector_event,21799,statistical detector rows
+episode,3151,unchanged persistent episodes
+t0_path_available,3151,first causal same-symbol quote
+60m_path_available,3148,first quote at/after t0+3600s
+analysis_ready,2732,complete causal ATR path; GBPUSD fallback provenance excluded
+high_movement_filter,185,"past-only 30/70/70 quantiles, 100 prior symbol episodes"
