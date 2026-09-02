@@ -1,0 +1,10 @@
+{
+  "snapshots": 3151,
+  "paths": 28359,
+  "primary_eligible": 1818,
+  "market_clusters": 1709,
+  "support_gate": false,
+  "decision": "NO_DETECTION_TIME_CONTINUATION_FILTER_SUPPORTED",
+  "qa_failures": 0,
+  "order_rows": 0
+}

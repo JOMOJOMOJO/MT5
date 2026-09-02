@@ -1,0 +1,2 @@
+candidate_id,decision,eligible_episodes,market_clusters,support_gate,cost_status,formal_net_expectancy,edge,production
+NONE,NO_DETECTION_TIME_CONTINUATION_FILTER_SUPPORTED,1818,1709,False,COST_MODEL_INCOMPLETE,UNAVAILABLE,EDGE_UNDETERMINED,PRODUCTION_NOT_ELIGIBLE

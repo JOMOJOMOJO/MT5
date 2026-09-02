@@ -1,0 +1,13 @@
+feature,available,missing,future_source_reads
+spread_atr5,3151,0,0
+tick_activity_ratio,3151,0,0
+pre_return_5m_dir_atr,3151,0,0
+m5_ema20_slope_dir_atr,3151,0,0
+m15_alignment_dir,3148,3,0
+pre_extension_15m_dir_atr,3151,0,0
+day_range_position_dir,3151,0,0
+detection_efficiency,3151,0,0
+severity,3151,0,0
+confirmation_retention,2618,533,0
+spread_efficiency_interaction,3151,0,0
+flow_efficiency_interaction,3151,0,0

@@ -1,0 +1,3 @@
+run_id,status,source_commit,reason
+20260902_ts15h_detection_time_continuation_r1_202503,ACCEPTED,a12e72ade081a544fe02f417009fbf499503ca8b,formal preregistered March development run; causal QA pass
+NONE,REJECTED,,no Step 15H run rejected
