@@ -34,6 +34,15 @@ class FixtureIntegrityTests(unittest.TestCase):
                 self.assertTrue(spec.is_file(), path.name)
                 self.assertNotIn("TickShockEventResponse", oracle.read_text(encoding="utf-8"), path.name)
                 continue
+            if path.name.startswith("TS15H-"):
+                # Step 15H freezes provenance at suite level.  Its compact
+                # configs predate the generic oracle_source metadata keys.
+                oracle = ROOT / "tools/tick_shock/step15h_independent_oracle.py"
+                spec = ROOT / "docs/research/tick_shock/15h_detection_time_continuation_spec.md"
+                self.assertTrue(oracle.is_file(), path.name)
+                self.assertTrue(spec.is_file(), path.name)
+                self.assertNotIn("TickShockDetectionTimeContinuation", oracle.read_text(encoding="utf-8"), path.name)
+                continue
             self.assertEqual("false", config.get("production_function_used_for_expected"), path.name)
             self.assertIn(config.get("oracle_source"), {
                 "docs/research/tick_shock/03_test_oracle_calculation.md",

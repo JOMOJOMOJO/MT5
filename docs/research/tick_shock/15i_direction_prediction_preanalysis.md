@@ -22,7 +22,7 @@ No prior fixed trading thresholds exist for the three variables. Thresholds will
 
 - low `spread_atr`: at or below the expanding, within-symbol 30th percentile;
 - high `tick_activity`: at or above the expanding, within-symbol 70th percentile;
-- high `ATR`: at or above the expanding, within-symbol 70th percentile;
+- high `ATR`: Step 15G `F17 atr14_m5`, at or above the expanding, within-symbol 70th percentile (the same completed-M5 ATR family used by the registered risk geometry);
 - only observations with at least 100 strictly earlier eligible episodes for the same symbol receive a filter decision.
 
 Thresholds use only rows with an earlier decision timestamp. The current row and future rows are excluded. Ties are retained. The filter is the conjunction of the three frozen predicates. No alternate quantile is selected after outcomes are observed.
@@ -33,7 +33,12 @@ Thresholds use only rows with an earlier decision timestamp. The current row and
 2. High-movement validation versus the ready but unselected population using MFE, MAE, absolute excursion/ATR, barrier-touch frequency, cluster bootstrap confidence intervals, and standardized/rank effects.
 3. Direction label counts and continuation-versus-reversal feature comparisons with Neutral kept separate.
 4. Five coarse past-only percentile bins for causal numeric features; bins with fewer than 20 market clusters cannot support an edge claim.
-5. At most a small set of simple hypotheses registered from univariate monotonicity; no exhaustive AND search.
+5. Four simple, ex-ante direction hypotheses only; no exhaustive AND search:
+   - `M15_ALIGNMENT`: F09 `shock_alignment_m15` predicts continuation at +1 and reversal at -1;
+   - `PRE_MOMENTUM_5M`: F13 `shock_pre_momentum_5m` predicts continuation above zero and reversal below zero;
+   - `DIRECTIONAL_RANGE_POSITION`: direction-normalized F15 predicts continuation in the upper quintile and reversal in the lower quintile, using the same past-only percentile process;
+   - `M15_AND_PRE_MOMENTUM`: require F09 and the sign of F13 to agree; otherwise abstain.
+   None can support an edge claim with fewer than 20 selected market clusters.
 6. Optional lightweight time-ordered model only as a signal-existence diagnostic, never as the primary result.
 
 ## Leakage and interpretation rules

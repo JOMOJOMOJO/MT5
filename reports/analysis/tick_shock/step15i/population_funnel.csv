@@ -1,0 +1,6 @@
+stage,episode_or_row_count,market_clusters,definition
+STATISTICAL_EVENTS,21799,10245,formal Step 15G detector rows
+PERSISTENT_EPISODES,3151,2909,TAIL_V1_PERSISTENT episodes
+ANALYSIS_ELIGIBLE,1675,1553,valid +60s RR1.2 900s paths and causal features; GBPUSD excluded
+CAUSAL_QUANTILE_READY,1175,1108,100 strictly earlier same-symbol eligible episodes
+HIGH_MOVEMENT_FILTER,48,48,low spread/ATR AND high activity AND high M5 ATR

@@ -1,0 +1,4 @@
+component,status,pass,fail,xfail,xpass,skip,blocked,evidence
+research_ea_compile,PASS,1,0,0,0,0,0,reports/compile/tick_shock/step15i_direction_study_compile.log
+full_deterministic_suite,PASS,407,0,0,0,9,0,reports/tests/tick_shock/step12_post_fix_results.csv
+step15i_independent_oracle,PASS,14,0,0,0,0,0,reports/analysis/tick_shock/step15i/independent_oracle.csv

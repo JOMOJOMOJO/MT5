@@ -1,0 +1,2 @@
+trial_id,decision_seconds,horizon_seconds,requested_rr,spread_atr_quantile,tick_activity_quantile,atr_quantile,minimum_prior_same_symbol_episodes,development_window,status
+TS15I-T01,60,900,1.2,0.3,0.7,0.7,100,2025-03-01/2025-04-01,DEVELOPMENT_ONLY

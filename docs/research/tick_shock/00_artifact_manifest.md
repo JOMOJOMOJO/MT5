@@ -2,13 +2,13 @@
 
 - artifact ID: `TS-STEP01-MANIFEST`
 - step: `01`
-- branch: `research/tickshock-step15h-detection-time-continuation-filter-20260902`
+- branch: `research/tickshock-step15i-high-movement-direction-study-20260902`
 - purpose: canonical source, tests, documentation, baseline/current evidence, and checkpoint artifacts
-- status: `STEP15H_NO_DETECTION_TIME_CONTINUATION_FILTER_SUPPORTED`
-- manifest_revision: `15H`
-- covered_steps: `01-15H`
+- status: `STEP15I_HIGH_MOVEMENT_SUPPORTED_DIRECTION_UNDETERMINED`
+- manifest_revision: `15I`
+- covered_steps: `01-15I`
 - last_audited_commit: `SELF`
-- last_updated_at: `2026-09-02T23:59:00+09:00`
+- last_updated_at: `2026-09-02T20:00:00+09:00`
 
 Step 8 QA counted 393 artifact rows and 377 unique paths before its own four
 artifact rows were appended. The checked-in post-Step-8 state is therefore 397
@@ -3558,3 +3558,32 @@ Step 15H adds a preregistered causal t0 snapshot, immediate-continuation first-t
 | TS-S15H-0027 | 15H | `mql/Experts/tests/ExpectedValue_TickShock_EconomicPathHarness.ex5` | executable | transient local harness build | generated evidence | `91374B5CFE4758717A8C4C31F70233B73024D3A34EA0D3F658B4680C3B80A3ED` | no | stop after Step 15H | LOCAL_GENERATED | source compile log is authoritative | SELF |
 | TS-S15H-0028 | 15H | `reports/qa/tick_shock/step15h_final_qa.md` | QA | final gate corrected rollup | generated evidence | `8158E7E9179ED3BF185A5325C7A0F351E152343703AC33D97DA3C7BC4ED5E4F0` | yes | stop after Step 15H | COMPLETE | manifest counts included | SELF |
 | TS-S15H-0029 | 15H | `reports/backtest/runs/20260902_ts15h_detection_time_continuation_r1_202503/tester_journal_excerpt.txt` | journal | formal tester evidence | generated evidence | `4695349195FEFBE5702752758F6802AFAAC4B0CBBA36904BC7C15D3D40F71591` | yes | stop after Step 15H | COMPLETE | runtime 11m43.882s | SELF |
+
+## Step 15I rollup
+
+Step 15I separates movement-opportunity selection from direction prediction. It reuses the formal Step 15G causal +60-second Bid/Ask first-touch record, applies only past same-symbol quantiles, and adds no EA order or strategy rule. The rollup adds 22 artifact rows, bringing the manifest to 3,403 artifact IDs; duplicate artifact IDs remain zero.
+
+| artifact ID | step | artifact path | type | purpose | source/generated | SHA-256 | commit | next step | status | note | owning_commit |
+|---|---:|---|---|---|---|---|---|---|---|---|---|
+| TS-S15I-0001 | 15I | `docs/research/tick_shock/15i_direction_prediction_preanalysis.md` | specification | frozen population, clocks, quantiles and hypotheses | source | `F0A4255DA1051CAE631017628C48C759DBF93C782A13108C32952D65D5F3E9C0` | yes | future frozen OOS design | COMPLETE | committed before outcome calculation | SELF |
+| TS-S15I-0002 | 15I | `docs/research/tick_shock/15i_high_movement_direction_prediction_results.md` | report | movement and direction verdict | generated evidence | `F5839CF19E408D617148905C5019C079D5E7D0BE387AFDF2D6CDFEAB43DB41D4` | yes | future frozen OOS design | COMPLETE | development only | SELF |
+| TS-S15I-0003 | 15I | `docs/devlog/2026-09-02-tickshock-step15i-high-movement-direction.md` | devlog | durable research decision | generated evidence | `06C0E108D5F900ABEF7E6D76F1E71AC11CA06EBE539DC623AE03872A2D8DA827` | yes | research routing | COMPLETE | no production promotion | SELF |
+| TS-S15I-0004 | 15I | `tools/tick_shock/analyze_step15i_direction.py` | analysis tool | causal filter and direction analysis | source | `F5B3E08024955CD4DDF9D6629134D1530FF37B971E9A4D8E0A85C961B4CF2595` | yes | reproducibility | COMPLETE | no production formulas changed | SELF |
+| TS-S15I-0005 | 15I | `tools/tick_shock/step15i_independent_oracle.py` | oracle | independent headline and quantile rebuild | source | `A0FBC57753216C3CB77DE0972A661F58716AD3F796284CA85CE4A51BAF52B83B` | yes | reproducibility | COMPLETE | 14 checks PASS | SELF |
+| TS-S15I-0006 | 15I | `tests/tick_shock/python/test_fixture_integrity.py` | test | recognize Step 15H suite-level oracle provenance | source | `080F78290A6DA69B9FCF5522D23B2FC52E11C4F0D922A447DBB84FC48BCF90FC` | yes | regression | COMPLETE | fixtures and expected values unchanged | SELF |
+| TS-S15I-0007 | 15I | `reports/compile/tick_shock/step15i_direction_study_compile.log` | compile log | research EA compilation | generated evidence | `3336A6FF7D47F7958059BFFA924062C5A005E1BDDFC8ECC5C279C042D77A6B21` | yes | QA | COMPLETE | 0 errors / 0 warnings | SELF |
+| TS-S15I-0008 | 15I | `reports/analysis/tick_shock/step15i/episode_direction_dataset.csv` | compact dataset | one row per persistent episode | generated evidence | `E30EE0128FFB1B343F10249DC01A1F6A7E8D93FD0F24D787BE4529A6A96027AA` | yes | future hypothesis review | COMPLETE | 3,151 rows; 48 selected | SELF |
+| TS-S15I-0009 | 15I | `reports/analysis/tick_shock/step15i/population_funnel.csv` | funnel | detector-to-filter counts | generated evidence | `7D7ABC496E4CEBDAEBC9A46160E00D58F0DBA69B485B595FC2F071A194420EBB` | yes | QA | COMPLETE | 21,799 to 3,151 to 48 | SELF |
+| TS-S15I-0010 | 15I | `reports/analysis/tick_shock/step15i/direction_label_counts.csv` | label summary | continuation/reversal/neutral counts | generated evidence | `77123E53D9F702D5F4B3CEB8B3EDBAC077DEB168E09907822B79AABA815D3530` | yes | verdict | COMPLETE | 11 / 9 / 28 | SELF |
+| TS-S15I-0011 | 15I | `reports/analysis/tick_shock/step15i/feature_summary.csv` | analysis | label-conditional feature distributions | generated evidence | `AFA50029574100C0265AA8B149AB4BE1676F5286F57B0725B7CF1F4B9F3DB275` | yes | feature review | COMPLETE | neutral preserved | SELF |
+| TS-S15I-0012 | 15I | `reports/analysis/tick_shock/step15i/feature_bin_comparison.csv` | analysis | five-bin causal comparisons | generated evidence | `8C01EACEDE11BABDD8DA53C759DB7A62EB020BACA3D90D47DBAD6A383AFCF7EB` | yes | feature review | COMPLETE | Wilson intervals and support gate | SELF |
+| TS-S15I-0013 | 15I | `reports/analysis/tick_shock/step15i/continuation_vs_reversal_feature_comparison.csv` | analysis | direct direction contrasts | generated evidence | `F5D961D40CA3F0D4A7F8411BF3F6B9709D8A349274E3858DCF058CF777D1B13F` | yes | feature review | COMPLETE | Holm adjustment included | SELF |
+| TS-S15I-0014 | 15I | `reports/analysis/tick_shock/step15i/candidate_hypothesis_comparison.csv` | analysis | four frozen simple rules | generated evidence | `E27631FB3A483D394C1C8AD197C4280DE94634EA8C89556BE8B9A1D535E74800` | yes | verdict | COMPLETE | all diagnostic C2 R negative | SELF |
+| TS-S15I-0015 | 15I | `reports/analysis/tick_shock/step15i/high_movement_validation.csv` | analysis | selected versus unselected movement | generated evidence | `D69803DD985FBCDAE123535EE8455B39FB6F55E7EA284AC8072057A154F18453` | yes | verdict | COMPLETE | cluster bootstrap CI | SELF |
+| TS-S15I-0016 | 15I | `reports/analysis/tick_shock/step15i/high_movement_distribution.csv` | analysis | symbol/session/day distribution | generated evidence | `0F7B5F38930299F26E5F793A4F4E887714D014FF3C53F213E9D8AA73EA3220F0` | yes | concentration review | COMPLETE | USDJPY and NY concentrated | SELF |
+| TS-S15I-0017 | 15I | `reports/analysis/tick_shock/step15i/population_exclusions.csv` | analysis | exclusion counts | generated evidence | `544579C185680282598DE8CB8775008C81F026A9AF86075B02DCD60A28C4DD6D` | yes | QA | COMPLETE | explicit warm-up and quality exclusions | SELF |
+| TS-S15I-0018 | 15I | `reports/analysis/tick_shock/step15i/qa_checks.csv` | QA | causal/path/cluster checks | generated evidence | `EE2AD6F78AC2674E528D62CEE03E341F77E24F93C9BF797AE4CD91C70D4CC16C` | yes | gate | COMPLETE | 10 checks PASS | SELF |
+| TS-S15I-0019 | 15I | `reports/analysis/tick_shock/step15i/independent_oracle.csv` | QA | independent recomputation | generated evidence | `2D0298B1549393C857AA15A06FA80079CD2C2182A0A4E73642B7CAB1443673B2` | yes | gate | COMPLETE | 14 checks PASS | SELF |
+| TS-S15I-0020 | 15I | `reports/analysis/tick_shock/step15i/regression_summary.csv` | QA | compile and regression rollup | generated evidence | `C31091870C1171BC2F72621C04E430553CCE502F9247BE0A1717482CAB7E7464` | yes | gate | COMPLETE | 407 PASS / 9 terminal-only SKIP | SELF |
+| TS-S15I-0021 | 15I | `reports/analysis/tick_shock/step15i/trial_registry.csv` | registry | frozen primary trial values | generated evidence | `92F44FDCE76BAD05CF815A6CD171E93ADAE4365064F798E428D26DD78B6D69A4` | yes | reproducibility | COMPLETE | development-only trial | SELF |
+| TS-S15I-0022 | 15I | `reports/analysis/tick_shock/step15i/source_hashes.csv` | provenance | formal input hashes | generated evidence | `D3AAB97E52F303A0D7637341E01A53C6E194A8F0CC62411BF3E9599CABAD584D` | yes | reproducibility | COMPLETE | Step 15G inputs and preregistration | SELF |

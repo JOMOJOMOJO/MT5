@@ -1,0 +1,15 @@
+check,actual,expected,status
+episode_rows,3151,3151,PASS
+duplicate_episode_id,0,0,PASS
+analysis_eligible,1675,1675,PASS
+quantile_ready,1175,1175,PASS
+high_movement,48,48,PASS
+high_movement_clusters,48,48,PASS
+filter_predicate_mismatch,0,0,PASS
+feature_quote_after_processing,0,0,PASS
+continuation_labels,11,11,PASS
+reversal_labels,9,9,PASS
+neutral_labels,28,28,PASS
+ambiguous_labels,0,0,PASS
+causal_threshold_rebuild_mismatch,0,0,PASS
+missing_required_outputs,0,0,PASS
