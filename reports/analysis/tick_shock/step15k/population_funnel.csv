@@ -1,0 +1,8 @@
+stage,count,reason
+detector_event,21799,statistical rows
+persistent_episode,3151,unchanged 900s episodes
+valid_t0,3151,causal entry quote
+horizon_path_available,3103,lag-valid 60m path
+analysis_ready,2696,complete normalized path excluding unresolved GBPUSD
+relative_state_ready,1783,100 prior valid observations per feature
+high_movement_selected,185,frozen q30/q70/q70 rule

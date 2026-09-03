@@ -1,0 +1,4 @@
+component,baseline_rows,candidate_rows,matched_keys,compared_columns,mismatch_rows,expected_difference,status
+detector,21799,21799,21799,52,0,none,PASS
+episode,3151,3151,3151,38,0,none,PASS
+complete_excursion,3151,3151,3103,90,0,46 lag-censored plus end-of-data status; new lag columns,PASS

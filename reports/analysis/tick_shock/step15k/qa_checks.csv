@@ -1,0 +1,14 @@
+check,status,actual
+compile,PASS,0 errors / 0 warnings
+postshock_harness,PASS,11 PASS / 0 FAIL
+deterministic_regression,PASS,407 PASS / 0 FAIL / 9 terminal-only SKIP
+all_runner_phase_compatibility,FAIL,run_all_tests.ps1 rejects phase step15h; component runners used
+duplicate_episode_id,PASS,0
+pre_t0_quote,PASS,0
+invalid_entry_bid_ask,PASS,0
+future_atr_or_feature,PASS,0
+past_only_percentile,PASS,current observation appended only after percentile calculation
+horizon_overshoot_available,PASS,0
+orders_and_trades,PASS,0
+market_cluster_integrity,PASS,0
+capacity_or_drop,PASS,summary reports pending_capacity_hits=0 and event_pool_exhaustion=0

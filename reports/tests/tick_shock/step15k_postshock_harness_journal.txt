@@ -1,0 +1,12 @@
+Source: C:/Users/windows/AppData/Roaming/MetaQuotes/Tester/D232275B22422903BD477FB48B858FBA/Agent-127.0.0.1-3000/logs/20260903.log
+2025.03.03 00:00:00 TS15J arm PASS
+2025.03.03 00:00:00 TS15J pre_t0_not_entry PASS
+2025.03.03 00:00:00 TS15J same_msc_last_quote_entry PASS
+2025.03.03 00:00:00 TS15J bid_ask_mfe_30s PASS
+2025.03.03 00:00:00 TS15J horizon_clock_recorded PASS
+2025.03.03 00:00:00 TS15J directional_hit PASS
+2025.03.03 00:00:00 TS15J production_geometry PASS
+2025.03.03 00:00:00 TS15J lag_boundary_arm PASS
+2025.03.03 00:00:00 TS15J horizon_lag_equal_allowed PASS
+2025.03.03 00:00:00 TS15J lag_reject_arm PASS
+2025.03.03 00:00:00 TS15J horizon_lag_plus_one_censored PASS
