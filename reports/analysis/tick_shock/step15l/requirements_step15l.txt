@@ -1,0 +1,8 @@
+lightgbm==4.6.0
+matplotlib==3.10.6
+numpy==2.4.4
+pandas==3.0.1
+scikit-learn==1.9.0
+scipy==1.17.1
+python==3.11.9
+random_seed==20260903
