@@ -509,3 +509,25 @@ EA-only globals add three handles and row counters for
 `TSR15EWritePending` serializes them. Schema is
 `tickshock-medium-horizon-response-v1`. No all-tick or one-second CSV global
 was added.
+
+## Step 15N delayed-decision state
+
+`TickShock15NPool delayed_decision` is embedded in every `TSRSymbolContext`.
+It has eight reusable episode slots. Each record has four checkpoint states
+(`15,30,60,120` seconds), two action states per checkpoint, and a 121-slot
+one-second aggregation ring. Capacity is fixed; no tick vector grows with run
+length.
+
+`TickShock15NRecord` owns t0/deadline/quote clocks, frozen symbol values,
+cumulative path statistics, the same-millisecond pending quote, second ring and
+checkpoint objects. `TickShock15NCheckpoint` owns decision clocks, latest
+completed M5 ATR source, causal features and two `TickShock15NAction` objects.
+An action owns direction, eligibility/entry/exit clocks, executable prices,
+0.25 ATR risk, 0.40 ATR target and first-touch R. Clocks use ms, prices use
+symbol price, normalized features use ATR/ratios and R is dimensionless.
+
+EA globals add two file handles and row counters for
+`delayed_decision_checkpoints` and `delayed_decision_actions`. Domain functions
+do no I/O. Four checkpoint and eight action rows are written per episode; no
+all-tick or one-second CSV is written. Schema is
+`tickshock-delayed-decision-v1`.

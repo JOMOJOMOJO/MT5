@@ -551,3 +551,30 @@ same module and does not copy its formulas.
 | S15E-EA-005 | research EA: `void TSR15EWritePending(TSRSymbolContext &context)` | Writes one summary, nine response and ten entry records, then clears pending. Reads run/commission inputs and writes three bounded CSV handles/counters. Called on reuse and deinit. |
 | S15E-H-001..003 | harness: `int OnInit()`, `void OnTick()`, `void OnDeinit(int reason)` | Tester-only lifecycle: initialize evidence, run cases and close files. No production order. |
 | S15E-H-004..007 | support: `void TS15ETestArm(TickShockMediumHorizonContext&)`, `void TS15ETestM1(TickShock15EM1State&,bool fallback)`, `void TS15ERunCase(string id)`, `void TS15ERunAll()` | Synthetic fixture builders/dispatcher calling production functions and registry expected values. Effects are fixture/test evidence only; expected formulas are not copied from production. |
+
+## Step 15N delayed-decision additions
+
+`TickShockDelayedDecision.mqh` is research-production code called by the formal
+research EA and directly by the delayed-decision harness. It has no MT5 API or
+file I/O dependency; all clocks, quotes, ATR state, configuration, and mutable
+state are explicit arguments.
+
+The mechanically extracted current total is 379 definitions and 379 catalog
+entries: the prior 355 plus 17 delayed-decision domain functions, three EA
+wiring/serialization functions, and four harness functions.
+
+| Function IDs | File / signatures | Contract, units, effects and callers |
+|---|---|---|
+| S15N-DD-001..004 | `TickShockDelayedDecision.mqh`: `TS15NSchema`, `TS15NStatusName`, `TS15NResultName`, `TS15NActionName` | Pure schema/enum serialization. EA serializers and harness are callers. |
+| S15N-DD-005..006 | `TS15NResetRecord(TickShock15NRecord&)`, `TS15NResetPool(TickShock15NPool&)` | Explicit bounded-state initialization. Sets four fixed delays and pending action results. |
+| S15N-DD-007 | `bool TS15NArm(TickShock15NPool&,string,string,string,long,int,long,long,long,double,double,double,double,double)` | Allocates one of eight per-symbol records; freezes t0/deadline/spec. Clocks ms, prices symbol price. Returns false for invalid, duplicate or capacity input. |
+| S15N-DD-008 | `void TS15NObserveSecond(TickShock15NRecord&,long,double,double,double)` | Adds causal quote aggregates to the fixed 121-second ring. Same second updates in place; oldest bucket is reused at capacity. |
+| S15N-DD-009 | `void TS15NRecent(const TickShock15NRecord&,long,int,double&,long&,double&)` | Pure bounded-ring read for recent return, ticks and absolute path. Outputs price/count/price. |
+| S15N-DD-010 | `void TS15NBuildDecision(TickShock15NRecord&,int,long,long,double,double,double,long,int,int)` | Freezes one checkpoint, causal features, status and `max(q,p+latency)` eligibility. It never fills. |
+| S15N-DD-011 | `void TS15NEnterAction(TickShock15NAction&,long,long,double,double,double)` | Freezes Long Ask/Short Bid entry and 0.40/0.25 decision-ATR barriers on a strictly later eligible quote. |
+| S15N-DD-012 | `void TS15NEvaluateAction(TickShock15NAction&,long,double,double,long)` | Bid/Ask first-touch evaluator. TP +1.6R, SL -1R, deadline executable-side MTM R. |
+| S15N-DD-013 | `void TS15NProcessQuote(TickShock15NRecord&,long,long,double,double,double,long,bool,int,int)` | Explicit-context state transition: features, decisions, entries, both actions and t0+900s finalization. Invalid/fallback/future input fails closed. |
+| S15N-DD-014..017 | `TS15NFlushPending`, `TS15NQueueQuote`, `TS15NObservePool`, `TS15NFinalizePool` | Same-ms last-quote grouping, pool dispatch and EOD censoring. EA raw-tick/deinit path and harness call the same production functions. |
+| S15N-EA-001..002 | research EA: `TSR15NCheckpointHeader`, `TSR15NActionHeader` | Pure fixed CSV header builders. |
+| S15N-EA-003 | research EA: `void TSR15NWritePending(TickShock15NPool&)` | Writes four checkpoint/eight action rows once per episode, updates bounded counters and recycles the slot. |
+| S15N-H-001..004 | delayed harness: `Check`, `OnInit`, `OnTick`, `OnDeinit` | Tester assertions for same-ms quote, strict later fill, processing+latency eligibility and TP R. Harness-only file output is opened/closed in lifecycle handlers. No order calls. |
