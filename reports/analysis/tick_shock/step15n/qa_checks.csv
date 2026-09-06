@@ -1,0 +1,15 @@
+check,expected,actual,status
+source_episode_count,2696,2696,PASS
+checkpoint_population_rows,10784,10784,PASS
+episode_checkpoint_duplicate,0,0,PASS
+action_key_duplicate,0,0,PASS
+decision_before_target,0,0,PASS
+entry_before_target,0,0,PASS
+entry_not_after_feature,0,0,PASS
+entry_before_eligible,0,0,PASS
+future_feature,0,0,PASS
+episode_fold_overlap,0,0,PASS
+market_cluster_fold_overlap,0,0,PASS
+chronology_violation,0,0,PASS
+status_rows_reconcile,10784,10784,PASS
+orders,0,0,PASS

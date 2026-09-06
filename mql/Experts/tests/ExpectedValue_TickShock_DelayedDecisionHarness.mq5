@@ -1,11 +1,12 @@
 #property strict
 #include "..\..\Include\TickShock\TickShockDelayedDecision.mqh"
 
-int g_pass=0,g_fail=0;
-void Check(const bool ok,const string name){if(ok){++g_pass;Print("PASS ",name);}else{++g_fail;Print("FAIL ",name);}}
+int g_pass=0,g_fail=0,g_file=INVALID_HANDLE;
+void Check(const bool ok,const string name){string status=ok?"PASS":"FAIL";if(ok)++g_pass;else ++g_fail;Print(status," ",name);if(g_file!=INVALID_HANDLE)FileWrite(g_file,name,status);}
 
 int OnInit()
   {
+   FolderCreate("tick_shock_step15n",FILE_COMMON);g_file=FileOpen("tick_shock_step15n\\delayed_decision_harness.csv",FILE_WRITE|FILE_CSV|FILE_COMMON,',');if(g_file==INVALID_HANDLE)return INIT_FAILED;FileWrite(g_file,"test","status");
    TickShock15NPool pool;TS15NResetPool(pool);
    Check(TS15NArm(pool,"E1","V1","EURUSD",7,1,100000,99990,100000,1.10000,1.10002,0.00100,0.00001,10.0),"arm");
    TickShock15NRecord r=pool.records[0];
@@ -27,6 +28,7 @@ int OnInit()
    TickShock15NRecord z=latency.records[0];TS15NQueueQuote(z,215000,215600,1.24980,1.24982,0.00100,214999,false,500,100);TS15NQueueQuote(z,215650,215650,1.24979,1.24981,0.00100,214999,false,500,100);TS15NQueueQuote(z,215700,215700,1.24978,1.24980,0.00100,214999,false,500,100);TS15NQueueQuote(z,215701,215701,1.24977,1.24979,0.00100,214999,false,500,100);
    Check(z.checkpoint[0].action[0].entry_eligible_msc==215700,"processing plus submit latency");
    Check(z.checkpoint[0].action[0].entry_quote_msc==215700,"no entry before eligible");
-   PrintFormat("TS15N harness pass=%d fail=%d",g_pass,g_fail);return g_fail==0?INIT_SUCCEEDED:INIT_FAILED;
+   PrintFormat("TS15N harness pass=%d fail=%d",g_pass,g_fail);FileWrite(g_file,"TOTAL",StringFormat("PASS=%d;FAIL=%d",g_pass,g_fail));FileClose(g_file);g_file=INVALID_HANDLE;return g_fail==0?INIT_SUCCEEDED:INIT_FAILED;
   }
 void OnTick(){}
+void OnDeinit(const int reason){if(g_file!=INVALID_HANDLE)FileClose(g_file);}

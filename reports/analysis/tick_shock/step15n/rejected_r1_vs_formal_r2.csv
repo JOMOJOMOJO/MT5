@@ -1,0 +1,12 @@
+check,actual
+action_rows_r1,25208
+action_rows_r2,25208
+key_mismatch,0
+checkpoint_status_difference,0
+decision_clock_difference,0
+entry_clock_difference,0
+exit_clock_difference,0
+result_label_difference,0
+realized_r_difference,13181
+r2_tp_r_violation,0
+r2_sl_r_violation,0
