@@ -152,10 +152,11 @@ importanceは全データfitのdescriptive evidenceであり、validation成績�
 - TP `+1.6R` / SL `-1R`違反: 0/0
 - actual orders/trades: 0/0
 
-GBPUSDでは30,187分中179分（0.593%）にreal-tick discard/generated fallbackの
-tester warningがある。interval mapを取得できないため、primary推論ではGBPUSDを
-除外して解釈する。他symbolはdiscard warning非観測であり、完全なreal tick保証とは
-表現しない。
+GBPUSDではtester報告30,187分中179分（0.593%）にreal-tick
+discard/generated fallback warningがあり、EAのM1集計は30,188分だった。
+interval mapを取得できず該当episodeを特定できないため、all-symbol分析にはGBPUSDを
+残したうえで品質制約として明示する。他symbolはdiscard warning非観測であり、完全な
+real tick保証とは表現しない。
 
 ## データ量
 

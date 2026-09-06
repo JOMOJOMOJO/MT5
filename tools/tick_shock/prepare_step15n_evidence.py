@@ -22,7 +22,7 @@ def main():
     quality=[]
     for symbol in ("EURUSD","GBPUSD","USDJPY","AUDUSD","USDCAD","USDCHF"):
         row=next(r for r in summary if r["record_type"]=="SYMBOL" and r["key"]==symbol);m=re.search(r"m1_minutes_seen=(\d+)",row["value"]);minutes=int(m.group(1)) if m else 0
-        if symbol=="GBPUSD":quality.append(dict(symbol=symbol,ea_m1_minutes_seen=minutes,tester_reported_total_minutes=30187,tester_reported_discarded_minutes=179,fallback_rate_pct=179/30187*100,status="GENERATED_TICK_FALLBACK_OBSERVED",primary_treatment="EXCLUDE_GBPUSD_FROM_PRIMARY_INFERENCE_INTERVAL_MAP_UNAVAILABLE",evidence="tester_journal_excerpt.txt"))
+        if symbol=="GBPUSD":quality.append(dict(symbol=symbol,ea_m1_minutes_seen=minutes,tester_reported_total_minutes=30187,tester_reported_discarded_minutes=179,fallback_rate_pct=179/30187*100,status="GENERATED_TICK_FALLBACK_OBSERVED",primary_treatment="INCLUDED_WITH_DISCLOSED_LIMITATION_INTERVAL_MAP_UNAVAILABLE",evidence="tester_journal_excerpt.txt"))
         else:quality.append(dict(symbol=symbol,ea_m1_minutes_seen=minutes,tester_reported_total_minutes="",tester_reported_discarded_minutes="",fallback_rate_pct=0,status="NO_DISCARD_WARNING_OBSERVED",primary_treatment="PRIMARY_ELIGIBLE_IF_OTHER_GATES_PASS",evidence="tester_journal_excerpt.txt"))
     with (RUN/"tick_quality.csv").open("w",encoding="utf-8",newline="") as h:w=csv.DictWriter(h,fieldnames=quality[0]);w.writeheader();w.writerows(quality)
     checkpoints=sum(1 for _ in (RUN/"delayed_decision_checkpoints.csv").open(encoding="utf-8-sig"))-1
@@ -33,7 +33,7 @@ def main():
       "- Mode: REALIZABLE_EA research-only; no orders; trades.csv is header-only","- Detector: frozen TAIL_V1_PERSISTENT","- Raw candidates: 74,415","- Statistical detector events: 21,799","- Medium-horizon episodes: 3,151",
       f"- Delayed checkpoint rows: {checkpoints:,}",f"- Delayed action rows: {actions:,}","- Pool capacity hits: 0","- Global order violations: 0","- Dropped ticks/cursor stalls: 0/0",
       "- Tester runtime: 0:19:12.691","- Tester memory: 503 MB (40 MB history, 256 MB tick data)","- Tester total ticks across symbols: 10,587,807","- Internal summary memory: average 31.331 MB, maximum 32 MB",
-      "- Tick quality: GBPUSD real ticks discarded/generated fallback for 179 of 30,187 minutes (0.593%); interval map unavailable, so GBPUSD is excluded from primary inference","- All-tick CSV: disabled","- One-second CSV: disabled","",
+      "- Tick quality: GBPUSD real ticks discarded/generated fallback for 179 of 30,187 tester-reported minutes (0.593%); the EA counted 30,188 M1 minutes. The interval map is unavailable, so affected episodes cannot be isolated and the all-symbol analysis retains GBPUSD with this explicit limitation.","- All-tick CSV: disabled","- One-second CSV: disabled","",
       "> This is March development research evidence, not OOS evidence and not a production trading EA." ,""]),encoding="utf-8")
 
 if __name__=="__main__":main()

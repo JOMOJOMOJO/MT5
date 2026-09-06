@@ -17,7 +17,7 @@
 - Tester memory: 503 MB (40 MB history, 256 MB tick data)
 - Tester total ticks across symbols: 10,587,807
 - Internal summary memory: average 31.331 MB, maximum 32 MB
-- Tick quality: GBPUSD real ticks discarded/generated fallback for 179 of 30,187 minutes (0.593%); interval map unavailable, so GBPUSD is excluded from primary inference
+- Tick quality: GBPUSD real ticks discarded/generated fallback for 179 of 30,187 tester-reported minutes (0.593%); the EA counted 30,188 M1 minutes. The interval map is unavailable, so affected episodes cannot be isolated and the all-symbol analysis retains GBPUSD with this explicit limitation.
 - All-tick CSV: disabled
 - One-second CSV: disabled
 

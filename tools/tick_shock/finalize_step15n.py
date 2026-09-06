@@ -24,6 +24,11 @@ def committed_paths(commit: str) -> list[str]:
 
 
 def owner(path: str) -> str:
+    dirty = subprocess.check_output(
+        ["git", "status", "--porcelain", "--", path], cwd=ROOT, text=True
+    ).strip()
+    if dirty:
+        return "SELF"
     output = subprocess.check_output(
         ["git", "log", "-1", "--format=%H", "--", path], cwd=ROOT, text=True
     ).strip()
