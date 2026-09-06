@@ -144,7 +144,7 @@ void TS15NEvaluateAction(TickShock15NAction &a,const long q,const double bid,con
   {
    if(!a.entered||a.done||q<=a.entry_quote_msc)return;double exit_side=a.direction>0?bid:ask;double move=(a.direction>0?exit_side-a.entry_price:a.entry_price-exit_side);a.mfe_r=MathMax(a.mfe_r,move/a.risk_distance);a.mae_r=MathMax(a.mae_r,-move/a.risk_distance);
    if(move>=a.tp_distance){a.done=true;a.result=TS15N_TP_FIRST;a.exit_msc=q;a.exit_price=a.direction>0?a.tp:a.tp;a.realized_r=1.6;return;}
-   if(move<=-a.risk_distance){a.done=true;a.result=TS15N_SL_FIRST;a.exit_msc=q;a.exit_price=exit_side;a.realized_r=move/a.risk_distance;return;}
+   if(move<=-a.risk_distance){a.done=true;a.result=TS15N_SL_FIRST;a.exit_msc=q;a.exit_price=a.sl;a.realized_r=-1.0;return;}
    if(q>=deadline){a.done=true;a.result=TS15N_TIMEOUT;a.exit_msc=q;a.exit_price=exit_side;a.realized_r=move/a.risk_distance;}
   }
 
