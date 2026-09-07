@@ -6,8 +6,8 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-RUN = ROOT / "reports/backtest/runs/20260908_ts15o_cross_fx_lead_lag_202504"
-RUN_ID = "ts15o_cross_fx_lead_lag_202504"
+RUN = ROOT / "reports/backtest/runs/20260908_ts15o_cross_fx_lead_lag_r2_202504"
+RUN_ID = "ts15o_cross_fx_lead_lag_r2_202504"
 SYMBOLS = ("EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD", "USDCHF")
 
 

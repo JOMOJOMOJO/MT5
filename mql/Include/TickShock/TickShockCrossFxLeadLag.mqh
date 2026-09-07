@@ -36,7 +36,8 @@ struct TickShock15OSource
   {
    bool valid;string reason;string symbol;int window_seconds;
    long current_quote_msc;long current_processing_msc;long anchor_quote_msc;long anchor_processing_msc;
-   long quote_age_ms;long anchor_age_ms;long atr_source_msc;double atr14_m5;double usd_return_atr;
+   long quote_age_ms;long anchor_age_ms;long atr_source_msc;long crossing_msc;int usd_orientation;
+   double current_mid;double anchor_mid;double atr14_m5;double usd_return_atr;
   };
 
 struct TickShock15OSnapshot
@@ -120,6 +121,7 @@ bool TS15OReturn(const TickShock15OQuoteState &state,const string symbol,const i
    if(!TS15OAnchor(state,t0_msc-(long)window_seconds*1000,processing_msc,anchor)){source.reason="ANCHOR_MISSING";return false;}
    int orientation=TS15OUsdOrientation(symbol);if(orientation==0){source.reason="INVALID_USD_ORIENTATION";return false;}
    source.current_quote_msc=now.quote_msc;source.current_processing_msc=now.processing_msc;source.anchor_quote_msc=anchor.quote_msc;source.anchor_processing_msc=anchor.processing_msc;
+   source.current_mid=now.mid;source.anchor_mid=anchor.mid;source.usd_orientation=orientation;
    source.quote_age_ms=processing_msc-now.quote_msc;source.anchor_age_ms=t0_msc-(long)window_seconds*1000-anchor.quote_msc;
    source.usd_return_atr=(now.mid-anchor.mid)*(double)orientation/atr;
    source.valid=MathIsValidNumber(source.usd_return_atr)&&source.quote_age_ms>=0&&source.current_quote_msc<=t0_msc&&source.current_processing_msc<=processing_msc&&source.anchor_quote_msc<=t0_msc-(long)window_seconds*1000&&source.anchor_processing_msc<=processing_msc;
@@ -174,6 +176,7 @@ bool TS15OBuildSnapshot(const TickShock15OQuoteState &states[],const string &sym
    long lead_ages[TS15O_SYMBOLS-1];int lead_count=0;for(int i=0;i<n;++i){snapshot.crossing_msc[i]=TS15OFirstAlignedCrossing(states[i],symbols[i],t0_msc,t0_processing_msc,atrs[i],snapshot.target_usd_sign);if(i!=target_index&&snapshot.crossing_msc[i]>0){lead_ages[lead_count++]=t0_msc-snapshot.crossing_msc[i];}}
    snapshot.num_prior_cross_fx_movers=lead_count;if(lead_count>0){snapshot.first_cross_fx_lead_ms=lead_ages[0];for(int i=1;i<lead_count;++i)snapshot.first_cross_fx_lead_ms=MathMax(snapshot.first_cross_fx_lead_ms,lead_ages[i]);snapshot.median_cross_fx_lead_ms=TS15OMedianLong(lead_ages,lead_count);}
    if(snapshot.crossing_msc[target_index]>0){int rank=1;for(int i=0;i<n;++i)if(i!=target_index&&(snapshot.crossing_msc[i]>0)&&(snapshot.crossing_msc[i]<snapshot.crossing_msc[target_index]||(snapshot.crossing_msc[i]==snapshot.crossing_msc[target_index]&&i<target_index)))++rank;snapshot.target_leader_rank=rank;snapshot.target_lead_bucket=rank<=2?"EARLY":(rank<=4?"MIDDLE":"LATE");}
+   for(int i=0;i<n;++i)for(int w=0;w<TS15O_WINDOWS;++w)snapshot.sources[i*TS15O_WINDOWS+w].crossing_msc=snapshot.crossing_msc[i];
    bool h_ready=snapshot.valid_cross_symbols[2]==5&&snapshot.target_return_valid[2];snapshot.h1=h_ready&&snapshot.breadth_count[2]>=4&&snapshot.aligned_consensus[2]>0.0;snapshot.h2=h_ready&&snapshot.breadth_count[2]<=1;snapshot.h3=h_ready&&snapshot.aligned_residual[2]<=-0.10+1e-12;snapshot.h4=h_ready&&snapshot.aligned_residual[2]>=0.10-1e-12;
    return snapshot.status!=TS15O_DATA_INTEGRITY_INVALID;
   }
