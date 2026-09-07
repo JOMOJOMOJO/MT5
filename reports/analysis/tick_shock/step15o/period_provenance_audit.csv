@@ -1,0 +1,2 @@
+candidate_period,tick_shock_cross_fx_family_used,other_ea_family_used,decision,reason,evidence_path
+2025-04-01_TO_2025-05-01,false,true,SELECTED_DEVELOPMENT,"Explicit user scope: unused means Tick-shock/Cross-FX lead-lag family; unrelated EA use prevents OOS label",".company/release/usdjpy_20260402_round_continuation_long-quality12b_guarded.md"
