@@ -19,6 +19,7 @@
 #include "..\Include\TickShock\TickShockCleanMoveFeatures.mqh"
 #include "..\Include\TickShock\TickShockDelayedDecision.mqh"
 #include "..\Include\TickShock\TickShockCrossFxLeadLag.mqh"
+#include "..\Include\TickShock\TickShockSymmetricOco.mqh"
 
 // Research-only EA.  This file contains no OrderCheck/OrderSend call.
 // IDEAL_EVENT_STUDY is event-time research only.  REALIZABLE_EA includes the
@@ -408,6 +409,7 @@ struct TSRSymbolContext
    TickShock15JPool post_shock_excursion;
    TickShock15LState clean_move_features;
    TickShock15NPool delayed_decision;
+   TickShock15PPool symmetric_oco;
    TSRV1Candidate v1_pending_candidate;
    TSRV1StatisticalTrack v1_tracks[];
    TickShockSymbolClusterClock v1_stat_symbol_cluster_clock;
@@ -515,6 +517,7 @@ int g_delayed_action_file = INVALID_HANDLE;
 int g_cross_fx_feature_file = INVALID_HANDLE;
 int g_cross_fx_freshness_file = INVALID_HANDLE;
 int g_cross_fx_action_file = INVALID_HANDLE;
+int g_symmetric_oco_file = INVALID_HANDLE;
 long g_economic_path_rows = 0;
 long g_detection_time_snapshot_rows = 0;
 long g_detection_time_path_rows = 0;
@@ -525,6 +528,7 @@ long g_delayed_action_rows = 0;
 long g_cross_fx_feature_rows = 0;
 long g_cross_fx_freshness_rows = 0;
 long g_cross_fx_action_rows = 0;
+long g_symmetric_oco_rows = 0;
 long g_context_feature_rows = 0;
 long g_context_control_rows = 0;
 int g_debug_messages = 0;
@@ -880,6 +884,11 @@ string TSR15OFreshnessHeader()
 string TSR15OActionHeader()
   {return "episode_id,event_id,market_cluster_id,symbol,shock_direction,t0_msc,feature_status,h1,h2,h3,h4,action,action_direction,entry_eligible_msc,entry_quote_msc,entry_processing_msc,entry_bid,entry_ask,entry_price,atr14_m5,risk_distance,tp_distance,sl,tp,exit_msc,exit_price,result,gross_r,net_r_commission_002,net_r_commission_005,net_r_commission_010,mfe_r,mae_r,deadline_msc,feature_spec_sha256,schema_version";}
 
+string TSR15PHeader()
+  {
+   return "episode_id,event_id,market_cluster_id,symbol,shock_direction,t0_msc,t0_quote_msc,t0_processing_msc,t0_bid,t0_ask,t0_mid,atr14_m5,atr_source_msc,point,pip_size,offset_index,offset_atr,upper_trigger,lower_trigger,entry_status,oco_direction,trigger_msc,trigger_bid,trigger_ask,entry_msc,entry_processing_msc,entry_bid,entry_ask,entry_price,entry_spread,entry_spread_pips,deadline_msc,tp_index,tp_atr,sl_index,sl_atr,tp_price,sl_price,result,exit_msc,exit_bid,exit_ask,exit_price,gross_price,gross_pips,gross_r,mfe_price,mae_price,quote_groups,same_msc_ticks,future_reads,backdates,fallback_quotes,ambiguous_triggers,record_invalid,record_censored,schema_version";
+  }
+
 bool TSROpenLogs()
   {
    g_event_file = TSROpenCsv("events", TSREventHeader());
@@ -911,6 +920,7 @@ bool TSROpenLogs()
    g_cross_fx_feature_file = TSROpenCsv("cross_fx_features",TSR15OFeatureHeader());
    g_cross_fx_freshness_file = TSROpenCsv("cross_fx_feature_freshness",TSR15OFreshnessHeader());
    g_cross_fx_action_file = TSROpenCsv("cross_fx_actions",TSR15OActionHeader());
+   g_symmetric_oco_file = TSROpenCsv("symmetric_oco_scenarios",TSR15PHeader());
    return g_event_file!=INVALID_HANDLE && g_trade_file!=INVALID_HANDLE && g_summary_file!=INVALID_HANDLE && g_specs_file!=INVALID_HANDLE && g_features_file!=INVALID_HANDLE &&
           g_controls_file!=INVALID_HANDLE && g_control_matches_file!=INVALID_HANDLE && g_funnel_file!=INVALID_HANDLE && g_event_response_file!=INVALID_HANDLE &&
           g_decision_checkpoint_file!=INVALID_HANDLE && g_strategy_entry_feature_file!=INVALID_HANDLE && g_path_class_file!=INVALID_HANDLE &&
@@ -919,7 +929,7 @@ bool TSROpenLogs()
            g_context_feature_file!=INVALID_HANDLE && g_context_control_file!=INVALID_HANDLE && g_economic_path_file!=INVALID_HANDLE &&
            g_detection_time_snapshot_file!=INVALID_HANDLE && g_detection_time_path_file!=INVALID_HANDLE && g_post_shock_excursion_file!=INVALID_HANDLE && g_clean_move_feature_file!=INVALID_HANDLE &&
            g_delayed_checkpoint_file!=INVALID_HANDLE && g_delayed_action_file!=INVALID_HANDLE && g_cross_fx_feature_file!=INVALID_HANDLE &&
-           g_cross_fx_freshness_file!=INVALID_HANDLE && g_cross_fx_action_file!=INVALID_HANDLE;
+           g_cross_fx_freshness_file!=INVALID_HANDLE && g_cross_fx_action_file!=INVALID_HANDLE && g_symmetric_oco_file!=INVALID_HANDLE;
   }
 
 void TSRCloseLogs()
@@ -953,6 +963,7 @@ void TSRCloseLogs()
    TSMt5Close(g_cross_fx_feature_file);
    TSMt5Close(g_cross_fx_freshness_file);
    TSMt5Close(g_cross_fx_action_file);
+   TSMt5Close(g_symmetric_oco_file);
   }
 
 double TSRPercentile(double &values[],const int count,const double percentile)
@@ -2281,6 +2292,32 @@ void TSR15OWritePending(TickShock15OPool &pool)
    TSMt5Flush(g_cross_fx_feature_file);TSMt5Flush(g_cross_fx_freshness_file);TSMt5Flush(g_cross_fx_action_file);
   }
 
+void TSR15PWritePending(TickShock15PPool &pool)
+  {
+   if(g_symmetric_oco_file==INVALID_HANDLE)return;
+   for(int n=0;n<TS15P_POOL_CAPACITY;++n)
+     {
+      TickShock15PRecord r=pool.records[n];if(!r.write_pending)continue;
+      for(int o=0;o<TS15P_OFFSET_COUNT;++o)
+        {
+         TickShock15PLeg leg=r.legs[o];
+         for(int tp=0;tp<TS15P_TP_COUNT;++tp)for(int sl=0;sl<TS15P_SL_COUNT;++sl)
+           {
+            int k=TS15PScenarioIndex(tp,sl);TickShock15PScenario s=leg.scenarios[k];string line="";
+            TSRCsvAppend(line,r.episode_id);TSRCsvAppend(line,r.event_id);TSRCsvAppend(line,TSRLong(r.market_cluster_id));TSRCsvAppend(line,r.symbol);TSRCsvAppend(line,TSRDirection(r.shock_direction));
+            TSRCsvAppend(line,TSRLong(r.t0_msc));TSRCsvAppend(line,TSRLong(r.t0_quote_msc));TSRCsvAppend(line,TSRLong(r.t0_processing_msc));TSRCsvAppend(line,TSRDouble(r.t0_bid));TSRCsvAppend(line,TSRDouble(r.t0_ask));TSRCsvAppend(line,TSRDouble(r.t0_mid));TSRCsvAppend(line,TSRDouble(r.atr14_m5,12));TSRCsvAppend(line,TSRLong(r.atr_source_msc));TSRCsvAppend(line,TSRDouble(r.point));TSRCsvAppend(line,TSRDouble(r.pip_size));
+            TSRCsvAppend(line,IntegerToString(o));TSRCsvAppend(line,TSRDouble(leg.offset_atr,6));TSRCsvAppend(line,TSRDouble(leg.upper_trigger));TSRCsvAppend(line,TSRDouble(leg.lower_trigger));TSRCsvAppend(line,TS15PEntryStatusName(leg.status));TSRCsvAppend(line,leg.direction==0?"NONE":TSRDirection(leg.direction));
+            TSRCsvAppend(line,leg.trigger_msc>0?TSRLong(leg.trigger_msc):"");TSRCsvAppend(line,leg.trigger_msc>0?TSRDouble(leg.trigger_bid):"");TSRCsvAppend(line,leg.trigger_msc>0?TSRDouble(leg.trigger_ask):"");TSRCsvAppend(line,leg.entry_msc>0?TSRLong(leg.entry_msc):"");TSRCsvAppend(line,leg.entry_msc>0?TSRLong(leg.entry_processing_msc):"");TSRCsvAppend(line,leg.entry_msc>0?TSRDouble(leg.entry_bid):"");TSRCsvAppend(line,leg.entry_msc>0?TSRDouble(leg.entry_ask):"");TSRCsvAppend(line,leg.entry_msc>0?TSRDouble(leg.entry_price):"");TSRCsvAppend(line,leg.entry_msc>0?TSRDouble(leg.entry_spread):"");TSRCsvAppend(line,leg.entry_msc>0&&r.pip_size>0.0?TSRDouble(leg.entry_spread/r.pip_size,8):"");TSRCsvAppend(line,leg.deadline_msc>0?TSRLong(leg.deadline_msc):"");
+            TSRCsvAppend(line,IntegerToString(tp));TSRCsvAppend(line,TSRDouble(s.tp_atr,6));TSRCsvAppend(line,IntegerToString(sl));TSRCsvAppend(line,TSRDouble(s.sl_atr,6));TSRCsvAppend(line,leg.entry_msc>0?TSRDouble(s.tp_price):"");TSRCsvAppend(line,leg.entry_msc>0?TSRDouble(s.sl_price):"");TSRCsvAppend(line,TS15PResultName(s.result));TSRCsvAppend(line,s.exit_msc>0?TSRLong(s.exit_msc):"");TSRCsvAppend(line,s.exit_msc>0?TSRDouble(s.exit_bid):"");TSRCsvAppend(line,s.exit_msc>0?TSRDouble(s.exit_ask):"");TSRCsvAppend(line,s.exit_msc>0?TSRDouble(s.exit_price):"");TSRCsvAppend(line,s.exit_msc>0?TSRDouble(s.gross_price,12):"");TSRCsvAppend(line,s.exit_msc>0?TSRDouble(s.gross_pips,8):"");TSRCsvAppend(line,s.exit_msc>0?TSRDouble(s.gross_r,12):"");TSRCsvAppend(line,leg.entry_msc>0?TSRDouble(s.mfe_price,12):"");TSRCsvAppend(line,leg.entry_msc>0?TSRDouble(s.mae_price,12):"");
+            TSRCsvAppend(line,TSRLong(r.quote_groups));TSRCsvAppend(line,TSRLong(r.same_msc_ticks));TSRCsvAppend(line,TSRLong(r.future_reads));TSRCsvAppend(line,TSRLong(r.backdates));TSRCsvAppend(line,TSRLong(r.fallback_quotes));TSRCsvAppend(line,TSRLong(r.ambiguous_triggers));TSRCsvAppend(line,TSRBool(r.invalid));TSRCsvAppend(line,TSRBool(r.censored));TSRCsvAppend(line,TS15PSchema());
+            TSMt5WriteLine(g_symmetric_oco_file,line);++g_symmetric_oco_rows;
+           }
+        }
+      ++pool.completed;if(r.invalid)++pool.invalid_paths;pool.ambiguous_triggers+=r.ambiguous_triggers;TS15PResetRecord(r);pool.records[n]=r;
+     }
+   TSMt5Flush(g_symmetric_oco_file);
+  }
+
 void TSR15FCaptureAndWriteControl(TSRSymbolContext &context,const long quote_msc,const long processing_msc,const double bid,const double ask)
   {
    TickShock15FControl c=context.context_features.control;if(c.active)
@@ -2434,6 +2471,9 @@ bool TSRV1RegisterStatisticalTrack(TSRSymbolContext &context,
           TS15JArm(context.post_shock_excursion,episode.episode_id,candidate.statistical_event_id,context.symbol,candidate.statistical_market_cluster_id,candidate.direction,candidate.candidate_msc,confirmed_msc,confirmed_point.quote_msc,processing_msc,t0.atr14_m5,t0.available[0]?t0.features[0]:0.0,candidate.tick_intensity_ratio,t0.available[0]?t0.feature_source_msc[0]:0,context.tick_size,(double)context.stops_level*context.point);
           TS15NArm(context.delayed_decision,episode.episode_id,candidate.statistical_event_id,context.symbol,candidate.statistical_market_cluster_id,candidate.direction,t0.t0_msc,t0.confirmed_quote_msc,processing_msc,confirmed_point.bid,confirmed_point.ask,t0.atr14_m5,context.tick_size,candidate.tick_intensity_ratio);
           if(!TSR15OArmEpisode(symbol_index,episode.episode_id,candidate.statistical_event_id,candidate.statistical_market_cluster_id,candidate.direction,t0.t0_msc,t0.confirmed_quote_msc,processing_msc))
+             g_event_engine.validation_invalid=true;
+          double oco_atr=0.0;long oco_atr_source=0;TS15LATRAtOffset(context.context_features.bars,0,oco_atr,oco_atr_source);
+          if(oco_atr>0.0&&oco_atr_source>0&&!TS15PArm(context.symmetric_oco,episode.episode_id,candidate.statistical_event_id,context.symbol,candidate.statistical_market_cluster_id,candidate.direction,t0.t0_msc,t0.confirmed_quote_msc,processing_msc,confirmed_point.bid,confirmed_point.ask,oco_atr,oco_atr_source,context.digits,context.point))
              g_event_engine.validation_invalid=true;
         }
      }
@@ -3039,6 +3079,8 @@ void TSRProcessOneTick(const int symbol_index,const MqlTick &source,const long p
    TSR15NWritePending(g_symbols[symbol_index].delayed_decision);
    TS15OObservePool(g_cross_fx_pools[symbol_index],time_msc,processing_msc,tick.bid,tick.ask,false);
    TSR15OWritePending(g_cross_fx_pools[symbol_index]);
+   TS15PObservePool(g_symbols[symbol_index].symmetric_oco,time_msc,processing_msc,tick.bid,tick.ask,false);
+   TSR15PWritePending(g_symbols[symbol_index].symmetric_oco);
    if(g_symbols[symbol_index].medium_horizon.episode.mode!=TS15E_IDLE)
      {
       TS15EQueueQuote(g_symbols[symbol_index].medium_horizon,time_msc,processing_msc,tick.bid,tick.ask,false,InpSubmitLatencyMs);
@@ -3385,6 +3427,8 @@ void TSRWriteSummary()
    TSRSummaryRow("LOG_POLICY","delayed_decision_csv",0,0,0,delayed_completed,delayed_capacity,0.0,StringFormat("episodes=%I64d;checkpoint_rows=%I64d;action_rows=%I64d;checkpoints=15,30,60,120;deadline=t0_plus_900s;atr=latest_completed_M5_ATR14;second_ring_capacity=%d;tick_csv=false;orders=0",delayed_armed,g_delayed_checkpoint_rows,g_delayed_action_rows,TS15N_SECOND_CAPACITY));
    long cross_armed=0,cross_completed=0,cross_capacity=0,cross_invalid=0;for(int i=0;i<ArraySize(g_cross_fx_pools);++i){cross_armed+=g_cross_fx_pools[i].armed;cross_completed+=g_cross_fx_pools[i].completed;cross_capacity+=g_cross_fx_pools[i].capacity_hits;cross_invalid+=g_cross_fx_pools[i].invalid_paths;}
    TSRSummaryRow("LOG_POLICY","cross_fx_lead_lag_csv",0,0,0,cross_completed,cross_capacity,0.0,StringFormat("episodes=%I64d;feature_rows=%I64d;freshness_rows=%I64d;action_rows=%I64d;invalid_paths=%I64d;windows=1,3,5,10;lead_threshold=0.10ATR_5s;quote_ring_per_symbol=%d;tick_csv=false;orders=0",cross_armed,g_cross_fx_feature_rows,g_cross_fx_freshness_rows,g_cross_fx_action_rows,cross_invalid,TS15O_QUOTE_CAPACITY));
+   long oco_armed=0,oco_completed=0,oco_capacity=0,oco_invalid=0,oco_ambiguous=0;for(int i=0;i<ArraySize(g_symbols);++i){oco_armed+=g_symbols[i].symmetric_oco.armed;oco_completed+=g_symbols[i].symmetric_oco.completed;oco_capacity+=g_symbols[i].symmetric_oco.capacity_hits;oco_invalid+=g_symbols[i].symmetric_oco.invalid_paths;oco_ambiguous+=g_symbols[i].symmetric_oco.ambiguous_triggers;}
+   TSRSummaryRow("LOG_POLICY","symmetric_oco_scenarios_csv",0,0,0,oco_completed,oco_capacity,0.0,StringFormat("episodes=%I64d;scenario_rows=%I64d;invalid_paths=%I64d;ambiguous_triggers=%I64d;offsets=0.02,0.05,0.10ATR;tp=0.02,0.03,0.05,0.075,0.10,0.15ATR;sl=0.10,0.20,0.30,0.50,0.75,1.00ATR;trigger_wait=30s;hold_from_entry=300s;tick_csv=false;orders=0",oco_armed,g_symmetric_oco_rows,oco_invalid,oco_ambiguous));
    TSRSummaryRow("LOG_POLICY","detector_feature_csv",0,0,0,0,0,0.0,StringFormat("one_row_per_event;bytes=%I64d",TSMt5FileSize(g_features_file)));
    TSRSummaryRow("MODEL","shock_detector",0,0,0,0,0,0.0,"version="+TSV1DetectorName(InpDetectorVersion)+";feature_schema="+TSV1FeatureSchema()+";spec_sha256="+TSV1SpecSha256()+";default=STRICT_V0");
    TSRSummaryRow("MODEL","return_definition",0,0,0,0,0,0.0,"independent_250_500_1000ms_detectors;signal_and_baseline_use_same_absolute_mid Move;rolling half-tick histogram;exclude_2000ms;log returns diagnostic only");
@@ -3471,7 +3515,7 @@ int OnInit()
      {PrintFormat("%s Step15O requires exactly %d symbols",TSR_NAME,TS15O_SYMBOLS);return INIT_PARAMETERS_INCORRECT;}
    ArrayResize(g_cross_fx_quotes,ArraySize(g_symbols));ArrayResize(g_cross_fx_pools,ArraySize(g_symbols));
    for(int i=0;i<ArraySize(g_symbols);++i){TS15OResetQuoteState(g_cross_fx_quotes[i]);TS15OResetPool(g_cross_fx_pools[i]);}
-   for(int i=0;i<ArraySize(g_symbols);++i){TS15GResetContext(g_symbols[i].economic_episode);TS15GResetContext(g_symbols[i].economic_control);TS15HReset(g_symbols[i].detection_time_continuation);TS15JResetPool(g_symbols[i].post_shock_excursion);TS15NResetPool(g_symbols[i].delayed_decision);}
+   for(int i=0;i<ArraySize(g_symbols);++i){TS15GResetContext(g_symbols[i].economic_episode);TS15GResetContext(g_symbols[i].economic_control);TS15HReset(g_symbols[i].detection_time_continuation);TS15JResetPool(g_symbols[i].post_shock_excursion);TS15NResetPool(g_symbols[i].delayed_decision);TS15PResetPool(g_symbols[i].symmetric_oco);}
    if(!TSROpenLogs())
      {
       TSRCloseLogs();TSRReleaseSymbols();return INIT_FAILED;
@@ -3499,6 +3543,7 @@ void OnDeinit(const int reason)
        TS15JFinalizePool(g_symbols[i].post_shock_excursion);TSR15JWritePending(g_symbols[i].post_shock_excursion);
        TS15NFinalizePool(g_symbols[i].delayed_decision,InpMaxQuoteAgeMs,InpSubmitLatencyMs);TSR15NWritePending(g_symbols[i].delayed_decision);
        TS15OFinalizePool(g_cross_fx_pools[i]);TSR15OWritePending(g_cross_fx_pools[i]);
+       TS15PFinalizePool(g_symbols[i].symmetric_oco);TSR15PWritePending(g_symbols[i].symmetric_oco);
       if(g_symbols[i].context_features.control.active){g_symbols[i].context_features.control.active=false;g_symbols[i].context_features.control.invalid=true;g_symbols[i].context_features.control.write_pending=true;g_symbols[i].context_features.control.reason="END_OF_DATA";}
       TSR15FCaptureAndWriteControl(g_symbols[i],0,0,0.0,0.0);
      }
