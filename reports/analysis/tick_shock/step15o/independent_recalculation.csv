@@ -1,0 +1,15 @@
+check,actual,expected,status
+raw_return_recalculation_max_abs_error,5.5176174740267925e-09,<=1e-8,PASS
+cross_fx_feature_recalculation_max_abs_error,1.8035782659020505e-09,<=1e-8,PASS
+breadth_zero_serialization_boundary_ambiguities,1.0,REPORTED,NOT_OBSERVED
+entry_before_eligibility,0.0,0,PASS
+tp_realized_r_max_abs_error,0.0,<=1e-9,PASS
+duplicate_action_key,0.0,0,PASS
+lead_lag_recalculation_max_abs_error,0.0,0,PASS
+tp_sl_timeout_independent_mismatch,0.0,0,PASS
+tp_sl_timeout_censored_not_recalculable,58.0,REPORTED,NOT_OBSERVED
+both_sl_count,3401.0,3401,PASS
+h1_membership_mismatch,0.0,0,PASS
+h2_membership_mismatch,0.0,0,PASS
+h3_membership_mismatch,0.0,0,PASS
+h4_membership_mismatch,0.0,0,PASS

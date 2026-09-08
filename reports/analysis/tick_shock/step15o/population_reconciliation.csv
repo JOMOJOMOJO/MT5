@@ -1,0 +1,7 @@
+stage,rows,episodes,clusters
+feature_rows,3967,3967,3746
+eligible,388,388,356
+action_rows,7934,3967,3746
+status:CROSS_SYMBOL_STALE,555,555,546
+status:ELIGIBLE,388,388,356
+status:TARGET_STALE,3024,3024,2940

@@ -1,0 +1,4 @@
+artifact,r1_rows,r2_rows,compared_columns,differing_rows,status,note
+cross_fx_features.csv,3967,3967,59,0,PASS,IDs normalized; r2 raw-oracle additions excluded where absent in r1
+cross_fx_actions.csv,7934,7934,36,0,PASS,IDs normalized; r2 raw-oracle additions excluded where absent in r1
+cross_fx_feature_freshness.csv,95208,95208,19,0,PASS,IDs normalized; current_mid/anchor_mid/orientation/crossing are r2 evidence-only columns

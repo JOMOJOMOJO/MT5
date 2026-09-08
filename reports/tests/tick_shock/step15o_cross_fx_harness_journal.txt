@@ -1,0 +1,5 @@
+Source: C:/Users/windows/AppData/Roaming/MetaQuotes/Tester/D232275B22422903BD477FB48B858FBA/Agent-127.0.0.1-3000/logs/20260908.log
+Observed: 2026-09-08 10:22:33 local tester log time
+Tester event time: 2025-04-01 00:00:00
+Expert: ExpectedValue_TickShock_CrossFxLeadLagHarness (EURUSD,M1)
+Message: TS15O harness PASS=13 FAIL=0

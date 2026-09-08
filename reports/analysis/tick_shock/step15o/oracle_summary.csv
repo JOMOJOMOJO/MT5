@@ -1,0 +1,2 @@
+hypothesis,fixed_action,episodes,market_clusters,continuation_tp,reversal_tp,both_sl,both_sl_rate,tradeable_episodes,continuation_only_share_tradeable,fixed_action_mean_gross_r,fixed_action_mean_net_r_005,fixed_action_pf_gross,oracle_mean_gross_r,wins,losses
+ELIGIBLE_ORACLE,CONTINUATION,388,356,46,47,295,0.7603092783505154,93,0.4946236559139785,-1.1165130086181467,-1.1665130086181468,0.1452229213972756,0.3835051546391753,46,342
