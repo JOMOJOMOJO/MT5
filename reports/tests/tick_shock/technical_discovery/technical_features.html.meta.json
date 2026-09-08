@@ -1,0 +1,16 @@
+﻿{
+    "generated_at":  "2026-09-09T00:26:21.9668247+09:00",
+    "config":  {
+                   "source_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\tests\\tick_shock\\technical_discovery\\technical_features.ini",
+                   "resolved_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpC733.ini",
+                   "generated_config_path":  "C:\\Users\\windows\\AppData\\Local\\Temp\\tmpC733.ini"
+               },
+    "tester":  {
+                   "symbol":  "EURUSD",
+                   "period":  "M1",
+                   "from_date":  "2025.04.01",
+                   "to_date":  "2025.04.02",
+                   "report_path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\tests\\tick_shock\\technical_discovery\\technical_features.html"
+               },
+    "preset":  null
+}

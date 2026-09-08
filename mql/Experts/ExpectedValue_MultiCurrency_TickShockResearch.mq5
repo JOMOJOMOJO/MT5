@@ -20,6 +20,9 @@
 #include "..\Include\TickShock\TickShockDelayedDecision.mqh"
 #include "..\Include\TickShock\TickShockCrossFxLeadLag.mqh"
 #include "..\Include\TickShock\TickShockSymmetricOco.mqh"
+#ifdef TS_TECH_DISCOVERY
+#include "..\Include\TickShock\TickShockTechnicalStudy.mqh"
+#endif
 
 // Research-only EA.  This file contains no OrderCheck/OrderSend call.
 // IDEAL_EVENT_STUDY is event-time research only.  REALIZABLE_EA includes the
@@ -2465,6 +2468,9 @@ bool TSRV1RegisterStatisticalTrack(TSRSymbolContext &context,
       if(TS15EArmEpisode(context.medium_horizon,InpRunId,context.symbol,candidate.statistical_event_id,candidate.statistical_market_cluster_id,candidate.direction,confirmed_msc,processing_msc,confirmed_point.bid,confirmed_point.ask,context.point,context.tick_size,MathAbs(confirmed_point.mid-candidate.anchor_mid),candidate.score[candidate.trigger_horizon_index],false,InpSubmitLatencyMs))
         {
          TSR15FArmEpisode(context,candidate);TickShock15EEpisode episode=context.medium_horizon.episode;
+#ifdef TS_TECH_DISCOVERY
+         if(!TSTDArm(symbol_index,episode.episode_id,candidate.statistical_event_id,context.symbol,candidate.statistical_market_cluster_id,candidate.direction,confirmed_msc,confirmed_point.quote_msc,processing_msc,confirmed_point.bid,confirmed_point.ask,context.digits,context.point,context.tick_size,context.stops_level*context.point))g_event_engine.validation_invalid=true;
+#endif
          TS15HArm(context.detection_time_continuation,context.context_features.bars,episode.episode_id,candidate.statistical_event_id,context.symbol,candidate.statistical_market_cluster_id,candidate.direction,candidate.candidate_msc,confirmed_msc,confirmed_point.quote_msc,processing_msc,context.ticks_processed,confirmed_point.bid,confirmed_point.ask,context.tick_size,(double)context.stops_level*context.point,false,candidate.tick_intensity_ratio,candidate.efficiency,candidate.score[candidate.trigger_horizon_index],candidate.anchor_mid,candidate.candidate_point.mid,confirmed_point.mid);
          TickShock15HSnapshot t0=context.detection_time_continuation;
          TickShock15LSnapshot clean_features;TS15LBuildSnapshot(context.clean_move_features,context.context_features.bars,episode.episode_id,candidate.statistical_event_id,context.symbol,candidate.statistical_market_cluster_id,candidate.direction,t0.t0_msc,t0.atr14_m5,clean_features);TSR15LWriteSnapshot(clean_features);
@@ -3081,6 +3087,9 @@ void TSRProcessOneTick(const int symbol_index,const MqlTick &source,const long p
    TSR15OWritePending(g_cross_fx_pools[symbol_index]);
    TS15PObservePool(g_symbols[symbol_index].symmetric_oco,time_msc,processing_msc,tick.bid,tick.ask,false);
    TSR15PWritePending(g_symbols[symbol_index].symmetric_oco);
+#ifdef TS_TECH_DISCOVERY
+   TSTDObserve(symbol_index,time_msc,tick.bid,tick.ask);
+#endif
    if(g_symbols[symbol_index].medium_horizon.episode.mode!=TS15E_IDLE)
      {
       TS15EQueueQuote(g_symbols[symbol_index].medium_horizon,time_msc,processing_msc,tick.bid,tick.ask,false,InpSubmitLatencyMs);
@@ -3521,6 +3530,9 @@ int OnInit()
       TSRCloseLogs();TSRReleaseSymbols();return INIT_FAILED;
      }
    TSRWriteSymbolSpecs();
+#ifdef TS_TECH_DISCOVERY
+   if(!TSTDInit(InpLogFolder,ArraySize(g_symbols),InpSubmitLatencyMs))return INIT_FAILED;
+#endif
    g_started_tick_count=TSMt5RuntimeTickCount();
    if(!g_is_tester && !TSMt5StartTimer(50))
      {
@@ -3548,6 +3560,9 @@ void OnDeinit(const int reason)
       TSR15FCaptureAndWriteControl(g_symbols[i],0,0,0.0,0.0);
      }
    TSRWriteSummary();
+#ifdef TS_TECH_DISCOVERY
+   TSTDFinish();
+#endif
    PrintFormat("%s deinitialized reason=%d events=%I64d rows=%I64d",TSR_NAME,reason,g_total_events,g_event_rows);
    TSRCloseLogs();
    TSRReleaseSymbols();
