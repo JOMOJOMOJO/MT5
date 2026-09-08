@@ -1,0 +1,13 @@
+CS	0	01:46:08.765	Tester	  InpRunId=ts15o_cross_fx_lead_lag_r2_202504
+CS	0	01:46:08.765	Tester	  InpResearchPeriod=2025-04-01_TO_2025-05-01
+CS	0	01:46:16.590	ExpectedValue_MultiCurrency_TickShockResearch (EURUSD,M1)	2025.04.01 00:00:00   ExpectedValue_MultiCurrency_TickShockResearch initialized research_only symbols=6 grid_ms=250 detector=TAIL_V1_PERSISTENT horizons=250,500,1000 execution_mode=REALIZABLE_EA submit_latency_ms=0
+CS	0	02:14:18.510	ExpectedValue_MultiCurrency_TickShockResearch (EURUSD,M1)	2025.04.30 23:57:59   ExpectedValue_MultiCurrency_TickShockResearch deinitialized reason=1 events=26 rows=26
+CS	0	02:14:18.565	Tester	EURUSD,M1: 2189869 ticks, 31621 bars generated. Environment synchronized in 0:00:00.026. Test passed in 0:28:10.073 (including ticks preprocessing 0:00:01.062).
+CS	0	02:14:18.565	Tester	14085619 total ticks for all symbols
+CS	0	02:14:18.565	Tester	AUDUSD: generate 2105564 ticks in 0:00:00.156, passed to tester 2105564 ticks
+CS	0	02:14:18.565	Tester	EURUSD: generate 2189869 ticks in 0:00:00.188, passed to tester 2189869 ticks
+CS	0	02:14:18.565	Tester	GBPUSD: generate 2590177 ticks in 0:00:00.187, passed to tester 2590177 ticks
+CS	0	02:14:18.565	Tester	USDCAD: generate 2110567 ticks in 0:00:00.156, passed to tester 2110568 ticks
+CS	0	02:14:18.565	Tester	USDCHF: generate 1978336 ticks in 0:00:00.156, passed to tester 1978337 ticks
+CS	0	02:14:18.565	Tester	USDJPY: generate 3111106 ticks in 0:00:00.219, passed to tester 3111106 ticks
+CS	0	02:14:18.565	Tester	625 Mb memory used including 48 Mb of history data, 320 Mb of tick data
