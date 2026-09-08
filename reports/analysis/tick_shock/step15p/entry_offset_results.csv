@@ -1,0 +1,4 @@
+offset_index,offset_atr,eligible_shocks,triggered_trades,long,short,no_entry,ambiguous,invalid,censored,trades_per_day
+0,0.02,3967,481,243,238,0,3486,0,0,21.863636363636363
+1,0.05,3967,941,471,470,0,3026,0,0,42.77272727272727
+2,0.1,3967,1972,999,973,1,1994,0,0,89.63636363636364

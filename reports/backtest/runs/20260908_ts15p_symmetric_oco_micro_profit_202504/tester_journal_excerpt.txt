@@ -1,0 +1,7 @@
+CS	0	11:30:38.058	Tester	  InpRunId=ts15p_symmetric_oco_micro_profit_202504
+CS	0	11:30:38.058	Tester	  InpResearchPeriod=2025-04-01_TO_2025-05-01
+CS	0	11:30:46.236	ExpectedValue_MultiCurrency_TickShockResearch (EURUSD,M1)	2025.04.01 00:00:00   ExpectedValue_MultiCurrency_TickShockResearch initialized research_only symbols=6 grid_ms=250 detector=TAIL_V1_PERSISTENT horizons=250,500,1000 execution_mode=REALIZABLE_EA submit_latency_ms=0
+CS	0	12:01:58.554	ExpectedValue_MultiCurrency_TickShockResearch (EURUSD,M1)	2025.04.30 23:57:59   ExpectedValue_MultiCurrency_TickShockResearch deinitialized reason=1 events=26 rows=26
+CS	0	12:01:58.588	Tester	EURUSD,M1: 2189869 ticks, 31621 bars generated. Environment synchronized in 0:00:00.030. Test passed in 0:31:20.771 (including ticks preprocessing 0:00:01.047).
+CS	0	12:01:58.588	Tester	14085619 total ticks for all symbols
+CS	0	12:01:58.588	Tester	624 Mb memory used including 48 Mb of history data, 320 Mb of tick data

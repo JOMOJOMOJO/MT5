@@ -1,0 +1,12 @@
+check,violations,status,note
+future_quote_usage,0,PASS,
+entry_before_or_at_trigger,0,PASS,
+barrier_before_or_at_entry,0,PASS,
+duplicate_episode_offset_geometry,0,PASS,
+market_cluster_split,0,PASS,
+ambiguous_trigger_silently_selected,0,PASS,
+actual_orders_or_trades,0,PASS,
+gross_price_recalculation,0,PASS,
+gross_pips_recalculation,0,PASS,
+gross_r_recalculation,0,PASS,
+record_future_or_backdate,0,PASS,

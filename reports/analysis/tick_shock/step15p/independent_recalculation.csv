@@ -1,0 +1,12 @@
+check,independent_value,reported_value,violations,status
+eligible_episode_count,3967,3967,0,PASS
+geometry_reconciliation,108,108,0,PASS
+duplicate,,,0,PASS
+future_or_backdate,,,0,PASS
+entry_before_trigger,,,0,PASS
+exit_before_entry,,,0,PASS
+ambiguous_selected,,,0,PASS
+gross_price,,,0,PASS
+gross_pips,,,0,PASS
+gross_r,,,0,PASS
+cluster_split,,,0,PASS

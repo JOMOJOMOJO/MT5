@@ -1,0 +1,7 @@
+symbol,ea_m1_minutes_seen,real_tick_discard_warning_count,generated_fallback_minutes,status,evidence
+EURUSD,31621,0,NOT_OBSERVED,NO_DISCARD_WARNING_OBSERVED,tester_journal_excerpt.txt
+GBPUSD,31621,0,NOT_OBSERVED,NO_DISCARD_WARNING_OBSERVED,tester_journal_excerpt.txt
+USDJPY,31578,0,NOT_OBSERVED,NO_DISCARD_WARNING_OBSERVED,tester_journal_excerpt.txt
+AUDUSD,31621,0,NOT_OBSERVED,NO_DISCARD_WARNING_OBSERVED,tester_journal_excerpt.txt
+USDCAD,31619,0,NOT_OBSERVED,NO_DISCARD_WARNING_OBSERVED,tester_journal_excerpt.txt
+USDCHF,31616,0,NOT_OBSERVED,NO_DISCARD_WARNING_OBSERVED,tester_journal_excerpt.txt

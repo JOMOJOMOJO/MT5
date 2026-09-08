@@ -1,0 +1,13 @@
+metric,value
+raw_rows,428436
+eligible_episodes,3967
+market_clusters,3746
+valid_scenario_rows,122184
+best_02_cost_offset,0.05
+best_02_cost_tp,0.15
+best_02_cost_sl,1.0
+best_02_cost_expectancy_r,-0.25504875960843054
+best_02_cost_win_rate,0.5749202975557917
+qualifying_regions,0
+verdict,MICRO_PROFIT_FEASIBILITY_NOT_FOUND
+actual_commission,NOT_OBSERVED_ALL_SYMBOL_SCOPE
