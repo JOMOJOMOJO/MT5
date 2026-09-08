@@ -12,7 +12,6 @@ New-Item -ItemType Directory -Path $run | Out-Null
 $source=Join-Path $root "mql\Experts\ExpectedValue_MultiCurrency_TickShockTechnicalResearch.mq5"
 $compile=Join-Path $run "compile.log"
 & (Join-Path $root 'scripts\compile.ps1') -Source $source -LogPath $compile
-if($LASTEXITCODE -notin @(0,1)){throw 'Compile command failed'}
 $log=Get-Content $compile -Raw
 if($log -notmatch '0 errors, 0 warnings'){throw 'Compile gate failed'}
 $binary=[IO.Path]::ChangeExtension($source,'.ex5')
