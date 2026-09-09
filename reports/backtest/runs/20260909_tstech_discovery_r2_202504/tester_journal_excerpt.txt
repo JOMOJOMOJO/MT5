@@ -1,0 +1,13 @@
+CS	0	00:29:01.538	Startup	MetaTester 5 build 6182, 5 Sep 2026
+CS	0	00:29:01.538	Startup	Windows 11 build 26200, 6 x Intel Core i5-8500  @ 3.00GHz, AVX2, 5 / 15 Gb memory, 228 / 475 Gb disk, UAC, GMT+9
+CS	0	00:29:01.882	127.0.0.1	login (build 6182)
+CS	0	00:29:02.208	Tester	EURUSD,M1 (VantageTradingLtd-Live): generating based on real ticks
+CS	0	00:29:02.208	Tester	  InpDetectorVersion=3
+CS	0	00:29:02.208	Tester	  InpRunId=tstech_discovery_r2_202504
+CS	0	00:29:02.208	Tester	  InpResearchPeriod=2025-04-01_TO_2025-05-01
+CS	0	00:29:10.139	ExpectedValue_MultiCurrency_TickShockTechnicalResearch (EURUSD,M1)	2025.04.01 00:00:00   ExpectedValue_MultiCurrency_TickShockResearch initialized research_only symbols=6 grid_ms=250 detector=TAIL_V1_PERSISTENT horizons=250,500,1000 execution_mode=REALIZABLE_EA submit_latency_ms=0
+CS	0	01:00:35.068	ExpectedValue_MultiCurrency_TickShockTechnicalResearch (EURUSD,M1)	2025.04.30 23:57:59   technical_discovery episodes=3967 censored=11 capacity=0 feature_invalid=0 orders=0
+CS	0	01:00:35.068	ExpectedValue_MultiCurrency_TickShockTechnicalResearch (EURUSD,M1)	2025.04.30 23:57:59   ExpectedValue_MultiCurrency_TickShockResearch deinitialized reason=1 events=26 rows=26
+CS	0	01:00:35.140	Tester	EURUSD,M1: 2189869 ticks, 31621 bars generated. Environment synchronized in 0:00:00.029. Test passed in 0:31:33.199 (including ticks preprocessing 0:00:01.078).
+CS	0	01:00:35.140	Tester	14085619 total ticks for all symbols
+CS	0	01:00:35.140	Tester	793 Mb memory used including 227 Mb of history data, 320 Mb of tick data

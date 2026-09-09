@@ -6,3 +6,18 @@ reports/backtest/ExpectedValue_MultiCurrency_ScoreScanner_2025_phase2_structure_
 reports/backtest/ExpectedValue_MultiCurrency_ScoreScanner_*_oos_*_scores.csv filter=lfs diff=lfs merge=lfs -text
 reports/backtest/ExpectedValue_MultiCurrency_ScoreScanner_*_oos_*_structure_diagnostics.csv filter=lfs diff=lfs merge=lfs -text
 reports/backtest/ExpectedValue_MultiCurrency_ScoreScanner_2025_thirdwave_*_thirdwave_signal_diagnostics.csv filter=lfs diff=lfs merge=lfs -text
+
+# Preserve byte hashes for this experiment, including CSV newline conventions.
+reports/backtest/runs/20260909_tstech_discovery_r2_202504/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/backtest/runs/20260909_tstech_candidate_202504/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/analysis/tick_shock/technical_discovery/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/analysis/tick_shock/technical_discovery_replay/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/tests/tick_shock/technical_discovery/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+tools/tick_shock/*technical* -text whitespace=trailing-space,space-before-tab,cr-at-eol
+docs/research/tick_shock/technical_*.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
+mql/Include/TickShock/TickShockTechnical*.mqh -text whitespace=trailing-space,space-before-tab,cr-at-eol
+mql/Experts/ExpectedValue_MultiCurrency_TickShockTechnical*.mq5 -text whitespace=trailing-space,space-before-tab,cr-at-eol
+mql/Experts/tests/ExpectedValue_TickShock_Technical*.mq5 -text whitespace=trailing-space,space-before-tab,cr-at-eol
+docs/devlog/2026-09-09-tickshock-technical-discovery.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
+knowledge/lessons/tickshock-model-parity-versus-execution-parity.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
+content/seeds/2026-09-09-model-parity-is-not-fill-parity.md -text whitespace=trailing-space,space-before-tab,cr-at-eol

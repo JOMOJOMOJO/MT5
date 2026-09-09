@@ -1,0 +1,12 @@
+{
+  "episodes": 3967,
+  "market_clusters": 3746,
+  "raw_outcome_rows": 47604,
+  "completed_direction_geometry_rows": 23498,
+  "hold_max_seconds": 173691.211,
+  "hold_over_901_seconds": 2434,
+  "processing_delay_max_ms": 64883,
+  "processing_delay_median_ms": 601.0,
+  "quote_age_max_ms": 500,
+  "note": "900s closes on first available executable quote; gaps are reported, not capped or interpolated"
+}

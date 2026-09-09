@@ -1,0 +1,1 @@
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/tick_shock/run_technical_candidate.ps1 -TimeoutSeconds 5400 -Folder 20260909_tstech_candidate_202504 -RunId tstech_candidate_202504

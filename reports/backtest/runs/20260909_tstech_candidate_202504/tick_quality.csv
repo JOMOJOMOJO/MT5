@@ -1,0 +1,7 @@
+symbol,discard_warnings,generated_minutes,commission,evidence
+EURUSD,0,NOT_OBSERVED,NOT_OBSERVED_ALL_SYMBOL_SCOPE,tester_journal_excerpt.txt
+GBPUSD,0,NOT_OBSERVED,NOT_OBSERVED_ALL_SYMBOL_SCOPE,tester_journal_excerpt.txt
+USDJPY,0,NOT_OBSERVED,NOT_OBSERVED_ALL_SYMBOL_SCOPE,tester_journal_excerpt.txt
+AUDUSD,0,NOT_OBSERVED,NOT_OBSERVED_ALL_SYMBOL_SCOPE,tester_journal_excerpt.txt
+USDCAD,0,NOT_OBSERVED,NOT_OBSERVED_ALL_SYMBOL_SCOPE,tester_journal_excerpt.txt
+USDCHF,0,NOT_OBSERVED,NOT_OBSERVED_ALL_SYMBOL_SCOPE,tester_journal_excerpt.txt

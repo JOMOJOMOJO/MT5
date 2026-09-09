@@ -1,0 +1,2 @@
+candidate_id,market_clusters,resamples,seed,net_expectancy_r,ci95_low,ci95_high,interpretation
+g3_SHALLOW_TREE_absolute_0,351,5000,20260909,0.073126763600303,-0.024047669922842,0.16347319991841,DESCRIPTIVE_AFTER_MODEL_SELECTION_NOT_SELECTION_ADJUSTED

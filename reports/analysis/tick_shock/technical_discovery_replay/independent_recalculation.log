@@ -1,0 +1,21 @@
+{
+  "checks": 32,
+  "failures": 0,
+  "candidate": [
+    {
+      "candidate_id": "g3_SHALLOW_TREE_absolute_0",
+      "trades": 351,
+      "wins": 202,
+      "losses": 149,
+      "tp": 141,
+      "sl": 116,
+      "timeout": 94,
+      "total_r": 25.667494023711605,
+      "expectancy_r": 0.07312676360031796,
+      "total_pips": 437.5000000000262,
+      "expectancy_pips": 1.2464387464388211,
+      "pf": 1.193756733694788,
+      "maxdd_r": 12.974213361568232
+    }
+  ]
+}

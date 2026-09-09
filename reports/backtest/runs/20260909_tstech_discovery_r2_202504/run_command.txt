@@ -1,0 +1,1 @@
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/tick_shock/run_technical_discovery.ps1 -TimeoutSeconds 5400 -Folder 20260909_tstech_discovery_r2_202504 -RunId tstech_discovery_r2_202504

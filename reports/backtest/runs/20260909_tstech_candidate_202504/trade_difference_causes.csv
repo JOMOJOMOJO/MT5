@@ -1,0 +1,8 @@
+symbol,t0_msc,direction,scope,mt5_actions,python_blocking_episode,python_blocking_exit_msc,python_outcome_status,mt5_blocking_episode,mt5_pending_blocker,reason
+EURUSD,1745554589000,-1,PYTHON_ONLY,OVERLAP_SKIP,,,SL,,tstech_candidate_202504_AUDUSD_mh_345,Current-quote fills/server exit timing change cost/overlap eligibility; model is unchanged
+USDCAD,1743777121750,-1,MT5_ONLY,ENTRY,tstech_discovery_r2_202504_USDCHF_mh_27,1743777182808,TP,tstech_candidate_202504_USDCAD_mh_29,tstech_candidate_202504_USDCAD_mh_29,Current-quote fills/server exit timing change cost/overlap eligibility; model is unchanged
+USDCAD,1745371388500,-1,PYTHON_ONLY,OVERLAP_SKIP,,,SL,tstech_candidate_202504_GBPUSD_mh_570,,Current-quote fills/server exit timing change cost/overlap eligibility; model is unchanged
+USDCHF,1743765637500,-1,PYTHON_ONLY,COST_DISTANCE_REJECT,,,SL,,tstech_candidate_202504_USDCHF_mh_19,Current-quote fills/server exit timing change cost/overlap eligibility; model is unchanged
+USDCHF,1743777442000,-1,PYTHON_ONLY,OVERLAP_SKIP,,,TP,tstech_candidate_202504_USDCAD_mh_29,,Current-quote fills/server exit timing change cost/overlap eligibility; model is unchanged
+USDCHF,1745255362250,-1,MT5_ONLY,ENTRY,,,COST_DISTANCE_REJECT,tstech_candidate_202504_USDCHF_mh_522,tstech_candidate_202504_USDCHF_mh_522,Current-quote fills/server exit timing change cost/overlap eligibility; model is unchanged
+USDJPY,1743777890000,1,MT5_ONLY,ENTRY,tstech_discovery_r2_202504_USDCHF_mh_28,1743778292993,TP,tstech_candidate_202504_USDJPY_mh_81,tstech_candidate_202504_USDJPY_mh_81,Current-quote fills/server exit timing change cost/overlap eligibility; model is unchanged

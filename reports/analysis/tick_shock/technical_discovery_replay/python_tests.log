@@ -1,0 +1,20 @@
+test_all_exported_models_independent_prediction (__main__.TestIndependentSpecification.test_all_exported_models_independent_prediction) ... ok
+test_candidate_requires_frequency_and_concentration (__main__.TestIndependentSpecification.test_candidate_requires_frequency_and_concentration) ... ok
+test_censored_position_not_released_at_entry (__main__.TestIndependentSpecification.test_censored_position_not_released_at_entry) ... ok
+test_cost_and_gap_oracle (__main__.TestIndependentSpecification.test_cost_and_gap_oracle) ... ok
+test_equal_close_time_is_conservatively_busy (__main__.TestIndependentSpecification.test_equal_close_time_is_conservatively_busy) ... ok
+test_feature_metadata_excluded (__main__.TestIndependentSpecification.test_feature_metadata_excluded) ... ok
+test_forward_purge_clusters_and_labels (__main__.TestIndependentSpecification.test_forward_purge_clusters_and_labels) ... ok
+test_no_entry_retains_pending_reservation (__main__.TestIndependentSpecification.test_no_entry_retains_pending_reservation) ... ok
+test_outcome_predictor_rejected (__main__.TestIndependentSpecification.test_outcome_predictor_rejected) ... ok
+test_pending_reservation_before_entry (__main__.TestIndependentSpecification.test_pending_reservation_before_entry) ... ok
+test_preferred_invalid_direction_does_not_fallback (__main__.TestIndependentSpecification.test_preferred_invalid_direction_does_not_fallback) ... ok
+test_reject_entry_before_processing (__main__.TestIndependentSpecification.test_reject_entry_before_processing) ... ok
+test_synthetic_end_to_end_candidate_and_independent_replay (__main__.TestIndependentSpecification.test_synthetic_end_to_end_candidate_and_independent_replay) ... ok
+test_threshold_boundary (__main__.TestIndependentSpecification.test_threshold_boundary) ... ok
+test_tie_is_no_trade (__main__.TestIndependentSpecification.test_tie_is_no_trade) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 4.335s
+
+OK

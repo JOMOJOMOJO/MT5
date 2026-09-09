@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import zipfile
 from pathlib import Path
 import pandas as pd
 
@@ -43,8 +44,17 @@ def main():
         expected, path = line.split('  ',1)
         source = Path(path)
         actual = hashlib.sha256(source.read_bytes()).hexdigest().upper() if source.exists() else 'MISSING'
+        status='PASS' if actual == expected else 'FAIL'
+        archived=''
+        bundle=a.run/'exact_source_bundle.zip'
+        if status=='FAIL' and source.suffix in ('.mqh','.mq5') and bundle.exists():
+            relative=source.relative_to(Path.cwd()).as_posix()
+            with zipfile.ZipFile(bundle) as z:
+                if relative in z.namelist():
+                    archived=hashlib.sha256(z.read(relative)).hexdigest().upper()
+            if archived==expected:status='HISTORICAL_BUNDLE_MATCH_CURRENT_DIFFERS'
         hashes.append(dict(path=path, recorded_sha256=expected, current_sha256=actual,
-                           status='PASS' if actual == expected else 'FAIL'))
+                           archived_sha256=archived,status=status))
     check('formal_dependency_hash_mismatch', sum(x['status']=='FAIL' for x in hashes))
     valid = o[o.status.isin(['TP','SL','TIME'])]
     diagnostics = dict(episodes=len(f), market_clusters=int(f.market_cluster_id.nunique()),
