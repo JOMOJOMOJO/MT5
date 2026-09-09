@@ -14,7 +14,7 @@ def main():
         if not starts:continue
         start=starts[-1];end=next((i for i in range(start+1,len(lines)) if 'InpRunId=' in lines[i]),len(lines));block=lines[max(0,start-70):end];break
     if block is None:raise SystemExit('Matching tester run journal missing')
-    tokens=('InpRunId=','InpResearchPeriod=','InpDetectorVersion=','real ticks discarded','initialized research_only','deinitialized reason=','Test passed in','total ticks for all symbols','memory used','technical_discovery','error','failed','Vantage','build ')
+    tokens=('InpRunId=','InpResearchPeriod=','InpDetectorVersion=','real ticks discarded','initialized research_only','deinitialized reason=','Test passed in','total ticks for all symbols','memory used','technical_discovery','technical_candidate','error','failed','Vantage','build ')
     selected=[s for s in block if any(x in s for x in tokens)]
     (a.run_dir/'tester_journal_excerpt.txt').write_text('\n'.join(selected)+'\n',encoding='utf-8')
     rows=[]

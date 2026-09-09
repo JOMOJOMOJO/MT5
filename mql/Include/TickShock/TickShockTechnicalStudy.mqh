@@ -141,7 +141,11 @@ bool TSTDArm(const int symbol_index,const string episode,const string event_id,c
    string line=episode+","+event_id+","+(string)cluster+","+symbol+","+(string)shock_direction+","+(string)t0+","+(string)processing+","+(string)quote;
    TSTDAdd(line,(string)f.max_source_close_msc);TSTDAdd(line,(string)f.future_source_count);TSTDAdd(line,(string)f.available_count);
    TSTDAdd(line,TSTDNumber(f.atr14_m1));TSTDAdd(line,TSTDNumber(f.atr14_m5));TSTDAdd(line,TSTechValuesCsv(f));
-   FileWriteString(g_tstd_features,line+"\r\n");FileFlush(g_tstd_features);++g_tstd_episodes;return true;
+   FileWriteString(g_tstd_features,line+"\r\n");FileFlush(g_tstd_features);++g_tstd_episodes;
+#ifdef TS_TECH_CANDIDATE
+   TSTCOnSnapshot(episode,symbol,t0,processing,quote,f);
+#endif
+   return true;
   }
 void TSTDObserve(const int i,const long q,const double bid,const double ask)
   {for(int slot=0;slot<TSTD_POOL;++slot)if(g_tstd_pools[i].records[slot].active)TSTDAdvance(g_tstd_pools[i].records[slot],q,bid,ask);}
