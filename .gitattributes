@@ -21,3 +21,14 @@ mql/Experts/tests/ExpectedValue_TickShock_Technical*.mq5 -text whitespace=traili
 docs/devlog/2026-09-09-tickshock-technical-discovery.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
 knowledge/lessons/tickshock-model-parity-versus-execution-parity.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
 content/seeds/2026-09-09-model-parity-is-not-fill-parity.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
+
+# Immutable byte-level USDJPY-only freeze/reproduction evidence.
+reports/analysis/tick_shock/usdjpy_only_ml_20260912/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/backtest/batches/usdjpy_only_ml_20260912/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+tools/tick_shock/*usdjpy_only* -text whitespace=trailing-space,space-before-tab,cr-at-eol
+tools/tick_shock/verify_usdjpy_forward_frontier.py -text
+mql/Include/TickShock4m2mFrozen/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+mql/Include/TickShockUSDJPYOnlyModel.mqh -text
+mql/Experts/ExpectedValue_USDJPY_TickShockMLHoldout.mq5 -text
+mql/Experts/tests/ExpectedValue_USDJPY_TickShockMLParityHarness.mq5 -text
+docs/research/tick_shock/usdjpy_only_ml*.md -text
