@@ -1,0 +1,6 @@
+{
+  "checks": 17280,
+  "estimator_fitting": false,
+  "failures": 0,
+  "uses_full_precision_task_thresholds": true
+}

@@ -1,0 +1,9 @@
+{
+  "model_sha256": "4c113948414a289843fc4518a76bc1f761ad611957a4c4f1e7ec92bb0fe4981b",
+  "mql_path": "mql/Include/TickShockUSDJPYOnlyModel.mqh",
+  "mql_sha256": "33a3f928a57c865301a1cb68779215a3aadf576b3396bf3a8cf1ce500186bbdd",
+  "parity_vectors": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\usdjpy_only_parity_20260912\\vectors.csv",
+  "parity_vectors_sha256": "8b93371e0901bcb91016decf199b328b5c391f23364adbdb9eb9a4e78e406343",
+  "prepared_at": "2026-09-12T04:18:36.647903+00:00",
+  "rows": 3644
+}

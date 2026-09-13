@@ -1,0 +1,3 @@
+episode_id,symbol,direction,t0_msc,processing_msc,action_msc,quote_msc,status,retcode,detail
+usdjpy_only_ml_smoke_20260912_USDJPY_mh_2,USDJPY,-1,1735843577250,1735843577554,1735843577655,1735843577555,ENTRY,10009,order=2 deal=2 external=0 request=0
+usdjpy_only_ml_smoke_20260912_USDJPY_mh_2,USDJPY,-1,1735843577250,1735843577554,1735844479300,1735844475473,CLOSE_TIME,10009,order=3 deal=3 external=0 request=1

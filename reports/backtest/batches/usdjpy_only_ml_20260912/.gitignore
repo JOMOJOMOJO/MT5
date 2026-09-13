@@ -1,0 +1,9 @@
+# Full scanner data/cache and identifying tester HTML stay local with hashes.
+**/technical_features.csv
+**/technical_outcomes.csv
+**/medium_horizon_episode_summary.csv
+**/tester_report.html
+**/tester_report.html.meta.json
+**/tester_report*.png
+**/summary.csv
+**/summary.csv.runmeta

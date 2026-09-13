@@ -1,0 +1,11 @@
+month,geometry,distance_atr,statistical_candidates,shock_detections_in_episode_archive,episode_archive_rows,episodes,executable_long,executable_short,executable_either,monthly_episode_ceiling_ge_200,collection_status,one_position_always_long,one_position_always_short
+202505,1,0.5,7668,6809,840,840,811,811,811,True,PASS,811,811
+202505,2,0.75,7668,6809,840,840,814,814,814,True,PASS,814,814
+202505,3,1,7668,6809,840,840,815,815,815,True,PASS,815,815
+202505,4,1.5,7668,6809,840,840,817,817,817,True,PASS,817,817
+202505,5,2,7668,6809,840,840,819,819,819,True,PASS,819,819
+202506,1,0.5,3684,3237,476,476,438,438,438,True,PASS,438,438
+202506,2,0.75,3684,3237,476,476,445,445,445,True,PASS,445,445
+202506,3,1,3684,3237,476,476,447,447,447,True,PASS,447,447
+202506,4,1.5,3684,3237,476,476,450,450,450,True,PASS,450,450
+202506,5,2,3684,3237,476,476,451,451,451,True,PASS,451,451

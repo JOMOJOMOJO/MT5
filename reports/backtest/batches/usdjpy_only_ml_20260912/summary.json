@@ -1,0 +1,27 @@
+{
+  "actual": {
+    "commission": 0.0,
+    "expectancy_r": -0.018444722211396945,
+    "fee": 0.0,
+    "hold_over_900": 108,
+    "long": 32,
+    "max_hold": 909.42,
+    "maxdd_money": 137.68,
+    "maxdd_r": 14.82352821488897,
+    "net_profit": -25.85,
+    "pf_money": 0.9224608554802328,
+    "pf_r": 0.9285761637284339,
+    "short": 107,
+    "sl": 17,
+    "swap": 0.0,
+    "time": 108,
+    "tp": 14,
+    "trades": 139,
+    "win_rate": 0.48201438848920863
+  },
+  "completed": "2026-09-13T14:25:07.746151+00:00",
+  "hold_limit_is_first_observable_quote_not_strict_900": true,
+  "model_unchanged": true,
+  "production_eligible": false,
+  "qa_failures": 0
+}

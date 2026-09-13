@@ -1,0 +1,14 @@
+{
+  "status": "COMPLETED_NOT_PRODUCTION_ELIGIBLE",
+  "freeze_integrity": true,
+  "model_sha256": "4c113948414a289843fc4518a76bc1f761ad611957a4c4f1e7ec92bb0fe4981b",
+  "artifacts": 607,
+  "source_dependencies": 61,
+  "mt5_qa_failures": 0,
+  "source_prerequisites_commit": "f0415e6712748802d7db8069d803dd01f30fddc5",
+  "manifest_self_hash_excluded": true,
+  "local_only_reason": "Caches, repeated replay outputs and identifying/full-scanner raw stay local; USDJPY compressed inputs and compact evidence are delivered.",
+  "terminal_and_binary_hashes": "reports/backtest/batches/usdjpy_only_ml_20260912/source_hashes.csv",
+  "standard_dependencies": "MT5 standard MQL library and pinned Python requirements",
+  "unrelated_worktree_changes": "Preserved; not staged or repaired."
+}

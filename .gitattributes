@@ -26,9 +26,12 @@ content/seeds/2026-09-09-model-parity-is-not-fill-parity.md -text whitespace=tra
 reports/analysis/tick_shock/usdjpy_only_ml_20260912/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
 reports/backtest/batches/usdjpy_only_ml_20260912/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
 tools/tick_shock/*usdjpy_only* -text whitespace=trailing-space,space-before-tab,cr-at-eol
-tools/tick_shock/verify_usdjpy_forward_frontier.py -text
+tools/tick_shock/verify_usdjpy_forward_frontier.py -text whitespace=trailing-space,space-before-tab,cr-at-eol
 mql/Include/TickShock4m2mFrozen/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
-mql/Include/TickShockUSDJPYOnlyModel.mqh -text
-mql/Experts/ExpectedValue_USDJPY_TickShockMLHoldout.mq5 -text
-mql/Experts/tests/ExpectedValue_USDJPY_TickShockMLParityHarness.mq5 -text
-docs/research/tick_shock/usdjpy_only_ml*.md -text
+mql/Include/TickShockUSDJPYOnlyModel.mqh -text whitespace=trailing-space,space-before-tab,cr-at-eol
+mql/Experts/ExpectedValue_USDJPY_TickShockMLHoldout.mq5 -text whitespace=trailing-space,space-before-tab,cr-at-eol
+mql/Experts/tests/ExpectedValue_USDJPY_TickShockMLParityHarness.mq5 -text whitespace=trailing-space,space-before-tab,cr-at-eol
+docs/research/tick_shock/usdjpy_only_ml*.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
+docs/devlog/2026-09-13-tickshock-usdjpy-only-ml.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
+knowledge/experiments/2026-09-13-tickshock-usdjpy-only-ml.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
+content/seeds/2026-09-13-frequency-calibration-is-not-a-trade-quota.md -text whitespace=trailing-space,space-before-tab,cr-at-eol

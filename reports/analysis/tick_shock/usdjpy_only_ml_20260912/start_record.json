@@ -1,0 +1,12 @@
+{
+  "development_episodes": 3644,
+  "holdout_read": false,
+  "lightgbm": "4.6.0",
+  "numpy": "2.4.4",
+  "pandas": "3.0.1",
+  "prereg_sha256": "ca4f32463a30c9bf791b7f67af689aae32f25d4ba4e93b22a2024afdedfb5d6c",
+  "sklearn": "1.9.0",
+  "source_commit": "5158de8b56bf58953a005b2440a9b86cd6d4746e",
+  "source_sha256": "05bd83abddddcad0e1c6df7bf23a08cdd1a79c5bea95a0a05f5a0f74429bef42",
+  "started": "2026-09-12T04:13:30.359108+00:00"
+}

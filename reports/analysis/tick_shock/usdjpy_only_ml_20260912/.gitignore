@@ -1,0 +1,3 @@
+# Rebuildable local cache; compressed USDJPY-only inputs are committed instead.
+dataset.pkl
+deterministic_full_replay/

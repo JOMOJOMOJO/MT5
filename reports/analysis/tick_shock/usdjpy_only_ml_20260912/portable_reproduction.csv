@@ -1,0 +1,5 @@
+check,rows,max_error,status
+compressed_input_frozen_refit_1,4960,1.3877787807814e-17,PASS
+compressed_input_frozen_refit_-1,4960,2.7755575615629e-17,PASS
+compressed_input_holdout_portfolio_202505,96,0,PASS
+compressed_input_holdout_portfolio_202506,44,0,PASS

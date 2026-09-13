@@ -1,0 +1,2 @@
+episode_id,symbol,direction,signal_msc,processing_msc,request_msc,quote_msc,entry_msc,exit_msc,requested_volume,filled_volume,closed_volume,entry_price,exit_price,sl,tp,risk_amount,gross_profit,commission,fee,swap,net_profit,gross_r,net_r,hold_seconds,exit_reason,entry_deals,exit_deals,position_identifier
+usdjpy_only_ml_smoke_20260912_USDJPY_mh_2,USDJPY,-1,1735843577250,1735843577554,1735843577655,1735843577555,1735843577655,1735844479300,0.06,0.06,0.06,157.712,157.691,157.959,157.465,9.38,0.8,0.0,0.0,0.0,0.8,0.08528784648187633,0.08528784648187633,901.645,TIME,1,1,2

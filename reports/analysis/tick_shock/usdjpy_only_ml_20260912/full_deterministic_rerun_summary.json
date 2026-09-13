@@ -1,0 +1,8 @@
+{
+  "checks": 17820,
+  "failures": 0,
+  "folds": 180,
+  "holdout_read": false,
+  "input": "COMPRESSED_USDJPY_ONLY_SUBSETS",
+  "source_model_unchanged": true
+}

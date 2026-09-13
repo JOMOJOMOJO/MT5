@@ -1,0 +1,8 @@
+﻿{
+    "reason":  "Tester report appeared before terminal finished shutdown",
+    "resume_at":  "2026-09-13T00:29:55.7223209+09:00",
+    "runner_sha256":  "c574869fcd892de363aae551a68db509c214844307b040d10e27533661d9e249",
+    "model_unchanged":  true,
+    "binary_unchanged":  true,
+    "configs_unchanged":  true
+}

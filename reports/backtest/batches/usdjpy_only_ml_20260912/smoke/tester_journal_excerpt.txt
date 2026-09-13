@@ -1,0 +1,6 @@
+CS	0	00:30:00.771	Tester	EURUSD,M1 (Bybit-Live): generating based on real ticks
+CS	0	00:30:00.772	Tester	EURUSD,M1: testing of Experts\dev\mql\Experts\ExpectedValue_USDJPY_TickShockMLHoldout.ex5 from 2025.01.02 00:00 to 2025.01.03 00:00 started with inputs:
+CS	0	00:30:00.772	Tester	  InpRunId=usdjpy_only_ml_smoke_20260912
+CS	0	00:30:07.938	ExpectedValue_USDJPY_TickShockMLHoldout (EURUSD,M1)	2025.01.02 00:00:00   ExpectedValue_MultiCurrency_TickShockResearch initialized research_only symbols=6 grid_ms=250 detector=TAIL_V1_PERSISTENT horizons=250,500,1000 execution_mode=REALIZABLE_EA submit_latency_ms=0
+CS	0	00:30:45.682	ExpectedValue_USDJPY_TickShockMLHoldout (EURUSD,M1)	2025.01.02 23:57:59   technical_discovery episodes=3 censored=0 capacity=0 feature_invalid=0 orders=0
+CS	0	00:30:45.707	Tester	EURUSD,M1: 107093 ticks, 1438 bars generated. Environment synchronized in 0:00:00.023. Test passed in 0:00:45.063 (including ticks preprocessing 0:00:00.015).

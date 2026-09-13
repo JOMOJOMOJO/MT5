@@ -1,0 +1,7 @@
+CS	0	00:30:55.332	Tester	EURUSD,M1 (Bybit-Live): generating based on real ticks
+CS	0	00:53:24.261	Tester	final balance 10022.62 USD
+CS	0	00:53:24.278	ExpectedValue_USDJPY_TickShockMLHoldout (EURUSD,M1)	2025.05.30 23:56:59   technical_discovery episodes=2364 censored=8 capacity=0 feature_invalid=0 orders=0
+CS	0	00:53:24.306	ExpectedValue_USDJPY_TickShockMLHoldout (EURUSD,M1)	2025.05.30 23:56:59   technical_candidate signals=840 closed=95 errors=0 remaining_positions=0 tester_only=true
+CS	0	00:53:24.334	Tester	EURUSD,M1: 2829246 ticks, 31628 bars generated. Environment synchronized in 0:00:00.024. Test passed in 0:22:29.065 (including ticks preprocessing 0:00:01.046).
+CS	0	00:53:24.335	Tester	788 Mb memory used including 222 Mb of history data, 320 Mb of tick data
+CS	0	00:53:35.267	Tester	EURUSD,M1 (Bybit-Live): generating based on real ticks

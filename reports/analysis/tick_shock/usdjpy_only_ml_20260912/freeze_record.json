@@ -1,0 +1,18 @@
+{
+  "designation": "HOLDOUT_DIAGNOSTIC_CANDIDATE_NOT_ADOPTED",
+  "driver_sha256": "05bd83abddddcad0e1c6df7bf23a08cdd1a79c5bea95a0a05f5a0f74429bef42",
+  "files": {
+    "development_input_hashes.csv": "cda0a1f774b806c1950282cdd6715047bcbbf67038505b23475b84fa8f2959e6",
+    "frozen_model.json": "4c113948414a289843fc4518a76bc1f761ad611957a4c4f1e7ec92bb0fe4981b",
+    "frozen_model.pkl": "a1ee448cd9242d3d5acc3c8f8092277ced16ed48a4200aac255ff33e633d6ca7",
+    "selection.json": "997cb2f821c53aed03b7d2db7e70c6e32c32a778eab3d95699eb6023a815dfe8"
+  },
+  "frozen_at": "2026-09-12T04:16:46.340302+00:00",
+  "holdout_read": false,
+  "prereg_sha256": "ca4f32463a30c9bf791b7f67af689aae32f25d4ba4e93b22a2024afdedfb5d6c",
+  "source_commit": "5158de8b56bf58953a005b2440a9b86cd6d4746e",
+  "source_files": {
+    "tools\\tick_shock\\analyze_technical_discovery.py": "e2e3e23ed5b9dbe377184993986e13d6fbbea346e654eeab4abf0a623e140209",
+    "tools\\tick_shock\\technical_ml_discovery.py": "73ef42a50d51912033c50379fdc89e9aaaa283ea386ecb59ad54e60dc19dd8fe"
+  }
+}
