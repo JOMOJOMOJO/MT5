@@ -38,3 +38,21 @@ For rolling calibration, August must inherit July's feature-score state via the
 predeclared algorithm, not newly fitted weights or an outcome-adjusted threshold.
 Main pipeline source SHA is checked by the waiting watcher. If the driver changes,
 it intentionally stops rather than executing an unreviewed replacement.
+
+## September 14 validation continuation
+
+Six monthly collection gates are now PASS. Development training resumed after
+loader/launcher recovery (commit def35c96); do not start a duplicate process.
+The actual MT5 core harness is complete: 8 PASS, evidence in
+`reports/tests/tick_shock/two_stage_core_20260914/`. Python policy tests: 10 PASS.
+
+`watch_two_stage_validation.ps1` is waiting for the successful Python freeze,
+then runs `audit_two_stage_development.py` and the full 180-fit deterministic
+replay. Its state is `validation_status.json` under the development batch.
+This watcher never opens July/August and never launches a trading EA.
+The independent accountant imports no production model/statistics functions;
+it joins selected trades to original fixed-time labels, checks causal clocks,
+single position, monthly/pooled R/PF/DD, hashes and cost/exit-lag strata.
+Its literal three-trade arithmetic check passed before formal execution.
+Actual independent accounting and deterministic replay results remain pending
+until their result files exist and pass. Steps 5, 7 and 8 above remain pending.
