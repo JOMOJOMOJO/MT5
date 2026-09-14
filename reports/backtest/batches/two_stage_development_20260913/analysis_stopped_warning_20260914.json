@@ -1,0 +1,7 @@
+﻿{
+    "detail":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\tick_shock\\two_stage_ml.py:62: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`",
+    "status":  "STOPPED_ERROR",
+    "pid":  40440,
+    "source_sha256":  "842928DCC1CBC597909C3AF4F9103DE52F1024780CD771C00E2266D70081B94E",
+    "updated":  "2026-09-14T12:03:03.7287647+09:00"
+}

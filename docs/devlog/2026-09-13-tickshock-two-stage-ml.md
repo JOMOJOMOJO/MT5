@@ -43,3 +43,15 @@ the saved source/binary SHA and starts February, never overwrites January.
 Some fixed-time exits cross market closures (January maximum excess ~172,785 seconds).
 This is not strict 5/10/15-minute liquidation and must remain a limitation/stratum in
 all economic results. No hindsight deletion of these trades has been authorized.
+
+## Development launcher recovery (September 14)
+
+All six collection QA gates passed. The watcher stopped before fitting because Windows
+PowerShell classified pandas stderr PerformanceWarning as a terminating error. The
+original status is retained as `analysis_stopped_warning_20260914.json` in the batch.
+The launcher now captures stdout/stderr separately and checks process exit code.
+An explicit `--resume-empty-load` accepts only the two empty output directories and
+refuses any existing data/model files. A subsequent actual Python error exposed pandas
+copy-on-write: the NumPy feature array was read-only. Requesting an explicit copy fixes
+buffer ownership without changing feature values, labels or model design. Timestamped
+stderr logs retain both incidents. No model fit or holdout access preceded these fixes.

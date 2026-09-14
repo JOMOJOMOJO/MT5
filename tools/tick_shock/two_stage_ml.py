@@ -56,6 +56,7 @@ def load():
                         pip_size=row.pip_size,status='NO_ENTRY',exit_msc=0,exit_price=np.nan,gross_r=np.nan,gross_pips=np.nan))
         if extras:o=pd.concat([o,pd.DataFrame(extras)],ignore_index=True)
         assert len(o)==6*len(f) and not o.duplicated(['episode_id','direction','horizon_seconds']).any()
+        f=f.copy();o=o.copy()  # Consolidate CSV blocks before metadata insertion.
         for frame in (f,o):
             frame.episode_id=str(month)+':'+frame.episode_id.astype(str)
             frame.market_cluster_id=str(month)+':'+frame.market_cluster_id.astype(str)
@@ -69,7 +70,7 @@ def load():
     o=pd.concat(outcomes,ignore_index=True)
     columns={'FULL486':list(range(486)),'SCALE_FREE':[i for i,n in enumerate(names) if not core.raw_scale_feature(n)]}
     assert len(columns['SCALE_FREE'])==448
-    x=f[names].to_numpy(float);x[~np.isfinite(x)]=np.nan
+    x=f[names].to_numpy(dtype=float,copy=True);x[~np.isfinite(x)]=np.nan
     dump(hashes,'input_hashes.csv');dump(pop,'population.csv');dump([dict(feature=n) for n in names],'feature_catalog.csv')
     return f,o,x,columns,names
 
@@ -262,13 +263,19 @@ def summarize_and_freeze(data):
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--workers',type=int,default=3)
+    parser.add_argument('--resume-empty-load',action='store_true',help='Resume only an aborted load with empty tasks/predictions and no files')
     a=parser.parse_args()
-    if OUT.exists():raise RuntimeError('Output exists; no implicit rerun/overwrite')
+    if OUT.exists():
+        empty_layout=(set(p.name for p in OUT.iterdir())=={'tasks','predictions'}
+            and all(p.is_dir() and not any(p.iterdir()) for p in OUT.iterdir()))
+        if not (a.resume_empty_load and empty_layout):
+            raise RuntimeError('Output exists; explicit resume requires empty load-only layout')
     # Required six-month evidence before creating model state; never reads July/August.
     for month in MONTHS:
         q=BATCH/str(month)/'fixed_time_qa.json'
         if not q.exists() or json.loads(q.read_text())['status']!='PASS':raise RuntimeError(f'Missing passing input: {q}')
-    OUT.mkdir(parents=True);(OUT/'tasks').mkdir();(OUT/'predictions').mkdir()
+    OUT.mkdir(parents=True,exist_ok=a.resume_empty_load)
+    (OUT/'tasks').mkdir(exist_ok=a.resume_empty_load);(OUT/'predictions').mkdir(exist_ok=a.resume_empty_load)
     data=load();cache=OUT/'dataset.pkl'
     with cache.open('wb') as handle:pickle.dump(data,handle,protocol=5)
     js(dict(status='DEVELOPMENT_RUNNING',holdout_read=False,source_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),

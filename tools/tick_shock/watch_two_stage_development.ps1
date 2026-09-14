@@ -1,4 +1,4 @@
-param([int]$Workers=3)
+param([int]$Workers=3,[switch]$ResumeEmptyLoad)
 $ErrorActionPreference='Stop'
 $root=(Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $state=Join-Path $root 'reports\backtest\batches\two_stage_development_20260913\status.json'
@@ -17,8 +17,14 @@ try {
  }
  if((Get-FileHash $source -Algorithm SHA256).Hash -ne $initial){throw 'Analysis source changed while waiting; review before restarting watcher'}
  WatchState 'RUNNING_DEVELOPMENT' 'No July/August access'
- & 'C:\Users\windows\.pyenv\pyenv-win\versions\3.11.9\python.exe' $source --workers $Workers *> $log
- if($LASTEXITCODE -ne 0){throw 'Two-stage development failed; holdout remains sealed'}
+ $stamp=Get-Date -Format 'yyyyMMdd_HHmmss'
+ $stdout="$log.$stamp.stdout.txt"
+ $stderr="$log.$stamp.stderr.txt"
+ $arguments=@('-u',('"'+$source+'"'),'--workers',"$Workers")
+ if($ResumeEmptyLoad){$arguments+='--resume-empty-load'}
+ $job=Start-Process -FilePath 'C:\Users\windows\.pyenv\pyenv-win\versions\3.11.9\python.exe' -ArgumentList $arguments -WorkingDirectory $root -WindowStyle Hidden -PassThru -Wait -RedirectStandardOutput $stdout -RedirectStandardError $stderr
+ $job.WaitForExit()
+ if($job.ExitCode -ne 0){throw "Two-stage development failed (exit $($job.ExitCode)); inspect $stderr; holdout remains sealed"}
  WatchState 'PYTHON_FROZEN_AWAITING_MQL' 'No holdout launched; inspect model/parity gates next'
 }catch{
  WatchState 'STOPPED_ERROR' $_.Exception.Message
