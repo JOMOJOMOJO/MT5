@@ -1,0 +1,24 @@
+{
+  "status": "FAIL",
+  "checks": {
+    "feature_identity": true,
+    "time_row_unique": true,
+    "horizons": true,
+    "directions": true,
+    "feature_parity": true,
+    "all_entered_tracked": true,
+    "six_labels_per_entered": true,
+    "entry_matches_original": true,
+    "entry_causal": true,
+    "exit_causal": true,
+    "r_arithmetic": false,
+    "pip_arithmetic": true,
+    "statuses": true
+  },
+  "rows": 9732,
+  "episodes": 1628,
+  "time_labels": 9714,
+  "censored_labels": 18,
+  "max_exit_lag_ms": 172785162.0,
+  "sha256": "2288b5196babc2669754370c16fd405fa8a49a0f455798eeff7212ae2b42d608"
+}

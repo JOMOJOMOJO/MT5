@@ -1,0 +1,8 @@
+# Runtime state and raw scanner copies stay local; reproducible inputs will be packaged after collection.
+status.json
+**/technical_features.csv
+**/technical_outcomes.csv
+**/medium_horizon_episode_summary.csv
+**/summary.csv
+**/summary.csv.runmeta
+**/tester_report*

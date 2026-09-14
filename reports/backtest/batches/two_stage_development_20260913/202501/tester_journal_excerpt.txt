@@ -1,0 +1,46 @@
+CS	0	23:46:57.689	Tester	EURUSD,M1 (Bybit-Live): generating based on real ticks
+CS	0	23:46:57.689	Tester	EURUSD,M1: testing of Experts\dev\mql\Experts\ExpectedValue_TickShockTwoStageCollector.ex5 from 2025.01.01 00:00 to 2025.02.01 00:00 started with inputs:
+CS	0	23:46:57.689	Tester	  InpRunId=two_stage_dev_202501_20260913
+CS	0	23:47:04.829	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.01 00:00:00   ExpectedValue_MultiCurrency_TickShockResearch initialized research_only symbols=6 grid_ms=250 detector=TAIL_V1_PERSISTENT horizons=250,500,1000 execution_mode=REALIZABLE_EA submit_latency_ms=0
+CS	0	23:58:11.460	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:25:18   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDJPY
+CS	0	23:58:11.586	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:25:22   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	23:58:11.588	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:25:22   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	23:58:11.713	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:25:39   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	23:58:11.733	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:25:42   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDJPY
+CS	0	23:58:11.775	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:25:49   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDJPY
+CS	0	23:58:11.990	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:26:23   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=GBPUSD
+CS	0	23:58:11.991	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:26:23   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	23:58:11.992	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:26:23   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=GBPUSD
+CS	0	23:58:12.042	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:26:32   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=AUDUSD
+CS	0	23:58:12.043	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:26:32   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=GBPUSD
+CS	0	23:58:12.048	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:26:33   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=EURUSD
+CS	0	23:58:12.048	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:26:33   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=AUDUSD
+CS	0	23:58:12.054	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:26:34   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	23:58:12.131	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:26:46   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	23:58:12.132	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.20 19:26:46   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.375	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:09:42   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.471	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:09:52   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.477	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:09:53   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=AUDUSD
+CS	0	00:08:07.536	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:00   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=GBPUSD
+CS	0	00:08:07.538	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:00   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=GBPUSD
+CS	0	00:08:07.547	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:02   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.564	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:04   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.567	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:04   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.571	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:04   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.592	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:07   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.594	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:07   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.621	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:10   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.624	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:10   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.626	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:10   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.627	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:10   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=EURUSD
+CS	0	00:08:07.628	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:10   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=GBPUSD
+CS	0	00:08:07.631	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:11   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=GBPUSD
+CS	0	00:08:07.632	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:11   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.714	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:20   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.736	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:22   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.751	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:24   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.773	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:27   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.778	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:27   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:07.782	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 19:10:27   ExpectedValue_MultiCurrency_TickShockResearch validation invalid: active event pool exhausted symbol=USDCAD
+CS	0	00:08:48.569	ExpectedValue_TickShockTwoStageCollector (EURUSD,M1)	2025.01.31 23:56:59   technical_discovery episodes=1628 censored=10 capacity=0 feature_invalid=0 orders=0
+CS	0	00:08:48.617	Tester	EURUSD,M1: 2648660 ticks, 31631 bars generated. Environment synchronized in 0:00:00.019. Test passed in 0:21:51.052 (including ticks preprocessing 0:00:01.125).

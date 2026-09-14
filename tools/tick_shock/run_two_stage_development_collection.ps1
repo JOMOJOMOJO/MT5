@@ -1,4 +1,4 @@
-param([int]$TimeoutSeconds=14400)
+param([int]$TimeoutSeconds=14400,[switch]$ResumeAfterJanuaryQa)
 $ErrorActionPreference='Stop'
 Set-StrictMode -Version Latest
 $root=(Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
@@ -8,16 +8,31 @@ $terminal='C:\Program Files\XMTrading MT5\terminal64.exe'
 $python='C:\Users\windows\.pyenv\pyenv-win\versions\3.11.9\python.exe'
 $commonRoot=Join-Path $env:APPDATA 'MetaQuotes\Terminal\Common\Files'
 $dataRoot=Split-Path (Split-Path (Split-Path $root))
-if(Test-Path $batch){throw 'Existing batch; no implicit resume or overwrite'}
-New-Item -ItemType Directory $batch | Out-Null
+if(Test-Path $batch){if(-not $ResumeAfterJanuaryQa){throw 'Existing batch; no implicit resume or overwrite'}}
+elseif($ResumeAfterJanuaryQa){throw 'Resume requires existing checkpoint'}
+else{New-Item -ItemType Directory $batch | Out-Null}
 function State([string]$state,[string]$detail){@{status=$state;detail=$detail;updated=(Get-Date).ToString('o');pid=$PID}|ConvertTo-Json|Set-Content (Join-Path $batch 'status.json') -Encoding UTF8}
 try {
  $binary=Join-Path $root 'mql\Experts\ExpectedValue_TickShockTwoStageCollector.ex5'
  $hash=(Get-FileHash $binary -Algorithm SHA256).Hash
  $sources=@($binary,$PSCommandPath,(Join-Path $root 'mql\Experts\ExpectedValue_TickShockTwoStageCollector.mq5'),(Join-Path $root 'mql\Include\TickShockTwoStageTimeLabels.mqh'),$terminal)
  $sources+=Get-ChildItem (Join-Path $root 'mql\Include\TickShock4m2mFrozen') -Recurse -File | Select-Object -ExpandProperty FullName
- $sources|ForEach-Object {Get-FileHash $_ -Algorithm SHA256}|Export-Csv (Join-Path $batch 'source_hashes.csv') -NoTypeInformation -Encoding UTF8
- foreach($month in 1..6){
+ if($ResumeAfterJanuaryQa){
+  $saved=Get-Content (Join-Path $batch 'status.json') -Raw|ConvertFrom-Json
+  if($saved.status -ne 'STOPPED_ERROR' -or $saved.detail -ne 'Fixed-time label/parity gate failed'){throw 'Unexpected checkpoint'}
+  $qa=Get-Content (Join-Path $batch '202501\fixed_time_qa.json') -Raw|ConvertFrom-Json
+  if($qa.status -ne 'PASS'){throw 'January corrected QA has not passed'}
+  foreach($row in Import-Csv (Join-Path $batch 'source_hashes.csv')){
+   if($row.Path -ne $PSCommandPath -and (Get-FileHash $row.Path -Algorithm SHA256).Hash -ne $row.Hash){throw "Frozen collection source changed: $($row.Path)"}
+  }
+  $evidence=Join-Path $batch 'resume_after_january_precision_qa.json'
+  if(Test-Path $evidence){throw 'Resume already attempted'}
+  @{reason='Analytical bound for 12-decimal CSV serialization; original FAIL retained';binary_unchanged=$true;source_unchanged=$true;resumed=(Get-Date).ToString('o')}|ConvertTo-Json|Set-Content $evidence -Encoding UTF8
+ }else{
+  $sources|ForEach-Object {Get-FileHash $_ -Algorithm SHA256}|Export-Csv (Join-Path $batch 'source_hashes.csv') -NoTypeInformation -Encoding UTF8
+ }
+ $months=if($ResumeAfterJanuaryQa){2..6}else{1..6}
+ foreach($month in $months){
   $wait=[Diagnostics.Stopwatch]::StartNew()
   while(@(Get-Process terminal64 -ErrorAction SilentlyContinue | Where-Object Path -eq $terminal).Count){
    if($wait.Elapsed.TotalSeconds -gt 60){throw 'Terminal busy; do not interfere'}

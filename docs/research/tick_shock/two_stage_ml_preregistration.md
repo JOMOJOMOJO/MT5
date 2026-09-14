@@ -43,6 +43,10 @@ Three horizons; 36 family/variant/horizon settings, five folds, three Stage1 gat
 
 Stage2 thresholds compare training-only score quantiles and training-only portfolio-frequency
 calibration at 100/150/200/300/500 per month, plus zero expected-return threshold diagnostic.
+Also compare rolling-score percentile: the quantile level is fixed by training exposure;
+the reference distribution contains only preceding 30 server-calendar days of scores from
+the frozen current-fold model, seeded with prior training-month feature scores. Insert the
+current score only after its threshold is calculated. Outcomes never enter this update.
 Do not select monthly top-N using validation outcomes or future month's score distribution.
 Report realized monthly frequency rather than treating targets as quotas. Threshold-neighbor
 diagnostics are predefined adjacent training quantiles; no holdout threshold tuning.
@@ -56,6 +60,10 @@ fit and validation when overlapping. No random split; fit-only imputation/scalin
 Prefer positive pooled forward EV/PF>1, each month >=200 trades, >=3 positive months,
 positive total after removing top five profits and additional 0.2 pip stress (0.4 total),
 worst-month EV > -0.1R, no symbol >50% of positive profit, stable nearby thresholds.
+For the bounded grid, neighboring target frequencies within the same policy family,
+Stage1 gate, model, variant and horizon must also have positive pooled EV (both neighbors
+where available, one at an endpoint). ZERO is an ablation/diagnostic without this grid
+neighborhood proof, not a PASS promotion solely from one cutoff.
 If no PASS, freeze one DIAGNOSTIC using frequency tier, worst-month EV, pooled EV,
 then deterministic config name; label it not adopted. Never optimize on July/August.
 Separate Stage1 gate vs no gate and model direction vs constant LONG/SHORT controls.

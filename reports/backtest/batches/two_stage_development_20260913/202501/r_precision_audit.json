@@ -1,0 +1,9 @@
+{
+  "rows": 9714,
+  "old_absolute_tolerance": 1e-09,
+  "old_failures": 970,
+  "max_error": 3.860039399228299e-08,
+  "outside_serialization_bound": 0,
+  "max_bound_ratio": 0.8780002717316248,
+  "source": "TSTDNumber: DoubleToString(v,12)"
+}

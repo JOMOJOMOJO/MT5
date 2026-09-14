@@ -1,0 +1,6 @@
+﻿{
+    "binary_unchanged":  true,
+    "reason":  "Analytical bound for 12-decimal CSV serialization; original FAIL retained",
+    "source_unchanged":  true,
+    "resumed":  "2026-09-14T09:37:27.3536675+09:00"
+}

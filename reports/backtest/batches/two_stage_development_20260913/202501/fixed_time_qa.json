@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "checks": {
+    "feature_identity": true,
+    "time_row_unique": true,
+    "horizons": true,
+    "directions": true,
+    "feature_parity": true,
+    "cluster_parity": true,
+    "original_barrier_identity": true,
+    "original_barrier_parity": true,
+    "all_entered_tracked": true,
+    "six_labels_per_entered": true,
+    "entry_matches_original": true,
+    "entry_causal": true,
+    "exit_causal": true,
+    "r_arithmetic": true,
+    "pip_arithmetic": true,
+    "statuses": true
+  },
+  "rows": 9732,
+  "episodes": 1628,
+  "time_labels": 9714,
+  "censored_labels": 18,
+  "max_exit_lag_ms": 172785162.0,
+  "r_check": "Per-row analytical 12-decimal serialization bound; not fixed relaxed tolerance",
+  "max_r_arithmetic_error": 3.860039399228299e-08,
+  "sha256": "2288b5196babc2669754370c16fd405fa8a49a0f455798eeff7212ae2b42d608"
+}
