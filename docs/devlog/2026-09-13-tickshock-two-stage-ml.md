@@ -55,3 +55,16 @@ refuses any existing data/model files. A subsequent actual Python error exposed 
 copy-on-write: the NumPy feature array was read-only. Requesting an explicit copy fixes
 buffer ownership without changing feature values, labels or model design. Timestamped
 stderr logs retain both incidents. No model fit or holdout access preceded these fixes.
+
+## Development complete and diagnostic MQL parity
+
+All 180 tasks completed, then all 180 were independently refit: 9,360 comparisons,
+zero differences. Independent financial/clock/source-label accounting passed 59 checks.
+No adoption gate passed. The frozen diagnostic candidate is ElasticNet SCALE_FREE,
+300 seconds, Stage 1 gate 25, FREQUENCY_500: 2,996 forward trades, -0.077865 R/trade,
+PF 0.782741. See `docs/research/tick_shock/two_stage_ml_development_results.md`.
+
+Generated MQL inference passed all 15,119 development vectors inside Strategy Tester.
+Candidate and model parity harness compile with zero errors/warnings. A January-only
+Model 4 wiring smoke is now running in `two_stage_development_smoke_20260914`.
+The candidate remains diagnostic and tester-only; July/August remain sealed.

@@ -1,0 +1,7 @@
+{
+  "holdout_read": false,
+  "prereg_sha256": "9540005b81d99d678642f61d462171d4fae181f6a1999c31cddaea9b87c4ff51",
+  "source_commit": "83b6352d3f1db63991f9bffe4cf2673a4c5fd272",
+  "source_sha256": "7fb00597be475ce3ff4803c48beadbb52f3fa0b303e4353b48b551a62881a04b",
+  "status": "DEVELOPMENT_RUNNING"
+}

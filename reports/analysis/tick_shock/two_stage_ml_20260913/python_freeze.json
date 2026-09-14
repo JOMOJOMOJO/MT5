@@ -1,0 +1,14 @@
+{
+  "driver_sha256": "7fb00597be475ce3ff4803c48beadbb52f3fa0b303e4353b48b551a62881a04b",
+  "files": {
+    "frozen_model.json": "f7d341f0b98a7092159b746f31dfed2fb5797c254eed280b66169027b48e1c8f",
+    "frozen_model.pkl": "1ca4699f1116b98f5da083243dc6d8cd48e40376bc6c356df1ef8f62198c6de4",
+    "input_hashes.csv": "3af9d9da045596e852b8f4de8dcf221b665b28af050f85fac494b9f619b3941c",
+    "rolling_seed.csv": "c054246a2aaa2b4df3ff521f76737bfa3dc4c3af61e7b4e62d7b8378e2ba8d82",
+    "selection.json": "cf529ccaf295369ba339f79e72acb24d596fb04cb0bde2581961b0f767ea555f"
+  },
+  "holdout_read": false,
+  "prereg_sha256": "9540005b81d99d678642f61d462171d4fae181f6a1999c31cddaea9b87c4ff51",
+  "source_commit": "624178f9241653e07c88a8673f700c7ec1887d0e",
+  "status": "PYTHON_FROZEN_AWAITING_MQL_PARITY"
+}

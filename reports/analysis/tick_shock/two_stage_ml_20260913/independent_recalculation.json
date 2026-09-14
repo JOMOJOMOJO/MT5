@@ -1,0 +1,7 @@
+{
+  "checks": 59,
+  "failures": 0,
+  "holdout_read": false,
+  "maximum_exit_lag_seconds": 1903.1260000000002,
+  "commission": "NOT_OBSERVED: 0.2 pip assumption, actual Bid/Ask spread already embedded"
+}

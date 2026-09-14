@@ -1,0 +1,10 @@
+{
+  "development_vectors": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\two_stage_model_parity_20260913\\vectors.csv",
+  "holdout_read": false,
+  "model_sha256": "f7d341f0b98a7092159b746f31dfed2fb5797c254eed280b66169027b48e1c8f",
+  "mql_sha256": "c1dd9accf70fb2696fcfc344951d0c38f4ce46d74a82f3092ba6b80b59ab8b54",
+  "rows": 15119,
+  "source_path": "mql/Include/TickShockTwoStageModel.mqh",
+  "status": "GENERATED_NOT_YET_PARITY_VALIDATED",
+  "vectors_sha256": "529f0f4c173ad3de42d0ffdc28f417626379165fa8e6143c5095b574101adbb4"
+}
