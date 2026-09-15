@@ -1,0 +1,31 @@
+{
+  "actual": {
+    "commission": 0.0,
+    "expectancy_r": -0.01728469659423276,
+    "extra_cost_pips": 0.0,
+    "fee": 0.0,
+    "hold_max_seconds": 906.466,
+    "hold_mean_seconds": 771.2396956521739,
+    "long": 9,
+    "maxdd_closed_money": 29.09,
+    "maxdd_closed_r": 3.222640569359628,
+    "net_profit": -6.919999999999996,
+    "pf_money": 0.9403191030616643,
+    "pf_r": 0.9366625863089755,
+    "short": 37,
+    "sl": 7,
+    "swap": 0.0,
+    "timeout": 33,
+    "total_r": -0.7950960433347068,
+    "tp": 6,
+    "trades": 46,
+    "win_rate": 0.43478260869565216,
+    "wins": 20
+  },
+  "model_sha256": "cbd3dcbb9ce9c20319f4e06ed2666d87180f268e6fa63ab706b7b653a5569a63",
+  "month": 202505,
+  "mt5_only": 0,
+  "python_matched": 46,
+  "python_only": 1,
+  "qa_failures": 0
+}

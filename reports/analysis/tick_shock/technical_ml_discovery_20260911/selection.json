@@ -1,0 +1,32 @@
+{
+  "basic_gate_candidates": 0,
+  "candidate_policies": 3240,
+  "diagnostic_candidate": {
+    "adjacent_gate": false,
+    "all_converged": true,
+    "basic_gate": false,
+    "calibration": "PERCENTILE",
+    "candidate_gate": false,
+    "expectancy_r": -0.0019921562504172196,
+    "family": "EXTRA_TREES",
+    "geometry": 5,
+    "max_month_trades": 437,
+    "min_month_trades": 218,
+    "policy": "PERCENTILE_300",
+    "positive_months": 1,
+    "robustness_gate": false,
+    "target": "NET_R",
+    "target_count": 300,
+    "total_r": -2.0559052504305706,
+    "trades": 1032,
+    "variant": "SCALE_FREE",
+    "worst_month_ev": -0.004709202552422149
+  },
+  "ea_created": false,
+  "fold_configurations": 540,
+  "frequency_qualified": 1996,
+  "holdout_outcomes_read": false,
+  "passing_candidates": 0,
+  "selected_candidate": null,
+  "status": "ANALYSIS_COMPLETE"
+}

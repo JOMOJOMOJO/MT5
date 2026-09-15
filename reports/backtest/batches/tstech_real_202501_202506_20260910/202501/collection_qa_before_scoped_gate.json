@@ -1,0 +1,26 @@
+{
+  "status": "FAIL",
+  "checks": {
+    "matching_journal": true,
+    "real_tick_mode": true,
+    "tester_completed": true,
+    "technical_end_summary": true,
+    "technical_no_loss": true,
+    "research_no_orders": true,
+    "broker_bybit": true,
+    "summary_exists": true,
+    "run_integrity_valid": false,
+    "six_symbols": true,
+    "technical_features.csv_exists": true,
+    "technical_outcomes.csv_exists": true,
+    "episode_rows_unique": true,
+    "outcome_rows_unique": true,
+    "outcomes_twelve_per_episode": true,
+    "no_feature_future": true
+  },
+  "common_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\tstech_real_202501_202506_20260910_202501",
+  "run_id": "tstech_real_202501_202506_20260910_202501",
+  "commission": "NOT_OBSERVED",
+  "generated_fallback_minutes": "NOT_QUANTIFIED",
+  "note": "No ML or P/L evaluation; real-tick mode does not prove zero generated fallback."
+}

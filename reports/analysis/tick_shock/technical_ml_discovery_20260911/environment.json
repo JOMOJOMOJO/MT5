@@ -1,0 +1,15 @@
+{
+  "actual_commission": "NOT_OBSERVED_IN_COLLECTION",
+  "analysis_source_sha256": "73ef42a50d51912033c50379fdc89e9aaaa283ea386ecb59ad54e60dc19dd8fe",
+  "holdout_outcomes_read": false,
+  "lightgbm": "4.6.0",
+  "numpy": "2.4.4",
+  "pandas": "3.0.1",
+  "preregistration_sha256": "60c57a555052924eda03d871b2327b8c634fe42ca079750352766186de681ad6",
+  "primary_extra_cost_pips": 0.2,
+  "python": "3.11.9",
+  "seed": 20260911,
+  "shap": "NATIVE_LIGHTGBM_TREE_SHAP",
+  "sklearn": "1.9.0",
+  "xgboost": "NOT_INSTALLED"
+}

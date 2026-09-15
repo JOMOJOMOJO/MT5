@@ -1,0 +1,5 @@
+finding,status,observed
+FREQUENCY_BELOW_OBJECTIVE,NOT_MET,"May 46 / June 25, below 200 per month"
+STRICT_900_SECOND_HOLD,OBSERVED_LIMITATION,maximum 906.491 seconds; 54 trades exceed 900 seconds
+DEVELOPMENT_STABILITY,NOT_MET,0 of 108 candidates passed all preregistered gates
+LIVE_EXECUTION,NOT_OBSERVED,tester-only EA; no live or demo chart orders

@@ -1,0 +1,4 @@
+period,clusters,trades,replicates,expectancy_r,ci_low,ci_high,cost,limitation
+BOTH,71,71,10000,-0.031398002504445,-0.16994673495168,0.10864251256482,actual observed broker costs; not hypothetical pip stress,clusters sampled iid; multi-day dependence not removed; no live-readiness claim
+202505,46,46,10000,-0.017284696594233,-0.20503947402076,0.16302780239725,actual observed broker costs; not hypothetical pip stress,clusters sampled iid; multi-day dependence not removed; no live-readiness claim
+202506,25,25,10000,-0.057366485379235,-0.25855616465427,0.14655316316147,actual observed broker costs; not hypothetical pip stress,clusters sampled iid; multi-day dependence not removed; no live-readiness claim

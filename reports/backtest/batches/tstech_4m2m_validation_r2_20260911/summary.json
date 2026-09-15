@@ -1,0 +1,23 @@
+{
+  "actual": {
+    "commission": 0.0,
+    "expectancy_r": -0.031398002504444716,
+    "fee": 0.0,
+    "maxdd_closed_money": 45.620000000000005,
+    "maxdd_closed_r": 4.921480971133886,
+    "net_profit": -20.11999999999999,
+    "pf_money": 0.8815216111176541,
+    "swap": 0.0,
+    "trades": 71,
+    "win_rate": 0.4084507042253521
+  },
+  "frequency_objective_met": false,
+  "live_trading_enabled": false,
+  "max_hold_seconds": 906.491,
+  "model_sha256": "cbd3dcbb9ce9c20319f4e06ed2666d87180f268e6fa63ab706b7b653a5569a63",
+  "positive_holdout": false,
+  "qa_failures": 0,
+  "selection": "DIAGNOSTIC_CANDIDATE",
+  "strict_hold_limit_violations": 54,
+  "verdict": "NOT_ELIGIBLE_FOR_PRODUCTION"
+}

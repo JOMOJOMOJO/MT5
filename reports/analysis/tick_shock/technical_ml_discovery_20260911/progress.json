@@ -1,0 +1,9 @@
+{
+  "completed": 540,
+  "completed_at": "2026-09-12T02:55:10.012308+00:00",
+  "elapsed_seconds": 864.5639639000001,
+  "holdout_outcomes_read": false,
+  "latest": "LIGHTGBM__NET_R__SCALE_FREE__g5__m202504",
+  "status": "COMPLETED_ANALYSIS_QA",
+  "total": 540
+}

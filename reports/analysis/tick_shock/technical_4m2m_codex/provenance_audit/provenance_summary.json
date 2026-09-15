@@ -1,0 +1,25 @@
+{
+  "verdict": "BLOCKED_WRONG_TICK_MODEL",
+  "actual_mode": "GENERATED_EVERY_TICK",
+  "metadata_mode": "REAL_TICKS_MODEL_4",
+  "broker": "Bybit-Live",
+  "run_id": "tstech_candidate_202501to06-2",
+  "legacy_pool_failures": 15097,
+  "statistical_track_capacity_hits": 0,
+  "read_failures_by_symbol": {
+    "EURUSD": 0,
+    "GBPUSD": 1,
+    "USDJPY": 1,
+    "AUDUSD": 0,
+    "USDCAD": 1,
+    "USDCHF": 1
+  },
+  "all_final_frontiers_complete": true,
+  "checks": {
+    "PASS": 45,
+    "FAIL": 2
+  },
+  "model_training_performed": false,
+  "holdout_profit_evaluated": false,
+  "note": "Generated-tick labels cannot validate real-tick shock feasibility. Legacy global invalid verdict retained."
+}

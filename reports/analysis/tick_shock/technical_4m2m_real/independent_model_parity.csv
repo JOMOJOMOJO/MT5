@@ -1,0 +1,3 @@
+check,rows,max_difference,status
+independent_json_long,11230,4.7184478546569e-16,PASS
+independent_json_short,11230,6.6613381477509e-16,PASS

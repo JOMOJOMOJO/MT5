@@ -1,0 +1,75 @@
+check,status,actual,expected,evidence_path
+dataset_has_only_january_april,PASS,"202501,202502,202503,202504","202501,202502,202503,202504",dataset.pkl
+episode_key_duplicates,PASS,0,0,dataset.pkl
+outcome_key_duplicates,PASS,0,0,dataset.pkl
+future_feature_count,PASS,0,0,dataset.pkl
+completed_bar_after_t0,PASS,0,0,dataset.pkl
+source_quote_after_detection,PASS,0,0,dataset.pkl
+processing_before_detection,PASS,0,0,dataset.pkl
+selected_trade_duplicate,PASS,0,0,diagnostic_trades.csv
+entry_before_processing,PASS,0,0,diagnostic_trades.csv
+entry_before_eligible,PASS,0,0,diagnostic_trades.csv
+exit_before_entry,PASS,0,0,diagnostic_trades.csv
+invalid_direction,PASS,0,0,diagnostic_trades.csv
+unexecuted_status_in_trades,PASS,0,0,diagnostic_trades.csv
+recorded_risk_vs_entry_sl,PASS,2.7755575615628914e-14,<= 1e-09,diagnostic_trades.csv
+quote_side_entry_price,PASS,0.0,<= 1e-09,diagnostic_trades.csv
+gross_r_reconstructed_from_prices,PASS,8.550937735662956e-13,<= 2e-07,diagnostic_trades.csv
+gross_pips_reconstructed_from_prices,PASS,4.028777311759768e-12,<= 2e-07,diagnostic_trades.csv
+independent_pending_portfolio_202502,PASS,0,0,diagnostic_trades.csv; predictions/
+csv_accounting_202502_trades,PASS,218.0,218.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202502_total_r,PASS,-0.21881922199765677,-0.21881922199766,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202502_expectancy_r,PASS,-0.0010037578990718201,-0.0010037578990718,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202502_pf,PASS,0.9959201176927093,0.99592011769271,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202502_maxdd_r,PASS,8.23547139298298,8.235471392983,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202502_win_rate,PASS,0.4954128440366973,0.4954128440367,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202502_tp,PASS,25.0,25.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202502_sl,PASS,25.0,25.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202502_timeout,PASS,168.0,168.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202502_total_pips,PASS,30.30000000001702,30.300000000017,walk_forward.csv; diagnostic_trades.csv
+closed_trade_position_overlap_202502,PASS,0,0,diagnostic_trades.csv
+independent_pending_portfolio_202503,PASS,0,0,diagnostic_trades.csv; predictions/
+csv_accounting_202503_trades,PASS,437.0,437.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202503_total_r,PASS,-2.057921515408476,-2.0579215154085,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202503_expectancy_r,PASS,-0.004709202552422141,-0.0047092025524221,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202503_pf,PASS,0.9816114054668483,0.98161140546685,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202503_maxdd_r,PASS,11.878064265754151,11.878064265754,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202503_win_rate,PASS,0.494279176201373,0.49427917620137,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202503_tp,PASS,65.0,65.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202503_sl,PASS,47.0,47.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202503_timeout,PASS,325.0,325.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202503_total_pips,PASS,119.40000000001702,119.40000000002,walk_forward.csv; diagnostic_trades.csv
+closed_trade_position_overlap_202503,PASS,0,0,diagnostic_trades.csv
+independent_pending_portfolio_202504,PASS,0,0,diagnostic_trades.csv; predictions/
+csv_accounting_202504_trades,PASS,377.0,377.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202504_total_r,PASS,0.2208354869755681,0.22083548697557,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202504_expectancy_r,PASS,0.000585770522481613,0.0005857705224816,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202504_pf,PASS,1.0024089546562749,1.0024089546563,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202504_maxdd_r,PASS,10.823925235482218,10.823925235482,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202504_win_rate,PASS,0.519893899204244,0.51989389920424,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202504_tp,PASS,32.0,32.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202504_sl,PASS,54.0,54.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202504_timeout,PASS,291.0,291.0,walk_forward.csv; diagnostic_trades.csv
+csv_accounting_202504_total_pips,PASS,-7.3999999999977835,-7.3999999999979,walk_forward.csv; diagnostic_trades.csv
+closed_trade_position_overlap_202504,PASS,0,0,diagnostic_trades.csv
+purged_cluster_split_g1_202502,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g1_202503,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g1_202504,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g2_202502,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g2_202503,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g2_202504,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g3_202502,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g3_202503,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g3_202504,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g4_202502,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g4_202503,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g4_202504,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g5_202502,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g5_202503,PASS,0,0,dataset.pkl; split_audit.csv
+purged_cluster_split_g5_202504,PASS,0,0,dataset.pkl; split_audit.csv
+prediction_indices_outer_month,PASS,0,0,predictions/
+input_hashes_unchanged,PASS,0,0,input_hashes.csv
+protected_source_hashes_unchanged,PASS,0,0,protected_source_hashes.csv
+preregistration_sha256_unchanged,PASS,60c57a555052924eda03d871b2327b8c634fe42ca079750352766186de681ad6,60c57a555052924eda03d871b2327b8c634fe42ca079750352766186de681ad6,docs\research\tick_shock\technical_ml_discovery_preregistration.md
+analysis_source_sha256_unchanged,PASS,73ef42a50d51912033c50379fdc89e9aaaa283ea386ecb59ad54e60dc19dd8fe,73ef42a50d51912033c50379fdc89e9aaaa283ea386ecb59ad54e60dc19dd8fe,tools\tick_shock\technical_ml_discovery.py
+environment_holdout_not_read,PASS,False,False,environment.json

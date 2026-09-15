@@ -1,0 +1,47 @@
+{
+  "base_commit": "5158de8b56bf58953a005b2440a9b86cd6d4746e",
+  "branch": "research/tickshock/2026-09-11-technical-ml-discovery",
+  "candidate_policies": 3240,
+  "completed_at": "2026-09-12T02:55:10.012308+00:00",
+  "ea_created": false,
+  "fold_configurations": 540,
+  "frequency_qualified": 1996,
+  "holdout_outcomes_read": false,
+  "holdout_status": "NOT_RUN_PREREGISTERED_GATE_NOT_MET",
+  "passing_candidates": 0,
+  "positive_pooled_cells": 3,
+  "qa_evidence": [
+    {
+      "checks": 74,
+      "evidence": "qa_checks.csv",
+      "fail_count": 0,
+      "pass_count": 74
+    },
+    {
+      "checks": 792,
+      "evidence": "deterministic_rerun.csv",
+      "fail_count": 0,
+      "pass_count": 792
+    },
+    {
+      "checks": 3030,
+      "evidence": "verify_source_integrity.csv",
+      "fail_count": 0,
+      "pass_count": 3030
+    },
+    {
+      "checks": 6,
+      "evidence": "interpretation_qa.csv",
+      "fail_count": 0,
+      "pass_count": 6
+    },
+    {
+      "checks": 6,
+      "evidence": "interpretation_shap_additivity.csv",
+      "fail_count": 0,
+      "pass_count": 6
+    }
+  ],
+  "report": "docs/research/tick_shock/technical_ml_discovery_readout_ja.md",
+  "status": "COMPLETED_ANALYSIS_QA"
+}

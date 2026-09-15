@@ -1,0 +1,13 @@
+check,status,actual,expected
+202505_portfolio_episode_order,PASS,47,
+202505_price_arithmetic_trades,PASS,47,47
+202505_price_arithmetic_total_r,PASS,-2.8637419529453,-2.8637419529424
+202505_price_arithmetic_expectancy_r,PASS,-0.0609306798499,-0.060930679849839
+202505_price_arithmetic_pf,PASS,0.79144847149453,0.79144847149469
+202505_price_arithmetic_maxdd_r,PASS,3.8600288067173,3.8600288067163
+202506_portfolio_episode_order,PASS,25,
+202506_price_arithmetic_trades,PASS,25,25
+202506_price_arithmetic_total_r,PASS,-1.7188734048063,-1.718873404806
+202506_price_arithmetic_expectancy_r,PASS,-0.068754936192251,-0.06875493619224
+202506_price_arithmetic_pf,PASS,0.71495490018349,0.71495490018352
+202506_price_arithmetic_maxdd_r,PASS,4.2051728556873,4.2051728556869

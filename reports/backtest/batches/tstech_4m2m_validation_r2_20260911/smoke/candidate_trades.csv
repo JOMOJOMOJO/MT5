@@ -1,0 +1,1 @@
+episode_id,symbol,direction,signal_msc,processing_msc,request_msc,quote_msc,entry_msc,exit_msc,requested_volume,filled_volume,closed_volume,entry_price,exit_price,sl,tp,risk_amount,gross_profit,commission,fee,swap,net_profit,gross_r,net_r,hold_seconds,exit_reason,entry_deals,exit_deals,position_identifier

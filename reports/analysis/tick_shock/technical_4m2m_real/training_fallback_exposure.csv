@@ -1,0 +1,5 @@
+month,episodes,target_symbol_discard_day_episodes,any_symbol_discard_day_episodes,note
+202501,1628,0,0,Day-level exposure proxy; not tick-level provenance. Completed bars may carry effects across days. No rows excluded.
+202502,1574,6,119,Day-level exposure proxy; not tick-level provenance. Completed bars may carry effects across days. No rows excluded.
+202503,4232,39,39,Day-level exposure proxy; not tick-level provenance. Completed bars may carry effects across days. No rows excluded.
+202504,3796,0,0,Day-level exposure proxy; not tick-level provenance. Completed bars may carry effects across days. No rows excluded.

@@ -1,0 +1,2 @@
+month,trades,wins,win_rate,net_profit,total_r,expectancy_r,pf_money,pf_r,maxdd_closed_r,maxdd_closed_money,long,short,tp,sl,timeout,hold_mean_seconds,hold_max_seconds,commission,fee,swap,extra_cost_pips
+202506,25,9,0.36,-13.2,-1.4341621344809,-0.057366485379235,0.75496565806571,0.7521560726437,4.0742657140414,38.61,4,21,2,2,21,822.60256,906.491,0,0,0,0

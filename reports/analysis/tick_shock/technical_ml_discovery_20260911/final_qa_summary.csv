@@ -1,0 +1,6 @@
+evidence,checks,pass_count,fail_count
+qa_checks.csv,74,74,0
+deterministic_rerun.csv,792,792,0
+verify_source_integrity.csv,3030,3030,0
+interpretation_qa.csv,6,6,0
+interpretation_shap_additivity.csv,6,6,0

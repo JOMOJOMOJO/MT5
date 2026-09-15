@@ -1,0 +1,2 @@
+symbol,t0_msc,direction,presence,mt5_actions,python_status,reason
+USDJPY,1747702985500,-1,right_only,NO_ENTRY_TIMEOUT,TIME,"Recorded execution-path difference, not model reselection"

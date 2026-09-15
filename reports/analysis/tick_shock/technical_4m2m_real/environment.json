@@ -1,0 +1,9 @@
+{
+  "lightgbm": "4.6.0",
+  "model_sha256": "cbd3dcbb9ce9c20319f4e06ed2666d87180f268e6fa63ab706b7b653a5569a63",
+  "numpy": "2.4.4",
+  "pandas": "3.0.1",
+  "python": "3.11.9",
+  "seed": 20260909,
+  "sklearn": "1.9.0"
+}
