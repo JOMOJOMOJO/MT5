@@ -1,0 +1,8 @@
+check,passed
+all_signal_rows_match,True
+signal_direction,True
+signal_long_score,True
+signal_short_score,True
+signal_stage1_score,True
+signal_processing_msc,True
+population_delta_reconciles,True

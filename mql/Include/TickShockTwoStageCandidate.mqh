@@ -5,6 +5,7 @@
 
 // Tester-only adapter. No orders are ever sent from a replayed historical tick.
 input double InpTechnicalRiskMoney=10.0;
+input int InpTechnicalHoldSeconds=TS2_HOLD_SECONDS; // Exit-only comparison; model remains frozen.
 input long InpTechnicalMagic=260914521;
 struct TSTCIntent {string episode,symbol;long t0,processing,quote;int direction;double atr;};
 TSTCIntent g_tstc_queue[64],g_tstc_pending,g_tstc_trade;
@@ -51,7 +52,7 @@ void TS2WriteSeed()
 
 bool TSTCInit(const string folder)
   {
-   if(!MQLInfoInteger(MQL_TESTER)||!MathIsValidNumber(InpTechnicalRiskMoney)||InpTechnicalRiskMoney<=0||InpTechnicalMagic<=0)return false;
+   if(!MQLInfoInteger(MQL_TESTER)||!MathIsValidNumber(InpTechnicalRiskMoney)||InpTechnicalRiskMoney<=0||InpTechnicalMagic<=0||InpTechnicalHoldSeconds<=0)return false;
    g_ts2_folder=folder;if(!TS2ReadSeed())return false;
    string base=folder+"\\candidate_";
    if(FileIsExist(base+"signals.csv",FILE_COMMON)||FileIsExist(base+"trades.csv",FILE_COMMON))return false;
@@ -130,7 +131,7 @@ void TSTCManage()
    if(TSTCOwnPosition())
      {
       long opened=PositionGetInteger(POSITION_TIME_MSC);
-      if(TSTCNow()>=opened+(long)TS2_HOLD_SECONDS*1000)TSTCClose("TIME");
+      if(TSTCNow()>=opened+(long)InpTechnicalHoldSeconds*1000)TSTCClose("TIME");
      }
    TSTCCollect();
   }

@@ -1,0 +1,10 @@
+horizon,month,n,mean_shadow_gross_r,positive,same_entry_clock,note
+300,all,102,-0.15713489226519609,47,27,"shadow Bid/Ask entry, not necessarily actual fill; no commission"
+300,7,46,-0.24364205230249997,17,8,"shadow Bid/Ask entry, not necessarily actual fill; no commission"
+300,8,56,-0.08607543937741069,30,19,"shadow Bid/Ask entry, not necessarily actual fill; no commission"
+600,all,102,-0.0902155669205196,54,27,"shadow Bid/Ask entry, not necessarily actual fill; no commission"
+600,7,46,-0.3303204794115217,20,8,"shadow Bid/Ask entry, not necessarily actual fill; no commission"
+600,8,56,0.10701346833994639,34,19,"shadow Bid/Ask entry, not necessarily actual fill; no commission"
+900,all,102,-0.11958132227885293,50,27,"shadow Bid/Ask entry, not necessarily actual fill; no commission"
+900,7,46,-0.41473169095169554,18,8,"shadow Bid/Ask entry, not necessarily actual fill; no commission"
+900,8,56,0.12286362341669646,32,19,"shadow Bid/Ask entry, not necessarily actual fill; no commission"

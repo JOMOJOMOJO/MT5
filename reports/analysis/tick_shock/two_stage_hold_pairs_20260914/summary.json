@@ -1,0 +1,125 @@
+{
+  "signal_rows": 3151,
+  "groups": [
+    {
+      "group": "all_5min",
+      "n": 279,
+      "net_usd": -337.48,
+      "mean_r": -0.12630856916169053,
+      "wins": 121,
+      "losses": 156,
+      "flat": 2,
+      "pf": 0.710518866710699,
+      "top5_removed_usd": -503.58000000000004
+    },
+    {
+      "group": "all_4hour",
+      "n": 102,
+      "net_usd": 229.29999999999998,
+      "mean_r": 0.22984170746980773,
+      "wins": 54,
+      "losses": 48,
+      "flat": 0,
+      "pf": 1.1328066629212832,
+      "top5_removed_usd": -364.0
+    },
+    {
+      "group": "common_5min",
+      "n": 102,
+      "net_usd": -142.37,
+      "mean_r": -0.14161262836640043,
+      "wins": 44,
+      "losses": 57,
+      "flat": 1,
+      "pf": 0.6916128752761773,
+      "top5_removed_usd": -255.89000000000001
+    },
+    {
+      "group": "common_4hour",
+      "n": 102,
+      "net_usd": 229.29999999999998,
+      "mean_r": 0.22984170746980773,
+      "wins": 54,
+      "losses": 48,
+      "flat": 0,
+      "pf": 1.1328066629212832,
+      "top5_removed_usd": -364.0
+    },
+    {
+      "group": "only_5min",
+      "n": 177,
+      "net_usd": -195.11,
+      "mean_r": -0.11748928080643399,
+      "wins": 77,
+      "losses": 99,
+      "flat": 1,
+      "pf": 0.722914151814244,
+      "top5_removed_usd": -335.07
+    },
+    {
+      "group": "only_4hour",
+      "n": 0,
+      "net_usd": 0.0,
+      "mean_r": null,
+      "wins": 0,
+      "losses": 0,
+      "flat": 0,
+      "pf": null,
+      "top5_removed_usd": 0.0
+    }
+  ],
+  "common": 102,
+  "exact_fill_pairs": 102,
+  "improved": 54,
+  "worsened": 47,
+  "mean_paired_delta_r": 0.3714543358362081,
+  "day_cluster_count": 40,
+  "paired_delta_r_ci95": [
+    -0.5962536047337361,
+    1.3752366509264466
+  ],
+  "total_result_difference_usd": 566.78,
+  "common_entry_change_usd": 371.6700000000001,
+  "population_change_usd": 195.11,
+  "late_four_hour_trades": 2,
+  "maximum_hold_seconds": 178218.982,
+  "transitions": [
+    {
+      "transition": "FLAT->WIN",
+      "n": 1,
+      "five_usd": 0.0,
+      "four_usd": 14.7,
+      "delta_usd": 14.7
+    },
+    {
+      "transition": "LOSS->LOSS",
+      "n": 31,
+      "five_usd": -319.82,
+      "four_usd": -1186.0,
+      "delta_usd": -866.18
+    },
+    {
+      "transition": "LOSS->WIN",
+      "n": 26,
+      "five_usd": -141.84,
+      "four_usd": 795.54,
+      "delta_usd": 937.38
+    },
+    {
+      "transition": "WIN->LOSS",
+      "n": 17,
+      "five_usd": 112.42999999999999,
+      "four_usd": -540.5699999999999,
+      "delta_usd": -653.0
+    },
+    {
+      "transition": "WIN->WIN",
+      "n": 27,
+      "five_usd": 206.86,
+      "four_usd": 1145.63,
+      "delta_usd": 938.77
+    }
+  ],
+  "qa_failures": 0,
+  "warning": "Post-hoc comparison of observed July/August; shared entries are a selected subset. No path or opposite-direction 4h counterfactual is inferred."
+}
