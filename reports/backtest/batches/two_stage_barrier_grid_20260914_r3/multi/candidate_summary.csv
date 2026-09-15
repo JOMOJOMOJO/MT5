@@ -1,0 +1,2 @@
+signals,closed,errors,remaining_positions,unreconciled_records,peak_positions,peak_sl_risk_money,margin_mode,tp_atr,sl_atr,spacing_seconds,hold_seconds
+0,2,0,0,0,2,20.0,2,100.0,100.0,900,14400

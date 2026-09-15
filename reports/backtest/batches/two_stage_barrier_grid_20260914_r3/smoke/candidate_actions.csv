@@ -1,0 +1,5 @@
+episode_id,symbol,direction,action_msc,status,retcode,detail
+ts2bg_smoke_20260914_r3_USDJPY_mh_6,USDJPY,-1,1735924548715,ENTRY,10009,order=2 deal=2 external=0
+ts2bg_smoke_20260914_r3_USDJPY_mh_7,USDJPY,-1,1735925637341,ENTRY,10009,order=4 deal=4 external=0
+ts2bg_smoke_20260914_r3_USDJPY_mh_8,USDJPY,-1,1735927362215,ENTRY,10009,order=6 deal=6 external=0
+ts2bg_smoke_20260914_r3_USDJPY_mh_10,USDJPY,-1,1735932069412,ENTRY,10009,order=8 deal=8 external=0

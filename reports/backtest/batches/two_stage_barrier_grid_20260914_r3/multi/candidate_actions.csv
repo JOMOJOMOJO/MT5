@@ -1,0 +1,6 @@
+episode_id,symbol,direction,action_msc,status,retcode,detail
+test_long,EURUSD,1,1735808400000,ENTRY,10009,order=2 deal=2 external=0
+too_early,EURUSD,-1,1735808420000,ENTRY_INTERVAL,0,
+test_short,EURUSD,-1,1735809300000,ENTRY,10009,order=3 deal=3 external=0
+test_long,EURUSD,1,1735809300000,CLOSE_TEST_CLOSE,10009,order=4 deal=4 external=0
+test_short,EURUSD,-1,1735809320000,CLOSE_TEST_CLOSE,10009,order=5 deal=5 external=0
