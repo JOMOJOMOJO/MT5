@@ -1,0 +1,29 @@
+{
+  "variant": "normal",
+  "decisions": 7189,
+  "orders": 23,
+  "fills": 13,
+  "removals": {
+    "EXPIRED_15_MINUTES_SERVER": 5,
+    "NEW_M5_STRUCTURE": 5
+  },
+  "protection_successes": 0,
+  "reasons": {
+    "NOT_HIGHER_LOW": 3722,
+    "WAIT_POST_CONFIRM_BARS": 64,
+    "WAIT_POST_CONFIRM_CROSS": 985,
+    "M5_LOW_BROKEN": 22,
+    "STRUCTURE_ALREADY_USED_OR_INVALIDATED": 1076,
+    "WAIT_CONFIRMED_BREAKOUT_HIGH": 185,
+    "LIMIT_PLACED_WITH_SLTP": 23,
+    "ORDER_ACTIVE": 163,
+    "AMBIGUOUS_M5_PIVOT": 580,
+    "CLOSED_BAR_M5_LOW_BROKEN": 11,
+    "LIMIT_NOT_BELOW_ASK_OR_BROKER_DISTANCE": 2,
+    "POSITION_ACTIVE": 212,
+    "FILL_COOLDOWN_15_MINUTES": 54,
+    "NO_VALID_REFERENCE_HIGH": 90
+  },
+  "max_expected_risk_fraction": 0.009999190348959599,
+  "violations": []
+}

@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "cases": [
+    "position longer than cooldown",
+    "cooldown from entry",
+    "one fill per parent",
+    "censored position stays occupied",
+    "exact cooldown boundary",
+    "newest parent tie priority",
+    "empty environment cell",
+    "invalid geometry does not occupy"
+  ]
+}

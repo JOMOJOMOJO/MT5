@@ -1,0 +1,46 @@
+{
+  "baseline_unchanged": {
+    "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5": true,
+    "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.ex5": true,
+    "mql/Include/ThreeWaveStructure.mqh": true,
+    "mql/Include/ThreeWaveInputs.mqh": true,
+    "mql/Include/ThreeWaveDrawing.mqh": true,
+    "mql/Indicators/MultiTF_3WaveIn3Wave_Visualizer_Shared.mq5": true,
+    "mql/Indicators/MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5": true,
+    "mql/Experts/USDJPY_3Wave_FeatureResearch.mq5": true,
+    "mql/Experts/USDJPY_3Wave_FeatureResearch.ex5": true,
+    "mql/Include/ThreeWaveFeatureObserver.mqh": true
+  },
+  "repeat": {
+    "smoke/TW_features.csv": true,
+    "smoke/TW_feature_outcomes.csv": true,
+    "smoke/TW_context.csv": true,
+    "smoke/TW_context_bars.csv": true,
+    "discovery/TW_features.csv": true,
+    "discovery/TW_feature_outcomes.csv": true,
+    "discovery/TW_context.csv": true,
+    "discovery/TW_context_bars.csv": true
+  },
+  "audits": {
+    "smoke": true,
+    "discovery": true,
+    "replication": true,
+    "extension": true,
+    "smoke_repeat": true,
+    "discovery_repeat": true
+  },
+  "compile": {
+    "compile.log": true,
+    "compile_gap.log": true
+  },
+  "replay_unit": true,
+  "extension_gap_audit": true,
+  "boundary_clear": true,
+  "execution_invariants": {
+    "checked_acceptances": 2821,
+    "issues": [],
+    "passed": true
+  },
+  "no_order_calls": true,
+  "passed": true
+}

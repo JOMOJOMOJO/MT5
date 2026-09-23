@@ -1,0 +1,7 @@
+period,month,distinct_attempts,distinct_parents
+discovery,2025-01,53,49
+discovery,2025-02,30,28
+discovery,2025-03,37,35
+replication,2025-05,48,37
+replication,2025-06,45,39
+replication,2025-07,41,38

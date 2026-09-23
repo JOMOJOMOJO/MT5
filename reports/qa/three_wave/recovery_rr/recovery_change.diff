@@ -1,0 +1,125 @@
+--- v1.01
++++ v1.02
+@@ -1,5 +1,5 @@
+ #property strict
+-#property version "1.01"
++#property version "1.02"
+ #property description "3x3 confirmed LONG READY market-entry validation EA. Shared indicator engine."
+ #property tester_indicator "MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5"
+ #include "../Include/ThreeWaveInputs.mqh"
+@@ -47,6 +47,7 @@
+ string g_prefix="",reason="INITIALIZING",execution_state="IDLE";
+ int parity_checks=0,parity_failures=0,trace_csv=INVALID_HANDLE,shots=0;
+ datetime screenshot_pending=0;
++datetime recovery_poll=0;
+ string screenshot_copy="";
+ double protected_volume=0,protected_entry=0;
+ long inventory_orders=-1,inventory_positions=-1,inventory_foreign=-1;
+@@ -144,6 +145,7 @@
+    if(tick.bid<p.hl.price || tick.bid<p.reversal_low.price || tick.bid<s.origin_low.price)
+    { reason="STRUCTURE_BROKEN_ON_ENTRY_TICK"; return false; }
+    ZeroMemory(plan); plan.higher=s; plan.lower=p; plan.signal_time=p.ready_time+60;
++   protected_volume=0; protected_entry=0;
+    plan.entry=tick.ask; plan.reward_risk=InpRewardRisk; plan.equity=AccountInfoDouble(ACCOUNT_EQUITY);
+    double anchor=p.hl.price;
+    if(InpStopMode==STOP_M1_REVERSAL_LOW) anchor=p.reversal_low.price;
+@@ -249,12 +251,29 @@
+    }
+    if(plan.position_id>0 && plan.position_id!=(ulong)PositionGetInteger(POSITION_IDENTIFIER))
+    { blocked=true; ExecutionState("RECOVERY_BLOCKED","POSITION_PLAN_MISMATCH"); return; }
++   // A selected, owned position is positive fill evidence even when the
++   // deal-history interval has not caught up with a delayed execution yet.
++   ulong identifier=(ulong)PositionGetInteger(POSITION_IDENTIFIER);
++   if(plan.inflight)
++   {
++      if(plan.order==0 || (plan.position_id==0 && identifier!=plan.order))
++      { blocked=true; ExecutionState("RECOVERY_BLOCKED","POSITION_ORDER_IDENTITY_UNCLEAR"); return; }
++      datetime filled=(datetime)PositionGetInteger(POSITION_TIME);
++      if(filled<=0) { blocked=true; ExecutionState("RECOVERY_BLOCKED","POSITION_FILL_TIME_UNKNOWN"); return; }
++      plan.position_id=identifier; plan.inflight=false;
++      if(last_fill<plan.placed || filled<last_fill) last_fill=filled;
++      Print("TW_RECONCILE source=position order=",plan.order," position=",identifier," filled=",TS(filled));
++      if(!Save()) return;
++   }
+    if(plan.emergency) { EmergencyClose(ticket,"LATCHED_PROTECTION_FAILURE"); return; }
+    double volume=PositionGetDouble(POSITION_VOLUME),entry=PositionGetDouble(POSITION_PRICE_OPEN);
+    if(volume!=protected_volume || entry!=protected_entry)
+    {
+       double loss=0;
+-      if(!OrderCalcProfit(ORDER_TYPE_BUY,_Symbol,volume,entry,plan.sl,loss) || loss>=0 || -loss>plan.equity*0.01)
++      bool calculated=OrderCalcProfit(ORDER_TYPE_BUY,_Symbol,volume,entry,plan.sl,loss);
++      plan.fill_risk=(calculated && loss<0 ? -loss : 0);
++      plan.fill_price=entry; plan.fill_volume=volume; plan.position_id=identifier;
++      if(!calculated || loss>=0 || -loss>plan.equity*0.01)
+       {
+          plan.emergency=true; Save();
+          EmergencyClose(ticket,"FILLED_PRICE_RISK_EXCEEDS_BUDGET_OR_CALC_FAILED"); return;
+@@ -295,7 +314,6 @@
+       {
+          if(plan.placed>0 && time>=plan.placed && (plan.order==order || plan.order==0))
+          {
+-            if(last_fill<plan.placed || time<last_fill) { last_fill=time; changed=true; }
+             if(plan.order==0)
+             {
+                string expected="TW:"+IntegerToString((long)plan.signal_time);
+@@ -303,8 +321,13 @@
+                { blocked=true; reason="RECOVERY_ORDER_IDENTITY_UNCLEAR"; changed=true; continue; }
+                plan.order=order; changed=true;
+             }
++            if(last_fill<plan.placed || time<last_fill) { last_fill=time; changed=true; }
+             if(plan.position_id==0) { plan.position_id=(ulong)HistoryDealGetInteger(d,DEAL_POSITION_ID); changed=true; }
+-            if(plan.inflight) { plan.inflight=false; changed=true; }
++            if(plan.inflight)
++            {
++               plan.inflight=false; changed=true;
++               Print("TW_RECONCILE source=deal order=",order," deal=",d," filled=",TS(time));
++            }
+          }
+          else if(plan.placed==0 && time>last_fill) { last_fill=time; changed=true; }
+       }
+@@ -321,12 +344,32 @@
+          last_exit=d; changed=true;
+       }
+    }
++   // Definitively rejected/cancelled/expired, completely unfilled orders do
++   // not need a deal to resolve. Partial fills still require fill evidence.
++   if(plan.inflight && plan.order>0 &&
++      HistoryOrderGetString(plan.order,ORDER_SYMBOL)==_Symbol &&
++      (ulong)HistoryOrderGetInteger(plan.order,ORDER_MAGIC)==InpMagicNumber)
++   {
++      long state=HistoryOrderGetInteger(plan.order,ORDER_STATE);
++      double initial=HistoryOrderGetDouble(plan.order,ORDER_VOLUME_INITIAL);
++      double remaining=HistoryOrderGetDouble(plan.order,ORDER_VOLUME_CURRENT);
++      if((state==ORDER_STATE_CANCELED || state==ORDER_STATE_REJECTED || state==ORDER_STATE_EXPIRED) &&
++         initial>0 && MathAbs(initial-remaining)<1e-9)
++      {
++         plan.inflight=false; changed=true;
++         Print("TW_RECONCILE source=unfilled_terminal_order order=",plan.order," state=",state);
++      }
++   }
+    if(changed) Save();
+ }
+ void Manage()
+ {
+    int orders,positions,foreign; ulong order,position;
+    Counts(orders,positions,foreign,order,position);
++   // Inventory may remain flat after a rapid fill/close. Keep polling while
++   // unresolved instead of relying solely on inventory/transaction changes.
++   if(plan.inflight && TimeCurrent()!=recovery_poll)
++   { recovery_poll=TimeCurrent(); Recover(); }
+    if(orders!=inventory_orders || positions!=inventory_positions || foreign!=inventory_foreign)
+    {
+       Recover();
+@@ -351,7 +394,11 @@
+       ExecutionState(TimeCurrent()<last_fill+InpCooldownMinutes*60 ? "COOLDOWN" : "WAIT_SIGNAL",
+                      TimeCurrent()<last_fill+InpCooldownMinutes*60 ? "FILL_COOLDOWN" : "NO_ACTIVE_EXPOSURE");
+    if(plan.inflight && orders==0 && positions==0 && plan.placed>0 && TimeCurrent()>plan.placed+60)
+-   { blocked=true; ExecutionState("RECOVERY_BLOCKED","UNRESOLVED_MARKET_SEND"); Save(); }
++   {
++      Recover(); // Always exhaust current history before declaring unknown.
++      if(plan.inflight && !blocked)
++      { blocked=true; ExecutionState("RECOVERY_BLOCKED","UNRESOLVED_MARKET_SEND"); Save(); }
++   }
+ }
+ 
+ bool GetSources(MqlRates &lower[],MqlRates &higher[])

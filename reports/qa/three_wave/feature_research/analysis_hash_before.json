@@ -1,0 +1,11 @@
+{
+  "stage_summary.csv": "1d5846ae9e30d8dbff0cab7c56b8097377fdc1bbf03222a0e74133b58a4e6c17",
+  "feature_distributions.csv": "cd00b38bde7bfea6b02620bbe3fa14edea0226575503b81c08cdf2ab901f15c3",
+  "bin_statistics.csv": "f4fab695f08437d6e6466295c5776244dd6832a157f13707a0f1cd43a99b9792",
+  "bin_replication.csv": "7a1e7dab8a2ef8dde29040c721545e244cf1efd8102744842a07c7a2d66c78b9",
+  "monthly_candidates.csv": "d885b96bfc7ef462e46b9794b05daab46fed634b977ed3a14f491cd7266792bd",
+  "distinct_opportunities.csv": "f2695867213256b4f9eb20fc94f81e631cefc733eaa8a5fafdb1fae6f3a49313",
+  "feature_contrasts.csv": "f5b60e3776ebb95a245a8ce8672859afb107b07679e248f068e504e1155ea645",
+  "frozen_bins.json": "5cdfeb25f94d563c269024f92122d5f5407b02202e93f98ef07510d9589708d4",
+  "next_hypothesis_frequency_only.json": "4001cda529b6a0f46c7d0572323537136eebb80c265c1f49234b3d039fa8607a"
+}

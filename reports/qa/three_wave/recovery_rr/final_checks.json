@@ -1,0 +1,13 @@
+{
+  "compile": {
+    "ea_compile.log": "Result: 0 errors, 0 warnings, 1831 ms elapsed, cpu='X64 Regular'",
+    "execution_compile.log": "Result: 0 errors, 0 warnings, 959 ms elapsed, cpu='X64 Regular'",
+    "rr_replay_compile.log": "Result: 0 errors, 0 warnings, 680 ms elapsed, cpu='X64 Regular'"
+  },
+  "originals_unchanged": true,
+  "production_matches_tested_build": true,
+  "missing_links": [],
+  "paired_native_outcomes_equal": true,
+  "native_execution_tests": 24,
+  "indicator_parity_decisions": 90577
+}

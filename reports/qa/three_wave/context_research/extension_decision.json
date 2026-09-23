@@ -1,0 +1,170 @@
+{
+  "extension": "2025-08-01 through 2025-11-01 exclusive",
+  "trigger": "Any predefined discovery/replication regime cell has fewer than 30 primary candidates",
+  "count_only_evidence": [
+    {
+      "period": "discovery",
+      "stage": "CHOCH",
+      "cell": "UP / UP",
+      "n": 9
+    },
+    {
+      "period": "discovery",
+      "stage": "CHOCH",
+      "cell": "UP / RANGE",
+      "n": 13
+    },
+    {
+      "period": "discovery",
+      "stage": "CHOCH",
+      "cell": "UP / DOWN",
+      "n": 12
+    },
+    {
+      "period": "discovery",
+      "stage": "CHOCH",
+      "cell": "RANGE / UP",
+      "n": 11
+    },
+    {
+      "period": "discovery",
+      "stage": "CHOCH",
+      "cell": "RANGE / RANGE",
+      "n": 20
+    },
+    {
+      "period": "discovery",
+      "stage": "CHOCH",
+      "cell": "RANGE / DOWN",
+      "n": 15
+    },
+    {
+      "period": "discovery",
+      "stage": "CHOCH",
+      "cell": "DOWN / UP",
+      "n": 10
+    },
+    {
+      "period": "discovery",
+      "stage": "CHOCH",
+      "cell": "DOWN / RANGE",
+      "n": 16
+    },
+    {
+      "period": "discovery",
+      "stage": "CHOCH",
+      "cell": "DOWN / DOWN",
+      "n": 14
+    },
+    {
+      "period": "discovery",
+      "stage": "HL",
+      "cell": "UP / UP",
+      "n": 3
+    },
+    {
+      "period": "discovery",
+      "stage": "HL",
+      "cell": "UP / RANGE",
+      "n": 7
+    },
+    {
+      "period": "discovery",
+      "stage": "HL",
+      "cell": "UP / DOWN",
+      "n": 9
+    },
+    {
+      "period": "discovery",
+      "stage": "HL",
+      "cell": "RANGE / UP",
+      "n": 9
+    },
+    {
+      "period": "discovery",
+      "stage": "HL",
+      "cell": "RANGE / RANGE",
+      "n": 12
+    },
+    {
+      "period": "discovery",
+      "stage": "HL",
+      "cell": "RANGE / DOWN",
+      "n": 4
+    },
+    {
+      "period": "discovery",
+      "stage": "HL",
+      "cell": "DOWN / UP",
+      "n": 5
+    },
+    {
+      "period": "discovery",
+      "stage": "HL",
+      "cell": "DOWN / RANGE",
+      "n": 9
+    },
+    {
+      "period": "discovery",
+      "stage": "HL",
+      "cell": "DOWN / DOWN",
+      "n": 8
+    },
+    {
+      "period": "discovery",
+      "stage": "READY",
+      "cell": "UP / UP",
+      "n": 1
+    },
+    {
+      "period": "discovery",
+      "stage": "READY",
+      "cell": "UP / RANGE",
+      "n": 6
+    },
+    {
+      "period": "discovery",
+      "stage": "READY",
+      "cell": "UP / DOWN",
+      "n": 4
+    },
+    {
+      "period": "discovery",
+      "stage": "READY",
+      "cell": "RANGE / UP",
+      "n": 7
+    },
+    {
+      "period": "discovery",
+      "stage": "READY",
+      "cell": "RANGE / RANGE",
+      "n": 11
+    },
+    {
+      "period": "discovery",
+      "stage": "READY",
+      "cell": "RANGE / DOWN",
+      "n": 0
+    },
+    {
+      "period": "discovery",
+      "stage": "READY",
+      "cell": "DOWN / UP",
+      "n": 4
+    },
+    {
+      "period": "discovery",
+      "stage": "READY",
+      "cell": "DOWN / RANGE",
+      "n": 6
+    },
+    {
+      "period": "discovery",
+      "stage": "READY",
+      "cell": "DOWN / DOWN",
+      "n": 7
+    }
+  ],
+  "activated": true,
+  "selection_by_return": false
+}

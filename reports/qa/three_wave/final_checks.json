@@ -1,0 +1,13 @@
+{
+  "compile": {
+    "MultiTF_3WaveIn3Wave_Visualizer_Shared_compile.log": "Result: 0 errors, 0 warnings, 1027 ms elapsed, cpu='X64 Regular'",
+    "ThreeWaveExecution_Validation_compile.log": "Result: 0 errors, 0 warnings, 748 ms elapsed, cpu='X64 Regular'",
+    "ThreeWaveOracleComparison_compile.log": "Result: 0 errors, 0 warnings, 862 ms elapsed, cpu='X64 Regular'",
+    "ThreeWaveStructure_Validation_compile.log": "Result: 0 errors, 0 warnings, 1022 ms elapsed, cpu='X64 Regular'",
+    "USDJPY_M1_M5_3WaveIn3Wave_Long_compile.log": "Result: 0 errors, 0 warnings, 1552 ms elapsed, cpu='X64 Regular'"
+  },
+  "report_links": true,
+  "originals_unchanged": true,
+  "manifest_verified": true,
+  "final_reference_window_match": true
+}

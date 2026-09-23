@@ -1,0 +1,16 @@
+{
+  "files": {
+    "candidates_with_context.csv": true,
+    "regime_statistics.csv": true,
+    "monthly_counts.csv": true,
+    "context_distributions.csv": true,
+    "single_context_buckets.csv": true,
+    "regime_vs_other_intervals.csv": true,
+    "execution_ledger.csv": true,
+    "regime_contrasts.csv": true,
+    "regime_stability.csv": true,
+    "regime_tables.md": true,
+    "next_hypothesis_diagnostic.json": true
+  },
+  "passed": true
+}

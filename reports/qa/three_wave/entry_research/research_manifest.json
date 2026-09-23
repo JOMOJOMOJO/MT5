@@ -1,0 +1,7 @@
+{
+  "mql/Experts/USDJPY_3Wave_EntryResearch.mq5": "cbcb04d31d500264d69f7b0cce5c91a86542ebf20f1796e8bd698b2d72a5c940",
+  "mql/Experts/USDJPY_3Wave_EntryResearch.ex5": "3880eadde48516bdea6c473d1d39f461adb4ee4d197a56b6704c156f145dd2bb",
+  "mql/Include/ThreeWaveEntryResearch.mqh": "bdba34c20aa4941c304e936597af0dd9a2c1dfad560e85ffda810d5683ee459a",
+  "mql/Scripts/tests/ThreeWaveEntry_Validation.mq5": "313cb456f4769fbdea9cc84f907ea88c00e25fb93412579e4e417cceb15ae84d",
+  "mql/Scripts/tests/ThreeWaveEntry_Validation.ex5": "e3c2adfb9da7591d05916a23e8ca084239da50405e952bc66174c53fd8a86ffa"
+}

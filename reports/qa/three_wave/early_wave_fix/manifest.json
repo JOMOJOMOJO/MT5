@@ -1,0 +1,70 @@
+{
+  "files": [
+    {
+      "path": "mql/Indicators/MultiTF_3WaveIn3Wave_Visualizer_Shared.mq5",
+      "sha256": "4e3e94b7ea4df7c2bcfa488695349250063843b93a6d3f6bc5829bbbc84b426c"
+    },
+    {
+      "path": "mql/Indicators/MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5",
+      "sha256": "db001fb1bdc83611a782731436f43e42df4cab8400065910907c1c181021837d"
+    },
+    {
+      "path": "mql/Include/ThreeWaveInputs.mqh",
+      "sha256": "dfca6d58d0be32a3f6ad5f3854317bc8b38912dcba1bc6e74a461b6550d0649a"
+    },
+    {
+      "path": "mql/Include/ThreeWaveStructure.mqh",
+      "sha256": "9cced01e7ae9035be0adca5531f3f54cc420ea11d270a2dfb49e10cfd19098a4"
+    },
+    {
+      "path": "mql/Include/ThreeWaveDrawing.mqh",
+      "sha256": "e45b9c5d609be7406059e99c6b7e6734e767b9b64d3c36a167846521b3b3e589"
+    },
+    {
+      "path": "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5",
+      "sha256": "cb61dd88cbaa976cd07eafdfde1e093e19649c8536a497f26696f96cf062415c"
+    },
+    {
+      "path": "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.ex5",
+      "sha256": "297a41bd48ce84ac6c7051490e26aae26ce7af32bfc146d5e5ea48aa59f0437c"
+    },
+    {
+      "path": "mql/Scripts/tests/ThreeWaveStructure_Validation.mq5",
+      "sha256": "bca31c6f87125339a54a676f4de4476ee2e6b45c824d8c258bf0aea943b5504c"
+    },
+    {
+      "path": "mql/Scripts/tests/ThreeWaveExportApril.mq5",
+      "sha256": "7f2a86c0cbe3783d12b652b1eb965cbadc335caa1dad836d7be89570c7fdc178"
+    },
+    {
+      "path": "tools/swing_structure/audit_early_wave.py",
+      "sha256": "46fe838fa60f108c1a07cd543b159b9721ba9cadfeaa991d7d864955476d65d9"
+    }
+  ],
+  "installed": [
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Indicators\\MultiTF_3WaveIn3Wave_Visualizer_Shared.mq5",
+      "sha256": "4e3e94b7ea4df7c2bcfa488695349250063843b93a6d3f6bc5829bbbc84b426c"
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Indicators\\MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5",
+      "sha256": "db001fb1bdc83611a782731436f43e42df4cab8400065910907c1c181021837d"
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Include\\ThreeWaveInputs.mqh",
+      "sha256": "dfca6d58d0be32a3f6ad5f3854317bc8b38912dcba1bc6e74a461b6550d0649a"
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Include\\ThreeWaveStructure.mqh",
+      "sha256": "9cced01e7ae9035be0adca5531f3f54cc420ea11d270a2dfb49e10cfd19098a4"
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Include\\ThreeWaveDrawing.mqh",
+      "sha256": "e45b9c5d609be7406059e99c6b7e6734e767b9b64d3c36a167846521b3b3e589"
+    }
+  ],
+  "originals_unchanged": {
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Indicators\\MultiTF_3WaveIn3Wave_Visualizer_v1.05_InvalidationReset.mq5": true,
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\USDJPY_M1_M5_HL_Fib50_Long.mq5": true
+  }
+}

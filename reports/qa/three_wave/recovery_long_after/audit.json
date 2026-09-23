@@ -1,0 +1,40 @@
+{
+  "run": "recovery_long_after",
+  "candidates": 46,
+  "sent": 46,
+  "decisions_compared": 0,
+  "parity_failures": 0,
+  "reasons": {
+    "MARKET_BUY_WITH_SLTP": 46
+  },
+  "metrics": {
+    "trades": 46,
+    "win_rate": 0.45652173913043476,
+    "profit_factor": 1.2183353704330921,
+    "expectancy": 6.446304347826087,
+    "expectancy_R": 0.07717691322848835,
+    "net_profit": 296.5300000000001,
+    "max_closed_balance_drawdown": 287.7999999999993,
+    "average_win_R": 0.8289357434703665,
+    "average_loss_R": -0.5543005041746892,
+    "max_equity_drawdown": "393.24 (3.77%)",
+    "native_history_quality": "100%"
+  },
+  "monthly": {
+    "2025.01": {
+      "trades": 23,
+      "profit": 118.00000000000001
+    },
+    "2025.02": {
+      "trades": 12,
+      "profit": 264.27
+    },
+    "2025.03": {
+      "trades": 11,
+      "profit": -85.74000000000004
+    }
+  },
+  "unclosed_positions": [],
+  "data_quality_warnings": [],
+  "issues": []
+}

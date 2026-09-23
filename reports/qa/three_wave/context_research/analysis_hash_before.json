@@ -1,0 +1,13 @@
+{
+  "candidates_with_context.csv": "2ca340ff2528c58a0e796db81f2ff0afb656fd19e4c21ad7c96467f6706c8658",
+  "regime_statistics.csv": "2dbfdfda6265f69bd91f274fa4ac2bc067f3c217d147a6838709504808867fc9",
+  "monthly_counts.csv": "180ae285e903181a3e0dbefd82f08ebae849a276b2e7daa5807b5f2b2784b39c",
+  "context_distributions.csv": "f15e604dfe91de0a208def1ab1859b30b8074783f02492662be27ae3611ba8ef",
+  "single_context_buckets.csv": "158a8815204f31f912aa8768f5c2aa45c814c43ff05f17fc77a0043cbcfb27fd",
+  "regime_vs_other_intervals.csv": "8a9e19b9f5b77716c9aa78eb016d45d045b405bcb2b4ce581b260c2fe8eb8d8e",
+  "execution_ledger.csv": "2b2cb1037927d2c2c053eb3fa203345fc2f0b94a96bcfc328821c04e8525de15",
+  "regime_contrasts.csv": "49a53912b97cd301be88cd43c4adb8524052b31fa3cdf914a6396c6a3b673e25",
+  "regime_stability.csv": "2fd31b8907c5c0d9791e301387cd874cb62e5149cc1e10f3d4eda0bb7abad7b2",
+  "regime_tables.md": "ffb4480a9950b9861413392cb292d75cddb85a79790fe9555357c449fcc816a1",
+  "next_hypothesis_diagnostic.json": "8ca6fc845486efdf763fdd4d4724d9303daa58c510e0e94420bcbf61fe2e81cd"
+}

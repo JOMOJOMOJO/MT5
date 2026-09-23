@@ -1,0 +1,33 @@
+--- Previous feature recorder unchanged
++++ Context recorder
+@@ -3,6 +3,7 @@
+ #property description "Tester-only, no-order candidate feature and shadow-outcome recorder."
+ #include "../Include/ThreeWaveInputs.mqh"
+ #include "../Include/ThreeWaveFeatureObserver.mqh"
++#include "../Include/ThreeWaveContextResearch.mqh"
+ 
+ int f_candidates=INVALID_HANDLE,f_outcomes=INVALID_HANDLE;
+ int h_ema=INVALID_HANDLE,h_atr=INVALID_HANDLE,h_adx=INVALID_HANDLE,h_m1atr=INVALID_HANDLE;
+@@ -125,6 +126,7 @@
+       V(down_er),V(down_net),TS(down_start),V(w1_er),V(w1_net),V(retrace),V(current_retrace),
+       (close_time-s.wave1_high.bar_time-300)/60.0,(close_time-s.wave1_high.confirmed_time)/60.0,V(strength),V(m1atr),V(ok?(tick.ask-tick.bid)/atr:EMPTY_VALUE),
+       V(ema3),V(ema6),V(p.choch_price),V(source_m1[lc-2].close),V(p.found_wave1_high?p.wave1_high.price:EMPTY_VALUE),TS(p.wave1_high.bar_time),TS(p.wave1_high.confirmed_time));
++   ContextRecord(id,close_time,tick.ask);
+    AddShadow(id,"STAGE",stage=="CHOCH"?p.reversal_low.price:p.hl.price,tick);
+    AddShadow(id,"REVERSAL_CONTROL",p.reversal_low.price,tick);
+    candidates++;
+@@ -132,6 +134,7 @@
+ int OnInit()
+ {
+    if(!MQLInfoInteger(MQL_TESTER) || _Symbol!="USDJPY" || _Period!=PERIOD_M1 || InpLowerTF!=PERIOD_M1 || InpHigherTF!=PERIOD_M5) return INIT_PARAMETERS_INCORRECT;
++   if(!ContextInit()) return INIT_FAILED;
+    h_ema=iMA(_Symbol,PERIOD_M5,20,0,MODE_EMA,PRICE_CLOSE);h_atr=iATR(_Symbol,PERIOD_M5,14);
+    h_adx=iADX(_Symbol,PERIOD_M5,14);h_m1atr=iATR(_Symbol,PERIOD_M1,14);
+    if(h_ema==INVALID_HANDLE || h_atr==INVALID_HANDLE || h_adx==INVALID_HANDLE || h_m1atr==INVALID_HANDLE) return INIT_FAILED;
+@@ -183,5 +186,6 @@
+    if(h_atr!=INVALID_HANDLE) IndicatorRelease(h_atr);
+    if(h_adx!=INVALID_HANDLE) IndicatorRelease(h_adx);
+    if(h_m1atr!=INVALID_HANDLE) IndicatorRelease(h_m1atr);
++   ContextDeinit();
+    Print("TW_FEATURE_RESULT candidates=",candidates," feature_errors=",feature_errors," data_skips=",data_skips," orders_sent=0");
+ }

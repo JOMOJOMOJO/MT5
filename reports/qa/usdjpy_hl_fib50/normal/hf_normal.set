@@ -1,0 +1,13 @@
+InpMagicNumber=260915501
+InpSLBufferPoints=10
+InpLowerLeftBars=2
+InpLowerRightBars=2
+InpHigherLeftBars=2
+InpHigherRightBars=2
+InpHistoryBars=6000
+InpAllowDeferredProtection=true
+InpShowMarkers=true
+InpWriteCSV=true
+InpRewardRisk=1.2
+InpPreferServerExpiry=true
+InpTestDeferredProtection=false

@@ -1,0 +1,3 @@
+deal,order,position,time,time_msc,entry,type,price,volume,profit,commission,swap,fee,reason
+2,2,2,2025.02.14 09:57:11,1739527031000,0,0,152.733,0.96,0.0,0.0,0.0,0.0,3
+3,3,2,2025.02.14 09:57:22,1739527042000,1,1,152.731,0.96,-1.26,0.0,0.0,0.0,3

@@ -1,0 +1,84 @@
+{
+  "candidates": 46,
+  "source_candidates": 46,
+  "issues": [],
+  "rr1": {
+    "n": 46,
+    "wins": 20,
+    "net_R": -6.000000000000233,
+    "mean_R": -0.1304347826087007,
+    "PF": 0.7692307692307604
+  },
+  "rr12": {
+    "n": 46,
+    "wins": 17,
+    "net_R": -8.59071304980619,
+    "mean_R": -0.1867546315175259,
+    "PF": 0.7037685155239244
+  },
+  "one_R_then_SL_without_1_2R": 3,
+  "selected_near_M5_high": 0,
+  "selected_cross_before_HL_confirm": 0,
+  "all_rr12_losses": 29,
+  "losses_near_M5": 2,
+  "losses_preconfirm_cross": 7,
+  "wins_preconfirm_cross": 1,
+  "censored": 0,
+  "monthly": {
+    "2025.01": {
+      "rr1": {
+        "n": 23,
+        "wins": 11,
+        "net_R": -0.9999999999995874,
+        "mean_R": -0.04347826086954728,
+        "PF": 0.916666666666701
+      },
+      "rr12": {
+        "n": 23,
+        "wins": 10,
+        "net_R": -0.9993160117254625,
+        "mean_R": -0.04344852224893315,
+        "PF": 0.9231295375595797
+      }
+    },
+    "2025.02": {
+      "rr1": {
+        "n": 12,
+        "wins": 5,
+        "net_R": -2.00000000000011,
+        "mean_R": -0.16666666666667584,
+        "PF": 0.7142857142856986
+      },
+      "rr12": {
+        "n": 12,
+        "wins": 5,
+        "net_R": -0.9854268888267923,
+        "mean_R": -0.0821189074022327,
+        "PF": 0.8592247301676011
+      }
+    },
+    "2025.03": {
+      "rr1": {
+        "n": 11,
+        "wins": 4,
+        "net_R": -3.0000000000005356,
+        "mean_R": -0.2727272727273214,
+        "PF": 0.571428571428495
+      },
+      "rr12": {
+        "n": 11,
+        "wins": 2,
+        "net_R": -6.6059701492539356,
+        "mean_R": -0.6005427408412669,
+        "PF": 0.2660033167495627
+      }
+    }
+  },
+  "assumptions": [
+    "Ask entry / Bid exits; fixed SL for both targets",
+    "Nominal R at target or stop; no added commission, execution delay or stop slippage",
+    "Maximum 7 calendar days or test end; censored results reported",
+    "Near M5 = peak within 0.1 initial R of fixed parent high; diagnostic only",
+    "Pre-confirmation price cross is hindsight diagnosis, NOT a tradable confirmed HL"
+  ]
+}

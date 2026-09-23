@@ -1,0 +1,30 @@
+[
+  {
+    "category": "earlier_win_baseline_loss",
+    "file": "earlier_win_baseline_loss.png",
+    "early_signal": "2025.01.17 05:36:00",
+    "baseline_signal": "2025.01.17 05:51:00",
+    "selection": "first chronological example in category"
+  },
+  {
+    "category": "earlier_loss_baseline_win",
+    "file": "earlier_loss_baseline_win.png",
+    "early_signal": "2025.01.13 16:23:00",
+    "baseline_signal": "2025.01.13 16:28:00",
+    "selection": "first chronological example in category"
+  },
+  {
+    "category": "additional_loss",
+    "file": "additional_loss.png",
+    "early_signal": "2025.01.07 20:15:00",
+    "baseline_signal": null,
+    "selection": "first chronological example in category"
+  },
+  {
+    "category": "additional_win",
+    "file": "additional_win.png",
+    "early_signal": "2025.01.20 15:19:00",
+    "baseline_signal": null,
+    "selection": "first chronological example in category"
+  }
+]

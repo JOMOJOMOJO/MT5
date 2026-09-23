@@ -1,0 +1,50 @@
+[
+  {
+    "period": "discovery",
+    "posthoc_hypothesis": "Exclude existing discovery Q4 of CHoCH break strength; not optimized or deployed",
+    "fixed_boundary": 0.8078847442479999,
+    "n": 91,
+    "mean_R": -0.09518263197686816,
+    "monthly": {
+      "2025-01": {
+        "candidates": 42,
+        "unique_times": 42,
+        "unique_parents": 40
+      },
+      "2025-02": {
+        "candidates": 21,
+        "unique_times": 21,
+        "unique_parents": 21
+      },
+      "2025-03": {
+        "candidates": 28,
+        "unique_times": 27,
+        "unique_parents": 27
+      }
+    }
+  },
+  {
+    "period": "replication",
+    "posthoc_hypothesis": "Exclude existing discovery Q4 of CHoCH break strength; not optimized or deployed",
+    "fixed_boundary": 0.8078847442479999,
+    "n": 112,
+    "mean_R": -0.14492186638733034,
+    "monthly": {
+      "2025-05": {
+        "candidates": 39,
+        "unique_times": 39,
+        "unique_parents": 31
+      },
+      "2025-06": {
+        "candidates": 37,
+        "unique_times": 37,
+        "unique_parents": 33
+      },
+      "2025-07": {
+        "candidates": 36,
+        "unique_times": 35,
+        "unique_parents": 33
+      }
+    }
+  }
+]

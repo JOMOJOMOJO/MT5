@@ -1,0 +1,220 @@
+--- v1.05 structure engine
++++ ThreeWaveStructure.mqh
+@@ -1,3 +1,7 @@
++#ifndef THREE_WAVE_STRUCTURE
++#define THREE_WAVE_STRUCTURE
++// Shared v1.06 engine. v1.05 source retained in reports/qa/three_wave/original_v1.05.mq5.
++// Inputs precede this header; arrays oldest first, final rate is forming and never evaluated.
+ struct PivotPoint
+ {
+    datetime bar_time;       // source timeframe bar open time
+@@ -41,6 +45,21 @@
+    bool       early_break;
+ };
+ 
++struct TWEvent
++{
++   datetime time,setup;
++   string state,reason;
++};
++TWEvent tw_events[];
++datetime tw_trace_from=0;
++void TWTrace(const datetime time,const datetime setup,const string state,const string why)
++{
++   if(time<tw_trace_from) return;
++   int n=ArraySize(tw_events); ArrayResize(tw_events,n+1);
++   tw_events[n].time=time; tw_events[n].setup=setup;
++   tw_events[n].state=state; tw_events[n].reason=why;
++}
++
+ int TFSeconds(const ENUM_TIMEFRAMES tf)
+ {
+    int s=PeriodSeconds(tf);
+@@ -82,7 +101,7 @@
+    int n=ArraySize(r);
+    if(n<left+right+3) return;
+ 
+-   for(int i=left;i<n-right;i++)
++   for(int i=left;i<n-right-1;i++)
+    {
+       if(IsPivotHigh(r,i,left,right))
+       {
+@@ -236,6 +255,15 @@
+    {
+       datetime close_time=BarCloseTime(r[i],InpHigherTF);
+ 
++      // Invalidation precedes newly-confirmed high recognition on this bar.
++      if(armed && r[i].low<armedOrigin.price)
++      {
++         TWTrace(close_time,armedBreak,"WAIT_M5_DOWNTREND","M5_ORIGIN_BROKEN_BEFORE_WAVE1_CONFIRM");
++         armed=false; hh1=false; hh2=false; ll1=false; ll2=false;
++         // Pivots originating in this failed attempt cannot re-arm it.
++         while(pidx<ArraySize(pivots) && pivots[pidx].bar_time<=r[i].time) pidx++;
++         continue;
++      }
+       while(pidx<ArraySize(pivots) && pivots[pidx].confirmed_time<=close_time)
+       {
+          const PivotPoint p=pivots[pidx];
+@@ -252,6 +280,7 @@
+             s.break_price=armedBreakPrice;
+             s.wave1_high=p;
+             AddSetup(setups,s);
++            TWTrace(close_time,armedBreak,"M5_WAVE2_ACTIVE","M5_WAVE1_HIGH_CONFIRMED");
+             armed=false;
+          }
+          pidx++;
+@@ -272,11 +301,19 @@
+ 
+       if(PriceBreakUp(r[i],h2.price) && close_time>=h2.confirmed_time)
+       {
++         if(r[i].low<l2.price)
++         {
++            TWTrace(close_time,r[i].time,"WAIT_M5_DOWNTREND","M5_CHOCH_BAR_ORIGIN_BROKEN");
++            hh1=false; hh2=false; ll1=false; ll2=false;
++            while(pidx<ArraySize(pivots) && pivots[pidx].bar_time<=r[i].time) pidx++;
++            continue;
++         }
+          armed=true;
+          armedOrigin=l2;
+          armedBroken=h2;
+          armedBreak=r[i].time;
+          armedBreakPrice=r[i].close;
++         TWTrace(close_time,armedBreak,"M5_WAVE1_ACTIVE","M5_CLOSED_CHOCH");
+ 
+          // Consume the current downtrend. A new setup requires a newly-established lower-high/lower-low structure.
+          hh1=false; hh2=false; ll1=false; ll2=false;
+@@ -308,6 +345,20 @@
+    int start=FindRateIndexAtOrAfter(r,start_time);
+    if(start<0) return false;
+ 
++   // Closed M1 bars may reveal an origin break inside an unfinished M5 bar.
++   // Scan the whole post-CHoCH interval BEFORE the M5 high knowledge gate.
++   for(int j=0;j<ArraySize(r)-1;j++)
++   {
++      if(BarCloseTime(r[j],InpLowerTF)<=s.break_time+TFSeconds(InpHigherTF)) continue;
++      if(BarCloseTime(r[j],InpLowerTF)>knowledge_time) break;
++      if(r[j].low<s.origin_low.price)
++      {
++         TWTrace(BarCloseTime(r[j],InpLowerTF),s.break_time,"WAIT_M5_DOWNTREND","M5_ORIGIN_BROKEN_DURING_CONFIRMATION");
++         return false;
++      }
++   }
++   datetime m1_epoch=start_time;
++   TWTrace(knowledge_time,s.break_time,"WAIT_M1_DOWNTREND","M5_WAVE2_KNOWN");
+    // Generic M1 structure is maintained continuously, even while a candidate
+    // CHoCH/Wave1/Wave2 pattern is active.  If that candidate is invalidated,
+    // the same M5 Wave2 can immediately start searching for a NEW M1 downtrend.
+@@ -335,10 +386,12 @@
+    {
+       datetime close_time=BarCloseTime(r[i],InpLowerTF);
+       if(close_time<knowledge_time) continue;  // M5 Wave1 high was not knowable yet.
+-      if(r[i].time>hard_end) break;
++      if(r[i].time>hard_end)
++      { TWTrace(close_time,s.break_time,"WAIT_M5_DOWNTREND","SETUP_240_MINUTE_EXPIRY"); break; }
+ 
+       // M5 Wave1 origin broken => the whole M5 Wave2 thesis is invalid.
+-      if(r[i].low<s.origin_low.price) break;
++      if(r[i].low<s.origin_low.price)
++      { ZeroMemory(pat); TWTrace(close_time,s.break_time,"WAIT_M5_DOWNTREND","M5_ORIGIN_BROKEN"); break; }
+ 
+       // Once M5 Wave1 high is exceeded, M5 Wave3 is already underway.
+       bool m5Wave3Already=PriceBreakUp(r[i],s.wave1_high.price);
+@@ -348,7 +401,7 @@
+       while(pidx<ArraySize(pivots) && PivotConfirmedBy(pivots[pidx],close_time))
+       {
+          PivotPoint p=pivots[pidx];
+-         if(p.bar_time>=start_time)
++         if(p.bar_time>=m1_epoch)
+          {
+             if(p.high) PushLastTwo(p,h1,h2,hh1,hh2);
+             else       PushLastTwo(p,l1,l2,ll1,ll2);
+@@ -363,6 +416,7 @@
+                   {
+                      pat.wave1_high=p;
+                      pat.found_wave1_high=true;
++                     TWTrace(close_time,s.break_time,"M1_WAVE2_ACTIVE","M1_WAVE1_HIGH_CONFIRMED");
+                      ZeroMemory(latestPullbackHigh);
+                      haveLatestPullbackHigh=false;
+                   }
+@@ -383,6 +437,7 @@
+                   {
+                      pat.hl=p;
+                      pat.found_hl=true;
++                     TWTrace(close_time,s.break_time,"M1_WAVE2_ACTIVE","M1_HL_CONFIRMED");
+ 
+                      double range=pat.wave1_high.price-pat.reversal_low.price;
+                      pat.retrace=(range>0.0 ? (pat.wave1_high.price-p.price)/range : 0.0);
+@@ -408,16 +463,12 @@
+          ZeroMemory(latestPullbackHigh);
+          haveLatestPullbackHigh=false;
+ 
+-         downtrend=(hh1 && hh2 && ll1 && ll2 && h2.price<h1.price && l2.price<l1.price);
+-         haveReturnHigh=false;
+-         haveCurrentLow=false;
+-         if(downtrend)
+-         {
+-            currentReturnHigh=h2;
+-            currentLow=l2;
+-            haveReturnHigh=true;
+-            haveCurrentLow=true;
+-         }
++         // A fresh attempt must be built from pivots after this failure.
++         // Previously confirmed lows may themselves already have been broken.
++         m1_epoch=close_time;
++         hh1=false; hh2=false; ll1=false; ll2=false;
++         downtrend=false; haveReturnHigh=false; haveCurrentLow=false;
++         TWTrace(close_time,s.break_time,"WAIT_M1_DOWNTREND","M1_REVERSAL_LOW_BROKEN_RESET");
+ 
+          // Conservative: do not create a new CHoCH on the same bar that
+          // invalidated the old reversal origin.
+@@ -429,6 +480,7 @@
+       // old HL and wait for a newer confirmed low before allowing READY.
+       if(pat.found_hl && r[i].low<pat.hl.price)
+       {
++         TWTrace(close_time,s.break_time,"M1_WAVE2_ACTIVE","M1_HL_BROKEN_DISCARD_OLD_HL");
+          pat.found_hl=false;
+          ZeroMemory(pat.hl);
+          ZeroMemory(pat.pullback_lh);
+@@ -457,7 +509,14 @@
+          if(downtrend && haveReturnHigh && haveCurrentLow &&
+             PriceBreakUp(r[i],currentReturnHigh.price) && close_time>=currentReturnHigh.confirmed_time)
+          {
++            if(r[i].low<currentLow.price)
++            {
++               m1_epoch=close_time; hh1=false; hh2=false; ll1=false; ll2=false;
++               TWTrace(close_time,s.break_time,"WAIT_M1_DOWNTREND","M1_CHOCH_BAR_REVERSAL_BROKEN");
++               continue;
++            }
+             pat.found_choch=true;
++            TWTrace(close_time,s.break_time,"M1_WAVE1_ACTIVE","M1_CLOSED_CHOCH");
+             pat.downtrend_return_high=currentReturnHigh;
+             pat.reversal_low=currentLow;
+             pat.choch_time=r[i].time;
+@@ -486,6 +545,7 @@
+                pat.ready_time=r[i].time;
+                pat.ready_price=r[i].close;
+                pat.early_break=true;
++               TWTrace(close_time,s.break_time,"LONG_READY","WAVE2_RETURN_HIGH_CLOSE_BREAK");
+                return true;
+             }
+ 
+@@ -495,6 +555,7 @@
+                pat.ready_time=r[i].time;
+                pat.ready_price=r[i].close;
+                pat.early_break=false;
++               TWTrace(close_time,s.break_time,"LONG_READY","WAVE1_HIGH_CLOSE_BREAK");
+                return true;
+             }
+          }
+@@ -503,8 +564,10 @@
+       // If M5 Wave3 has already begun before we even confirmed an M1 HL,
+       // this particular "3 inside 3" opportunity has been missed.
+       if(m5Wave3Already && pat.found_choch && !pat.found_hl)
+-         break;
++      { TWTrace(close_time,s.break_time,"WAIT_M5_DOWNTREND","M5_WAVE3_STARTED_BEFORE_M1_HL"); break; }
+    }
+    return pat.found_choch;
+ }
+ 
++
++#endif

@@ -1,0 +1,32 @@
+{
+  "run": "early_visual_final",
+  "candidates": 1,
+  "sent": 1,
+  "decisions_compared": 1438,
+  "parity_failures": 0,
+  "reasons": {
+    "MARKET_BUY_WITH_SLTP": 1
+  },
+  "metrics": {
+    "trades": 1,
+    "win_rate": 0.0,
+    "profit_factor": 0.0,
+    "expectancy": -98.51,
+    "expectancy_R": -1.0,
+    "net_profit": -98.51,
+    "max_closed_balance_drawdown": 98.51000000000022,
+    "average_win_R": null,
+    "average_loss_R": -1.0,
+    "max_equity_drawdown": "142.72 (1.42%)",
+    "native_history_quality": "100%"
+  },
+  "monthly": {
+    "2025.04": {
+      "trades": 1,
+      "profit": -98.51
+    }
+  },
+  "unclosed_positions": [],
+  "data_quality_warnings": [],
+  "issues": []
+}

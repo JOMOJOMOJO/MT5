@@ -1,0 +1,3 @@
+deal,position_id,signal_time,exit_time,exit_price,volume,profit_exit_deal,initial_risk,result_R_exit_deal,reason
+3,2,2025.01.02 10:49:00,2025.01.02 10:51:41,156.779,1.34,98.29,98.44,0.9984762291751321,5
+7,6,2025.01.06 06:37:00,2025.01.06 06:44:26,157.692,3.48,-99.31,99.31,-1.0,4

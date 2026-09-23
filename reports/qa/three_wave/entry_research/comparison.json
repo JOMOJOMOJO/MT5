@@ -1,0 +1,256 @@
+{
+  "runs": {
+    "choch50": {
+      "run": "entry_train_choch50",
+      "candidates": 60,
+      "sent": 60,
+      "decisions_compared": 0,
+      "parity_failures": 0,
+      "reasons": {
+        "MARKET_BUY_WITH_SLTP": 60
+      },
+      "metrics": {
+        "trades": 60,
+        "win_rate": 0.4666666666666667,
+        "profit_factor": 0.8491729473451717,
+        "expectancy": -8.308333333333334,
+        "expectancy_R": -0.08054271042962344,
+        "net_profit": -498.4999999999999,
+        "max_closed_balance_drawdown": 882.960000000001,
+        "average_win_R": 1.0140365168678482,
+        "average_loss_R": -1.0382995343149113,
+        "max_equity_drawdown": "888.04 (8.63%)",
+        "native_history_quality": "98% リアルティック"
+      },
+      "monthly": {
+        "2025.01": {
+          "trades": 25,
+          "profit": 51.83000000000001
+        },
+        "2025.02": {
+          "trades": 15,
+          "profit": 66.59000000000005
+        },
+        "2025.03": {
+          "trades": 20,
+          "profit": -616.9200000000001
+        }
+      },
+      "unclosed_positions": [],
+      "data_quality_warnings": [
+        "USDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+        "USDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+        "USDJPY : 2025.03.27 23:59 - 256705 tick prices mismatch for 1431 minute bars",
+        "USDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 90577 total minute bars, every tick generation used",
+        "USDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks discarded for 1431 minutes of 90577 total minute bars, every tick generation used"
+      ],
+      "issues": []
+    },
+    "current": {
+      "run": "entry_train_current",
+      "candidates": 46,
+      "sent": 46,
+      "decisions_compared": 0,
+      "parity_failures": 0,
+      "reasons": {
+        "MARKET_BUY_WITH_SLTP": 46
+      },
+      "metrics": {
+        "trades": 46,
+        "win_rate": 0.43478260869565216,
+        "profit_factor": 0.7555341749365696,
+        "expectancy": -13.698695652173912,
+        "expectancy_R": -0.1372678364459969,
+        "net_profit": -630.1400000000002,
+        "max_closed_balance_drawdown": 935.6500000000015,
+        "average_win_R": 1.018278080313296,
+        "average_loss_R": -1.0261493108762223,
+        "max_equity_drawdown": "982.58 (9.63%)",
+        "native_history_quality": "98% リアルティック"
+      },
+      "monthly": {
+        "2025.01": {
+          "trades": 23,
+          "profit": -111.61000000000008
+        },
+        "2025.02": {
+          "trades": 12,
+          "profit": -236.6899999999999
+        },
+        "2025.03": {
+          "trades": 11,
+          "profit": -281.84000000000003
+        }
+      },
+      "unclosed_positions": [],
+      "data_quality_warnings": [
+        "USDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+        "USDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+        "USDJPY : 2025.03.27 23:59 - 256705 tick prices mismatch for 1431 minute bars",
+        "USDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 90577 total minute bars, every tick generation used",
+        "USDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks discarded for 1431 minutes of 90577 total minute bars, every tick generation used"
+      ],
+      "issues": []
+    },
+    "current_origin": {
+      "run": "entry_train_current_origin",
+      "candidates": 46,
+      "sent": 45,
+      "decisions_compared": 0,
+      "parity_failures": 0,
+      "reasons": {
+        "MARKET_BUY_WITH_SLTP": 45,
+        "POSITION_OPEN": 1
+      },
+      "metrics": {
+        "trades": 45,
+        "win_rate": 0.4222222222222222,
+        "profit_factor": 0.6931109163100087,
+        "expectancy": -18.515777777777778,
+        "expectancy_R": -0.18925640212266182,
+        "net_profit": -833.21,
+        "max_closed_balance_drawdown": 1038.6900000000005,
+        "average_win_R": 1.0151854826122884,
+        "average_loss_R": -1.0694254717366638,
+        "max_equity_drawdown": "1 114.26 (10.84%)",
+        "native_history_quality": "98% リアルティック"
+      },
+      "monthly": {
+        "2025.01": {
+          "trades": 21,
+          "profit": -95.85999999999989
+        },
+        "2025.02": {
+          "trades": 13,
+          "profit": 137.01
+        },
+        "2025.03": {
+          "trades": 11,
+          "profit": -874.3600000000001
+        }
+      },
+      "unclosed_positions": [],
+      "data_quality_warnings": [
+        "USDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+        "USDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+        "USDJPY : 2025.03.27 23:59 - 256705 tick prices mismatch for 1431 minute bars",
+        "USDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 90577 total minute bars, every tick generation used",
+        "USDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks discarded for 1431 minutes of 90577 total minute bars, every tick generation used"
+      ],
+      "issues": []
+    },
+    "hl": {
+      "run": "entry_train_hl",
+      "candidates": 63,
+      "sent": 62,
+      "decisions_compared": 0,
+      "parity_failures": 0,
+      "reasons": {
+        "MARKET_BUY_WITH_SLTP": 62,
+        "POSITION_OPEN": 1
+      },
+      "metrics": {
+        "trades": 62,
+        "win_rate": 0.43548387096774194,
+        "profit_factor": 0.7778252891270122,
+        "expectancy": -12.654354838709677,
+        "expectancy_R": -0.126266159329975,
+        "net_profit": -784.5699999999999,
+        "max_closed_balance_drawdown": 1215.479999999996,
+        "average_win_R": 1.0897810337826286,
+        "average_loss_R": -1.0643597083025549,
+        "max_equity_drawdown": "1 217.34 (11.89%)",
+        "native_history_quality": "98% リアルティック"
+      },
+      "monthly": {
+        "2025.01": {
+          "trades": 30,
+          "profit": -507.26999999999975
+        },
+        "2025.02": {
+          "trades": 15,
+          "profit": -100.40999999999997
+        },
+        "2025.03": {
+          "trades": 17,
+          "profit": -176.89000000000001
+        }
+      },
+      "unclosed_positions": [],
+      "data_quality_warnings": [
+        "USDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+        "USDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+        "USDJPY : 2025.03.27 23:59 - 256705 tick prices mismatch for 1431 minute bars",
+        "USDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 90577 total minute bars, every tick generation used",
+        "USDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks discarded for 1431 minutes of 90577 total minute bars, every tick generation used"
+      ],
+      "issues": []
+    }
+  },
+  "independent_bar_audit": {
+    "choch50": {
+      "signals": 60,
+      "issues": []
+    },
+    "current": {
+      "signals": 46,
+      "issues": []
+    },
+    "current_origin": {
+      "signals": 46,
+      "issues": []
+    },
+    "hl": {
+      "signals": 63,
+      "issues": []
+    }
+  },
+  "matched_candidates": {
+    "hl": {
+      "matched_setups": 44,
+      "only_early": 19,
+      "only_baseline": 2,
+      "median_minutes_earlier": 5.0,
+      "both_sent": 44,
+      "mean_entry_saving_pips": 2.9022727272728264,
+      "common_realized": {
+        "trades": 44,
+        "early_profit": 539.91,
+        "baseline_profit": -429.02000000000004,
+        "early_net_R": 6.144413781537199,
+        "baseline_net_R": -4.247626711524807,
+        "same_SL_trades": 20,
+        "note": "Common setups selected retrospectively; not a tradable filter. HL can change before baseline entry."
+      },
+      "additional_setups_realized": {
+        "trades": 18,
+        "profit": -1324.4799999999998,
+        "wins": 2,
+        "net_R": -13.972915659995646
+      }
+    },
+    "choch50": {
+      "matched_setups": 29,
+      "only_early": 31,
+      "only_baseline": 17,
+      "median_minutes_earlier": 12.0,
+      "both_sent": 29,
+      "mean_entry_saving_pips": 4.06206896551684,
+      "common_realized": {
+        "trades": 29,
+        "early_profit": 899.09,
+        "baseline_profit": -1109.65,
+        "early_net_R": 9.038952560742262,
+        "baseline_net_R": -11.448666648276202,
+        "same_SL_trades": 0,
+        "note": "Common setups selected retrospectively; not a tradable filter. HL can change before baseline entry."
+      },
+      "additional_setups_realized": {
+        "trades": 31,
+        "profit": -1397.59,
+        "wins": 9,
+        "net_R": -13.87151518651967
+      }
+    }
+  }
+}

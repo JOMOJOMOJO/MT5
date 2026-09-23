@@ -1,0 +1,43 @@
+{
+  "run": "real_ticks",
+  "candidates": 33,
+  "sent": 32,
+  "decisions_compared": 61774,
+  "parity_failures": 0,
+  "reasons": {
+    "MARKET_BUY_WITH_SLTP": 32,
+    "POSITION_OPEN": 1
+  },
+  "metrics": {
+    "trades": 32,
+    "win_rate": 0.3125,
+    "profit_factor": 0.5321466436555367,
+    "expectancy": -30.751562500000002,
+    "expectancy_R": -0.32001792701736276,
+    "net_profit": -984.0499999999998,
+    "max_closed_balance_drawdown": 1122.4700000000066,
+    "average_win_R": 1.2120348507139118,
+    "average_loss_R": -1.0164055532588512,
+    "max_equity_drawdown": "1 160.16 (11.43%)",
+    "native_history_quality": "100% リアルティック"
+  },
+  "monthly": {
+    "2025.03": {
+      "trades": 13,
+      "profit": -630.18
+    },
+    "2025.04": {
+      "trades": 19,
+      "profit": -353.87
+    }
+  },
+  "unclosed_positions": [],
+  "data_quality_warnings": [
+    "USDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+    "USDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+    "USDJPY : 2025.03.27 23:59 - 256705 tick prices mismatch for 1431 minute bars",
+    "USDJPY : 2025.03.03 00:00 - 2025.05.01 00:00  real ticks absent for 6 minutes of 61774 total minute bars, every tick generation used",
+    "USDJPY : 2025.03.03 00:00 - 2025.05.01 00:00  real ticks discarded for 1431 minutes of 61774 total minute bars, every tick generation used"
+  ],
+  "issues": []
+}

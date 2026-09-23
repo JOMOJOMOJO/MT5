@@ -1,0 +1,15 @@
+{
+  "compile": {
+    "ea_compile.log": "Result: 0 errors, 0 warnings, 1551 ms elapsed, cpu='X64 Regular'",
+    "execution_compile.log": "Result: 0 errors, 0 warnings, 750 ms elapsed, cpu='X64 Regular'",
+    "export_compile.log": "Result: 0 errors, 0 warnings, 483 ms elapsed, cpu='X64 Regular'",
+    "indicator_compile.log": "Result: 0 errors, 0 warnings, 1178 ms elapsed, cpu='X64 Regular'",
+    "structure_compile.log": "Result: 0 errors, 0 warnings, 735 ms elapsed, cpu='X64 Regular'"
+  },
+  "native_structure_checks": 26,
+  "native_execution_checks": 19,
+  "monthly_parity_checks": 31580,
+  "visual_parity_checks": 1438,
+  "missing_links": [],
+  "hashes_verified": true
+}

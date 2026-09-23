@@ -1,0 +1,33 @@
+{
+  "run": "entry_smoke_hl",
+  "candidates": 6,
+  "sent": 5,
+  "decisions_compared": 0,
+  "parity_failures": 0,
+  "reasons": {
+    "MARKET_BUY_WITH_SLTP": 5,
+    "POSITION_OPEN": 1
+  },
+  "metrics": {
+    "trades": 5,
+    "win_rate": 0.6,
+    "profit_factor": 1.410823594880356,
+    "expectancy": 17.717999999999996,
+    "expectancy_R": 0.18301570885227664,
+    "net_profit": 88.58999999999999,
+    "max_closed_balance_drawdown": 115.31999999999971,
+    "average_win_R": 1.0267208395166003,
+    "average_loss_R": -1.082541987144209,
+    "max_equity_drawdown": "192.23 (1.91%)",
+    "native_history_quality": "100% リアルティック"
+  },
+  "monthly": {
+    "2025.03": {
+      "trades": 5,
+      "profit": 88.58999999999999
+    }
+  },
+  "unclosed_positions": [],
+  "data_quality_warnings": [],
+  "issues": []
+}

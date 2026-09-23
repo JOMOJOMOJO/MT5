@@ -1,0 +1,119 @@
+{
+  "runs": {
+    "choch50": {
+      "run": "entry_holdout_choch50",
+      "candidates": 69,
+      "sent": 69,
+      "decisions_compared": 0,
+      "parity_failures": 0,
+      "reasons": {
+        "MARKET_BUY_WITH_SLTP": 69
+      },
+      "metrics": {
+        "trades": 69,
+        "win_rate": 0.43478260869565216,
+        "profit_factor": 0.7578332576626626,
+        "expectancy": -13.063913043478262,
+        "expectancy_R": -0.13278819069069334,
+        "net_profit": -901.4100000000003,
+        "max_closed_balance_drawdown": 1352.3800000000028,
+        "average_win_R": 1.0094119729859754,
+        "average_loss_R": -1.0114037012112078,
+        "max_equity_drawdown": "1 415.75 (13.93%)",
+        "native_history_quality": "100% リアルティック"
+      },
+      "monthly": {
+        "2025.05": {
+          "trades": 22,
+          "profit": -403.0600000000001
+        },
+        "2025.06": {
+          "trades": 27,
+          "profit": -476.59
+        },
+        "2025.07": {
+          "trades": 20,
+          "profit": -21.75999999999999
+        }
+      },
+      "unclosed_positions": [],
+      "data_quality_warnings": [],
+      "issues": []
+    },
+    "current": {
+      "run": "entry_holdout_current",
+      "candidates": 55,
+      "sent": 55,
+      "decisions_compared": 0,
+      "parity_failures": 0,
+      "reasons": {
+        "MARKET_BUY_WITH_SLTP": 55
+      },
+      "metrics": {
+        "trades": 55,
+        "win_rate": 0.41818181818181815,
+        "profit_factor": 0.7213973547279112,
+        "expectancy": -15.809636363636363,
+        "expectancy_R": -0.16070604315077713,
+        "net_profit": -869.5299999999999,
+        "max_closed_balance_drawdown": 1149.7499999999982,
+        "average_win_R": 1.0177586708710626,
+        "average_loss_R": -1.0077275563539745,
+        "max_equity_drawdown": "1 199.84 (11.76%)",
+        "native_history_quality": "100% リアルティック"
+      },
+      "monthly": {
+        "2025.05": {
+          "trades": 16,
+          "profit": -7.109999999999999
+        },
+        "2025.06": {
+          "trades": 17,
+          "profit": -109.65000000000002
+        },
+        "2025.07": {
+          "trades": 22,
+          "profit": -752.7699999999999
+        }
+      },
+      "unclosed_positions": [],
+      "data_quality_warnings": [],
+      "issues": []
+    }
+  },
+  "independent_bar_audit": {
+    "choch50": {
+      "signals": 69,
+      "issues": []
+    },
+    "current": {
+      "signals": 55,
+      "issues": []
+    }
+  },
+  "matched_candidates": {
+    "choch50": {
+      "matched_setups": 34,
+      "only_early": 35,
+      "only_baseline": 21,
+      "median_minutes_earlier": 14.0,
+      "both_sent": 34,
+      "mean_entry_saving_pips": 3.7058823529412335,
+      "common_realized": {
+        "trades": 34,
+        "early_profit": -30.14999999999999,
+        "baseline_profit": -613.83,
+        "early_net_R": -0.03229089278056585,
+        "baseline_net_R": -6.056017566168059,
+        "same_SL_trades": 0,
+        "note": "Common setups selected retrospectively; not a tradable filter. HL can change before baseline entry."
+      },
+      "additional_setups_realized": {
+        "trades": 35,
+        "profit": -871.26,
+        "wins": 13,
+        "net_R": -9.130094264877274
+      }
+    }
+  }
+}

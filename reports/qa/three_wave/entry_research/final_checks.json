@@ -1,0 +1,90 @@
+{
+  "research_build_unchanged": {
+    "mql/Experts/USDJPY_3Wave_EntryResearch.mq5": true,
+    "mql/Experts/USDJPY_3Wave_EntryResearch.ex5": true,
+    "mql/Include/ThreeWaveEntryResearch.mqh": true,
+    "mql/Scripts/tests/ThreeWaveEntry_Validation.mq5": true,
+    "mql/Scripts/tests/ThreeWaveEntry_Validation.ex5": true
+  },
+  "compile_clean": {
+    "compile.log": true,
+    "compile_unit.log": true,
+    "compile_export.log": true
+  },
+  "run_issues": {
+    "entry_smoke_choch": [],
+    "entry_smoke_hl": [],
+    "entry_train_current": [],
+    "entry_train_hl": [],
+    "entry_train_choch50": [],
+    "entry_train_current_origin": [],
+    "entry_holdout_current": [],
+    "entry_holdout_choch50": []
+  },
+  "unclosed": {
+    "entry_smoke_choch": [],
+    "entry_smoke_hl": [],
+    "entry_train_current": [],
+    "entry_train_hl": [],
+    "entry_train_choch50": [],
+    "entry_train_current_origin": [],
+    "entry_holdout_current": [],
+    "entry_holdout_choch50": []
+  },
+  "no_unresolved_send": {
+    "entry_smoke_choch": true,
+    "entry_smoke_hl": true,
+    "entry_train_current": true,
+    "entry_train_hl": true,
+    "entry_train_choch50": true,
+    "entry_train_current_origin": true,
+    "entry_holdout_current": true,
+    "entry_holdout_choch50": true
+  },
+  "bar_audits": {
+    "comparison.json": {
+      "choch50": {
+        "signals": 60,
+        "issues": []
+      },
+      "current": {
+        "signals": 46,
+        "issues": []
+      },
+      "current_origin": {
+        "signals": 46,
+        "issues": []
+      },
+      "hl": {
+        "signals": 63,
+        "issues": []
+      }
+    },
+    "holdout_comparison.json": {
+      "choch50": {
+        "signals": 69,
+        "issues": []
+      },
+      "current": {
+        "signals": 55,
+        "issues": []
+      }
+    }
+  },
+  "audited_main_candidates": 339,
+  "adopted": false,
+  "decision": "Both early alternatives failed fixed comparison; selected CHoCH50 also worsened total loss and DD in locked holdout.",
+  "production_matches_archived_v102": {
+    "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5": true,
+    "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.ex5": false,
+    "mql/Include/ThreeWaveStructure.mqh": true,
+    "mql/Indicators/MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5": true
+  },
+  "existing_production_binary": {
+    "sha256": "4b820004302c747e35937ba6ba5ed03b586d285eb8843a6f8cd3561442d958b3",
+    "last_write_local": "2026-09-23T14:41:25.352306",
+    "research_start_snapshot_local": "2026-09-23T15:04:17.025785",
+    "note": "Existing EA ex5 already predates this experiment and differs from older archived v1.02 hash. This task did not rebuild it. Source equals archived v1.02; mode0 rebuilt from source exactly reproduces old signal/deal/exit CSVs. Binary identity to old archive is not claimed."
+  },
+  "all_validation_checks_pass": true
+}

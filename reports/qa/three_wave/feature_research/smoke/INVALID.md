@@ -1,0 +1,1 @@
+This development run has an invalid shadow-outcome initialization. Do not use its outcomes in research. Corrected, audited runs are ../smoke_fixed and ../smoke_repeat. The analysis loader explicitly excludes this folder.

@@ -1,0 +1,30 @@
+{
+  "current": {
+    "median_planned_SL_pips": 7.499999999998863,
+    "mean_planned_SL_pips": 8.33478260869572,
+    "emergency_close_lines": 0,
+    "recovery_blocked_lines": 0,
+    "march27_signals": 0
+  },
+  "current_origin": {
+    "median_planned_SL_pips": 13.500000000001933,
+    "mean_planned_SL_pips": 13.415555555555569,
+    "emergency_close_lines": 0,
+    "recovery_blocked_lines": 0,
+    "march27_signals": 0
+  },
+  "hl": {
+    "median_planned_SL_pips": 3.999999999999204,
+    "mean_planned_SL_pips": 4.691935483870909,
+    "emergency_close_lines": 0,
+    "recovery_blocked_lines": 0,
+    "march27_signals": 0
+  },
+  "choch50": {
+    "median_planned_SL_pips": 8.899999999999864,
+    "mean_planned_SL_pips": 9.921666666666766,
+    "emergency_close_lines": 0,
+    "recovery_blocked_lines": 0,
+    "march27_signals": 0
+  }
+}

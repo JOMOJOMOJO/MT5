@@ -1,0 +1,57 @@
+{
+  "production_unchanged": {
+    "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5": true,
+    "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.ex5": true,
+    "mql/Include/ThreeWaveStructure.mqh": true,
+    "mql/Include/ThreeWaveInputs.mqh": true,
+    "mql/Include/ThreeWaveDrawing.mqh": true,
+    "mql/Indicators/MultiTF_3WaveIn3Wave_Visualizer_Shared.mq5": true,
+    "mql/Indicators/MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5": true
+  },
+  "repeated_csv": {
+    "smoke_fixed/TW_features.csv": {
+      "identical": true,
+      "sha256": "381f5ce159ab8008af3727336d91a48bfe31ce3344fa66badf2f1dfcc7aeb3ea"
+    },
+    "smoke_fixed/TW_feature_outcomes.csv": {
+      "identical": true,
+      "sha256": "7bd2d753db0242cc04650691c57a5e9117a1e28e047b14031fd7c60fd2015e1e"
+    },
+    "discovery/TW_features.csv": {
+      "identical": true,
+      "sha256": "c4c799126d70181876919e269f07432f9c7ddb90cc6500f3b0764919e53902a4"
+    },
+    "discovery/TW_feature_outcomes.csv": {
+      "identical": true,
+      "sha256": "c261f837c8ce1d02c4fb10b28c924bb0274cf10dbfe6e269709c699577428694"
+    }
+  },
+  "ready_parity": {
+    "discovery": {
+      "observer_ready": 46,
+      "baseline_ready": 46,
+      "identical": true,
+      "only_observer": [],
+      "only_baseline": []
+    },
+    "replication": {
+      "observer_ready": 55,
+      "baseline_ready": 55,
+      "identical": true,
+      "only_observer": [],
+      "only_baseline": []
+    }
+  },
+  "no_order_calls": true,
+  "compile_clean": {
+    "compile.log": true,
+    "compile_gap.log": true,
+    "compile_observer_unit.log": true,
+    "compile_shadow_unit.log": true
+  },
+  "gap_audit": {
+    "passed": true,
+    "scope": "Only these two windows; re-audit gaps for any future window."
+  },
+  "passed": true
+}

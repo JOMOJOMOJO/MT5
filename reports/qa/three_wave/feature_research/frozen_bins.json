@@ -1,0 +1,80 @@
+{
+  "source": "discovery only, first candidate per parent/attempt/stage",
+  "edges": {
+    "ema20": [
+      149.55066545719748,
+      153.60733509325348,
+      155.697800455699
+    ],
+    "ema_slope_atr": [
+      -0.044845002700000004,
+      0.0144361792035,
+      0.08240652583575
+    ],
+    "ema_deceleration": [
+      -0.06809379462925,
+      -0.0229455839165,
+      0.020426803888
+    ],
+    "ema_distance_atr": [
+      -0.0249952582425,
+      0.621182037068,
+      1.1485724726705
+    ],
+    "adx14": [
+      18.79231161389075,
+      23.416127141799002,
+      29.519651094879748
+    ],
+    "plus_di": [
+      14.805831273088,
+      18.415220599156,
+      23.684498302096003
+    ],
+    "minus_di": [
+      14.61942390569525,
+      18.173498143713502,
+      22.04741992432825
+    ],
+    "down_er": [
+      0.413461538462,
+      0.667844522968,
+      1.0
+    ],
+    "wave1_er": [
+      0.5826932006632499,
+      0.716514954486,
+      0.942857142857
+    ],
+    "wave2_retracement": [
+      0.41621423330900004,
+      0.578933399391,
+      0.80198019802
+    ],
+    "wave2_minutes": [
+      21.75,
+      36.0,
+      58.25
+    ],
+    "choch_break_strength": [
+      0.161538461539,
+      0.3077056845845,
+      0.8078847442479999
+    ]
+  },
+  "contrast_top_bin": {
+    "ema20": 3,
+    "ema_slope_atr": 3,
+    "ema_deceleration": 3,
+    "ema_distance_atr": 3,
+    "adx14": 3,
+    "plus_di": 3,
+    "minus_di": 3,
+    "down_er": 2,
+    "wave1_er": 3,
+    "wave2_retracement": 3,
+    "wave2_minutes": 3,
+    "choch_break_strength": 3
+  },
+  "note": "Top contrast bin is highest occupied discovery bin; bounded ER=1 can leave an empty overflow bin. All bins, including empty overflow, stay in tables."
+}

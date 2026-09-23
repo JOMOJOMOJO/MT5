@@ -1,0 +1,141 @@
+{
+  "before": 19,
+  "after": 14,
+  "removed": 5,
+  "added": 0,
+  "issues": [],
+  "funnels": {
+    "april_real_ticks": {
+      "M5_CLOSED_CHOCH": {
+        "events": 92,
+        "distinct_m5_setups": 92
+      },
+      "M5_WAVE1_HIGH_CONFIRMED": {
+        "events": 88,
+        "distinct_m5_setups": 88
+      },
+      "M5_WAVE2_KNOWN": {
+        "events": 88,
+        "distinct_m5_setups": 88
+      },
+      "M5_ORIGIN_BROKEN": {
+        "events": 35,
+        "distinct_m5_setups": 35
+      },
+      "M1_CLOSED_CHOCH": {
+        "events": 69,
+        "distinct_m5_setups": 60
+      },
+      "M1_WAVE1_HIGH_CONFIRMED": {
+        "events": 43,
+        "distinct_m5_setups": 36
+      },
+      "M1_REVERSAL_LOW_BROKEN_RESET": {
+        "events": 20,
+        "distinct_m5_setups": 17
+      },
+      "M5_ORIGIN_BROKEN_BEFORE_WAVE1_CONFIRM": {
+        "events": 4,
+        "distinct_m5_setups": 4
+      },
+      "M5_WAVE3_STARTED_BEFORE_M1_HL": {
+        "events": 29,
+        "distinct_m5_setups": 29
+      },
+      "M5_CHOCH_BAR_ORIGIN_BROKEN": {
+        "events": 1,
+        "distinct_m5_setups": 1
+      },
+      "M1_HL_CONFIRMED": {
+        "events": 59,
+        "distinct_m5_setups": 25
+      },
+      "WAVE1_HIGH_CLOSE_BREAK": {
+        "events": 7,
+        "distinct_m5_setups": 7
+      },
+      "SETUP_240_MINUTE_EXPIRY": {
+        "events": 5,
+        "distinct_m5_setups": 5
+      },
+      "M1_HL_BROKEN_DISCARD_OLD_HL": {
+        "events": 24,
+        "distinct_m5_setups": 13
+      },
+      "WAVE2_RETURN_HIGH_CLOSE_BREAK": {
+        "events": 12,
+        "distinct_m5_setups": 12
+      },
+      "M1_CHOCH_BAR_REVERSAL_BROKEN": {
+        "events": 1,
+        "distinct_m5_setups": 1
+      }
+    },
+    "early_april_final": {
+      "M5_CLOSED_CHOCH": {
+        "events": 92,
+        "distinct_m5_setups": 92
+      },
+      "M5_WAVE1_HIGH_CONFIRMED": {
+        "events": 88,
+        "distinct_m5_setups": 88
+      },
+      "M5_WAVE2_KNOWN": {
+        "events": 88,
+        "distinct_m5_setups": 88
+      },
+      "M5_ORIGIN_BROKEN": {
+        "events": 25,
+        "distinct_m5_setups": 25
+      },
+      "M1_CLOSED_CHOCH": {
+        "events": 45,
+        "distinct_m5_setups": 40
+      },
+      "M1_WAVE1_HIGH_CONFIRMED": {
+        "events": 34,
+        "distinct_m5_setups": 29
+      },
+      "M1_REVERSAL_LOW_BROKEN_RESET": {
+        "events": 16,
+        "distinct_m5_setups": 13
+      },
+      "M5_WAVE3_STARTED_BEFORE_M1_READY": {
+        "events": 45,
+        "distinct_m5_setups": 45
+      },
+      "M5_ORIGIN_BROKEN_BEFORE_WAVE1_CONFIRM": {
+        "events": 4,
+        "distinct_m5_setups": 4
+      },
+      "M5_CHOCH_BAR_ORIGIN_BROKEN": {
+        "events": 1,
+        "distinct_m5_setups": 1
+      },
+      "M1_HL_CONFIRMED": {
+        "events": 51,
+        "distinct_m5_setups": 20
+      },
+      "WAVE1_HIGH_CLOSE_BREAK": {
+        "events": 5,
+        "distinct_m5_setups": 5
+      },
+      "SETUP_240_MINUTE_EXPIRY": {
+        "events": 4,
+        "distinct_m5_setups": 4
+      },
+      "M1_HL_BROKEN_DISCARD_OLD_HL": {
+        "events": 23,
+        "distinct_m5_setups": 12
+      },
+      "WAVE2_RETURN_HIGH_CLOSE_BREAK": {
+        "events": 9,
+        "distinct_m5_setups": 9
+      },
+      "M1_CHOCH_BAR_REVERSAL_BROKEN": {
+        "events": 1,
+        "distinct_m5_setups": 1
+      }
+    }
+  }
+}

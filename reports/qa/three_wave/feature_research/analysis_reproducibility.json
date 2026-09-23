@@ -1,0 +1,14 @@
+{
+  "identical_outputs": {
+    "stage_summary.csv": true,
+    "feature_distributions.csv": true,
+    "bin_statistics.csv": true,
+    "bin_replication.csv": true,
+    "monthly_candidates.csv": true,
+    "distinct_opportunities.csv": true,
+    "feature_contrasts.csv": true,
+    "frozen_bins.json": true,
+    "next_hypothesis_frequency_only.json": true
+  },
+  "all_identical": true
+}

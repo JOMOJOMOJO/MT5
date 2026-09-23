@@ -1,0 +1,138 @@
+{
+  "source": "early_april_final/TW_signals.csv",
+  "period": "2025-04-01 to 2025-05-01 exclusive",
+  "count": 14,
+  "median_sl_pips": 9.150000000001057,
+  "median_room_R": 0.6763440860213228,
+  "room_below_1R": 10,
+  "room_below_1_2R": 11,
+  "limitation": "Geometric diagnostic only. Does not measure MFE or verify user RR1 results. Parent high is not assumed to cap price.",
+  "records": [
+    {
+      "signal_time": "2025.04.03 23:19:00",
+      "entry": 146.286,
+      "sl": 146.237,
+      "m5_wave1_high": 146.516,
+      "sl_pips": 4.900000000000659,
+      "room_to_m5_high_R": 4.693877551019567,
+      "return_high_trigger": false
+    },
+    {
+      "signal_time": "2025.04.07 03:55:00",
+      "entry": 145.726,
+      "sl": 145.486,
+      "m5_wave1_high": 145.695,
+      "sl_pips": 24.00000000000091,
+      "room_to_m5_high_R": -0.1291666666666864,
+      "return_high_trigger": true
+    },
+    {
+      "signal_time": "2025.04.10 23:35:00",
+      "entry": 144.831,
+      "sl": 144.764,
+      "m5_wave1_high": 145.131,
+      "sl_pips": 6.699999999997885,
+      "room_to_m5_high_R": 4.477611940300091,
+      "return_high_trigger": false
+    },
+    {
+      "signal_time": "2025.04.17 01:55:00",
+      "entry": 141.946,
+      "sl": 141.811,
+      "m5_wave1_high": 142.199,
+      "sl_pips": 13.49999999999909,
+      "room_to_m5_high_R": 1.8740740740743065,
+      "return_high_trigger": true
+    },
+    {
+      "signal_time": "2025.04.17 10:58:00",
+      "entry": 142.823,
+      "sl": 142.708,
+      "m5_wave1_high": 142.892,
+      "sl_pips": 11.50000000000091,
+      "room_to_m5_high_R": 0.5999999999998518,
+      "return_high_trigger": true
+    },
+    {
+      "signal_time": "2025.04.17 18:52:00",
+      "entry": 142.323,
+      "sl": 142.241,
+      "m5_wave1_high": 142.315,
+      "sl_pips": 8.199999999999363,
+      "room_to_m5_high_R": -0.0975609756098829,
+      "return_high_trigger": true
+    },
+    {
+      "signal_time": "2025.04.18 08:51:00",
+      "entry": 142.373,
+      "sl": 142.333,
+      "m5_wave1_high": 142.351,
+      "sl_pips": 3.999999999999204,
+      "room_to_m5_high_R": -0.5499999999998935,
+      "return_high_trigger": true
+    },
+    {
+      "signal_time": "2025.04.21 20:16:00",
+      "entry": 140.909,
+      "sl": 140.803,
+      "m5_wave1_high": 141.013,
+      "sl_pips": 10.599999999999454,
+      "room_to_m5_high_R": 0.9811320754718752,
+      "return_high_trigger": true
+    },
+    {
+      "signal_time": "2025.04.22 11:21:00",
+      "entry": 140.414,
+      "sl": 140.31,
+      "m5_wave1_high": 140.508,
+      "sl_pips": 10.3999999999985,
+      "room_to_m5_high_R": 0.9038461538465007,
+      "return_high_trigger": true
+    },
+    {
+      "signal_time": "2025.04.22 12:56:00",
+      "entry": 140.475,
+      "sl": 140.325,
+      "m5_wave1_high": 140.634,
+      "sl_pips": 15.000000000000568,
+      "room_to_m5_high_R": 1.0599999999999052,
+      "return_high_trigger": false
+    },
+    {
+      "signal_time": "2025.04.24 09:07:00",
+      "entry": 142.865,
+      "sl": 142.772,
+      "m5_wave1_high": 142.935,
+      "sl_pips": 9.300000000001774,
+      "room_to_m5_high_R": 0.7526881720427939,
+      "return_high_trigger": true
+    },
+    {
+      "signal_time": "2025.04.29 10:32:00",
+      "entry": 142.517,
+      "sl": 142.427,
+      "m5_wave1_high": 142.554,
+      "sl_pips": 9.000000000000341,
+      "room_to_m5_high_R": 0.4111111111111637,
+      "return_high_trigger": false
+    },
+    {
+      "signal_time": "2025.04.30 03:49:00",
+      "entry": 142.322,
+      "sl": 142.273,
+      "m5_wave1_high": 142.324,
+      "sl_pips": 4.900000000000659,
+      "room_to_m5_high_R": 0.040816326530801646,
+      "return_high_trigger": true
+    },
+    {
+      "signal_time": "2025.04.30 07:52:00",
+      "entry": 142.533,
+      "sl": 142.495,
+      "m5_wave1_high": 142.553,
+      "sl_pips": 3.7999999999982492,
+      "room_to_m5_high_R": 0.526315789474196,
+      "return_high_trigger": false
+    }
+  ]
+}

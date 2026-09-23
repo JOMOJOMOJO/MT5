@@ -1,0 +1,37 @@
+--- mql/Include/ThreeWaveStructure.mqh
++++ mql/Include/ThreeWaveEntryResearch.mqh
+@@ -537,10 +537,33 @@
+          }
+       }
+ 
++      // Research modes preserve all origin, confirmation, reset and M5 deadline guards above.
++      // Mode 1: enter on the FIRST closed CHoCH, only when its confirmed reversal
++      // low has retraced at least 50% of the frozen M5 Wave1 (origin remains intact).
++      // No synthetic future HL is inserted; execution uses the reversal-low stop.
++      if(InpEntryResearchMode==1 && pat.found_choch && pat.choch_time==r[i].time)
++      {
++         double midpoint=(s.origin_low.price+s.wave1_high.price)*0.5;
++         if(pat.reversal_low.price<=midpoint && pat.reversal_low.price>s.origin_low.price)
++         {
++            pat.ready=true; pat.ready_time=r[i].time; pat.ready_price=r[i].close;
++            TWTrace(close_time,s.break_time,"LONG_READY","M5_FIB50_M1_CHOCH");
++            return true;
++         }
++         TWTrace(close_time,s.break_time,"WAIT_M1_RESET","M5_FIB50_NOT_REACHED_AT_CHOCH");
++      }
++      // Mode 2: confirmed, unbroken HL is sufficient; no extra upside break.
++      if(InpEntryResearchMode==2 && pat.found_hl)
++      {
++         pat.ready=true; pat.ready_time=r[i].time; pat.ready_price=r[i].close;
++         TWTrace(close_time,s.break_time,"LONG_READY","M1_HL_CONFIRMATION");
++         return true;
++      }
++
+       // READY requires a currently-valid confirmed HL and a renewed upside
+       // break.  Because stale HLs are cleared above, a deeper Wave2 cannot
+       // trigger from an obsolete low.
+-      if(pat.found_hl && !pat.ready)
++      if(InpEntryResearchMode==0 && pat.found_hl && !pat.ready)
+       {
+          bool fibPass=(!InpRequireFibZone || pat.fib_ok);
+          if(fibPass)

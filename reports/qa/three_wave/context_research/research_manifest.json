@@ -1,0 +1,13 @@
+{
+  "mql/Experts/USDJPY_3Wave_ContextResearch.mq5": "55caaebe6b85ae66aa23718e8b6c6c5c2d2acbacd8078ceaadf3d4143c4c0f86",
+  "mql/Include/ThreeWaveContextResearch.mqh": "d36003c9832816df280f2640215179c760b6ae928e7d566b714a0d44a538f394",
+  "mql/Experts/USDJPY_3Wave_ContextResearch.ex5": "4b4830b1656df6fad978f47c1fab207ac62161e7b5645dccc6a451c4a913f67b",
+  "mql/Scripts/tests/ThreeWaveContextGapAudit.mq5": "8beaccdaf80e6a11ef3fc0d42b08e77db455ddb71dbbda7c5cbcf95cc767e6c4",
+  "mql/Scripts/tests/ThreeWaveContextGapAudit.ex5": "cfd0d2969767e665f148a71b96ba9a9933940a0fff6774b65537c0ef781315d3",
+  "tools/swing_structure/analyze_three_wave_context.py": "dae0c0f0dfa4b8095b4368508ab3d7c26d0152d502c0144796ee957b6c16d78a",
+  "tools/swing_structure/audit_three_wave_context.py": "01365f85277769d3d491d5ee6565bc1dd2058cad3ae463019c5e0aeda8a7ddda",
+  "tools/swing_structure/build_context_research.py": "f2b1e1d5bef75819730653170cba786362664e356f1a96b32b76c043b0ece920",
+  "tools/swing_structure/check_context_reproducibility.py": "b3bb6e4731eaa8968945567a8742715e8668afc4681a985bae02146581d550a8",
+  "tools/swing_structure/run-three-wave-context-gap.ps1": "d3c075fcbe4f16b94cf772c4afcdca01e3db838fdef0ac9dfcfb5e908378450c",
+  "tools/swing_structure/run-three-wave-context.ps1": "796bfd01dd9f66979de9726061973fac4f8de5d36e42d5b867bfabc699d3cb37"
+}

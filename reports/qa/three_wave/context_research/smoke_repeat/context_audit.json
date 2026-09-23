@@ -1,0 +1,20 @@
+{
+  "run": "smoke_repeat",
+  "context_rows": 50,
+  "independent_snapshots": 26,
+  "regime_counts_raw": {
+    "H1/DOWN": 7,
+    "H1/RANGE": 12,
+    "H1/UP": 6,
+    "M15/DOWN": 8,
+    "M15/RANGE": 14,
+    "M15/UP": 3
+  },
+  "baseline_unchanged": true,
+  "previous_csv_parity": {
+    "TW_features.csv": true,
+    "TW_feature_outcomes.csv": true
+  },
+  "issues": [],
+  "passed": true
+}

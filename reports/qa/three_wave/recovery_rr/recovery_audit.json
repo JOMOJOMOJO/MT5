@@ -1,0 +1,15 @@
+{
+  "period": "2025-01-01 to 2025-04-01 exclusive",
+  "model": 0,
+  "execution_delay": "random",
+  "RR": 1,
+  "candidates": 46,
+  "sent": 46,
+  "entry_deals": 46,
+  "closed_positions": 46,
+  "emergency_closes": 16,
+  "position_reconciliations": 42,
+  "deal_reconciliations": 4,
+  "last_signal": "2025.03.31 15:48:00",
+  "issues": []
+}

@@ -1,0 +1,52 @@
+{
+  "candidates": 14,
+  "source_candidates": 14,
+  "issues": [],
+  "rr1": {
+    "n": 14,
+    "wins": 4,
+    "net_R": -5.999999999999973,
+    "mean_R": -0.42857142857142666,
+    "PF": 0.4000000000000027
+  },
+  "rr12": {
+    "n": 14,
+    "wins": 4,
+    "net_R": -5.193995290423951,
+    "mean_R": -0.37099966360171077,
+    "PF": 0.48060047095760494
+  },
+  "one_R_then_SL_without_1_2R": 0,
+  "selected_near_M5_high": 0,
+  "selected_cross_before_HL_confirm": 0,
+  "all_rr12_losses": 10,
+  "losses_near_M5": 1,
+  "losses_preconfirm_cross": 2,
+  "wins_preconfirm_cross": 0,
+  "censored": 0,
+  "monthly": {
+    "2025.04": {
+      "rr1": {
+        "n": 14,
+        "wins": 4,
+        "net_R": -5.999999999999973,
+        "mean_R": -0.42857142857142666,
+        "PF": 0.4000000000000027
+      },
+      "rr12": {
+        "n": 14,
+        "wins": 4,
+        "net_R": -5.193995290423951,
+        "mean_R": -0.37099966360171077,
+        "PF": 0.48060047095760494
+      }
+    }
+  },
+  "assumptions": [
+    "Ask entry / Bid exits; fixed SL for both targets",
+    "Nominal R at target or stop; no added commission, execution delay or stop slippage",
+    "Maximum 7 calendar days or test end; censored results reported",
+    "Near M5 = peak within 0.1 initial R of fixed parent high; diagnostic only",
+    "Pre-confirmation price cross is hindsight diagnosis, NOT a tradable confirmed HL"
+  ]
+}

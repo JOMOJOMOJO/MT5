@@ -1,0 +1,32 @@
+{
+  "run": "april_real_ticks",
+  "candidates": 19,
+  "sent": 19,
+  "decisions_compared": 31580,
+  "parity_failures": 0,
+  "reasons": {
+    "MARKET_BUY_WITH_SLTP": 19
+  },
+  "metrics": {
+    "trades": 19,
+    "win_rate": 0.3684210526315789,
+    "profit_factor": 0.6867802512125358,
+    "expectancy": -19.883684210526315,
+    "expectancy_R": -0.19846546486953126,
+    "net_profit": -377.79,
+    "max_closed_balance_drawdown": 437.1200000000008,
+    "average_win_R": 1.2157790053603905,
+    "average_loss_R": -1.0234414058369856,
+    "max_equity_drawdown": "447.68 (4.46%)",
+    "native_history_quality": "100% リアルティック"
+  },
+  "monthly": {
+    "2025.04": {
+      "trades": 19,
+      "profit": -377.79
+    }
+  },
+  "unclosed_positions": [],
+  "data_quality_warnings": [],
+  "issues": []
+}

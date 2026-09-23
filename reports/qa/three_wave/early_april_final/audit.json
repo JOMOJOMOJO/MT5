@@ -1,0 +1,32 @@
+{
+  "run": "early_april_final",
+  "candidates": 14,
+  "sent": 14,
+  "decisions_compared": 31580,
+  "parity_failures": 0,
+  "reasons": {
+    "MARKET_BUY_WITH_SLTP": 14
+  },
+  "metrics": {
+    "trades": 14,
+    "win_rate": 0.2857142857142857,
+    "profit_factor": 0.47318734890411784,
+    "expectancy": -37.667857142857144,
+    "expectancy_R": -0.3833025112868376,
+    "net_profit": -527.3499999999999,
+    "max_closed_balance_drawdown": 568.2000000000025,
+    "average_win_R": 1.226047581065849,
+    "average_loss_R": -1.0270425482279124,
+    "max_equity_drawdown": "590.76 (5.88%)",
+    "native_history_quality": "100% リアルティック"
+  },
+  "monthly": {
+    "2025.04": {
+      "trades": 14,
+      "profit": -527.3499999999999
+    }
+  },
+  "unclosed_positions": [],
+  "data_quality_warnings": [],
+  "issues": []
+}

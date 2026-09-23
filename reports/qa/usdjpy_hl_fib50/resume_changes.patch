@@ -1,0 +1,191 @@
+diff --git "a/C:\\Users\\windows\\AppData\\Local\\Temp\\hf_before_resume.mq5" b/mql/Experts/USDJPY_M1_M5_HL_Fib50_Long.mq5
+index 0e587bf1..37cfa6af 100644
+--- "a/C:\\Users\\windows\\AppData\\Local\\Temp\\hf_before_resume.mq5"
++++ b/mql/Experts/USDJPY_M1_M5_HL_Fib50_Long.mq5
+@@ -13,6 +13,7 @@ input int InpHistoryBars=6000;
+ input bool InpAllowDeferredProtection=true;
+ input bool InpShowMarkers=true;
+ input bool InpWriteCSV=true;
++input bool InpPreferServerExpiry=true; // Otherwise enforce expiry in Manage()
+ input double InpRewardRisk=1.2; // TP distance as a multiple of the SL distance
+ // Diagnostic only: exercise the requested deferred-SL/TP path in the tester.
+ input bool InpTestDeferredProtection=false;
+@@ -49,12 +50,17 @@ bool Save()
+    if(journal==INVALID_HANDLE) return false;
+    FileSeek(journal,0,SEEK_END);
+    ResetLastError();
+-   uint bytes=FileWrite(journal,"HF2",(long)used_structure,(long)last_fill,
++   uint bytes=FileWrite(journal,"HF3",(long)used_structure,(long)last_fill,
+                         (long)plan.structure_id,(long)plan.placed,
+                         DoubleToString(plan.low,10),DoubleToString(plan.entry,10),
+                         DoubleToString(plan.sl,10),DoubleToString(plan.tp,10),
+                         DoubleToString(plan.volume,8),DoubleToString(plan.loss,8),
+-                        (int)cancel_latched,cancel_reason,(int)blocked,"END");
++                        (int)cancel_latched,cancel_reason,(int)blocked,
++                        (long)plan.old_low.bar_time,(long)plan.old_low.confirmed_time,DoubleToString(plan.old_low.price,10),
++                        (long)plan.new_low.bar_time,(long)plan.new_low.confirmed_time,DoubleToString(plan.new_low.price,10),
++                        (long)plan.reference_high.bar_time,(long)plan.reference_high.confirmed_time,DoubleToString(plan.reference_high.price,10),
++                        (long)plan.breakout_high.bar_time,(long)plan.breakout_high.confirmed_time,DoubleToString(plan.breakout_high.price,10),
++                        (long)plan.cross_time,"END");
+    FileFlush(journal);
+    if(bytes==0 || GetLastError()!=0)
+    { blocked=true; Transition(RECOVERY_BLOCKED,"JOURNAL_WRITE_FAILED"); return false; }
+@@ -67,9 +73,11 @@ bool LoadJournal()
+    {
+       string version=FileReadString(journal);
+       if(version=="" && FileIsEnding(journal)) break;
+-      string f[14];
+-      for(int i=0;i<14;i++) f[i]=FileReadString(journal);
+-      if(version!="HF2" || f[13]!="END") return false;
++      int fields=(version=="HF3" ? 27 : 14);
++      if(version!="HF2" && version!="HF3") return false;
++      string f[]; ArrayResize(f,fields);
++      for(int i=0;i<fields;i++) f[i]=FileReadString(journal);
++      if(f[fields-1]!="END") return false;
+       used_structure=(datetime)StringToInteger(f[0]);
+       last_fill=(datetime)StringToInteger(f[1]);
+       plan.structure_id=(datetime)StringToInteger(f[2]);
+@@ -79,6 +87,19 @@ bool LoadJournal()
+       plan.volume=StringToDouble(f[8]); plan.loss=StringToDouble(f[9]);
+       cancel_latched=(StringToInteger(f[10])!=0); cancel_reason=f[11];
+       blocked=(StringToInteger(f[12])!=0);
++      if(version=="HF3")
++      {
++         plan.old_low.bar_time=(datetime)StringToInteger(f[13]);
++         plan.old_low.confirmed_time=(datetime)StringToInteger(f[14]); plan.old_low.price=StringToDouble(f[15]);
++         plan.new_low.bar_time=(datetime)StringToInteger(f[16]);
++         plan.new_low.confirmed_time=(datetime)StringToInteger(f[17]); plan.new_low.price=StringToDouble(f[18]);
++         plan.reference_high.bar_time=(datetime)StringToInteger(f[19]);
++         plan.reference_high.confirmed_time=(datetime)StringToInteger(f[20]); plan.reference_high.price=StringToDouble(f[21]);
++         plan.reference_high.high=true;
++         plan.breakout_high.bar_time=(datetime)StringToInteger(f[22]);
++         plan.breakout_high.confirmed_time=(datetime)StringToInteger(f[23]); plan.breakout_high.price=StringToDouble(f[24]);
++         plan.breakout_high.high=true; plan.cross_time=(datetime)StringToInteger(f[25]);
++      }
+    }
+    return true;
+ }
+@@ -307,9 +328,10 @@ void MarkPlan()
+    Mark("L1",setup.new_low,"M5 higher low / Fibonacci bottom",clrAqua);
+    Mark("H5",setup.reference_high,"Frozen M5 breakout reference",clrOrange);
+    Mark("H1",setup.breakout_high,"Confirmed M1 high / Fibonacci top",clrLime);
+-   Level("FIB50",(setup.new_low.price+setup.breakout_high.price)*0.5,clrGold,TimeCurrent());
+-   Level("LIMIT",plan.entry,clrGold,TimeCurrent());
+-   Level("SL",plan.sl,clrRed,TimeCurrent()); Level("TP",plan.tp,clrLime,TimeCurrent());
++   datetime placed=(plan.placed>0 ? plan.placed : TimeCurrent());
++   Level("FIB50",(setup.new_low.price+setup.breakout_high.price)*0.5,clrGold,placed);
++   Level("LIMIT",plan.entry,clrGold,placed);
++   Level("SL",plan.sl,clrRed,placed); Level("TP",plan.tp,clrLime,placed);
+ }
+ 
+ void Display()
+@@ -368,6 +390,9 @@ bool MakePlan()
+    { reason="INVALID_SYMBOL_SPEC"; return false; }
+    ZeroMemory(plan);
+    plan.structure_id=setup.new_low.bar_time; plan.low=setup.new_low.price;
++   plan.old_low=setup.old_low; plan.new_low=setup.new_low;
++   plan.reference_high=setup.reference_high; plan.breakout_high=setup.breakout_high;
++   plan.cross_time=setup.cross_time;
+    plan.entry=Price(HFFloor((plan.low+setup.breakout_high.price)*0.5,step));
+    plan.sl=Price(HFFloor(plan.low-InpSLBufferPoints*_Point,step));
+    plan.tp=Price(MathRound((plan.entry+(plan.entry-plan.sl)*InpRewardRisk)/step)*step);
+@@ -403,7 +428,7 @@ bool MakePlan()
+       if(!OrderCalcProfit(ORDER_TYPE_BUY,_Symbol,plan.volume,plan.entry,plan.sl,loss))
+       { reason="FINAL_LOSS_CALC_FAILED"; return false; }
+       plan.loss=-loss;
+-      const double tolerance=MathMax(0.01,budget*1e-8);
++      const double tolerance=MathMax(1e-8,budget*1e-10);
+       if(plan.loss<=budget+tolerance) break;
+       volume=HFFloor(volume-vstep,vstep);
+    }
+@@ -427,12 +452,12 @@ bool Place()
+    req.type=ORDER_TYPE_BUY_LIMIT; req.type_filling=ORDER_FILLING_RETURN;
+    req.price=plan.entry; req.volume=plan.volume; req.sl=plan.sl; req.tp=plan.tp;
+    req.comment="HF:"+ID(plan.structure_id);
+-   // Manage() enforces the 15-minute lifetime itself.  Prefer GTC here so
+-   // the request does not depend on tester/broker support for a specified
+-   // expiration timestamp.  Fall back to specified expiration only when GTC
+-   // is not advertised by the symbol.
++   // Prefer server expiry so it also works during a disconnection.
++   // GTC remains available where a broker does not support specified expiry.
+    long expiry=SymbolInfoInteger(_Symbol,SYMBOL_EXPIRATION_MODE);
+-   if((expiry & SYMBOL_EXPIRATION_GTC)!=0) req.type_time=ORDER_TIME_GTC;
++   if(InpPreferServerExpiry && (expiry & SYMBOL_EXPIRATION_SPECIFIED)!=0)
++   { req.type_time=ORDER_TIME_SPECIFIED; req.expiration=TimeCurrent()+LIFE_SECONDS; }
++   else if((expiry & SYMBOL_EXPIRATION_GTC)!=0) req.type_time=ORDER_TIME_GTC;
+    else if((expiry & SYMBOL_EXPIRATION_SPECIFIED)!=0)
+    { req.type_time=ORDER_TIME_SPECIFIED; req.expiration=TimeCurrent()+LIFE_SECONDS; }
+    else { reason="BROKER_EXPIRY_UNSUPPORTED"; return false; }
+@@ -451,12 +476,11 @@ bool Place()
+    if(!valid || check.retcode!=TRADE_RETCODE_DONE)
+    {
+       if(check.retcode==TRADE_RETCODE_INVALID_STOPS && InpAllowDeferredProtection) deferred=true;
+-      else if(check.retcode==0)
++      else if(valid && check.retcode==0 && check_error==0)
+       {
+-         // Some tester/broker combinations return no check result (retcode
+-         // 0) even though the pending request can still be submitted.  The
+-         // definitive result is OrderSend; do not discard the signal here.
+-         Print("HF_CHECK_INDETERMINATE proceed_to_ordersend");
++         // MT5 tester returns true/0/0 on a successful check in this environment.
++         // A false result with retcode 0 is NOT success and must not be sent.
++         Print("HF_CHECK_SUCCESS_ZERO_RETCODE");
+       }
+       else { reason="ORDER_CHECK_"+IntegerToString(check.retcode)+"_"+check.comment; return false; }
+    }
+@@ -473,8 +497,8 @@ bool Place()
+             " type_filling=",req.type_filling);
+       if(!deferred_valid || check.retcode!=TRADE_RETCODE_DONE)
+       {
+-         if(check.retcode==0)
+-            Print("HF_CHECK_DEFERRED_INDETERMINATE proceed_to_ordersend");
++         if(deferred_valid && check.retcode==0 && deferred_error==0)
++            Print("HF_CHECK_DEFERRED_SUCCESS_ZERO_RETCODE");
+          else
+          { reason="DEFERRED_CHECK_"+IntegerToString(check.retcode)+"_"+check.comment; return false; }
+       }
+@@ -488,7 +512,9 @@ bool Place()
+    {
+       // Definitive rejection only: never resend after a timeout/unknown response.
+       req.sl=0; req.tp=0; deferred=true;
+-      if(OrderCheck(req,check) && check.retcode==TRADE_RETCODE_DONE) sent=OrderSend(req,res);
++      ResetLastError();
++      if(OrderCheck(req,check) && (check.retcode==TRADE_RETCODE_DONE ||
++         (check.retcode==0 && GetLastError()==0))) sent=OrderSend(req,res);
+    }
+    Print("HF_ORDER id=",ID(plan.structure_id)," ticket=",res.order," retcode=",res.retcode,
+          " entry=",plan.entry," sl=",plan.sl," tp=",plan.tp," deferred=",deferred," comment=",res.comment);
+@@ -583,6 +609,13 @@ int OnInit()
+    if(journal==INVALID_HANDLE) { Print("HF_INIT journal locked/unavailable ",GetLastError()); return INIT_FAILED; }
+    if(!LoadJournal()) { blocked=true; reason="CORRUPT_JOURNAL"; }
+    prefix="HF_"+IntegerToString((long)InpMagicNumber)+"_";
++   if(plan.new_low.bar_time>0)
++   {
++      setup.old_low=plan.old_low; setup.new_low=plan.new_low;
++      setup.reference_high=plan.reference_high; setup.breakout_high=plan.breakout_high;
++      setup.cross_time=plan.cross_time; setup.valid=true;
++      MarkPlan();
++   }
+    if(InpWriteCSV)
+    {
+       csv=FileOpen("HF_diagnostics_"+IntegerToString((long)InpMagicNumber)+".csv",FILE_READ|FILE_WRITE|FILE_CSV|FILE_ANSI|FILE_SHARE_READ,',');
+@@ -614,6 +647,19 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &
+ {
+    if(trans.type==TRADE_TRANSACTION_DEAL_ADD && trans.symbol==_Symbol)
+    { RecoverFills(); Manage(); Display(); }
++   if(trans.type==TRADE_TRANSACTION_HISTORY_ADD && trans.order>0 && HistoryOrderSelect(trans.order))
++   {
++      if(HistoryOrderGetString(trans.order,ORDER_SYMBOL)!=_Symbol ||
++         (ulong)HistoryOrderGetInteger(trans.order,ORDER_MAGIC)!=InpMagicNumber) return;
++      long ended=HistoryOrderGetInteger(trans.order,ORDER_STATE);
++      if(ended==ORDER_STATE_EXPIRED) delete_reason="EXPIRED_15_MINUTES_SERVER";
++      else if(ended==ORDER_STATE_CANCELED && delete_reason=="") delete_reason="ORDER_CANCELED_EXTERNALLY";
++      else if(ended!=ORDER_STATE_CANCELED) return;
++      Print("HF_REMOVE ticket=",trans.order," reason=",delete_reason,
++            " placed=",TS((datetime)HistoryOrderGetInteger(trans.order,ORDER_TIME_SETUP)),
++            " removed=",TS((datetime)HistoryOrderGetInteger(trans.order,ORDER_TIME_DONE)));
++      Display();
++   }
+ }
+ 
+ void OnDeinit(const int why)

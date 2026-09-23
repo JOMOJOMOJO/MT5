@@ -1,0 +1,20 @@
+{
+  "run": "discovery",
+  "context_rows": 582,
+  "independent_snapshots": 305,
+  "regime_counts_raw": {
+    "H1/DOWN": 95,
+    "H1/RANGE": 117,
+    "H1/UP": 79,
+    "M15/DOWN": 85,
+    "M15/RANGE": 132,
+    "M15/UP": 74
+  },
+  "baseline_unchanged": true,
+  "previous_csv_parity": {
+    "TW_features.csv": true,
+    "TW_feature_outcomes.csv": true
+  },
+  "issues": [],
+  "passed": true
+}

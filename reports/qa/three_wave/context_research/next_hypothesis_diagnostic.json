@@ -1,0 +1,46 @@
+{
+  "status": "Post-hoc interpretation of existing group comparison, not a deployed filter or a newly optimized entry rule",
+  "hypothesis": "CHOCH in H1 RANGE / M15 DOWN may be an environment to avoid",
+  "capacity_method": "Subtract this cell from already accepted unfiltered entries only; no replacement entries replayed. Remaining entries are still feasible under the same constraints.",
+  "results": [
+    {
+      "period": "discovery",
+      "bad_n": 15,
+      "bad_R": -0.3437521516058,
+      "other_n": 105,
+      "other_R": -0.10380364640222856,
+      "unchanged_accepted_subset_R": -0.08046069886322449,
+      "unchanged_accepted_subset_monthly": {
+        "2025-01": 41,
+        "2025-02": 24,
+        "2025-03": 33
+      }
+    },
+    {
+      "period": "extension",
+      "bad_n": 11,
+      "bad_R": -0.6449613315501818,
+      "other_n": 117,
+      "other_R": -0.17287611671962394,
+      "unchanged_accepted_subset_R": -0.0789824647671489,
+      "unchanged_accepted_subset_monthly": {
+        "2025-08": 30,
+        "2025-09": 31,
+        "2025-10": 33
+      }
+    },
+    {
+      "period": "replication",
+      "bad_n": 9,
+      "bad_R": -0.7872526822820001,
+      "other_n": 125,
+      "other_R": -0.108589072532944,
+      "unchanged_accepted_subset_R": -0.0989191749215849,
+      "unchanged_accepted_subset_monthly": {
+        "2025-05": 36,
+        "2025-06": 34,
+        "2025-07": 36
+      }
+    }
+  ]
+}

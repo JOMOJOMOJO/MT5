@@ -1,0 +1,32 @@
+--- mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5
++++ mql/Experts/USDJPY_3Wave_EntryResearch.mq5
+@@ -3,7 +3,8 @@
+ #property description "3x3 confirmed LONG READY market-entry validation EA. Shared indicator engine."
+ #property tester_indicator "MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5"
+ #include "../Include/ThreeWaveInputs.mqh"
+-#include "../Include/ThreeWaveStructure.mqh"
++input int InpEntryResearchMode=0; // 0=current, 1=M5 fib50+CHoCH, 2=confirmed HL
++#include "../Include/ThreeWaveEntryResearch.mqh"
+ 
+ enum StopMode { STOP_M1_WAVE2_LOW,STOP_M1_REVERSAL_LOW,STOP_M5_WAVE1_ORIGIN };
+ input ulong InpMagicNumber=260922331;
+@@ -116,7 +117,7 @@
+    bool same=(plan.signal_time==p.ready_time+60 && plan.higher.break_time==s.break_time && plan.lower.choch_time==p.choch_time);
+    if(csv!=INVALID_HANDLE)
+    {
+-      FileWrite(csv,TS(p.ready_time+60),TS(TimeCurrent()),SignalID(s,p),outcome,sent,"",p.early_break?"WAVE2_RETURN_HIGH_CLOSE_BREAK":"WAVE1_HIGH_CLOSE_BREAK",
++      FileWrite(csv,TS(p.ready_time+60),TS(TimeCurrent()),SignalID(s,p),outcome,sent,"",InpEntryResearchMode==1?"M5_FIB50_M1_CHOCH":(InpEntryResearchMode==2?"M1_HL_CONFIRMATION":(p.early_break?"WAVE2_RETURN_HIGH_CLOSE_BREAK":"WAVE1_HIGH_CLOSE_BREAK")),
+          s.origin_low.price,TS(s.origin_low.bar_time),TS(s.origin_low.confirmed_time),
+          s.broken_high.price,TS(s.broken_high.bar_time),TS(s.broken_high.confirmed_time),TS(s.break_time+300),
+          s.wave1_high.price,TS(s.wave1_high.bar_time),TS(s.wave1_high.confirmed_time),
+@@ -464,6 +465,10 @@
+ }
+ int OnInit()
+ {
++   if(!MQLInfoInteger(MQL_TESTER) || InpEntryResearchMode<0 || InpEntryResearchMode>2 ||
++      InpVerifyIndicator || (InpEntryResearchMode==1 && InpStopMode!=STOP_M1_REVERSAL_LOW))
++      return INIT_PARAMETERS_INCORRECT;
++   Print("TW_RESEARCH mode=",InpEntryResearchMode," stop=",EnumToString(InpStopMode));
+    if(_Symbol!="USDJPY" || _Period!=PERIOD_M1 || InpLowerTF!=PERIOD_M1 || InpHigherTF!=PERIOD_M5 ||
+       InpMagicNumber==0 || InpSLBufferPoints<0 || InpCooldownMinutes<0 || InpCooldownMinutes>10080 ||
+       InpRewardRisk<=0 || InpRewardRisk>20 || !InpRequireCloseBreak || InpRequireFibZone ||

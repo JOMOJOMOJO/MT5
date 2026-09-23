@@ -1,0 +1,17 @@
+{
+  "TW_signals.csv": {
+    "identical": true,
+    "previous_sha256": "db7d9df5efc2eba8b4823750cc835b35d979b95a7fb2d0345faf696a92c42cfb",
+    "current_sha256": "db7d9df5efc2eba8b4823750cc835b35d979b95a7fb2d0345faf696a92c42cfb"
+  },
+  "TW_deals.csv": {
+    "identical": true,
+    "previous_sha256": "fd239e2f2e08ce72622802c96d9911ad97034e2aad09d11b56f600c0d1c4a976",
+    "current_sha256": "fd239e2f2e08ce72622802c96d9911ad97034e2aad09d11b56f600c0d1c4a976"
+  },
+  "TW_exits.csv": {
+    "identical": true,
+    "previous_sha256": "3133c1081562ff8593feb8139cd7e6972fada3a781a35eb08332b155a58fc187",
+    "current_sha256": "3133c1081562ff8593feb8139cd7e6972fada3a781a35eb08332b155a58fc187"
+  }
+}

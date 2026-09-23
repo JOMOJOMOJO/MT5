@@ -1,0 +1,17 @@
+{
+  "run": "extension",
+  "context_rows": 658,
+  "independent_snapshots": 329,
+  "regime_counts_raw": {
+    "H1/DOWN": 98,
+    "H1/RANGE": 110,
+    "H1/UP": 121,
+    "M15/DOWN": 103,
+    "M15/RANGE": 126,
+    "M15/UP": 100
+  },
+  "baseline_unchanged": true,
+  "previous_csv_parity": {},
+  "issues": [],
+  "passed": true
+}

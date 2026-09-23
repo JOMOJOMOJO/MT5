@@ -1,0 +1,40 @@
+{
+  "run": "entry_holdout_choch50",
+  "candidates": 69,
+  "sent": 69,
+  "decisions_compared": 0,
+  "parity_failures": 0,
+  "reasons": {
+    "MARKET_BUY_WITH_SLTP": 69
+  },
+  "metrics": {
+    "trades": 69,
+    "win_rate": 0.43478260869565216,
+    "profit_factor": 0.7578332576626626,
+    "expectancy": -13.063913043478262,
+    "expectancy_R": -0.13278819069069334,
+    "net_profit": -901.4100000000003,
+    "max_closed_balance_drawdown": 1352.3800000000028,
+    "average_win_R": 1.0094119729859754,
+    "average_loss_R": -1.0114037012112078,
+    "max_equity_drawdown": "1 415.75 (13.93%)",
+    "native_history_quality": "100% リアルティック"
+  },
+  "monthly": {
+    "2025.05": {
+      "trades": 22,
+      "profit": -403.0600000000001
+    },
+    "2025.06": {
+      "trades": 27,
+      "profit": -476.59
+    },
+    "2025.07": {
+      "trades": 20,
+      "profit": -21.75999999999999
+    }
+  },
+  "unclosed_positions": [],
+  "data_quality_warnings": [],
+  "issues": []
+}

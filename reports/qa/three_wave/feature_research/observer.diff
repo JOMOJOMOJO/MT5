@@ -1,0 +1,15 @@
+--- Shared unchanged
++++ research observer copy
+@@ -537,6 +537,12 @@
+          }
+       }
+ 
++      // Observation only: callback rejects historical closes and never mutates structure.
++      if(pat.found_choch && pat.choch_time==r[i].time)
++         TWFeatureCandidate(s,pat,close_time,"CHOCH");
++      if(pat.found_hl && pat.hl.confirmed_time==close_time)
++         TWFeatureCandidate(s,pat,close_time,"HL");
++
+       // READY requires a currently-valid confirmed HL and a renewed upside
+       // break.  Because stale HLs are cleared above, a deeper Wave2 cannot
+       // trigger from an obsolete low.

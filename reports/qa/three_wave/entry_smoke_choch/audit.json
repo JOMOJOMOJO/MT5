@@ -1,0 +1,32 @@
+{
+  "run": "entry_smoke_choch",
+  "candidates": 6,
+  "sent": 6,
+  "decisions_compared": 0,
+  "parity_failures": 0,
+  "reasons": {
+    "MARKET_BUY_WITH_SLTP": 6
+  },
+  "metrics": {
+    "trades": 6,
+    "win_rate": 0.16666666666666666,
+    "profit_factor": 0.2022328548644338,
+    "expectancy": -66.69333333333333,
+    "expectancy_R": -0.6779817109514665,
+    "net_profit": -400.16,
+    "max_closed_balance_drawdown": 401.84000000000015,
+    "average_win_R": 1.027344541219364,
+    "average_loss_R": -1.0190469613856326,
+    "max_equity_drawdown": "442.16 (4.40%)",
+    "native_history_quality": "100% リアルティック"
+  },
+  "monthly": {
+    "2025.03": {
+      "trades": 6,
+      "profit": -400.16
+    }
+  },
+  "unclosed_positions": [],
+  "data_quality_warnings": [],
+  "issues": []
+}

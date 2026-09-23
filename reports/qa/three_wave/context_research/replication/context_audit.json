@@ -1,0 +1,20 @@
+{
+  "run": "replication",
+  "context_rows": 704,
+  "independent_snapshots": 353,
+  "regime_counts_raw": {
+    "H1/DOWN": 133,
+    "H1/RANGE": 108,
+    "H1/UP": 111,
+    "M15/DOWN": 108,
+    "M15/RANGE": 140,
+    "M15/UP": 104
+  },
+  "baseline_unchanged": true,
+  "previous_csv_parity": {
+    "TW_features.csv": true,
+    "TW_feature_outcomes.csv": true
+  },
+  "issues": [],
+  "passed": true
+}

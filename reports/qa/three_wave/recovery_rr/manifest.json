@@ -1,0 +1,10 @@
+{
+  "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5": "bdff56999b84e2e0b2bcc07905dca43374da698592d8dff6456628aaafafacf1",
+  "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.ex5": "e29e122a98be2d6568b4b100dbfae79728dc3d7e25f8021655c7dde0e7a72d9a",
+  "mql/Scripts/tests/ThreeWaveExecution_Validation.mq5": "0bfb8f96de1a6bd90f4162f284e42f3b6cc035d85f11bed6ffa217f96e322d58",
+  "mql/Scripts/tests/ThreeWaveRRReplay.mq5": "8e15e0b5dd872dddd21a68f5352611e3a7cca1a3e13436f2e08d6d2b0ae23dab",
+  "mql/Scripts/tests/ThreeWaveRRReplay.ex5": "370defcbffd44babf3b5d531267947b4e1a6976a7e179a7f2700725bef8bc824",
+  "tools/swing_structure/run-three-wave.ps1": "e2e9a976a97333195b235d57f1fde0813ee45e4a30e925c591397213532090ff",
+  "tools/swing_structure/audit_three_wave.py": "7e86e8299733eceeb25b2b8bea1226026a05446f8474a596f37b5eb677e837f4",
+  "tools/swing_structure/analyze_rr_pairs.py": "94ea3f087e688cba571915ae5b10a0b423350149f54fe0578ea50d5577c317a8"
+}
