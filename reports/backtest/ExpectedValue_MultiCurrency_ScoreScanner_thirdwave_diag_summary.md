@@ -1,4 +1,3 @@
-# ThirdWave Diagnostics Improved Summary
 
 ## Scope
 
