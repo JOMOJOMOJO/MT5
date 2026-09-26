@@ -22,6 +22,9 @@ input int             InpMaxDrawSetups        = 12;
 // Appended: preserve the existing iCustom positional input contract.
 input bool            InpShowLowerPivots      = true;
 input bool            InpShowPivotLabels      = false;
+// CC research inputs (default false = original behaviour)
+input bool            InpHigherUseClosePivot  = false;
+input bool            InpSkipLowerHL          = false;
 
 
 #endif

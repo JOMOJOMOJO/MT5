@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "details": {
+    "original": {
+      "reasons": {
+        "MARKET_BUY_WITH_SLTP": 23
+      },
+      "fees": {
+        "commission": 0.0,
+        "swap": 0.0,
+        "fee": 0.0
+      }
+    },
+    "right1": {
+      "reasons": {
+        "MARKET_BUY_WITH_SLTP": 23
+      },
+      "fees": {
+        "commission": 0.0,
+        "swap": 0.0,
+        "fee": 0.0
+      },
+      "recognitions": 74,
+      "broken_events": 32,
+      "paired_executed_structures": 23,
+      "paired_entries_earlier": 3,
+      "paired_median_minutes_earlier": 0.0
+    },
+    "reversal": {
+      "reasons": {
+        "MARKET_BUY_WITH_SLTP": 23
+      },
+      "fees": {
+        "commission": 0.0,
+        "swap": 0.0,
+        "fee": 0.0
+      },
+      "recognitions": 30,
+      "broken_events": 6,
+      "paired_executed_structures": 23,
+      "paired_entries_earlier": 5,
+      "paired_median_minutes_earlier": 0.0
+    }
+  }
+}

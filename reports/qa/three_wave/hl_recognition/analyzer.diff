@@ -1,0 +1,57 @@
+--- 
++++ 
+@@ -1,4 +1,4 @@
+-bool AnalyzeLowerPattern(const MqlRates &r[],const PivotPoint &pivots[],const M5Setup &s,M1Pattern &pat)
++bool AnalyzeLowerPatternHLResearch(const MqlRates &r[],const PivotPoint &pivots[],const M5Setup &s,M1Pattern &pat)
+ {
+    ZeroMemory(pat);
+ 
+@@ -46,6 +46,7 @@
+    PivotPoint latestPullbackHigh={};
+    bool haveLatestPullbackHigh=false;
+ 
++   int hl_candidate=-1,hl_emitted=-1; datetime hl_wave_key=0;
+    datetime first_m5_break=0;
+    for(int i=start;i<ArraySize(r)-1;i++)
+    {
+@@ -103,7 +104,7 @@
+                   // A newer confirmed low above the reversal origin replaces
+                   // the previous HL.  This prevents a stale, shallow HL from
+                   // surviving while Wave2 continues deeper.
+-                  if(!p.high && p.bar_time>pat.wave1_high.bar_time && p.price>pat.reversal_low.price)
++                  if(InpHLRecognitionMode==HL_ORIGINAL && !p.high && p.bar_time>pat.wave1_high.bar_time && p.price>pat.reversal_low.price)
+                   {
+                      pat.hl=p;
+                      pat.found_hl=true;
+@@ -153,6 +154,7 @@
+       if(pat.found_hl && r[i].low<pat.hl.price)
+       {
+          TWTrace(close_time,s.break_time,"M1_WAVE2_ACTIVE","M1_HL_BROKEN_DISCARD_OLD_HL");
++         HLRecord("BROKEN",close_time,s,pat,0,r[i].close);
+          pat.found_hl=false;
+          ZeroMemory(pat.hl);
+          ZeroMemory(pat.pullback_lh);
+@@ -215,6 +217,23 @@
+          }
+       }
+ 
++      if(InpHLRecognitionMode!=HL_ORIGINAL && pat.found_wave1_high)
++      {
++         PivotPoint recognized={}; double threshold=0;
++         if(ResearchHL(InpHLRecognitionMode,r,i,pat,hl_candidate,hl_emitted,hl_wave_key,recognized,threshold))
++         {
++            pat.hl=recognized; pat.found_hl=true;
++            double range=pat.wave1_high.price-pat.reversal_low.price;
++            pat.retrace=(range>0 ? (pat.wave1_high.price-recognized.price)/range : 0);
++            pat.fib_ok=(pat.retrace>=InpFibZoneLow && pat.retrace<=InpFibZoneHigh);
++            ZeroMemory(pat.pullback_lh);
++            if(haveLatestPullbackHigh && latestPullbackHigh.bar_time<recognized.bar_time)
++               pat.pullback_lh=latestPullbackHigh;
++            HLRecord("RECOGNIZED",close_time,s,pat,threshold,r[i].close);
++            TWTrace(close_time,s.break_time,"M1_WAVE2_ACTIVE",InpHLRecognitionMode==HL_RIGHT_ONE ? "M1_HL_RIGHT1" : "M1_HL_PRICE_REVERSAL");
++         }
++      }
++
+       // READY requires a currently-valid confirmed HL and a renewed upside
+       // break.  Because stale HLs are cleared above, a deeper Wave2 cannot
+       // trigger from an obsolete low.

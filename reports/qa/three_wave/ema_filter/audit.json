@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "checked": 23,
+  "max_ema_error": 5.005063030694146e-11,
+  "ready_ids_unchanged": true,
+  "on_reasons": {
+    "MARKET_BUY_WITH_SLTP": 12,
+    "EMA_ORDER_NOT_BULLISH": 11
+  },
+  "off_reasons": {
+    "MARKET_BUY_WITH_SLTP": 23
+  }
+}

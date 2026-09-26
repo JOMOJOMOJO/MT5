@@ -1,0 +1,11 @@
+{
+  "unchanged_functions": [
+    "Place",
+    "CheckRequest",
+    "Manage",
+    "Recover",
+    "Protect",
+    "EMAEntryAllowed"
+  ],
+  "preset_inputs": 40
+}

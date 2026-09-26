@@ -1,0 +1,122 @@
+--- standard
++++ hl_research
+@@ -1,14 +1,18 @@
+ #property strict
+-#property version "1.03"
+-#property description "3x3 confirmed LONG READY market-entry validation EA. Shared indicator engine."
++#property version "1.00"
++#property description "Tester-only READY vs first confirmed HL vs HL retest. Common reversal-low SL."
+ #property tester_indicator "MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5"
+ #property tester_indicator "ThreeWave_EMA_Display.ex5"
+ #include "../Include/ThreeWaveInputs.mqh"
+ #include "../Include/ThreeWaveStructure.mqh"
+ 
++enum HLEntryMode { HL_ENTRY_READY=0, HL_ENTRY_CONFIRM=1, HL_ENTRY_RETEST=2 };
++input HLEntryMode InpHLEntryMode=HL_ENTRY_CONFIRM;
++input double InpHLNearFraction=0.25;
++
+ enum StopMode { STOP_M1_WAVE2_LOW,STOP_M1_REVERSAL_LOW,STOP_M5_WAVE1_ORIGIN };
+-input ulong InpMagicNumber=260922331;
+-input StopMode InpStopMode=STOP_M1_WAVE2_LOW;
++input ulong InpMagicNumber=260922335;
++input StopMode InpStopMode=STOP_M1_REVERSAL_LOW;
+ input int InpSLBufferPoints=10;
+ input double InpRewardRisk=1.2;
+ input int InpCooldownMinutes=15;
+@@ -167,7 +171,7 @@
+    bool same=(plan.signal_time==p.ready_time+60 && plan.higher.break_time==s.break_time && plan.lower.choch_time==p.choch_time);
+    if(csv!=INVALID_HANDLE)
+    {
+-      FileWrite(csv,TS(p.ready_time+60),TS(TimeCurrent()),SignalID(s,p),outcome,sent,"",p.early_break?"WAVE2_RETURN_HIGH_CLOSE_BREAK":"WAVE1_HIGH_CLOSE_BREAK",
++      FileWrite(csv,TS(p.ready_time+60),TS(TimeCurrent()),SignalID(s,p),outcome,sent,"",InpHLEntryMode!=HL_ENTRY_READY ? EnumToString(InpHLEntryMode) : (p.early_break?"WAVE2_RETURN_HIGH_CLOSE_BREAK":"WAVE1_HIGH_CLOSE_BREAK"),
+          s.origin_low.price,TS(s.origin_low.bar_time),TS(s.origin_low.confirmed_time),
+          s.broken_high.price,TS(s.broken_high.bar_time),TS(s.broken_high.confirmed_time),TS(s.break_time+300),
+          s.wave1_high.price,TS(s.wave1_high.bar_time),TS(s.wave1_high.confirmed_time),
+@@ -452,6 +456,8 @@
+    }
+ }
+ 
++#include "../Include/ThreeWaveHLResearchTrigger.mqh"
++
+ bool GetSources(MqlRates &lower[],MqlRates &higher[])
+ {
+    ArraySetAsSeries(lower,false); ArraySetAsSeries(higher,false);
+@@ -463,6 +469,7 @@
+ }
+ void Evaluate(const datetime now)
+ {
++   if(InpHLEntryMode!=HL_ENTRY_READY) HLRefreshBegin();
+    MqlRates lower[],higher[];
+    if(!GetSources(lower,higher)) { ExecutionState("WAIT_DATA","DATA_NOT_READY_SKIP_THIS_M1"); return; }
+    datetime closed_time=lower[ArraySize(lower)-2].time+60;
+@@ -475,6 +482,7 @@
+    for(int i=0;i<ArraySize(setups);i++)
+    {
+       M1Pattern p; AnalyzeLowerPattern(lower,lp,setups[i],p);
++      if(InpHLEntryMode!=HL_ENTRY_READY) { HLObserve(setups[i],p,lower,now); continue; }
+       if(!p.ready || p.ready_time+60!=closed_time) continue;
+       fresh++; digest+=(double)setups[i].break_time;
+       if(InpShowMarkers)
+@@ -520,6 +528,9 @@
+ }
+ int OnInit()
+ {
++   if(!MQLInfoInteger(MQL_TESTER)) { Print("Research EA: strategy tester only"); return INIT_FAILED; }
++   if(InpHLEntryMode<HL_ENTRY_READY || InpHLEntryMode>HL_ENTRY_RETEST || InpHLNearFraction<=0 || InpHLNearFraction>1 ||
++      InpStopMode!=STOP_M1_REVERSAL_LOW || InpSkipLowerHL || (InpHLEntryMode!=HL_ENTRY_READY && InpVerifyIndicator)) return INIT_PARAMETERS_INCORRECT;
+    if(_Symbol!="USDJPY" || _Period!=PERIOD_M1 || InpLowerTF!=PERIOD_M1 || InpHigherTF!=PERIOD_M5 ||
+       InpMagicNumber==0 || InpSLBufferPoints<0 || InpCooldownMinutes<0 || InpCooldownMinutes>10080 ||
+       InpRewardRisk<=0 || InpRewardRisk>20 || !InpRequireCloseBreak || InpRequireFibZone ||
+@@ -543,7 +554,7 @@
+    started=TimeCurrent();
+    string identity=AccountInfoString(ACCOUNT_SERVER)+"_"+IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN))+"_"+IntegerToString((long)InpMagicNumber);
+    StringReplace(identity,"/","_"); StringReplace(identity,"\\","_"); StringReplace(identity,":","_");
+-   string name="TW_USDJPY_"+identity+".bin";
++   string name="TW_HL_RESEARCH_"+identity+".bin";
+    if(MQLInfoInteger(MQL_TESTER)) FileDelete(name);
+    journal=FileOpen(name,FILE_READ|FILE_WRITE|FILE_BIN);
+    if(journal==INVALID_HANDLE) return INIT_FAILED;
+@@ -582,6 +593,14 @@
+       if(parity==INVALID_HANDLE) return INIT_FAILED;
+       FileWrite(parity,"time","ea_count","ea_digest","available","indicator_count","indicator_digest","equal");
+    }
++   if(InpWriteCSV && InpHLEntryMode!=HL_ENTRY_READY)
++   {
++      hl_csv=FileOpen("TW_hl_events.csv",FILE_WRITE|FILE_CSV|FILE_ANSI,',');
++      if(hl_csv==INVALID_HANDLE) return INIT_FAILED;
++      FileWrite(hl_csv,"event","key","tick_msc","armed_msc","bid","ask","hl","zone_top","sl",
++                "reversal_low","hl_time","hl_confirmed","parent","choch","reason","sent");
++   }
++   Print("TW_HL_INIT mode=",EnumToString(InpHLEntryMode)," near_fraction=",InpHLNearFraction," common_stop=REVERSAL_LOW");
+    Recover(); Manage(); DrawTrade(); Save();
+    AttachEMADisplay();
+    Print("TW_INIT equity_risk=1% RR=",InpRewardRisk," cooldown=",InpCooldownMinutes," stop=",EnumToString(InpStopMode));
+@@ -606,11 +625,15 @@
+    }
+    Manage();
+    datetime now=iTime(_Symbol,PERIOD_M1,0);
+-   if(now==0 || now==last_bar) return;
+-   last_bar=now;
+-   if(!Save()) return;
+-   Evaluate(now);
+-   Manage();
++   if(now==0) return;
++   if(now!=last_bar)
++   {
++      last_bar=now;
++      if(!Save()) return;
++      Evaluate(now);
++      Manage();
++   }
++   if(InpHLEntryMode!=HL_ENTRY_READY) ProcessHLTick();
+ }
+ void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &req,const MqlTradeResult &res)
+ {
+@@ -620,6 +643,7 @@
+ }
+ void OnDeinit(const int why)
+ {
++   if(hl_csv!=INVALID_HANDLE) FileClose(hl_csv);
+    for(int i=0;i<3;i++) if(ema_filter_handles[i]!=INVALID_HANDLE) IndicatorRelease(ema_filter_handles[i]);
+    if(ema_display_name!="") ChartIndicatorDelete(0,0,ema_display_name);
+    if(ema_display!=INVALID_HANDLE) IndicatorRelease(ema_display);

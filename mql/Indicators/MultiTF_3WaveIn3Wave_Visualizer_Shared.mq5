@@ -1,5 +1,5 @@
 #property strict
-#property version   "1.07"
+#property version   "1.08"
 #property description "Visual validator for M5 Wave1->Wave2 and M1 Wave1->Wave2->Wave3 long setups, with M1 invalidation/reset. No trading."
 #property indicator_chart_window
 #property indicator_buffers 2

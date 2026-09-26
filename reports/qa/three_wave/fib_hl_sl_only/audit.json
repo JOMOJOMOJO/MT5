@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "diagnostics": {
+    "static": {
+      "signal_reasons": {
+        "MARKET_BUY_WITH_SLTP": 38,
+        "POSITION_OPEN": 1
+      },
+      "recovery_blocked": false,
+      "fee_totals": {
+        "commission": 0.0,
+        "swap": 0.0,
+        "fee": 0.0
+      },
+      "march27_trades": 0,
+      "data_warning_lines": [
+        "CS\t3\t15:21:14.525\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t15:21:14.525\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t15:21:14.548\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 90577 total minute bars, every tick generation used",
+        "CS\t3\t15:21:14.548\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks discarded for 1431 minutes of 90577 total minute bars, every tick generation used"
+      ]
+    },
+    "dynamic": {
+      "signal_reasons": {
+        "MARKET_BUY_WITH_SLTP": 38,
+        "POSITION_OPEN": 1
+      },
+      "recovery_blocked": false,
+      "fee_totals": {
+        "commission": 0.0,
+        "swap": 0.0,
+        "fee": 0.0
+      },
+      "march27_trades": 0,
+      "data_warning_lines": [
+        "CS\t3\t20:11:01.333\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t20:11:01.333\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t20:11:01.357\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 90577 total minute bars, every tick generation used",
+        "CS\t3\t20:11:01.357\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks discarded for 1431 minutes of 90577 total minute bars, every tick generation used"
+      ],
+      "update_events": {
+        "TARGET": 27,
+        "MODIFY": 27,
+        "SKIP": 1
+      },
+      "update_reasons": {
+        "FIRST_POST_ENTRY_HL_CONFIRMED": 27,
+        "HL_SL_APPLIED_INITIAL_TP_KEPT": 27,
+        "SL_NOT_TIGHTER_OR_NOT_BELOW_ENTRY": 1
+      }
+    },
+    "same_entry_candidates": true,
+    "closed_bar_first_zone_audit_count": 39,
+    "paired_executions": 38
+  }
+}

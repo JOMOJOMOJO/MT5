@@ -1,0 +1,22 @@
+[
+  {
+    "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Tester\\2FA8A7E69CED7DC259B1AD86A247F675\\Agent-127.0.0.1-3001\\logs\\20260926.log",
+    "sha256": "7709a539216a5f515396d9656b5cca0ea7efee32b3b6d1bd1c725d11f4d35397"
+  },
+  {
+    "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Tester\\2FA8A7E69CED7DC259B1AD86A247F675\\Agent-127.0.0.1-3001\\MQL5\\Files\\TW_deals.csv",
+    "sha256": "42f027f5234953e64ec39b72ef4ab033ed85e973712b3c757242afcec08af60a"
+  },
+  {
+    "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\resistance_research\\TW_resistance_M1.csv",
+    "sha256": "bb6152c64c31d6fdb81c56d47f751e459455d888addc5dafffc00550521aa606"
+  },
+  {
+    "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\USDJPY_M1_M5_3WaveIn3Wave_Long.mq5",
+    "sha256": "fb562accba2a8a07d1ce7f9c37113f6a0adf381b3fb215dbcd95a2fa94ce9538"
+  },
+  {
+    "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\ThreeWaveStructure.mqh",
+    "sha256": "bc9bd8f2a3fd5273fbedb7bccf3e14ee861ee1fc87cb6bbed9b541baa2d2bc11"
+  }
+]

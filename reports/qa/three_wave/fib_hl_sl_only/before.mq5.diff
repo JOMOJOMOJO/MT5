@@ -1,0 +1,26 @@
+--- before.mq5
++++ mql/Experts/USDJPY_3Wave_FibHLExitResearch.mq5
+@@ -1,5 +1,5 @@
+ #property strict
+-#property version "1.00"
++#property version "1.01"
+ #property description "Tester-only closed M1 Fib entry, optional first post-entry HL SL/TP update."
+ #property tester_indicator "MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5"
+ #property tester_indicator "ThreeWave_EMA_Display.ex5"
+@@ -10,6 +10,7 @@
+ input double InpFibEntryMaxRetracement=0.618;
+ input bool InpMoveSLToHL=true;
+ input int InpHLStopBufferPoints=10;
++input bool InpRecalculateTPOnHL=true; // False preserves the initial TP when tightening SL.
+ 
+ enum StopMode { STOP_M1_WAVE2_LOW,STOP_M1_REVERSAL_LOW,STOP_M5_WAVE1_ORIGIN };
+ input ulong InpMagicNumber=260922336;
+@@ -603,7 +604,7 @@
+       FileWrite(exit_csv,"event","reason","position","signal_time","tick_msc","hl_time","hl_confirmed","hl_price",
+                 "fill_price","old_sl","old_tp","new_sl","new_tp","initial_risk","bid","retcode");
+    }
+-   Print("TW_FIB_HL_INIT dynamic=",InpMoveSLToHL," min=",InpFibEntryMinRetracement," max=",InpFibEntryMaxRetracement," HL_buffer=",InpHLStopBufferPoints);
++   Print("TW_FIB_HL_INIT dynamic=",InpMoveSLToHL," recalculate_TP=",InpRecalculateTPOnHL," min=",InpFibEntryMinRetracement," max=",InpFibEntryMaxRetracement," HL_buffer=",InpHLStopBufferPoints);
+    Recover(); Manage(); DrawTrade(); Save();
+    AttachEMADisplay();
+    Print("TW_INIT equity_risk=1% RR=",InpRewardRisk," cooldown=",InpCooldownMinutes," stop=",EnumToString(InpStopMode));

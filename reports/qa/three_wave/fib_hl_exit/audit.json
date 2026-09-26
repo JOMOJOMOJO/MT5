@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "diagnostics": {
+    "static": {
+      "signal_reasons": {
+        "EMA_ORDER_NOT_BULLISH": 22,
+        "EMA_NOT_ALL_RISING": 16,
+        "MARKET_BUY_WITH_SLTP": 1
+      },
+      "recovery_blocked": false,
+      "fee_totals": {
+        "commission": 0.0,
+        "swap": 0.0,
+        "fee": 0.0
+      },
+      "march27_trades": 0,
+      "data_warning_lines": [
+        "CS\t3\t15:10:09.271\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t15:10:09.271\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t15:10:09.296\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 90577 total minute bars, every tick generation used",
+        "CS\t3\t15:10:09.296\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks discarded for 1431 minutes of 90577 total minute bars, every tick generation used"
+      ]
+    },
+    "dynamic": {
+      "signal_reasons": {
+        "EMA_ORDER_NOT_BULLISH": 22,
+        "EMA_NOT_ALL_RISING": 16,
+        "MARKET_BUY_WITH_SLTP": 1
+      },
+      "recovery_blocked": false,
+      "fee_totals": {
+        "commission": 0.0,
+        "swap": 0.0,
+        "fee": 0.0
+      },
+      "march27_trades": 0,
+      "data_warning_lines": [
+        "CS\t3\t15:06:42.120\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t15:06:42.120\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t15:06:42.144\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 90577 total minute bars, every tick generation used",
+        "CS\t3\t15:06:42.144\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks discarded for 1431 minutes of 90577 total minute bars, every tick generation used"
+      ],
+      "update_events": {
+        "TARGET": 1,
+        "MODIFY": 1
+      },
+      "update_reasons": {
+        "FIRST_POST_ENTRY_HL_CONFIRMED": 1,
+        "HL_SL_AND_RR_TP_APPLIED": 1
+      }
+    },
+    "same_entry_candidates": true,
+    "closed_bar_first_zone_audit_count": 39
+  }
+}

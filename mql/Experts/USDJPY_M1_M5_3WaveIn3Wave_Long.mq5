@@ -1,13 +1,17 @@
 #property strict
-#property version "1.02"
-#property description "3x3 confirmed LONG READY market-entry validation EA. Shared indicator engine."
+#property version "1.05"
+#property description "3x3 LONG EA with selectable READY or confirmed-HL retest entry."
 #property tester_indicator "MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5"
+#property tester_indicator "ThreeWave_EMA_Display.ex5"
 #include "../Include/ThreeWaveInputs.mqh"
 #include "../Include/ThreeWaveStructure.mqh"
 
 enum StopMode { STOP_M1_WAVE2_LOW,STOP_M1_REVERSAL_LOW,STOP_M5_WAVE1_ORIGIN };
+enum HLEntryMode { HL_ENTRY_READY=0, HL_ENTRY_CONFIRM=1, HL_ENTRY_RETEST=2 };
+input HLEntryMode InpHLEntryMode=HL_ENTRY_RETEST;
+input double InpHLNearFraction=0.25;
 input ulong InpMagicNumber=260922331;
-input StopMode InpStopMode=STOP_M1_WAVE2_LOW;
+input StopMode InpStopMode=STOP_M1_REVERSAL_LOW;
 input int InpSLBufferPoints=10;
 input double InpRewardRisk=1.2;
 input int InpCooldownMinutes=15;
@@ -16,6 +20,61 @@ input bool InpShowMarkers=true;
 input bool InpWriteCSV=true;
 input bool InpVerifyIndicator=false; // Tester comparison only; does not gate or generate signals.
 input bool InpTestDeferredProtection=false;
+input bool InpShowEMAs=true; // Display only; periods are shared with the EMA entry filter.
+input bool InpUseEMAFilter=true;
+input bool InpEMARequireRising=true; // Strict rise of all three from shift 2 to shift 1.
+input int InpEMAFastPeriod=20;
+input int InpEMAMiddlePeriod=50;
+input int InpEMASlowPeriod=100;
+int ema_filter_handles[3]={INVALID_HANDLE,INVALID_HANDLE,INVALID_HANDLE};
+
+bool EMAEntryAllowed(const datetime decision,string &result)
+{
+   if(!InpUseEMAFilter) { result="EMA_FILTER_DISABLED"; return true; }
+   double current[3],previous[3];
+   if(iTime(_Symbol,(ENUM_TIMEFRAMES)InpLowerTF,0)!=decision || iTime(_Symbol,(ENUM_TIMEFRAMES)InpLowerTF,1)+TFSeconds((ENUM_TIMEFRAMES)InpLowerTF)>decision)
+   { result="EMA_TIME_NOT_READY"; return false; }
+   for(int i=0;i<3;i++)
+   {
+      double values[2]; // CopyBuffer places the older (shift 2) value first.
+      if(BarsCalculated(ema_filter_handles[i])<InpEMASlowPeriod+2 || CopyBuffer(ema_filter_handles[i],0,1,2,values)!=2)
+      { result="EMA_DATA_NOT_READY"; return false; }
+      previous[i]=values[0]; current[i]=values[1];
+      if(!MathIsValidNumber(current[i]) || !MathIsValidNumber(previous[i]) ||
+         current[i]==EMPTY_VALUE || previous[i]==EMPTY_VALUE)
+      { result="EMA_DATA_INVALID"; return false; }
+   }
+   bool ordered=current[0]>current[1] && current[1]>current[2];
+   bool rising=current[0]>previous[0] && current[1]>previous[1] && current[2]>previous[2];
+   result=!ordered ? "EMA_ORDER_NOT_BULLISH" : (InpEMARequireRising && !rising ? "EMA_NOT_ALL_RISING" : "EMA_PASS");
+   Print("TW_EMA_FILTER decision=",TimeToString(decision,TIME_DATE|TIME_SECONDS),
+         " closed_bar=",TimeToString(iTime(_Symbol,(ENUM_TIMEFRAMES)InpLowerTF,1),TIME_DATE|TIME_SECONDS),
+         " ema_fast=",DoubleToString(current[0],10)," ema_middle=",DoubleToString(current[1],10),
+         " ema_slow=",DoubleToString(current[2],10)," prev_fast=",DoubleToString(previous[0],10),
+         " prev_middle=",DoubleToString(previous[1],10)," prev_slow=",DoubleToString(previous[2],10),
+         " result=",result);
+   return ordered && (!InpEMARequireRising || rising);
+}
+int ema_display=INVALID_HANDLE;
+string ema_display_name="";
+
+void AttachEMADisplay()
+{
+   if(!InpShowEMAs || (MQLInfoInteger(MQL_TESTER) && !MQLInfoInteger(MQL_VISUAL_MODE))) return;
+   string instance=IntegerToString(ChartID())+"_"+IntegerToString((long)GetTickCount64());
+   ema_display=iCustom(_Symbol,_Period,"ThreeWave_EMA_Display",instance,
+                       InpEMAFastPeriod,InpEMAMiddlePeriod,InpEMASlowPeriod);
+   if(ema_display==INVALID_HANDLE)
+   { Print("TW_EMA display creation failed error=",GetLastError()); return; }
+   if(!ChartIndicatorAdd(0,0,ema_display))
+   {
+      Print("TW_EMA chart attachment failed error=",GetLastError());
+      IndicatorRelease(ema_display); ema_display=INVALID_HANDLE; return;
+   }
+   ema_display_name="TW EMA "+IntegerToString(InpEMAFastPeriod)+"/"+
+                    IntegerToString(InpEMAMiddlePeriod)+"/"+IntegerToString(InpEMASlowPeriod)+" ["+instance+"]";
+   ChartRedraw();
+}
 
 struct TWPlan
 {
@@ -111,17 +170,21 @@ void DrawTrade()
 }
 void LogCandidate(const M5Setup &s,const M1Pattern &p,const string outcome,const bool sent)
 {
+   string entry_reason=InpHLEntryMode==HL_ENTRY_RETEST ? "HL_ENTRY_RETEST" :
+      (InpSkipLowerHL ? "SKIP_HL_CHOCH_ONLY" : (p.early_break ? "WAVE2_RETURN_HIGH_CLOSE_BREAK" : "WAVE1_HIGH_CLOSE_BREAK"));
    int orders,positions,foreign; ulong o,t; Counts(orders,positions,foreign,o,t);
    double pct=p.retrace*100;
-   bool same=(plan.signal_time==p.ready_time+60 && plan.higher.break_time==s.break_time && plan.lower.choch_time==p.choch_time);
+   int lbar_s=TFSeconds((ENUM_TIMEFRAMES)InpLowerTF),hbar_s=TFSeconds((ENUM_TIMEFRAMES)InpHigherTF);
+   bool same=(plan.signal_time==p.ready_time+lbar_s && plan.higher.break_time==s.break_time && plan.lower.choch_time==p.choch_time);
    if(csv!=INVALID_HANDLE)
    {
-      FileWrite(csv,TS(p.ready_time+60),TS(TimeCurrent()),SignalID(s,p),outcome,sent,"",p.early_break?"WAVE2_RETURN_HIGH_CLOSE_BREAK":"WAVE1_HIGH_CLOSE_BREAK",
+      FileWrite(csv,TS(p.ready_time+lbar_s),TS(TimeCurrent()),SignalID(s,p),outcome,sent,"",
+         entry_reason,
          s.origin_low.price,TS(s.origin_low.bar_time),TS(s.origin_low.confirmed_time),
-         s.broken_high.price,TS(s.broken_high.bar_time),TS(s.broken_high.confirmed_time),TS(s.break_time+300),
+         s.broken_high.price,TS(s.broken_high.bar_time),TS(s.broken_high.confirmed_time),TS(s.break_time+hbar_s),
          s.wave1_high.price,TS(s.wave1_high.bar_time),TS(s.wave1_high.confirmed_time),
          p.reversal_low.price,TS(p.reversal_low.bar_time),TS(p.reversal_low.confirmed_time),
-         p.downtrend_return_high.price,TS(p.downtrend_return_high.bar_time),TS(p.downtrend_return_high.confirmed_time),TS(p.choch_time+60),
+         p.downtrend_return_high.price,TS(p.downtrend_return_high.bar_time),TS(p.downtrend_return_high.confirmed_time),TS(p.choch_time+lbar_s),
          p.wave1_high.price,TS(p.wave1_high.bar_time),TS(p.wave1_high.confirmed_time),
          p.hl.price,TS(p.hl.bar_time),TS(p.hl.confirmed_time),
          p.pullback_lh.price,TS(p.pullback_lh.bar_time),TS(p.pullback_lh.confirmed_time),p.early_break,pct,FibZoneName(pct),
@@ -129,7 +192,7 @@ void LogCandidate(const M5Setup &s,const M1Pattern &p,const string outcome,const
          same?plan.order:0,execution_state,orders,positions,foreign);
       FileFlush(csv);
    }
-   Print("TW_SIGNAL id=",SignalID(s,p)," confirmed=",TS(p.ready_time+60)," result=",outcome," sent=",sent);
+   Print("TW_SIGNAL id=",SignalID(s,p)," confirmed=",TS(p.ready_time+lbar_s)," result=",outcome," sent=",sent," entry_reason=",entry_reason);
 }
 
 // Same min-volume OrderCalcProfit conversion, downward lot rounding, margin cap
@@ -144,7 +207,7 @@ bool MakePlan(const M5Setup &s,const M1Pattern &p)
    MqlTick tick={}; if(!SymbolInfoTick(_Symbol,tick) || tick.ask<=0) { reason="NO_QUOTE"; return false; }
    if(tick.bid<p.hl.price || tick.bid<p.reversal_low.price || tick.bid<s.origin_low.price)
    { reason="STRUCTURE_BROKEN_ON_ENTRY_TICK"; return false; }
-   ZeroMemory(plan); plan.higher=s; plan.lower=p; plan.signal_time=p.ready_time+60;
+   ZeroMemory(plan); plan.higher=s; plan.lower=p; plan.signal_time=p.ready_time+TFSeconds((ENUM_TIMEFRAMES)InpLowerTF);
    protected_volume=0; protected_entry=0;
    plan.entry=tick.ask; plan.reward_risk=InpRewardRisk; plan.equity=AccountInfoDouble(ACCOUNT_EQUITY);
    double anchor=p.hl.price;
@@ -401,6 +464,8 @@ void Manage()
    }
 }
 
+#include "../Include/ThreeWaveHLResearchTrigger.mqh"
+
 bool GetSources(MqlRates &lower[],MqlRates &higher[])
 {
    ArraySetAsSeries(lower,false); ArraySetAsSeries(higher,false);
@@ -408,13 +473,14 @@ bool GetSources(MqlRates &lower[],MqlRates &higher[])
    int hc=CopyRates(_Symbol,InpHigherTF,0,InpHistoryHigherBars,higher);
    if(lc<100 || hc<100 || !SeriesInfoInteger(_Symbol,InpLowerTF,SERIES_SYNCHRONIZED) ||
       !SeriesInfoInteger(_Symbol,InpHigherTF,SERIES_SYNCHRONIZED)) return false;
-   return lower[lc-1].time==last_bar && higher[hc-1].time<=last_bar && last_bar<higher[hc-1].time+300;
+   return lower[lc-1].time==last_bar && higher[hc-1].time<=last_bar && last_bar<higher[hc-1].time+TFSeconds((ENUM_TIMEFRAMES)InpHigherTF);
 }
 void Evaluate(const datetime now)
 {
+   if(InpHLEntryMode==HL_ENTRY_RETEST) HLRefreshBegin();
    MqlRates lower[],higher[];
    if(!GetSources(lower,higher)) { ExecutionState("WAIT_DATA","DATA_NOT_READY_SKIP_THIS_M1"); return; }
-   datetime closed_time=lower[ArraySize(lower)-2].time+60;
+   datetime closed_time=lower[ArraySize(lower)-2].time+TFSeconds((ENUM_TIMEFRAMES)InpLowerTF);
    ArrayResize(tw_events,0); tw_trace_from=closed_time;
    PivotPoint lp[],hp[]; M5Setup setups[];
    BuildPivots(lower,InpLowerTF,InpLowerLeftBars,InpLowerRightBars,lp);
@@ -424,7 +490,8 @@ void Evaluate(const datetime now)
    for(int i=0;i<ArraySize(setups);i++)
    {
       M1Pattern p; AnalyzeLowerPattern(lower,lp,setups[i],p);
-      if(!p.ready || p.ready_time+60!=closed_time) continue;
+      if(InpHLEntryMode==HL_ENTRY_RETEST) { HLObserve(setups[i],p,lower,now); continue; }
+      if(!p.ready || p.ready_time+TFSeconds((ENUM_TIMEFRAMES)InpLowerTF)!=closed_time) continue;
       fresh++; digest+=(double)setups[i].break_time;
       if(InpShowMarkers)
       {
@@ -439,8 +506,13 @@ void Evaluate(const datetime now)
       else if(orders>0 || plan.inflight) why="ORDER_INFLIGHT";
       else if(foreign>0) why="FOREIGN_USDJPY_EXPOSURE";
       else if(TimeCurrent()<last_fill+InpCooldownMinutes*60) why="COOLDOWN";
-      else if(p.ready_time+60<=started) why="STARTUP_STALE_SIGNAL";
-      if(why=="") { sent=Place(setups[i],p); why=reason; }
+      else if(p.ready_time+TFSeconds((ENUM_TIMEFRAMES)InpLowerTF)<=started) why="STARTUP_STALE_SIGNAL";
+      if(why=="")
+      {
+         string ema_reason="";
+         if(!EMAEntryAllowed(now,ema_reason)) why=ema_reason;
+         else { sent=Place(setups[i],p); why=reason; }
+      }
       LogCandidate(setups[i],p,why,sent);
    }
    for(int e=0;e<ArraySize(tw_events);e++)
@@ -462,9 +534,18 @@ void Evaluate(const datetime now)
    }
    Print("TW_M1 ",TS(now)," fresh_ready=",fresh," state=",execution_state," reason=",reason);
 }
+#include "../Include/ThreeWaveOptimization.mqh"
+
 int OnInit()
 {
-   if(_Symbol!="USDJPY" || _Period!=PERIOD_M1 || InpLowerTF!=PERIOD_M1 || InpHigherTF!=PERIOD_M5 ||
+   if(InpHLEntryMode==HL_ENTRY_RETEST && InpSkipLowerHL)
+   { Print("TW_INPUT_ERROR HL_ENTRY_RETEST requires InpSkipLowerHL=false"); return INIT_PARAMETERS_INCORRECT; }
+   if(InpHLEntryMode==HL_ENTRY_CONFIRM || InpHLEntryMode<HL_ENTRY_READY || InpHLEntryMode>HL_ENTRY_RETEST ||
+      (InpHLEntryMode==HL_ENTRY_RETEST && (InpHLNearFraction<=0 || InpHLNearFraction>1)) ||
+      (InpHLEntryMode==HL_ENTRY_RETEST && InpVerifyIndicator) ||
+      InpEMAFastPeriod<1 || InpEMAMiddlePeriod<=InpEMAFastPeriod || InpEMASlowPeriod<=InpEMAMiddlePeriod ||
+      InpEMASlowPeriod>10000 ||
+      _Period!=(ENUM_TIMEFRAMES)InpLowerTF ||
       InpMagicNumber==0 || InpSLBufferPoints<0 || InpCooldownMinutes<0 || InpCooldownMinutes>10080 ||
       InpRewardRisk<=0 || InpRewardRisk>20 || !InpRequireCloseBreak || InpRequireFibZone ||
       InpLowerLeftBars<1 || InpLowerRightBars<1 || InpHigherLeftBars<1 || InpHigherRightBars<1 ||
@@ -472,6 +553,18 @@ int OnInit()
       InpHistoryLowerBars<InpLowerLeftBars+InpLowerRightBars+3 || InpHistoryHigherBars<InpHigherLeftBars+InpHigherRightBars+3 ||
       InpHistoryLowerBars<500 || InpHistoryHigherBars<200 || InpMaxSetupMinutes<30 ||
       ((InpTestDeferredProtection || InpVerifyIndicator) && !MQLInfoInteger(MQL_TESTER))) return INIT_PARAMETERS_INCORRECT;
+   if(InpUseEMAFilter)
+   {
+      TesterHideIndicators(true); // Calculation handles must not add duplicate chart lines.
+      int periods[3]={InpEMAFastPeriod,InpEMAMiddlePeriod,InpEMASlowPeriod};
+      for(int i=0;i<3;i++)
+      {
+         ema_filter_handles[i]=iMA(_Symbol,(ENUM_TIMEFRAMES)InpLowerTF,periods[i],0,MODE_EMA,PRICE_CLOSE);
+         if(ema_filter_handles[i]==INVALID_HANDLE)
+         { TesterHideIndicators(false); return INIT_FAILED; }
+      }
+      TesterHideIndicators(false);
+   }
    started=TimeCurrent();
    string identity=AccountInfoString(ACCOUNT_SERVER)+"_"+IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN))+"_"+IntegerToString((long)InpMagicNumber);
    StringReplace(identity,"/","_"); StringReplace(identity,"\\","_"); StringReplace(identity,":","_");
@@ -481,7 +574,7 @@ int OnInit()
    if(journal==INVALID_HANDLE) return INIT_FAILED;
    if(!LoadJournal()) { blocked=true; reason="CORRUPT_JOURNAL"; }
    // Never replay the already-open startup bar, even after a clean restart.
-   last_bar=iTime(_Symbol,PERIOD_M1,0);
+   last_bar=iTime(_Symbol,(ENUM_TIMEFRAMES)InpLowerTF,0);
    g_prefix="TW_"+IntegerToString((long)InpMagicNumber)+"_";
    if(InpWriteCSV)
    {
@@ -504,7 +597,7 @@ int OnInit()
    }
    if(InpVerifyIndicator)
    {
-      indicator=iCustom(_Symbol,PERIOD_M1,"MultiTF_3WaveIn3Wave_Visualizer_Shared",InpLowerTF,InpHigherTF,
+      indicator=iCustom(_Symbol,(ENUM_TIMEFRAMES)InpLowerTF,"MultiTF_3WaveIn3Wave_Visualizer_Shared",InpLowerTF,InpHigherTF,
          InpLowerLeftBars,InpLowerRightBars,InpHigherLeftBars,InpHigherRightBars,InpHistoryLowerBars,InpHistoryHigherBars,
          InpMaxSetupMinutes,InpFibZoneLow,InpFibZoneHigh,false,true,(bool)MQLInfoInteger(MQL_VISUAL_MODE),false,false,true,false,InpMaxDrawSetups,
          (bool)MQLInfoInteger(MQL_VISUAL_MODE),false);
@@ -514,8 +607,20 @@ int OnInit()
       if(parity==INVALID_HANDLE) return INIT_FAILED;
       FileWrite(parity,"time","ea_count","ea_digest","available","indicator_count","indicator_digest","equal");
    }
+   if(InpWriteCSV && InpHLEntryMode==HL_ENTRY_RETEST)
+   {
+      hl_csv=FileOpen("TW_hl_events.csv",FILE_READ|FILE_WRITE|FILE_CSV|FILE_ANSI|FILE_SHARE_READ,',');
+      if(hl_csv==INVALID_HANDLE) return INIT_FAILED;
+      if(FileSize(hl_csv)==0)
+         FileWrite(hl_csv,"event","key","tick_msc","armed_msc","bid","ask","hl","zone_top","sl",
+                   "reversal_low","hl_time","hl_confirmed","parent","choch","reason","sent");
+      FileSeek(hl_csv,0,SEEK_END);
+   }
+   Print("TW_HL_ENTRY mode=",EnumToString(InpHLEntryMode)," near_fraction=",InpHLNearFraction);
    Recover(); Manage(); DrawTrade(); Save();
-   Print("TW_INIT equity_risk=1% RR=",InpRewardRisk," cooldown=",InpCooldownMinutes," stop=",EnumToString(InpStopMode));
+   AttachEMADisplay();
+   Print("TW_INIT equity_risk=1% RR=",InpRewardRisk," cooldown=",InpCooldownMinutes," stop=",EnumToString(InpStopMode),
+         " EMA=",InpEMAFastPeriod,"/",InpEMAMiddlePeriod,"/",InpEMASlowPeriod);
    return INIT_SUCCEEDED;
 }
 void OnTick()
@@ -536,12 +641,16 @@ void OnTick()
       screenshot_copy=path; shots++; screenshot_pending=0;
    }
    Manage();
-   datetime now=iTime(_Symbol,PERIOD_M1,0);
-   if(now==0 || now==last_bar) return;
-   last_bar=now;
-   if(!Save()) return;
-   Evaluate(now);
-   Manage();
+   datetime now=iTime(_Symbol,(ENUM_TIMEFRAMES)InpLowerTF,0);
+   if(now==0) return;
+   if(now!=last_bar)
+   {
+      last_bar=now;
+      if(!Save()) return;
+      Evaluate(now);
+      Manage();
+   }
+   if(InpHLEntryMode==HL_ENTRY_RETEST) ProcessHLTick();
 }
 void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &req,const MqlTradeResult &res)
 {
@@ -551,6 +660,10 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &
 }
 void OnDeinit(const int why)
 {
+   if(hl_csv!=INVALID_HANDLE) { FileFlush(hl_csv); FileClose(hl_csv); }
+   for(int i=0;i<3;i++) if(ema_filter_handles[i]!=INVALID_HANDLE) IndicatorRelease(ema_filter_handles[i]);
+   if(ema_display_name!="") ChartIndicatorDelete(0,0,ema_display_name);
+   if(ema_display!=INVALID_HANDLE) IndicatorRelease(ema_display);
    Print("TW_PARITY_RESULT checks=",parity_checks," failures=",parity_failures);
    if(MQLInfoInteger(MQL_TESTER) && HistorySelect(started,TimeCurrent()))
    {

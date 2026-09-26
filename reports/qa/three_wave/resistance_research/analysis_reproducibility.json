@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "files": {
+    "resistance_features.csv": true,
+    "resistance_levels.csv": true,
+    "resistance_clusters.csv": true,
+    "candidates_with_resistance.csv": true,
+    "primary_candidates_stage.csv": true,
+    "resistance_statistics.csv": true,
+    "monthly_execution_counts.csv": true,
+    "execution_ledger.csv": true,
+    "feature_distributions.csv": true,
+    "threshold_stability.csv": true,
+    "threshold_tables.md": true
+  }
+}

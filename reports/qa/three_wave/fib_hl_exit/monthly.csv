@@ -1,0 +1,7 @@
+mode,month,trades,net_usd,win_rate_pct,expectancy_R
+static,2025-01,1,-99.78,0.0,-1.0
+static,2025-02,0,0.0,,
+static,2025-03,0,0.0,,
+dynamic,2025-01,1,42.44,100.0,0.4253357386249749
+dynamic,2025-02,0,0.0,,
+dynamic,2025-03,0,0.0,,

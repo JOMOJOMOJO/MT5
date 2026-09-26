@@ -1,0 +1,6 @@
+{
+  "mql\\Experts\\USDJPY_M1_M5_3WaveIn3Wave_Long.mq5": "a76b539e4ed5a3cba55e6c77634beb0711cd20c7fef79b9cd8e649dcb4ed6f42",
+  "mql\\Include\\ThreeWaveStructure.mqh": "bc9bd8f2a3fd5273fbedb7bccf3e14ee861ee1fc87cb6bbed9b541baa2d2bc11",
+  "mql\\Include\\ThreeWaveInputs.mqh": "ba563f619646c4fd0e4b3416be14c81768be79848f0c438e6c53a08e91e9f216",
+  "mql\\Include\\ThreeWaveExecutionBase.mqh": "c40e706ab0077c0fdc5820d46e4dfc939a79f99f3abfd76d7b7728db5458eec8"
+}

@@ -1,0 +1,14 @@
+{
+  "dynamic": {
+    "InpUseEMAFilter": [
+      "true",
+      "false"
+    ]
+  },
+  "static": {
+    "InpUseEMAFilter": [
+      "true",
+      "false"
+    ]
+  }
+}

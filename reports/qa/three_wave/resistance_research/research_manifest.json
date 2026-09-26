@@ -1,0 +1,11 @@
+{
+  "tools/swing_structure/analyze_three_wave_resistance.py": "10d1046d226044013324911c1fe66820726158d68c9bee403867733af12ca8e8",
+  "tools/swing_structure/audit_three_wave_resistance.py": "3ee54b26bbbe80bcc88e1be6b77b5faa0a21f7849cfa47a3df5c478ef11f5b46",
+  "tools/swing_structure/build_resistance_features.py": "06a2832a443ce131ef47e2eb65ccd8ce68fa9e7e1d6bdf50daab922a36b8ae76",
+  "tools/swing_structure/summarize_resistance_counts.py": "c4d07ae51bb2b77e41955435e7ab87e9f76e8d3084924ea24a48dfd2978c7fbf",
+  "tools/swing_structure/three_wave_resistance.py": "8c9e57baa2a16d13a0572705f8d49445263175db7c96cab78436b42c3ff1a110",
+  "tools/swing_structure/run-three-wave-resistance-export.ps1": "1614eae6fda54da235af34b1f5f1e912a7e3f626cbd8b22a7fabd7bbd30904a2",
+  "mql/Scripts/tests/ThreeWaveResistanceExport.mq5": "cb5fe5e961d1801a0ec8900f4db8eef28bca0031aa5078f82e69e1bec16572ab",
+  "mql/Scripts/tests/ThreeWaveResistanceExport.ex5": "b370abfb170ae1bbafca9e8690606d185d21a47ff6e0f92c491e177af1a87f4f",
+  "tools/swing_structure/analyze_three_wave_context.py": "dae0c0f0dfa4b8095b4368508ab3d7c26d0152d502c0144796ee957b6c16d78a"
+}

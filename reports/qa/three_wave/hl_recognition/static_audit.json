@@ -1,0 +1,10 @@
+{
+  "MakePlan": true,
+  "Place": true,
+  "CheckRequest": true,
+  "Manage": true,
+  "Recover": true,
+  "Protect": true,
+  "EMAEntryAllowed": true,
+  "OnTick": true
+}

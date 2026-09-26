@@ -1,0 +1,10 @@
+{
+  "USDJPY_M1_M5_3WaveIn3Wave_Long.mq5": true,
+  "ThreeWaveInputs.mqh": true,
+  "ThreeWaveStructure.mqh": true,
+  "ThreeWaveExecutionBase.mqh": true,
+  "mql/Experts/USDJPY_3Wave_FibHLExitResearch.mq5": true,
+  "mql/Experts/USDJPY_3Wave_FibHLExitResearch.ex5": true,
+  "mql/Include/ThreeWaveFibHLExitResearch.mqh": true,
+  "mql/Include/ThreeWaveFibHLPolicy.mqh": true
+}

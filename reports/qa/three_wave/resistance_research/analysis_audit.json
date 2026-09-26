@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "primary_candidates": 769,
+  "all_rows": 1944,
+  "geometry_matches_original": true,
+  "baseline_replays_identical": 18,
+  "positive_and_twenty_conditions": 0
+}

@@ -1,0 +1,12 @@
+{
+  "unchanged_functions": [
+    "MakePlan",
+    "Place",
+    "CheckRequest",
+    "Manage",
+    "Recover",
+    "Protect",
+    "EMAEntryAllowed"
+  ],
+  "preset_inputs": 38
+}

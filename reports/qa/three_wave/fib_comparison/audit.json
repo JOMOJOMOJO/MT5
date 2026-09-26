@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "diagnostics": {
+    "ready": {
+      "signal_reasons": {
+        "EMA_ORDER_NOT_BULLISH": 23,
+        "MARKET_BUY_WITH_SLTP": 23
+      },
+      "recovery_blocked": false,
+      "fee_totals": {
+        "commission": 0.0,
+        "swap": 0.0,
+        "fee": 0.0
+      },
+      "march27_trades": 0,
+      "data_warning_lines": [
+        "CS\t3\t10:35:18.527\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t10:35:18.527\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t10:35:18.551\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 90577 total minute bars, every tick generation used",
+        "CS\t3\t10:35:18.551\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks discarded for 1431 minutes of 90577 total minute bars, every tick generation used"
+      ]
+    },
+    "fib": {
+      "signal_reasons": {
+        "EMA_ORDER_NOT_BULLISH": 31,
+        "MARKET_BUY_WITH_SLTP": 26,
+        "EMA_NOT_ALL_RISING": 9
+      },
+      "recovery_blocked": false,
+      "fee_totals": {
+        "commission": 0.0,
+        "swap": 0.0,
+        "fee": 0.0
+      },
+      "march27_trades": 0,
+      "data_warning_lines": [
+        "CS\t3\t10:38:22.226\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t10:38:22.226\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+        "CS\t3\t10:38:22.251\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 90577 total minute bars, every tick generation used",
+        "CS\t3\t10:38:22.251\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.04.01 00:00  real ticks discarded for 1431 minutes of 90577 total minute bars, every tick generation used"
+      ],
+      "events": {
+        "ARM": 80,
+        "TOUCH": 66,
+        "DECISION": 66,
+        "INVALIDATE": 14
+      }
+    }
+  }
+}

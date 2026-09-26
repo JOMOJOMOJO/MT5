@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "protected_files": 4,
+  "native_policy_checks": 12,
+  "arms": 38,
+  "touches": 34,
+  "decisions": 34,
+  "fib_orders": 15,
+  "ready_orders": 12,
+  "fib_reasons": {
+    "MARKET_BUY_WITH_SLTP": 15,
+    "EMA_ORDER_NOT_BULLISH": 14,
+    "EMA_NOT_ALL_RISING": 5
+  },
+  "ready_signals_and_deals_identical": true,
+  "next_tick_and_closed_confirmation": true,
+  "risk_and_cooldown": true
+}

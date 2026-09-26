@@ -1,0 +1,18 @@
+{
+  "reversal": {
+    "paired": 23,
+    "earlier": 5,
+    "same": 15,
+    "later": 3,
+    "changed_hl": 8,
+    "within_original_hl_one_minute": 0
+  },
+  "right1": {
+    "paired": 23,
+    "earlier": 3,
+    "same": 20,
+    "later": 0,
+    "changed_hl": 1,
+    "within_original_hl_one_minute": 0
+  }
+}

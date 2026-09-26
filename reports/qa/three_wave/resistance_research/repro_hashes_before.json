@@ -1,0 +1,13 @@
+{
+  "resistance_features.csv": "5e240a05ad1a7c74c5b5c1af712f6fc8f9703954327a7199751d981700a824c5",
+  "resistance_levels.csv": "c361f22f09a79062ecac0ddf7f23f9a51fc530e40f5e9a6a06e4aceb46de0960",
+  "resistance_clusters.csv": "dd825acec15ba7a22693cd0c32227fdae9c99a781adc30bac23b1263fc9fa0cf",
+  "candidates_with_resistance.csv": "c911358610345b1180c21d6158404a1b17e095e602b2ddd38c81c86489db3551",
+  "primary_candidates_stage.csv": "9487901fc5387e5ead5bbb8d112ece06d20c8e1fc73d7e91f3d0bf13ffe6239a",
+  "resistance_statistics.csv": "7b88d281b69689c915425f66e00bac1f238e9973d505cf57c121d5dbf81ba226",
+  "monthly_execution_counts.csv": "d0bdedf54fcf1d82bf9a74e7eeaac1395e9b051909bb4675b26838aa3185e622",
+  "execution_ledger.csv": "29f1ff4e9f58a914cfd64c8e9ca1fefb77abeef446b01522aa4bd38d52239462",
+  "feature_distributions.csv": "01cf090bc38c303d4a4f88325140bd1b28277111ba4e67a68dacb8ad2b3de87c",
+  "threshold_stability.csv": "0b4884522d24b73fe9ad0df6b680c7faa132e2e8e5be9ef7a071a4a098da9dbb",
+  "threshold_tables.md": "84906995f958bcf53d660f6786b0d6e368f39d82d04a8dc8d9f008c318284c5e"
+}

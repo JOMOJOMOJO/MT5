@@ -1,0 +1,3 @@
+mode,trades,win_rate_pct,net_usd,expectancy_R,total_R,profit_factor,balance_dd,equity_dd,history_quality
+static,1,0.0,-99.78,-1.0,-1.0,0.0,99.78 (1.00%),131.61 (1.31%),98% リアルティック
+dynamic,1,100.0,42.44,0.4253357386249749,0.4253357386249749,,0.00 (0.00%),2.12 (0.02%),98% リアルティック

@@ -1,0 +1,10 @@
+{
+  "mql/Include/ThreeWaveStructure.mqh": {
+    "previous": "9cced01e7ae9035be0adca5531f3f54cc420ea11d270a2dfb49e10cfd19098a4",
+    "start": "bc9bd8f2a3fd5273fbedb7bccf3e14ee861ee1fc87cb6bbed9b541baa2d2bc11"
+  },
+  "mql/Include/ThreeWaveInputs.mqh": {
+    "previous": "dfca6d58d0be32a3f6ad5f3854317bc8b38912dcba1bc6e74a461b6550d0649a",
+    "start": "ba563f619646c4fd0e4b3416be14c81768be79848f0c438e6c53a08e91e9f216"
+  }
+}

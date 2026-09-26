@@ -1,0 +1,84 @@
+--- 
++++ 
+@@ -1,13 +1,13 @@
+ #property strict
+-#property version "1.03"
+-#property description "3x3 confirmed LONG READY market-entry validation EA. Shared indicator engine."
++#property version "1.00"
++#property description "Tester-only M1 HL recognition comparison; original READY entry."
+ #property tester_indicator "MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5"
+ #property tester_indicator "ThreeWave_EMA_Display.ex5"
+ #include "../Include/ThreeWaveInputs.mqh"
+-#include "../Include/ThreeWaveStructure.mqh"
++#include "../Include/ThreeWaveHLRecognitionResearch.mqh"
+ 
+ enum StopMode { STOP_M1_WAVE2_LOW,STOP_M1_REVERSAL_LOW,STOP_M5_WAVE1_ORIGIN };
+-input ulong InpMagicNumber=260922331;
++input ulong InpMagicNumber=260922337;
+ input StopMode InpStopMode=STOP_M1_WAVE2_LOW;
+ input int InpSLBufferPoints=10;
+ input double InpRewardRisk=1.2;
+@@ -93,6 +93,7 @@
+ datetime last_bar=0,last_fill=0,started=0;
+ ulong last_exit=0;
+ bool blocked=false;
++int hl_rec_csv=INVALID_HANDLE;
+ int journal=INVALID_HANDLE,csv=INVALID_HANDLE,deals_csv=INVALID_HANDLE,parity=INVALID_HANDLE;
+ int indicator=INVALID_HANDLE;
+ string g_prefix="",reason="INITIALIZING",execution_state="IDLE";
+@@ -466,7 +467,7 @@
+    MqlRates lower[],higher[];
+    if(!GetSources(lower,higher)) { ExecutionState("WAIT_DATA","DATA_NOT_READY_SKIP_THIS_M1"); return; }
+    datetime closed_time=lower[ArraySize(lower)-2].time+60;
+-   ArrayResize(tw_events,0); tw_trace_from=closed_time;
++   ArrayResize(tw_events,0); ArrayResize(hl_rec_events,0); tw_trace_from=closed_time;
+    PivotPoint lp[],hp[]; M5Setup setups[];
+    BuildPivots(lower,InpLowerTF,InpLowerLeftBars,InpLowerRightBars,lp);
+    BuildPivots(higher,InpHigherTF,InpHigherLeftBars,InpHigherRightBars,hp);
+@@ -474,7 +475,7 @@
+    int fresh=0; double digest=0;
+    for(int i=0;i<ArraySize(setups);i++)
+    {
+-      M1Pattern p; AnalyzeLowerPattern(lower,lp,setups[i],p);
++      M1Pattern p; AnalyzeLowerPatternHLResearch(lower,lp,setups[i],p);
+       if(!p.ready || p.ready_time+60!=closed_time) continue;
+       fresh++; digest+=(double)setups[i].break_time;
+       if(InpShowMarkers)
+@@ -499,6 +500,16 @@
+       }
+       LogCandidate(setups[i],p,why,sent);
+    }
++   if(hl_rec_csv!=INVALID_HANDLE)
++   {
++      for(int h=0;h<ArraySize(hl_rec_events);h++)
++      {
++         HLRecognitionEvent ev=hl_rec_events[h];
++         FileWrite(hl_rec_csv,EnumToString(InpHLRecognitionMode),ev.event,TS(ev.time),TS(ev.parent),TS(ev.choch),
++                   TS(ev.wave1),TS(ev.wave1_known),TS(ev.hl),ev.price,ev.threshold,ev.close);
++      }
++      FileFlush(hl_rec_csv);
++   }
+    for(int e=0;e<ArraySize(tw_events);e++)
+    {
+       if(trace_csv!=INVALID_HANDLE) FileWrite(trace_csv,TS(tw_events[e].time),tw_events[e].setup,tw_events[e].state,tw_events[e].reason);
+@@ -520,6 +531,12 @@
+ }
+ int OnInit()
+ {
++   if(!MQLInfoInteger(MQL_TESTER) || InpVerifyIndicator || InpSkipLowerHL || InpStopMode!=STOP_M1_WAVE2_LOW ||
++      InpHLRecognitionMode<HL_ORIGINAL || InpHLRecognitionMode>HL_PRICE_REVERSAL) return INIT_PARAMETERS_INCORRECT;
++   hl_rec_csv=FileOpen("TW_hl_recognition.csv",FILE_WRITE|FILE_CSV|FILE_ANSI,',');
++   if(hl_rec_csv==INVALID_HANDLE) return INIT_FAILED;
++   FileWrite(hl_rec_csv,"mode","event","time","parent","choch","wave1","wave1_known","hl_bar","hl_price","threshold","close");
++
+    if(_Symbol!="USDJPY" || _Period!=PERIOD_M1 || InpLowerTF!=PERIOD_M1 || InpHigherTF!=PERIOD_M5 ||
+       InpMagicNumber==0 || InpSLBufferPoints<0 || InpCooldownMinutes<0 || InpCooldownMinutes>10080 ||
+       InpRewardRisk<=0 || InpRewardRisk>20 || !InpRequireCloseBreak || InpRequireFibZone ||
+@@ -620,6 +637,7 @@
+ }
+ void OnDeinit(const int why)
+ {
++   if(hl_rec_csv!=INVALID_HANDLE) FileClose(hl_rec_csv);
+    for(int i=0;i<3;i++) if(ema_filter_handles[i]!=INVALID_HANDLE) IndicatorRelease(ema_filter_handles[i]);
+    if(ema_display_name!="") ChartIndicatorDelete(0,0,ema_display_name);
+    if(ema_display!=INVALID_HANDLE) IndicatorRelease(ema_display);

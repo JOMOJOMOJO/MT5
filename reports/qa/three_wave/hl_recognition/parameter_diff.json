@@ -1,0 +1,22 @@
+{
+  "hl_rec_right1_jan": {
+    "InpMagicNumber": [
+      "260922331",
+      "260922337"
+    ],
+    "InpHLRecognitionMode": [
+      null,
+      "1"
+    ]
+  },
+  "hl_rec_reversal_jan": {
+    "InpMagicNumber": [
+      "260922331",
+      "260922337"
+    ],
+    "InpHLRecognitionMode": [
+      null,
+      "2"
+    ]
+  }
+}

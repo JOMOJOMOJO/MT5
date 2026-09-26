@@ -1,0 +1,20 @@
+--- before.mqh
++++ mql/Include/ThreeWaveFibHLExitResearch.mqh
+@@ -61,7 +61,7 @@
+    hl_selected=true; hl_source_price=p.hl.price; hl_source_time=p.hl.bar_time; hl_confirmed=p.hl.confirmed_time;
+    double step=SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
+    hl_new_sl=Price(FloorStep(p.hl.price-InpHLStopBufferPoints*_Point,step));
+-   hl_new_tp=Price(MathRound(HLTarget(plan.fill_price,hl_new_sl,plan.reward_risk)/step)*step);
++   hl_new_tp=InpRecalculateTPOnHL ? Price(MathRound(HLTarget(plan.fill_price,hl_new_sl,plan.reward_risk)/step)*step) : plan.tp;
+    MqlTick tick={}; SymbolInfoTick(_Symbol,tick);
+    if(!HLTighteningValid(plan.fill_price,MathMax(plan.sl,PositionGetDouble(POSITION_SL)),hl_new_sl))
+    { HLExitLog("SKIP","SL_NOT_TIGHTER_OR_NOT_BELOW_ENTRY",tick); return; }
+@@ -119,7 +119,7 @@
+    bool sent=OrderSend(req,res);
+    if(sent && ResultOK(res.retcode))
+    {
+-      HLExitLog("MODIFY","HL_SL_AND_RR_TP_APPLIED",tick,res.retcode);
++      HLExitLog("MODIFY",InpRecalculateTPOnHL ? "HL_SL_AND_RR_TP_APPLIED" : "HL_SL_APPLIED_INITIAL_TP_KEPT",tick,res.retcode);
+       plan.sl=hl_new_sl; plan.tp=hl_new_tp; Save();
+       // Keep initial fill_risk intact: exit R remains measured against entry risk.
+       hl_update_pending=false;

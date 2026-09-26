@@ -14,6 +14,12 @@ string ObjName(const string kind,const datetime t,const int serial=0)
    return g_prefix+kind+"_"+IntegerToString((long)t)+"_"+IntegerToString(serial);
 }
 
+string TWTimeframeLabel(const ENUM_TIMEFRAMES tf)
+{
+   string tag=EnumToString(tf); StringReplace(tag,"PERIOD_","");
+   return tag;
+}
+
 void TextAt(const string name,const datetime t,const double price,const string text,const color c,const int anchor=ANCHOR_LEFT_LOWER,const int font=8)
 {
    if(!ObjectCreate(0,name,OBJ_TEXT,0,t,price)) return;
@@ -70,7 +76,7 @@ void FibZone(const string base,const datetime t1,const datetime t2,const double 
 void PivotMarker(const PivotPoint &p,const ENUM_TIMEFRAMES tf,const bool parent,const int serial)
 {
    string tag=EnumToString(tf); StringReplace(tag,"PERIOD_","");
-   string label=tag+(p.high ? " H" : " L");
+   string label=tag+(p.high ? " H" : " L")+(parent && InpHigherUseClosePivot ? " [Close]" : " [Wick]");
    color c=parent ? (p.high ? clrOrange : clrAqua) : (p.high ? clrTomato : clrDodgerBlue);
    string name=ObjName(parent ? "HP" : "LP",p.bar_time,serial);
    datetime t=PivotPlotTime(p);
@@ -78,6 +84,7 @@ void PivotMarker(const PivotPoint &p,const ENUM_TIMEFRAMES tf,const bool parent,
    ObjectSetInteger(0,name,OBJPROP_ANCHOR,p.high ? ANCHOR_BOTTOM : ANCHOR_TOP);
    string tip=label+" | price="+DoubleToString(p.price,_Digits)+
       "\npivot="+TimeToString(p.bar_time,TIME_DATE|TIME_MINUTES)+
+      "\nplot="+TimeToString(t,TIME_DATE|TIME_MINUTES)+
       "\nconfirmed="+TimeToString(p.confirmed_time,TIME_DATE|TIME_MINUTES);
    ObjectSetString(0,name,OBJPROP_TOOLTIP,tip);
    if(InpShowPivotLabels)
@@ -116,6 +123,8 @@ void DrawLowerPivots(const PivotPoint &pivots[])
 void DrawSetup(const M5Setup &s,const M1Pattern &p,const int serial)
 {
    string base=g_prefix+"S"+IntegerToString(serial)+"_"+IntegerToString((long)s.break_time);
+   string parent=TWTimeframeLabel(InpHigherTF)+(InpHigherUseClosePivot ? " [Close]" : " [Wick]");
+   string lower=TWTimeframeLabel(InpLowerTF);
 
    datetime m5BreakPlot=CloseSignalPlotTime(s.break_time,InpHigherTF);
    datetime brokenPlot=PivotPlotTime(s.broken_high);
@@ -123,12 +132,12 @@ void DrawSetup(const M5Setup &s,const M1Pattern &p,const int serial)
    datetime wave1Plot=PivotPlotTime(s.wave1_high);
 
    ArrowAt(base+"_M5BREAK",m5BreakPlot,s.break_price,clrLimeGreen,233,2);
-   TextAt(base+"_M5BREAK_TXT",m5BreakPlot,s.break_price,"M5 CHoCH / Wave1 start",clrLimeGreen,ANCHOR_LEFT_LOWER,8);
+   TextAt(base+"_M5BREAK_TXT",m5BreakPlot,s.break_price,parent+" CHoCH / Wave1 start",clrLimeGreen,ANCHOR_LEFT_LOWER,8);
    HLineSegment(base+"_BROKEN",brokenPlot,s.wave1_high.confirmed_time,s.broken_high.price,clrDarkOrange,STYLE_DASH);
-   TextAt(base+"_BROKEN_TXT",brokenPlot,s.broken_high.price,"M5 return high",clrDarkOrange,ANCHOR_LEFT_LOWER,7);
+   TextAt(base+"_BROKEN_TXT",brokenPlot,s.broken_high.price,parent+" return high",clrDarkOrange,ANCHOR_LEFT_LOWER,7);
 
    ArrowAt(base+"_M5W1H",wave1Plot,s.wave1_high.price,clrGold,234,2);
-   TextAt(base+"_M5W1H_TXT",wave1Plot,s.wave1_high.price,"M5 Wave1 high -> Wave2",clrGold,ANCHOR_LEFT_LOWER,8);
+   TextAt(base+"_M5W1H_TXT",wave1Plot,s.wave1_high.price,parent+" Wave1 high -> Wave2",clrGold,ANCHOR_LEFT_LOWER,8);
 
    if(InpShowStructureLines)
       Segment(base+"_M5W1",originPlot,s.origin_low.price,wave1Plot,s.wave1_high.price,clrMediumSeaGreen,STYLE_SOLID,2);
@@ -137,18 +146,22 @@ void DrawSetup(const M5Setup &s,const M1Pattern &p,const int serial)
 
    datetime m1ChochPlot=CloseSignalPlotTime(p.choch_time,InpLowerTF);
    ArrowAt(base+"_M1CHOCH",m1ChochPlot,p.choch_price,clrAqua,233,2);
-   TextAt(base+"_M1CHOCH_TXT",m1ChochPlot,p.choch_price,"M1 CHoCH",clrAqua,ANCHOR_LEFT_LOWER,8);
+   TextAt(base+"_M1CHOCH_TXT",m1ChochPlot,p.choch_price,lower+" CHoCH",clrAqua,ANCHOR_LEFT_LOWER,8);
    HLineSegment(base+"_M1RET",p.downtrend_return_high.bar_time,m1ChochPlot,p.downtrend_return_high.price,clrAqua,STYLE_DOT);
 
    if(InpShowRelevantM1Pivots)
    {
-      TextAt(base+"_M1RL",p.reversal_low.bar_time,p.reversal_low.price,"M1 reversal low",clrDeepSkyBlue,ANCHOR_LEFT_UPPER,7);
-      TextAt(base+"_M1RH",p.downtrend_return_high.bar_time,p.downtrend_return_high.price,"M1 return high",clrDeepSkyBlue,ANCHOR_LEFT_LOWER,7);
+      TextAt(base+"_M1RL",p.reversal_low.bar_time,p.reversal_low.price,lower+" reversal low",clrDeepSkyBlue,ANCHOR_LEFT_UPPER,7);
+      TextAt(base+"_M1RH",p.downtrend_return_high.bar_time,p.downtrend_return_high.price,lower+" return high",clrDeepSkyBlue,ANCHOR_LEFT_LOWER,7);
    }
 
+   if(InpSkipLowerHL && p.ready && !p.found_wave1_high)
+   {
+      TextAt(base+"_READY_TXT",m1ChochPlot,p.ready_price,"LONG CANDIDATE [CHoCH only]",clrLime,ANCHOR_LEFT_LOWER,9);
+   }
    if(!p.found_wave1_high) return;
    ArrowAt(base+"_M1W1H",p.wave1_high.bar_time,p.wave1_high.price,clrYellow,234,1);
-   TextAt(base+"_M1W1H_TXT",p.wave1_high.bar_time,p.wave1_high.price,"M1 Wave1 high",clrYellow,ANCHOR_LEFT_LOWER,7);
+   TextAt(base+"_M1W1H_TXT",p.wave1_high.bar_time,p.wave1_high.price,lower+" Wave1 high",clrYellow,ANCHOR_LEFT_LOWER,7);
 
    datetime fibEnd=p.found_hl ? p.hl.confirmed_time+15*60 : p.wave1_high.confirmed_time+15*60;
    if(p.ready) fibEnd=p.ready_time;
@@ -162,7 +175,7 @@ void DrawSetup(const M5Setup &s,const M1Pattern &p,const int serial)
    color hlc=clrDeepSkyBlue;
    ArrowAt(base+"_HL",p.hl.bar_time,p.hl.price,hlc,233,1);
    TextAt(base+"_HL_TXT",p.hl.bar_time,p.hl.price,
-          "M1 Wave2 HL",
+          lower+" Wave2 HL",
           hlc,ANCHOR_LEFT_UPPER,7);
    if(InpShowStructureLines)
       Segment(base+"_M1W2",p.wave1_high.bar_time,p.wave1_high.price,p.hl.bar_time,p.hl.price,clrOrange,STYLE_SOLID,2);
@@ -171,7 +184,7 @@ void DrawSetup(const M5Setup &s,const M1Pattern &p,const int serial)
    {
       HLineSegment(base+"_PBLH",p.pullback_lh.bar_time,p.ready ? p.ready_time : p.hl.confirmed_time+20*60,
                    p.pullback_lh.price,clrViolet,STYLE_DOT);
-      TextAt(base+"_PBLH_TXT",p.pullback_lh.bar_time,p.pullback_lh.price,"M1 Wave2 return high",clrViolet,ANCHOR_LEFT_LOWER,7);
+      TextAt(base+"_PBLH_TXT",p.pullback_lh.bar_time,p.pullback_lh.price,lower+" Wave2 return high",clrViolet,ANCHOR_LEFT_LOWER,7);
    }
 
    if(!p.ready) return;

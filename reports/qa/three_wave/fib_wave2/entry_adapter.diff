@@ -1,0 +1,152 @@
+--- current_standard_EA
++++ FibWave2Research
+@@ -1,13 +1,18 @@
+ #property strict
+-#property version "1.03"
+-#property description "3x3 confirmed LONG READY market-entry validation EA. Shared indicator engine."
++#property version "1.00"
++#property description "Tester-only READY vs confirmed M1 Wave1 Fibonacci Wave2 entry research."
+ #property tester_indicator "MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5"
+ #property tester_indicator "ThreeWave_EMA_Display.ex5"
+ #include "../Include/ThreeWaveInputs.mqh"
+ #include "../Include/ThreeWaveStructure.mqh"
+ 
++enum FibEntryMode { ENTRY_CURRENT_READY=0, ENTRY_FIB_WAVE2=1 };
++input FibEntryMode InpFibEntryMode=ENTRY_FIB_WAVE2;
++input double InpFibEntryMinRetracement=0.382;
++input double InpFibEntryMaxRetracement=0.618;
++
+ enum StopMode { STOP_M1_WAVE2_LOW,STOP_M1_REVERSAL_LOW,STOP_M5_WAVE1_ORIGIN };
+-input ulong InpMagicNumber=260922331;
++input ulong InpMagicNumber=260922334;
+ input StopMode InpStopMode=STOP_M1_WAVE2_LOW;
+ input int InpSLBufferPoints=10;
+ input double InpRewardRisk=1.2;
+@@ -167,7 +172,7 @@
+    bool same=(plan.signal_time==p.ready_time+60 && plan.higher.break_time==s.break_time && plan.lower.choch_time==p.choch_time);
+    if(csv!=INVALID_HANDLE)
+    {
+-      FileWrite(csv,TS(p.ready_time+60),TS(TimeCurrent()),SignalID(s,p),outcome,sent,"",p.early_break?"WAVE2_RETURN_HIGH_CLOSE_BREAK":"WAVE1_HIGH_CLOSE_BREAK",
++      FileWrite(csv,TS(p.ready_time+60),TS(TimeCurrent()),SignalID(s,p),outcome,sent,"",InpFibEntryMode==ENTRY_FIB_WAVE2 ? "FIB_WAVE2_NEXT_TICK" : (p.early_break?"WAVE2_RETURN_HIGH_CLOSE_BREAK":"WAVE1_HIGH_CLOSE_BREAK"),
+          s.origin_low.price,TS(s.origin_low.bar_time),TS(s.origin_low.confirmed_time),
+          s.broken_high.price,TS(s.broken_high.bar_time),TS(s.broken_high.confirmed_time),TS(s.break_time+300),
+          s.wave1_high.price,TS(s.wave1_high.bar_time),TS(s.wave1_high.confirmed_time),
+@@ -176,7 +181,7 @@
+          p.wave1_high.price,TS(p.wave1_high.bar_time),TS(p.wave1_high.confirmed_time),
+          p.hl.price,TS(p.hl.bar_time),TS(p.hl.confirmed_time),
+          p.pullback_lh.price,TS(p.pullback_lh.bar_time),TS(p.pullback_lh.confirmed_time),p.early_break,pct,FibZoneName(pct),
+-         EnumToString(InpStopMode),same?plan.entry:0,same?plan.sl:0,same?plan.tp:0,InpRewardRisk,same?plan.volume:0,same?plan.loss:0,same?plan.equity:AccountInfoDouble(ACCOUNT_EQUITY),
++         EnumToString(InpFibEntryMode==ENTRY_FIB_WAVE2 ? STOP_M1_REVERSAL_LOW : InpStopMode),same?plan.entry:0,same?plan.sl:0,same?plan.tp:0,InpRewardRisk,same?plan.volume:0,same?plan.loss:0,same?plan.equity:AccountInfoDouble(ACCOUNT_EQUITY),
+          same?plan.order:0,execution_state,orders,positions,foreign);
+       FileFlush(csv);
+    }
+@@ -193,7 +198,7 @@
+    if(step<=0 || vmin<=0 || vmax<vmin || vstep<=0 || SymbolInfoDouble(_Symbol,SYMBOL_TRADE_CONTRACT_SIZE)<=0)
+    { reason="INVALID_SYMBOL_SPEC"; return false; }
+    MqlTick tick={}; if(!SymbolInfoTick(_Symbol,tick) || tick.ask<=0) { reason="NO_QUOTE"; return false; }
+-   if(tick.bid<p.hl.price || tick.bid<p.reversal_low.price || tick.bid<s.origin_low.price)
++   if((InpFibEntryMode==ENTRY_CURRENT_READY && tick.bid<p.hl.price) || tick.bid<p.reversal_low.price || tick.bid<s.origin_low.price)
+    { reason="STRUCTURE_BROKEN_ON_ENTRY_TICK"; return false; }
+    ZeroMemory(plan); plan.higher=s; plan.lower=p; plan.signal_time=p.ready_time+60;
+    protected_volume=0; protected_entry=0;
+@@ -201,6 +206,7 @@
+    double anchor=p.hl.price;
+    if(InpStopMode==STOP_M1_REVERSAL_LOW) anchor=p.reversal_low.price;
+    if(InpStopMode==STOP_M5_WAVE1_ORIGIN) anchor=s.origin_low.price;
++   if(InpFibEntryMode==ENTRY_FIB_WAVE2) anchor=p.reversal_low.price;
+    plan.sl=Price(FloorStep(anchor-InpSLBufferPoints*_Point,step));
+    plan.tp=Price(MathRound((plan.entry+(plan.entry-plan.sl)*InpRewardRisk)/step)*step);
+    if(plan.sl<=0 || plan.entry<=plan.sl || plan.tp<=plan.entry) { reason="INVALID_PRICE_GEOMETRY"; return false; }
+@@ -452,6 +458,8 @@
+    }
+ }
+ 
++#include "../Include/ThreeWaveFibWave2Trigger.mqh"
++
+ bool GetSources(MqlRates &lower[],MqlRates &higher[])
+ {
+    ArraySetAsSeries(lower,false); ArraySetAsSeries(higher,false);
+@@ -463,6 +471,7 @@
+ }
+ void Evaluate(const datetime now)
+ {
++   if(InpFibEntryMode==ENTRY_FIB_WAVE2) FibRefreshBegin();
+    MqlRates lower[],higher[];
+    if(!GetSources(lower,higher)) { ExecutionState("WAIT_DATA","DATA_NOT_READY_SKIP_THIS_M1"); return; }
+    datetime closed_time=lower[ArraySize(lower)-2].time+60;
+@@ -475,6 +484,8 @@
+    for(int i=0;i<ArraySize(setups);i++)
+    {
+       M1Pattern p; AnalyzeLowerPattern(lower,lp,setups[i],p);
++      if(InpFibEntryMode==ENTRY_FIB_WAVE2)
++      { FibObserveStructure(setups[i],p,lower,now); continue; }
+       if(!p.ready || p.ready_time+60!=closed_time) continue;
+       fresh++; digest+=(double)setups[i].break_time;
+       if(InpShowMarkers)
+@@ -520,6 +531,11 @@
+ }
+ int OnInit()
+ {
++   if(!MQLInfoInteger(MQL_TESTER)) { Print("Research EA: strategy tester only"); return INIT_FAILED; }
++   if(InpFibEntryMode<ENTRY_CURRENT_READY || InpFibEntryMode>ENTRY_FIB_WAVE2 ||
++      InpFibEntryMinRetracement<=0 || InpFibEntryMinRetracement>=InpFibEntryMaxRetracement ||
++      InpFibEntryMaxRetracement>=1 ||
++      (InpFibEntryMode==ENTRY_FIB_WAVE2 && (InpSkipLowerHL || InpVerifyIndicator))) return INIT_PARAMETERS_INCORRECT;
+    if(_Symbol!="USDJPY" || _Period!=PERIOD_M1 || InpLowerTF!=PERIOD_M1 || InpHigherTF!=PERIOD_M5 ||
+       InpMagicNumber==0 || InpSLBufferPoints<0 || InpCooldownMinutes<0 || InpCooldownMinutes>10080 ||
+       InpRewardRisk<=0 || InpRewardRisk>20 || !InpRequireCloseBreak || InpRequireFibZone ||
+@@ -543,7 +559,7 @@
+    started=TimeCurrent();
+    string identity=AccountInfoString(ACCOUNT_SERVER)+"_"+IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN))+"_"+IntegerToString((long)InpMagicNumber);
+    StringReplace(identity,"/","_"); StringReplace(identity,"\\","_"); StringReplace(identity,":","_");
+-   string name="TW_USDJPY_"+identity+".bin";
++   string name="TW_FIB_RESEARCH_"+identity+".bin";
+    if(MQLInfoInteger(MQL_TESTER)) FileDelete(name);
+    journal=FileOpen(name,FILE_READ|FILE_WRITE|FILE_BIN);
+    if(journal==INVALID_HANDLE) return INIT_FAILED;
+@@ -582,6 +598,16 @@
+       if(parity==INVALID_HANDLE) return INIT_FAILED;
+       FileWrite(parity,"time","ea_count","ea_digest","available","indicator_count","indicator_digest","equal");
+    }
++   if(InpWriteCSV && InpFibEntryMode==ENTRY_FIB_WAVE2)
++   {
++      fib_csv=FileOpen("TW_fib_events.csv",FILE_WRITE|FILE_CSV|FILE_ANSI,',');
++      if(fib_csv==INVALID_HANDLE) return INIT_FAILED;
++      FileWrite(fib_csv,"event","key","tick_msc","tick_seq","touch_msc","touch_seq","touch_bid",
++                "bid","ask","zone_bottom","zone_top","reversal_low","reversal_time","wave1_high",
++                "wave1_time","wave1_confirmed","parent","choch","reason","sent");
++   }
++   Print("TW_FIB_INIT mode=",EnumToString(InpFibEntryMode)," min=",InpFibEntryMinRetracement," max=",InpFibEntryMaxRetracement,
++         " effective_stop=",EnumToString(InpFibEntryMode==ENTRY_FIB_WAVE2 ? STOP_M1_REVERSAL_LOW : InpStopMode));
+    Recover(); Manage(); DrawTrade(); Save();
+    AttachEMADisplay();
+    Print("TW_INIT equity_risk=1% RR=",InpRewardRisk," cooldown=",InpCooldownMinutes," stop=",EnumToString(InpStopMode));
+@@ -606,11 +632,15 @@
+    }
+    Manage();
+    datetime now=iTime(_Symbol,PERIOD_M1,0);
+-   if(now==0 || now==last_bar) return;
+-   last_bar=now;
+-   if(!Save()) return;
+-   Evaluate(now);
+-   Manage();
++   if(now==0) return;
++   if(now!=last_bar)
++   {
++      last_bar=now;
++      if(!Save()) return;
++      Evaluate(now);
++      Manage();
++   }
++   if(InpFibEntryMode==ENTRY_FIB_WAVE2) ProcessFibTick();
+ }
+ void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &req,const MqlTradeResult &res)
+ {
+@@ -620,6 +650,7 @@
+ }
+ void OnDeinit(const int why)
+ {
++   if(fib_csv!=INVALID_HANDLE) FileClose(fib_csv);
+    for(int i=0;i<3;i++) if(ema_filter_handles[i]!=INVALID_HANDLE) IndicatorRelease(ema_filter_handles[i]);
+    if(ema_display_name!="") ChartIndicatorDelete(0,0,ema_display_name);
+    if(ema_display!=INVALID_HANDLE) IndicatorRelease(ema_display);

@@ -88,6 +88,23 @@ bool IsPivotLow(const MqlRates &r[],const int i,const int left,const int right)
    return true;
 }
 
+// Close-based pivot detection: wick spikes do not qualify as structural highs/lows.
+bool IsPivotHighClose(const MqlRates &r[],const int i,const int left,const int right)
+{
+   const double p=r[i].close;
+   for(int k=1;k<=left;k++)  if(p<=r[i-k].close) return false;
+   for(int k=1;k<=right;k++) if(p< r[i+k].close) return false;
+   return true;
+}
+
+bool IsPivotLowClose(const MqlRates &r[],const int i,const int left,const int right)
+{
+   const double p=r[i].close;
+   for(int k=1;k<=left;k++)  if(p>=r[i-k].close) return false;
+   for(int k=1;k<=right;k++) if(p> r[i+k].close) return false;
+   return true;
+}
+
 void AddPivot(PivotPoint &out[],const PivotPoint &p)
 {
    int n=ArraySize(out);
@@ -97,30 +114,31 @@ void AddPivot(PivotPoint &out[],const PivotPoint &p)
 
 void BuildPivots(const MqlRates &r[],const ENUM_TIMEFRAMES tf,const int left,const int right,PivotPoint &out[])
 {
+   bool useClose=InpHigherUseClosePivot && (tf==(ENUM_TIMEFRAMES)InpHigherTF);
    ArrayResize(out,0);
    int n=ArraySize(r);
    if(n<left+right+3) return;
 
    for(int i=left;i<n-right-1;i++)
    {
-      if(IsPivotHigh(r,i,left,right))
+      if(useClose ? IsPivotHighClose(r,i,left,right) : IsPivotHigh(r,i,left,right))
       {
          PivotPoint p={};
          p.bar_time=r[i].time;
          p.plot_time=r[i].time;
          p.confirmed_time=r[i+right].time+TFSeconds(tf);
-         p.price=r[i].high;
+         p.price=useClose ? r[i].close : r[i].high;
          p.high=true;
          p.bar_index=i;
          AddPivot(out,p);
       }
-      if(IsPivotLow(r,i,left,right))
+      if(useClose ? IsPivotLowClose(r,i,left,right) : IsPivotLow(r,i,left,right))
       {
          PivotPoint p={};
          p.bar_time=r[i].time;
          p.plot_time=r[i].time;
          p.confirmed_time=r[i+right].time+TFSeconds(tf);
-         p.price=r[i].low;
+         p.price=useClose ? r[i].close : r[i].low;
          p.high=false;
          p.bar_index=i;
          AddPivot(out,p);
@@ -143,6 +161,15 @@ void AlignHigherPivotPlotTimes(PivotPoint &pivots[],const MqlRates &lower[])
    {
       datetime from=pivots[p].bar_time;
       datetime to=from+TFSeconds(InpHigherTF);
+
+      // A close pivot represents the parent bar's closing boundary, not
+      // the time of an unrelated wick extreme. Drawing only: keep logical
+      // bar_time, confirmed_time and price unchanged.
+      if(InpHigherUseClosePivot)
+      {
+         pivots[p].plot_time=to;
+         continue;
+      }
 
       while(li<ln && lower[li].time<from) li++;
 
@@ -534,6 +561,20 @@ bool AnalyzeLowerPattern(const MqlRates &r[],const PivotPoint &pivots[],const M5
 
             ZeroMemory(latestPullbackHigh);
             haveLatestPullbackHigh=false;
+
+            // HL skip mode: READY fires at CHoCH without requiring Wave1 or HL.
+            if(InpSkipLowerHL)
+            {
+               // Use the reversal low as HL so MakePlan has a valid SL anchor.
+               pat.hl=pat.reversal_low;
+               pat.found_hl=true;
+               pat.ready=true;
+               pat.ready_time=r[i].time;
+               pat.ready_price=r[i].close;
+               pat.early_break=false;
+               TWTrace(close_time,s.break_time,"LONG_READY","SKIP_HL_CHOCH_ONLY");
+               return true;
+            }
          }
       }
 

@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "feature_rows": 1944,
+  "raw_candidates": 972,
+  "level_rows": 72608,
+  "cluster_rows": 16802,
+  "prior_native_OHLC_rows_matched": {
+    "discovery/M15": 6801,
+    "discovery/H1": 2300,
+    "replication/M15": 7120,
+    "replication/H1": 2380,
+    "extension/M15": 7038,
+    "extension/H1": 2360
+  },
+  "physical_prefix_tests": 21,
+  "forming_and_future_poison_tests": 21,
+  "baseline_unchanged": true
+}

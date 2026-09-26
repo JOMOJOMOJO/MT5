@@ -1,0 +1,43 @@
+; Tester-only FibHLExitResearch, Fib closed bar .5-.618, RR1.2, EMA ON.
+; EMA order and rising gate; M1 closed bars only
+; EMA display enabled; all optimization flags disabled. Standard EA, not CC.
+InpLowerTF=1||1||0||1||N
+InpHigherTF=5||5||0||5||N
+InpLowerLeftBars=2||2||0||2||N
+InpLowerRightBars=2||2||0||2||N
+InpHigherLeftBars=2||2||0||2||N
+InpHigherRightBars=2||2||0||2||N
+InpHistoryLowerBars=6000||6000||0||6000||N
+InpHistoryHigherBars=1800||1800||0||1800||N
+InpMaxSetupMinutes=240||240||0||240||N
+InpFibZoneLow=0.382||0.382||0||0.382||N
+InpFibZoneHigh=0.618||0.618||0||0.618||N
+InpRequireFibZone=false||false||0||false||N
+InpRequireCloseBreak=true||true||0||true||N
+InpShowHigherPivots=false||false||0||false||N
+InpShowRelevantM1Pivots=true||true||0||true||N
+InpShowFibZone=false||false||0||false||N
+InpShowStructureLines=true||true||0||true||N
+InpDiagnosticMode=false||false||0||false||N
+InpMaxDrawSetups=12||12||0||12||N
+InpShowLowerPivots=true||true||0||true||N
+InpShowPivotLabels=false||false||0||false||N
+InpHigherUseClosePivot=false||false||0||false||N
+InpSkipLowerHL=false||false||0||false||N
+InpMagicNumber=260922336||260922336||0||260922336||N
+InpStopMode=1||1||0||1||N
+InpSLBufferPoints=10||10||0||10||N
+InpRewardRisk=1.2||1.2||0||1.2||N
+InpCooldownMinutes=15||15||0||15||N
+InpAllowDeferredProtection=true||true||0||true||N
+InpShowMarkers=true||true||0||true||N
+InpWriteCSV=true||true||0||true||N
+InpVerifyIndicator=false||false||0||false||N
+InpTestDeferredProtection=false||false||0||false||N
+InpShowEMAs=true||true||0||true||N
+InpUseEMAFilter=true||false||0||true||N
+InpEMARequireRising=true||false||0||true||N
+InpFibEntryMinRetracement=0.5||0.5||0||0.5||N
+InpFibEntryMaxRetracement=0.618||0.618||0||0.618||N
+InpMoveSLToHL=true||false||0||true||N
+InpHLStopBufferPoints=10||10||0||10||N

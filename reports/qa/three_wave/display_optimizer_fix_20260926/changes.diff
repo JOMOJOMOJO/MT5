@@ -1,0 +1,295 @@
+--- before/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5
++++ mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5
+@@ -1,5 +1,5 @@
+ #property strict
+-#property version "1.04"
++#property version "1.05"
+ #property description "3x3 LONG EA with selectable READY or confirmed-HL retest entry."
+ #property tester_indicator "MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5"
+ #property tester_indicator "ThreeWave_EMA_Display.ex5"
+@@ -170,6 +170,8 @@
+ }
+ void LogCandidate(const M5Setup &s,const M1Pattern &p,const string outcome,const bool sent)
+ {
++   string entry_reason=InpHLEntryMode==HL_ENTRY_RETEST ? "HL_ENTRY_RETEST" :
++      (InpSkipLowerHL ? "SKIP_HL_CHOCH_ONLY" : (p.early_break ? "WAVE2_RETURN_HIGH_CLOSE_BREAK" : "WAVE1_HIGH_CLOSE_BREAK"));
+    int orders,positions,foreign; ulong o,t; Counts(orders,positions,foreign,o,t);
+    double pct=p.retrace*100;
+    int lbar_s=TFSeconds((ENUM_TIMEFRAMES)InpLowerTF),hbar_s=TFSeconds((ENUM_TIMEFRAMES)InpHigherTF);
+@@ -177,7 +179,7 @@
+    if(csv!=INVALID_HANDLE)
+    {
+       FileWrite(csv,TS(p.ready_time+lbar_s),TS(TimeCurrent()),SignalID(s,p),outcome,sent,"",
+-         InpHLEntryMode==HL_ENTRY_RETEST ? "HL_ENTRY_RETEST" : (p.early_break?"WAVE2_RETURN_HIGH_CLOSE_BREAK":"WAVE1_HIGH_CLOSE_BREAK"),
++         entry_reason,
+          s.origin_low.price,TS(s.origin_low.bar_time),TS(s.origin_low.confirmed_time),
+          s.broken_high.price,TS(s.broken_high.bar_time),TS(s.broken_high.confirmed_time),TS(s.break_time+hbar_s),
+          s.wave1_high.price,TS(s.wave1_high.bar_time),TS(s.wave1_high.confirmed_time),
+@@ -190,7 +192,7 @@
+          same?plan.order:0,execution_state,orders,positions,foreign);
+       FileFlush(csv);
+    }
+-   Print("TW_SIGNAL id=",SignalID(s,p)," confirmed=",TS(p.ready_time+lbar_s)," result=",outcome," sent=",sent);
++   Print("TW_SIGNAL id=",SignalID(s,p)," confirmed=",TS(p.ready_time+lbar_s)," result=",outcome," sent=",sent," entry_reason=",entry_reason);
+ }
+ 
+ // Same min-volume OrderCalcProfit conversion, downward lot rounding, margin cap
+@@ -532,10 +534,14 @@
+    }
+    Print("TW_M1 ",TS(now)," fresh_ready=",fresh," state=",execution_state," reason=",reason);
+ }
++#include "../Include/ThreeWaveOptimization.mqh"
++
+ int OnInit()
+ {
++   if(InpHLEntryMode==HL_ENTRY_RETEST && InpSkipLowerHL)
++   { Print("TW_INPUT_ERROR HL_ENTRY_RETEST requires InpSkipLowerHL=false"); return INIT_PARAMETERS_INCORRECT; }
+    if(InpHLEntryMode==HL_ENTRY_CONFIRM || InpHLEntryMode<HL_ENTRY_READY || InpHLEntryMode>HL_ENTRY_RETEST ||
+-      InpHLNearFraction<=0 || InpHLNearFraction>1 ||
++      (InpHLEntryMode==HL_ENTRY_RETEST && (InpHLNearFraction<=0 || InpHLNearFraction>1)) ||
+       (InpHLEntryMode==HL_ENTRY_RETEST && InpVerifyIndicator) ||
+       InpEMAFastPeriod<1 || InpEMAMiddlePeriod<=InpEMAFastPeriod || InpEMASlowPeriod<=InpEMAMiddlePeriod ||
+       InpEMASlowPeriod>10000 ||
+--- before/ThreeWaveStructure.mqh
++++ mql/Include/ThreeWaveStructure.mqh
+@@ -161,6 +161,15 @@
+    {
+       datetime from=pivots[p].bar_time;
+       datetime to=from+TFSeconds(InpHigherTF);
++
++      // A close pivot represents the parent bar's closing boundary, not
++      // the time of an unrelated wick extreme. Drawing only: keep logical
++      // bar_time, confirmed_time and price unchanged.
++      if(InpHigherUseClosePivot)
++      {
++         pivots[p].plot_time=to;
++         continue;
++      }
+ 
+       while(li<ln && lower[li].time<from) li++;
+ 
+--- before/ThreeWaveDrawing.mqh
++++ mql/Include/ThreeWaveDrawing.mqh
+@@ -12,6 +12,12 @@
+ string ObjName(const string kind,const datetime t,const int serial=0)
+ {
+    return g_prefix+kind+"_"+IntegerToString((long)t)+"_"+IntegerToString(serial);
++}
++
++string TWTimeframeLabel(const ENUM_TIMEFRAMES tf)
++{
++   string tag=EnumToString(tf); StringReplace(tag,"PERIOD_","");
++   return tag;
+ }
+ 
+ void TextAt(const string name,const datetime t,const double price,const string text,const color c,const int anchor=ANCHOR_LEFT_LOWER,const int font=8)
+@@ -70,7 +76,7 @@
+ void PivotMarker(const PivotPoint &p,const ENUM_TIMEFRAMES tf,const bool parent,const int serial)
+ {
+    string tag=EnumToString(tf); StringReplace(tag,"PERIOD_","");
+-   string label=tag+(p.high ? " H" : " L");
++   string label=tag+(p.high ? " H" : " L")+(parent && InpHigherUseClosePivot ? " [Close]" : " [Wick]");
+    color c=parent ? (p.high ? clrOrange : clrAqua) : (p.high ? clrTomato : clrDodgerBlue);
+    string name=ObjName(parent ? "HP" : "LP",p.bar_time,serial);
+    datetime t=PivotPlotTime(p);
+@@ -78,6 +84,7 @@
+    ObjectSetInteger(0,name,OBJPROP_ANCHOR,p.high ? ANCHOR_BOTTOM : ANCHOR_TOP);
+    string tip=label+" | price="+DoubleToString(p.price,_Digits)+
+       "\npivot="+TimeToString(p.bar_time,TIME_DATE|TIME_MINUTES)+
++      "\nplot="+TimeToString(t,TIME_DATE|TIME_MINUTES)+
+       "\nconfirmed="+TimeToString(p.confirmed_time,TIME_DATE|TIME_MINUTES);
+    ObjectSetString(0,name,OBJPROP_TOOLTIP,tip);
+    if(InpShowPivotLabels)
+@@ -116,6 +123,8 @@
+ void DrawSetup(const M5Setup &s,const M1Pattern &p,const int serial)
+ {
+    string base=g_prefix+"S"+IntegerToString(serial)+"_"+IntegerToString((long)s.break_time);
++   string parent=TWTimeframeLabel(InpHigherTF)+(InpHigherUseClosePivot ? " [Close]" : " [Wick]");
++   string lower=TWTimeframeLabel(InpLowerTF);
+ 
+    datetime m5BreakPlot=CloseSignalPlotTime(s.break_time,InpHigherTF);
+    datetime brokenPlot=PivotPlotTime(s.broken_high);
+@@ -123,12 +132,12 @@
+    datetime wave1Plot=PivotPlotTime(s.wave1_high);
+ 
+    ArrowAt(base+"_M5BREAK",m5BreakPlot,s.break_price,clrLimeGreen,233,2);
+-   TextAt(base+"_M5BREAK_TXT",m5BreakPlot,s.break_price,"M5 CHoCH / Wave1 start",clrLimeGreen,ANCHOR_LEFT_LOWER,8);
++   TextAt(base+"_M5BREAK_TXT",m5BreakPlot,s.break_price,parent+" CHoCH / Wave1 start",clrLimeGreen,ANCHOR_LEFT_LOWER,8);
+    HLineSegment(base+"_BROKEN",brokenPlot,s.wave1_high.confirmed_time,s.broken_high.price,clrDarkOrange,STYLE_DASH);
+-   TextAt(base+"_BROKEN_TXT",brokenPlot,s.broken_high.price,"M5 return high",clrDarkOrange,ANCHOR_LEFT_LOWER,7);
++   TextAt(base+"_BROKEN_TXT",brokenPlot,s.broken_high.price,parent+" return high",clrDarkOrange,ANCHOR_LEFT_LOWER,7);
+ 
+    ArrowAt(base+"_M5W1H",wave1Plot,s.wave1_high.price,clrGold,234,2);
+-   TextAt(base+"_M5W1H_TXT",wave1Plot,s.wave1_high.price,"M5 Wave1 high -> Wave2",clrGold,ANCHOR_LEFT_LOWER,8);
++   TextAt(base+"_M5W1H_TXT",wave1Plot,s.wave1_high.price,parent+" Wave1 high -> Wave2",clrGold,ANCHOR_LEFT_LOWER,8);
+ 
+    if(InpShowStructureLines)
+       Segment(base+"_M5W1",originPlot,s.origin_low.price,wave1Plot,s.wave1_high.price,clrMediumSeaGreen,STYLE_SOLID,2);
+@@ -137,18 +146,22 @@
+ 
+    datetime m1ChochPlot=CloseSignalPlotTime(p.choch_time,InpLowerTF);
+    ArrowAt(base+"_M1CHOCH",m1ChochPlot,p.choch_price,clrAqua,233,2);
+-   TextAt(base+"_M1CHOCH_TXT",m1ChochPlot,p.choch_price,"M1 CHoCH",clrAqua,ANCHOR_LEFT_LOWER,8);
++   TextAt(base+"_M1CHOCH_TXT",m1ChochPlot,p.choch_price,lower+" CHoCH",clrAqua,ANCHOR_LEFT_LOWER,8);
+    HLineSegment(base+"_M1RET",p.downtrend_return_high.bar_time,m1ChochPlot,p.downtrend_return_high.price,clrAqua,STYLE_DOT);
+ 
+    if(InpShowRelevantM1Pivots)
+    {
+-      TextAt(base+"_M1RL",p.reversal_low.bar_time,p.reversal_low.price,"M1 reversal low",clrDeepSkyBlue,ANCHOR_LEFT_UPPER,7);
+-      TextAt(base+"_M1RH",p.downtrend_return_high.bar_time,p.downtrend_return_high.price,"M1 return high",clrDeepSkyBlue,ANCHOR_LEFT_LOWER,7);
+-   }
+-
++      TextAt(base+"_M1RL",p.reversal_low.bar_time,p.reversal_low.price,lower+" reversal low",clrDeepSkyBlue,ANCHOR_LEFT_UPPER,7);
++      TextAt(base+"_M1RH",p.downtrend_return_high.bar_time,p.downtrend_return_high.price,lower+" return high",clrDeepSkyBlue,ANCHOR_LEFT_LOWER,7);
++   }
++
++   if(InpSkipLowerHL && p.ready && !p.found_wave1_high)
++   {
++      TextAt(base+"_READY_TXT",m1ChochPlot,p.ready_price,"LONG CANDIDATE [CHoCH only]",clrLime,ANCHOR_LEFT_LOWER,9);
++   }
+    if(!p.found_wave1_high) return;
+    ArrowAt(base+"_M1W1H",p.wave1_high.bar_time,p.wave1_high.price,clrYellow,234,1);
+-   TextAt(base+"_M1W1H_TXT",p.wave1_high.bar_time,p.wave1_high.price,"M1 Wave1 high",clrYellow,ANCHOR_LEFT_LOWER,7);
++   TextAt(base+"_M1W1H_TXT",p.wave1_high.bar_time,p.wave1_high.price,lower+" Wave1 high",clrYellow,ANCHOR_LEFT_LOWER,7);
+ 
+    datetime fibEnd=p.found_hl ? p.hl.confirmed_time+15*60 : p.wave1_high.confirmed_time+15*60;
+    if(p.ready) fibEnd=p.ready_time;
+@@ -162,7 +175,7 @@
+    color hlc=clrDeepSkyBlue;
+    ArrowAt(base+"_HL",p.hl.bar_time,p.hl.price,hlc,233,1);
+    TextAt(base+"_HL_TXT",p.hl.bar_time,p.hl.price,
+-          "M1 Wave2 HL",
++          lower+" Wave2 HL",
+           hlc,ANCHOR_LEFT_UPPER,7);
+    if(InpShowStructureLines)
+       Segment(base+"_M1W2",p.wave1_high.bar_time,p.wave1_high.price,p.hl.bar_time,p.hl.price,clrOrange,STYLE_SOLID,2);
+@@ -171,7 +184,7 @@
+    {
+       HLineSegment(base+"_PBLH",p.pullback_lh.bar_time,p.ready ? p.ready_time : p.hl.confirmed_time+20*60,
+                    p.pullback_lh.price,clrViolet,STYLE_DOT);
+-      TextAt(base+"_PBLH_TXT",p.pullback_lh.bar_time,p.pullback_lh.price,"M1 Wave2 return high",clrViolet,ANCHOR_LEFT_LOWER,7);
++      TextAt(base+"_PBLH_TXT",p.pullback_lh.bar_time,p.pullback_lh.price,lower+" Wave2 return high",clrViolet,ANCHOR_LEFT_LOWER,7);
+    }
+ 
+    if(!p.ready) return;
+--- before/MultiTF_3WaveIn3Wave_Visualizer_Shared.mq5
++++ mql/Indicators/MultiTF_3WaveIn3Wave_Visualizer_Shared.mq5
+@@ -1,5 +1,5 @@
+ #property strict
+-#property version   "1.07"
++#property version   "1.08"
+ #property description "Visual validator for M5 Wave1->Wave2 and M1 Wave1->Wave2->Wave3 long setups, with M1 invalidation/reset. No trading."
+ #property indicator_chart_window
+ #property indicator_buffers 2
+--- /dev/null
++++ mql\Include\ThreeWaveOptimization.mqh
+@@ -0,0 +1,82 @@
++#ifndef THREE_WAVE_OPTIMIZATION
++#define THREE_WAVE_OPTIMIZATION
++// Optimize one entry family per batch. Do not change the selected live inputs.
++bool TWFixOptimizationLong(const string name)
++{
++   bool enabled; long value,start,step,stop;
++   if(!ParameterGetRange(name,enabled,value,start,step,stop)) return false;
++   if(enabled) Print("TW_OPT_FIXED ",name,"=",value," (selected family / inactive input)");
++   return ParameterSetRange(name,false,value,start,step,stop);
++}
++bool TWFixOptimizationDouble(const string name)
++{
++   bool enabled; double value,start,step,stop;
++   if(!ParameterGetRange(name,enabled,value,start,step,stop)) return false;
++   if(enabled) Print("TW_OPT_FIXED ",name,"=",value," (inactive input)");
++   return ParameterSetRange(name,false,value,start,step,stop);
++}
++bool TWOptimizationBounds(const string name,long &minimum,long &maximum)
++{
++   bool enabled; long value,start,step,stop;
++   if(!ParameterGetRange(name,enabled,value,start,step,stop)) return false;
++   minimum=enabled ? start : value; maximum=enabled ? stop : value;
++   return minimum>0 && maximum>=minimum && (!enabled || step>0);
++}
++void OnTesterDeinit()
++{
++   Print("TW_OPT_FINISHED");
++}
++int OnTesterInit()
++{
++   // ParameterGetRange is the authoritative source of selected tester values.
++   bool enabled; long mode,start,step,stop,skip,ema,close_break,fib,verify;
++   if(!ParameterGetRange("InpHLEntryMode",enabled,mode,start,step,stop) ||
++      !ParameterGetRange("InpSkipLowerHL",enabled,skip,start,step,stop) ||
++      !ParameterGetRange("InpUseEMAFilter",enabled,ema,start,step,stop) ||
++      !ParameterGetRange("InpRequireCloseBreak",enabled,close_break,start,step,stop) ||
++      !ParameterGetRange("InpRequireFibZone",enabled,fib,start,step,stop) ||
++      !ParameterGetRange("InpVerifyIndicator",enabled,verify,start,step,stop)) return INIT_FAILED;
++   if((mode!=HL_ENTRY_READY && mode!=HL_ENTRY_RETEST) || !close_break || fib ||
++      (mode==HL_ENTRY_RETEST && (skip || verify)))
++   {
++      Print("TW_OPT_ERROR Select READY(0) or RETEST(2), CloseBreak=true, FibZone=false; RETEST requires SkipLowerHL=false and VerifyIndicator=false. Compare families in separate batches.");
++      return INIT_PARAMETERS_INCORRECT;
++   }
++   string fixed[]={"InpHLEntryMode","InpSkipLowerHL","InpUseEMAFilter","InpLowerTF",
++                   "InpRequireCloseBreak","InpRequireFibZone","InpVerifyIndicator","InpTestDeferredProtection"};
++   for(int i=0;i<ArraySize(fixed);i++) if(!TWFixOptimizationLong(fixed[i])) return INIT_FAILED;
++   if(!TWFixOptimizationDouble("InpFibZoneLow") || !TWFixOptimizationDouble("InpFibZoneHigh")) return INIT_FAILED;
++   if(mode==HL_ENTRY_READY)
++   {
++      if(!TWFixOptimizationDouble("InpHLNearFraction")) return INIT_FAILED;
++   }
++   else
++   {
++      double value,first,increment,last;
++      if(!ParameterGetRange("InpHLNearFraction",enabled,value,first,increment,last)) return INIT_FAILED;
++      if(value<=0 || value>1 || (enabled && (first<=0 || increment<=0 || last<first || first>1)))
++      { Print("TW_OPT_ERROR HLNearFraction must be in (0,1]"); return INIT_PARAMETERS_INCORRECT; }
++      if(enabled && last>1)
++      {
++         last=first+MathFloor((1.0-first)/increment+1e-9)*increment;
++         Print("TW_OPT_CLAMP InpHLNearFraction stop=",last);
++         if(!ParameterSetRange("InpHLNearFraction",true,value,first,increment,last)) return INIT_FAILED;
++      }
++   }
++   if(!ema)
++   {
++      string periods[]={"InpEMAFastPeriod","InpEMAMiddlePeriod","InpEMASlowPeriod","InpEMARequireRising"};
++      for(int i=0;i<ArraySize(periods);i++) if(!TWFixOptimizationLong(periods[i])) return INIT_FAILED;
++   }
++   else
++   {
++      long fmin,fmax,mmin,mmax,smin,smax;
++      if(!TWOptimizationBounds("InpEMAFastPeriod",fmin,fmax) ||
++         !TWOptimizationBounds("InpEMAMiddlePeriod",mmin,mmax) ||
++         !TWOptimizationBounds("InpEMASlowPeriod",smin,smax) || fmax>=mmin || mmax>=smin || smax>10000)
++      { Print("TW_OPT_ERROR Use non-overlapping EMA ranges: fast max < middle min < slow min, slow max <=10000"); return INIT_PARAMETERS_INCORRECT; }
++   }
++   Print("TW_OPT_READY selected entry family=",mode," skipHL=",skip," EMA=",ema);
++   return INIT_SUCCEEDED;
++}
++#endif
+--- before/installed_Shared.mq5
++++ ..\..\..\MQL5\Indicators\MultiTF_3WaveIn3Wave_Visualizer_Shared.mq5
+@@ -1,5 +1,5 @@
+ #property strict
+-#property version   "1.07"
++#property version   "1.08"
+ #property description "Visual validator for M5 Wave1->Wave2 and M1 Wave1->Wave2->Wave3 long setups, with M1 invalidation/reset. No trading."
+ #property indicator_chart_window
+ #property indicator_buffers 2
+@@ -9,14 +9,14 @@
+ #property indicator_type2 DRAW_NONE
+ #property indicator_label2 "ReadySetupDigest"
+ 
+-#include "../Include/ThreeWaveInputs.mqh"
+-#include "../Include/ThreeWaveStructure.mqh"
++#include "../Experts/dev/mql/Include/ThreeWaveInputs.mqh"
++#include "../Experts/dev/mql/Include/ThreeWaveStructure.mqh"
+ string g_prefix="W33_SHARED_";
+ datetime g_last_lower_bar=0;
+ string g_status="";
+ double g_dummy[],g_digest[];
+ bool g_force_rebuild=true;
+-#include "../Include/ThreeWaveDrawing.mqh"
++#include "../Experts/dev/mql/Include/ThreeWaveDrawing.mqh"
+ 
+ void Rebuild()
+ {

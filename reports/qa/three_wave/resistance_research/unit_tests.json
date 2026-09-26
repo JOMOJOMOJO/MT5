@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "cases": [
+    "right confirmation not closed",
+    "exact confirmation boundary",
+    "equal touch and duplicate price keeps latest",
+    "broken then returned stays broken",
+    "partial bar or current Bid breaks high",
+    "equal neighbor rejects strict pivot",
+    "future bars do not change prefix",
+    "round number equality and next half yen",
+    "cluster has bounded span without chaining",
+    "same TF alone is not confluence",
+    "same price across families is one cluster"
+  ]
+}

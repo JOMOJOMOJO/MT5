@@ -1,0 +1,48 @@
+{
+  "confirm": {
+    "trades": 21,
+    "pivot_wait_minutes": [
+      3.0
+    ],
+    "median_total": 3.0004166666666667,
+    "min_total": 3.00005,
+    "max_total": 3.0324999999999998,
+    "median_after_confirmation": 0.0,
+    "max_after_confirmation": 0.016666666666666666,
+    "median_fill_delay_seconds": 0.025,
+    "triggers": {
+      "HL_ENTRY_CONFIRM": 21
+    }
+  },
+  "ready": {
+    "trades": 23,
+    "pivot_wait_minutes": [
+      3.0
+    ],
+    "median_total": 4.0001,
+    "min_total": 3.0,
+    "max_total": 7.0001,
+    "median_after_confirmation": 1.0,
+    "max_after_confirmation": 4.0,
+    "median_fill_delay_seconds": 0.024,
+    "triggers": {
+      "WAVE1_HIGH_CLOSE_BREAK": 14,
+      "WAVE2_RETURN_HIGH_CLOSE_BREAK": 9
+    }
+  },
+  "retest": {
+    "trades": 11,
+    "pivot_wait_minutes": [
+      3.0
+    ],
+    "median_total": 3.7959666666666667,
+    "min_total": 3.0011,
+    "max_total": 8.547316666666667,
+    "median_after_confirmation": 0.7833333333333333,
+    "max_after_confirmation": 5.533333333333333,
+    "median_fill_delay_seconds": 0.302,
+    "triggers": {
+      "HL_ENTRY_RETEST": 11
+    }
+  }
+}

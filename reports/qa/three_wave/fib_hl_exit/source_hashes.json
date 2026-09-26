@@ -1,0 +1,6 @@
+{
+  "mql/Experts/USDJPY_3Wave_FibHLExitResearch.mq5": "0ef2bf6b37a75e4355d0321431dd032c1a67754cfc3de4ff20651c006085d016",
+  "mql/Experts/USDJPY_3Wave_FibHLExitResearch.ex5": "914bbc178ad549761ba5713ddd7884757aa04b65348e8e2b1809de6f54749151",
+  "mql/Include/ThreeWaveFibHLExitResearch.mqh": "5e1740974cbed9612bc988d4e3a8b52c9749377e1b5263fab7211749e3ee8bb0",
+  "mql/Include/ThreeWaveFibHLPolicy.mqh": "c5b6ed7efa18fd308cb7a3042190d25f09417272cfca44d36cfd7ed4d36d3565"
+}

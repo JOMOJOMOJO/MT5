@@ -1,0 +1,26 @@
+{
+  "candles": {
+    "DOJI": {
+      "count": 1,
+      "mean_R": 1.2017606715119256
+    },
+    "DOWN": {
+      "count": 26,
+      "mean_R": -0.07191800146620177
+    },
+    "UP": {
+      "count": 11,
+      "mean_R": -0.4090777049747563
+    }
+  },
+  "median_risk_pips": 6.500000000001194,
+  "median_choch_to_entry_min": 9.0,
+  "dynamic": {
+    "mean_winner_R": 0.6818557412258291,
+    "mean_loser_R": -0.8697701950748069
+  },
+  "static": {
+    "mean_winner_R": 1.2210968279304024,
+    "mean_loser_R": -1.0210615017516382
+  }
+}

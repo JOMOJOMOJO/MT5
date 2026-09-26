@@ -1,0 +1,20 @@
+{
+  "trades": 88,
+  "wins": 42,
+  "win_rate": 0.4772727272727273,
+  "pnl": 450.08000000000015,
+  "mean_r": 0.05606890081426244,
+  "pf": 1.0963323173863908,
+  "max_win_streak": 4,
+  "max_loss_streak": 9,
+  "max_closed_balance_dd_pct": 11.39220642864071,
+  "origin_price_matches": 88,
+  "sl_above_origin_wick": 47,
+  "risk_plan_count": 88,
+  "final_balance": 10450.08,
+  "iid_bootstrap_mean_r_95pct": [
+    -0.17335874820235042,
+    0.28589620158075324
+  ],
+  "note": "IID interval ignores optimizer selection and temporal dependence; not proof of edge."
+}
