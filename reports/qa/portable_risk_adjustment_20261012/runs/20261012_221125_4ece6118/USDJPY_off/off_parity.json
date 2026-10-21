@@ -1,0 +1,14 @@
+{
+  "environment_pass": true,
+  "history_pass": true,
+  "runtime_pass": true,
+  "input_pass": true,
+  "signal_pass": true,
+  "execution_pass": true,
+  "cash_pass": true,
+  "reference_deals": 98,
+  "candidate_deals": 98,
+  "execution_differences": [],
+  "cash_differences": [],
+  "passed": true
+}

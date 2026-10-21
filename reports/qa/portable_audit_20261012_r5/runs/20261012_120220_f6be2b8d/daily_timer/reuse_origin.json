@@ -1,0 +1,32 @@
+{
+  "run_id": "daily_timer",
+  "source": "reports\\qa\\portable_audit_20261009_r4\\runs\\20261012_113626_a789b4ef\\daily_timer",
+  "input_file_hashes": {
+    "audit.json": "803e81a5f0a2fa3d251a24503985b7fa4b66c33424b1f35e6bd1944f5df8c9af",
+    "channel_20261012_113626_a789b4ef_daily_timer-holding.png": "b736bad391322ce900ca7772fd1ec67a2cb63c9542859eb4aaa1b92b8402755d",
+    "channel_20261012_113626_a789b4ef_daily_timer-hst.png": "027d1185c914832c1c3a7815bc3864b7c9ef88896ffbbe98b9ff305235d6ef14",
+    "channel_20261012_113626_a789b4ef_daily_timer-mfemae.png": "608bce36d50335e7b39392c8626c463c7f263578113fd0cb8d2c41c2670dc2d8",
+    "channel_20261012_113626_a789b4ef_daily_timer.png": "6ad7432d84108cc3560cf052a92967c8099c3b29ed860683647ef03236122f48",
+    "conversion.csv": "5da565bec47714926b6fe8eeaf4888b9eeb08e774e40bd8517e35646107878f7",
+    "cost.csv": "eb4744934565d414ad836e62d1d8497e615546289094caf9832d19dd027b7bc3",
+    "deal_coverage.json": "ca1cb790682cc4d8c7ca33e860d648b18de8bdf4a7d48d092a159c17eeba43b0",
+    "environment.csv": "a61c922b90005f5c3b08104c0079a694c29dbde7ca5c3507b6e525036db534f8",
+    "environment_audit.json": "67aafebe43a72eb59dcb7ede66a1a0905585deb50b7e0882db7dc674d320f3eb",
+    "final_history_clocks.json": "66ef4a4b0054182ffef6ddf6988807321ca7307ab4da34c697c19648664a619f",
+    "history.csv": "a63a2c2f8a49ec64cd94f01ac33e00fc567881b118009c3af9f21fda0a35ad5e",
+    "inputs.set": "d32fe7fa1fa1dc770ef6e72fa581fdcaec07eaa7dfe3f9898ba3eb6561136415",
+    "journals\\logs\\20261012.log": "888e841c52a292953b4a0c496f04884ce8276b56a2bae4f784c7c50d4339301e",
+    "journals\\logs\\metaeditor.log": "d4e976ec8fbb378c96e621c5b6ae63e3c43b390f855d66b153ee59cb508ef613",
+    "journals\\Tester\\Agent-127.0.0.1-39057\\logs\\20261012.log": "b6c03c43b82994918c8e14c5d224117ffeefee026f794fd4e7e5a5d0cdcf41ce",
+    "journals\\Tester\\logs\\20261012.log": "4b59995cb452f7b9bdfb9b195a917647aa6e1b168705528986d2c2ef85f03097",
+    "report.htm": "3dd0c87e99342b3c4a68109d704ca6acf87b5aa1fcf072d4328a1486d005e950",
+    "risk.csv": "e544133f1c660136fe16cff4f53b10bd24bb8de9273129667b8d132d3a4a749f",
+    "runtime_after.json": "0670aa9dceed0e3be83bfcad35b510bce6bdc2f69daa0c1e1404f7f9a11cbf70",
+    "runtime_before.json": "0670aa9dceed0e3be83bfcad35b510bce6bdc2f69daa0c1e1404f7f9a11cbf70",
+    "telemetry.csv": "e75e43d44a95f56e8962fece194f20b835f4629b0c2c53420ddf7bbe1f00ee1f",
+    "tester_public.ini": "e4f701982d1eac3e63114422f12c893a130b6e0548fb9dcc33dd48b6aed3cc20",
+    "trades.csv": "b131d8ea4c8848b86321f78bffd67ca2db58498a45696fcbb0edc241371ac14f"
+  },
+  "re_audited": true,
+  "newly_executed": false
+}

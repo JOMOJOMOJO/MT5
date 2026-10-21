@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "quality": {
+    "strict_real_tick_pass": false,
+    "category": "GENERATED_TICKS",
+    "header_real_tick_percent": 0.0,
+    "matching_execution_blocks": 1,
+    "test_finished_in_block": true,
+    "fallback_line_count": 1,
+    "fallback_evidence": [
+      "CS\t3\t11:38:48.649\tTicks\tUSDJPY : 2023.01.01 00:00 - 2023.04.01 00:00  no real ticks, every tick generation used"
+    ],
+    "scope": "Expert/date plus unique telemetry input when present; ambiguous executions rejected",
+    "limit": "Header percentage may be rounded; no-fallback log is evidence, not a hash proof of historical ticks"
+  },
+  "actual": {
+    "n": 49,
+    "net": -239.91,
+    "pf": 0.8271877948813992,
+    "win_rate": 0.4489795918367347,
+    "mean_fill_r": -0.07271808445345011,
+    "exact_quote_n": 49,
+    "mean_mid_move_r": -0.008809461753876814,
+    "mean_spread_cost_r": 0.06390862269955447,
+    "mean_execution_residual_r": 0.0,
+    "commission": 0.0,
+    "swap": 0.0,
+    "fee": 0.0
+  }
+}

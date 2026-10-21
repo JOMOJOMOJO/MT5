@@ -1,0 +1,167 @@
+{
+  "status": "REVIEWED_RESEARCH_ONLY",
+  "audits": {
+    "daily_smoke": {
+      "passed": true,
+      "retry_audit": {
+        "rejected": 8,
+        "marked": 8,
+        "resolved": {
+          "RETRY_RESUMED": 8
+        }
+      },
+      "reported_drawdown": "94.01 (0.94%)",
+      "tick_quality": "GENERATED_TICKS"
+    },
+    "daily_2023_2024": {
+      "passed": true,
+      "retry_audit": {
+        "rejected": 44,
+        "marked": 44,
+        "resolved": {
+          "RETRY_RESUMED": 44
+        }
+      },
+      "reported_drawdown": "246.30 (2.44%)",
+      "tick_quality": "MIXED_TICKS"
+    },
+    "daily_2025_2026": {
+      "passed": true,
+      "retry_audit": {
+        "rejected": 28,
+        "marked": 28,
+        "resolved": {
+          "RETRY_RESUMED": 28
+        }
+      },
+      "reported_drawdown": "429.16 (4.29%)",
+      "tick_quality": "MIXED_TICKS"
+    }
+  },
+  "all": {
+    "n": 96,
+    "net": -425.82000000000005,
+    "pf": 0.5539190010266295,
+    "win_rate": 0.3020833333333333,
+    "mean_fill_r": -0.23339840628614528,
+    "exact_quote_n": 35,
+    "mean_mid_move_r": -0.15861449177316284,
+    "mean_spread_cost_r": 0.039310025290224225,
+    "mean_execution_residual_r": 0.0,
+    "commission": 0.0,
+    "swap": -52.620000000000005,
+    "fee": 0.0
+  },
+  "periods": [
+    {
+      "run_id": "daily_2023_2024",
+      "n": 48,
+      "net": -57.0,
+      "pf": 0.8487220998434142,
+      "win_rate": 0.375,
+      "mean_fill_r": -0.0537871565268651,
+      "exact_quote_n": 20,
+      "mean_mid_move_r": 0.14567717116367165,
+      "mean_spread_cost_r": 0.037810721715434245,
+      "mean_execution_residual_r": 0.0,
+      "commission": 0.0,
+      "swap": -33.879999999999995,
+      "fee": 0.0,
+      "native_equity_drawdown": "246.30 (2.44%)",
+      "tick_quality": "MIXED_TICKS"
+    },
+    {
+      "run_id": "daily_2025_2026",
+      "n": 48,
+      "net": -368.81999999999994,
+      "pf": 0.36167119541702003,
+      "win_rate": 0.22916666666666666,
+      "mean_fill_r": -0.4130096560454255,
+      "exact_quote_n": 15,
+      "mean_mid_move_r": -0.5643367090222756,
+      "mean_spread_cost_r": 0.04130909672327752,
+      "mean_execution_residual_r": 0.0,
+      "commission": 0.0,
+      "swap": -18.739999999999995,
+      "fee": 0.0,
+      "native_equity_drawdown": "429.16 (4.29%)",
+      "tick_quality": "MIXED_TICKS"
+    }
+  ],
+  "sides": [
+    {
+      "side": "buy",
+      "n": 52,
+      "net": -219.23999999999998,
+      "pf": 0.5678211673796053,
+      "win_rate": 0.28846153846153844,
+      "mean_fill_r": -0.2361456793217308,
+      "exact_quote_n": 21,
+      "mean_mid_move_r": -0.12435020142309923,
+      "mean_spread_cost_r": 0.04217817243539125,
+      "mean_execution_residual_r": 0.0,
+      "commission": 0.0,
+      "swap": -16.59,
+      "fee": 0.0
+    },
+    {
+      "side": "sell",
+      "n": 44,
+      "net": -206.58000000000007,
+      "pf": 0.538151981935657,
+      "win_rate": 0.3181818181818182,
+      "mean_fill_r": -0.23015162906227138,
+      "exact_quote_n": 14,
+      "mean_mid_move_r": -0.21001092729825824,
+      "mean_spread_cost_r": 0.035007804572473676,
+      "mean_execution_residual_r": 0.0,
+      "commission": 0.0,
+      "swap": -36.03,
+      "fee": 0.0
+    }
+  ],
+  "unique_flat_signal_count": 389,
+  "signal_final_events": {
+    "VOLUME_OR_RISK": 167,
+    "SEND_RESULT": 96,
+    "PORTFOLIO_CAP": 126
+  },
+  "months": {
+    "n": 45,
+    "mean": 2.1333333333333333,
+    "minimum": 0,
+    "maximum": 6,
+    "zero": 5,
+    "at_least_20": 0
+  },
+  "holding_days": {
+    "mean": 27.268726507040896,
+    "median": 17.999943038194445,
+    "maximum": 112.99999975694443
+  },
+  "planned_risk_percent_accepted": {
+    "minimum": 0.1251385797761051,
+    "mean": 0.18067500013712734,
+    "maximum": 0.24614124411750532
+  },
+  "synchronized_quote_subset": {
+    "n": 35,
+    "net": -98.22,
+    "pf": 0.7043525374751671,
+    "win_rate": 0.3142857142857143,
+    "mean_fill_r": -0.19792451706338657,
+    "exact_quote_n": 35,
+    "mean_mid_move_r": -0.15861449177316284,
+    "mean_spread_cost_r": 0.039310025290224225,
+    "mean_execution_residual_r": 0.0,
+    "commission": 0.0,
+    "swap": -14.209999999999997,
+    "fee": 0.0
+  },
+  "source_hashes": {
+    "reports\\qa\\cost_channel_20261008_r2\\manifest.json": "73cc307f71f1afa9a7d829bed58fa2c83d40db35e7c3a06256d66ede3ba4940e",
+    "reports\\qa\\cost_channel_20261008_r2\\runs\\20261008_171544_bbf5d27f\\all_trades.csv": "b152257236fbf58017f5470659c434712ba3bec7ec062c5c4e22989a3059c647",
+    "reports\\qa\\cost_channel_20261008_r2\\runs\\20261008_171544_bbf5d27f\\statistics.csv": "16985d8807c520664256c46df3f25c07239a4ae02cd9225c1bebc890b4978321",
+    "tools\\quality12b\\review_daily_channel.py": "f722f4bd818aef7569915827e43b5a7609037300296cf75bcaf030edc7a3fcce"
+  }
+}

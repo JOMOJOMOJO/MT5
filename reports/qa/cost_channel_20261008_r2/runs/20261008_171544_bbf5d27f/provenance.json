@@ -1,0 +1,11 @@
+﻿{
+    "terminal_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Channel\\20261008_171544_bbf5d27f",
+    "manifest_sha256":  "73CC307F71F1AFA9A7D829BED58FA2C83D40DB35E7C3A06256D66EDE3BA4940E",
+    "batch_id":  "20261008_171544_bbf5d27f",
+    "run_order":  [
+                      "daily_smoke",
+                      "daily_2023_2024",
+                      "daily_2025_2026"
+                  ],
+    "source_data_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Channel\\20261008_103353_57f61562"
+}

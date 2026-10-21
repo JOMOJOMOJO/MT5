@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "classification": "EXACT_EXECUTIONS_AND_COSTS",
+  "ignored_execution_inputs": [
+    "InpDeviationATR",
+    "InpIndependentClock",
+    "InpTelemetryFileName"
+  ],
+  "errors": [],
+  "deal_differences": [],
+  "reference_trades": 7,
+  "candidate_trades": 7,
+  "split": {
+    "execution_pass": true,
+    "cash_pass": true,
+    "reference_deals": 14,
+    "candidate_deals": 14,
+    "execution_differences": [],
+    "cash_differences": []
+  },
+  "role": "Historical drift diagnostic; contemporaneous pair is required separately"
+}

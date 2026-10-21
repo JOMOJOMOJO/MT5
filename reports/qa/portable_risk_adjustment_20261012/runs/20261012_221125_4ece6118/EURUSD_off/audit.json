@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "quality": {
+    "strict_real_tick_pass": false,
+    "category": "GENERATED_TICKS",
+    "header_real_tick_percent": 0.0,
+    "matching_execution_blocks": 1,
+    "test_finished_in_block": true,
+    "fallback_line_count": 1,
+    "fallback_evidence": [
+      "CS\t3\t22:13:27.799\tTicks\tEURUSD : 2023.01.01 00:00 - 2023.04.01 00:00  no real ticks, every tick generation used"
+    ],
+    "scope": "Expert/date plus unique telemetry input when present; ambiguous executions rejected",
+    "limit": "Header percentage may be rounded; no-fallback log is evidence, not a hash proof of historical ticks"
+  },
+  "actual": {
+    "n": 36,
+    "net": -505.68000000000006,
+    "pf": 0.5503667807762413,
+    "win_rate": 0.4166666666666667,
+    "mean_fill_r": -0.22105735412642316,
+    "exact_quote_n": 36,
+    "mean_mid_move_r": -0.1515725707999853,
+    "mean_spread_cost_r": 0.06948478332643965,
+    "mean_execution_residual_r": 0.0,
+    "commission": 0.0,
+    "swap": 0.0,
+    "fee": 0.0
+  },
+  "risk_reasons": {
+    "OK": 36
+  },
+  "risk_reasons_by_symbol": {
+    "EURUSD": {
+      "OK": 36
+    }
+  },
+  "normalized_risk_rejections": [],
+  "evidence_limit": "No same-symbol entry deal in the rejection minute; not a general proof about delayed submissions",
+  "context_rows": 392,
+  "context_missing": 0,
+  "recovered_plans": 0
+}

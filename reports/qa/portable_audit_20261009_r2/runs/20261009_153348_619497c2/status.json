@@ -1,0 +1,6 @@
+﻿{
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\portable_audit_20261009_r2\\runs\\20261009_153348_619497c2",
+    "status":  "FAILED",
+    "run_id":  "daily_legacy_clock",
+    "reason":  "Run audit failed; remaining runs stopped"
+}

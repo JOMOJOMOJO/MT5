@@ -1,0 +1,111 @@
+{
+  "passed": false,
+  "classification": "EXECUTION_DIFFERENCE",
+  "ignored_execution_inputs": [
+    "InpDeviationATR",
+    "InpIndependentClock",
+    "InpTelemetryFileName"
+  ],
+  "errors": [
+    "Execution or cost differs"
+  ],
+  "deal_differences": [
+    {
+      "index": 3,
+      "fields": {
+        "time_msc": [
+          "1675728090000",
+          "1675728060000"
+        ],
+        "price": [
+          "0.688120000000",
+          "0.688180000000"
+        ],
+        "profit": [
+          "-4.67000000",
+          "-4.61000000"
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "fields": {
+        "time_msc": [
+          "1675728090000",
+          "1675728060000"
+        ],
+        "price": [
+          "1.201520000000",
+          "1.201020000000"
+        ],
+        "sl": [
+          "1.225080000000",
+          "1.224580000000"
+        ]
+      }
+    },
+    {
+      "index": 5,
+      "fields": {
+        "time_msc": [
+          "1676388774642",
+          "1676388769285"
+        ],
+        "price": [
+          "1.225120000000",
+          "1.224580000000"
+        ],
+        "profit": [
+          "-23.60000000",
+          "-23.56000000"
+        ]
+      }
+    },
+    {
+      "index": 8,
+      "fields": {
+        "time_msc": [
+          "1678752090000",
+          "1678752060000"
+        ],
+        "price": [
+          "1.073230000000",
+          "1.073180000000"
+        ],
+        "profit": [
+          "-12.87000000",
+          "-12.82000000"
+        ]
+      }
+    },
+    {
+      "index": 9,
+      "fields": {
+        "time_msc": [
+          "1678752090000",
+          "1678752060000"
+        ]
+      }
+    },
+    {
+      "index": 12,
+      "fields": {
+        "time_msc": [
+          "1680307019919",
+          "1680307190000"
+        ]
+      }
+    },
+    {
+      "index": 13,
+      "fields": {
+        "time_msc": [
+          "1680307019919",
+          "1680307190000"
+        ]
+      }
+    }
+  ],
+  "reference_trades": 7,
+  "candidate_trades": 7
+}

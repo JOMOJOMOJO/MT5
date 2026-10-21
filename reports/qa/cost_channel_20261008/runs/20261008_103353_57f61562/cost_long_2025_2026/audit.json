@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "actual": {
+    "n": 60,
+    "net": 237.57999999999987,
+    "pf": 1.1489772627512949,
+    "win_rate": 0.5333333333333333,
+    "mean_fill_r": 0.06991188555493687,
+    "exact_quote_n": 60,
+    "mean_mid_move_r": 0.14543692845763276,
+    "mean_spread_cost_r": 0.07552504290269467,
+    "mean_execution_residual_r": 0.0,
+    "commission": 0.0,
+    "swap": 0.0,
+    "fee": 0.0
+  },
+  "quality": {
+    "strict_real_tick_pass": false,
+    "category": "MIXED_TICKS",
+    "header_real_tick_percent": 100.0,
+    "matching_execution_blocks": 1,
+    "test_finished_in_block": true,
+    "fallback_line_count": 8,
+    "fallback_evidence": [
+      "CS\t3\t10:35:06.122\tTicks\tUSDJPY : 2025.02.27 23:59 - real ticks discarded for 1364 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t10:35:06.846\tTicks\tUSDJPY : 2025.07.24 23:59 - real ticks absent for 5 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t10:35:06.846\tTicks\tUSDJPY : 2025.07.24 23:59 - real ticks discarded for 829 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t10:35:07.125\tTicks\tUSDJPY : 2025.10.02 23:59 - real ticks discarded for 930 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t10:35:07.338\tTicks\tUSDJPY : 2025.11.10 23:59 - real ticks absent for 34 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t10:35:07.338\tTicks\tUSDJPY : 2025.11.10 23:59 - real ticks discarded for 882 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t10:35:10.054\tTicks\tUSDJPY : 2025.01.01 00:00 - 2026.10.01 00:00  real ticks absent for 39 minutes of 651234 total minute bars, every tick generation used",
+      "CS\t3\t10:35:10.054\tTicks\tUSDJPY : 2025.01.01 00:00 - 2026.10.01 00:00  real ticks discarded for 4005 minutes of 651234 total minute bars, every tick generation used"
+    ],
+    "scope": "Expert/date plus unique telemetry input when present; ambiguous executions rejected",
+    "limit": "Header percentage may be rounded; no-fallback log is evidence, not a hash proof of historical ticks"
+  },
+  "reported_drawdown": "641.41 (6.41%)",
+  "parity": true
+}

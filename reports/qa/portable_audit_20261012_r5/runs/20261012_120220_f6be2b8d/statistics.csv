@@ -1,0 +1,11 @@
+run_id,symbol,kind,passed,n,net,parity,context_rows,context_missing
+harness,USDJPY,harness,True,0,0,False,0,0
+daily_reference,USDJPY,daily,True,7,-48.33999999999999,False,0,0
+daily_legacy_clock,USDJPY,daily,True,7,-48.33999999999999,True,0,0
+daily_timer,USDJPY,daily,True,7,-48.19,False,0,0
+m5_USDJPY_reference,USDJPY,m5,True,49,-239.91,False,0,0
+m5_USDJPY_portable,USDJPY,m5,True,49,-239.91,True,456,0
+m5_EURUSD_reference,EURUSD,m5,True,36,-505.68000000000006,False,0,0
+m5_EURUSD_portable,EURUSD,m5,True,36,-505.68000000000006,True,392,0
+m5_XAUUSD_reference,XAUUSD,m5,True,55,73.63,False,0,0
+m5_XAUUSD_portable,XAUUSD,m5,True,55,73.63,True,360,0

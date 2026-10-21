@@ -1,0 +1,12 @@
+{
+  "risk_reasons": {
+    "OK": 55
+  },
+  "risk_reasons_by_symbol": {
+    "XAUUSD": {
+      "OK": 55
+    }
+  },
+  "normalized_risk_rejections": [],
+  "evidence_limit": "No same-symbol entry deal in the rejection minute; not a general proof about delayed submissions"
+}

@@ -1,0 +1,33 @@
+{
+  "run_id": "m5_USDJPY_reference",
+  "source": "reports\\qa\\portable_audit_20261009_r4\\runs\\20261012_113626_a789b4ef\\m5_USDJPY_reference",
+  "input_file_hashes": {
+    "audit.json": "78b7a451eb8db37b1f915dcabc8f1182dc6202aff0eb7a7553f87e413f78be49",
+    "channel_20261012_113626_a789b4ef_m5_USDJPY_reference-holding.png": "c686b8f8ef34d1ce8d8d003b5450fd04bc0b1da9d3ecfe354e96f62e4f06e1d3",
+    "channel_20261012_113626_a789b4ef_m5_USDJPY_reference-hst.png": "6d70c606584943bf01c71b8367fe0ab94bac9949ae2fa945e406624c0c1e6ca7",
+    "channel_20261012_113626_a789b4ef_m5_USDJPY_reference-mfemae.png": "25f3ad499a933dfd3b3df08f08439095d04159ebf629be0c83143d4b6676dd87",
+    "channel_20261012_113626_a789b4ef_m5_USDJPY_reference.png": "247ce69bbad5026b953b74d3f606922d1f29f04f9a4902e47b51eb004b5ba49e",
+    "context.csv": "2b55786595aabae9bee1fb198e57456b7ff54d5777ac00b9fc709b3082c4a2d6",
+    "conversion.csv": "4d415109552c1816887c82b1afd7c6ca2c5d5cc3ac4bbdef49b6dc5295a5acb5",
+    "cost.csv": "4ebad1d972774a4b5c50a75e593bfabd6ad4aca30f161c95dfd6fbad2528a801",
+    "deal_coverage.json": "3f780e49048433474edf509a819b50966aecc323bace59d7c62a78b5dd109d13",
+    "environment.csv": "ba6393688d12615b55485ce8763023c37357bd3781106765c67eda3e458cec64",
+    "environment_audit.json": "4efaa45d87311d60ebd91f09dbe245ad196bb7807666283b3d0845e407d144bd",
+    "final_history_clocks.json": "e86200e14d6404df2e17546669c4aa0a6fe974b0bec6bb9615c6759c44442a64",
+    "funnel.csv": "b145e7ef9aaf13028696fdeb075d58e800c9faf88a07db40e3afb5d2f7abe139",
+    "history.csv": "75c6c093cc79fc849119f4487547b00625e21a2d0034ff050b220d4518225c3b",
+    "inputs.set": "0b4da763c3e167f24a0a1b9e4424b83b0a306f424b4766b392400413e17dba81",
+    "journals\\logs\\20261012.log": "3a58a9112d13c30ef2df6e752710646f1e77afd5f9a050d43185f1699adbff73",
+    "journals\\logs\\metaeditor.log": "d4e976ec8fbb378c96e621c5b6ae63e3c43b390f855d66b153ee59cb508ef613",
+    "journals\\Tester\\Agent-127.0.0.1-39057\\logs\\20261012.log": "4cc03d5ca6f10b13cb8fa6d9f57911160ddd1c2910d9a59c093f4f85e81091ec",
+    "journals\\Tester\\logs\\20261012.log": "d8ad75b9e5ce53a82331aa4a5bc28028a4b82b21edf2712f08ad66cdf73634ff",
+    "report.htm": "461c2163ed3c03aae18c7dddb1779b42b75dcc3b3135b9c36e0627d3217985f1",
+    "runtime_after.json": "0670aa9dceed0e3be83bfcad35b510bce6bdc2f69daa0c1e1404f7f9a11cbf70",
+    "runtime_before.json": "0670aa9dceed0e3be83bfcad35b510bce6bdc2f69daa0c1e1404f7f9a11cbf70",
+    "telemetry.csv": "86f1c279d97178852ae3dd22943898202a72bf2802785d30a13bf3dfea19983f",
+    "tester_public.ini": "632759d8d9e80e168f959fc4fcf83e41d8d4648253556261a8a83aa8554b9e0d",
+    "trades.csv": "93ae57d68119f0ad1472d6f3fc2c3fc5ff44a6581945f5b8cc69855fad5c84b2"
+  },
+  "re_audited": true,
+  "newly_executed": false
+}

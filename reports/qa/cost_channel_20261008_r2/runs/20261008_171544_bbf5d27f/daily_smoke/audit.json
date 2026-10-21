@@ -1,0 +1,57 @@
+{
+  "passed": true,
+  "actual": {
+    "n": 7,
+    "net": -48.33999999999999,
+    "pf": 0.14199503017394394,
+    "win_rate": 0.2857142857142857,
+    "mean_fill_r": -0.34106226805619416,
+    "exact_quote_n": 3,
+    "mean_mid_move_r": -0.37674455116181355,
+    "mean_spread_cost_r": 0.03062710485641183,
+    "mean_execution_residual_r": 0.0,
+    "commission": 0.0,
+    "swap": -0.51,
+    "fee": 0.0
+  },
+  "quality": {
+    "strict_real_tick_pass": false,
+    "category": "GENERATED_TICKS",
+    "header_real_tick_percent": 0.0,
+    "matching_execution_blocks": 1,
+    "test_finished_in_block": true,
+    "fallback_line_count": 5,
+    "fallback_evidence": [
+      "CS\t3\t17:16:14.108\tTicks\tAUDUSD : 2023.01.01 00:00 - 2023.04.01 00:00  no real ticks, every tick generation used",
+      "CS\t3\t17:16:14.355\tTicks\tEURUSD : 2023.01.01 00:00 - 2023.04.01 00:00  no real ticks, every tick generation used",
+      "CS\t3\t17:16:14.681\tTicks\tGBPUSD : 2023.01.01 00:00 - 2023.04.01 00:00  no real ticks, every tick generation used",
+      "CS\t3\t17:16:15.051\tTicks\tUSDJPY : 2023.01.01 00:00 - 2023.04.01 00:00  no real ticks, every tick generation used",
+      "CS\t3\t17:16:15.399\tTicks\tXAUUSD : 2023.01.01 00:00 - 2023.04.01 00:00  no real ticks, every tick generation used"
+    ],
+    "scope": "Expert/date plus unique telemetry input when present; ambiguous executions rejected",
+    "limit": "Header percentage may be rounded; no-fallback log is evidence, not a hash proof of historical ticks"
+  },
+  "reported_drawdown": "94.01 (0.94%)",
+  "retry_audit": {
+    "rejected": 8,
+    "marked": 8,
+    "resolved": {
+      "RETRY_RESUMED": 8
+    }
+  },
+  "events": {
+    "BAR_EVALUATED": 332,
+    "NO_SIGNAL": 213,
+    "SIGNAL": 39,
+    "VOLUME_OR_RISK": 20,
+    "RISK_PLAN": 15,
+    "SEND_FAILED": 8,
+    "RETRY_MARKET_CLOSED": 8,
+    "RETRY_RESUMED": 8,
+    "SEND_RESULT": 7,
+    "CHANNEL_EXIT": 4,
+    "CLOSE_RESULT": 8,
+    "PORTFOLIO_CAP": 4
+  },
+  "risk_plans": 15
+}

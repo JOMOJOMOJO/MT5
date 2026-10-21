@@ -1,0 +1,43 @@
+--- DealQuoteAudit_original
++++ PortableDealQuoteAudit_r2
+@@ -1,6 +1,7 @@
+ // Read-only tester observer. Missing synchronous quotes are never interpolated.
+ #ifndef RESEARCH_DEAL_QUOTE_AUDIT
+ #define RESEARCH_DEAL_QUOTE_AUDIT
++// Portable QA r2: end-of-test history is independent of the last tick clock.
+ int dqFile=INVALID_HANDLE;
+ ulong dqSeen[];
+ string dqName="";
+@@ -48,12 +49,27 @@
+       DoubleToString(q.bid,12),DoubleToString(q.ask,12),q.time_msc,status,HistoryDealGetInteger(ticket,DEAL_REASON));
+    int size=ArraySize(dqSeen);ArrayResize(dqSeen,size+1);dqSeen[size]=ticket;FileFlush(dqFile);
+   }
+-void DQDrain()
++void DQDrain(const bool final_pass=false)
+   {
+-   if(!HistorySelect(0,TimeCurrent()))return;
+-   int n=HistoryDealsTotal();ulong ids[];ArrayResize(ids,n);
+-   for(int j=0;j<n;j++)ids[j]=HistoryDealGetTicket(j);
++   if(dqFile==INVALID_HANDLE)return;
++   datetime quote_clock=TimeCurrent();
++   bool terminal_pass=final_pass && (bool)MQLInfoInteger(MQL_TESTER);
++   if(!HistorySelect(0,quote_clock)){Print("DQ_FATAL_HISTORY_NARROW");return;}
++   int narrow=HistoryDealsTotal();
++   // Only completed tester accounting requests the full already-created deal list.
++   // No price data or result of this observer is consumed by signal/risk code.
++   if(terminal_pass && !HistorySelect(0,D'3000.12.31 23:59:59'))
++     {Print("DQ_FATAL_HISTORY_FINAL");return;}
++   int n=HistoryDealsTotal();ulong ids[];ArrayResize(ids,n);long latest=0;
++   for(int j=0;j<n;j++)
++     {
++      ids[j]=HistoryDealGetTicket(j);
++      if(ids[j]>0){long stamp=HistoryDealGetInteger(ids[j],DEAL_TIME_MSC);if(stamp>latest)latest=stamp;}
++     }
++   // DQCapture calls HistoryDealSelect, so snapshot all tickets before capturing.
+    for(int j=0;j<n;j++)DQCapture(ids[j]);
++   if(terminal_pass)PrintFormat("DQ_FINAL quote_clock=%I64d server_clock=%I64d narrow=%d all=%d latest_msc=%I64d captured=%d",
++      (long)quote_clock,(long)TimeTradeServer(),narrow,n,latest,ArraySize(dqSeen));
+   }
+-void DQClose(){DQDrain();if(dqFile!=INVALID_HANDLE){FileClose(dqFile);dqFile=INVALID_HANDLE;}}
++void DQClose(){DQDrain(true);if(dqFile!=INVALID_HANDLE){FileClose(dqFile);dqFile=INVALID_HANDLE;}}
+ #endif

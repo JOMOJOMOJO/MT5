@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "purpose": "COST_DECOMPOSITION_AND_FIXED_DAILY_BASELINE",
+  "sources": {
+    "daily_channel": "reports\\qa\\cost_channel_20261008_r2\\frozen\\daily_channel.mq5"
+  },
+  "runs": [
+    {
+      "run_id": "daily_smoke",
+      "kind": "portfolio",
+      "expert": "daily_channel",
+      "inputs": "daily_channel.json",
+      "date_from": "2023.01.01",
+      "date_to": "2023.04.01",
+      "timeframe": "M1",
+      "reference": "",
+      "label": "QA_ONLY"
+    },
+    {
+      "run_id": "daily_2023_2024",
+      "kind": "portfolio",
+      "expert": "daily_channel",
+      "inputs": "daily_channel.json",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M1",
+      "reference": "",
+      "label": "KNOWN_PERIOD_NOT_OOS"
+    },
+    {
+      "run_id": "daily_2025_2026",
+      "kind": "portfolio",
+      "expert": "daily_channel",
+      "inputs": "daily_channel.json",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M1",
+      "reference": "",
+      "label": "KNOWN_PERIOD_NOT_OOS"
+    }
+  ],
+  "expected_server": "VantageTradingLtd-Live",
+  "expected_broker": "Vantage Trading Ltd",
+  "symbols": [
+    "USDJPY",
+    "EURUSD",
+    "GBPUSD",
+    "AUDUSD",
+    "XAUUSD"
+  ],
+  "hashes": {
+    "reports\\qa\\cost_channel_20261008_r2\\frozen\\cost_long.json": "0f73285e8d5d844cae2928592a517c7975ea7d4be3b7b3f6bd3b71a8d4bbe2c7",
+    "reports\\qa\\cost_channel_20261008_r2\\frozen\\cost_long.mq5": "be6e3f8ca79822cd12b9daea945e20eae5e12872196f06e5087a6e3cfc8083e6",
+    "reports\\qa\\cost_channel_20261008_r2\\frozen\\cost_short.json": "874e8e7b31a651da844df13b56847bd7cc4ff1b00b3a34260416955de79f9a30",
+    "reports\\qa\\cost_channel_20261008_r2\\frozen\\cost_short.mq5": "7711196dfffeb7ca5ad6af15a14ee850693899a3dd93e017b71ff15f5415cd77",
+    "reports\\qa\\cost_channel_20261008_r2\\frozen\\daily_channel.json": "422fffd01eeded4da1cd134dfa4bd90eb38075e165289b99d532339527a64abb",
+    "reports\\qa\\cost_channel_20261008_r2\\frozen\\daily_channel.mq5": "d88b679792682523f149a927c1a44bc05923e78816efcb2ba5f0a9e24c60621a",
+    "mql\\Experts\\Research\\DailyChannelPortfolio.mq5": "6b9b29fdd05e130c1c4d06920b1844c37b0ecde09e0c488c2ffd85a2ce9d967e",
+    "mql\\Include\\Research\\DealQuoteAudit.mqh": "413df56d9168b06b610ebd9a4b8d4874c06f9a9e7b8974b199545094c8de9acd",
+    "tools\\quality12b\\analyze_cost_channel.py": "8e25244be209158c788f2f586d1a5b1e89bfbeabc8a281295b4d064f6cd99466",
+    "scripts\\run-cost-channel.ps1": "f830f4d1c68302e6ce73e5f44a55d2862c34a6aac86f95c2ea156aa45b5e5fbd",
+    "tools\\quality12b\\prepare_cost_channel.py": "b383060184c8df3def3500792d0e9fa58026c47167bc37a928b8df43401e2199",
+    "tools\\quality12b\\analyze_reports.py": "d655e406132eca6e1db9759d85e58b71d61bb7ed03a069dc1d3c7af768c8460b",
+    "tools\\quality12b\\compare_reproduction.py": "d2ccab78aabacb81d177eb8428e026c7a42b63b9ad2d21084bfacd86cdbe5a7f",
+    "tools\\quality12b\\tick_quality.py": "6c8e61501813d28b26d210f42df9408591e2d8f5b88036e7347e926cec25427c",
+    "tools\\quality12b\\test_cost_channel.py": "2325dc6f11c33101dbc1231d0321b55f3cf4649ae1b0d8da22f1ce469bafe2f6",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_long_2023_2024\\audit.json": "bc5e78d6fed4c7e9683bd257464947d8161313283d6548723654a857ddf24768",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_long_2023_2024\\execution_parity.json": "41dec5527d082ccaf1475fc17a4581a5f4d0538be8c525ef99c5dc36f6e97045",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_long_2023_2024\\trades_cost_decomposition.csv": "8aa17fa3a4615f9c12cd7f096cce6f8ba50c1de62f39c162cbf6af5e28746ccb",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_long_2023_2024\\report.htm": "e351ebc71224b9cea8c2d9df52fb936f73770a78d2f9389c43703eb2454c7d60",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_long_2025_2026\\audit.json": "1260a57911eb651d7c91e72f46f6802d7a9c88adc0c835da0eebfb1357db597e",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_long_2025_2026\\execution_parity.json": "bda51e875c2c88f24e4042c4e40907245dc28cd9540dd5d250b13efe953c8242",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_long_2025_2026\\trades_cost_decomposition.csv": "dc882789bb1f6aadf1b1dd6100b1b31b930f477f44e632396e001897a5c15751",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_long_2025_2026\\report.htm": "cd046ce6c67aefa9de53125da75c3efde2911f12fdf6ad0ed901a263d86642bd",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_short_2023_2024\\audit.json": "0db5b70a4b5c68f3f5de655560a81f59614abf86cf6e982c84a83d49792c16df",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_short_2023_2024\\execution_parity.json": "03798cb4bb840a8e6cbd869adb921e7736ebd8b8ac755423ab11aa0bf12c2a0b",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_short_2023_2024\\trades_cost_decomposition.csv": "77aa8b821a574a91771ece1f7e51f2bb6bbbed47db94620124142c92c06d7b17",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_short_2023_2024\\report.htm": "85d0c1f3a6482547350a654a0bb27c6ae41436bb204b70c841b13d91947e6112",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_short_2025_2026\\audit.json": "6bda01c1453a997a6c9beee919df4fe36011d035fc82f0a86826349050e729b6",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_short_2025_2026\\execution_parity.json": "c6a2343e2dc06d54a2e0830b78f3f0804caadb74c6968673d845278e9e197f49",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_short_2025_2026\\trades_cost_decomposition.csv": "37034fd4235420a1ade80225f0d0b8a4c42c48b70309a1601c9a18c221e76a4c",
+    "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_short_2025_2026\\report.htm": "011bf13822501543afd457224fdec53ed29ad8be0b17977b1104695e802ca9f2",
+    "reports\\qa\\cost_channel_20261008_r2\\execution_repair.diff": "873a262c14ec07dc6d349f03a1563cca1b6f96e495edf81c42e4070ed2431680"
+  },
+  "completed_cost_runs": [
+    {
+      "path": "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_long_2023_2024",
+      "run_id": "cost_long_2023_2024",
+      "family": "cost_long"
+    },
+    {
+      "path": "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_long_2025_2026",
+      "run_id": "cost_long_2025_2026",
+      "family": "cost_long"
+    },
+    {
+      "path": "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_short_2023_2024",
+      "run_id": "cost_short_2023_2024",
+      "family": "cost_short"
+    },
+    {
+      "path": "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562\\cost_short_2025_2026",
+      "run_id": "cost_short_2025_2026",
+      "family": "cost_short"
+    }
+  ],
+  "repair_of": "reports\\qa\\cost_channel_20261008\\runs\\20261008_103353_57f61562"
+}

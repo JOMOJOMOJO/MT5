@@ -1,0 +1,10 @@
+﻿{
+    "run_count":  10,
+    "revision":  3,
+    "purpose":  "MULTI_ASSET_PORTABILITY_QA",
+    "stdout":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\portable_audit_20261009_r3\\launch-20261009_162414.stdout.log",
+    "waited":  false,
+    "stderr":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\portable_audit_20261009_r3\\launch-20261009_162414.stderr.log",
+    "runner_pid":  16496,
+    "launched_at":  "2026-10-09T16:24:14.7808726+09:00"
+}

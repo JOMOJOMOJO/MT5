@@ -1,0 +1,20 @@
+﻿{
+    "terminal_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5RiskAdjustment\\20261012_221125_4ece6118",
+    "manifest_sha256":  "C4DBAF515C786C2F6B60D349C90FAE8D5D681DF24BACD08819D3334F17E5DCDB",
+    "batch_id":  "20261012_221125_4ece6118",
+    "run_order":  [
+                      "harness_USDJPY",
+                      "harness_EURUSD",
+                      "harness_XAUUSD",
+                      "USDJPY_legacy",
+                      "USDJPY_off",
+                      "USDJPY_on",
+                      "EURUSD_legacy",
+                      "EURUSD_off",
+                      "EURUSD_on",
+                      "XAUUSD_legacy",
+                      "XAUUSD_off",
+                      "XAUUSD_on"
+                  ],
+    "source_data_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Channel\\20261008_171544_bbf5d27f"
+}

@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "source_sha256": {
+    "USDJPY_on\\cost.csv": "e3471dbb2b20a125bc4c6babc612320d6c43aa0355613abf90d4e0581ccbbda4",
+    "USDJPY_on\\trades.csv": "9966108a2f913ef81fca5f0eb8a0f5682fadf654f66b220b3379b115f652c7ec",
+    "EURUSD_on\\cost.csv": "2f1bc6c70946c3cf15dad4c39d3d924ddeb5b7bebd17ed0e5c9afcc79eb31217",
+    "EURUSD_on\\trades.csv": "06ba54729d27c73a5f1f757ff3f857ad6883ef97b1ef69487915e029cbfe0f5b",
+    "XAUUSD_on\\cost.csv": "f5ae35233ceb8f9d2d48b5e19159c48bba8c92c0a81c7878fdea71dcafb5a138",
+    "XAUUSD_on\\trades.csv": "0d564364889342dd4bc14142887bd196874ee4c54655efbb121e2ef24e4c7fbf"
+  },
+  "per_symbol": [
+    {
+      "symbol": "USDJPY",
+      "n": 49,
+      "wins": 23,
+      "losses": 26,
+      "mean_winner_price_r": 0.8000998366575799,
+      "mean_loser_price_r": -0.8301443027234192
+    },
+    {
+      "symbol": "EURUSD",
+      "n": 36,
+      "wins": 15,
+      "losses": 21,
+      "mean_winner_price_r": 0.662686530113835,
+      "mean_loser_price_r": -0.8523029857266079
+    },
+    {
+      "symbol": "XAUUSD",
+      "n": 55,
+      "wins": 28,
+      "losses": 27,
+      "mean_winner_price_r": 0.8445258614955957,
+      "mean_loser_price_r": -0.82136080583236
+    }
+  ]
+}

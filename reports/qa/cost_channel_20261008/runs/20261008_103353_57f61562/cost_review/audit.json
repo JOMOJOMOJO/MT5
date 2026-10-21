@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "n": 447,
+  "runs": [
+    {
+      "run_id": "cost_long_2023_2024",
+      "n": 157,
+      "quality": "MIXED_TICKS"
+    },
+    {
+      "run_id": "cost_long_2025_2026",
+      "n": 60,
+      "quality": "MIXED_TICKS"
+    },
+    {
+      "run_id": "cost_short_2023_2024",
+      "n": 124,
+      "quality": "MIXED_TICKS"
+    },
+    {
+      "run_id": "cost_short_2025_2026",
+      "n": 106,
+      "quality": "MIXED_TICKS"
+    }
+  ]
+}

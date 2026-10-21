@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "passed": true,
+  "classification": "EXACT_EXECUTIONS_AND_COSTS",
+  "reference_sha256": "f763bd2307bfca9a571f5f910948a333153ff06614034f42635a03ddae1e912b",
+  "candidate_sha256": "e407be912a053a33c27c8e02fa791acd981ecaec4aaf00195b183355dc8aa6d5",
+  "reference": {
+    "trade_count": 55,
+    "net_profit": 73.63,
+    "gross_profit": 1482.0,
+    "gross_loss": -1408.37,
+    "profit_factor": 1.0522802956609414,
+    "expected_payoff": 1.3387272727272728,
+    "winning_trade_count": 28,
+    "losing_trade_count": 27,
+    "commission": 0.0,
+    "swap": 0.0
+  },
+  "candidate": {
+    "trade_count": 55,
+    "net_profit": 73.63,
+    "gross_profit": 1482.0,
+    "gross_loss": -1408.37,
+    "profit_factor": 1.0522802956609414,
+    "expected_payoff": 1.3387272727272728,
+    "winning_trade_count": 28,
+    "losing_trade_count": 27,
+    "commission": 0.0,
+    "swap": 0.0
+  },
+  "trade_count": 55,
+  "exact_core_fields": [
+    "symbol",
+    "side",
+    "entry_time",
+    "entry_price",
+    "volume",
+    "initial_sl",
+    "initial_tp",
+    "exit_time",
+    "exit_price",
+    "exit_reason",
+    "exit_comment",
+    "profit",
+    "commission"
+  ],
+  "core_trade_differences": [],
+  "swap_difference_trades": [],
+  "net_delta": 0.0,
+  "swap_delta": 0.0,
+  "errors": [],
+  "note": "Observed swap-only difference is attributed, not removed from candidate P/L. No parameter or P/L threshold relaxation. Identical fills in this sample do not establish profitability or binary identity."
+}

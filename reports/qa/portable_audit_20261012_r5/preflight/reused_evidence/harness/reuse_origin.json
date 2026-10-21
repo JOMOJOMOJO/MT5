@@ -1,0 +1,26 @@
+{
+  "run_id": "harness",
+  "source": "reports\\qa\\portable_audit_20261009_r4\\runs\\20261012_113626_a789b4ef\\harness",
+  "input_file_hashes": {
+    "audit.json": "e61d8054b590e70286f845fc11f0cf6d11fa04a02b80802671bea5574b4255ce",
+    "channel_20261012_113626_a789b4ef_harness-holding.png": "420b97960777df5cbf9051ca5847f1e510b4b403b710b00c9fa65d88215f2dfc",
+    "channel_20261012_113626_a789b4ef_harness-hst.png": "5b9668ef6d82ea20eeab5b71848e8888ee466aa0f86591e14a7dc58584e5f2b9",
+    "channel_20261012_113626_a789b4ef_harness-mfemae.png": "2a4950f6229528d0560066bf71d09891ffa6cfeb50c555bda8df0896c35c7512",
+    "channel_20261012_113626_a789b4ef_harness.png": "06aa980fbe864302877ddb986e353149c546cff30ef6fd8b46241a7e63e5c4e4",
+    "conversion.csv": "e13aebe1a319352ea05b251bc8adcb9b5d69fd8fa93bbc7092c401b3367deff6",
+    "environment.csv": "7b834751cc0d090aaac33c0781cfdc52b2a6cbb78851abbd676958e1d8bc0800",
+    "history.csv": "3788f55ee91c35b9d746dd4219b723350787259a6943d33dd06029905aa62a69",
+    "inputs.set": "e30507c9d4cbd96e0bb60e504ed49d90d7184957dd9e06fa280fd45c5cc6e1d7",
+    "journals\\logs\\20261012.log": "4dab0f3561dd9e2d425c9e9db7b4e1cab5c333d7c13588e3d1719975a90e7c87",
+    "journals\\logs\\metaeditor.log": "ec28f4768edde5761d770f5a7ed56814af30a4c8bbe3f1d41501c0f7aa1f08f2",
+    "journals\\Tester\\Agent-127.0.0.1-39057\\logs\\20261012.log": "7108b36b1735bdf31560adee73d70bb0a7b3353a61458e390fc01be423a817e4",
+    "journals\\Tester\\logs\\20261012.log": "fa0149bb1b5c187c08d0edf5e841e540bc8049e88628051ed86b87a13153021d",
+    "report.htm": "cc8fe78bce6db8f3392f24ba1525189ebf1e32f6f005e66b471d0b40361bc237",
+    "runtime_after.json": "0670aa9dceed0e3be83bfcad35b510bce6bdc2f69daa0c1e1404f7f9a11cbf70",
+    "runtime_before.json": "0670aa9dceed0e3be83bfcad35b510bce6bdc2f69daa0c1e1404f7f9a11cbf70",
+    "telemetry.csv": "2225e692e50524cadf740c6ea8ee5d5a1f07baadd0939062eb466c88334e3250",
+    "tester_public.ini": "5d80a9ce8edeaa947c442bfd5cb4df2c53dbdf03f33c95b84d2d3d8e289e3b1d"
+  },
+  "re_audited": true,
+  "newly_executed": false
+}

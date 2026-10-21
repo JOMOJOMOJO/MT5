@@ -1,0 +1,35 @@
+--- environment_r3
++++ environment_r4
+@@ -4,7 +4,8 @@
+ int qeFile=INVALID_HANDLE,qeConversion=INVALID_HANDLE,qeHistory=INVALID_HANDLE;
+ string qeSymbols[],qePrevious[];
+ datetime qeMinute=0;
+-bool qeFinished=false;
++bool qeFinished=false,qeHaveBaseline=false;
++int qeChanges=0;
+ string QENumber(const double value){return DoubleToString(value,16);}
+ string QESpec(const string symbol)
+   {
+@@ -41,17 +42,20 @@
+    for(int i=0;i<ArraySize(qeSymbols);i++)
+      {
+       string value=QESpec(qeSymbols[i]);
+-      bool changed=qePrevious[i]!="" && qePrevious[i]!=value;
+-      if(changed){QEWriteSpec("CHANGE",qeSymbols[i],value);Print("QE_SPEC_CHANGED ",qeSymbols[i]);}
++      bool changed=qeHaveBaseline && qePrevious[i]!=value;
++      if(changed){qeChanges++;QEWriteSpec("CHANGE",qeSymbols[i],value);Print("QE_SPEC_CHANGED ",qeSymbols[i]);}
+       if(phase=="START" || phase=="END")QEWriteSpec(phase,qeSymbols[i],value);
+       qePrevious[i]=value;
+      }
++   qeHaveBaseline=true;
+   }
+ bool QEStart(const string symbols,const string filename)
+   {
+    if(!MQLInfoInteger(MQL_TESTER) || MQLInfoInteger(MQL_OPTIMIZATION))return false;
+    int n=StringSplit(symbols,',',qeSymbols);if(n<1)return false;
+    ArrayResize(qePrevious,n);
++   for(int i=0;i<n;i++)qePrevious[i]="";
++   qeHaveBaseline=false;qeFinished=false;qeChanges=0;qeMinute=0;
+    qeFile=FileOpen(filename+".environment.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+    qeConversion=FileOpen(filename+".conversion.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+    qeHistory=FileOpen(filename+".history.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');

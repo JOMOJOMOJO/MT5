@@ -1,0 +1,27 @@
+{
+  "risk_reasons": {
+    "MIN_VOLUME_EXCEEDS_RISK": 20,
+    "OK": 19
+  },
+  "risk_reasons_by_symbol": {
+    "AUDUSD": {
+      "OK": 6
+    },
+    "EURUSD": {
+      "OK": 6
+    },
+    "GBPUSD": {
+      "MIN_VOLUME_EXCEEDS_RISK": 3,
+      "OK": 5
+    },
+    "USDJPY": {
+      "MIN_VOLUME_EXCEEDS_RISK": 3,
+      "OK": 2
+    },
+    "XAUUSD": {
+      "MIN_VOLUME_EXCEEDS_RISK": 14
+    }
+  },
+  "normalized_risk_rejections": [],
+  "evidence_limit": "No same-symbol entry deal in the rejection minute; not a general proof about delayed submissions"
+}

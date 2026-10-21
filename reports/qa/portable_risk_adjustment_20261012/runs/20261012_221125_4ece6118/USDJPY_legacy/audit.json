@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "quality": {
+    "strict_real_tick_pass": false,
+    "category": "GENERATED_TICKS",
+    "header_real_tick_percent": 0.0,
+    "matching_execution_blocks": 1,
+    "test_finished_in_block": true,
+    "fallback_line_count": 1,
+    "fallback_evidence": [
+      "CS\t3\t22:12:25.608\tTicks\tUSDJPY : 2023.01.01 00:00 - 2023.04.01 00:00  no real ticks, every tick generation used"
+    ],
+    "scope": "Expert/date plus unique telemetry input when present; ambiguous executions rejected",
+    "limit": "Header percentage may be rounded; no-fallback log is evidence, not a hash proof of historical ticks"
+  },
+  "actual": {
+    "n": 49,
+    "net": -239.91,
+    "pf": 0.8271877948813992,
+    "win_rate": 0.4489795918367347,
+    "mean_fill_r": -0.07271808445345011,
+    "exact_quote_n": 49,
+    "mean_mid_move_r": -0.008809461753876814,
+    "mean_spread_cost_r": 0.06390862269955447,
+    "mean_execution_residual_r": 0.0,
+    "commission": 0.0,
+    "swap": 0.0,
+    "fee": 0.0
+  },
+  "risk_reasons": {
+    "OK": 49,
+    "NORMALIZED_VOLUME_EXCEEDS_RISK": 3
+  },
+  "risk_reasons_by_symbol": {
+    "USDJPY": {
+      "OK": 49,
+      "NORMALIZED_VOLUME_EXCEEDS_RISK": 3
+    }
+  },
+  "normalized_risk_rejections": [
+    {
+      "time": "2023.01.26 14:20:00",
+      "symbol": "USDJPY",
+      "volume": 0.52,
+      "budget": 65.52890500000001,
+      "planned_loss": 65.71,
+      "excess": 0.1810949999999849,
+      "no_entry_in_signal_minute": true
+    },
+    {
+      "time": "2023.02.06 08:15:00",
+      "symbol": "USDJPY",
+      "volume": 0.57,
+      "budget": 65.57135,
+      "planned_loss": 65.83,
+      "excess": 0.25865000000000293,
+      "no_entry_in_signal_minute": true
+    },
+    {
+      "time": "2023.02.15 17:35:00",
+      "symbol": "USDJPY",
+      "volume": 0.36,
+      "budget": 64.199915,
+      "planned_loss": 64.25,
+      "excess": 0.050084999999995716,
+      "no_entry_in_signal_minute": true
+    }
+  ],
+  "evidence_limit": "No same-symbol entry deal in the rejection minute; not a general proof about delayed submissions",
+  "context_rows": 456,
+  "context_missing": 0
+}

@@ -1,0 +1,42 @@
+{
+  "risk_reasons": {
+    "OK": 49,
+    "NORMALIZED_VOLUME_EXCEEDS_RISK": 3
+  },
+  "risk_reasons_by_symbol": {
+    "USDJPY": {
+      "OK": 49,
+      "NORMALIZED_VOLUME_EXCEEDS_RISK": 3
+    }
+  },
+  "normalized_risk_rejections": [
+    {
+      "time": "2023.01.26 14:20:00",
+      "symbol": "USDJPY",
+      "volume": 0.52,
+      "budget": 65.52890500000001,
+      "planned_loss": 65.71,
+      "excess": 0.1810949999999849,
+      "no_entry_in_signal_minute": true
+    },
+    {
+      "time": "2023.02.06 08:15:00",
+      "symbol": "USDJPY",
+      "volume": 0.57,
+      "budget": 65.57135,
+      "planned_loss": 65.83,
+      "excess": 0.25865000000000293,
+      "no_entry_in_signal_minute": true
+    },
+    {
+      "time": "2023.02.15 17:35:00",
+      "symbol": "USDJPY",
+      "volume": 0.36,
+      "budget": 64.199915,
+      "planned_loss": 64.25,
+      "excess": 0.050084999999995716,
+      "no_entry_in_signal_minute": true
+    }
+  ],
+  "evidence_limit": "No same-symbol entry deal in the rejection minute; not a general proof about delayed submissions"
+}

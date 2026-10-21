@@ -1,0 +1,4 @@
+symbol,execution_pass,cash_pass,environment_pass,history_pass,candidate_pass,passed,candidate_context_rows
+USDJPY,True,True,True,True,True,True,342
+EURUSD,True,True,True,True,True,True,294
+XAUUSD,True,True,True,True,True,True,270

@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "tests": 16,
+  "quality": {
+    "strict_real_tick_pass": false,
+    "category": "GENERATED_TICKS",
+    "header_real_tick_percent": 0.0,
+    "matching_execution_blocks": 1,
+    "test_finished_in_block": true,
+    "fallback_line_count": 1,
+    "fallback_evidence": [
+      "CS\t3\t22:12:14.294\tTicks\tXAUUSD : 2023.01.02 00:00 - 2023.01.04 00:00  no real ticks, every tick generation used"
+    ],
+    "scope": "Expert/date plus unique telemetry input when present; ambiguous executions rejected",
+    "limit": "Header percentage may be rounded; no-fallback log is evidence, not a hash proof of historical ticks"
+  }
+}

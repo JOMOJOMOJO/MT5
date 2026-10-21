@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "purpose": "COST_DECOMPOSITION_AND_FIXED_DAILY_BASELINE",
+  "sources": {
+    "cost_long": "reports\\qa\\cost_channel_20261008\\frozen\\cost_long.mq5",
+    "cost_short": "reports\\qa\\cost_channel_20261008\\frozen\\cost_short.mq5",
+    "daily_channel": "reports\\qa\\cost_channel_20261008\\frozen\\daily_channel.mq5"
+  },
+  "runs": [
+    {
+      "run_id": "cost_long_2023_2024",
+      "kind": "cost",
+      "expert": "cost_long",
+      "inputs": "cost_long.json",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "reference": "reports\\qa\\m5_ichimoku_diagnostics_20261007\\runs\\20261007_183110_12bea14d\\known_2023_2024\\report.htm",
+      "reference_sha256": "a733a96b2f12103e64c439154d8fdc74f4b03b019a1aa1ecba1843209349c80b"
+    },
+    {
+      "run_id": "cost_long_2025_2026",
+      "kind": "cost",
+      "expert": "cost_long",
+      "inputs": "cost_long.json",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "reference": "reports\\qa\\m5_ichimoku_diagnostics_20261007\\runs\\20261007_183110_12bea14d\\known_2025_2026\\report.htm",
+      "reference_sha256": "d394f4f1855dfc38962106cce71a9478e2db9da25eaaea946a9c561bd7837adc"
+    },
+    {
+      "run_id": "cost_short_2023_2024",
+      "kind": "cost",
+      "expert": "cost_short",
+      "inputs": "cost_short.json",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "reference": "reports\\qa\\m5_short_ichimoku_20261007\\runs\\20261007_193908_b4fa5afc\\short_2023_2024\\report.htm",
+      "reference_sha256": "0c0713d44ed45875405f82bedc04d02ba9903ef5acfa532f957ae3bac5eebdd4"
+    },
+    {
+      "run_id": "cost_short_2025_2026",
+      "kind": "cost",
+      "expert": "cost_short",
+      "inputs": "cost_short.json",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "reference": "reports\\qa\\m5_short_ichimoku_20261007\\runs\\20261007_193908_b4fa5afc\\short_2025_2026\\report.htm",
+      "reference_sha256": "ab59ff4192ef388029f6d10aae4ae35c5e84bc61f1d343eec5caf02d8d81cacc"
+    },
+    {
+      "run_id": "daily_smoke",
+      "kind": "portfolio",
+      "expert": "daily_channel",
+      "inputs": "daily_channel.json",
+      "date_from": "2023.01.01",
+      "date_to": "2023.04.01",
+      "timeframe": "M1",
+      "reference": "",
+      "label": "QA_ONLY"
+    },
+    {
+      "run_id": "daily_2023_2024",
+      "kind": "portfolio",
+      "expert": "daily_channel",
+      "inputs": "daily_channel.json",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M1",
+      "reference": "",
+      "label": "KNOWN_PERIOD_NOT_OOS"
+    },
+    {
+      "run_id": "daily_2025_2026",
+      "kind": "portfolio",
+      "expert": "daily_channel",
+      "inputs": "daily_channel.json",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M1",
+      "reference": "",
+      "label": "KNOWN_PERIOD_NOT_OOS"
+    }
+  ],
+  "expected_server": "VantageTradingLtd-Live",
+  "expected_broker": "Vantage Trading Ltd",
+  "symbols": [
+    "USDJPY",
+    "EURUSD",
+    "GBPUSD",
+    "AUDUSD",
+    "XAUUSD"
+  ],
+  "hashes": {
+    "reports\\qa\\cost_channel_20261008\\frozen\\cost_long.json": "0f73285e8d5d844cae2928592a517c7975ea7d4be3b7b3f6bd3b71a8d4bbe2c7",
+    "reports\\qa\\cost_channel_20261008\\frozen\\cost_long.mq5": "be6e3f8ca79822cd12b9daea945e20eae5e12872196f06e5087a6e3cfc8083e6",
+    "reports\\qa\\cost_channel_20261008\\frozen\\cost_short.json": "874e8e7b31a651da844df13b56847bd7cc4ff1b00b3a34260416955de79f9a30",
+    "reports\\qa\\cost_channel_20261008\\frozen\\cost_short.mq5": "7711196dfffeb7ca5ad6af15a14ee850693899a3dd93e017b71ff15f5415cd77",
+    "reports\\qa\\cost_channel_20261008\\frozen\\daily_channel.json": "422fffd01eeded4da1cd134dfa4bd90eb38075e165289b99d532339527a64abb",
+    "reports\\qa\\cost_channel_20261008\\frozen\\daily_channel.mq5": "60fc5b2b72912f38d9a9beb79cc9f9933bff185045e91dfe196feb1d45db4b60",
+    "mql\\Experts\\Research\\DailyChannelPortfolio.mq5": "c6695bd0de44ae64a76edbf7debaa3427604366cbd9ae4028e1d97b8cbbdff08",
+    "mql\\Include\\Research\\DealQuoteAudit.mqh": "413df56d9168b06b610ebd9a4b8d4874c06f9a9e7b8974b199545094c8de9acd",
+    "tools\\quality12b\\analyze_cost_channel.py": "d2dd3925f79fd1ccf93a642aac9fdb6270f874408de1dd9bc15c85f75eeb733e",
+    "scripts\\run-cost-channel.ps1": "09d7cf1e24a0ebe8c345c9165bcc6b6f61311e5ce4bf0780d2940a60cdcccde9",
+    "tools\\quality12b\\prepare_cost_channel.py": "078c64766bddc6d18cff25e3d1b632236a8facf1ae211278a8f7806a827c266e",
+    "tools\\quality12b\\analyze_reports.py": "d655e406132eca6e1db9759d85e58b71d61bb7ed03a069dc1d3c7af768c8460b",
+    "tools\\quality12b\\compare_reproduction.py": "d2ccab78aabacb81d177eb8428e026c7a42b63b9ad2d21084bfacd86cdbe5a7f",
+    "tools\\quality12b\\tick_quality.py": "6c8e61501813d28b26d210f42df9408591e2d8f5b88036e7347e926cec25427c",
+    "tools\\quality12b\\test_cost_channel.py": "234542f10e23dfe1f5d13459ce893bd8ae3dc87a42a34b0364244dbdd64b79d6"
+  }
+}

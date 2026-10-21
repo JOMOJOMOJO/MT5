@@ -1,0 +1,102 @@
+--- m5_multitf
++++ m5_portable
+@@ -8,6 +8,7 @@
+ #property description "USDJPY multi-bucket continuation prototype using EMA13/EMA100 trend, 50-unit anti-chop state, and parallel bucket entries."
+ 
+ #include <Trade\Trade.mqh>
++#include "../../Include/Research/PortableTrading.mqh"
+ 
+ CTrade trade;
+ 
+@@ -384,42 +385,12 @@
+    return InpRiskPercent;
+   }
+ 
+-double CalculateVolume(ENUM_ORDER_TYPE side, double entryPrice, double stopPrice)
+-  {
+-   double equity = AccountInfoDouble(ACCOUNT_EQUITY);
+-   double riskPercent = GetEffectiveRiskPercent(equity);
+-   double riskAmount = equity * (riskPercent / 100.0);
+-   if(riskAmount <= 0.0)
+-      return 0.0;
+-
+-   double minVolume = SymbolInfoDouble(runtimeSymbol, SYMBOL_VOLUME_MIN);
+-   double maxVolume = SymbolInfoDouble(runtimeSymbol, SYMBOL_VOLUME_MAX);
+-   double stepVolume = SymbolInfoDouble(runtimeSymbol, SYMBOL_VOLUME_STEP);
+-   if(minVolume <= 0.0 || maxVolume < minVolume || stepVolume <= 0.0)
+-      return 0.0;
+-
+-   double lossAtMin = 0.0;
+-   if(!OrderCalcProfit(side,runtimeSymbol,minVolume,entryPrice,stopPrice,lossAtMin) || lossAtMin >= 0.0)
+-      return 0.0;
+-   double moneyPerLot = -lossAtMin / minVolume;
+-   if(moneyPerLot <= 0.0)
+-      return 0.0;
+-
+-   double rawVolume = riskAmount / moneyPerLot;
+-   double normalized = MathFloor(MathMin(rawVolume,maxVolume) / stepVolume + 1e-10) * stepVolume;
+-   if(normalized < minVolume)
+-     {
+-      Print("ORDER_SKIPPED MIN_VOLUME_EXCEEDS_RISK");
+-      return 0.0;
+-     }
+-   normalized = NormalizeDouble(normalized, VolumeDigits(stepVolume));
+-   double actualLoss = 0.0, margin = 0.0;
+-   if(!OrderCalcProfit(side,runtimeSymbol,normalized,entryPrice,stopPrice,actualLoss) ||
+-      -actualLoss > riskAmount + 1e-7 ||
+-      !OrderCalcMargin(side,runtimeSymbol,normalized,entryPrice,margin) ||
+-      margin > AccountInfoDouble(ACCOUNT_MARGIN_FREE)) return 0.0;
+-   PrintFormat("RISK volume=%.8f expected_loss=%.4f budget=%.4f margin=%.4f",normalized,-actualLoss,riskAmount,margin);
+-   return normalized;
++double CalculateVolume(ENUM_ORDER_TYPE side,double entryPrice,double stopPrice)
++  {
++   PFPlan p;bool ok=PFMakePlan(runtimeSymbol,side,entryPrice,stopPrice,InpRiskPercent,GetDistanceUnit(),p);
++   PFWrite(runtimeSymbol,side,entryPrice,stopPrice,p);
++   if(!ok){Print("ORDER_SKIPPED ",p.reason);return 0;}
++   return p.volume;
+   }
+ 
+ bool IsNewBarForTimeframe(ENUM_TIMEFRAMES timeframe, datetime &lastSeenBarTime, datetime &barTime)
+@@ -816,6 +787,7 @@
+    if(!SymbolInfoTick(runtimeSymbol,dcQuote)) return;
+    dcDecision=TimeCurrent();dcId=TimeToString(barTime,TIME_DATE|TIME_SECONDS);
+    DCLoad(dcDecision,dcQuote.ask);DCWrite("CANDIDATE",dcDecision,dcQuote.ask,gate);
++   PCWrite(dcId,runtimeSymbol,dcDecision,dcPlan);
+    int n=ArraySize(dcPaths);ArrayResize(dcPaths,n+1);ZeroMemory(dcPaths[n]);
+    dcPaths[n].id=dcId;dcPaths[n].entry=dcDecision;DCUpdate(false);
+   }
+@@ -829,6 +801,8 @@
+    if(dcContext!=INVALID_HANDLE) FileClose(dcContext);
+    if(dcPath!=INVALID_HANDLE) FileClose(dcPath);
+   }
++
++#include "../../Include/Research/PortableContextDiagnostics.mqh"
+ 
+ bool PersistRiskState()
+   {
+@@ -2455,7 +2429,7 @@
+ 
+ int OnInit()
+   {
+-   if(!MQLInfoInteger(MQL_TESTER)) return INIT_FAILED;
++   if(!MQLInfoInteger(MQL_TESTER) || MQLInfoInteger(MQL_OPTIMIZATION)) return INIT_FAILED; // Parallel logs require a pass-specific optimization adapter.
+    runtimeSymbol = NormalizePresetString(InpSymbol);
+    if(runtimeSymbol=="") runtimeSymbol=_Symbol;
+    if(runtimeSymbol!=_Symbol) { Print("Attach to requested symbol chart: OnTick belongs to chart symbol"); return INIT_PARAMETERS_INCORRECT; }
+@@ -2605,7 +2579,7 @@
+       timerStarted = true;
+      }
+ 
+-   if(!DCOpen()) return INIT_FAILED;
++   if(!DCOpen() || !PFOpen(runtimeTelemetryFileName+".risk.csv") || !PCOpen(runtimeSymbol,runtimeTelemetryFileName+".portable_context.csv")) return INIT_FAILED;
+    RefreshOperatorMode();
+    WriteStatusSnapshot();
+    return INIT_SUCCEEDED;
+@@ -2620,6 +2594,7 @@
+       EventKillTimer();
+       timerStarted = false;
+      }
++   PFClose();PCClose();
+    DCClose();
+    CloseTelemetryFile();
+    if(funnelHandle!=INVALID_HANDLE) FileClose(funnelHandle);

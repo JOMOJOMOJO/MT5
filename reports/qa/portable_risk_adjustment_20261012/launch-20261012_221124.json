@@ -1,0 +1,8 @@
+﻿{
+    "launcher_pid":  23880,
+    "launched_at":  "2026-10-12T22:11:24.6188844+09:00",
+    "stdout":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\portable_risk_adjustment_20261012\\launch-20261012_221124.stdout.log",
+    "stderr":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\portable_risk_adjustment_20261012\\launch-20261012_221124.stderr.log",
+    "planned_runs":  12,
+    "scope":  "volume_adjustment_only"
+}

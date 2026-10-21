@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "classification": "EXACT_EXECUTIONS_AND_COSTS",
+  "ignored_execution_inputs": [
+    "InpDeviationATR",
+    "InpIndependentClock",
+    "InpTelemetryFileName"
+  ],
+  "errors": [],
+  "deal_differences": [],
+  "reference_trades": 7,
+  "candidate_trades": 7
+}

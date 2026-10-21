@@ -1,0 +1,15 @@
+﻿{
+    "terminal_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Channel\\20261008_103353_57f61562",
+    "manifest_sha256":  "DFABB583A146030226DF4E271A43A6732117362926E5464BEA70A899DF0D8A6E",
+    "batch_id":  "20261008_103353_57f61562",
+    "run_order":  [
+                      "cost_long_2023_2024",
+                      "cost_long_2025_2026",
+                      "cost_short_2023_2024",
+                      "cost_short_2025_2026",
+                      "daily_smoke",
+                      "daily_2023_2024",
+                      "daily_2025_2026"
+                  ],
+    "source_data_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Quality12b\\20261007_193908_b4fa5afc"
+}

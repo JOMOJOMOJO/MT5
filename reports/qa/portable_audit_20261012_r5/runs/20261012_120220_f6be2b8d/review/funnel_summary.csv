@@ -1,0 +1,4 @@
+symbol,evaluated_bars,signal_bars,signal_spread_failed,spread_passed_but_position_open,other_gate_blocked,entry_gate_passed,normalized_risk_rejected,entries,note
+USDJPY,18720,114,44,12,6,52,3,49,"Spread and other causes can overlap; priority here is spread, then open position, then other"
+EURUSD,18720,98,50,11,1,36,0,36,"Spread and other causes can overlap; priority here is spread, then open position, then other"
+XAUUSD,17604,90,8,21,6,55,0,55,"Spread and other causes can overlap; priority here is spread, then open position, then other"

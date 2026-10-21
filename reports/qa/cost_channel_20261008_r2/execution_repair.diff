@@ -1,0 +1,62 @@
+--- daily_v1
++++ daily_v1.01
+@@ -1,5 +1,5 @@
+ #property strict
+-#property version "1.00"
++#property version "1.01"
+ // Fixed research baseline; deliberately refuses attachment outside the tester.
+ #include <Trade/Trade.mqh>
+ // Read-only tester observer. Missing synchronous quotes are never interpolated.
+@@ -75,7 +75,7 @@
+ input double InpDailyLossPercent=3.0;
+ input double InpPeakLossPercent=12.0;
+ CTrade dcTrade;
+-struct DCAsset{string name;int atr;datetime consumed;bool close_due;};
++struct DCAsset{string name;int atr;datetime consumed;bool close_due;datetime retry_bar,retry_signal;};
+ DCAsset dcAssets[];
+ int dcLog=INVALID_HANDLE,dcDay=-1;
+ datetime dcMinute=0;
+@@ -127,6 +127,7 @@
+    for(int j=0;j<n;j++)
+      {
+       dcAssets[j].name=names[j];dcAssets[j].consumed=0;dcAssets[j].close_due=false;
++      dcAssets[j].retry_bar=0;dcAssets[j].retry_signal=0;
+       if(!SymbolSelect(names[j],true)){Print("DC_FATAL_SYMBOL ",names[j]);return INIT_FAILED;}
+       dcAssets[j].atr=iATR(names[j],PERIOD_D1,InpATRPeriod);
+       if(dcAssets[j].atr==INVALID_HANDLE)return INIT_FAILED;
+@@ -149,6 +150,11 @@
+    if(CopyRates(symbol,PERIOD_D1,0,count,r)!=count)return;
+    if(r[0].time>TimeCurrent() || r[1].time>=r[0].time || dcAssets[index].consumed==r[0].time)return;
+    double a[];if(CopyBuffer(dcAssets[index].atr,0,1,1,a)!=1 || a[0]<=0)return;
++   if(dcAssets[index].retry_bar>0)
++     {
++      DCLog(symbol,dcAssets[index].retry_signal,dcAssets[index].retry_bar==r[0].time?"RETRY_RESUMED":"RETRY_EXPIRED");
++      dcAssets[index].retry_bar=0;dcAssets[index].retry_signal=0;
++     }
+    dcAssets[index].consumed=r[0].time;
+    DCLog(symbol,r[1].time,"BAR_EVALUATED",r[1].close,a[0]);
+    // Exclude signal bar [1] from both channels; only indices [2..N+1].
+@@ -191,6 +197,14 @@
+    DCLog(symbol,r[1].time,"RISK_PLAN",price,a[0],level,sl,volume,risk);
+    bool sent=side>0?dcTrade.Buy(volume,symbol,price,sl,0,"D1 channel"):dcTrade.Sell(volume,symbol,price,sl,0,"D1 channel");
+    uint rc=dcTrade.ResultRetcode();DCLog(symbol,r[1].time,sent?"SEND_RESULT":"SEND_FAILED",price,a[0],level,sl,volume,risk,rc);
++   // MARKET_CLOSED is a definite rejection, not an uncertain send. Preserve this
++   // closed-bar signal until a subsequent fresh quote in the same D1 bar.
++   if(rc==TRADE_RETCODE_MARKET_CLOSED)
++     {
++      dcAssets[index].consumed=0;dcAssets[index].retry_bar=r[0].time;dcAssets[index].retry_signal=r[1].time;
++      DCLog(symbol,r[1].time,"RETRY_MARKET_CLOSED",price,a[0],level,sl,volume,risk,rc);
++      return;
++     }
+    if(rc==TRADE_RETCODE_TIMEOUT||rc==TRADE_RETCODE_CONNECTION||rc==TRADE_RETCODE_PLACED)dcUncertain=true;
+    if(PositionSelect(symbol))
+      {
+@@ -217,6 +231,8 @@
+ double OnTester(){DQDrain();return (double)dcErrors;}
+ void OnDeinit(const int reason)
+   {
++   for(int j=0;j<ArraySize(dcAssets);j++)
++      if(dcAssets[j].retry_bar>0)DCLog(dcAssets[j].name,dcAssets[j].retry_signal,"RETRY_END_CENSORED");
+    DQClose();if(dcLog!=INVALID_HANDLE)FileClose(dcLog);
+    for(int j=0;j<ArraySize(dcAssets);j++)if(dcAssets[j].atr!=INVALID_HANDLE)IndicatorRelease(dcAssets[j].atr);
+    PrintFormat("DC_FINISH errors=%d uncertain=%d peak_stop=%d",dcErrors,(int)dcUncertain,(int)dcPeakStop);

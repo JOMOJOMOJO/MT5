@@ -1,0 +1,34 @@
+{
+  "passed": false,
+  "classification": "EXECUTION_DIFFERENCE",
+  "ignored_execution_inputs": [
+    "InpDeviationATR",
+    "InpIndependentClock",
+    "InpTelemetryFileName"
+  ],
+  "errors": [
+    "Execution or cost differs"
+  ],
+  "deal_differences": [
+    {
+      "index": 2,
+      "fields": {
+        "swap": [
+          "-1.35000000",
+          "-1.32000000"
+        ]
+      }
+    },
+    {
+      "index": 12,
+      "fields": {
+        "swap": [
+          "-0.68000000",
+          "-0.66000000"
+        ]
+      }
+    }
+  ],
+  "reference_trades": 7,
+  "candidate_trades": 7
+}

@@ -1,0 +1,8 @@
+﻿{
+    "launcher_pid":  23576,
+    "launched_at":  "2026-10-12T12:02:19.5124604+09:00",
+    "stdout":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\portable_audit_20261012_r5\\launch-20261012_120219.stdout.log",
+    "stderr":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\portable_audit_20261012_r5\\launch-20261012_120219.stderr.log",
+    "reused_runs":  6,
+    "new_mt5_runs":  4
+}

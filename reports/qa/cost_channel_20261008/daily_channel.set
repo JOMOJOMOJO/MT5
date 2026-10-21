@@ -1,0 +1,12 @@
+InpSymbols=USDJPY,EURUSD,GBPUSD,AUDUSD,XAUUSD
+InpTelemetryFileName=daily_channel.csv
+InpMagic=261008201
+InpEntryBars=20
+InpExitBars=10
+InpATRPeriod=14
+InpSLATR=2.0
+InpRiskPercent=0.25
+InpTotalRiskPercent=0.75
+InpUSDGroupRiskPercent=0.50
+InpDailyLossPercent=3.0
+InpPeakLossPercent=12.0

@@ -1,0 +1,10 @@
+﻿{
+    "launched_at":  "2026-10-08T17:15:43.4197934+09:00",
+    "runner_pid":  9796,
+    "purpose":  "DAILY_EXECUTION_REPAIR_R2",
+    "run_count":  3,
+    "reused_cost_runs":  4,
+    "stdout":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\cost_channel_20261008_r2\\launch-20261008_171543.stdout.log",
+    "stderr":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\cost_channel_20261008_r2\\launch-20261008_171543.stderr.log",
+    "waited":  false
+}

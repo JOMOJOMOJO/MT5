@@ -1,0 +1,109 @@
+--- r5_m5_portable
++++ risk_adjustment
+@@ -235,6 +235,77 @@
+   }
+ void PFClose(){if(pfRiskFile!=INVALID_HANDLE){FileClose(pfRiskFile);pfRiskFile=INVALID_HANDLE;}}
+ #endif
++
++#ifndef PORTABLE_RISK_ADJUSTMENT_MQH
++#define PORTABLE_RISK_ADJUSTMENT_MQH
++
++// Opt-in research adapter. No orders, no increase of the original volume or risk budget.
++struct PFAudit
++  {
++   string before_reason;
++   double before_volume,before_loss;
++   int checks;
++  };
++double PFNextSmallerVolume(const double volume,const double loss,const double budget,
++                          const double minimum,const double maximum,const double step)
++  {
++   if(!MathIsValidNumber(volume)||!MathIsValidNumber(loss)||!MathIsValidNumber(budget)||
++      volume<=0||loss<=0||budget<=0||step<=0||minimum<=0||maximum<minimum)return 0;
++   if(loss<=budget+1e-7)return volume;
++   double ceiling=MathMin(volume-step,volume*budget/loss);
++   double next=PFFloorVolume(ceiling,minimum,maximum,step);
++   if(next<=0||next>=volume-1e-10)return 0;
++   return next;
++  }
++bool PFReduceRejectedPlan(const string symbol,const ENUM_ORDER_TYPE side,const double entry,const double sl,
++                          const bool enabled,PFPlan &p,PFAudit &a)
++  {
++   ZeroMemory(a);a.before_reason=p.reason;a.before_volume=p.volume;a.before_loss=p.loss;
++   if(p.reason=="OK")return true;
++   if(!enabled||p.reason!="NORMALIZED_VOLUME_EXCEEDS_RISK")return false;
++   if(p.min_loss>p.budget+1e-7){p.reason="MIN_VOLUME_EXCEEDS_RISK";return false;}
++   // Bounded even for an unusual/non-linear contract. Every accepted value is re-priced.
++   for(int i=0;i<32;i++)
++     {
++      double next=PFNextSmallerVolume(p.volume,p.loss,p.budget,p.min_volume,p.max_volume,p.step);
++      if(next<=0||next>=p.volume-1e-10){p.reason="ADJUSTED_VOLUME_UNAVAILABLE";return false;}
++      p.volume=next;a.checks++;
++      double profit=0;p.reason="PROFIT_RECHECK_FAILED";
++      if(!OrderCalcProfit(side,symbol,p.volume,entry,sl,profit)||!MathIsValidNumber(profit)||profit>=0)return false;
++      p.loss=-profit;
++      if(p.loss>p.budget+1e-7){p.reason="NORMALIZED_VOLUME_EXCEEDS_RISK";continue;}
++      p.reason="MARGIN_CALC_FAILED";
++      if(!OrderCalcMargin(side,symbol,p.volume,entry,p.margin)||!MathIsValidNumber(p.margin)||p.margin<0)return false;
++      p.reason="INSUFFICIENT_MARGIN";
++      if(p.margin>AccountInfoDouble(ACCOUNT_MARGIN_FREE))return false;
++      p.reason="OK";return true;
++     }
++   p.reason="RISK_ADJUSTMENT_LIMIT";return false;
++  }
++bool PFMakeAdjustedPlan(const string symbol,const ENUM_ORDER_TYPE side,const double entry,const double sl,
++                        const double risk_percent,const double atr,const bool enabled,PFPlan &p,PFAudit &a)
++  {
++   PFMakePlan(symbol,side,entry,sl,risk_percent,atr,p);
++   return PFReduceRejectedPlan(symbol,side,entry,sl,enabled,p,a);
++  }
++int pfaFile=INVALID_HANDLE;
++bool PFAOpen(const string file)
++  {
++   pfaFile=FileOpen(file,FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');if(pfaFile==INVALID_HANDLE)return false;
++   FileWrite(pfaFile,"time","symbol","side","enabled","entry","sl","budget","before_reason","before_volume","before_loss",
++             "checks","after_reason","after_volume","after_loss","margin","min_volume","step","max_volume");return true;
++  }
++void PFAWrite(const string symbol,const ENUM_ORDER_TYPE side,const bool enabled,const double entry,const double sl,
++              const PFPlan &p,const PFAudit &a)
++  {
++   if(pfaFile==INVALID_HANDLE)return;
++   FileWrite(pfaFile,TimeToString(TimeCurrent(),TIME_DATE|TIME_SECONDS),symbol,EnumToString(side),(int)enabled,entry,sl,
++             p.budget,a.before_reason,a.before_volume,a.before_loss,a.checks,p.reason,p.volume,p.loss,p.margin,p.min_volume,p.step,p.max_volume);
++  }
++void PFAClose(){if(pfaFile!=INVALID_HANDLE){FileClose(pfaFile);pfaFile=INVALID_HANDLE;}}
++#endif
++
++input bool InpAdjustRoundedVolume=false;
+ 
+ 
+ CTrade trade;
+@@ -614,8 +685,9 @@
+ 
+ double CalculateVolume(ENUM_ORDER_TYPE side,double entryPrice,double stopPrice)
+   {
+-   PFPlan p;bool ok=PFMakePlan(runtimeSymbol,side,entryPrice,stopPrice,InpRiskPercent,GetDistanceUnit(),p);
++   PFPlan p;PFAudit a;bool ok=PFMakeAdjustedPlan(runtimeSymbol,side,entryPrice,stopPrice,InpRiskPercent,GetDistanceUnit(),InpAdjustRoundedVolume,p,a);
+    PFWrite(runtimeSymbol,side,entryPrice,stopPrice,p);
++   PFAWrite(runtimeSymbol,side,InpAdjustRoundedVolume,entryPrice,stopPrice,p,a);
+    if(!ok){Print("ORDER_SKIPPED ",p.reason);return 0;}
+    return p.volume;
+   }
+@@ -2867,7 +2939,7 @@
+       timerStarted = true;
+      }
+ 
+-   if(!DCOpen() || !PFOpen(runtimeTelemetryFileName+".risk.csv") || !PCOpen(runtimeSymbol,runtimeTelemetryFileName+".portable_context.csv")) return INIT_FAILED;
++   if(!DCOpen() || !PFOpen(runtimeTelemetryFileName+".risk.csv") || !PFAOpen(runtimeTelemetryFileName+".adjustment.csv") || !PCOpen(runtimeSymbol,runtimeTelemetryFileName+".portable_context.csv")) return INIT_FAILED;
+    RefreshOperatorMode();
+    WriteStatusSnapshot();
+    return INIT_SUCCEEDED;
+@@ -2882,7 +2954,7 @@
+       EventKillTimer();
+       timerStarted = false;
+      }
+-   PFClose();PCClose();
++   PFAClose();PFClose();PCClose();
+    DCClose();
+    CloseTelemetryFile();
+    if(funnelHandle!=INVALID_HANDLE) FileClose(funnelHandle);

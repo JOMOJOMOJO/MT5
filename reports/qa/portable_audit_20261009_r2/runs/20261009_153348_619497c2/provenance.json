@@ -1,0 +1,17 @@
+﻿{
+    "terminal_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5PortableAudit\\20261009_153348_619497c2",
+    "manifest_sha256":  "B29F20E98774BC233D73E86836DAB643BB8D7CDC785484675A7994BBD9D830E9",
+    "batch_id":  "20261009_153348_619497c2",
+    "run_order":  [
+                      "harness",
+                      "daily_legacy_clock",
+                      "daily_timer",
+                      "m5_USDJPY_reference",
+                      "m5_USDJPY_portable",
+                      "m5_EURUSD_reference",
+                      "m5_EURUSD_portable",
+                      "m5_XAUUSD_reference",
+                      "m5_XAUUSD_portable"
+                  ],
+    "source_data_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Channel\\20261008_171544_bbf5d27f"
+}
