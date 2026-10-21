@@ -1,0 +1,254 @@
+[
+  {
+    "old": "InpMinWindowRangePips",
+    "new": "InpMinWindowRangeAtr",
+    "old_default": 18.0,
+    "new_default": 1.8,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRoundStepPips",
+    "new": "InpGridStepAtr",
+    "old_default": 50.0,
+    "new_default": 5.0,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpMaxEma13DistancePips",
+    "new": "InpMaxEma13DistanceAtr",
+    "old_default": 12.0,
+    "new_default": 1.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpMinSlowSlopePips",
+    "new": "InpMinSlowSlopeAtr",
+    "old_default": 0.0,
+    "new_default": 0.0,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpStopLossPips",
+    "new": "InpStopLossAtr",
+    "old_default": 22.0,
+    "new_default": 2.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRoundShortMaxEma13DistancePips",
+    "new": "InpRoundShortMaxEma13DistanceAtr",
+    "old_default": 12.0,
+    "new_default": 1.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRoundShortMinSlowSlopePips",
+    "new": "InpRoundShortMinSlowSlopeAtr",
+    "old_default": 0.0,
+    "new_default": 0.0,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRoundShortStopLossPips",
+    "new": "InpRoundShortStopLossAtr",
+    "old_default": 22.0,
+    "new_default": 2.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRoundLooseMaxEma13DistancePips",
+    "new": "InpRoundLooseMaxEma13DistanceAtr",
+    "old_default": 18.0,
+    "new_default": 1.8,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRoundLooseStopLossPips",
+    "new": "InpRoundLooseStopLossAtr",
+    "old_default": 18.0,
+    "new_default": 1.8,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpEmaMaxEma13DistancePips",
+    "new": "InpEmaMaxEma13DistanceAtr",
+    "old_default": 22.0,
+    "new_default": 2.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpEmaStopLossPips",
+    "new": "InpEmaStopLossAtr",
+    "old_default": 15.0,
+    "new_default": 1.5,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpCompressionMaxEma13DistancePips",
+    "new": "InpCompressionMaxEma13DistanceAtr",
+    "old_default": 30.0,
+    "new_default": 3.0,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpCompressionStopLossPips",
+    "new": "InpCompressionStopLossAtr",
+    "old_default": 15.0,
+    "new_default": 1.5,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRsiMaxEma13DistancePips",
+    "new": "InpRsiMaxEma13DistanceAtr",
+    "old_default": 25.0,
+    "new_default": 2.5,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRsiTouchBufferPips",
+    "new": "InpRsiTouchBufferAtr",
+    "old_default": 1.0,
+    "new_default": 0.1,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRsiMinBodyPips",
+    "new": "InpRsiMinBodyAtr",
+    "old_default": 2.0,
+    "new_default": 0.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRsiStopLossPips",
+    "new": "InpRsiStopLossAtr",
+    "old_default": 16.0,
+    "new_default": 1.6,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpBreakoutMidpointDistancePips",
+    "new": "InpBreakoutMidpointDistanceAtr",
+    "old_default": 25.0,
+    "new_default": 2.5,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpBreakoutTouchTolerancePips",
+    "new": "InpBreakoutTouchToleranceAtr",
+    "old_default": 0.5,
+    "new_default": 0.05,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpBreakoutRetestBufferPips",
+    "new": "InpBreakoutRetestBufferAtr",
+    "old_default": 2.0,
+    "new_default": 0.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpBreakoutMinBodyPips",
+    "new": "InpBreakoutMinBodyAtr",
+    "old_default": 6.0,
+    "new_default": 0.6,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpBreakoutMaxToEma13Pips",
+    "new": "InpBreakoutMaxToEma13Atr",
+    "old_default": 30.0,
+    "new_default": 3.0,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpBreakoutMaxRetestDepthPips",
+    "new": "InpBreakoutMaxRetestDepthAtr",
+    "old_default": 1.0,
+    "new_default": 0.1,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpBreakoutStopLossPips",
+    "new": "InpBreakoutStopLossAtr",
+    "old_default": 20.0,
+    "new_default": 2.0,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpDowMinBreachPips",
+    "new": "InpDowMinBreachAtr",
+    "old_default": 2.0,
+    "new_default": 0.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpDowMaxBreachPips",
+    "new": "InpDowMaxBreachAtr",
+    "old_default": 12.0,
+    "new_default": 1.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpDowStopBufferPips",
+    "new": "InpDowStopBufferAtr",
+    "old_default": 2.0,
+    "new_default": 0.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpDowTargetBufferPips",
+    "new": "InpDowTargetBufferAtr",
+    "old_default": 3.0,
+    "new_default": 0.3,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRangeMinBreachPips",
+    "new": "InpRangeMinBreachAtr",
+    "old_default": 1.0,
+    "new_default": 0.1,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRangeMaxBreachPips",
+    "new": "InpRangeMaxBreachAtr",
+    "old_default": 7.0,
+    "new_default": 0.7,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRangeStopBufferPips",
+    "new": "InpRangeStopBufferAtr",
+    "old_default": 1.5,
+    "new_default": 0.15,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpRangeTargetBufferPips",
+    "new": "InpRangeTargetBufferAtr",
+    "old_default": 2.0,
+    "new_default": 0.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpFractalStopBufferPips",
+    "new": "InpFractalStopBufferAtr",
+    "old_default": 1.0,
+    "new_default": 0.1,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpFractalTargetBufferPips",
+    "new": "InpFractalTargetBufferAtr",
+    "old_default": 2.0,
+    "new_default": 0.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  },
+  {
+    "old": "InpMaxSpreadPips",
+    "new": "InpMaxSpreadAtr",
+    "old_default": 2.0,
+    "new_default": 0.2,
+    "note": "Initial engineering scale only: old numeric value / 10, NOT equivalent trades or fitted ATR"
+  }
+]

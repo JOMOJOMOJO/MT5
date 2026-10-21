@@ -1,0 +1,4 @@
+﻿run_id,cell,stage,n,net,pf,win_rate,mean_price_r,min_monthly,mean_monthly,worst_annual_mean_price_r,train_eligible,report_quality,signal_bars,raw_signals,signals_spread_blocked,signals_any_gate_blocked,signals_spread_blocked_other_recorded_gates_clear,planned_risk_log_checks
+validate_c04,c04,Validate,10,-107.09,0.5322355202236394,0.3,-0.17267519299469164,0,0.47619047619047616,-999,False,100% リアルティック,43486,207,196,197,195,2908
+validate_c05,c05,Validate,10,-124.07999999999998,0.3931924882629108,0.3,-0.19561550503947978,0,0.47619047619047616,-999,False,100% リアルティック,43486,207,196,197,195,2928
+validate_c06,c06,Validate,10,-116.92999999999999,0.4281592331768387,0.3,-0.18366391653721048,0,0.47619047619047616,-999,False,100% リアルティック,43486,207,196,197,195,2948

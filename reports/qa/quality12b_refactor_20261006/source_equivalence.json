@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "reassembled_byte_identical": true,
+  "baseline_sha256": "e8a3376a9d5a07089f7373592fbabcf7ccd6513781b7940540ef2ba421c4cd20",
+  "reassembled_sha256": "e8a3376a9d5a07089f7373592fbabcf7ccd6513781b7940540ef2ba421c4cd20",
+  "input_count": 163,
+  "modules": [
+    "Configuration",
+    "RuntimeRisk",
+    "MarketData",
+    "PositionManagement",
+    "PriceStructure",
+    "Signals",
+    "Orders",
+    "TelemetryControl"
+  ],
+  "main_lines": 429,
+  "original_lines": 2315,
+  "changed_logic": false,
+  "scope": "Exact source text after expanding local modules; no claim of EX5 byte identity or new backtest performance."
+}

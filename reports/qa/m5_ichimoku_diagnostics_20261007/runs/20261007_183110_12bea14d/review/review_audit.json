@@ -1,0 +1,50 @@
+{
+  "audit_passed": true,
+  "runs": 3,
+  "reconstructed_rows": 5757,
+  "raw": 1666,
+  "actual": 217,
+  "actual_stats": {
+    "n": 217,
+    "net": 4.980000000000217,
+    "pf": 1.0008547140569573,
+    "win_rate": 0.4838709677419355,
+    "mean_price_r": 0.006895721960872668,
+    "mean_tp_capped_price_r": 0.005111021357856491,
+    "pf_tp_capped_price_r": 1.0120212832012425,
+    "overshoot_trades": 1
+  },
+  "h4_above_actual": {
+    "n": 109,
+    "net": 873.5800000000002,
+    "pf": 1.357541030573405,
+    "win_rate": 0.5321100917431193,
+    "mean_price_r": 0.1328260289056563,
+    "mean_tp_capped_price_r": 0.13093667700339326,
+    "pf_tp_capped_price_r": 1.3709658019739646,
+    "overshoot_trades": 1
+  },
+  "h4_above_spread_allowed_shadow": {
+    "n": 141,
+    "n_closed": 141,
+    "excluded": 0,
+    "executed": 109,
+    "win_rate": 0.5460992907801419,
+    "mean_price_r": 0.14724959469971807,
+    "pf_price_r": 1.4127174116609245,
+    "mean_tp_capped_price_r": 0.14724959469971807,
+    "mean_horizon_mfe_r": 0.9442190254621047,
+    "mean_horizon_mae_r": -0.8634392391175972,
+    "horizon_reach_1r": 0.3971631205673759,
+    "horizon_reach_1.2r": 0.3262411347517731,
+    "horizon_reach_1.5r": 0.22695035460992907,
+    "horizon_reach_2r": 0.10638297872340426
+  },
+  "h4_above_observed_monthly": 2.422222222222222,
+  "outcomes": {
+    "TP": 293,
+    "SL": 787,
+    "TIME": 584,
+    "AMBIGUOUS_M1": 2
+  }
+}

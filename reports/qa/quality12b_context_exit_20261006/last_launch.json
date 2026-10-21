@@ -1,0 +1,9 @@
+﻿{
+    "launched_at":  "2026-10-06T21:42:35",
+    "runner_pid":  10388,
+    "package":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\quality12b_context_exit_20261006",
+    "stdout":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\quality12b_context_exit_20261006\\launch-20261006_214235.stdout.log",
+    "stderr":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\quality12b_context_exit_20261006\\launch-20261006_214235.stderr.log",
+    "purpose":  "CONTEXT_EXIT_RESEARCH",
+    "waited":  false
+}

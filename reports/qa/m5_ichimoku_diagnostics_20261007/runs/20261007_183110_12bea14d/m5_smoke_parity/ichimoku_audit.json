@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "rows": 108,
+  "ohlc_reconstructed": 108,
+  "unknown": 0,
+  "prefix_invariance": true,
+  "cloud_shift_bars": 26,
+  "reference_population_and_path_equal": true
+}

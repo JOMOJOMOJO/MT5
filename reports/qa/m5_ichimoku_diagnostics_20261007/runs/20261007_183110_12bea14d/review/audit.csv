@@ -1,0 +1,4 @@
+﻿run_id,reconstructed,unknown,parity_trades,quality,fallback_lines
+m5_smoke_parity,108,0,1,REAL_TICKS_NO_FALLBACK_REPORTED,0
+known_2023_2024,3309,0,157,MIXED_TICKS,79
+known_2025_2026,2340,0,60,MIXED_TICKS,8

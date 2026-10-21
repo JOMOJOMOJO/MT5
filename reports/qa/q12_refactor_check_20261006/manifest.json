@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "created": "2026-10-06",
+  "status": "PREPARED_NOT_EXECUTED",
+  "input_count": 163,
+  "source": "mql/Experts/usdjpy_20260402_round_continuation_long.mq5",
+  "source_sha256": "e10068574a921a71970c242ac5f70e0e71f1be49fdeb02aa99098a5c6135d347",
+  "source_identity_note": "Refactored modular baseline, no research observer. Reassembled text is byte-identical to original.",
+  "reference_reports": [],
+  "runtime_only_overrides": [
+    "InpTelemetryFileName",
+    "InpOperatorCommandFile",
+    "InpStatusFileName"
+  ],
+  "expected_broker": "Vantage Trading Ltd",
+  "expected_server": "VantageTradingLtd-Live",
+  "symbol": "USDJPY",
+  "timeframe": "M15",
+  "model": 4,
+  "execution_mode": 0,
+  "deposit": 10000,
+  "currency": "USD",
+  "leverage": 100,
+  "runs": [
+    {
+      "run_id": "refactored_control_2022",
+      "stage": "Extend",
+      "date_from": "2022.01.01",
+      "date_to": "2023.01.01",
+      "label": "EXECUTION_PARITY_NOT_PROFITABILITY",
+      "reference_report": "reports\\qa\\quality12b_context_exit_20261006\\runs\\20261006_214236_66a0b587\\annual_2022\\report.htm",
+      "reference_sha256": "2956dd72b307df035211c1a40fb2e68adb713e553977303fd23b15ff7cd4fb38"
+    }
+  ],
+  "sha256": {
+    "frozen/inputs.json": "7fd68656b58cadb2f321f3ff2ba39b14742437480329a06cda218458245de9bb",
+    "frozen/quality12b_full.set": "5296826efabfc3e498091c9912cf7e74574ce04a1e621e2549722a9222f67d23",
+    "frozen/quality12b_snapshot.mq5": "e10068574a921a71970c242ac5f70e0e71f1be49fdeb02aa99098a5c6135d347",
+    "frozen/Quality12b/Configuration.mqh": "ff3905b6b9d7776bddec68bcdcaa5e74585349e78413643b9501cc1e0500310b",
+    "frozen/Quality12b/MarketData.mqh": "3ba681276a86443a08db09bc2b7ed51e71199e947407550351f5349b2a2e32f3",
+    "frozen/Quality12b/Orders.mqh": "918e515709cc23bea5afa244da174872795ce7cfcbd19debe378f6616b0b176f",
+    "frozen/Quality12b/PositionManagement.mqh": "60ec3d29352db0f4d9778274d1e5f3a7d82b3630f476ced387d9f8d6358328d4",
+    "frozen/Quality12b/PriceStructure.mqh": "5fd25b9d5cd164910a2faea8e889c09704f51427bbcac7c5f9ba0a8b7e2ab877",
+    "frozen/Quality12b/RuntimeRisk.mqh": "36e314e6762e9a865ad4388406a0eec490b8e0bfc05a860b0a67e99ee9625ff2",
+    "frozen/Quality12b/Signals.mqh": "d8eb0502fe919292475da1c4a859fc2f171a8149e03b200e8159be755cb8fe98",
+    "frozen/Quality12b/TelemetryControl.mqh": "d9a90070ddea1579a3f72fa0cfc2d769b761d473f79970cda155014280131a20"
+  },
+  "purpose": "BASELINE_RECHECK"
+}

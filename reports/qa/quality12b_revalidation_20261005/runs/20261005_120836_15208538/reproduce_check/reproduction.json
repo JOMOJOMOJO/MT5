@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "passed": true,
+  "classification": "EXACT_EXECUTIONS_SWAP_ONLY_DIFFERENCE",
+  "reference_sha256": "423178ea2d029cf679e1925e91091efe2146c9b56298dcc4a2b7adc214e6cd06",
+  "candidate_sha256": "72968e76605cbc52e810777874ea80bc470b9543af2dfe755c1759cb8b701b31",
+  "reference": {
+    "trade_count": 9,
+    "net_profit": 113.2,
+    "gross_profit": 209.94,
+    "gross_loss": -96.74,
+    "profit_factor": 2.1701467851974363,
+    "expected_payoff": 12.577777777777778,
+    "winning_trade_count": 6,
+    "losing_trade_count": 3,
+    "commission": 0.0,
+    "swap": 7.01
+  },
+  "candidate": {
+    "trade_count": 9,
+    "net_profit": 111.81,
+    "gross_profit": 209.01,
+    "gross_loss": -97.2,
+    "profit_factor": 2.150308641975309,
+    "expected_payoff": 12.423333333333334,
+    "winning_trade_count": 6,
+    "losing_trade_count": 3,
+    "commission": 0.0,
+    "swap": 5.62
+  },
+  "trade_count": 9,
+  "exact_core_fields": [
+    "symbol",
+    "side",
+    "entry_time",
+    "entry_price",
+    "volume",
+    "initial_sl",
+    "initial_tp",
+    "exit_time",
+    "exit_price",
+    "exit_reason",
+    "exit_comment",
+    "profit",
+    "commission"
+  ],
+  "core_trade_differences": [],
+  "swap_difference_trades": [
+    {
+      "trade_index": 4,
+      "entry_time": "2026-01-12 19:30:00",
+      "old_swap": 2.31,
+      "new_swap": 1.85,
+      "delta_swap": -0.46
+    },
+    {
+      "trade_index": 6,
+      "entry_time": "2026-01-13 21:45:00",
+      "old_swap": 2.34,
+      "new_swap": 1.88,
+      "delta_swap": -0.46
+    },
+    {
+      "trade_index": 7,
+      "entry_time": "2026-01-19 21:30:00",
+      "old_swap": 2.36,
+      "new_swap": 1.89,
+      "delta_swap": -0.47
+    }
+  ],
+  "net_delta": -1.39,
+  "swap_delta": -1.39,
+  "errors": [],
+  "note": "Observed swap-only difference is attributed, not removed from candidate P/L. No parameter or P/L threshold relaxation. Identical fills in this sample do not establish profitability or binary identity."
+}

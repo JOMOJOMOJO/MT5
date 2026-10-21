@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "purpose": "M5_ICHIMOKU_DIAGNOSTICS",
+  "created": "2026-10-07",
+  "input_count": 161,
+  "source": "mql\\Experts\\Research\\RelativeM5IchimokuDiagnostics.mq5",
+  "source_sha256": "25f136fd22aa6a68e159592295d811fb3993c31d765475c65d19fa84e86e3012",
+  "analysis_sha256": "7e9d27a9faa9843e88b4a96e50052bf1afd211b47e6f3b3d5b9ce93a146e5544",
+  "expected_broker": "Vantage Trading Ltd",
+  "expected_server": "VantageTradingLtd-Live",
+  "reference_reports": [],
+  "symbol": "USDJPY",
+  "timeframe": "M5",
+  "model": 4,
+  "execution_mode": 0,
+  "deposit": 10000,
+  "currency": "USD",
+  "leverage": 100,
+  "runs": [
+    {
+      "run_id": "m5_smoke_parity",
+      "stage": "Control",
+      "date_from": "2026.09.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_DIAGNOSTIC_NOT_OOS",
+      "overrides": {},
+      "reference_report": "reports\\qa\\m5_multitf_diagnostics_20261007\\runs\\20261007_134859_995aab81\\m5_smoke_parity\\report.htm",
+      "reference_sha256": "6790118e74f214742d815bb344b0843ea3dfb678dc762e0c6f1a56710dbf4502"
+    },
+    {
+      "run_id": "known_2023_2024",
+      "stage": "Observe",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_DIAGNOSTIC_NOT_OOS",
+      "overrides": {},
+      "reference_report": "reports\\qa\\m5_multitf_diagnostics_20261007\\runs\\20261007_134859_995aab81\\known_2023_2024\\report.htm",
+      "reference_sha256": "79b19f02faf5970b0ea497ce6e6cd8226d79729e41c35fefcd426a5d688db48c"
+    },
+    {
+      "run_id": "known_2025_2026",
+      "stage": "Observe",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_DIAGNOSTIC_NOT_OOS",
+      "overrides": {},
+      "reference_report": "reports\\qa\\m5_multitf_diagnostics_20261007\\runs\\20261007_134859_995aab81\\known_2025_2026\\report.htm",
+      "reference_sha256": "0c79f3d7e4f209f07ad066ba158b2caaefe2326c825d81eeddd2671a7d0fade7"
+    }
+  ],
+  "sha256": {
+    "frozen/HTFResearchEnvironment.mqh": "af6cb1fa2338ff82689641520932de46b4e79f8b5a842444c691b438262e8d6b",
+    "frozen/inputs.json": "0f73285e8d5d844cae2928592a517c7975ea7d4be3b7b3f6bd3b71a8d4bbe2c7",
+    "frozen/M15Environment.mqh": "9e66dc51457bec6f294dd7eea07a4c388808d4cf1081748c6a536a9c66b90765",
+    "frozen/quality12b_full.set": "7a52d243faa44a7a405c4fbfa0757ea7fe22e4dfa9ca74c98e05cd2137035f79",
+    "frozen/quality12b_snapshot.mq5": "25f136fd22aa6a68e159592295d811fb3993c31d765475c65d19fa84e86e3012"
+  }
+}

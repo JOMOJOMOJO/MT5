@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "candidates": 35,
+  "entries": 1,
+  "risk_plans": 1,
+  "causal_context": true,
+  "m15_core_parity": true,
+  "quality": {
+    "strict_real_tick_pass": true,
+    "category": "REAL_TICKS_NO_FALLBACK_REPORTED",
+    "header_real_tick_percent": 100.0,
+    "matching_execution_blocks": 1,
+    "test_finished_in_block": true,
+    "fallback_line_count": 0,
+    "fallback_evidence": [],
+    "scope": "Expert/date plus unique telemetry input when present; ambiguous executions rejected",
+    "limit": "Header percentage may be rounded; no-fallback log is evidence, not a hash proof of historical ticks"
+  },
+  "invalid_ranges": 0
+}

@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "purpose": "M5_MULTITF_DIAGNOSTICS",
+  "created": "2026-10-07",
+  "input_count": 161,
+  "source": "mql\\Experts\\Research\\RelativeM5MultiTFDiagnostics.mq5",
+  "source_sha256": "d2cd3c4faa898f197c23a6ee56599f4f578f13eab780dbe5487ae39b973dd1db",
+  "analysis_sha256": "7e46515c2c2f9beee4b0ecaf71cb30e8902838802498cdcfe5b348e32292cff5",
+  "expected_broker": "Vantage Trading Ltd",
+  "expected_server": "VantageTradingLtd-Live",
+  "reference_reports": [],
+  "symbol": "USDJPY",
+  "timeframe": "M5",
+  "model": 4,
+  "execution_mode": 0,
+  "deposit": 10000,
+  "currency": "USD",
+  "leverage": 100,
+  "runs": [
+    {
+      "run_id": "m15_parity",
+      "stage": "Control",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M15",
+      "label": "KNOWN_PERIOD_DIAGNOSTIC_NOT_OOS",
+      "overrides": {
+        "InpSignalTimeframe": "15"
+      },
+      "reference_report": "reports\\qa\\rc_search_20261007\\runs\\20261007_094431_0d639534\\validate_c10\\report.htm",
+      "reference_sha256": "230a5eaa2b4d9f20a04390ef225c72bc9dcf5bd9aa6855110d7e29a3903f34d7"
+    },
+    {
+      "run_id": "m5_smoke_parity",
+      "stage": "Control",
+      "date_from": "2026.09.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_DIAGNOSTIC_NOT_OOS",
+      "overrides": {},
+      "reference_report": "reports\\qa\\m5_m15_context_20261007\\runs\\20261007_133107_b26b2e57\\smoke_m5\\report.htm",
+      "reference_sha256": "ca4cc7ae0ecf95799e7d0681962832563e3d1a723bb897f9df3d57fc62db67e5"
+    },
+    {
+      "run_id": "known_2023_2024",
+      "stage": "Observe",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_DIAGNOSTIC_NOT_OOS",
+      "overrides": {},
+      "reference_report": "reports\\qa\\m5_m15_context_20261007\\runs\\20261007_133107_b26b2e57\\search_fixed_1p5\\report.htm",
+      "reference_sha256": "2e622719f1e3e1c91c84274a02a366bc40b000d6dc685833e509fea628ff0ace"
+    },
+    {
+      "run_id": "known_2025_2026",
+      "stage": "Observe",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_DIAGNOSTIC_NOT_OOS",
+      "overrides": {}
+    }
+  ],
+  "sha256": {
+    "frozen/HTFResearchEnvironment.mqh": "af6cb1fa2338ff82689641520932de46b4e79f8b5a842444c691b438262e8d6b",
+    "frozen/inputs.json": "0f73285e8d5d844cae2928592a517c7975ea7d4be3b7b3f6bd3b71a8d4bbe2c7",
+    "frozen/M15Environment.mqh": "9e66dc51457bec6f294dd7eea07a4c388808d4cf1081748c6a536a9c66b90765",
+    "frozen/quality12b_full.set": "7a52d243faa44a7a405c4fbfa0757ea7fe22e4dfa9ca74c98e05cd2137035f79",
+    "frozen/quality12b_snapshot.mq5": "d2cd3c4faa898f197c23a6ee56599f4f578f13eab780dbe5487ae39b973dd1db"
+  }
+}

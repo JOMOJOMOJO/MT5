@@ -1,0 +1,8 @@
+{
+  "observer_removal_recovers_exact_baseline": true,
+  "compile_errors": 0,
+  "compile_warnings": 0,
+  "python_tests_passed": 49,
+  "preflight_passed": true,
+  "mt5_result_status": "NOT_YET_RUN"
+}

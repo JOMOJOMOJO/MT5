@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "runs": 37,
+  "unique_run_scope": true,
+  "source_profit_unchanged": true,
+  "selection_unchanged": true,
+  "original_risk_counter_superseded": true,
+  "quality_counts": {
+    "REAL_TICKS_NO_FALLBACK_REPORTED": 1,
+    "MIXED_TICKS": 36
+  },
+  "risk_plans": 2851,
+  "runtime_errors": 0
+}

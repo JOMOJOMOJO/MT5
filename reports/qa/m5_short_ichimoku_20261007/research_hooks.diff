@@ -1,0 +1,196 @@
+--- long_observer
++++ short_observer
+@@ -43,7 +43,7 @@
+ input int             InpDistanceATRPeriod        = 14;
+ input double          InpDeviationAtr             = 0.05;
+ input bool            InpWriteFunnel               = true;
+-input ENUM_TIMEFRAMES InpSignalTimeframe          = PERIOD_M15;
++input ENUM_TIMEFRAMES InpSignalTimeframe          = PERIOD_M5;
+ input int             InpFastEMAPeriod            = 13;
+ input int             InpSlowEMAPeriod            = 100;
+ input int             InpSlowSlopeLookback        = 5;
+@@ -52,7 +52,7 @@
+ input int             InpVolatilityLookbackBars   = 24;
+ input double InpMinWindowRangeAtr = 1.8;
+ input double InpGridStepAtr = 5;
+-input bool            InpEnableRoundBucket        = true;
++input bool            InpEnableRoundBucket        = false;
+ input int             InpSessionStartHour         = 7;
+ input int             InpSessionEndHour           = 22;
+ input double InpMaxEma13DistanceAtr = 1.2;
+@@ -64,7 +64,7 @@
+ input int             InpMaxHoldBars              = 18;
+ input bool            InpAllowParallelBuckets     = false;
+ input int             InpMaxOpenPositions         = 1;
+-input bool            InpEnableRoundShortBucket   = false;
++input bool            InpEnableRoundShortBucket   = true;
+ input int             InpRoundShortSessionStartHour = 7;
+ input int             InpRoundShortSessionEndHour = 22;
+ input double InpRoundShortMaxEma13DistanceAtr = 1.2;
+@@ -689,6 +689,7 @@
+ #endif
+ 
+ // Tester-only observer. No trade calls and no environment-based entry gate.
++input bool InpShortObserver=true;
+ int dcContext=INVALID_HANDLE,dcPath=INVALID_HANDLE;
+ HTFResearchSnapshot dcPlan[3];
+ int dcCounts[3];bool dcComplete[3];
+@@ -763,7 +764,7 @@
+ 
+ void ICWrite(const string stage,const datetime when,const double price)
+   {
+-   double risk=dcQuote.ask-NormalizePrice(dcQuote.ask-InpStopLossAtr*GetDistanceUnit());
++   double risk=NormalizePrice(dcQuote.bid+InpRoundShortStopLossAtr*GetDistanceUnit())-dcQuote.bid;
+    for(int i=0;i<3;i++)
+      {
+       ICSnapshot s=icPlan[i];
+@@ -802,7 +803,7 @@
+       "m15_reference_equal","bid","ask","spread_price","spread_points","spread_atr","atr",
+       "server_hour","server_weekday","execution_gate","spread_allowed","positions","daily_entries",
+       "daily_cap","equity_cap","uncertain_send","planned_sl","planned_tp","hold_bars");
+-   FileWrite(dcPath,"id","minute","first_msc","last_msc","open_bid","high_bid","low_bid","close_bid","horizon_end","end_censored");
++   FileWrite(dcPath,"id","minute","first_msc","last_msc","open_ask","high_ask","low_ask","close_ask","horizon_end","end_censored");
+    return ICOpen();
+   }
+ 
+@@ -843,8 +844,8 @@
+    ICWrite(stage,when,price);
+    MqlDateTime dt;TimeToStruct(dcDecision,dt);
+    double atr=GetDistanceUnit(),point=SymbolInfoDouble(runtimeSymbol,SYMBOL_POINT);
+-   double sl=NormalizePrice(dcQuote.ask-InpStopLossAtr*atr);
+-   double tp=NormalizePrice(dcQuote.ask+InpStopLossAtr*atr*InpTargetRMultiple);
++   double sl=NormalizePrice(dcQuote.bid+InpRoundShortStopLossAtr*atr);
++   double tp=NormalizePrice(dcQuote.bid-InpRoundShortStopLossAtr*atr*InpRoundShortTargetRMultiple);
+    for(int t=0;t<3;t++)
+      {
+       HTFResearchSnapshot s=dcPlan[t];
+@@ -878,8 +879,9 @@
+ 
+ void DCUpdate(const bool newBar)
+   {
++   if(!InpShortObserver) return;
+    if(ArraySize(dcPaths)==0) return;
+-   MqlTick t;if(!SymbolInfoTick(runtimeSymbol,t) || t.bid<=0) return;
++   MqlTick t;if(!SymbolInfoTick(runtimeSymbol,t) || t.ask<=0) return;
+    datetime minute=(datetime)((long)t.time/60*60);
+    for(int i=ArraySize(dcPaths)-1;i>=0;i--)
+      {
+@@ -887,11 +889,11 @@
+       if(!dcPaths[i].started || dcPaths[i].minute!=minute)
+         {
+          DCFlush(i,false,false);dcPaths[i].started=true;dcPaths[i].minute=minute;dcPaths[i].first_msc=t.time_msc;
+-         dcPaths[i].open=t.bid;dcPaths[i].high=t.bid;dcPaths[i].low=t.bid;
++         dcPaths[i].open=t.ask;dcPaths[i].high=t.ask;dcPaths[i].low=t.ask;
+         }
+-      dcPaths[i].last_msc=t.time_msc;dcPaths[i].close=t.bid;
+-      dcPaths[i].high=MathMax(dcPaths[i].high,t.bid);dcPaths[i].low=MathMin(dcPaths[i].low,t.bid);
+-      if(newBar && iBarShift(runtimeSymbol,InpSignalTimeframe,dcPaths[i].entry,false)>=InpMaxHoldBars)
++      dcPaths[i].last_msc=t.time_msc;dcPaths[i].close=t.ask;
++      dcPaths[i].high=MathMax(dcPaths[i].high,t.ask);dcPaths[i].low=MathMin(dcPaths[i].low,t.ask);
++      if(newBar && iBarShift(runtimeSymbol,InpSignalTimeframe,dcPaths[i].entry,false)>=InpRoundShortMaxHoldBars)
+         {
+          DCFlush(i,true,false);int lastIndex=ArraySize(dcPaths)-1;
+          if(i!=lastIndex) dcPaths[i]=dcPaths[lastIndex];ArrayResize(dcPaths,lastIndex);
+@@ -901,15 +903,17 @@
+ 
+ void DCCandidate(const datetime barTime,const bool gate)
+   {
++   if(!InpShortObserver) return;
+    if(!SymbolInfoTick(runtimeSymbol,dcQuote)) return;
+    dcDecision=TimeCurrent();dcId=TimeToString(barTime,TIME_DATE|TIME_SECONDS);
+-   DCLoad(dcDecision,dcQuote.ask);DCWrite("CANDIDATE",dcDecision,dcQuote.ask,gate);
++   DCLoad(dcDecision,dcQuote.bid);DCWrite("CANDIDATE",dcDecision,dcQuote.bid,gate);
+    int n=ArraySize(dcPaths);ArrayResize(dcPaths,n+1);ZeroMemory(dcPaths[n]);
+    dcPaths[n].id=dcId;dcPaths[n].entry=dcDecision;DCUpdate(false);
+   }
+ 
+ void DCEntry(const datetime when,const double fill)
+-  { DCWrite("ENTRY",when,fill,true); }
++  {
++   if(!InpShortObserver) return; DCWrite("ENTRY",when,fill,true); }
+ 
+ void DCClose()
+   {
+@@ -1540,44 +1544,44 @@
+ bool EvaluateRoundShortSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[])
+   {
+    if(!InpEnableRoundShortBucket)
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+    if(!PassesVolatilityState(rates))
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+ 
+    datetime barTime = rates[0].time;
+    if(!IsWithinSession(barTime, InpRoundShortSessionStartHour, InpRoundShortSessionEndHour))
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+ 
+    PivotPoint latestHigh, previousHigh, latestLow, previousLow;
+    FindRecentPivots(rates, true, latestHigh, previousHigh);
+    FindRecentPivots(rates, false, latestLow, previousLow);
+    if(!latestHigh.valid || !previousHigh.valid || !latestLow.valid || !previousLow.valid)
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+ 
+    double unit = GetDistanceUnit();
+    if(unit <= 0.0)
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+    if(!(latestHigh.price < previousHigh.price && latestLow.price < previousLow.price))
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+    if(fastEma[1] >= slowEma[1])
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+    if(rates[1].close >= slowEma[1])
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+ 
+    double slowSlopeAtr = (slowEma[1] - slowEma[1 + InpSlowSlopeLookback]) / unit;
+    if(slowSlopeAtr > -InpRoundShortMinSlowSlopeAtr)
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+    if(rates[1].high >= latestHigh.price)
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+ 
+    double emaDistanceAtr = MathAbs(rates[1].close - fastEma[1]) / unit;
+    if(emaDistanceAtr > InpRoundShortMaxEma13DistanceAtr)
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+    if(LowerWickShare(rates[1]) < InpRoundShortMinLowerWickShare)
+-      return false;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
+    if(UpperWickShare(rates[1]) > InpRoundShortMaxUpperWickShare)
+-      return false;
+-   return true;
++      return RecordRoundDecision("SHORT_CONDITION_NOT_MET");
++   return RecordRoundDecision("SHORT_SIGNAL",true);
+   }
+ 
+ bool EvaluateRoundLooseSignal(const MqlRates &rates[], const double &fastEma[], const double &slowEma[])
+@@ -2545,6 +2549,7 @@
+ int OnInit()
+   {
+    if(!MQLInfoInteger(MQL_TESTER)) return INIT_FAILED;
++   if(InpEnableRoundBucket || !InpEnableRoundShortBucket) return INIT_PARAMETERS_INCORRECT;
+    runtimeSymbol = NormalizePresetString(InpSymbol);
+    if(runtimeSymbol=="") runtimeSymbol=_Symbol;
+    if(runtimeSymbol!=_Symbol) { Print("Attach to requested symbol chart: OnTick belongs to chart symbol"); return INIT_PARAMETERS_INCORRECT; }
+@@ -2849,12 +2854,11 @@
+         {
+          SignalBucket buckets[7];
+          int bucketCount = 0;
+-         bool roundSignal=EvaluateRoundSignal(rates,fastEma,slowEma);
++         bool roundSignal=EvaluateRoundShortSignal(rates,fastEma,slowEma);
+          bool executionGate=CanOpenAnotherTrade(barTime);
+          RecordFunnel(barTime,roundSignal,executionGate);
+-         if(roundSignal) buckets[bucketCount++] = SIGNAL_ROUND;
+-         if(EvaluateRoundShortSignal(rates, fastEma, slowEma))
+-            buckets[bucketCount++] = SIGNAL_ROUND_SHORT;
++         if(roundSignal) buckets[bucketCount++] = SIGNAL_ROUND_SHORT;
++         // The short signal above is evaluated and enqueued exactly once.
+          if(EvaluateEmaSignal(rates, fastEma, slowEma, adxValues))
+             buckets[bucketCount++] = SIGNAL_EMA;
+          if(EvaluateCompressionSignal(rates, fastEma, slowEma, adxValues))

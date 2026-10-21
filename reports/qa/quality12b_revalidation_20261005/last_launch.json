@@ -1,0 +1,9 @@
+﻿{
+    "pid":  21568,
+    "launched_at":  "2026-10-05T12:08:34.9072160+09:00",
+    "script":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\run-quality12b-revalidation.ps1",
+    "stdout":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\quality12b_revalidation_20261005\\launch_20261005_120834.stdout.log",
+    "stderr":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\quality12b_revalidation_20261005\\launch_20261005_120834.stderr.log",
+    "stage":  "All",
+    "reason":  "Exact trade sequence verified; swap-only difference attributed"
+}

@@ -1,0 +1,65 @@
+{
+  "audit_passed": true,
+  "audits": [
+    {
+      "run_id": "short_control_2023_2024",
+      "passed": true,
+      "observer": false,
+      "trades": 124,
+      "quality": "MIXED_TICKS"
+    },
+    {
+      "run_id": "short_2023_2024",
+      "passed": true,
+      "observer": true,
+      "trades": 124,
+      "quality": "MIXED_TICKS"
+    },
+    {
+      "run_id": "short_2025_2026",
+      "passed": true,
+      "observer": true,
+      "trades": 106,
+      "quality": "MIXED_TICKS"
+    }
+  ],
+  "observer_parity": {
+    "passed": true,
+    "trades": 124,
+    "exact_costs": true
+  },
+  "actual": {
+    "n": 230,
+    "net": -1924.7299999999998,
+    "pf": 0.7042321480982916,
+    "win_rate": 0.3782608695652174,
+    "mean_price_r": -0.13562479263384766,
+    "mean_tp_capped_price_r": -0.13752085152085752,
+    "pf_tp_capped_price_r": 0.701021368030806,
+    "overshoot_trades": 1
+  },
+  "shadow": {
+    "n": 1337,
+    "n_closed": 1336,
+    "excluded": 1,
+    "executed": 230,
+    "win_rate": 0.37425149700598803,
+    "mean_price_r": -0.1556187092462789,
+    "pf_price_r": 0.698147936546058,
+    "mean_tp_capped_price_r": -0.155637842259965,
+    "mean_horizon_mfe_r": 1.0139864544098405,
+    "mean_horizon_mae_r": -1.2346802985703613,
+    "horizon_reach_1r": 0.3395661929693343,
+    "horizon_reach_1.2r": 0.27299925205684367,
+    "horizon_reach_1.5r": 0.2011967090501122,
+    "horizon_reach_2r": 0.12789827973074047
+  },
+  "spread_blocked": 975,
+  "equity_cap_blocked": 274,
+  "outcomes": {
+    "SL": 600,
+    "TIME": 496,
+    "TP": 240,
+    "AMBIGUOUS_M1": 1
+  }
+}

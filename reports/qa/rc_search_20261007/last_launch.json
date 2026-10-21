@@ -1,0 +1,10 @@
+﻿{
+    "launched_at":  "2026-10-07T09:44:30.3926015+09:00",
+    "runner_pid":  14632,
+    "package":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\rc_search_20261007",
+    "stdout":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\rc_search_20261007\\launch-20261007_094430.stdout.log",
+    "stderr":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\rc_search_20261007\\launch-20261007_094430.stderr.log",
+    "purpose":  "RELATIVE_CONTINUATION_SEARCH",
+    "planned_runs":  37,
+    "waited":  false
+}

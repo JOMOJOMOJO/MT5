@@ -1,0 +1,1 @@
+﻿entry_deal_id,exit_deal_id,entry_order_id,exit_order_id,symbol,side,entry_time,entry_price,volume,initial_sl,initial_tp,exit_time,exit_price,exit_reason,exit_comment,profit,commission,swap,net,holding_seconds,weekend_flag_calendar_heuristic,initial_risk_price,implied_initial_r_price,planned_reward_r_price,tp_overshoot_price,tp_overshoot_initial_r,tp_overshoot_pips_usdjpy

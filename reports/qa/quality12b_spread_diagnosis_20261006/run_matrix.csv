@@ -1,0 +1,3 @@
+run_id,stage,date_from,date_to,label,reference_report,reference_sha256
+annual_2024,Extend,2024.01.01,2025.01.01,SPREAD_CAUSE_DIAGNOSIS_ONLY,reports\qa\quality12b_revalidation_20261005\runs\20261005_120836_15208538\annual_2024\report.htm,b8fd048af2dc80f220cb04e4c44c492050c5bc6e1135b82a7795cedc05e117c2
+recent_2026_apr_sep,Extend,2026.04.01,2026.10.01,SPREAD_CAUSE_DIAGNOSIS_ONLY,reports\qa\quality12b_revalidation_20261005\runs\20261005_120836_15208538\recent_2026_apr_sep\report.htm,e0a01fefe25e115630b6208435eecfd31d41abd7f6edbcf9f5926282bb0c2577

@@ -1,0 +1,104 @@
+--- frozen_baseline
++++ research_diagnostic
+@@ -316,15 +316,71 @@
+    return NormalizeDouble(price, digits);
+   }
+ 
++
++// Research-only quote audit. Original decisions are returned unchanged.
++int spreadAuditHandle = INVALID_HANDLE;
++bool spreadAuditEntryGate = false;
++void WriteSpreadAudit(bool tickOk,int tickError,const MqlTick &quote,double pip,double rawSpread)
++  {
++   if(!spreadAuditEntryGate || !MQLInfoInteger(MQL_TESTER))
++      return;
++   if(spreadAuditHandle == INVALID_HANDLE)
++     {
++      spreadAuditHandle=FileOpen(runtimeTelemetryFileName+".spread.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
++      if(spreadAuditHandle == INVALID_HANDLE)
++        {
++         Print("SPREAD_AUDIT_FILE_FAILED error=",GetLastError());
++         return;
++        }
++      FileWrite(spreadAuditHandle,"time","bar_time","tick_time_msc","tick_ok","tick_error",
++                "bid","ask","point","digits","pip","symbol_spread_points","tick_flags",
++                "raw_spread_pips","limit_pips","raw_allowed","point_gap_rounded","point_aligned",
++                "point_grid_allowed","reason");
++     }
++   double point=SymbolInfoDouble(runtimeSymbol,SYMBOL_POINT);
++   long digits=SymbolInfoInteger(runtimeSymbol,SYMBOL_DIGITS);
++   double gap=(tickOk && point>0.0)?(quote.ask-quote.bid)/point:0.0;
++   double rounded=MathRound(gap);
++   bool aligned=(tickOk && point>0.0 && MathAbs(gap-rounded)<0.000001);
++   bool rawAllowed=(rawSpread>=0.0 && rawSpread<=InpMaxSpreadPips);
++   bool gridAllowed=(tickOk && pip>0.0 && point>0.0 && gap>=0.0 &&
++                     rounded<=InpMaxSpreadPips*pip/point);
++   string reason="PASS";
++   if(!tickOk) reason="TICK_API_FAILURE";
++   else if(pip<=0.0) reason="INVALID_PIP";
++   else if(rawSpread<0.0) reason="NEGATIVE_SPREAD";
++   else if(!rawAllowed && aligned && gridAllowed) reason="FLOAT_BOUNDARY_ONLY";
++   else if(!rawAllowed) reason="ABOVE_LIMIT";
++   FileWrite(spreadAuditHandle,TimeToString(TimeCurrent(),TIME_DATE|TIME_SECONDS),
++             TimeToString(iTime(runtimeSymbol,InpSignalTimeframe,0),TIME_DATE|TIME_SECONDS),
++             quote.time_msc,(int)tickOk,tickError,DoubleToString(quote.bid,16),DoubleToString(quote.ask,16),
++             DoubleToString(point,16),digits,DoubleToString(pip,16),
++             SymbolInfoInteger(runtimeSymbol,SYMBOL_SPREAD),quote.flags,
++             DoubleToString(rawSpread,16),DoubleToString(InpMaxSpreadPips,16),(int)rawAllowed,
++             DoubleToString(rounded,0),(int)aligned,(int)gridAllowed,reason);
++   FileFlush(spreadAuditHandle);
++  }
++
+ double GetCurrentSpreadPips()
+   {
+    MqlTick tick;
+-   if(!SymbolInfoTick(runtimeSymbol, tick))
++   ZeroMemory(tick);
++   bool tickOk=SymbolInfoTick(runtimeSymbol,tick);
++   int tickError=tickOk?0:GetLastError();
++   if(!tickOk)
++     {
++      WriteSpreadAudit(false,tickError,tick,0.0,-1.0);
+       return -1.0;
++     }
+    double pip = GetPipSize();
+    if(pip <= 0.0)
++     {
++      WriteSpreadAudit(true,0,tick,pip,-1.0);
+       return -1.0;
+-   return (tick.ask - tick.bid) / pip;
++     }
++   double spread=(tick.ask-tick.bid)/pip;
++   WriteSpreadAudit(true,0,tick,pip,spread);
++   return spread;
+   }
+ 
+ bool IsSpreadAllowed()
+@@ -732,7 +788,10 @@
+       return false;
+    if(!IsWithinActiveSession(barTime))
+       return false;
+-   if(!IsSpreadAllowed())
++   spreadAuditEntryGate=true;
++   bool spreadAuditAllowed=IsSpreadAllowed();
++   spreadAuditEntryGate=false;
++   if(!spreadAuditAllowed)
+      {
+       dailyBlockedSpread++;
+       return false;
+@@ -1907,6 +1966,7 @@
+ 
+ int OnInit()
+   {
++   if(!MQLInfoInteger(MQL_TESTER)) return INIT_FAILED;
+    runtimeSymbol = NormalizePresetString(InpSymbol);
+    runtimeAllowedWeekdays = NormalizePresetString(InpAllowedWeekdays);
+    runtimeTelemetryFileName = NormalizePresetString(InpTelemetryFileName);
+@@ -2062,6 +2122,7 @@
+       timerStarted = false;
+      }
+    CloseTelemetryFile();
++   if(spreadAuditHandle != INVALID_HANDLE) FileClose(spreadAuditHandle);
+    if(fastEmaHandle != INVALID_HANDLE)
+       IndicatorRelease(fastEmaHandle);
+    if(slowEmaHandle != INVALID_HANDLE)

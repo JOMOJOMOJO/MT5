@@ -1,0 +1,502 @@
+{
+  "schema": 1,
+  "purpose": "RELATIVE_CONTINUATION_SEARCH",
+  "created": "2026-10-07",
+  "input_count": 161,
+  "source": "mql\\Experts\\RelativeContinuation.mq5",
+  "source_sha256": "af6704ecb405f79db6bc68ebccb8d19d70e8b78803bb93062f109a49b58b1cc0",
+  "analysis_sha256": "a99f3bd11ab75ac7d2b84c51fe0e068eb9e3d1d451802b4ee9881752eec9e25d",
+  "expected_broker": "Vantage Trading Ltd",
+  "expected_server": "VantageTradingLtd-Live",
+  "reference_reports": [],
+  "symbol": "USDJPY",
+  "timeframe": "M15",
+  "model": 4,
+  "execution_mode": 0,
+  "deposit": 10000,
+  "currency": "USD",
+  "leverage": 100,
+  "runs": [
+    {
+      "run_id": "smoke",
+      "stage": "Smoke",
+      "date_from": "2026.09.01",
+      "date_to": "2026.09.08",
+      "label": "ENGINEERING_SMOKE",
+      "overrides": {}
+    },
+    {
+      "run_id": "search_c01",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c01",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "search_c02",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c02",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "search_c03",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c03",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "search_c04",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c04",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "search_c05",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c05",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "search_c06",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c06",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "search_c07",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c07",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "search_c08",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c08",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "search_c09",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c09",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "search_c10",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c10",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "search_c11",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c11",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "search_c12",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c12",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "search_c13",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c13",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "search_c14",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c14",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "search_c15",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c15",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "search_c16",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c16",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "search_c17",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c17",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "search_c18",
+      "stage": "Search",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c18",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "validate_c01",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c01",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "validate_c02",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c02",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "validate_c03",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c03",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "validate_c04",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c04",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "validate_c05",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c05",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "validate_c06",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c06",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.1",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "validate_c07",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c07",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "validate_c08",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c08",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "validate_c09",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c09",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "validate_c10",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c10",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "validate_c11",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c11",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "validate_c12",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c12",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.2",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "validate_c13",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c13",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "validate_c14",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c14",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "1.5",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "validate_c15",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c15",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "validate_c16",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c16",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "2.2",
+        "InpTargetRMultiple": "1.5"
+      }
+    },
+    {
+      "run_id": "validate_c17",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c17",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.0"
+      }
+    },
+    {
+      "run_id": "validate_c18",
+      "stage": "Validate",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "label": "KNOWN_RETROSPECTIVE_NOT_OOS",
+      "cell": "c18",
+      "overrides": {
+        "InpMaxSpreadAtr": "0.3",
+        "InpStopLossAtr": "3.0",
+        "InpTargetRMultiple": "1.5"
+      }
+    }
+  ],
+  "sha256": {
+    "frozen/inputs.json": "951672bab901475246a9d87dce69f33a2ea264fac2cc3ba962d9b2e8608be50a",
+    "frozen/quality12b_full.set": "8dc4aa00978ed464de6eec24f66280c34920c9245cf6b1ecc7a912f24b105f23",
+    "frozen/quality12b_snapshot.mq5": "af6704ecb405f79db6bc68ebccb8d19d70e8b78803bb93062f109a49b58b1cc0"
+  }
+}

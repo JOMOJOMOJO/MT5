@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "candidates": 207,
+  "entries": 98,
+  "risk_plans": 98,
+  "causal_context": true,
+  "m15_core_parity": true,
+  "quality": {
+    "strict_real_tick_pass": false,
+    "category": "MIXED_TICKS",
+    "header_real_tick_percent": 100.0,
+    "matching_execution_blocks": 1,
+    "test_finished_in_block": true,
+    "fallback_line_count": 8,
+    "fallback_evidence": [
+      "CS\t3\t13:49:21.924\tTicks\tUSDJPY : 2025.02.27 23:59 - real ticks discarded for 1364 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t13:49:22.672\tTicks\tUSDJPY : 2025.07.24 23:59 - real ticks absent for 5 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t13:49:22.672\tTicks\tUSDJPY : 2025.07.24 23:59 - real ticks discarded for 829 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t13:49:22.956\tTicks\tUSDJPY : 2025.10.02 23:59 - real ticks discarded for 930 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t13:49:23.180\tTicks\tUSDJPY : 2025.11.10 23:59 - real ticks absent for 34 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t13:49:23.180\tTicks\tUSDJPY : 2025.11.10 23:59 - real ticks discarded for 882 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t13:49:25.925\tTicks\tUSDJPY : 2025.01.01 00:00 - 2026.10.01 00:00  real ticks absent for 39 minutes of 651234 total minute bars, every tick generation used",
+      "CS\t3\t13:49:25.925\tTicks\tUSDJPY : 2025.01.01 00:00 - 2026.10.01 00:00  real ticks discarded for 4005 minutes of 651234 total minute bars, every tick generation used"
+    ],
+    "scope": "Expert/date plus unique telemetry input when present; ambiguous executions rejected",
+    "limit": "Header percentage may be rounded; no-fallback log is evidence, not a hash proof of historical ticks"
+  },
+  "invalid_ranges": 0
+}

@@ -1,0 +1,5 @@
+﻿run_id,passed,candidates,trades,parity_trades,invalid_ranges,quality,header_real_tick_percent,fallback_lines
+m15_parity,True,207,98,98,0,MIXED_TICKS,100.0,8
+m5_smoke_parity,True,35,1,1,0,REAL_TICKS_NO_FALLBACK_REPORTED,100.0,0
+known_2023_2024,True,946,157,157,0,MIXED_TICKS,57.0,79
+known_2025_2026,True,720,60,,2,MIXED_TICKS,100.0,8

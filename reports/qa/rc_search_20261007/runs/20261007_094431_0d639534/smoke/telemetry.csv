@@ -1,0 +1,11 @@
+timestamp;event;reason;side;price;volume;net_profit;balance;equity;daily_closed_trades;daily_entries_buy;daily_entries_sell;consecutive_losses;blocked_spread;blocked_daily_loss;blocked_trade_cap;blocked_loss_lock;blocked_equity_cap;loss_lock_activations;note
+2026.09.01 00:00:00;day_reset;;;0.0;0.0;0.0;10000.0;10000.0;0;0;0;0;0;0;0;0;0;0;
+2026.09.02 00:00:00;daily_summary;rollover;;0.0;0.0;0.0;10000.0;10000.0;0;0;0;0;96;0;0;0;0;0;
+2026.09.02 00:00:00;day_reset;;;0.0;0.0;0.0;10000.0;10000.0;0;0;0;0;0;0;0;0;0;0;
+2026.09.03 00:00:00;daily_summary;rollover;;0.0;0.0;0.0;10000.0;10000.0;0;0;0;0;61;0;0;0;0;0;
+2026.09.03 00:00:00;day_reset;;;0.0;0.0;0.0;10000.0;10000.0;0;0;0;0;0;0;0;0;0;0;
+2026.09.04 00:00:00;daily_summary;rollover;;0.0;0.0;0.0;10000.0;10000.0;0;0;0;0;23;0;0;0;0;0;
+2026.09.04 00:00:00;day_reset;;;0.0;0.0;0.0;10000.0;10000.0;0;0;0;0;0;0;0;0;0;0;
+2026.09.07 00:00:00;daily_summary;rollover;;0.0;0.0;0.0;10000.0;10000.0;0;0;0;0;26;0;0;0;0;0;
+2026.09.07 00:00:00;day_reset;;;0.0;0.0;0.0;10000.0;10000.0;0;0;0;0;0;0;0;0;0;0;
+2026.09.07 23:57:45;daily_summary;deinit;;0.0;0.0;0.0;10000.0;10000.0;0;0;0;0;38;0;0;0;0;0;

@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "created": "2026-10-06",
+  "status": "PREPARED_NOT_EXECUTED",
+  "input_count": 163,
+  "source": "mql\\Experts\\Research\\Quality12bSpreadDiagnostic.mq5",
+  "source_sha256": "fef31212118ef52e0516eef1ee07e01463153d6a6ca4640fbc95f11310ba2120",
+  "source_identity_note": "Logging-only tester clone; see instrumentation.diff; order parity is mandatory.",
+  "reference_reports": [],
+  "runtime_only_overrides": [
+    "InpTelemetryFileName",
+    "InpOperatorCommandFile",
+    "InpStatusFileName"
+  ],
+  "expected_broker": "Vantage Trading Ltd",
+  "expected_server": "VantageTradingLtd-Live",
+  "symbol": "USDJPY",
+  "timeframe": "M15",
+  "model": 4,
+  "execution_mode": 0,
+  "deposit": 10000,
+  "currency": "USD",
+  "leverage": 100,
+  "runs": [
+    {
+      "run_id": "annual_2024",
+      "stage": "Extend",
+      "date_from": "2024.01.01",
+      "date_to": "2025.01.01",
+      "label": "SPREAD_CAUSE_DIAGNOSIS_ONLY",
+      "reference_report": "reports\\qa\\quality12b_revalidation_20261005\\runs\\20261005_120836_15208538\\annual_2024\\report.htm",
+      "reference_sha256": "b8fd048af2dc80f220cb04e4c44c492050c5bc6e1135b82a7795cedc05e117c2"
+    },
+    {
+      "run_id": "recent_2026_apr_sep",
+      "stage": "Extend",
+      "date_from": "2026.04.01",
+      "date_to": "2026.10.01",
+      "label": "SPREAD_CAUSE_DIAGNOSIS_ONLY",
+      "reference_report": "reports\\qa\\quality12b_revalidation_20261005\\runs\\20261005_120836_15208538\\recent_2026_apr_sep\\report.htm",
+      "reference_sha256": "e0a01fefe25e115630b6208435eecfd31d41abd7f6edbcf9f5926282bb0c2577"
+    }
+  ],
+  "sha256": {
+    "frozen/inputs.json": "7fd68656b58cadb2f321f3ff2ba39b14742437480329a06cda218458245de9bb",
+    "frozen/quality12b_full.set": "5296826efabfc3e498091c9912cf7e74574ce04a1e621e2549722a9222f67d23",
+    "frozen/quality12b_snapshot.mq5": "fef31212118ef52e0516eef1ee07e01463153d6a6ca4640fbc95f11310ba2120",
+    "run_matrix.csv": "b49511fafb22dbffc90982174621f8873baac3bca3b401ce4ffabc26318832a8",
+    "instrumentation.diff": "6e2a32f75780d5ccc203de127d6b778733f098387821faf629efadcbc9874130"
+  },
+  "purpose": "SPREAD_DIAGNOSIS_ONLY",
+  "baseline_source_sha256": "e8a3376a9d5a07089f7373592fbabcf7ccd6513781b7940540ef2ba421c4cd20"
+}

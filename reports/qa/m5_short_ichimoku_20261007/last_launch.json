@@ -1,0 +1,10 @@
+﻿{
+    "launched_at":  "2026-10-07T19:39:07.0294137+09:00",
+    "runner_pid":  11124,
+    "package":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\m5_short_ichimoku_20261007",
+    "stdout":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\m5_short_ichimoku_20261007\\launch-20261007_193907.stdout.log",
+    "stderr":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\m5_short_ichimoku_20261007\\launch-20261007_193907.stderr.log",
+    "purpose":  "M5_SHORT_ICHIMOKU",
+    "planned_runs":  3,
+    "waited":  false
+}

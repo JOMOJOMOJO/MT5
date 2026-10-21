@@ -1,0 +1,7 @@
+﻿{
+    "status":  "FAILED",
+    "batch_id":  "20261006_112552_9c78e5e1",
+    "run_id":  "recent_2026_apr_sep",
+    "reason":  "パス \u0027C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\quality12b_spread_diagnosis_20261006\\runs\\20261006_112552_9c78e5e1\\recent_2026_apr_sep\\q12_20261006_112552_9c78e5e1_recent_2026_apr_sep-holding.png\u0027 の一部が見つかりませんでした。",
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\quality12b_spread_diagnosis_20261006\\runs\\20261006_112552_9c78e5e1"
+}

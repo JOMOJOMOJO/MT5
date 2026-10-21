@@ -1,0 +1,7 @@
+﻿{
+    "status":  "FAILED",
+    "batch_id":  "20261005_114938_50e3b4ee",
+    "run_id":  "reproduce_train",
+    "reason":  "REPRODUCTION_MISMATCH: extension stopped; retain evidence and investigate data/code/build before continuing.",
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\quality12b_revalidation_20261005\\runs\\20261005_114938_50e3b4ee"
+}

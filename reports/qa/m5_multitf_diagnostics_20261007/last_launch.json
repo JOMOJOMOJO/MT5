@@ -1,0 +1,10 @@
+﻿{
+    "launched_at":  "2026-10-07T13:48:58.0139530+09:00",
+    "runner_pid":  10016,
+    "package":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\m5_multitf_diagnostics_20261007",
+    "stdout":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\m5_multitf_diagnostics_20261007\\launch-20261007_134857.stdout.log",
+    "stderr":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\m5_multitf_diagnostics_20261007\\launch-20261007_134857.stderr.log",
+    "purpose":  "M5_MULTITF_DIAGNOSTICS",
+    "planned_runs":  4,
+    "waited":  false
+}

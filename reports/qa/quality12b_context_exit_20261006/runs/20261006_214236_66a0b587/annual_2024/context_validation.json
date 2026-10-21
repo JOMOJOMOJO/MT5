@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "errors": [],
+  "entry_count": 23,
+  "context_rows": 69,
+  "history_counts_equal": {
+    "bars": true,
+    "ticks": true
+  },
+  "quality": {
+    "strict_real_tick_pass": false,
+    "category": "MIXED_TICKS",
+    "header_real_tick_percent": 100.0,
+    "matching_execution_blocks": 1,
+    "test_finished_in_block": true,
+    "fallback_line_count": 24,
+    "fallback_evidence": [
+      "CS\t3\t21:43:56.208\tTicks\tUSDJPY : 2024.01.02 23:59 - real ticks absent for 3 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.208\tTicks\tUSDJPY : 2024.01.02 23:59 - real ticks discarded for 1417 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.212\tTicks\tUSDJPY : 2024.01.03 23:59 - real ticks discarded for 1432 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.221\tTicks\tUSDJPY : 2024.01.04 23:59 - real ticks absent for 1239 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.221\tTicks\tUSDJPY : 2024.01.04 23:59 - real ticks discarded for 195 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.237\tTicks\tUSDJPY : 2024.01.09 23:59 - real ticks absent for 230 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.237\tTicks\tUSDJPY : 2024.01.09 23:59 - real ticks discarded for 1208 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.253\tTicks\tUSDJPY : 2024.01.10 23:59 - real ticks discarded for 1436 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.266\tTicks\tUSDJPY : 2024.01.11 23:59 - real ticks discarded for 1432 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.278\tTicks\tUSDJPY : 2024.01.12 23:59 - real ticks discarded for 1435 minutes out of 1437 total minute bars within a day",
+      "CS\t3\t21:43:56.292\tTicks\tUSDJPY : 2024.01.15 23:59 - real ticks absent for 25 minutes out of 1437 total minute bars within a day",
+      "CS\t3\t21:43:56.292\tTicks\tUSDJPY : 2024.01.15 23:59 - real ticks discarded for 1396 minutes out of 1437 total minute bars within a day",
+      "CS\t3\t21:43:56.305\tTicks\tUSDJPY : 2024.01.16 23:59 - real ticks absent for 11 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.305\tTicks\tUSDJPY : 2024.01.16 23:59 - real ticks discarded for 1422 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.319\tTicks\tUSDJPY : 2024.01.17 23:59 - real ticks absent for 7 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.319\tTicks\tUSDJPY : 2024.01.17 23:59 - real ticks discarded for 1428 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.332\tTicks\tUSDJPY : 2024.01.18 23:59 - real ticks absent for 1 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.332\tTicks\tUSDJPY : 2024.01.18 23:59 - real ticks discarded for 1432 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:56.345\tTicks\tUSDJPY : 2024.01.19 23:59 - real ticks discarded for 1433 minutes out of 1435 total minute bars within a day",
+      "CS\t3\t21:43:58.417\tTicks\tUSDJPY : 2024.11.21 23:59 - real ticks absent for 9 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:58.417\tTicks\tUSDJPY : 2024.11.21 23:59 - real ticks discarded for 362 minutes out of 1438 total minute bars within a day",
+      "CS\t3\t21:43:58.573\tTicks\tUSDJPY : 2024.01.01 00:00 - 2025.01.01 00:00  real ticks absent for 4394 minutes of 373731 total minute bars, every tick generation used",
+      "CS\t3\t21:43:58.573\tTicks\tUSDJPY : 2024.01.01 00:00 - 2025.01.01 00:00  real ticks discarded for 16028 minutes of 373731 total minute bars, every tick generation used",
+      "CS\t3\t21:43:58.573\tTicks\tUSDJPY : 2024.01.01 00:00 - 2025.01.01 00:00  real ticks absent for 2 whole days"
+    ],
+    "scope": "Exact requested expert/date block; earlier cumulative journal executions excluded",
+    "limit": "Header percentage may be rounded; no-fallback log is evidence, not a hash proof of historical ticks"
+  },
+  "note": "Exact baseline execution required. History count drift recorded separately; no assertion of byte-identical tick history. Exit comparison is OHLC shadow, not actual orders; cash costs excluded from price R."
+}

@@ -1,0 +1,23 @@
+{
+  "completed_runs": 4,
+  "parity_comparisons": 3,
+  "candidate_count": 1666,
+  "execution_count": 217,
+  "spread_blocked": 1388,
+  "spread_only": 1349,
+  "candidates_per_month": 37.022222222222226,
+  "executions_per_month": 4.822222222222222,
+  "min_monthly_candidates": 15,
+  "months_at_least20_candidates": 44,
+  "months_at_least20_executions": 1,
+  "zero_execution_months": 8,
+  "outcomes": {
+    "TP": 293,
+    "SL": 787,
+    "TIME": 584,
+    "AMBIGUOUS_M1": 2
+  },
+  "unclassified_nonexecutions": 4,
+  "joint_cells": 243,
+  "joint_cells_below30": 240
+}

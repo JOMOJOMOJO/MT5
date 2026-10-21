@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "errors": [],
+  "entry_count": 9,
+  "context_rows": 27,
+  "history_counts_equal": {
+    "bars": true,
+    "ticks": true
+  },
+  "quality": {
+    "strict_real_tick_pass": true,
+    "category": "REAL_TICKS_NO_FALLBACK_REPORTED",
+    "header_real_tick_percent": 100.0,
+    "matching_execution_blocks": 1,
+    "test_finished_in_block": true,
+    "fallback_line_count": 0,
+    "fallback_evidence": [],
+    "scope": "Exact requested expert/date block; earlier cumulative journal executions excluded",
+    "limit": "Header percentage may be rounded; no-fallback log is evidence, not a hash proof of historical ticks"
+  },
+  "note": "Exact baseline execution required. History count drift recorded separately; no assertion of byte-identical tick history. Exit comparison is OHLC shadow, not actual orders; cash costs excluded from price R."
+}

@@ -1,0 +1,100 @@
+[
+  {
+    "run_id": "reproduce_train",
+    "failed_at": "2025.06.30 00:00:03",
+    "order": "30",
+    "eventual_exit": "2025-06-30 00:01:00",
+    "reason": "sl"
+  },
+  {
+    "run_id": "reproduce_check",
+    "failed_at": "2026.01.13 00:00:00",
+    "order": "8",
+    "eventual_exit": "2026-01-13 00:15:00",
+    "reason": "unspecified"
+  },
+  {
+    "run_id": "annual_2019",
+    "failed_at": "2019.02.28 00:00:00",
+    "order": "26",
+    "eventual_exit": "2019-02-28 00:15:00",
+    "reason": "unspecified"
+  },
+  {
+    "run_id": "annual_2019",
+    "failed_at": "2019.10.24 00:00:00",
+    "order": "102",
+    "eventual_exit": "2019-10-24 00:15:00",
+    "reason": "unspecified"
+  },
+  {
+    "run_id": "annual_2020",
+    "failed_at": "2020.01.29 00:00:00",
+    "order": "8",
+    "eventual_exit": "2020-01-29 00:15:00",
+    "reason": "unspecified"
+  },
+  {
+    "run_id": "annual_2020",
+    "failed_at": "2020.05.12 00:00:00",
+    "order": "36",
+    "eventual_exit": "2020-05-12 00:15:00",
+    "reason": "unspecified"
+  },
+  {
+    "run_id": "annual_2021",
+    "failed_at": "2021.07.21 00:00:00",
+    "order": "66",
+    "eventual_exit": "2021-07-21 00:15:30",
+    "reason": "unspecified"
+  },
+  {
+    "run_id": "annual_2021",
+    "failed_at": "2021.08.26 00:00:00",
+    "order": "84",
+    "eventual_exit": "2021-08-26 00:15:00",
+    "reason": "unspecified"
+  },
+  {
+    "run_id": "annual_2022",
+    "failed_at": "2022.07.21 00:00:00",
+    "order": "84",
+    "eventual_exit": "2022-07-21 00:15:30",
+    "reason": "unspecified"
+  },
+  {
+    "run_id": "annual_2022",
+    "failed_at": "2022.12.27 00:00:00",
+    "order": "150",
+    "eventual_exit": "2022-12-27 00:15:00",
+    "reason": "unspecified"
+  },
+  {
+    "run_id": "annual_2023",
+    "failed_at": "2023.04.07 00:00:00",
+    "order": "42",
+    "eventual_exit": "2023-04-07 00:15:30",
+    "reason": "unspecified"
+  },
+  {
+    "run_id": "annual_2024",
+    "failed_at": "2024.02.20 00:00:00",
+    "order": "20",
+    "eventual_exit": "2024-02-20 00:15:00",
+    "reason": "unspecified"
+  },
+  {
+    "run_id": "annual_2025",
+    "failed_at": "2025.06.30 00:00:03",
+    "order": "44",
+    "eventual_exit": "2025-06-30 00:01:00",
+    "reason": "sl"
+  },
+  {
+    "run_id": "annual_2025",
+    "failed_at": "2025.12.31 00:00:00",
+    "order": "134",
+    "eventual_exit": "2025-12-31 00:15:00",
+    "reason": "unspecified"
+  }
+]

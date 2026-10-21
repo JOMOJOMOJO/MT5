@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "purpose": "M5_SHORT_ICHIMOKU",
+  "created": "2026-10-07",
+  "input_count": 162,
+  "source": "mql\\Experts\\Research\\RelativeM5ShortIchimoku.mq5",
+  "source_sha256": "57ee64dfc123b9837e48bb8ede2fe4a1dc3a6b019a29dbd11a1b25d1a0fd0488",
+  "analysis_sha256": "988b00ad44549a6891e86d171e8f076e8988591c6ecd45beffe0031a3a779fed",
+  "expected_broker": "Vantage Trading Ltd",
+  "expected_server": "VantageTradingLtd-Live",
+  "reference_reports": [],
+  "symbol": "USDJPY",
+  "timeframe": "M5",
+  "model": 4,
+  "execution_mode": 0,
+  "deposit": 10000,
+  "currency": "USD",
+  "leverage": 100,
+  "runs": [
+    {
+      "run_id": "short_control_2023_2024",
+      "stage": "Control",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "label": "OBSERVER_OFF_EXECUTION_CONTROL",
+      "overrides": {
+        "InpShortObserver": "false"
+      }
+    },
+    {
+      "run_id": "short_2023_2024",
+      "stage": "Observe",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {},
+      "reference_run_id": "short_control_2023_2024"
+    },
+    {
+      "run_id": "short_2025_2026",
+      "stage": "Observe",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {}
+    }
+  ],
+  "sha256": {
+    "frozen/HTFResearchEnvironment.mqh": "af6cb1fa2338ff82689641520932de46b4e79f8b5a842444c691b438262e8d6b",
+    "frozen/inputs.json": "874e8e7b31a651da844df13b56847bd7cc4ff1b00b3a34260416955de79f9a30",
+    "frozen/M15Environment.mqh": "9e66dc51457bec6f294dd7eea07a4c388808d4cf1081748c6a536a9c66b90765",
+    "frozen/quality12b_full.set": "3137e887bea11bd035b104e4a6f3f66ad2be6027ce769e14ae1c674d872e512d",
+    "frozen/quality12b_snapshot.mq5": "57ee64dfc123b9837e48bb8ede2fe4a1dc3a6b019a29dbd11a1b25d1a0fd0488"
+  },
+  "long_reference": {
+    "path": "reports\\qa\\m5_ichimoku_diagnostics_20261007\\runs\\20261007_183110_12bea14d\\trades_with_ichimoku.csv",
+    "sha256": "8d5ba9c759be5631e18ab4a4b4640dcb59c8dd353de227a6327ca2a8b10ec0a3"
+  }
+}

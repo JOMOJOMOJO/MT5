@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "entries": 1,
+  "risk_plans": 1,
+  "causal_context": true,
+  "quality": "REAL_TICKS_NO_FALLBACK_REPORTED",
+  "fallback_lines": 0
+}

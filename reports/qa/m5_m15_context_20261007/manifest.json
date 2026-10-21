@@ -1,0 +1,245 @@
+{
+  "schema": 1,
+  "purpose": "M5_M15_CONTEXT_RESEARCH",
+  "created": "2026-10-07",
+  "input_count": 162,
+  "source": "mql\\Experts\\Research\\RelativeM5M15Context.mq5",
+  "source_sha256": "538fce168ddea05b73085063ad9bbea1aeb0829a661a3958ef4bd1dd9665e381",
+  "analysis_sha256": "a64cca3cc8f39df600ae74b6bb91c813b1a02a51362a3409dd8fc7698628c532",
+  "expected_broker": "Vantage Trading Ltd",
+  "expected_server": "VantageTradingLtd-Live",
+  "reference_reports": [],
+  "symbol": "USDJPY",
+  "timeframe": "M5",
+  "model": 4,
+  "execution_mode": 0,
+  "deposit": 10000,
+  "currency": "USD",
+  "leverage": 100,
+  "runs": [
+    {
+      "run_id": "m15_parity",
+      "stage": "Control",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M15",
+      "label": "OBSERVER_PARITY_CONTROL",
+      "overrides": {
+        "InpSignalTimeframe": "15"
+      },
+      "reference_report": "reports\\qa\\rc_search_20261007\\runs\\20261007_094431_0d639534\\validate_c10\\report.htm",
+      "reference_sha256": "230a5eaa2b4d9f20a04390ef225c72bc9dcf5bd9aa6855110d7e29a3903f34d7"
+    },
+    {
+      "run_id": "smoke_m5",
+      "stage": "Smoke",
+      "date_from": "2026.09.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "M5_ENGINEERING_SMOKE",
+      "overrides": {}
+    },
+    {
+      "run_id": "search_fixed_1",
+      "stage": "Search",
+      "cell": "fixed_1",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "0",
+        "InpTargetRMultiple": "1.0",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "search_fixed_1p5",
+      "stage": "Search",
+      "cell": "fixed_1p5",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "0",
+        "InpTargetRMultiple": "1.5",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "search_fixed_2",
+      "stage": "Search",
+      "cell": "fixed_2",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "0",
+        "InpTargetRMultiple": "2.0",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "search_up_only",
+      "stage": "Search",
+      "cell": "up_only",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "1",
+        "InpTargetRMultiple": "1.5",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "search_non_down",
+      "stage": "Search",
+      "cell": "non_down",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "2",
+        "InpTargetRMultiple": "1.5",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "search_up2_range1",
+      "stage": "Search",
+      "cell": "up2_range1",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "3",
+        "InpTargetRMultiple": "1.5",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "search_hold270_control",
+      "stage": "Search",
+      "cell": "hold270_control",
+      "date_from": "2023.01.01",
+      "date_to": "2025.01.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "0",
+        "InpTargetRMultiple": "1.5",
+        "InpMaxHoldBars": "54"
+      }
+    },
+    {
+      "run_id": "validate_fixed_1",
+      "stage": "Validate",
+      "cell": "fixed_1",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "0",
+        "InpTargetRMultiple": "1.0",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "validate_fixed_1p5",
+      "stage": "Validate",
+      "cell": "fixed_1p5",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "0",
+        "InpTargetRMultiple": "1.5",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "validate_fixed_2",
+      "stage": "Validate",
+      "cell": "fixed_2",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "0",
+        "InpTargetRMultiple": "2.0",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "validate_up_only",
+      "stage": "Validate",
+      "cell": "up_only",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "1",
+        "InpTargetRMultiple": "1.5",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "validate_non_down",
+      "stage": "Validate",
+      "cell": "non_down",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "2",
+        "InpTargetRMultiple": "1.5",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "validate_up2_range1",
+      "stage": "Validate",
+      "cell": "up2_range1",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "3",
+        "InpTargetRMultiple": "1.5",
+        "InpMaxHoldBars": "18"
+      }
+    },
+    {
+      "run_id": "validate_hold270_control",
+      "stage": "Validate",
+      "cell": "hold270_control",
+      "date_from": "2025.01.01",
+      "date_to": "2026.10.01",
+      "timeframe": "M5",
+      "label": "KNOWN_PERIOD_NOT_OOS",
+      "overrides": {
+        "InpM15ResearchPolicy": "0",
+        "InpTargetRMultiple": "1.5",
+        "InpMaxHoldBars": "54"
+      }
+    }
+  ],
+  "sha256": {
+    "frozen/inputs.json": "a3e61244b6183588910e279c9d871ec6ac4347f7935f1b1bad9397c6050c4ebc",
+    "frozen/M15Environment.mqh": "9e66dc51457bec6f294dd7eea07a4c388808d4cf1081748c6a536a9c66b90765",
+    "frozen/quality12b_full.set": "c587d785a03bde4b0facf53176a98f59c61131d616503a7828e00b5e18bed8c5",
+    "frozen/quality12b_snapshot.mq5": "538fce168ddea05b73085063ad9bbea1aeb0829a661a3958ef4bd1dd9665e381"
+  }
+}

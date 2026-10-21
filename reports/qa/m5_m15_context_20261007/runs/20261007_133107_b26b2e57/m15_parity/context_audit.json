@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "entries": 98,
+  "risk_plans": 98,
+  "causal_context": true,
+  "quality": "MIXED_TICKS",
+  "fallback_lines": 8
+}

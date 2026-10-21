@@ -1,0 +1,14 @@
+{
+  "InpEnableRoundBucket": {
+    "old": "true",
+    "new": "false"
+  },
+  "InpEnableRoundShortBucket": {
+    "old": "false",
+    "new": "true"
+  },
+  "InpShortObserver": {
+    "old": null,
+    "new": "true"
+  }
+}

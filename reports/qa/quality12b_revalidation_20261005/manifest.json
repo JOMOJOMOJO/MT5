@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "created": "2026-10-05",
+  "status": "PREPARED_NOT_EXECUTED",
+  "input_count": 163,
+  "source": "mql\\Experts\\usdjpy_20260402_round_continuation_long.mq5",
+  "source_sha256": "e8a3376a9d5a07089f7373592fbabcf7ccd6513781b7940540ef2ba421c4cd20",
+  "source_identity_note": "Current unmodified source snapshot; historical binary identity is not proven. Reproduction is required.",
+  "reference_reports": [
+    {
+      "path": "reports\\backtest\\imported\\usdjpy_20260402_round_continuation_long-quality12b_guarded-train-9m-m15.htm",
+      "sha256": "50c6cd72cd1b1a4f0692a1d30ea3d074bed9c42c9e8a005cbcd6c35bb3185fdf"
+    },
+    {
+      "path": "reports\\backtest\\imported\\usdjpy_20260402_round_continuation_long-quality12b_guarded-oos-3m-m15.htm",
+      "sha256": "423178ea2d029cf679e1925e91091efe2146c9b56298dcc4a2b7adc214e6cd06"
+    }
+  ],
+  "runtime_only_overrides": [
+    "InpTelemetryFileName",
+    "InpOperatorCommandFile",
+    "InpStatusFileName"
+  ],
+  "expected_broker": "Vantage Trading Ltd",
+  "expected_server": "VantageTradingLtd-Live",
+  "symbol": "USDJPY",
+  "timeframe": "M15",
+  "model": 4,
+  "execution_mode": 0,
+  "deposit": 10000,
+  "currency": "USD",
+  "leverage": 100,
+  "runs": [
+    {
+      "run_id": "reproduce_train",
+      "stage": "Reproduce",
+      "date_from": "2025.04.01",
+      "date_to": "2025.12.31",
+      "label": "KNOWN_SELECTED_TRAIN",
+      "expected_trades": 60,
+      "expected_net": 914.94,
+      "expected_pf": 1.56
+    },
+    {
+      "run_id": "reproduce_check",
+      "stage": "Reproduce",
+      "date_from": "2026.01.01",
+      "date_to": "2026.04.01",
+      "label": "KNOWN_REUSED_VALIDATION",
+      "expected_trades": 9,
+      "expected_net": 113.2,
+      "expected_pf": 2.17
+    },
+    {
+      "run_id": "annual_2018",
+      "stage": "Extend",
+      "date_from": "2018.01.01",
+      "date_to": "2019.01.01",
+      "label": "RETROSPECTIVE_NOT_OOS",
+      "expected_trades": "",
+      "expected_net": "",
+      "expected_pf": ""
+    },
+    {
+      "run_id": "annual_2019",
+      "stage": "Extend",
+      "date_from": "2019.01.01",
+      "date_to": "2020.01.01",
+      "label": "RETROSPECTIVE_NOT_OOS",
+      "expected_trades": "",
+      "expected_net": "",
+      "expected_pf": ""
+    },
+    {
+      "run_id": "annual_2020",
+      "stage": "Extend",
+      "date_from": "2020.01.01",
+      "date_to": "2021.01.01",
+      "label": "RETROSPECTIVE_NOT_OOS",
+      "expected_trades": "",
+      "expected_net": "",
+      "expected_pf": ""
+    },
+    {
+      "run_id": "annual_2021",
+      "stage": "Extend",
+      "date_from": "2021.01.01",
+      "date_to": "2022.01.01",
+      "label": "RETROSPECTIVE_NOT_OOS",
+      "expected_trades": "",
+      "expected_net": "",
+      "expected_pf": ""
+    },
+    {
+      "run_id": "annual_2022",
+      "stage": "Extend",
+      "date_from": "2022.01.01",
+      "date_to": "2023.01.01",
+      "label": "RETROSPECTIVE_NOT_OOS",
+      "expected_trades": "",
+      "expected_net": "",
+      "expected_pf": ""
+    },
+    {
+      "run_id": "annual_2023",
+      "stage": "Extend",
+      "date_from": "2023.01.01",
+      "date_to": "2024.01.01",
+      "label": "RETROSPECTIVE_NOT_OOS",
+      "expected_trades": "",
+      "expected_net": "",
+      "expected_pf": ""
+    },
+    {
+      "run_id": "annual_2024",
+      "stage": "Extend",
+      "date_from": "2024.01.01",
+      "date_to": "2025.01.01",
+      "label": "RETROSPECTIVE_NOT_OOS",
+      "expected_trades": "",
+      "expected_net": "",
+      "expected_pf": ""
+    },
+    {
+      "run_id": "annual_2025",
+      "stage": "Extend",
+      "date_from": "2025.01.01",
+      "date_to": "2026.01.01",
+      "label": "RETROSPECTIVE_NOT_OOS",
+      "expected_trades": "",
+      "expected_net": "",
+      "expected_pf": ""
+    },
+    {
+      "run_id": "recent_2026_apr_sep",
+      "stage": "Extend",
+      "date_from": "2026.04.01",
+      "date_to": "2026.10.01",
+      "label": "UNUSED_STATUS_UNVERIFIED_NOT_OOS",
+      "expected_trades": "",
+      "expected_net": "",
+      "expected_pf": ""
+    }
+  ],
+  "sha256": {
+    "frozen/inputs.json": "7fd68656b58cadb2f321f3ff2ba39b14742437480329a06cda218458245de9bb",
+    "frozen/quality12b_full.set": "5296826efabfc3e498091c9912cf7e74574ce04a1e621e2549722a9222f67d23",
+    "frozen/quality12b_snapshot.mq5": "e8a3376a9d5a07089f7373592fbabcf7ccd6513781b7940540ef2ba421c4cd20",
+    "run_matrix.csv": "338e7b036b0e3f48734f0421d28d630d048ed7226e1aaf863c42e253951ed76d"
+  }
+}

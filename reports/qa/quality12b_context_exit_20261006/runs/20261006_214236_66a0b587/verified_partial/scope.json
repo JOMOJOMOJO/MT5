@@ -1,0 +1,20 @@
+{
+  "accepted": [
+    "annual_2023",
+    "annual_2024",
+    "annual_2025",
+    "recent_2026_apr_sep",
+    "reproduce_check"
+  ],
+  "excluded": [
+    {
+      "run": "annual_2022",
+      "errors": [
+        "Execution differs 2022-09-20 13:00:00",
+        "Non-swap cash difference"
+      ]
+    }
+  ],
+  "complete": false,
+  "entries": 181
+}

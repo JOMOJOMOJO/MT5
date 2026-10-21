@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "passed": true,
+  "classification": "EXACT_EXECUTIONS_SWAP_ONLY_DIFFERENCE",
+  "reference_sha256": "50c6cd72cd1b1a4f0692a1d30ea3d074bed9c42c9e8a005cbcd6c35bb3185fdf",
+  "candidate_sha256": "acc2952e4e9e771f4a3528418fa7b813b25676a053b724481efd1065c65f6479",
+  "reference": {
+    "trade_count": 60,
+    "net_profit": 914.94,
+    "gross_profit": 2547.15,
+    "gross_loss": -1632.21,
+    "profit_factor": 1.5605528700351057,
+    "expected_payoff": 15.249,
+    "winning_trade_count": 32,
+    "losing_trade_count": 28,
+    "commission": 0.0,
+    "swap": 24.42
+  },
+  "candidate": {
+    "trade_count": 60,
+    "net_profit": 908.05,
+    "gross_profit": 2544.73,
+    "gross_loss": -1636.68,
+    "profit_factor": 1.554812180756165,
+    "expected_payoff": 15.134166666666667,
+    "winning_trade_count": 32,
+    "losing_trade_count": 28,
+    "commission": 0.0,
+    "swap": 17.53
+  },
+  "trade_count": 60,
+  "exact_core_fields": [
+    "symbol",
+    "side",
+    "entry_time",
+    "entry_price",
+    "volume",
+    "initial_sl",
+    "initial_tp",
+    "exit_time",
+    "exit_price",
+    "exit_reason",
+    "exit_comment",
+    "profit",
+    "commission"
+  ],
+  "core_trade_differences": [],
+  "swap_difference_trades": [
+    {
+      "trade_index": 6,
+      "entry_time": "2025-06-03 20:30:00",
+      "old_swap": 2.31,
+      "new_swap": 1.85,
+      "delta_swap": -0.46
+    },
+    {
+      "trade_index": 15,
+      "entry_time": "2025-06-27 19:30:00",
+      "old_swap": 2.36,
+      "new_swap": 1.89,
+      "delta_swap": -0.47
+    },
+    {
+      "trade_index": 17,
+      "entry_time": "2025-07-07 21:00:00",
+      "old_swap": 2.33,
+      "new_swap": 1.87,
+      "delta_swap": -0.46
+    },
+    {
+      "trade_index": 35,
+      "entry_time": "2025-10-03 20:45:00",
+      "old_swap": 2.31,
+      "new_swap": 1.85,
+      "delta_swap": -0.46
+    },
+    {
+      "trade_index": 40,
+      "entry_time": "2025-10-09 19:45:00",
+      "old_swap": 2.49,
+      "new_swap": 1.99,
+      "delta_swap": -0.5
+    },
+    {
+      "trade_index": 45,
+      "entry_time": "2025-10-31 21:45:00",
+      "old_swap": 2.52,
+      "new_swap": 2.02,
+      "delta_swap": -0.5
+    },
+    {
+      "trade_index": 46,
+      "entry_time": "2025-11-03 20:45:00",
+      "old_swap": 2.52,
+      "new_swap": 2.02,
+      "delta_swap": -0.5
+    },
+    {
+      "trade_index": 58,
+      "entry_time": "2025-12-19 20:15:00",
+      "old_swap": 2.51,
+      "new_swap": 2.01,
+      "delta_swap": -0.5
+    },
+    {
+      "trade_index": 59,
+      "entry_time": "2025-12-26 19:45:00",
+      "old_swap": 5.07,
+      "new_swap": 2.03,
+      "delta_swap": -3.04
+    }
+  ],
+  "net_delta": -6.89,
+  "swap_delta": -6.89,
+  "errors": [],
+  "note": "Observed swap-only difference is attributed, not removed from candidate P/L. No parameter or P/L threshold relaxation. Identical fills in this sample do not establish profitability or binary identity."
+}

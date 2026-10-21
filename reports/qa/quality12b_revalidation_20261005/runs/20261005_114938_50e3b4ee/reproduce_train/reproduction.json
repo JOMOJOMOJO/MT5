@@ -1,0 +1,24 @@
+﻿{
+    "passed":  false,
+    "expected":  {
+                     "run_id":  "reproduce_train",
+                     "stage":  "Reproduce",
+                     "date_from":  "2025.04.01",
+                     "date_to":  "2025.12.31",
+                     "label":  "KNOWN_SELECTED_TRAIN",
+                     "expected_trades":  60,
+                     "expected_net":  914.94,
+                     "expected_pf":  1.56
+                 },
+    "actual":  {
+                   "run_id":  "reproduce_train",
+                   "from":  "2025.04.01",
+                   "to":  "2025.12.31",
+                   "label":  "KNOWN_SELECTED_TRAIN",
+                   "trades":  60,
+                   "net":  908.05,
+                   "pf":  1.554812180756165,
+                   "report":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\quality12b_revalidation_20261005\\runs\\20261005_114938_50e3b4ee\\reproduce_train\\report.htm"
+               },
+    "note":  "Metrics parity alone does not prove identical entry/exit sequences."
+}
