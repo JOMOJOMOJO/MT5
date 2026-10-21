@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "rows": 167889,
+  "old_seconds": 15.706779600004666,
+  "new_seconds": 0.0670164999901317,
+  "exact_dataframe_equality": true
+}

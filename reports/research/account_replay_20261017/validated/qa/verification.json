@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "account_scenarios": 432,
+  "independent_cashflows": 4320,
+  "original_prefix_trades_identical": 161083,
+  "closed_trade_closure_crossings_verified": 1846,
+  "protected_files_unchanged": 3892,
+  "source_hashes_match": true,
+  "holdout_2026_used": false
+}

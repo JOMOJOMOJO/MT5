@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "source_and_output_hashes_match": true,
+  "existing_data_unchanged": true,
+  "csv_parquet_duckdb_table_counts_match": 13,
+  "report_links_checked": 11,
+  "independent_bootstrap_ci_checks": 8,
+  "independent_cost_break_even_checks": 4,
+  "table_equality_across_reporting_revisions": true,
+  "tests": 15,
+  "failures_or_errors": 0,
+  "holdout_2026_used": false
+}

@@ -1,0 +1,11 @@
+﻿candidate_id,side,entry_time,ambiguous_hour_start,ambiguous_hour_end,expected_m1,actual_m1,complete_m1_path,h1_bid_ohlc_match,valid_m1_ohlc,tick_sequence_verified,cashflow_recalculated,quote_model,first,first_minute,observation,spread_fallback_minutes,first_hit_in_ambiguous_hour
+USDJPY_H1_atr_breakout_LONG_1712750400,LONG,1712750400,1712761200,1712764800,240,240,True,True,True,False,False,fixed_H1_spread_proxy,stop_first,1712762580,minute_OHLC,0,True
+USDJPY_H1_atr_breakout_LONG_1712750400,LONG,1712750400,1712761200,1712764800,240,240,True,True,True,False,False,M1_spread_proxy,stop_first,1712762580,minute_OHLC,0,True
+USDJPY_H1_atr_breakout_LONG_1718870400,LONG,1718870400,1718877600,1718881200,180,180,True,True,True,False,False,fixed_H1_spread_proxy,stop_first,1718879400,minute_OHLC,0,True
+USDJPY_H1_atr_breakout_LONG_1718870400,LONG,1718870400,1718877600,1718881200,180,180,True,True,True,False,False,M1_spread_proxy,stop_first,1718879400,minute_OHLC,0,True
+USDJPY_H1_atr_breakout_LONG_1752591600,LONG,1752591600,1752591600,1752595200,60,60,True,True,True,False,False,fixed_H1_spread_proxy,stop_first,1752593400,minute_OHLC,60,True
+USDJPY_H1_atr_breakout_LONG_1752591600,LONG,1752591600,1752591600,1752595200,60,60,True,True,True,False,False,M1_spread_proxy,stop_first,1752593400,minute_OHLC,28,True
+USDJPY_H1_atr_breakout_SHORT_1720713600,SHORT,1720713600,1720713600,1720717200,60,60,True,True,True,False,False,fixed_H1_spread_proxy,target_first,1720713660,minute_OHLC,0,True
+USDJPY_H1_atr_breakout_SHORT_1720713600,SHORT,1720713600,1720713600,1720717200,60,60,True,True,True,False,False,M1_spread_proxy,target_first,1720713660,minute_OHLC,0,True
+USDJPY_H1_atr_breakout_SHORT_1745197200,SHORT,1745197200,1745197200,1745200800,60,60,True,True,True,False,False,fixed_H1_spread_proxy,stop_first,1745197200,minute_OHLC,0,True
+USDJPY_H1_atr_breakout_SHORT_1745197200,SHORT,1745197200,1745197200,1745200800,60,60,True,True,True,False,False,M1_spread_proxy,stop_first,1745197200,minute_OHLC,0,True

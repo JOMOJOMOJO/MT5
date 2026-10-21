@@ -1,0 +1,10 @@
+{
+  "status": "completed",
+  "request_count": 120,
+  "requests_with_recovered_prices": 0,
+  "recovered_rows": 0,
+  "failed_requests": 0,
+  "server": "Bybit-Live",
+  "holdout_2026_requested": false,
+  "original_data_modified": false
+}

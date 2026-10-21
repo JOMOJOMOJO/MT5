@@ -1,0 +1,29 @@
+{
+  "selected_after_results": true,
+  "selection": "four rows from preceding assistant answer",
+  "cells": [
+    "USDJPY_donchian_LONG_margin025",
+    "USDJPY_atr_breakout_SHORT_margin025",
+    "USDCHF_donchian_SHORT_margin025",
+    "AUDUSD_rsi2_pullback_SHORT_rsi2"
+  ],
+  "weights_optimized": false,
+  "independent_books_initial_usd_each": 10000,
+  "shared_account_replayed": false,
+  "holdout_2026_used": false,
+  "missing_months": "USDCHF Jan-Jul2024 not zero; common-month result primary",
+  "pf_scope": "pooled closed trade cash, not average of individual PF",
+  "common_pf_cohort": "entry months in common coverage; monthly PnL uses boundary MTM",
+  "input_sha256": {
+    "reports\\research\\hypothesis_cycle_20261019\\validated\\monthly.parquet": "dfaae5e83d36a592d5837292a2fe7cc0b32f99322fd477005998c384aa703e87",
+    "reports\\research\\hypothesis_cycle_20261019\\validated\\accounts\\USDJPY_donchian_LONG_margin025\\base_pause\\trades.parquet": "009de6a55c21fa078c83cb86d5e0c79e4e61e8c549b978b6e1eb790ecc99c66f",
+    "reports\\research\\hypothesis_cycle_20261019\\validated\\accounts\\USDJPY_atr_breakout_SHORT_margin025\\base_pause\\trades.parquet": "7dc90330e64750d70887485c991d7c29bc30c92bdac63214ad81a249c6efac2d",
+    "reports\\research\\hypothesis_cycle_20261019\\validated\\accounts\\USDCHF_donchian_SHORT_margin025\\base_pause\\trades.parquet": "12bfe019eb5cd1b717297f54f7dc46ad1622237f19b8391e878c7f2ea27b020f",
+    "reports\\research\\hypothesis_cycle_20261019\\validated\\accounts\\AUDUSD_rsi2_pullback_SHORT_rsi2\\base_pause\\trades.parquet": "06b5a3cf940a57f764bdf45d978daa9ee1736cd89579c0099019e25e81bdcb12",
+    "reports\\research\\hypothesis_cycle_20261019\\validated\\accounts\\USDJPY_donchian_LONG_margin025\\stress_pause\\trades.parquet": "63927a877767e7e85375fcd7a77d5ef722239eb0c9837ad7ccbc42d636520210",
+    "reports\\research\\hypothesis_cycle_20261019\\validated\\accounts\\USDJPY_atr_breakout_SHORT_margin025\\stress_pause\\trades.parquet": "75bb28c9f5192c3d18916609a300cfb273802c0e35f82f0923593a32d451dfda",
+    "reports\\research\\hypothesis_cycle_20261019\\validated\\accounts\\USDCHF_donchian_SHORT_margin025\\stress_pause\\trades.parquet": "faafabc99638860677d0889a93882c43fc94133113f4a8ab6585e8f22a7e6493",
+    "reports\\research\\hypothesis_cycle_20261019\\validated\\accounts\\AUDUSD_rsi2_pullback_SHORT_rsi2\\stress_pause\\trades.parquet": "81d8c9ff8cbbf91c7ddaa7441974a12577c293da9bf65e80ef9e5f92d14b625a"
+  },
+  "script_sha256": "b5e17071e3b21a5364e2767e1245ddc8dba694acfeb38d22776eeed300df2e9a"
+}

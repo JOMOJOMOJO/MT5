@@ -1,0 +1,9 @@
+﻿scenario,complete,n_closed,net_pnl_before_unknown_swap_usd,profit_factor,monthly_positive,available_months,period,cost
+stop_first_lower,True,475,353.74604611789573,1.1791283435976507,11,17,common,base
+target_first_upper,True,475,447.2080381731985,1.231626291410194,12,17,common,base
+stop_first_lower,True,476,120.49365198703455,1.0598554751336366,10,17,common,stress
+target_first_upper,True,476,188.07589543186765,1.095017509701342,11,17,common,stress
+stop_first_lower,True,656,318.84170829382134,1.1130343614631637,14,24,mixed_reference,base
+target_first_upper,True,656,481.8781566487304,1.1755268795946632,16,24,mixed_reference,base
+stop_first_lower,True,658,-77.02333784446628,0.9734171664000624,12,24,mixed_reference,stress
+target_first_upper,True,658,39.477920668045165,1.0138922611374659,13,24,mixed_reference,stress

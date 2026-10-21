@@ -1,0 +1,59 @@
+{
+  "status": "complete",
+  "source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated",
+  "period": [
+    "2024-01-01",
+    "2026-01-01"
+  ],
+  "inputs_sha256": {
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\accounts.parquet": "f36ab7971fb1027b0e470280d119ae449b7d0638bb5a201df069a5ec85bce1a3",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\manifest.json": "5a25900138c9338beea593db7b249d727c343b661ef35651f2ea1803895315c5",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\data\\manifest.json": "c55f92753ff7421f26f599f05d63ce76abd09279b32f5d53d4a8c685f64a61b7",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\data\\USDJPY\\H1.parquet": "f6c31b93dddd6640c442a0e407f13297f4bfc565a9edea88f91601aa1105276b",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\data\\USDJPY\\M1.parquet": "07e554fa8ecfa293bfad2d5c9ee873f1198e50fea7e1294d2efc128b32a227c1",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\full_validated\\primary.parquet": "5090c4c9b5f3bfb3db3df7759e6017b4322e80b93bce93d24bfdf42113ed0ba4",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\knowledge\\experiments\\2026-10-17-positive-pf-followup-plan.md": "a30d983b4aabf345ec549fc63f45ccbc636ff42beb4661d8063c8eeaa26017b5",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDJPY\\H1\\atr_breakout_LONG\\execution_trades.parquet": "d7a30bf845b3f850ea78f8f937b3fa76999f12ce78cc1b071f554de64784f120",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDJPY\\H1\\atr_breakout_LONG\\execution_events.parquet": "6ac94bb19a5ac2fa361320f338f0a039fce4d8b1c96bb63376fe9853cee6dfa6",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDJPY\\H1\\atr_breakout_SHORT\\execution_trades.parquet": "a0a1ba9706a35b2aa3e9fba51637444f8724247103a0d850dff0a054550467cb",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDJPY\\H1\\atr_breakout_SHORT\\execution_events.parquet": "bdcae07e38bd97384780cc140e362a73d0e8c6c9e3d5636cdd581e6e0407db0e"
+  },
+  "inputs_unchanged": true,
+  "source_code_hashes_verified": true,
+  "source_hashes": {
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\pf_review\\intrabar.py": "c9cf5cd9f0e3cd3ed7496b224022cfcad3913027e36bc84650fe89f9741f14fc",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\pf_review\\metrics.py": "91623ca8bc95f473e7e0bb8765513fe0057b1b9e35c1350f71dbd0c9276a94c7",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\pf_review\\report.py": "ee3ffb94e0c48bd49856f74eadc038bf47a51105ca136a19ddf8ecaaf3bd5b59",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\pf_review\\run.py": "63484170b1543ea89063c8d79178de4fc37e73124a66c59e96d09445ef5dec4b",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\pf_review\\__init__.py": "c2f05962b43fe0dbd0f5bc68677f4029c4199e08a7e46089383ed40cf3e68c62",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\pf_review\\tests\\test_review.py": "908152ab6341c7b9f644da510751e3c661342d83f17786b3b5f9bee46c65a77d"
+  },
+  "git_head": "bfe77a8ff319065d6913b78058bbd2f429ac40c2",
+  "git_worktree_clean_required": false,
+  "code_identity": "SHA256 of all new Python source files",
+  "python": "3.11.9",
+  "libraries": {
+    "numpy": "2.4.4",
+    "pandas": "3.0.1",
+    "pyarrow": "23.0.1",
+    "duckdb": "1.5.6",
+    "plotly": "6.9.0"
+  },
+  "seed": 20261017,
+  "bootstrap_reps": 20000,
+  "primary_block_weeks": 4,
+  "block_sensitivity": [
+    1,
+    8
+  ],
+  "all_account_scenarios": 432,
+  "positive_pf_scenarios": 12,
+  "selected_after_observing_results": true,
+  "confirmatory": false,
+  "holdout_2026_used": false,
+  "new_signals_or_account_simulation": false,
+  "known_swap": false,
+  "live_promotion": false,
+  "source_clock": "unverified_source_calendar_not_verified_geographic_timezone",
+  "cashflow_stress": "fixed_saved_fills_and_lots_no_trigger_or_size_recalculation"
+}

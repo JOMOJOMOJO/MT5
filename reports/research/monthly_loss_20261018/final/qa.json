@@ -1,0 +1,199 @@
+{
+  "status": "PASS",
+  "counts": {
+    "positive_pf_scenarios": 12,
+    "positive_scenario_trade_sum": 2874,
+    "distinct_conditions": 10,
+    "distinct_logic_trades": 2666,
+    "distinct_symbol_side_entry_times": 2406,
+    "cross_logic_duplicate_groups": 260,
+    "distinct_original_candidates": 2845,
+    "losers_conservative": 1345,
+    "portfolio_simulated": false,
+    "independent_trade_count_known": false
+  },
+  "checks": [
+    {
+      "symbol": "AUDUSD",
+      "timeframe": "H1",
+      "method": "bollinger",
+      "side": "SHORT",
+      "scenario": "stop_first_lower",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "AUDUSD",
+      "timeframe": "H1",
+      "method": "bollinger",
+      "side": "SHORT",
+      "scenario": "target_first_upper",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "AUDUSD",
+      "timeframe": "H1",
+      "method": "ichimoku_cloud",
+      "side": "SHORT",
+      "scenario": "stop_first_lower",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "AUDUSD",
+      "timeframe": "H1",
+      "method": "ichimoku_cloud",
+      "side": "SHORT",
+      "scenario": "target_first_upper",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDCHF",
+      "timeframe": "H1",
+      "method": "atr_breakout",
+      "side": "SHORT",
+      "scenario": "stop_first_lower",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDCHF",
+      "timeframe": "H1",
+      "method": "atr_breakout",
+      "side": "SHORT",
+      "scenario": "target_first_upper",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDCHF",
+      "timeframe": "H1",
+      "method": "bollinger",
+      "side": "SHORT",
+      "scenario": "stop_first_lower",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDCHF",
+      "timeframe": "H1",
+      "method": "bollinger",
+      "side": "SHORT",
+      "scenario": "target_first_upper",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDCHF",
+      "timeframe": "H1",
+      "method": "donchian",
+      "side": "SHORT",
+      "scenario": "stop_first_lower",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDCHF",
+      "timeframe": "H1",
+      "method": "donchian",
+      "side": "SHORT",
+      "scenario": "target_first_upper",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "atr_breakout",
+      "side": "LONG",
+      "scenario": "stop_first_lower",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "atr_breakout",
+      "side": "LONG",
+      "scenario": "target_first_upper",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "atr_breakout",
+      "side": "SHORT",
+      "scenario": "stop_first_lower",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "atr_breakout",
+      "side": "SHORT",
+      "scenario": "target_first_upper",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "bollinger",
+      "side": "LONG",
+      "scenario": "stop_first_lower",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "bollinger",
+      "side": "LONG",
+      "scenario": "target_first_upper",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "donchian",
+      "side": "LONG",
+      "scenario": "stop_first_lower",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "donchian",
+      "side": "LONG",
+      "scenario": "target_first_upper",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "donchian",
+      "side": "SHORT",
+      "scenario": "stop_first_lower",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "donchian",
+      "side": "SHORT",
+      "scenario": "target_first_upper",
+      "summary_reconciled": true,
+      "realized_and_equity_totals_reconciled": true
+    }
+  ],
+  "consumed_inputs_unchanged": 40,
+  "prior_engine_source_hashes_match": true
+}

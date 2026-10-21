@@ -1,0 +1,5 @@
+﻿symbol,timeframe,method,side,scenario,extra_roundtrip_pips_to_zero,extra_roundtrip_usd_per_lot_to_zero,sum_lots,sum_usd_per_pip,n_source_day_crossing,lot_source_day_exposure,swap_cost_known,frozen_cashflow_stress_only
+USDJPY,H1,atr_breakout,LONG,stop_first_lower,0.5258530130793547,3.445753362518694,12.350000000000001,80.92575866002318,13,1.49,False,True
+USDJPY,H1,atr_breakout,LONG,target_first_upper,1.2434063311922443,8.147314655148193,12.370000000000001,81.05337712696681,13,1.5,False,True
+USDJPY,H1,atr_breakout,SHORT,stop_first_lower,1.0708261048681473,7.144892055503897,4.949999999999999,33.02797299576397,3,0.19,False,True
+USDJPY,H1,atr_breakout,SHORT,target_first_upper,2.140489727432037,14.282557437434043,4.959999999999999,33.095923788740606,3,0.19,False,True

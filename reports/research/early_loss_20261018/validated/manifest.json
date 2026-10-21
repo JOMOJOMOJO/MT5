@@ -1,0 +1,58 @@
+{
+  "status": "complete",
+  "holdout_2026_used": false,
+  "new_filters_applied": false,
+  "source_clock_verified": false,
+  "swaps_verified": false,
+  "selection": "10 posthoc PF-positive conditions; conservative scenario",
+  "trade_n": 2666,
+  "unique_timestamps": 2406,
+  "early_loss_rate_difference_ci": {
+    "difference": 0.031835079418722545,
+    "ci95_lower": -0.009855778703120505,
+    "ci95_upper": 0.0633382290237375,
+    "block_weeks": 4,
+    "reps": 2000
+  },
+  "bootstrap_seed": 20261018,
+  "features_fixed": [
+    "signal_range_atr",
+    "signed_body_atr",
+    "rejection_wick_fraction",
+    "signed_move12_atr",
+    "relative_vol",
+    "signed_ema_distance_atr",
+    "breakout_margin_atr",
+    "signal_spread_proxy_atr"
+  ],
+  "inputs_sha256": {
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDCHF\\H1\\donchian_SHORT\\execution_trades.parquet": "b67281e88dfdb98de9cc1d273d9751dbce3e83ed1084906777994851da06000c",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDJPY\\H1\\atr_breakout_LONG\\execution_trades.parquet": "d7a30bf845b3f850ea78f8f937b3fa76999f12ce78cc1b071f554de64784f120",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\AUDUSD\\H1\\ichimoku_cloud_SHORT\\execution_trades.parquet": "828ba17ea79cb732582271c6ea745184ef76e09a956342408dc63ac7652c1476",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDJPY\\H1\\donchian_SHORT\\execution_trades.parquet": "b0c614b115e2799b7e10f9cd03a523c6f434214a72aaa640282431638ef48ab5",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\data\\AUDUSD\\H1.parquet": "a0989ad4accbb8389f0f75350a97219efbbdb9fa689cc4a5a04d19fe03a708da",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\data\\USDJPY\\H1.parquet": "f6c31b93dddd6640c442a0e407f13297f4bfc565a9edea88f91601aa1105276b",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\knowledge\\experiments\\2026-10-18-early-loss-plan.md": "64c1c79a86f54b9bbb8c4302f45538223e3064f10dddf164d4d1b5f1cedf3c5b",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\data\\manifest.json": "c55f92753ff7421f26f599f05d63ce76abd09279b32f5d53d4a8c685f64a61b7",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\AUDUSD\\H1\\bollinger_SHORT\\execution_trades.parquet": "97cc7ae084c1c056b064514c2e5c4b9979c0e6a9186c1e53edfbd9dcdef42137",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\data\\USDCHF\\H1.parquet": "10aab664c5ebcdc2c732eab12d3fb07c52b8b54df70fc222782efafdb40257f6",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\full_validated\\AUDUSD\\H1\\candidates.parquet": "cfad6a05a76fc351ccdcb5e43f117a5299847d0ec0e1e217441fff522c117850",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\full_validated\\USDCHF\\H1\\candidates.parquet": "13c3e18eb2c6b0bbae3786d53c7d83821a46ac94a24720a7aa70771c171c6fd2",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\full_validated\\USDJPY\\H1\\candidates.parquet": "12b5afc4eda3d67ae1861b812d5968a52bb4e5f3b19b076e2de7202cd6d5e954",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDJPY\\H1\\bollinger_LONG\\execution_trades.parquet": "68464d57d060564dbb2939ad59d9fbeda82cb0de8a1b42ab2669ecf7f51fc037",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDJPY\\H1\\donchian_LONG\\execution_trades.parquet": "92181edb3ce6f791a4e4171c70dbfaf4eba47fd45cbf7af1a172a976fa7a7b2b",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDCHF\\H1\\bollinger_SHORT\\execution_trades.parquet": "e258841807aa39de2e7e02dde59afab8b7460d74355489adae27175a5e8c31df",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDCHF\\H1\\atr_breakout_SHORT\\execution_trades.parquet": "6109baf22758790c15aef48ade5212e58e77373dc44ada5b79817591fef5f4ba",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\accounts.parquet": "f36ab7971fb1027b0e470280d119ae449b7d0638bb5a201df069a5ec85bce1a3",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\manifest.json": "5a25900138c9338beea593db7b249d727c343b661ef35651f2ea1803895315c5",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\account_replay_20261017\\validated\\USDJPY\\H1\\atr_breakout_SHORT\\execution_trades.parquet": "a0a1ba9706a35b2aa3e9fba51637444f8724247103a0d850dff0a054550467cb"
+  },
+  "inputs_unchanged": true,
+  "source_hashes": {
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\early_loss\\analysis.py": "b96274da6f6018079f7ec568a261230edf8e542bd62a8e1bafb334aea295d4c4",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\early_loss\\report.py": "b5fd5ab942fdd5ae8b53c0003c9fa12b7aa5a84c9a2e4f5622e91336c57c71fc",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\early_loss\\run.py": "2005ac5988b70432b4250fb4dfa48db84ca7fd4b108e3087cd0557a8ab8f2583",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\early_loss\\__init__.py": "538e948a701278a1be0997e46eb2897b2731c2b83d7375254420ad0da2afdcc5"
+  },
+  "git_head": "bfe77a8ff319065d6913b78058bbd2f429ac40c2"
+}

@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "new_statistical_tests": 0,
+  "core_replay_results_changed": false,
+  "source_sha256": "2bc7c01bf772050f9ca06c9370a43765a103243586c79a867b23a07460cef773",
+  "outputs": {
+    "report.md": "e14fd3d814a061a9c06212f5d4d9f44d4e3161d36dbb519efd7625d1c48d76e7",
+    "dashboard.html": "e2ce8686de458b826f831d665ca77393f10fd5ba3b0830ef4c9c6a85ece0070d",
+    "stop_categories.csv": "05d065830578074b6ce851413927ebc6a4170dcf73266b16e3f34c4358e21eae",
+    "end_state.csv": "b50dbb517729dda3be22b9a71311677bce44d8daff8c345bccae643d42d76f8a",
+    "end_state.parquet": "9e520435ce1fe210f68aef3a5c4101af3ea5b5d45629559f6bca8126a7ae69f3"
+  }
+}

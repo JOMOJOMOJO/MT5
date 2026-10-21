@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "atr_breakout",
+      "side": "LONG",
+      "scenario": "stop_first_lower",
+      "source_summary_reconciled": true,
+      "all_candidates_accounted": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "atr_breakout",
+      "side": "LONG",
+      "scenario": "target_first_upper",
+      "source_summary_reconciled": true,
+      "all_candidates_accounted": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "atr_breakout",
+      "side": "SHORT",
+      "scenario": "stop_first_lower",
+      "source_summary_reconciled": true,
+      "all_candidates_accounted": true
+    },
+    {
+      "symbol": "USDJPY",
+      "timeframe": "H1",
+      "method": "atr_breakout",
+      "side": "SHORT",
+      "scenario": "target_first_upper",
+      "source_summary_reconciled": true,
+      "all_candidates_accounted": true
+    }
+  ],
+  "protected_inputs": 11,
+  "protected_hashes_unchanged": true,
+  "prices_match_original_manifest": true,
+  "holdout_2026_used": false
+}

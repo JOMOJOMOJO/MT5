@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "n": 2666,
+  "early": 752,
+  "losses": 1345,
+  "year_max": 2025,
+  "new_filters_applied": false,
+  "source_unchanged_by_script": true
+}

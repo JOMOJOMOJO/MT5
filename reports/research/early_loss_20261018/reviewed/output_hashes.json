@@ -1,0 +1,18 @@
+{
+  "context_comparisons.csv": "006742464967965549e5f0f0fe007e0411fd818986faa01fcc95b06bdb1d8278",
+  "context_comparisons.parquet": "67decf3adc128b5bbb2181f9100d2c509afe62c4e5ec8ad0b99c7c491a1a1ce0",
+  "dashboard.html": "41808fb61c2751ccbf95f3954e703462e3d89d8137b6ba078b57322d77e2f694",
+  "early_loss.duckdb": "93d53143e7f263b8bea4a1e5c5b52ae0d9cb194020ef580b2aa5faf6748063ae",
+  "feature_block_intervals.csv": "99b1e531af8ae958433141c81032e0d3a9fd0b78ccbd04ae0e97c383f015afb5",
+  "feature_block_intervals.parquet": "0c8a251e57b2d0c46fdf21a42566d001baeacd3e2b2598e93350fdd261c1e0ed",
+  "feature_comparisons.csv": "dd85b31f4e44bb3e73896e0a0ece4f922e60ef71da5eab31f2b6926a269775db",
+  "feature_comparisons.parquet": "4463d33ce528cb453f92321e9135ec63c9acdd0654a88d86d004f47500757ec1",
+  "group_counts.csv": "24eb57d75e2ca19143377ee79fbdfb185ae8382682c37405447f4186a55ec5ba",
+  "group_counts.parquet": "69a4b5c06ab27958bd999e82504b55deddb5fae66e1cc3ecac4c41b13803a0d5",
+  "manifest.json": "93ed7b5f70b79fca91f7688e6b851015040e4cc74e5ddaec242f815e9c76bd95",
+  "post_exit_paths.csv": "cd86af19266cb2f8f8a1156f09b844a3101526a1626631f3f2c4f796dcdd5714",
+  "post_exit_paths.parquet": "f78fc865a9e9c10cc8045a4eb2d0bc3996bdba379b42c4bd22b338a78cb09ca5",
+  "report.md": "8a796fc73f9ba1014cf378e512ac648252e83969e05a6cbdac13ecfef8a5d063",
+  "trade_diagnostics.csv": "951b3c48dc41ac9b752ea3ca8fdf02a4227d4a5c07c3f3c88e96055161867edc",
+  "trade_diagnostics.parquet": "9f8f357be4404c2bff9caf56af13df8250fe3a4631265d5eedd723210bee1919"
+}

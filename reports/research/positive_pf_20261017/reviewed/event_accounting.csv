@@ -1,0 +1,11 @@
+﻿symbol,timeframe,method,side,scenario,status,n
+USDJPY,H1,atr_breakout,LONG,stop_first_lower,executed,142
+USDJPY,H1,atr_breakout,LONG,stop_first_lower,skipped_overlap,14
+USDJPY,H1,atr_breakout,LONG,target_first_upper,executed,142
+USDJPY,H1,atr_breakout,LONG,target_first_upper,skipped_overlap,14
+USDJPY,H1,atr_breakout,SHORT,stop_first_lower,executed,66
+USDJPY,H1,atr_breakout,SHORT,stop_first_lower,skipped_overlap,1
+USDJPY,H1,atr_breakout,SHORT,stop_first_lower,skipped_entry_expired,1
+USDJPY,H1,atr_breakout,SHORT,target_first_upper,executed,66
+USDJPY,H1,atr_breakout,SHORT,target_first_upper,skipped_overlap,1
+USDJPY,H1,atr_breakout,SHORT,target_first_upper,skipped_entry_expired,1

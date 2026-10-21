@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "test_command": "python -m pytest tools/entry_research/hypothesis_cycle/tests tools/entry_research/account_replay/tests -q",
+  "tests_passed": 48,
+  "account_scenarios_verified": 142,
+  "hypotheses_verified": 19,
+  "representative_replays_exact": [
+    "USDJPY_donchian_LONG_margin025",
+    "AUDUSD_rsi2_pullback_SHORT_rsi2"
+  ],
+  "protected_hashes_unchanged": true,
+  "source_hashes_match": true,
+  "monthly_equity_cash_reconciled": true,
+  "original_candidates_accounted": true,
+  "censored_months_not_fabricated": true,
+  "holdout_2026_used": false,
+  "first_run_vs_final_execution_and_monthly_exact": true,
+  "dashboard_visual_check": "PASS: monthly heatmap, missing USDCHF months, cost and adaptation bars render in browser",
+  "canonical_run": "validated",
+  "preliminary_run": "delivery",
+  "final_change": "Censor flags and empty-data reporting hardening; no trading parameters changed; final ledgers exactly match preliminary run."
+}

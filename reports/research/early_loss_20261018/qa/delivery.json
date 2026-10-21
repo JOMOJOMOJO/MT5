@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "tables_reconciled": 6,
+  "inputs_unchanged": true,
+  "source_hashes_verified": true,
+  "output_hashes_verified": true,
+  "trade_n": 2666,
+  "early_stop_n": 752,
+  "early_win_n": 696,
+  "repeat_analysis_tables_identical": true,
+  "unit_tests": 11,
+  "holdout_2026_used": false,
+  "new_filters_applied": false
+}

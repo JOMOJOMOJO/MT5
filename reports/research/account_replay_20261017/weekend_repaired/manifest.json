@@ -1,0 +1,135 @@
+{
+  "status": "interrupted_performance_only",
+  "source_run": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\full_validated",
+  "source_run_manifest_sha256": "8d83a17451674ddffe0b5243e43a6ed21efbcf3ee8c2eb05893a9e3813968d16",
+  "data_manifest": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\data\\manifest.json",
+  "data_manifest_sha256": "c55f92753ff7421f26f599f05d63ce76abd09279b32f5d53d4a8c685f64a61b7",
+  "config": {
+    "schema_version": 1,
+    "experiment": "multiasset_20261016",
+    "start": "2024-01-01",
+    "end": "2026-01-01",
+    "warmup_start": "2023-10-01",
+    "symbols": [
+      "USDJPY",
+      "EURUSD",
+      "GBPUSD",
+      "AUDUSD",
+      "USDCHF",
+      "USDCAD"
+    ],
+    "timeframes": {
+      "M1": 60,
+      "M5": 300,
+      "M15": 900,
+      "H1": 3600,
+      "H4": 14400
+    },
+    "entry_timeframes": [
+      "M5",
+      "M15",
+      "H1"
+    ],
+    "methods": [
+      "ichimoku_cloud",
+      "kijun_bounce",
+      "ema_cross",
+      "donchian",
+      "bollinger",
+      "atr_breakout"
+    ],
+    "indicators": {
+      "tenkan": 9,
+      "kijun": 26,
+      "senkou_b": 52,
+      "displacement": 26,
+      "ema_fast": 20,
+      "ema_slow": 50,
+      "atr": 14,
+      "vol_lookback": 288
+    },
+    "donchian_period": 20,
+    "bollinger_period": 20,
+    "bollinger_std": 2.0,
+    "contraction_max": 0.8,
+    "horizons": [
+      1,
+      3,
+      5,
+      10,
+      20,
+      50
+    ],
+    "primary_horizon": 10,
+    "levels": [
+      1.0
+    ],
+    "baseline_repeats": 10,
+    "bootstrap_reps": 20000,
+    "seed": 20261016,
+    "hypothesis_cells": 216,
+    "confirmatory_claims": false,
+    "minimum_candidates": 200,
+    "minimum_weeks": 30,
+    "minimum_candidates_per_year": 75,
+    "max_hold_bars": 10,
+    "tp_atr": 1.0,
+    "sl_atr": 1.0,
+    "initial_equity": 10000.0,
+    "risk_fraction": 0.001,
+    "assumed_spread_pips": {
+      "USDJPY": 1.5,
+      "EURUSD": 2.0,
+      "GBPUSD": 2.0,
+      "AUDUSD": 2.0,
+      "USDCHF": 2.0,
+      "USDCAD": 2.0
+    },
+    "slippage_pips_per_side": 0.2,
+    "commission_per_lot_roundtrip_usd": 0.0,
+    "walk_forward_validation_starts": [
+      "2024-07-01",
+      "2025-01-01",
+      "2025-07-01"
+    ],
+    "walk_forward_validation_ends": [
+      "2025-01-01",
+      "2025-07-01",
+      "2026-01-01"
+    ],
+    "embargo_seconds": 180000,
+    "data_clock_policy": "source_clock_only_until_independently_verified",
+    "promotion": "research_only_until_independent_data_and_MT5_real_tick_execution_verified"
+  },
+  "calendar_policy": {
+    "kind": "source_clock_weekend_proxy",
+    "version": 1
+  },
+  "source_hashes": {
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\account_replay\\audit.py": "75d0b9e6f686f170c6e5cd44361c2baedfa2f6c7c7fe2db1f750c9f928fd1b1b",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\account_replay\\calendar.py": "181f93a0dcf6362ac0d94090381e746201c2b1c6391327c24c7b4f59e05763c8",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\account_replay\\execution.py": "cb51f1de1e80932ccef305c40532ae74e0825f00bf064166cf81edcf94907420",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\account_replay\\report.py": "d658425b068842db1e4c1dfc8fdecf3cd25ee7203cd2073b5bf28c6212917910",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\account_replay\\run.py": "f6a6c9813c6a110e75f8bb68806195913adf49293ad3e0a8ad81b3024171b58a",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\account_replay\\verify.py": "a2460f7ddf2c97fd7ed6f6c0776571d1d5056484c3899800737fbc2aef58a9f1",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\account_replay\\__init__.py": "01f0b5dab72d3a87053886301a90279fb9ced2074a91109133f98516f2633e77",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\account_replay\\tests\\test_calendar_execution.py": "cce1ae9e31e5b5d8ce4d901699c2cc2c9624608bc7385135c6176313ea8fa3c6",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\account_replay\\tests\\test_original_contract.py": "5a8fc74aa1fa0e39e0f2b84c4a4a3542bfc21dfcc85534a002aa7d46f3f210d2",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\multiasset\\execution.py": "131f17562e27a006cb7c9ce4b74521fe3e6e94d6fc595b7d10694282b48fddf3",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\multiasset\\data.py": "b4f69120f83e06b8b93fa9fd3b1e67c989ec85569a43b336b6bdd259e6dc6e2a",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\entry_research\\multiasset\\run.py": "3d21fa9c5f62076fff6d96a711b956bdbe74fab398baa7b8d2455a0ab4ef3e4c"
+  },
+  "source_candidates_unchanged": true,
+  "holdout_2026_used": false,
+  "git_head": "bfe77a8ff319065d6913b78058bbd2f429ac40c2",
+  "dependencies": {
+    "numpy": "2.4.4",
+    "pandas": "3.0.1",
+    "pyarrow": "23.0.1",
+    "duckdb": "1.5.6",
+    "pytest": "9.1.1"
+  },
+  "purpose": "execution_repair_not_parameter_search",
+  "all_costs_verified": false,
+  "reason": "Pandas Arrow string scalar assignment copied full columns per gap; no strategy change; preserved partial output."
+}

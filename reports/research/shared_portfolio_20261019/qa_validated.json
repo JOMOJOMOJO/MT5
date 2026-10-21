@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "date": "2026-10-19",
+  "artifact_directory": "validated",
+  "verification_command": "python -m tools.entry_research.shared_portfolio.verify reports/research/shared_portfolio_20261019/validated",
+  "profiles_verified": 16,
+  "original_candidate_accounting": true,
+  "trade_cash_pf_and_monthly_reconciled": true,
+  "rule_overlap_and_admission_risk_caps_checked": true,
+  "assumed_entry_margin_checked": true,
+  "source_and_output_hashes_match": true,
+  "primary_replay_exact": true,
+  "holdout_2026_used": false,
+  "pytest_command": "python -m pytest tools/entry_research/shared_portfolio/tests tools/entry_research/hypothesis_cycle/tests tools/entry_research/account_replay/tests -q",
+  "tests_passed": 93,
+  "tests_failed": 0,
+  "compact_path_vs_frozen_full_path_real_data_checks": 48,
+  "dashboard_visual_review": {
+    "status": "PASS",
+    "surface": "local IAB browser",
+    "checked": ["monthly_heatmap", "shared_equity", "currency_exposure", "limitations_visible"],
+    "temporary_tab_closed": true
+  },
+  "scope": "Engineering and saved-artifact integrity only; does not establish independent profitability, real-tick execution, historical broker margin, or live readiness."
+}
