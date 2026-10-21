@@ -1,0 +1,54 @@
+[
+  {
+    "arm": "A",
+    "case": "1",
+    "setup_id": "W33_XAUUSD_15_5_SHORT_1736177400_2",
+    "cutoff": "2025.01.07 01:15:00",
+    "image": "W33R_0BD153B5808FF0E9_1.png",
+    "objects": 142,
+    "trend_lines": 61,
+    "right_rays": 0,
+    "left_rays": 0,
+    "panel_objects": 0,
+    "entry_labels": 1
+  },
+  {
+    "arm": "A",
+    "case": "4",
+    "setup_id": "W33_XAUUSD_15_5_LONG_1736320500_7",
+    "cutoff": "2025.01.08 12:30:00",
+    "image": "W33R_06D14BD616602F00_4.png",
+    "objects": 110,
+    "trend_lines": 45,
+    "right_rays": 0,
+    "left_rays": 0,
+    "panel_objects": 0,
+    "entry_labels": 1
+  },
+  {
+    "arm": "B",
+    "case": "1",
+    "setup_id": "W33_XAUUSD_5_1_SHORT_1736140500_2",
+    "cutoff": "2025.01.06 13:20:00",
+    "image": "W33R_0B71E90ACF47B8E8_1.png",
+    "objects": 429,
+    "trend_lines": 198,
+    "right_rays": 0,
+    "left_rays": 0,
+    "panel_objects": 0,
+    "entry_labels": 0
+  },
+  {
+    "arm": "B",
+    "case": "4",
+    "setup_id": "W33_XAUUSD_5_1_SHORT_1736177100_5",
+    "cutoff": "2025.01.06 17:12:00",
+    "image": "W33R_0871E451FE5A8729_4.png",
+    "objects": 211,
+    "trend_lines": 87,
+    "right_rays": 0,
+    "left_rays": 0,
+    "panel_objects": 0,
+    "entry_labels": 1
+  }
+]

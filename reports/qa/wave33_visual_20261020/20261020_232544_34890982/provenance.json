@@ -1,0 +1,33 @@
+{
+  "terminal_live_trading_enabled": false,
+  "copied_history": [
+    "2024.hcc",
+    "2025.hcc"
+  ],
+  "date_to": "2025.01.18",
+  "server": "VantageTradingLtd-Live",
+  "date_from": "2025.01.06",
+  "terminal_root": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261020_232544_34890982",
+  "batch_id": "20261020_232544_34890982",
+  "copied_ticks": [
+    "202412.tkc",
+    "202501.tkc"
+  ],
+  "model": "4: every tick based on real ticks",
+  "header_sha256": {
+    "Wave33Visual\\Types.mqh": "7E1F7A5CD928F006D7A50E2B940AD901CFF3A705F4A81E094151E8822D8FE2C1",
+    "Wave33Visual\\Display.mqh": "75A7DBFE945405B134DA7B2E5A9F2B3ACC7F793DE763CE2028273C615D9EA514",
+    "Wave33Visual\\Ledger.mqh": "F6E3DA25EB7F03170507E71E521B7332CD5D0D36A2F1EA7DC7A8B69EEF471680",
+    "Wave33Visual\\Engine.mqh": "037D108D991D45102B1DDF2CD52CA651CB6244DB2AE717AB081988969F6FF727"
+  },
+  "source_sha256": {
+    "Wave33EngineHarness": "B585F78E073C3698AA84DF502AABE87EED1BCE689C32BF1E9EAF568065575A24",
+    "Wave33VisualVerifier": "EE20598477C72E5F00EB74F01D256DC9ED88C8F4DAC49D316BDA2E2B192F9B8B"
+  },
+  "source_data_root": "C:\\Users\\windows\\AppData\\Local\\CodexMT5WickRebreakR3\\20261014_094513_6f6042e2",
+  "purpose": "VISUAL_RECONSTRUCTION_QA_NOT_PROFITABILITY",
+  "run_order": [
+    "a_pivot_diagnostic"
+  ],
+  "symbol": "XAUUSD"
+}

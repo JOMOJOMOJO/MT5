@@ -1,0 +1,13 @@
+{
+  "run_id": "display_harness",
+  "visual_mode": false,
+  "model": 4,
+  "chart_period": "M1",
+  "tag": "wave33_20261020_235907_9a0d8776_display_harness",
+  "date_from": "2025.01.06",
+  "inputs": {
+    "InpRunTag": "wave33_20261020_235907_9a0d8776_display_harness"
+  },
+  "date_to": "2025.01.18",
+  "expert": "Wave33DisplayHarness"
+}

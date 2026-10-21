@@ -1,0 +1,14 @@
+{
+  "inputs": {
+    "InpRunTag": "wave33_20261021_105423_c2bca693_recognition_harness"
+  },
+  "date_to": "2025.01.18",
+  "model": 4,
+  "expert": "Wave33RecognitionHarness",
+  "visual_mode": false,
+  "chart_period": "M1",
+  "symbol": "XAUUSD",
+  "tag": "wave33_20261021_105423_c2bca693_recognition_harness",
+  "date_from": "2025.01.06",
+  "run_id": "recognition_harness"
+}

@@ -1,0 +1,23 @@
+{
+  "chart_period": "M5",
+  "expert": "Wave33VisualVerifier",
+  "symbol": "USDJPY",
+  "inputs": {
+    "InpRunTag": "wave33_20261021_105847_a7016337_a_v140_full",
+    "InpDraw": "true",
+    "InpScreenshots": "true",
+    "InpPattern": 0,
+    "InpMinWave1RoomR": 0.25,
+    "InpTriggerMode": 0,
+    "InpEnableTesterOrders": "true",
+    "InpLowerRecognition": 2,
+    "InpMagic": "3320261021",
+    "InpStrictWaveLifecycle": "true"
+  },
+  "tag": "wave33_20261021_105847_a7016337_a_v140_full",
+  "model": 4,
+  "run_id": "a_v140_full",
+  "date_from": "2016.01.01",
+  "visual_mode": false,
+  "date_to": "2016.05.24"
+}

@@ -1,0 +1,101 @@
+{
+  "run_id": "b_visual",
+  "kind": "native_mt5_observation",
+  "event_rows": 6448,
+  "candidate_count": 59,
+  "events": {
+    "INIT": 1,
+    "PIVOT_CONFIRMED": 4588,
+    "WAVE1_BREAK": 59,
+    "STATE": 423,
+    "WAVE1_PROVISIONAL": 183,
+    "WAVE1_PEAK_CONFIRMED": 39,
+    "WAVE2_EXTREME": 457,
+    "FIB_TOUCH": 36,
+    "LOWER_STRUCTURE_CONFIRMED": 267,
+    "LOWER_STRUCTURE_LOST": 119,
+    "FIB_TOO_DEEP": 26,
+    "PIVOT_TRIGGER": 27,
+    "SIGNAL": 27,
+    "RISK_CHECK": 27,
+    "ORDER_DISABLED": 27,
+    "DRAWING_CAPTURE": 59,
+    "COMPLETED": 26,
+    "SKIP": 20,
+    "TRENDLINE_TRIGGER": 24,
+    "INVALIDATE": 12,
+    "TEST_END": 1
+  },
+  "event_reach_setups": {
+    "LOWER_STRUCTURE_LOST": 29,
+    "WAVE2_EXTREME": 39,
+    "LOWER_STRUCTURE_CONFIRMED": 37,
+    "SIGNAL": 27,
+    "COMPLETED": 26,
+    "DRAWING_CAPTURE": 59,
+    "ORDER_DISABLED": 27,
+    "RISK_CHECK": 27,
+    "WAVE1_PROVISIONAL": 59,
+    "FIB_TOUCH": 36,
+    "WAVE1_BREAK": 59,
+    "FIB_TOO_DEEP": 26,
+    "STATE": 59,
+    "WAVE1_PEAK_CONFIRMED": 39,
+    "PIVOT_TRIGGER": 27,
+    "INVALIDATE": 12,
+    "TRENDLINE_TRIGGER": 24,
+    "SKIP": 20,
+    "TEST_END": 1
+  },
+  "state_reach_setups": {
+    "WAVE1_BREAK_CANDIDATE": 59,
+    "WAVE1_TOP_TRACKING": 59,
+    "LOWER_COUNTERTREND": 37,
+    "LOWER_REVERSAL_TRIGGER": 27,
+    "WAVE2_RETRACEMENT": 39,
+    "RESISTANCE_AND_RISK_CHECK": 27
+  },
+  "directions": {
+    "LONG": 33,
+    "SHORT": 26
+  },
+  "entry_statuses": {
+    "DIAGNOSTIC_ONLY": 27,
+    "INVALIDATED": 12,
+    "SKIPPED": 20
+  },
+  "case_count": 5,
+  "cases": [
+    "W33_XAUUSD_5_1_LONG_1736132100_1",
+    "W33_XAUUSD_5_1_SHORT_1736140500_2",
+    "W33_XAUUSD_5_1_LONG_1736158800_3",
+    "W33_XAUUSD_5_1_SHORT_1736163900_4",
+    "W33_XAUUSD_5_1_SHORT_1736177100_5"
+  ],
+  "images": [],
+  "drawing_images": [],
+  "tester_report_images": [
+    "images/wave33_20261020_173724_075de4c4_b_visual-holding.png",
+    "images/wave33_20261020_173724_075de4c4_b_visual-hst.png",
+    "images/wave33_20261020_173724_075de4c4_b_visual-mfemae.png",
+    "images/wave33_20261020_173724_075de4c4_b_visual.png",
+    "wave33_20261020_173724_075de4c4_b_visual-holding.png",
+    "wave33_20261020_173724_075de4c4_b_visual-hst.png",
+    "wave33_20261020_173724_075de4c4_b_visual-mfemae.png",
+    "wave33_20261020_173724_075de4c4_b_visual.png"
+  ],
+  "unverified_images": [],
+  "actual_visual_mode": true,
+  "required_columns_missing": [],
+  "violations": [
+    {
+      "check": "visual_run_native_screenshot_missing"
+    }
+  ],
+  "warnings": [
+    "No native ChartScreenShot image; visual rendering still requires MT5 visual mode inspection."
+  ],
+  "audit_passed": false,
+  "video_agreement": "UNASSESSED_SOURCE_CHARTS_NOT_PROVIDED",
+  "profitability_or_promotion": "NOT_ASSESSED"
+}

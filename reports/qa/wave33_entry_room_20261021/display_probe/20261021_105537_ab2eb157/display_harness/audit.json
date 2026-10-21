@@ -1,0 +1,22 @@
+{
+  "run_id": "display_harness",
+  "kind": "display_harness",
+  "assertions": 30,
+  "passed": 28,
+  "failed": 2,
+  "violations": [
+    {
+      "check": "harness_assertion",
+      "test": "trace_all_three_times",
+      "passed": "FAIL",
+      "detail": ""
+    },
+    {
+      "check": "harness_assertion",
+      "test": "tooltip_probe_short",
+      "passed": "FAIL",
+      "detail": "set=1 error=0 read="
+    }
+  ],
+  "audit_passed": false
+}

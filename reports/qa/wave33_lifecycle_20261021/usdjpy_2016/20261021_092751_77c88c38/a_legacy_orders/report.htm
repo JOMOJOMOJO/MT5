@@ -1,0 +1,632 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>ストラテジーテスターレポート</title>
+    <meta name="generator" content="strategy tester">
+    <style type="text/css">
+    <!--
+    @media screen {
+      td { font: 8pt  Tahoma,Arial; }
+      th { font: 10pt Tahoma,Arial; }
+    }
+    @media print {
+      td { font: 7pt Tahoma,Arial; }
+      th { font: 9pt Tahoma,Arial; }
+    }
+    .msdate { mso-number-format:"General Date"; }
+    .mspt   { mso-number-format:\#\,\#\#0\.00;  }
+    body {margin:1px;}
+    //-->
+    </style>
+  </head>
+<body>
+<div align="center">
+<table cellspacing="1" cellpadding="3" border="0">
+   <tr align="center">
+      <td colspan="13"><div style="font: 14pt Tahoma"><b>ストラテジーテスターレポート</b><br></div></td>
+   </tr>
+   <tr align="center">
+      <td colspan="13"><div style="font: 10pt Tahoma"><b>Bybit-Live (Build 6230)</b><br></div></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr>
+      <td colspan="13" align="center"><div style="font: 10pt Tahoma"><b>設定</b></div></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">エキスパート:</td>
+      <td nowrap colspan="10" align="left"><b>Wave33VisualVerifier</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">銘柄:</td>
+      <td nowrap colspan="10" align="left"><b>USDJPY</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">期間:</td>
+      <td nowrap colspan="10" align="left"><b>M5 (2016.01.01 - 2016.05.24)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">パラメータ:</td>
+      <td nowrap colspan="10" align="left"><b>InpPattern=0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpTriggerMode=0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpSwingLeft=2</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpSwingRight=2</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpFibMin=0.382</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpFibMax=0.618</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRequireFibTouch=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRejectDeepFib=false</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpStrictWaveLifecycle=false</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpTimeoutUpperBars=96</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpObstacleMode=0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRewardR=1.0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRiskPercent=1.0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpSLExtraPoints=10.0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpEnableTesterOrders=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpMagic=3320261021</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpDeviationPoints=20</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpDraw=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpShowInfoPanel=false</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpDiagnosticLabels=false</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpShowSwingPaths=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpKeepObjects=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpScreenshots=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpScreenshotLimit=12</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRunTag=wave33_20261021_092751_77c88c38_a_legacy_orders</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpManualLevels=</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >会社:</td>
+      <td nowrap colspan="10" align="left"><b>Infra Capital Limited</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >通貨:</td>
+      <td nowrap colspan="10" align="left"><b>USD</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >初期証拠金:</td>
+      <td nowrap colspan="10" align="left"><b>5 000.00</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >レバレッジ:</td>
+      <td nowrap colspan="10" align="left"><b>1:100</b></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr>
+      <td colspan="13" align="center"><div style="font: 10pt Tahoma"><b>結果</b></div></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">ヒストリー品質:</td>
+      <td nowrap><b>0% リアルティック</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">バー:</td>
+      <td nowrap><b>29060</b></td>
+      <td nowrap colspan="3">ティック:</td>
+      <td nowrap><b>16081236</b></td>
+      <td nowrap colspan="3">銘柄:</td>
+      <td nowrap colspan="2"><b>1</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">総損益:</td>
+      <td nowrap><b>-86.15</b></td>
+      <td nowrap colspan="3">残高絶対ドローダウン:</td>
+      <td nowrap><b>213.74</b></td>
+      <td nowrap colspan="3">証拠金絶対ドローダウン:</td>
+      <td nowrap colspan="2"><b>241.73</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">総利益:</td>
+      <td nowrap><b>1 315.25</b></td>
+      <td nowrap colspan="3">残高最大ドローダウン:</td>
+      <td nowrap><b>561.06 (10.49%)</b></td>
+      <td nowrap colspan="3">証拠金最大ドローダウン:</td>
+      <td nowrap colspan="2"><b>598.52 (11.17%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">総損失:</td>
+      <td nowrap><b>-1 401.40</b></td>
+      <td nowrap colspan="3">残高相対ドローダウン:</td>
+      <td nowrap><b>10.49% (561.06)</b></td>
+      <td nowrap colspan="3">証拠金相対ドローダウン:</td>
+      <td nowrap colspan="2"><b>11.17% (598.52)</b></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr align="right">
+      <td nowrap colspan="3">プロフィットファクター:</td>
+      <td nowrap><b>0.94</b></td>
+      <td nowrap colspan="3">期待利得:</td>
+      <td nowrap><b>-1.57</b></td>
+      <td nowrap colspan="3">証拠金維持率:</td>
+      <td nowrap colspan="2"><b>19359.92%</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">リカバリファクター:</td>
+      <td nowrap><b>-0.14</b></td>
+      <td nowrap colspan="3">シャープレシオ:</td>
+      <td nowrap><b>-2.00</b></td>
+      <td nowrap colspan="3">Z-Score:</td>
+      <td nowrap colspan="2"><b>-0.54 (41.08%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">AHPR:</td>
+      <td nowrap><b>0.9997 (-0.03%)</b></td>
+      <td nowrap colspan="3">LR Correlation:</td>
+      <td nowrap><b>-0.27</b></td>
+      <td nowrap colspan="3">OnTester 結果:</td>
+      <td nowrap colspan="2"><b>0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">GHPR:</td>
+      <td nowrap><b>0.9997 (-0.03%)</b></td>
+      <td nowrap colspan="3">LR Standard Error:</td>
+      <td nowrap><b>141.74</b></td>
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="2"><b></b></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr align="right">
+      <td nowrap colspan="3">取引数:</td>
+      <td nowrap><b>55</b></td>
+      <td nowrap colspan="3">ショート (勝率 %):</td>
+      <td nowrap><b>27 (40.74%)</b></td>
+      <td nowrap colspan="3">ロング (勝率 %):</td>
+      <td nowrap colspan="2"><b>28 (57.14%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">約定数:</td>
+      <td nowrap><b>110</b></td>
+      <td nowrap colspan="3">勝ちトレード (勝率 %):</td>
+      <td nowrap><b>27 (49.09%)</b></td>
+      <td nowrap colspan="3">負けトレード (負率 %):</td>
+      <td nowrap colspan="2"><b>28 (50.91%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">最大 勝ちトレード:</td>
+      <td nowrap><b>52.41</b></td>
+      <td nowrap colspan="3">最大 負けトレード:</td>
+      <td nowrap colspan="2"><b>-57.64</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">平均 勝ちトレード:</td>
+      <td nowrap><b>48.71</b></td>
+      <td nowrap colspan="3">平均 負けトレード:</td>
+      <td nowrap colspan="2"><b>-50.05</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">最大 連勝数 (金額):</td>
+      <td nowrap><b>6 (289.39)</b></td>
+      <td nowrap colspan="3">最大 連敗数 (金額):</td>
+      <td nowrap colspan="2"><b>8 (-394.72)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">最大 連勝利益額 (数):</td>
+      <td nowrap><b>289.39 (6)</b></td>
+      <td nowrap colspan="3">最大 連敗損失額 (数):</td>
+      <td nowrap colspan="2"><b>-394.72 (8)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">平均 連勝利益額 (数):</td>
+      <td nowrap><b>2</b></td>
+      <td nowrap colspan="3">平均 連敗数:</td>
+      <td nowrap colspan="2"><b>2</b></td>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261021_092751_77c88c38_a_legacy_orders.png" title="現金残高グラフ" width=820 height=200 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261021_092751_77c88c38_a_legacy_orders-hst.png" width=860 height=400 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">Correlation (Profits,MFE):</td>
+      <td nowrap><b>0.88</b></td>
+      <td nowrap colspan="3">Correlation (Profits,MAE):</td>
+      <td nowrap><b>0.87</b></td>
+      <td nowrap colspan="3">Correlation (MFE,MAE):</td>
+      <td nowrap colspan="2"><b>0.7519</b></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261021_092751_77c88c38_a_legacy_orders-mfemae.png" width=860 height=400 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">ポジション最短保持時間:</td>
+      <td nowrap><b>0:24:04</b></td>
+      <td nowrap colspan="3">ポジション最長保持時間:</td>
+      <td nowrap><b>61:19:31</b></td>
+      <td nowrap colspan="3">ポジション平均保持時間:</td>
+      <td nowrap colspan="2"><b>8:46:28</b></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261021_092751_77c88c38_a_legacy_orders-holding.png" width=860 height=200 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+</table>
+<table cellspacing="1" cellpadding="3" border="0">
+   <tr>
+      <td style="width: 90px;height: 10px"></td>
+      <td style="width: 40px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 70px;"></td>
+      <td style="width: 70px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 100px;"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13" style="height: 25px"><div style="font: 10pt Tahoma"><b>注文</b></div></th>
+   </tr>
+   <tr align="center" bgcolor="#E5F0FC">
+      <td nowrap style="height: 30px"><b>約定時刻</b></td>
+      <td nowrap><b>注文</b></td>
+      <td nowrap><b>銘柄</b></td>
+      <td nowrap><b>タイプ</b></td>
+      <td nowrap colspan="2"><b>数量</b></td>
+      <td nowrap><b>価格</b></td>
+      <td nowrap><b>決済逆指値(S/L)</b></td>
+      <td nowrap><b>決済指値(T/P)</b></td>
+      <td nowrap colspan="2"><b>時間</b></td>
+      <td nowrap><b>状況</b></td>
+      <td nowrap><b>コメント</b></td>
+   </tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.04 19:50:00</td><td>2</td><td>USDJPY</td><td>buy</td><td colspan="2">0.14 / 0.14</td><td>0.000</td><td>118.983</td><td>119.801</td><td colspan="2">2016.01.04 19:50:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1451919600</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.05 11:20:41</td><td>3</td><td>USDJPY</td><td>sell</td><td colspan="2">0.14 / 0.14</td><td>0.000</td><td></td><td></td><td colspan="2">2016.01.05 11:20:41</td><td>filled</td><td>sl 118.983</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.11 13:35:00</td><td>4</td><td>USDJPY</td><td>buy</td><td colspan="2">0.3 / 0.3</td><td>0.000</td><td>117.509</td><td>117.885</td><td colspan="2">2016.01.11 13:35:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1452506400</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.11 15:16:59</td><td>5</td><td>USDJPY</td><td>sell</td><td colspan="2">0.3 / 0.3</td><td>0.000</td><td></td><td></td><td colspan="2">2016.01.11 15:16:59</td><td>filled</td><td>tp 117.885</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.18 12:15:00</td><td>6</td><td>USDJPY</td><td>buy</td><td colspan="2">0.08 / 0.08</td><td>0.000</td><td>116.631</td><td>118.087</td><td colspan="2">2016.01.18 12:15:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1452891600</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.19 13:53:16</td><td>7</td><td>USDJPY</td><td>sell</td><td colspan="2">0.08 / 0.08</td><td>0.000</td><td></td><td></td><td colspan="2">2016.01.19 13:53:16</td><td>filled</td><td>tp 118.087</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.20 10:20:00</td><td>8</td><td>USDJPY</td><td>sell</td><td colspan="2">0.04 / 0.04</td><td>0.000</td><td>117.955</td><td>115.063</td><td colspan="2">2016.01.20 10:20:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145321920</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.22 07:01:47</td><td>9</td><td>USDJPY</td><td>buy</td><td colspan="2">0.04 / 0.04</td><td>0.000</td><td></td><td></td><td colspan="2">2016.01.22 07:01:47</td><td>filled</td><td>sl 117.955</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.22 19:15:00</td><td>10</td><td>USDJPY</td><td>buy</td><td colspan="2">0.28 / 0.28</td><td>0.000</td><td>118.323</td><td>118.731</td><td colspan="2">2016.01.22 19:15:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1453481100</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.22 20:49:37</td><td>11</td><td>USDJPY</td><td>sell</td><td colspan="2">0.28 / 0.28</td><td>0.000</td><td></td><td></td><td colspan="2">2016.01.22 20:49:37</td><td>filled</td><td>tp 118.731</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.25 08:15:00</td><td>12</td><td>USDJPY</td><td>buy</td><td colspan="2">0.26 / 0.26</td><td>0.000</td><td>118.588</td><td>119.038</td><td colspan="2">2016.01.25 08:15:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1453693500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.25 09:26:30</td><td>13</td><td>USDJPY</td><td>sell</td><td colspan="2">0.26 / 0.26</td><td>0.000</td><td></td><td></td><td colspan="2">2016.01.25 09:26:30</td><td>filled</td><td>sl 118.588</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.27 11:50:00</td><td>14</td><td>USDJPY</td><td>sell</td><td colspan="2">0.48 / 0.48</td><td>0.000</td><td>118.308</td><td>118.066</td><td colspan="2">2016.01.27 11:50:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145388610</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.27 12:53:38</td><td>15</td><td>USDJPY</td><td>buy</td><td colspan="2">0.48 / 0.48</td><td>0.000</td><td></td><td></td><td colspan="2">2016.01.27 12:53:38</td><td>filled</td><td>sl 118.308</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.27 14:25:00</td><td>16</td><td>USDJPY</td><td>buy</td><td colspan="2">0.2 / 0.2</td><td>0.000</td><td>118.051</td><td>118.609</td><td colspan="2">2016.01.27 14:25:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1453876200</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.27 17:38:36</td><td>17</td><td>USDJPY</td><td>sell</td><td colspan="2">0.2 / 0.2</td><td>0.000</td><td></td><td></td><td colspan="2">2016.01.27 17:38:36</td><td>filled</td><td>tp 118.609</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.28 09:25:00</td><td>18</td><td>USDJPY</td><td>buy</td><td colspan="2">0.26 / 0.26</td><td>0.000</td><td>118.523</td><td>118.969</td><td colspan="2">2016.01.28 09:25:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1453950000</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.28 16:18:39</td><td>19</td><td>USDJPY</td><td>sell</td><td colspan="2">0.26 / 0.26</td><td>0.000</td><td></td><td></td><td colspan="2">2016.01.28 16:18:39</td><td>filled</td><td>tp 118.969</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.02 05:40:00</td><td>20</td><td>USDJPY</td><td>sell</td><td colspan="2">0.19 / 0.19</td><td>0.000</td><td>121.051</td><td>120.427</td><td colspan="2">2016.02.02 05:40:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145436670</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.02 07:25:39</td><td>21</td><td>USDJPY</td><td>buy</td><td colspan="2">0.19 / 0.19</td><td>0.000</td><td></td><td></td><td colspan="2">2016.02.02 07:25:39</td><td>filled</td><td>tp 120.427</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.04 01:05:00</td><td>22</td><td>USDJPY</td><td>sell</td><td colspan="2">0.03 / 0.03</td><td>0.000</td><td>119.641</td><td>116.221</td><td colspan="2">2016.02.04 01:05:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145449810</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.08 14:24:31</td><td>23</td><td>USDJPY</td><td>buy</td><td colspan="2">0.03 / 0.03</td><td>0.000</td><td></td><td></td><td colspan="2">2016.02.08 14:24:31</td><td>filled</td><td>tp 116.221</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.11 05:25:00</td><td>24</td><td>USDJPY</td><td>sell</td><td colspan="2">0.09 / 0.09</td><td>0.000</td><td>113.503</td><td>112.217</td><td colspan="2">2016.02.11 05:25:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145515510</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.11 10:17:38</td><td>25</td><td>USDJPY</td><td>buy</td><td colspan="2">0.09 / 0.09</td><td>0.000</td><td></td><td></td><td colspan="2">2016.02.11 10:17:38</td><td>filled</td><td>tp 112.217</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.12 14:05:00</td><td>26</td><td>USDJPY</td><td>buy</td><td colspan="2">0.21 / 0.21</td><td>0.000</td><td>112.343</td><td>112.873</td><td colspan="2">2016.02.12 14:05:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1455271200</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.12 15:30:28</td><td>27</td><td>USDJPY</td><td>sell</td><td colspan="2">0.21 / 0.21</td><td>0.000</td><td></td><td></td><td colspan="2">2016.02.12 15:30:28</td><td>filled</td><td>tp 112.873</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.17 17:15:00</td><td>28</td><td>USDJPY</td><td>buy</td><td colspan="2">0.28 / 0.28</td><td>0.000</td><td>114.121</td><td>114.541</td><td colspan="2">2016.02.17 17:15:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1455720300</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.17 18:58:40</td><td>29</td><td>USDJPY</td><td>sell</td><td colspan="2">0.28 / 0.28</td><td>0.000</td><td></td><td></td><td colspan="2">2016.02.17 18:58:40</td><td>filled</td><td>sl 114.121</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.18 07:50:00</td><td>30</td><td>USDJPY</td><td>sell</td><td colspan="2">0.12 / 0.12</td><td>0.000</td><td>114.338</td><td>113.416</td><td colspan="2">2016.02.18 07:50:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145573470</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.18 22:36:05</td><td>31</td><td>USDJPY</td><td>buy</td><td colspan="2">0.12 / 0.12</td><td>0.000</td><td></td><td></td><td colspan="2">2016.02.18 22:36:05</td><td>filled</td><td>tp 113.416</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.19 09:05:00</td><td>32</td><td>USDJPY</td><td>sell</td><td colspan="2">0.34 / 0.34</td><td>0.000</td><td>113.232</td><td>112.886</td><td colspan="2">2016.02.19 09:05:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145584810</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.19 10:24:28</td><td>33</td><td>USDJPY</td><td>buy</td><td colspan="2">0.34 / 0.34</td><td>0.000</td><td></td><td></td><td colspan="2">2016.02.19 10:24:28</td><td>filled</td><td>tp 112.886</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.22 03:40:00</td><td>34</td><td>USDJPY</td><td>sell</td><td colspan="2">0.43 / 0.43</td><td>0.000</td><td>113.067</td><td>112.795</td><td colspan="2">2016.02.22 03:40:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145590120</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.22 04:20:28</td><td>35</td><td>USDJPY</td><td>buy</td><td colspan="2">0.43 / 0.43</td><td>0.000</td><td></td><td></td><td colspan="2">2016.02.22 04:20:28</td><td>filled</td><td>tp 112.795</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.24 01:30:00</td><td>36</td><td>USDJPY</td><td>buy</td><td colspan="2">0.26 / 0.26</td><td>0.000</td><td>111.838</td><td>112.288</td><td colspan="2">2016.02.24 01:30:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1456242300</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.24 01:55:05</td><td>37</td><td>USDJPY</td><td>sell</td><td colspan="2">0.26 / 0.26</td><td>0.000</td><td></td><td></td><td colspan="2">2016.02.24 01:55:05</td><td>filled</td><td>sl 111.838</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.26 10:55:00</td><td>38</td><td>USDJPY</td><td>sell</td><td colspan="2">0.38 / 0.38</td><td>0.000</td><td>112.963</td><td>112.653</td><td colspan="2">2016.02.26 10:55:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145645560</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.26 11:29:24</td><td>39</td><td>USDJPY</td><td>buy</td><td colspan="2">0.38 / 0.38</td><td>0.000</td><td></td><td></td><td colspan="2">2016.02.26 11:29:24</td><td>filled</td><td>sl 112.963</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.26 19:50:00</td><td>40</td><td>USDJPY</td><td>buy</td><td colspan="2">0.04 / 0.04</td><td>0.000</td><td>112.689</td><td>115.133</td><td colspan="2">2016.02.26 19:50:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1456479900</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.29 17:00:37</td><td>41</td><td>USDJPY</td><td>sell</td><td colspan="2">0.04 / 0.04</td><td>0.000</td><td></td><td></td><td colspan="2">2016.02.29 17:00:37</td><td>filled</td><td>sl 112.689</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.03 13:40:00</td><td>42</td><td>USDJPY</td><td>sell</td><td colspan="2">0.48 / 0.48</td><td>0.000</td><td>114.060</td><td>113.814</td><td colspan="2">2016.03.03 13:40:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145699650</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.03 14:24:39</td><td>43</td><td>USDJPY</td><td>buy</td><td colspan="2">0.48 / 0.48</td><td>0.000</td><td></td><td></td><td colspan="2">2016.03.03 14:24:39</td><td>filled</td><td>sl 114.060</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.08 07:35:00</td><td>44</td><td>USDJPY</td><td>sell</td><td colspan="2">0.09 / 0.09</td><td>0.000</td><td>113.711</td><td>112.489</td><td colspan="2">2016.03.08 07:35:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145734660</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.08 17:56:39</td><td>45</td><td>USDJPY</td><td>buy</td><td colspan="2">0.09 / 0.09</td><td>0.000</td><td></td><td></td><td colspan="2">2016.03.08 17:56:39</td><td>filled</td><td>tp 112.489</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.11 13:35:00</td><td>46</td><td>USDJPY</td><td>buy</td><td colspan="2">0.06 / 0.06</td><td>0.000</td><td>112.974</td><td>114.656</td><td colspan="2">2016.03.11 13:35:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1457664300</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.15 10:17:16</td><td>47</td><td>USDJPY</td><td>sell</td><td colspan="2">0.06 / 0.06</td><td>0.000</td><td></td><td></td><td colspan="2">2016.03.15 10:17:16</td><td>filled</td><td>sl 112.974</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.15 18:20:00</td><td>48</td><td>USDJPY</td><td>buy</td><td colspan="2">0.53 / 0.53</td><td>0.000</td><td>112.789</td><td>113.005</td><td colspan="2">2016.03.15 18:20:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1458059400</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.15 19:06:41</td><td>49</td><td>USDJPY</td><td>sell</td><td colspan="2">0.53 / 0.53</td><td>0.000</td><td></td><td></td><td colspan="2">2016.03.15 19:06:41</td><td>filled</td><td>tp 113.005</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.16 06:10:00</td><td>50</td><td>USDJPY</td><td>buy</td><td colspan="2">0.4 / 0.4</td><td>0.000</td><td>113.303</td><td>113.597</td><td colspan="2">2016.03.16 06:10:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1458096300</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.16 09:20:38</td><td>51</td><td>USDJPY</td><td>sell</td><td colspan="2">0.4 / 0.4</td><td>0.000</td><td></td><td></td><td colspan="2">2016.03.16 09:20:38</td><td>filled</td><td>tp 113.597</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.16 19:20:00</td><td>52</td><td>USDJPY</td><td>buy</td><td colspan="2">0.26 / 0.26</td><td>0.000</td><td>113.514</td><td>113.958</td><td colspan="2">2016.03.16 19:20:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1458138600</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.16 20:00:44</td><td>53</td><td>USDJPY</td><td>sell</td><td colspan="2">0.26 / 0.26</td><td>0.000</td><td></td><td></td><td colspan="2">2016.03.16 20:00:44</td><td>filled</td><td>sl 113.514</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.17 21:55:00</td><td>54</td><td>USDJPY</td><td>sell</td><td colspan="2">0.23 / 0.23</td><td>0.000</td><td>111.646</td><td>111.152</td><td colspan="2">2016.03.17 21:55:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145822950</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.18 02:36:39</td><td>55</td><td>USDJPY</td><td>buy</td><td colspan="2">0.23 / 0.23</td><td>0.000</td><td></td><td></td><td colspan="2">2016.03.18 02:36:39</td><td>filled</td><td>tp 111.152</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.21 10:10:00</td><td>56</td><td>USDJPY</td><td>buy</td><td colspan="2">0.47 / 0.47</td><td>0.000</td><td>111.335</td><td>111.579</td><td colspan="2">2016.03.21 10:10:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1458539100</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.21 11:40:40</td><td>57</td><td>USDJPY</td><td>sell</td><td colspan="2">0.47 / 0.47</td><td>0.000</td><td></td><td></td><td colspan="2">2016.03.21 11:40:40</td><td>filled</td><td>tp 111.579</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.21 14:00:00</td><td>58</td><td>USDJPY</td><td>buy</td><td colspan="2">0.41 / 0.41</td><td>0.000</td><td>111.396</td><td>111.678</td><td colspan="2">2016.03.21 14:00:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1458559800</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.21 15:02:30</td><td>59</td><td>USDJPY</td><td>sell</td><td colspan="2">0.41 / 0.41</td><td>0.000</td><td></td><td></td><td colspan="2">2016.03.21 15:02:30</td><td>filled</td><td>tp 111.678</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.22 14:20:00</td><td>60</td><td>USDJPY</td><td>sell</td><td colspan="2">0.22 / 0.22</td><td>0.000</td><td>111.858</td><td>111.332</td><td colspan="2">2016.03.22 14:20:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145863810</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.22 18:00:40</td><td>61</td><td>USDJPY</td><td>buy</td><td colspan="2">0.22 / 0.22</td><td>0.000</td><td></td><td></td><td colspan="2">2016.03.22 18:00:40</td><td>filled</td><td>sl 111.858</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.23 22:25:00</td><td>62</td><td>USDJPY</td><td>sell</td><td colspan="2">0.15 / 0.15</td><td>0.000</td><td>112.766</td><td>111.996</td><td colspan="2">2016.03.23 22:25:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145875150</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.24 03:17:28</td><td>63</td><td>USDJPY</td><td>buy</td><td colspan="2">0.15 / 0.15</td><td>0.000</td><td></td><td></td><td colspan="2">2016.03.24 03:17:28</td><td>filled</td><td>sl 112.766</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.01 09:05:00</td><td>64</td><td>USDJPY</td><td>buy</td><td colspan="2">0.51 / 0.51</td><td>0.000</td><td>112.114</td><td>112.342</td><td colspan="2">2016.04.01 09:05:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1459493100</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.01 09:54:39</td><td>65</td><td>USDJPY</td><td>sell</td><td colspan="2">0.51 / 0.51</td><td>0.000</td><td></td><td></td><td colspan="2">2016.04.01 09:54:39</td><td>filled</td><td>tp 112.342</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.04 06:50:00</td><td>66</td><td>USDJPY</td><td>sell</td><td colspan="2">0.2 / 0.2</td><td>0.000</td><td>111.735</td><td>111.155</td><td colspan="2">2016.04.04 06:50:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145973880</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.04 14:00:40</td><td>67</td><td>USDJPY</td><td>buy</td><td colspan="2">0.2 / 0.2</td><td>0.000</td><td></td><td></td><td colspan="2">2016.04.04 14:00:40</td><td>filled</td><td>sl 111.735</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.05 09:30:00</td><td>68</td><td>USDJPY</td><td>sell</td><td colspan="2">0.06 / 0.06</td><td>0.000</td><td>111.495</td><td>109.739</td><td colspan="2">2016.04.05 09:30:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_145978380</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.06 18:38:30</td><td>69</td><td>USDJPY</td><td>buy</td><td colspan="2">0.06 / 0.06</td><td>0.000</td><td></td><td></td><td colspan="2">2016.04.06 18:38:30</td><td>filled</td><td>tp 109.739</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.08 13:15:00</td><td>70</td><td>USDJPY</td><td>buy</td><td colspan="2">0.07 / 0.07</td><td>0.000</td><td>108.055</td><td>109.499</td><td colspan="2">2016.04.08 13:15:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1460058300</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.11 00:01:00</td><td>71</td><td>USDJPY</td><td>sell</td><td colspan="2">0.07 / 0.07</td><td>0.000</td><td></td><td></td><td colspan="2">2016.04.11 00:01:00</td><td>filled</td><td>sl 108.055</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.11 06:40:00</td><td>72</td><td>USDJPY</td><td>sell</td><td colspan="2">0.24 / 0.24</td><td>0.000</td><td>108.136</td><td>107.674</td><td colspan="2">2016.04.11 06:40:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_146034540</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.11 11:13:26</td><td>73</td><td>USDJPY</td><td>buy</td><td colspan="2">0.24 / 0.24</td><td>0.000</td><td></td><td></td><td colspan="2">2016.04.11 11:13:26</td><td>filled</td><td>sl 108.136</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.11 21:00:00</td><td>74</td><td>USDJPY</td><td>buy</td><td colspan="2">0.18 / 0.18</td><td>0.000</td><td>107.768</td><td>108.370</td><td colspan="2">2016.04.11 21:00:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1460371500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.12 09:45:38</td><td>75</td><td>USDJPY</td><td>sell</td><td colspan="2">0.18 / 0.18</td><td>0.000</td><td></td><td></td><td colspan="2">2016.04.12 09:45:38</td><td>filled</td><td>tp 108.370</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.22 00:05:00</td><td>76</td><td>USDJPY</td><td>sell</td><td colspan="2">0.12 / 0.12</td><td>0.000</td><td>109.871</td><td>108.953</td><td colspan="2">2016.04.22 00:05:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_146121120</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.22 07:37:41</td><td>77</td><td>USDJPY</td><td>buy</td><td colspan="2">0.12 / 0.12</td><td>0.000</td><td></td><td></td><td colspan="2">2016.04.22 07:37:41</td><td>filled</td><td>sl 109.871</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.25 23:05:00</td><td>78</td><td>USDJPY</td><td>buy</td><td colspan="2">0.16 / 0.16</td><td>0.000</td><td>110.857</td><td>111.569</td><td colspan="2">2016.04.25 23:05:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1461600900</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.26 06:33:03</td><td>79</td><td>USDJPY</td><td>sell</td><td colspan="2">0.16 / 0.16</td><td>0.000</td><td></td><td></td><td colspan="2">2016.04.26 06:33:03</td><td>filled</td><td>sl 110.857</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.26 12:20:00</td><td>80</td><td>USDJPY</td><td>sell</td><td colspan="2">0.1 / 0.1</td><td>0.000</td><td>111.314</td><td>110.204</td><td colspan="2">2016.04.26 12:20:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_146162340</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.26 18:43:27</td><td>81</td><td>USDJPY</td><td>buy</td><td colspan="2">0.1 / 0.1</td><td>0.000</td><td></td><td></td><td colspan="2">2016.04.26 18:43:27</td><td>filled</td><td>sl 111.314</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.27 03:55:00</td><td>82</td><td>USDJPY</td><td>buy</td><td colspan="2">0.13 / 0.13</td><td>0.000</td><td>110.840</td><td>111.684</td><td colspan="2">2016.04.27 03:55:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1461681000</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.27 21:00:40</td><td>83</td><td>USDJPY</td><td>sell</td><td colspan="2">0.13 / 0.13</td><td>0.000</td><td></td><td></td><td colspan="2">2016.04.27 21:00:40</td><td>filled</td><td>tp 111.684</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.28 14:50:00</td><td>84</td><td>USDJPY</td><td>buy</td><td colspan="2">0.24 / 0.24</td><td>0.000</td><td>107.943</td><td>108.403</td><td colspan="2">2016.04.28 14:50:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1461848400</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.28 16:09:42</td><td>85</td><td>USDJPY</td><td>sell</td><td colspan="2">0.24 / 0.24</td><td>0.000</td><td></td><td></td><td colspan="2">2016.04.28 16:09:42</td><td>filled</td><td>tp 108.403</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.02 16:05:00</td><td>86</td><td>USDJPY</td><td>buy</td><td colspan="2">0.14 / 0.14</td><td>0.000</td><td>106.298</td><td>107.080</td><td colspan="2">2016.05.02 16:05:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1462162500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.03 03:05:59</td><td>87</td><td>USDJPY</td><td>sell</td><td colspan="2">0.14 / 0.14</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.03 03:05:59</td><td>filled</td><td>sl 106.298</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.03 14:40:00</td><td>88</td><td>USDJPY</td><td>sell</td><td colspan="2">0.06 / 0.06</td><td>0.000</td><td>106.652</td><td>104.912</td><td colspan="2">2016.05.03 14:40:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_146221110</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.03 23:52:50</td><td>89</td><td>USDJPY</td><td>buy</td><td colspan="2">0.06 / 0.06</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.03 23:52:50</td><td>filled</td><td>sl 106.652</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.05 04:30:00</td><td>90</td><td>USDJPY</td><td>sell</td><td colspan="2">0.31 / 0.31</td><td>0.000</td><td>107.224</td><td>106.874</td><td colspan="2">2016.05.05 04:30:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_146239740</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.05 10:10:42</td><td>91</td><td>USDJPY</td><td>buy</td><td colspan="2">0.31 / 0.31</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.05 10:10:42</td><td>filled</td><td>sl 107.224</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.09 06:50:00</td><td>92</td><td>USDJPY</td><td>sell</td><td colspan="2">0.46 / 0.46</td><td>0.000</td><td>107.403</td><td>107.169</td><td colspan="2">2016.05.09 06:50:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_146276910</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.09 07:52:27</td><td>93</td><td>USDJPY</td><td>buy</td><td colspan="2">0.46 / 0.46</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.09 07:52:27</td><td>filled</td><td>sl 107.403</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.10 18:05:00</td><td>94</td><td>USDJPY</td><td>sell</td><td colspan="2">0.45 / 0.45</td><td>0.000</td><td>109.153</td><td>108.913</td><td colspan="2">2016.05.10 18:05:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_146289780</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.10 18:35:35</td><td>95</td><td>USDJPY</td><td>buy</td><td colspan="2">0.45 / 0.45</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.10 18:35:35</td><td>filled</td><td>sl 109.153</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.11 03:55:00</td><td>96</td><td>USDJPY</td><td>buy</td><td colspan="2">0.38 / 0.38</td><td>0.000</td><td>109.023</td><td>109.299</td><td colspan="2">2016.05.11 03:55:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1462905000</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.11 04:35:20</td><td>97</td><td>USDJPY</td><td>sell</td><td colspan="2">0.38 / 0.38</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.11 04:35:20</td><td>filled</td><td>sl 109.023</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.12 01:55:00</td><td>98</td><td>USDJPY</td><td>sell</td><td colspan="2">0.2 / 0.2</td><td>0.000</td><td>108.690</td><td>108.170</td><td colspan="2">2016.05.12 01:55:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_146298420</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.12 07:00:29</td><td>99</td><td>USDJPY</td><td>buy</td><td colspan="2">0.2 / 0.2</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.12 07:00:29</td><td>filled</td><td>sl 108.690</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.12 20:35:00</td><td>100</td><td>USDJPY</td><td>sell</td><td colspan="2">0.33 / 0.33</td><td>0.000</td><td>109.019</td><td>108.709</td><td colspan="2">2016.05.12 20:35:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_146306970</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.12 20:59:04</td><td>101</td><td>USDJPY</td><td>buy</td><td colspan="2">0.33 / 0.33</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.12 20:59:04</td><td>filled</td><td>sl 109.019</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.16 14:30:00</td><td>102</td><td>USDJPY</td><td>buy</td><td colspan="2">0.17 / 0.17</td><td>0.000</td><td>108.612</td><td>109.194</td><td colspan="2">2016.05.16 14:30:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1463367600</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.17 08:59:16</td><td>103</td><td>USDJPY</td><td>sell</td><td colspan="2">0.17 / 0.17</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.17 08:59:16</td><td>filled</td><td>tp 109.194</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.18 06:20:00</td><td>104</td><td>USDJPY</td><td>sell</td><td colspan="2">0.4 / 0.4</td><td>0.000</td><td>109.402</td><td>109.140</td><td colspan="2">2016.05.18 06:20:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_146349360</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.18 07:14:29</td><td>105</td><td>USDJPY</td><td>buy</td><td colspan="2">0.4 / 0.4</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.18 07:14:29</td><td>filled</td><td>tp 109.140</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.18 21:05:00</td><td>106</td><td>USDJPY</td><td>buy</td><td colspan="2">0.14 / 0.14</td><td>0.000</td><td>109.521</td><td>110.283</td><td colspan="2">2016.05.18 21:05:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1463587200</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.19 08:46:36</td><td>107</td><td>USDJPY</td><td>sell</td><td colspan="2">0.14 / 0.14</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.19 08:46:36</td><td>filled</td><td>tp 110.283</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.20 13:20:00</td><td>108</td><td>USDJPY</td><td>buy</td><td colspan="2">0.12 / 0.12</td><td>0.000</td><td>109.897</td><td>110.739</td><td colspan="2">2016.05.20 13:20:00</td><td>filled</td><td>W33_USDJPY_15_5_LONG_1463714100</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.23 03:12:41</td><td>109</td><td>USDJPY</td><td>sell</td><td colspan="2">0.12 / 0.12</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.23 03:12:41</td><td>filled</td><td>sl 109.897</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.23 16:50:00</td><td>110</td><td>USDJPY</td><td>sell</td><td colspan="2">0.14 / 0.14</td><td>0.000</td><td>109.810</td><td>109.066</td><td colspan="2">2016.05.23 16:50:00</td><td>filled</td><td>W33_USDJPY_15_5_SHORT_146399310</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.23 23:59:59</td><td>111</td><td>USDJPY</td><td>buy</td><td colspan="2">0.14 / 0.14</td><td>0.000</td><td></td><td></td><td colspan="2">2016.05.23 23:59:59</td><td>filled</td><td>end of test</td></tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13" style="height: 25px"><div style="font: 10pt Tahoma"><b>約定</b></div></th>
+   </tr>
+   <tr align="center" bgcolor="#E5F0FC">
+      <td nowrap style="height: 30px"><b>時間</b></td>
+      <td nowrap><b>約定</b></td>
+      <td nowrap><b>銘柄</b></td>
+      <td nowrap><b>タイプ</b></td>
+      <td nowrap><b>新規・決済</b></td>
+      <td nowrap><b>数量</b></td>
+      <td nowrap><b>価格</b></td>
+      <td nowrap><b>注文</b></td>
+      <td nowrap><b>手数料</b></td>
+      <td nowrap><b>スワップ</b></td>
+      <td nowrap><b>損益</b></td>
+      <td nowrap><b>残高</b></td>
+      <td nowrap><b>コメント</b></td>
+   </tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.01 00:00:00</td><td>1</td><td></td><td>balance</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>5 000.00</td><td>5 000.00</td><td></td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.04 19:50:00</td><td>2</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.14</td><td>119.392</td><td>2</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 000.00</td><td>W33_USDJPY_15_5_LONG_1451919600</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.05 11:20:41</td><td>3</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.14</td><td>118.978</td><td>3</td><td>0.00</td><td>1.06</td><td>-48.71</td><td>4 952.35</td><td>sl 118.983</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.11 13:35:00</td><td>4</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.3</td><td>117.697</td><td>4</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 952.35</td><td>W33_USDJPY_15_5_LONG_1452506400</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.11 15:16:59</td><td>5</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.3</td><td>117.885</td><td>5</td><td>0.00</td><td>0.00</td><td>47.84</td><td>5 000.19</td><td>tp 117.885</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.18 12:15:00</td><td>6</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.08</td><td>117.359</td><td>6</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 000.19</td><td>W33_USDJPY_15_5_LONG_1452891600</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.19 13:53:16</td><td>7</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.08</td><td>118.087</td><td>7</td><td>0.00</td><td>0.62</td><td>49.32</td><td>5 050.13</td><td>tp 118.087</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.20 10:20:00</td><td>8</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.04</td><td>116.509</td><td>8</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 050.13</td><td>W33_USDJPY_15_5_SHORT_145321920</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.22 07:01:47</td><td>9</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.04</td><td>117.959</td><td>9</td><td>0.00</td><td>-2.20</td><td>-49.17</td><td>4 998.76</td><td>sl 117.955</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.22 19:15:00</td><td>10</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.28</td><td>118.527</td><td>10</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 998.76</td><td>W33_USDJPY_15_5_LONG_1453481100</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.22 20:49:37</td><td>11</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.28</td><td>118.732</td><td>11</td><td>0.00</td><td>0.00</td><td>48.34</td><td>5 047.10</td><td>tp 118.731</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.25 08:15:00</td><td>12</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.26</td><td>118.813</td><td>12</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 047.10</td><td>W33_USDJPY_15_5_LONG_1453693500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.25 09:26:30</td><td>13</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.26</td><td>118.588</td><td>13</td><td>0.00</td><td>0.00</td><td>-49.33</td><td>4 997.77</td><td>sl 118.588</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.27 11:50:00</td><td>14</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.48</td><td>118.187</td><td>14</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 997.77</td><td>W33_USDJPY_15_5_SHORT_145388610</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.27 12:53:38</td><td>15</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.48</td><td>118.308</td><td>15</td><td>0.00</td><td>0.00</td><td>-49.09</td><td>4 948.68</td><td>sl 118.308</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.27 14:25:00</td><td>16</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.2</td><td>118.330</td><td>16</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 948.68</td><td>W33_USDJPY_15_5_LONG_1453876200</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.27 17:38:36</td><td>17</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.2</td><td>118.609</td><td>17</td><td>0.00</td><td>0.00</td><td>47.05</td><td>4 995.73</td><td>tp 118.609</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.01.28 09:25:00</td><td>18</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.26</td><td>118.746</td><td>18</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 995.73</td><td>W33_USDJPY_15_5_LONG_1453950000</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.01.28 16:18:39</td><td>19</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.26</td><td>118.969</td><td>19</td><td>0.00</td><td>0.00</td><td>48.74</td><td>5 044.47</td><td>tp 118.969</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.02 05:40:00</td><td>20</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.19</td><td>120.739</td><td>20</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 044.47</td><td>W33_USDJPY_15_5_SHORT_145436670</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.02 07:25:39</td><td>21</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.19</td><td>120.427</td><td>21</td><td>0.00</td><td>0.00</td><td>49.22</td><td>5 093.69</td><td>tp 120.427</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.04 01:05:00</td><td>22</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.03</td><td>117.931</td><td>22</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 093.69</td><td>W33_USDJPY_15_5_SHORT_145449810</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.08 14:24:31</td><td>23</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.03</td><td>116.221</td><td>23</td><td>0.00</td><td>-0.82</td><td>44.14</td><td>5 137.01</td><td>tp 116.221</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.11 05:25:00</td><td>24</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.09</td><td>112.860</td><td>24</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 137.01</td><td>W33_USDJPY_15_5_SHORT_145515510</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.11 10:17:38</td><td>25</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.09</td><td>112.217</td><td>25</td><td>0.00</td><td>0.00</td><td>51.57</td><td>5 188.58</td><td>tp 112.217</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.12 14:05:00</td><td>26</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.21</td><td>112.608</td><td>26</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 188.58</td><td>W33_USDJPY_15_5_LONG_1455271200</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.12 15:30:28</td><td>27</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.21</td><td>112.874</td><td>27</td><td>0.00</td><td>0.00</td><td>49.49</td><td>5 238.07</td><td>tp 112.873</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.17 17:15:00</td><td>28</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.28</td><td>114.331</td><td>28</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 238.07</td><td>W33_USDJPY_15_5_LONG_1455720300</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.17 18:58:40</td><td>29</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.28</td><td>114.117</td><td>29</td><td>0.00</td><td>0.00</td><td>-52.51</td><td>5 185.56</td><td>sl 114.121</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.18 07:50:00</td><td>30</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.12</td><td>113.877</td><td>30</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 185.56</td><td>W33_USDJPY_15_5_SHORT_145573470</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.18 22:36:05</td><td>31</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.12</td><td>113.416</td><td>31</td><td>0.00</td><td>0.00</td><td>48.78</td><td>5 234.34</td><td>tp 113.416</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.19 09:05:00</td><td>32</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.34</td><td>113.059</td><td>32</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 234.34</td><td>W33_USDJPY_15_5_SHORT_145584810</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.19 10:24:28</td><td>33</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.34</td><td>112.885</td><td>33</td><td>0.00</td><td>0.00</td><td>52.41</td><td>5 286.75</td><td>tp 112.886</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.22 03:40:00</td><td>34</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.43</td><td>112.931</td><td>34</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 286.75</td><td>W33_USDJPY_15_5_SHORT_145590120</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.22 04:20:28</td><td>35</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.43</td><td>112.795</td><td>35</td><td>0.00</td><td>0.00</td><td>51.85</td><td>5 338.60</td><td>tp 112.795</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.24 01:30:00</td><td>36</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.26</td><td>112.063</td><td>36</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 338.60</td><td>W33_USDJPY_15_5_LONG_1456242300</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.24 01:55:05</td><td>37</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.26</td><td>111.838</td><td>37</td><td>0.00</td><td>0.00</td><td>-52.31</td><td>5 286.29</td><td>sl 111.838</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.26 10:55:00</td><td>38</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.38</td><td>112.808</td><td>38</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 286.29</td><td>W33_USDJPY_15_5_SHORT_145645560</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.26 11:29:24</td><td>39</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.38</td><td>112.963</td><td>39</td><td>0.00</td><td>0.00</td><td>-52.14</td><td>5 234.15</td><td>sl 112.963</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.02.26 19:50:00</td><td>40</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.04</td><td>113.911</td><td>40</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 234.15</td><td>W33_USDJPY_15_5_LONG_1456479900</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.02.29 17:00:37</td><td>41</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.04</td><td>112.688</td><td>41</td><td>0.00</td><td>0.32</td><td>-43.41</td><td>5 191.06</td><td>sl 112.689</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.03 13:40:00</td><td>42</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.48</td><td>113.937</td><td>42</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 191.06</td><td>W33_USDJPY_15_5_SHORT_145699650</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.03 14:24:39</td><td>43</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.48</td><td>114.060</td><td>43</td><td>0.00</td><td>0.00</td><td>-51.76</td><td>5 139.30</td><td>sl 114.060</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.08 07:35:00</td><td>44</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.09</td><td>113.100</td><td>44</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 139.30</td><td>W33_USDJPY_15_5_SHORT_145734660</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.08 17:56:39</td><td>45</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.09</td><td>112.489</td><td>45</td><td>0.00</td><td>0.00</td><td>48.88</td><td>5 188.18</td><td>tp 112.489</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.11 13:35:00</td><td>46</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.06</td><td>113.815</td><td>46</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 188.18</td><td>W33_USDJPY_15_5_LONG_1457664300</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.15 10:17:16</td><td>47</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.06</td><td>112.974</td><td>47</td><td>0.00</td><td>0.96</td><td>-44.67</td><td>5 144.47</td><td>sl 112.974</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.15 18:20:00</td><td>48</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.53</td><td>112.897</td><td>48</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 144.47</td><td>W33_USDJPY_15_5_LONG_1458059400</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.15 19:06:41</td><td>49</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.53</td><td>113.005</td><td>49</td><td>0.00</td><td>0.00</td><td>50.65</td><td>5 195.12</td><td>tp 113.005</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.16 06:10:00</td><td>50</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.4</td><td>113.450</td><td>50</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 195.12</td><td>W33_USDJPY_15_5_LONG_1458096300</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.16 09:20:38</td><td>51</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.4</td><td>113.598</td><td>51</td><td>0.00</td><td>0.00</td><td>52.11</td><td>5 247.23</td><td>tp 113.597</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.16 19:20:00</td><td>52</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.26</td><td>113.736</td><td>52</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 247.23</td><td>W33_USDJPY_15_5_LONG_1458138600</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.16 20:00:44</td><td>53</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.26</td><td>113.514</td><td>53</td><td>0.00</td><td>0.00</td><td>-50.85</td><td>5 196.38</td><td>sl 113.514</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.17 21:55:00</td><td>54</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.23</td><td>111.399</td><td>54</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 196.38</td><td>W33_USDJPY_15_5_SHORT_145822950</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.18 02:36:39</td><td>55</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.23</td><td>111.152</td><td>55</td><td>0.00</td><td>-3.32</td><td>51.11</td><td>5 244.17</td><td>tp 111.152</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.21 10:10:00</td><td>56</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.47</td><td>111.457</td><td>56</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 244.17</td><td>W33_USDJPY_15_5_LONG_1458539100</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.21 11:40:40</td><td>57</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.47</td><td>111.579</td><td>57</td><td>0.00</td><td>0.00</td><td>51.39</td><td>5 295.56</td><td>tp 111.579</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.21 14:00:00</td><td>58</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.41</td><td>111.537</td><td>58</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 295.56</td><td>W33_USDJPY_15_5_LONG_1458559800</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.21 15:02:30</td><td>59</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.41</td><td>111.678</td><td>59</td><td>0.00</td><td>0.00</td><td>51.76</td><td>5 347.32</td><td>tp 111.678</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.22 14:20:00</td><td>60</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.22</td><td>111.595</td><td>60</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 347.32</td><td>W33_USDJPY_15_5_SHORT_145863810</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.22 18:00:40</td><td>61</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.22</td><td>111.863</td><td>61</td><td>0.00</td><td>0.00</td><td>-52.71</td><td>5 294.61</td><td>sl 111.858</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.03.23 22:25:00</td><td>62</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.15</td><td>112.381</td><td>62</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 294.61</td><td>W33_USDJPY_15_5_SHORT_145875150</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.03.24 03:17:28</td><td>63</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.15</td><td>112.766</td><td>63</td><td>0.00</td><td>-6.43</td><td>-51.21</td><td>5 236.97</td><td>sl 112.766</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.01 09:05:00</td><td>64</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.51</td><td>112.228</td><td>64</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 236.97</td><td>W33_USDJPY_15_5_LONG_1459493100</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.01 09:54:39</td><td>65</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.51</td><td>112.342</td><td>65</td><td>0.00</td><td>0.00</td><td>51.75</td><td>5 288.72</td><td>tp 112.342</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.04 06:50:00</td><td>66</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.2</td><td>111.445</td><td>66</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 288.72</td><td>W33_USDJPY_15_5_SHORT_145973880</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.04 14:00:40</td><td>67</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.2</td><td>111.739</td><td>67</td><td>0.00</td><td>0.00</td><td>-52.62</td><td>5 236.10</td><td>sl 111.735</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.05 09:30:00</td><td>68</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.06</td><td>110.617</td><td>68</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 236.10</td><td>W33_USDJPY_15_5_SHORT_145978380</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.06 18:38:30</td><td>69</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.06</td><td>109.739</td><td>69</td><td>0.00</td><td>-0.87</td><td>48.00</td><td>5 283.23</td><td>tp 109.739</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.08 13:15:00</td><td>70</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.07</td><td>108.777</td><td>70</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 283.23</td><td>W33_USDJPY_15_5_LONG_1460058300</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.11 00:01:00</td><td>71</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.07</td><td>107.952</td><td>71</td><td>0.00</td><td>0.59</td><td>-53.50</td><td>5 230.32</td><td>sl 108.055</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.11 06:40:00</td><td>72</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.24</td><td>107.905</td><td>72</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 230.32</td><td>W33_USDJPY_15_5_SHORT_146034540</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.11 11:13:26</td><td>73</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.24</td><td>108.136</td><td>73</td><td>0.00</td><td>0.00</td><td>-51.27</td><td>5 179.05</td><td>sl 108.136</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.11 21:00:00</td><td>74</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.18</td><td>108.069</td><td>74</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 179.05</td><td>W33_USDJPY_15_5_LONG_1460371500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.12 09:45:38</td><td>75</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.18</td><td>108.374</td><td>75</td><td>0.00</td><td>1.51</td><td>50.66</td><td>5 231.22</td><td>tp 108.370</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.22 00:05:00</td><td>76</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.12</td><td>109.412</td><td>76</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 231.22</td><td>W33_USDJPY_15_5_SHORT_146121120</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.22 07:37:41</td><td>77</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.12</td><td>109.872</td><td>77</td><td>0.00</td><td>0.00</td><td>-50.24</td><td>5 180.98</td><td>sl 109.871</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.25 23:05:00</td><td>78</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.16</td><td>111.213</td><td>78</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 180.98</td><td>W33_USDJPY_15_5_LONG_1461600900</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.26 06:33:03</td><td>79</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.16</td><td>110.857</td><td>79</td><td>0.00</td><td>1.30</td><td>-51.38</td><td>5 130.90</td><td>sl 110.857</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.26 12:20:00</td><td>80</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.1</td><td>110.759</td><td>80</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 130.90</td><td>W33_USDJPY_15_5_SHORT_146162340</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.26 18:43:27</td><td>81</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.1</td><td>111.319</td><td>81</td><td>0.00</td><td>0.00</td><td>-50.31</td><td>5 080.59</td><td>sl 111.314</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.27 03:55:00</td><td>82</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.13</td><td>111.262</td><td>82</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 080.59</td><td>W33_USDJPY_15_5_LONG_1461681000</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.27 21:00:40</td><td>83</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.13</td><td>111.687</td><td>83</td><td>0.00</td><td>0.00</td><td>49.47</td><td>5 130.06</td><td>tp 111.684</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.04.28 14:50:00</td><td>84</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.24</td><td>108.173</td><td>84</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 130.06</td><td>W33_USDJPY_15_5_LONG_1461848400</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.04.28 16:09:42</td><td>85</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.24</td><td>108.403</td><td>85</td><td>0.00</td><td>0.00</td><td>50.92</td><td>5 180.98</td><td>tp 108.403</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.02 16:05:00</td><td>86</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.14</td><td>106.689</td><td>86</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 180.98</td><td>W33_USDJPY_15_5_LONG_1462162500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.03 03:05:59</td><td>87</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.14</td><td>106.297</td><td>87</td><td>0.00</td><td>1.19</td><td>-51.63</td><td>5 130.54</td><td>sl 106.298</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.03 14:40:00</td><td>88</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.06</td><td>105.782</td><td>88</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 130.54</td><td>W33_USDJPY_15_5_SHORT_146221110</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.03 23:52:50</td><td>89</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.06</td><td>106.652</td><td>89</td><td>0.00</td><td>0.00</td><td>-48.94</td><td>5 081.60</td><td>sl 106.652</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.05 04:30:00</td><td>90</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.31</td><td>107.049</td><td>90</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 081.60</td><td>W33_USDJPY_15_5_SHORT_146239740</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.05 10:10:42</td><td>91</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.31</td><td>107.232</td><td>91</td><td>0.00</td><td>0.00</td><td>-52.90</td><td>5 028.70</td><td>sl 107.224</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.09 06:50:00</td><td>92</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.46</td><td>107.286</td><td>92</td><td>0.00</td><td>0.00</td><td>0.00</td><td>5 028.70</td><td>W33_USDJPY_15_5_SHORT_146276910</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.09 07:52:27</td><td>93</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.46</td><td>107.403</td><td>93</td><td>0.00</td><td>0.00</td><td>-50.11</td><td>4 978.59</td><td>sl 107.403</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.10 18:05:00</td><td>94</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.45</td><td>109.033</td><td>94</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 978.59</td><td>W33_USDJPY_15_5_SHORT_146289780</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.10 18:35:35</td><td>95</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.45</td><td>109.153</td><td>95</td><td>0.00</td><td>0.00</td><td>-49.47</td><td>4 929.12</td><td>sl 109.153</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.11 03:55:00</td><td>96</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.38</td><td>109.161</td><td>96</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 929.12</td><td>W33_USDJPY_15_5_LONG_1462905000</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.11 04:35:20</td><td>97</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.38</td><td>109.023</td><td>97</td><td>0.00</td><td>0.00</td><td>-48.10</td><td>4 881.02</td><td>sl 109.023</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.12 01:55:00</td><td>98</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.2</td><td>108.430</td><td>98</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 881.02</td><td>W33_USDJPY_15_5_SHORT_146298420</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.12 07:00:29</td><td>99</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.2</td><td>108.690</td><td>99</td><td>0.00</td><td>0.00</td><td>-47.84</td><td>4 833.18</td><td>sl 108.690</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.12 20:35:00</td><td>100</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.33</td><td>108.864</td><td>100</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 833.18</td><td>W33_USDJPY_15_5_SHORT_146306970</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.12 20:59:04</td><td>101</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.33</td><td>109.019</td><td>101</td><td>0.00</td><td>0.00</td><td>-46.92</td><td>4 786.26</td><td>sl 109.019</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.16 14:30:00</td><td>102</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.17</td><td>108.903</td><td>102</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 786.26</td><td>W33_USDJPY_15_5_LONG_1463367600</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.17 08:59:16</td><td>103</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.17</td><td>109.194</td><td>103</td><td>0.00</td><td>1.41</td><td>45.30</td><td>4 832.97</td><td>tp 109.194</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.18 06:20:00</td><td>104</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.4</td><td>109.271</td><td>104</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 832.97</td><td>W33_USDJPY_15_5_SHORT_146349360</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.18 07:14:29</td><td>105</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.4</td><td>109.140</td><td>105</td><td>0.00</td><td>0.00</td><td>48.01</td><td>4 880.98</td><td>tp 109.140</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.18 21:05:00</td><td>106</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.14</td><td>109.902</td><td>106</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 880.98</td><td>W33_USDJPY_15_5_LONG_1463587200</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.19 08:46:36</td><td>107</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.14</td><td>110.285</td><td>107</td><td>0.00</td><td>3.45</td><td>48.62</td><td>4 933.05</td><td>tp 110.283</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.20 13:20:00</td><td>108</td><td>USDJPY</td><td>buy</td><td>in</td><td>0.12</td><td>110.318</td><td>108</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 933.05</td><td>W33_USDJPY_15_5_LONG_1463714100</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.23 03:12:41</td><td>109</td><td>USDJPY</td><td>sell</td><td>out</td><td>0.12</td><td>109.896</td><td>109</td><td>0.00</td><td>0.99</td><td>-46.08</td><td>4 887.96</td><td>sl 109.897</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2016.05.23 16:50:00</td><td>110</td><td>USDJPY</td><td>sell</td><td>in</td><td>0.14</td><td>109.438</td><td>110</td><td>0.00</td><td>0.00</td><td>0.00</td><td>4 887.96</td><td>W33_USDJPY_15_5_SHORT_146399310</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2016.05.23 23:59:59</td><td>111</td><td>USDJPY</td><td>buy</td><td>out</td><td>0.14</td><td>109.236</td><td>111</td><td>0.00</td><td>0.00</td><td>25.89</td><td>4 913.85</td><td>end of test</td></tr>
+   <tr align="right">
+      <td nowrap colspan="8" style="height: 30px"></td>
+      <td nowrap><b>0.00</b></td>
+      <td nowrap><b>-0.24</b></td>
+      <td nowrap><b>-85.91</b></td>
+      <td nowrap><b>4 913.85</b></td>
+      <td nowrap></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+   </tr>
+</table>
+</div>
+</body>
+</html>

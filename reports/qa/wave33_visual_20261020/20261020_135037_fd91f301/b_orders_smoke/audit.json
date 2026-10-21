@@ -1,0 +1,100 @@
+{
+  "run_id": "b_orders_smoke",
+  "kind": "native_mt5_observation",
+  "event_rows": 6560,
+  "candidate_count": 59,
+  "events": {
+    "INIT": 1,
+    "PIVOT_CONFIRMED": 4588,
+    "WAVE1_BREAK": 59,
+    "STATE": 465,
+    "WAVE1_PROVISIONAL": 189,
+    "WAVE1_PEAK_CONFIRMED": 41,
+    "WAVE2_EXTREME": 476,
+    "FIB_TOUCH": 38,
+    "LOWER_STRUCTURE_CONFIRMED": 282,
+    "LOWER_STRUCTURE_LOST": 125,
+    "FIB_TOO_DEEP": 27,
+    "PIVOT_TRIGGER": 28,
+    "SIGNAL": 28,
+    "RISK_CHECK": 28,
+    "ORDER": 24,
+    "FILL": 24,
+    "POSITION_TRACKING": 24,
+    "EXIT": 24,
+    "COMPLETED": 28,
+    "SKIP": 22,
+    "TRENDLINE_TRIGGER": 26,
+    "INVALIDATE": 13
+  },
+  "event_reach_setups": {
+    "WAVE1_PEAK_CONFIRMED": 41,
+    "FIB_TOUCH": 38,
+    "SIGNAL": 28,
+    "ORDER": 24,
+    "FILL": 24,
+    "LOWER_STRUCTURE_CONFIRMED": 39,
+    "WAVE1_PROVISIONAL": 59,
+    "COMPLETED": 28,
+    "WAVE2_EXTREME": 41,
+    "RISK_CHECK": 28,
+    "EXIT": 24,
+    "LOWER_STRUCTURE_LOST": 31,
+    "STATE": 59,
+    "FIB_TOO_DEEP": 27,
+    "POSITION_TRACKING": 24,
+    "WAVE1_BREAK": 59,
+    "PIVOT_TRIGGER": 28,
+    "INVALIDATE": 13,
+    "TRENDLINE_TRIGGER": 26,
+    "SKIP": 22
+  },
+  "state_reach_setups": {
+    "LOWER_COUNTERTREND": 39,
+    "WAVE1_TOP_TRACKING": 59,
+    "LOWER_REVERSAL_TRIGGER": 28,
+    "WAVE1_BREAK_CANDIDATE": 59,
+    "POSITION_TRACKING": 24,
+    "WAVE2_RETRACEMENT": 41,
+    "RESISTANCE_AND_RISK_CHECK": 28
+  },
+  "directions": {
+    "LONG": 33,
+    "SHORT": 26
+  },
+  "entry_statuses": {
+    "CLOSED": 24,
+    "INVALIDATED": 13,
+    "SKIPPED": 22
+  },
+  "case_count": 5,
+  "cases": [
+    "W33_XAUUSD_5_1_LONG_1736132100_1",
+    "W33_XAUUSD_5_1_SHORT_1736140500_2",
+    "W33_XAUUSD_5_1_LONG_1736158800_3",
+    "W33_XAUUSD_5_1_SHORT_1736177100_5",
+    "W33_XAUUSD_5_1_LONG_1736181900_6"
+  ],
+  "images": [],
+  "drawing_images": [],
+  "tester_report_images": [
+    "images/wave33_20261020_135037_fd91f301_b_orders_smoke-holding.png",
+    "images/wave33_20261020_135037_fd91f301_b_orders_smoke-hst.png",
+    "images/wave33_20261020_135037_fd91f301_b_orders_smoke-mfemae.png",
+    "images/wave33_20261020_135037_fd91f301_b_orders_smoke.png",
+    "wave33_20261020_135037_fd91f301_b_orders_smoke-holding.png",
+    "wave33_20261020_135037_fd91f301_b_orders_smoke-hst.png",
+    "wave33_20261020_135037_fd91f301_b_orders_smoke-mfemae.png",
+    "wave33_20261020_135037_fd91f301_b_orders_smoke.png"
+  ],
+  "unverified_images": [],
+  "actual_visual_mode": false,
+  "required_columns_missing": [],
+  "violations": [],
+  "warnings": [
+    "No native ChartScreenShot image; visual rendering still requires MT5 visual mode inspection."
+  ],
+  "audit_passed": true,
+  "video_agreement": "UNASSESSED_SOURCE_CHARTS_NOT_PROVIDED",
+  "profitability_or_promotion": "NOT_ASSESSED"
+}

@@ -1,0 +1,22 @@
+{
+  "tester_screenshot": false,
+  "selected_cases": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "diagnostic_labels": false,
+  "arms": [
+    "A"
+  ],
+  "cases_per_arm": 5,
+  "source_batch": "reports/qa/wave33_lifecycle_20261021/render_cases",
+  "kind": "NORMAL_CHART_RECORDED_EVENT_REPLAY",
+  "trading_code_present": false,
+  "custom_symbols": "Actual USDJPY M1 bars, separately bounded at each case decision, no later bars",
+  "swing_paths": true,
+  "show_panel": false,
+  "signal_recalculation": false
+}

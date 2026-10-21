@@ -1,0 +1,21 @@
+{
+  "captured_at": "2026-10-21T00:56:41",
+  "setup_id": "W33_USDJPY_15_5_LONG_1463367600_171",
+  "source_tag": "wave33_A_M15_M5_orders_1451606400_507607453",
+  "source_clock": "tester broker time",
+  "signal_at": "2016.05.16 14:30:00",
+  "trigger_type": "PIVOT_BREAK",
+  "trigger_line_price": 108.89,
+  "entry_price": 108.903,
+  "sl_price": 108.612,
+  "tp_price": 109.194,
+  "nearest_obstacle_price": 108.905,
+  "nearest_obstacle_known_at": "2016.04.13 06:15:00",
+  "distance_price": 0.001999999999995339,
+  "distance_r": 0.0068728522,
+  "obstacle_mode": "DISPLAY_ONLY",
+  "snapshot_would_fail_skip_mode": true,
+  "alternate_mode_native_run_performed": false,
+  "source_files_changed": false,
+  "logic_changed": false
+}

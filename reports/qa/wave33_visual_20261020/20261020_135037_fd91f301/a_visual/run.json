@@ -1,0 +1,19 @@
+{
+  "expert": "Wave33VisualVerifier",
+  "chart_period": "M5",
+  "model": 4,
+  "date_from": "2025.01.06",
+  "inputs": {
+    "InpRunTag": "wave33_20261020_135037_fd91f301_a_visual",
+    "InpDraw": "true",
+    "InpScreenshots": "true",
+    "InpScreenshotLimit": 100,
+    "InpTriggerMode": 0,
+    "InpPattern": 0,
+    "InpEnableTesterOrders": "false"
+  },
+  "run_id": "a_visual",
+  "visual_mode": true,
+  "tag": "wave33_20261020_135037_fd91f301_a_visual",
+  "date_to": "2025.01.18"
+}

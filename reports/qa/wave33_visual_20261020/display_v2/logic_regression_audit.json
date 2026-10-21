@@ -1,0 +1,38 @@
+{
+  "scope": "DISPLAY_ONLY",
+  "protected_files": [
+    {
+      "path": "mql/Include/Wave33Visual/Engine.mqh",
+      "before_sha256": "037D108D991D45102B1DDF2CD52CA651CB6244DB2AE717AB081988969F6FF727",
+      "after_sha256": "037D108D991D45102B1DDF2CD52CA651CB6244DB2AE717AB081988969F6FF727",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Types.mqh",
+      "before_sha256": "7E1F7A5CD928F006D7A50E2B940AD901CFF3A705F4A81E094151E8822D8FE2C1",
+      "after_sha256": "7E1F7A5CD928F006D7A50E2B940AD901CFF3A705F4A81E094151E8822D8FE2C1",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Ledger.mqh",
+      "before_sha256": "F6E3DA25EB7F03170507E71E521B7332CD5D0D36A2F1EA7DC7A8B69EEF471680",
+      "after_sha256": "F6E3DA25EB7F03170507E71E521B7332CD5D0D36A2F1EA7DC7A8B69EEF471680",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Indicators/MultiTF_3WaveIn3Wave_Visualizer_v1.05_InvalidationReset.mq5",
+      "before_sha256": "407251F96D1CAEF4386EC25E359410E2DB07E44CFEF623AD700023446FD08EEB",
+      "after_sha256": "407251F96D1CAEF4386EC25E359410E2DB07E44CFEF623AD700023446FD08EEB",
+      "unchanged": true
+    }
+  ],
+  "regression_batch": "20261020_232831_482acab8",
+  "original_events_sha256": "069FE692C12459B65F6C5F0FABB01D237D498F08093BF12DE617C127B6F221D4",
+  "final_events_sha256": "069FE692C12459B65F6C5F0FABB01D237D498F08093BF12DE617C127B6F221D4",
+  "events_byte_identical": true,
+  "candidate_count": 19,
+  "signal_count": 5,
+  "compile_zero_errors_zero_warnings": true,
+  "ea_sha256": "EE20598477C72E5F00EB74F01D256DC9ED88C8F4DAC49D316BDA2E2B192F9B8B",
+  "display_sha256": "BE7E49D1F5F6186D9AF7CF3285E92BBB8CA71135424D44AE89DFA94F48EAFC75"
+}

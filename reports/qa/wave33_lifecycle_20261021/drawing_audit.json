@@ -1,0 +1,106 @@
+{
+  "cases": [
+    {
+      "arm": "A",
+      "index": 0,
+      "setup_id": "W33_USDJPY_15_5_SHORT_1462984200_166",
+      "cutoff": "2016.05.11 20:55:00",
+      "object_count": 81,
+      "violations": [],
+      "passed": true,
+      "image": "drawing_review/A/W33R_35E346FF6E693049_0.png"
+    },
+    {
+      "arm": "A",
+      "index": 1,
+      "setup_id": "W33_USDJPY_15_5_LONG_1463367600_171",
+      "cutoff": "2016.05.16 09:35:00",
+      "object_count": 79,
+      "violations": [],
+      "passed": true,
+      "image": "drawing_review/A/W33R_34E3456CC58A91EC_1.png"
+    },
+    {
+      "arm": "A",
+      "index": 2,
+      "setup_id": "W33_USDJPY_15_5_SHORT_1463993100_178",
+      "cutoff": "2016.05.23 10:00:00",
+      "object_count": 60,
+      "violations": [],
+      "passed": true,
+      "image": "drawing_review/A/W33R_37E34A253D18F353_2.png"
+    },
+    {
+      "arm": "A",
+      "index": 3,
+      "setup_id": "W33_USDJPY_15_5_LONG_1452506400_8",
+      "cutoff": "2016.01.11 13:35:00",
+      "object_count": 88,
+      "violations": [],
+      "passed": true,
+      "image": "drawing_review/A/W33R_36E3489289147736_3.png"
+    },
+    {
+      "arm": "A",
+      "index": 4,
+      "setup_id": "W33_USDJPY_15_5_SHORT_1452514500_9",
+      "cutoff": "2016.01.11 14:35:00",
+      "object_count": 69,
+      "violations": [],
+      "passed": true,
+      "image": "drawing_review/A/W33R_31E340B3CB40390D_4.png"
+    },
+    {
+      "arm": "B",
+      "index": 0,
+      "setup_id": "W33_XAUUSD_5_1_LONG_1736132100_1",
+      "cutoff": "2025.01.06 06:14:00",
+      "object_count": 180,
+      "violations": [],
+      "passed": true,
+      "image": "drawing_review_b/B/W33R_74008FC37A1AD03F_0.png"
+    },
+    {
+      "arm": "B",
+      "index": 1,
+      "setup_id": "W33_XAUUSD_5_1_SHORT_1736140500_2",
+      "cutoff": "2025.01.06 13:20:00",
+      "object_count": 406,
+      "violations": [],
+      "passed": true,
+      "image": "drawing_review_b/B/W33R_73008E30A45ACD8A_1.png"
+    },
+    {
+      "arm": "B",
+      "index": 2,
+      "setup_id": "W33_XAUUSD_5_1_LONG_1736158800_3",
+      "cutoff": "2025.01.06 10:57:00",
+      "object_count": 181,
+      "violations": [],
+      "passed": true,
+      "image": "drawing_review_b/B/W33R_760092E9AD2465D5_2.png"
+    },
+    {
+      "arm": "B",
+      "index": 3,
+      "setup_id": "W33_XAUUSD_5_1_SHORT_1736177100_5",
+      "cutoff": "2025.01.06 17:12:00",
+      "object_count": 212,
+      "violations": [],
+      "passed": true,
+      "image": "drawing_review_b/B/W33R_750091566D121C80_3.png"
+    },
+    {
+      "arm": "B",
+      "index": 4,
+      "setup_id": "W33_XAUUSD_5_1_LONG_1736290200_14",
+      "cutoff": "2025.01.08 03:42:00",
+      "object_count": 297,
+      "violations": [],
+      "passed": true,
+      "image": "drawing_review_b/B/W33R_7800960F5BE65B93_4.png"
+    }
+  ],
+  "passed": true,
+  "scope": "Recorded event drawing; finite rays, panel off, visible expiry, tooltip times, saved PNG. Human video agreement unassessed."
+}

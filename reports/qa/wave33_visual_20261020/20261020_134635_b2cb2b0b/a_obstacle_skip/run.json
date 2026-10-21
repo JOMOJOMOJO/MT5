@@ -1,0 +1,19 @@
+{
+  "tag": "wave33_20261020_134635_b2cb2b0b_a_obstacle_skip",
+  "chart_period": "M5",
+  "model": 4,
+  "expert": "Wave33VisualVerifier",
+  "date_from": "2025.01.06",
+  "inputs": {
+    "InpRunTag": "wave33_20261020_134635_b2cb2b0b_a_obstacle_skip",
+    "InpDraw": "true",
+    "InpScreenshots": "true",
+    "InpPattern": 0,
+    "InpEnableTesterOrders": "false",
+    "InpTriggerMode": 0,
+    "InpObstacleMode": 1
+  },
+  "date_to": "2025.01.18",
+  "visual_mode": false,
+  "run_id": "a_obstacle_skip"
+}

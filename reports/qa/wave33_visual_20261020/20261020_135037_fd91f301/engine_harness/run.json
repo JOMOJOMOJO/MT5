@@ -1,0 +1,13 @@
+{
+  "expert": "Wave33EngineHarness",
+  "chart_period": "M1",
+  "model": 4,
+  "date_from": "2025.01.06",
+  "inputs": {
+    "InpRunTag": "wave33_20261020_135037_fd91f301_engine_harness"
+  },
+  "run_id": "engine_harness",
+  "visual_mode": false,
+  "tag": "wave33_20261020_135037_fd91f301_engine_harness",
+  "date_to": "2025.01.18"
+}

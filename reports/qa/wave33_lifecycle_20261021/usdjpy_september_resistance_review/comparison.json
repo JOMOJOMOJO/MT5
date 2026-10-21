@@ -1,0 +1,47 @@
+{
+  "scope": "Resistance source and W1 room; no causal profitability inference or rule changes",
+  "cases": [
+    {
+      "case": "sep6",
+      "setup_id": "W33_USDJPY_15_5_LONG_1536215400_254",
+      "entry_at": "2018.09.06 11:55:00",
+      "entry_price": 111.398,
+      "sl": 111.234,
+      "tp": 111.562,
+      "wave1_peak": 111.419,
+      "room_to_w1_price": 0.021000000000000796,
+      "room_to_w1_r": 0.12804878048780857,
+      "selected_obstacle_price": 111.399,
+      "selected_obstacle_room_r": 0.006097561,
+      "obstacle_sources": [
+        {
+          "source_time": "2018.07.23 22:20:00",
+          "known_at": "2018.07.23 22:35:00",
+          "tf": "PERIOD_M5",
+          "label": "HL"
+        }
+      ]
+    },
+    {
+      "case": "sep17",
+      "setup_id": "W33_USDJPY_15_5_LONG_1537188300_265",
+      "entry_at": "2018.09.17 16:20:00",
+      "entry_price": 112.074,
+      "sl": 111.902,
+      "tp": 112.246,
+      "wave1_peak": 112.083,
+      "room_to_w1_price": 0.009000000000000341,
+      "room_to_w1_r": 0.05232558139535172,
+      "selected_obstacle_price": 112.075,
+      "selected_obstacle_room_r": 0.0058139535,
+      "obstacle_sources": [
+        {
+          "source_time": "2018.09.14 17:30:00",
+          "known_at": "2018.09.14 17:45:00",
+          "tf": "PERIOD_M5",
+          "label": "HH"
+        }
+      ]
+    }
+  ]
+}

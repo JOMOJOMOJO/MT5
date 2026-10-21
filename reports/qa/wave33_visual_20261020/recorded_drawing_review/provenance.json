@@ -1,0 +1,8 @@
+{
+  "tester_screenshot": false,
+  "trading_code_present": false,
+  "cases_per_arm": 5,
+  "source_batch": "reports/qa/wave33_visual_20261020/20261020_134635_b2cb2b0b",
+  "signal_recalculation": false,
+  "kind": "NORMAL_CHART_RECORDED_EVENT_REPLAY"
+}

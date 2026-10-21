@@ -1,0 +1,9 @@
+{
+  "run_id": "lifecycle_harness",
+  "kind": "engine_harness",
+  "assertions": 96,
+  "passed": 96,
+  "failed": 0,
+  "violations": [],
+  "audit_passed": true
+}

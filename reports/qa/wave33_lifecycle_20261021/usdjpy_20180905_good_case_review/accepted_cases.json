@@ -1,0 +1,108 @@
+{
+  "purpose": "Preserve user accepted visual references during future rule comparisons",
+  "cases": [
+    {
+      "setup_id": "W33_USDJPY_15_5_LONG_1536149700_251",
+      "direction": "LONG",
+      "candidate_detected_at": "2018.09.05 12:30:00",
+      "wave1_start_time": "2018.09.05 09:45:00",
+      "wave1_start_price": "111.3970000000",
+      "wave1_peak_time": "2018.09.05 13:30:00",
+      "wave1_peak_price": "111.6390000000",
+      "wave1_peak_known_at": "2018.09.05 14:15:00",
+      "wave2_extreme_time": "2018.09.05 15:50:00",
+      "wave2_extreme_price": "111.4490000000",
+      "lower_structure_known_at": "2018.09.05 16:05:00",
+      "trigger_known_at": "2018.09.05 16:05:00",
+      "trigger_line_price": "111.5510000000",
+      "signal_at": "2018.09.05 16:10:00",
+      "signal_known_at": "2018.09.05 16:10:00",
+      "fill_at": "2018.09.05 16:10:00",
+      "entry_price": "111.5770000000",
+      "sl_price": "111.4350000000",
+      "tp_price": "111.7190000000",
+      "lower_pivot_times": "1536158100|1536161400|1536160800|1536162600",
+      "lower_pivot_prices": "111.6210000000|111.5510000000|111.4960000000|111.4490000000",
+      "lower_wave2_time": "2018.09.05 15:50:00",
+      "lower_wave2_price": "111.4490000000",
+      "lower_entry_stage": "COUNTERTREND_NEGATION",
+      "user_review": "GOOD_EXAMPLE_IMAGE_3",
+      "evaluation_basis": "User visual judgment of entry shape; not selected by profit or TP hit",
+      "lower_pivots": [
+        {
+          "kind": "high1",
+          "bar_time": "2018.09.05 14:35:00",
+          "price": 111.621
+        },
+        {
+          "kind": "high2",
+          "bar_time": "2018.09.05 15:30:00",
+          "price": 111.551
+        },
+        {
+          "kind": "low1",
+          "bar_time": "2018.09.05 15:20:00",
+          "price": 111.496
+        },
+        {
+          "kind": "low2",
+          "bar_time": "2018.09.05 15:50:00",
+          "price": 111.449
+        }
+      ],
+      "stored_datetime_note": "Stored MQL datetime values formatted as wall-clock fields; broker UTC offset not inferred"
+    },
+    {
+      "setup_id": "W33_USDJPY_15_5_SHORT_1536172200_253",
+      "direction": "SHORT",
+      "candidate_detected_at": "2018.09.05 18:45:00",
+      "wave1_start_time": "2018.09.05 16:45:00",
+      "wave1_start_price": "111.7540000000",
+      "wave1_peak_time": "2018.09.05 19:00:00",
+      "wave1_peak_price": "111.4270000000",
+      "wave1_peak_known_at": "2018.09.05 19:45:00",
+      "wave2_extreme_time": "2018.09.05 20:55:00",
+      "wave2_extreme_price": "111.5790000000",
+      "lower_structure_known_at": "2018.09.05 21:10:00",
+      "trigger_known_at": "2018.09.05 21:10:00",
+      "trigger_line_price": "111.5470000000",
+      "signal_at": "2018.09.05 21:30:00",
+      "signal_known_at": "2018.09.05 21:30:00",
+      "fill_at": "2018.09.05 21:30:00",
+      "entry_price": "111.5290000000",
+      "sl_price": "111.5980000000",
+      "tp_price": "111.4600000000",
+      "lower_pivot_times": "1536180000|1536180900|1536177600|1536180600",
+      "lower_pivot_prices": "111.5730000000|111.5790000000|111.4770000000|111.5470000000",
+      "lower_wave2_time": "2018.09.05 20:55:00",
+      "lower_wave2_price": "111.5790000000",
+      "lower_entry_stage": "COUNTERTREND_NEGATION",
+      "user_review": "GOOD_EXAMPLE_IMAGE_3",
+      "evaluation_basis": "User visual judgment of entry shape; not selected by profit or TP hit",
+      "lower_pivots": [
+        {
+          "kind": "high1",
+          "bar_time": "2018.09.05 20:40:00",
+          "price": 111.573
+        },
+        {
+          "kind": "high2",
+          "bar_time": "2018.09.05 20:55:00",
+          "price": 111.579
+        },
+        {
+          "kind": "low1",
+          "bar_time": "2018.09.05 20:00:00",
+          "price": 111.477
+        },
+        {
+          "kind": "low2",
+          "bar_time": "2018.09.05 20:50:00",
+          "price": 111.547
+        }
+      ],
+      "stored_datetime_note": "Stored MQL datetime values formatted as wall-clock fields; broker UTC offset not inferred"
+    }
+  ],
+  "ea_changed": false
+}

@@ -1,0 +1,23 @@
+{
+  "date_to": "2018.09.25",
+  "symbol": "USDJPY",
+  "date_from": "2018.02.01",
+  "model": 4,
+  "run_id": "a_recognition_only",
+  "tag": "wave33_20261021_105602_42ef38a9_a_recognition_only",
+  "expert": "Wave33VisualVerifier",
+  "inputs": {
+    "InpRunTag": "wave33_20261021_105602_42ef38a9_a_recognition_only",
+    "InpDraw": "true",
+    "InpScreenshots": "true",
+    "InpPattern": 0,
+    "InpMagic": "3320261021",
+    "InpLowerRecognition": 2,
+    "InpEnableTesterOrders": "true",
+    "InpMinWave1RoomR": 0,
+    "InpTriggerMode": 0,
+    "InpStrictWaveLifecycle": "true"
+  },
+  "visual_mode": false,
+  "chart_period": "M5"
+}

@@ -1,0 +1,44 @@
+{
+  "deposit": 10000.0,
+  "batch_id": "20261021_105423_c2bca693",
+  "terminal_live_trading_enabled": false,
+  "header_sha256": {
+    "Wave33Visual\\Types.mqh": "78CBB1517037C756FC47BF4F3D413845FE2038465BD148C140EC51FDC3D8998C",
+    "Wave33Visual\\Engine.mqh": "4290166FF726C1508B2EB41EBB721D2B652E535B927E7B9E1C16805ED37C0D1F",
+    "Wave33Visual\\Room.mqh": "ECD3A1841A9F9DFE481AC43C35CA869A0D15492228FF553F7F0810133A0FC757",
+    "Wave33Visual\\Ledger.mqh": "1DE065715F5A50ED3C0A4FC054ED13C9B9FB75B4C499EDA2355EA938B6FF9395",
+    "Wave33Visual\\Display.mqh": "B3FC57928646D12AAFD3E6CC797CDEE05E4CFB8AA4C071064B0B6754CFAA4277"
+  },
+  "date_from": "2025.01.06",
+  "symbol": "XAUUSD",
+  "source_data_root": "C:\\Users\\windows\\AppData\\Local\\CodexMT5WickRebreakR3\\20261014_094513_6f6042e2",
+  "copied_ticks": [
+    "202412.tkc",
+    "202501.tkc"
+  ],
+  "run_order": [
+    "lifecycle_harness",
+    "recognition_harness",
+    "room_harness",
+    "a_orders_smoke",
+    "b_orders_smoke"
+  ],
+  "server": "VantageTradingLtd-Live",
+  "date_to": "2025.01.18",
+  "runtime_root": "C:\\Users\\windows\\AppData\\Local\\CodexMT5WickRebreakR3\\20261014_094513_6f6042e2",
+  "copied_history": [
+    "2024.hcc",
+    "2025.hcc"
+  ],
+  "terminal_root": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261021_105423_c2bca693",
+  "purpose": "VISUAL_RECONSTRUCTION_QA_NOT_PROFITABILITY",
+  "source_sha256": {
+    "Wave33VisualVerifier": "0C34A2D0E9980DCAA4285D4859A0D080CB66ABE7AA85AC3D705E38806BD8AB0C",
+    "Wave33LifecycleHarness": "31CD9901A4FE93E7CE67EF7E671106D695935BF4CA348D5B710D70F289B1BE02",
+    "Wave33RoomHarness": "A6577BA2D5F3B9287D0A74E194E43AA3DE61A8D8743EDFEC7A8A2AF73ADBB289",
+    "Wave33EngineHarness": "B585F78E073C3698AA84DF502AABE87EED1BCE689C32BF1E9EAF568065575A24",
+    "Wave33DisplayHarness": "617A4F19F0E329C1DCD347EB23CE3D890DF5C01E41C44748F705D03B1DEA2C4D",
+    "Wave33RecognitionHarness": "2D02A375E39B615C3FFD6938E0E68311E1BB9E0A7316726CFB6CC8BF6F7580B5"
+  },
+  "model": 4
+}

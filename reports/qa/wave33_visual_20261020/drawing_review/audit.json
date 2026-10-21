@@ -1,0 +1,107 @@
+{
+  "cases": [
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD_15_5_LONG_1736161200_1",
+      "png": "drawing_review\\A\\W33R_85A8785F1DE7977D_0.png",
+      "objects": 71,
+      "signal": false,
+      "native_tester_screenshot": false,
+      "object_names_within_63": true,
+      "sl_tp_anchor_spacing_passed": true
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD_15_5_SHORT_1736177400_2",
+      "png": "drawing_review\\A\\W33R_84A876CCA76A1C88_1.png",
+      "objects": 141,
+      "signal": true,
+      "native_tester_screenshot": false,
+      "object_names_within_63": true,
+      "sl_tp_anchor_spacing_passed": true
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD_15_5_LONG_1736188200_3",
+      "png": "drawing_review\\A\\W33R_87A87B852AFB6FD7_2.png",
+      "objects": 266,
+      "signal": false,
+      "native_tester_screenshot": false,
+      "object_names_within_63": true,
+      "sl_tp_anchor_spacing_passed": true
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD_15_5_LONG_1736204400_4",
+      "png": "drawing_review\\A\\W33R_86A879F284804A62_3.png",
+      "objects": 41,
+      "signal": false,
+      "native_tester_screenshot": false,
+      "object_names_within_63": true,
+      "sl_tp_anchor_spacing_passed": true
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD_15_5_LONG_1736320500_7",
+      "png": "drawing_review\\A\\W33R_81A87213D3E90839_4.png",
+      "objects": 106,
+      "signal": true,
+      "native_tester_screenshot": false,
+      "object_names_within_63": true,
+      "sl_tp_anchor_spacing_passed": true
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD_5_1_LONG_1736132100_1",
+      "png": "drawing_review\\B\\W33R_76AB09B57072A42D_0.png",
+      "objects": 128,
+      "signal": true,
+      "native_tester_screenshot": false,
+      "object_names_within_63": true,
+      "sl_tp_anchor_spacing_passed": true
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD_5_1_SHORT_1736140500_2",
+      "png": "drawing_review\\B\\W33R_75AB0822C3DA9AA8_1.png",
+      "objects": 371,
+      "signal": false,
+      "native_tester_screenshot": false,
+      "object_names_within_63": true,
+      "sl_tp_anchor_spacing_passed": true
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD_5_1_LONG_1736158800_3",
+      "png": "drawing_review\\B\\W33R_74AB068F1F090887_2.png",
+      "objects": 212,
+      "signal": true,
+      "native_tester_screenshot": false,
+      "object_names_within_63": true,
+      "sl_tp_anchor_spacing_passed": true
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD_5_1_SHORT_1736163900_4",
+      "png": "drawing_review\\B\\W33R_73AB04FC9C445122_3.png",
+      "objects": 107,
+      "signal": false,
+      "native_tester_screenshot": false,
+      "object_names_within_63": true,
+      "sl_tp_anchor_spacing_passed": true
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD_5_1_SHORT_1736177100_5",
+      "png": "drawing_review\\B\\W33R_72AB0369CDE496C1_4.png",
+      "objects": 191,
+      "signal": true,
+      "native_tester_screenshot": false,
+      "object_names_within_63": true,
+      "sl_tp_anchor_spacing_passed": true
+    }
+  ],
+  "count": 10,
+  "drawing_replay_audit_passed": true,
+  "direct_tester_capture_verified": false
+}

@@ -1,0 +1,8 @@
+{
+  "run_id": "a_visual",
+  "output": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_visual_20261020\\20261020_135037_fd91f301",
+  "batch_id": "20261020_135037_fd91f301",
+  "status": "FINISHED_WITH_CAPTURE_LIMITATION",
+  "original_status": "RUNNING",
+  "note": "Harness100 and B order smoke passed. A Visual completed; report and Common CSV recovered after an archive log lock. PNG output absent. B Visual was executed in separate 20261020_173724_075de4c4 batch."
+}

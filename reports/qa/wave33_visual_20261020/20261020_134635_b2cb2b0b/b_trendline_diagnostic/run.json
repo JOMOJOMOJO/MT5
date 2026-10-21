@@ -1,0 +1,18 @@
+{
+  "tag": "wave33_20261020_134635_b2cb2b0b_b_trendline_diagnostic",
+  "chart_period": "M1",
+  "model": 4,
+  "expert": "Wave33VisualVerifier",
+  "date_from": "2025.01.06",
+  "inputs": {
+    "InpRunTag": "wave33_20261020_134635_b2cb2b0b_b_trendline_diagnostic",
+    "InpDraw": "true",
+    "InpScreenshots": "true",
+    "InpPattern": 1,
+    "InpEnableTesterOrders": "false",
+    "InpTriggerMode": 1
+  },
+  "date_to": "2025.01.18",
+  "visual_mode": false,
+  "run_id": "b_trendline_diagnostic"
+}

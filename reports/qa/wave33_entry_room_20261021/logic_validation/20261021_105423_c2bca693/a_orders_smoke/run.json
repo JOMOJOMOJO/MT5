@@ -1,0 +1,19 @@
+{
+  "inputs": {
+    "InpRunTag": "wave33_20261021_105423_c2bca693_a_orders_smoke",
+    "InpDraw": "true",
+    "InpScreenshots": "true",
+    "InpTriggerMode": 0,
+    "InpEnableTesterOrders": "true",
+    "InpPattern": 0
+  },
+  "date_to": "2025.01.18",
+  "model": 4,
+  "expert": "Wave33VisualVerifier",
+  "visual_mode": false,
+  "chart_period": "M5",
+  "symbol": "XAUUSD",
+  "tag": "wave33_20261021_105423_c2bca693_a_orders_smoke",
+  "date_from": "2025.01.06",
+  "run_id": "a_orders_smoke"
+}

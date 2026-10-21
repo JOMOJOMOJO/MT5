@@ -1,0 +1,9 @@
+{
+  "run_id": "display_harness",
+  "kind": "engine_harness",
+  "assertions": 18,
+  "passed": 18,
+  "failed": 0,
+  "violations": [],
+  "audit_passed": true
+}

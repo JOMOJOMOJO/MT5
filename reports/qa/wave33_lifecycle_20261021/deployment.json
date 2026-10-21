@@ -1,0 +1,17 @@
+{
+  "version": "1.30",
+  "binary_sha256": "075f0a4db51d2f0e4e985ad515e1b75ebc3f0e6ca9f4f5efd58f23953c408605",
+  "checks": {
+    "Wave33Visual\\Types.mqh": true,
+    "Wave33Visual\\Engine.mqh": true,
+    "Wave33Visual\\Ledger.mqh": true,
+    "Wave33Visual\\Display.mqh": true,
+    "main_source": true,
+    "deployed_binary": true,
+    "source_snapshot": true,
+    "wave33-v130-A-M15-M5-orders.set": true,
+    "wave33-v130-B-M5-M1-orders.set": true
+  },
+  "passed": true,
+  "scope": "Local EX5 and separate v130 SET files; existing unrelated EAs and old presets preserved; no running user terminal restarted."
+}

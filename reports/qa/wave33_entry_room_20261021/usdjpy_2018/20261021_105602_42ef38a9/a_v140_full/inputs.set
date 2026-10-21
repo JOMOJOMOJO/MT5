@@ -1,0 +1,10 @@
+InpRunTag=wave33_20261021_105602_42ef38a9_a_v140_full
+InpDraw=true
+InpScreenshots=true
+InpPattern=0
+InpMagic=3320261021
+InpLowerRecognition=2
+InpEnableTesterOrders=true
+InpMinWave1RoomR=0.25
+InpTriggerMode=0
+InpStrictWaveLifecycle=true

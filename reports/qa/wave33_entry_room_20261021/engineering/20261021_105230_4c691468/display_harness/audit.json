@@ -1,0 +1,19 @@
+{
+  "run_id": "display_harness",
+  "kind": "display_harness",
+  "assertions": 29,
+  "passed": 28,
+  "failed": 1,
+  "violations": [
+    {
+      "check": "harness_assertion",
+      "test": "trace_all_three_times",
+      "passed": "FAIL",
+      "detail": "Location",
+      "null": [
+        " availability and adoption are distinct"
+      ]
+    }
+  ],
+  "audit_passed": false
+}

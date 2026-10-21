@@ -1,0 +1,9 @@
+{
+  "counter_pivots_unchanged_from_v120": true,
+  "baseline": "reports\\qa\\wave33_lifecycle_20261021\\baseline_v120\\Engine.mqh",
+  "current": "mql\\Include\\Wave33Visual\\Engine.mqh",
+  "target_structure_confirmations": 0,
+  "target_structure_rejections": 0,
+  "target_structure_lost": 0,
+  "interpretation": "Required countertrend never formed before first closed W1 endpoint break; membership gate not reached; v1.30 expires previously unqualified candidate."
+}

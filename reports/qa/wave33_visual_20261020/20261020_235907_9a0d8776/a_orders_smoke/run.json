@@ -1,0 +1,18 @@
+{
+  "run_id": "a_orders_smoke",
+  "visual_mode": false,
+  "model": 4,
+  "chart_period": "M5",
+  "tag": "wave33_20261020_235907_9a0d8776_a_orders_smoke",
+  "date_from": "2025.01.06",
+  "inputs": {
+    "InpRunTag": "wave33_20261020_235907_9a0d8776_a_orders_smoke",
+    "InpDraw": "true",
+    "InpScreenshots": "true",
+    "InpEnableTesterOrders": "true",
+    "InpTriggerMode": 0,
+    "InpPattern": 0
+  },
+  "date_to": "2025.01.18",
+  "expert": "Wave33VisualVerifier"
+}

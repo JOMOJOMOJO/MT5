@@ -1,0 +1,102 @@
+test,passed,detail
+pivot_no_early_0,PASS,Right-hand candles not all closed
+pivot_no_early_1,PASS,Right-hand candles not all closed
+pivot_no_early_2,PASS,Right-hand candles not all closed
+pivot_no_early_3,PASS,Right-hand candles not all closed
+pivot_exact_delay,PASS,Swing at index 2 first known at close of index 4
+unfinished_bar_rejected,PASS,No forming candle accepted
+duplicate_bar_rejected,PASS,No duplicate/out-of-order candle accepted
+signal_once_PERIOD_M15_PERIOD_M5_LONG_0,PASS,Actual CWave33Engine signal count=1
+signal_causal_PERIOD_M15_PERIOD_M5_LONG_0,PASS,Upper and lower anchors known before trigger candle opened
+state_path_PERIOD_M15_PERIOD_M5_LONG_0,PASS,W1 peak, Fib touch, lower structure and reversal/risk states reached
+pre_signal_line_PERIOD_M15_PERIOD_M5_LONG_0,PASS,Pivot decision line exists in pre-signal snapshot
+both_triggers_PERIOD_M15_PERIOD_M5_LONG_0,PASS,Same frozen anchors track TL first and later pivot
+selected_trigger_PERIOD_M15_PERIOD_M5_LONG_0,PASS,Expected PIVOT_BREAK, actual PIVOT_BREAK
+position_state_PERIOD_M15_PERIOD_M5_LONG_0,PASS,Execution acknowledgement changes observation state
+completed_PERIOD_M15_PERIOD_M5_LONG_0,PASS,Position completion releases direction lane
+signal_once_PERIOD_M5_PERIOD_M1_LONG_0,PASS,Actual CWave33Engine signal count=1
+signal_causal_PERIOD_M5_PERIOD_M1_LONG_0,PASS,Upper and lower anchors known before trigger candle opened
+state_path_PERIOD_M5_PERIOD_M1_LONG_0,PASS,W1 peak, Fib touch, lower structure and reversal/risk states reached
+pre_signal_line_PERIOD_M5_PERIOD_M1_LONG_0,PASS,Pivot decision line exists in pre-signal snapshot
+both_triggers_PERIOD_M5_PERIOD_M1_LONG_0,PASS,Same frozen anchors track TL first and later pivot
+selected_trigger_PERIOD_M5_PERIOD_M1_LONG_0,PASS,Expected PIVOT_BREAK, actual PIVOT_BREAK
+position_state_PERIOD_M5_PERIOD_M1_LONG_0,PASS,Execution acknowledgement changes observation state
+completed_PERIOD_M5_PERIOD_M1_LONG_0,PASS,Position completion releases direction lane
+signal_once_PERIOD_M5_PERIOD_M1_LONG_1,PASS,Actual CWave33Engine signal count=1
+signal_causal_PERIOD_M5_PERIOD_M1_LONG_1,PASS,Upper and lower anchors known before trigger candle opened
+state_path_PERIOD_M5_PERIOD_M1_LONG_1,PASS,W1 peak, Fib touch, lower structure and reversal/risk states reached
+pre_signal_line_PERIOD_M5_PERIOD_M1_LONG_1,PASS,Pivot decision line exists in pre-signal snapshot
+both_triggers_PERIOD_M5_PERIOD_M1_LONG_1,PASS,Same frozen anchors track TL first and later pivot
+selected_trigger_PERIOD_M5_PERIOD_M1_LONG_1,PASS,Expected TRENDLINE_BREAK, actual TRENDLINE_BREAK
+position_state_PERIOD_M5_PERIOD_M1_LONG_1,PASS,Execution acknowledgement changes observation state
+completed_PERIOD_M5_PERIOD_M1_LONG_1,PASS,Position completion releases direction lane
+signal_once_PERIOD_M5_PERIOD_M1_LONG_2,PASS,Actual CWave33Engine signal count=1
+signal_causal_PERIOD_M5_PERIOD_M1_LONG_2,PASS,Upper and lower anchors known before trigger candle opened
+state_path_PERIOD_M5_PERIOD_M1_LONG_2,PASS,W1 peak, Fib touch, lower structure and reversal/risk states reached
+pre_signal_line_PERIOD_M5_PERIOD_M1_LONG_2,PASS,Pivot decision line exists in pre-signal snapshot
+both_triggers_PERIOD_M5_PERIOD_M1_LONG_2,PASS,Same frozen anchors track TL first and later pivot
+selected_trigger_PERIOD_M5_PERIOD_M1_LONG_2,PASS,Expected TRENDLINE_BREAK, actual TRENDLINE_BREAK
+position_state_PERIOD_M5_PERIOD_M1_LONG_2,PASS,Execution acknowledgement changes observation state
+completed_PERIOD_M5_PERIOD_M1_LONG_2,PASS,Position completion releases direction lane
+invalidation_LONG_deep_measure,PASS,Default deep Fib is measurement; origin and opt-in deep rule exclude
+reason_LONG_deep_measure,PASS,Explicit invalidation or deep-Fib measurement retained
+invalidation_LONG_deep_reject,PASS,Default deep Fib is measurement; origin and opt-in deep rule exclude
+reason_LONG_deep_reject,PASS,Explicit invalidation or deep-Fib measurement retained
+invalidation_LONG_origin,PASS,Default deep Fib is measurement; origin and opt-in deep rule exclude
+reason_LONG_origin,PASS,Explicit invalidation or deep-Fib measurement retained
+latest_pivot_after_opposite_LONG,PASS,New LH after LL / new HL after HH updates the active return level
+latest_pivot_signal_LONG,PASS,Close beyond newest level signals before the superseded older level
+suffix_prefix_has_signal_LONG,PASS,Invariant test starts with an actual emitted engine signal
+duplicate_trigger_no_event_LONG,PASS,Refeeding exact trigger candle cannot emit another decision
+future_extension_keeps_anchors_LONG,PASS,Later higher/lower prices do not rewrite fixed W1, W2, ID or signal timestamps
+future_opposite_no_repeat_signal_LONG,PASS,Future origin failure closes monitor and preserves original decision evidence
+emitted_prefix_snapshot_preserved_LONG,PASS,Stored pre-suffix event remains the original SIGNAL after terminal transition
+signal_once_PERIOD_M15_PERIOD_M5_SHORT_0,PASS,Actual CWave33Engine signal count=1
+signal_causal_PERIOD_M15_PERIOD_M5_SHORT_0,PASS,Upper and lower anchors known before trigger candle opened
+state_path_PERIOD_M15_PERIOD_M5_SHORT_0,PASS,W1 peak, Fib touch, lower structure and reversal/risk states reached
+pre_signal_line_PERIOD_M15_PERIOD_M5_SHORT_0,PASS,Pivot decision line exists in pre-signal snapshot
+both_triggers_PERIOD_M15_PERIOD_M5_SHORT_0,PASS,Same frozen anchors track TL first and later pivot
+selected_trigger_PERIOD_M15_PERIOD_M5_SHORT_0,PASS,Expected PIVOT_BREAK, actual PIVOT_BREAK
+position_state_PERIOD_M15_PERIOD_M5_SHORT_0,PASS,Execution acknowledgement changes observation state
+completed_PERIOD_M15_PERIOD_M5_SHORT_0,PASS,Position completion releases direction lane
+signal_once_PERIOD_M5_PERIOD_M1_SHORT_0,PASS,Actual CWave33Engine signal count=1
+signal_causal_PERIOD_M5_PERIOD_M1_SHORT_0,PASS,Upper and lower anchors known before trigger candle opened
+state_path_PERIOD_M5_PERIOD_M1_SHORT_0,PASS,W1 peak, Fib touch, lower structure and reversal/risk states reached
+pre_signal_line_PERIOD_M5_PERIOD_M1_SHORT_0,PASS,Pivot decision line exists in pre-signal snapshot
+both_triggers_PERIOD_M5_PERIOD_M1_SHORT_0,PASS,Same frozen anchors track TL first and later pivot
+selected_trigger_PERIOD_M5_PERIOD_M1_SHORT_0,PASS,Expected PIVOT_BREAK, actual PIVOT_BREAK
+position_state_PERIOD_M5_PERIOD_M1_SHORT_0,PASS,Execution acknowledgement changes observation state
+completed_PERIOD_M5_PERIOD_M1_SHORT_0,PASS,Position completion releases direction lane
+signal_once_PERIOD_M5_PERIOD_M1_SHORT_1,PASS,Actual CWave33Engine signal count=1
+signal_causal_PERIOD_M5_PERIOD_M1_SHORT_1,PASS,Upper and lower anchors known before trigger candle opened
+state_path_PERIOD_M5_PERIOD_M1_SHORT_1,PASS,W1 peak, Fib touch, lower structure and reversal/risk states reached
+pre_signal_line_PERIOD_M5_PERIOD_M1_SHORT_1,PASS,Pivot decision line exists in pre-signal snapshot
+both_triggers_PERIOD_M5_PERIOD_M1_SHORT_1,PASS,Same frozen anchors track TL first and later pivot
+selected_trigger_PERIOD_M5_PERIOD_M1_SHORT_1,PASS,Expected TRENDLINE_BREAK, actual TRENDLINE_BREAK
+position_state_PERIOD_M5_PERIOD_M1_SHORT_1,PASS,Execution acknowledgement changes observation state
+completed_PERIOD_M5_PERIOD_M1_SHORT_1,PASS,Position completion releases direction lane
+signal_once_PERIOD_M5_PERIOD_M1_SHORT_2,PASS,Actual CWave33Engine signal count=1
+signal_causal_PERIOD_M5_PERIOD_M1_SHORT_2,PASS,Upper and lower anchors known before trigger candle opened
+state_path_PERIOD_M5_PERIOD_M1_SHORT_2,PASS,W1 peak, Fib touch, lower structure and reversal/risk states reached
+pre_signal_line_PERIOD_M5_PERIOD_M1_SHORT_2,PASS,Pivot decision line exists in pre-signal snapshot
+both_triggers_PERIOD_M5_PERIOD_M1_SHORT_2,PASS,Same frozen anchors track TL first and later pivot
+selected_trigger_PERIOD_M5_PERIOD_M1_SHORT_2,PASS,Expected TRENDLINE_BREAK, actual TRENDLINE_BREAK
+position_state_PERIOD_M5_PERIOD_M1_SHORT_2,PASS,Execution acknowledgement changes observation state
+completed_PERIOD_M5_PERIOD_M1_SHORT_2,PASS,Position completion releases direction lane
+invalidation_SHORT_deep_measure,PASS,Default deep Fib is measurement; origin and opt-in deep rule exclude
+reason_SHORT_deep_measure,PASS,Explicit invalidation or deep-Fib measurement retained
+invalidation_SHORT_deep_reject,PASS,Default deep Fib is measurement; origin and opt-in deep rule exclude
+reason_SHORT_deep_reject,PASS,Explicit invalidation or deep-Fib measurement retained
+invalidation_SHORT_origin,PASS,Default deep Fib is measurement; origin and opt-in deep rule exclude
+reason_SHORT_origin,PASS,Explicit invalidation or deep-Fib measurement retained
+latest_pivot_after_opposite_SHORT,PASS,New LH after LL / new HL after HH updates the active return level
+latest_pivot_signal_SHORT,PASS,Close beyond newest level signals before the superseded older level
+suffix_prefix_has_signal_SHORT,PASS,Invariant test starts with an actual emitted engine signal
+duplicate_trigger_no_event_SHORT,PASS,Refeeding exact trigger candle cannot emit another decision
+future_extension_keeps_anchors_SHORT,PASS,Later higher/lower prices do not rewrite fixed W1, W2, ID or signal timestamps
+future_opposite_no_repeat_signal_SHORT,PASS,Future origin failure closes monitor and preserves original decision evidence
+emitted_prefix_snapshot_preserved_SHORT,PASS,Stored pre-suffix event remains the original SIGNAL after terminal transition
+timeout,PASS,Two upper closed candles after candidate exhaust configured lifetime
+historical_seed_current_knowledge,PASS,Old W2 facts become known at peak confirmation, never at past timestamps
+new_peak_no_retroactive_signal,PASS,A lower candle closing when upper peak becomes known cannot use that anchor
+FINAL,PASS,passed=100 failed=0

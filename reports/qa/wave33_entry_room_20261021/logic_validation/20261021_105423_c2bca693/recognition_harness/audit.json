@@ -1,0 +1,9 @@
+{
+  "run_id": "recognition_harness",
+  "kind": "recognition_harness",
+  "assertions": 120,
+  "passed": 120,
+  "failed": 0,
+  "violations": [],
+  "audit_passed": true
+}

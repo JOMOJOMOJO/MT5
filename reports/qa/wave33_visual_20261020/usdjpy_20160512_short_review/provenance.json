@@ -1,0 +1,16 @@
+{
+  "captured_at": "2026-10-21T00:51:08",
+  "source_tag": "wave33_A_M15_M5_orders_1451606400_507607453",
+  "setup_id": "W33_USDJPY_15_5_SHORT_1462984200_166",
+  "symbol": "USDJPY",
+  "source_clock": "tester broker time; epoch formatting is not a broker-to-UTC conversion",
+  "image_matched_by": "2016-05-12 01:55 SELL108.430 SL108.690 TP108.170 W2high108.666",
+  "case_rows": 45,
+  "signal_known_at": "2016.05.12 01:55:00",
+  "lower_structure_known_at": "2016.05.12 01:50:00",
+  "candidate_age_minutes": 550,
+  "wave2_extreme_age_minutes": 440,
+  "obstacle_distance_r": "0.0115384615",
+  "source_files_changed": false,
+  "logic_changed": false
+}

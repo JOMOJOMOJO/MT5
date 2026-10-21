@@ -1,0 +1,95 @@
+{
+  "run_id": "b_trendline_diagnostic",
+  "kind": "native_mt5_observation",
+  "event_rows": 6245,
+  "candidate_count": 59,
+  "events": {
+    "INIT": 1,
+    "PIVOT_CONFIRMED": 4588,
+    "WAVE1_BREAK": 59,
+    "STATE": 384,
+    "WAVE1_PROVISIONAL": 183,
+    "WAVE1_PEAK_CONFIRMED": 39,
+    "WAVE2_EXTREME": 401,
+    "FIB_TOUCH": 36,
+    "LOWER_STRUCTURE_CONFIRMED": 238,
+    "LOWER_STRUCTURE_LOST": 102,
+    "FIB_TOO_DEEP": 23,
+    "PIVOT_TRIGGER": 28,
+    "TRENDLINE_TRIGGER": 26,
+    "SIGNAL": 26,
+    "RISK_CHECK": 26,
+    "ORDER_DISABLED": 26,
+    "COMPLETED": 25,
+    "SKIP": 20,
+    "INVALIDATE": 13,
+    "TEST_END": 1
+  },
+  "event_reach_setups": {
+    "LOWER_STRUCTURE_CONFIRMED": 37,
+    "SIGNAL": 26,
+    "COMPLETED": 25,
+    "FIB_TOO_DEEP": 23,
+    "STATE": 59,
+    "WAVE1_BREAK": 59,
+    "LOWER_STRUCTURE_LOST": 24,
+    "WAVE1_PEAK_CONFIRMED": 39,
+    "WAVE1_PROVISIONAL": 59,
+    "PIVOT_TRIGGER": 28,
+    "ORDER_DISABLED": 26,
+    "FIB_TOUCH": 36,
+    "TRENDLINE_TRIGGER": 26,
+    "RISK_CHECK": 26,
+    "WAVE2_EXTREME": 39,
+    "INVALIDATE": 13,
+    "SKIP": 20,
+    "TEST_END": 1
+  },
+  "state_reach_setups": {
+    "WAVE2_RETRACEMENT": 39,
+    "WAVE1_TOP_TRACKING": 59,
+    "LOWER_COUNTERTREND": 37,
+    "RESISTANCE_AND_RISK_CHECK": 26,
+    "WAVE1_BREAK_CANDIDATE": 59,
+    "LOWER_REVERSAL_TRIGGER": 26
+  },
+  "directions": {
+    "LONG": 33,
+    "SHORT": 26
+  },
+  "entry_statuses": {
+    "DIAGNOSTIC_ONLY": 26,
+    "INVALIDATED": 13,
+    "SKIPPED": 20
+  },
+  "case_count": 5,
+  "cases": [
+    "W33_XAUUSD_5_1_LONG_1736132100_1",
+    "W33_XAUUSD_5_1_SHORT_1736140500_2",
+    "W33_XAUUSD_5_1_LONG_1736158800_3",
+    "W33_XAUUSD_5_1_SHORT_1736163900_4",
+    "W33_XAUUSD_5_1_SHORT_1736177100_5"
+  ],
+  "images": [],
+  "drawing_images": [],
+  "tester_report_images": [
+    "images/wave33_20261020_134635_b2cb2b0b_b_trendline_diagnostic-holding.png",
+    "images/wave33_20261020_134635_b2cb2b0b_b_trendline_diagnostic-hst.png",
+    "images/wave33_20261020_134635_b2cb2b0b_b_trendline_diagnostic-mfemae.png",
+    "images/wave33_20261020_134635_b2cb2b0b_b_trendline_diagnostic.png",
+    "wave33_20261020_134635_b2cb2b0b_b_trendline_diagnostic-holding.png",
+    "wave33_20261020_134635_b2cb2b0b_b_trendline_diagnostic-hst.png",
+    "wave33_20261020_134635_b2cb2b0b_b_trendline_diagnostic-mfemae.png",
+    "wave33_20261020_134635_b2cb2b0b_b_trendline_diagnostic.png"
+  ],
+  "unverified_images": [],
+  "actual_visual_mode": false,
+  "required_columns_missing": [],
+  "violations": [],
+  "warnings": [
+    "No native ChartScreenShot image; visual rendering still requires MT5 visual mode inspection."
+  ],
+  "audit_passed": true,
+  "video_agreement": "UNASSESSED_SOURCE_CHARTS_NOT_PROVIDED",
+  "profitability_or_promotion": "NOT_ASSESSED"
+}

@@ -1,0 +1,77 @@
+{
+  "ea_version": "1.20",
+  "batch": "20261020_235907_9a0d8776",
+  "protected_files": [
+    {
+      "path": "mql/Include/Wave33Visual/Engine.mqh",
+      "before_sha256": "037D108D991D45102B1DDF2CD52CA651CB6244DB2AE717AB081988969F6FF727",
+      "after_sha256": "037D108D991D45102B1DDF2CD52CA651CB6244DB2AE717AB081988969F6FF727",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Types.mqh",
+      "before_sha256": "7E1F7A5CD928F006D7A50E2B940AD901CFF3A705F4A81E094151E8822D8FE2C1",
+      "after_sha256": "7E1F7A5CD928F006D7A50E2B940AD901CFF3A705F4A81E094151E8822D8FE2C1",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Ledger.mqh",
+      "before_sha256": "F6E3DA25EB7F03170507E71E521B7332CD5D0D36A2F1EA7DC7A8B69EEF471680",
+      "after_sha256": "F6E3DA25EB7F03170507E71E521B7332CD5D0D36A2F1EA7DC7A8B69EEF471680",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Indicators/MultiTF_3WaveIn3Wave_Visualizer_v1.05_InvalidationReset.mq5",
+      "before_sha256": "407251F96D1CAEF4386EC25E359410E2DB07E44CFEF623AD700023446FD08EEB",
+      "after_sha256": "407251F96D1CAEF4386EC25E359410E2DB07E44CFEF623AD700023446FD08EEB",
+      "unchanged": true
+    }
+  ],
+  "diagnostic_events_unchanged": true,
+  "diagnostic_events_sha256": "069FE692C12459B65F6C5F0FABB01D237D498F08093BF12DE617C127B6F221D4",
+  "orders": [
+    {
+      "run": "a_orders_smoke",
+      "orders": 4,
+      "fills": 4,
+      "exits": 4,
+      "long_fills": 0,
+      "short_fills": 4,
+      "events_equal_before_deferred_fix": true
+    },
+    {
+      "run": "b_orders_smoke",
+      "orders": 24,
+      "fills": 24,
+      "exits": 24,
+      "long_fills": 15,
+      "short_fills": 9,
+      "events_equal_before_deferred_fix": true
+    }
+  ],
+  "compile": [
+    {
+      "name": "Wave33VisualVerifier",
+      "zero_errors_zero_warnings": true
+    },
+    {
+      "name": "Wave33DisplayHarness",
+      "zero_errors_zero_warnings": true
+    },
+    {
+      "name": "Wave33EngineHarness",
+      "zero_errors_zero_warnings": true
+    }
+  ],
+  "display_harness": {
+    "run_id": "display_harness",
+    "kind": "display_harness",
+    "assertions": 19,
+    "passed": 19,
+    "failed": 0,
+    "violations": [],
+    "audit_passed": true
+  },
+  "ea_source_sha256": "4BDAFA3B517FCCFF166DC6A19C6A88291BA6AD088252C5CD8E8023E17807AC9D",
+  "display_source_sha256": "4FC18E108CAC9392F644A234C782A8235C6B8128E4B0B24D130BF3AE5B33026F"
+}

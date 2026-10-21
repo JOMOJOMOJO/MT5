@@ -1,0 +1,21 @@
+{
+  "captured_at": "2026-10-21T01:00:28",
+  "source_tag": "wave33_A_M15_M5_orders_1451606400_507607453",
+  "setup_id": "W33_USDJPY_15_5_SHORT_1463993100_178",
+  "source_clock": "tester broker time",
+  "w1_low": 109.68,
+  "w2_high_time": "2016.05.23 09:35:00",
+  "w2_high": 109.791,
+  "w1_peak_known_at": "2016.05.23 09:45:00",
+  "entry_at": "2016.05.23 16:50:00",
+  "entry_price": 109.438,
+  "trigger_level": 109.453,
+  "wave2_to_entry_minutes": 435,
+  "candidate_to_entry_minutes": 470,
+  "entry_below_w1_low": 0.24200000000000443,
+  "source_files_changed": false,
+  "logic_changed": false,
+  "assessment": "WAVE_MEMBERSHIP_AND_LIFECYCLE_GAP",
+  "earliest_current_guard_if_other_conditions_hold": "2016.05.23 09:50:00",
+  "earliest_entry_qualified_verified": false
+}

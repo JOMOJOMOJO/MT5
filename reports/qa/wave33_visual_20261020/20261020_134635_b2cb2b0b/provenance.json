@@ -1,0 +1,40 @@
+{
+  "terminal_root": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261020_134635_b2cb2b0b",
+  "header_sha256": {
+    "Wave33Visual\\Ledger.mqh": "F6E3DA25EB7F03170507E71E521B7332CD5D0D36A2F1EA7DC7A8B69EEF471680",
+    "Wave33Visual\\Types.mqh": "7E1F7A5CD928F006D7A50E2B940AD901CFF3A705F4A81E094151E8822D8FE2C1",
+    "Wave33Visual\\Display.mqh": "C298FBB015D3A1BA2A659F12E39A8B6C01CC07E392CD518A0A088729B5502989",
+    "Wave33Visual\\Engine.mqh": "037D108D991D45102B1DDF2CD52CA651CB6244DB2AE717AB081988969F6FF727"
+  },
+  "batch_id": "20261020_134635_b2cb2b0b",
+  "symbol": "XAUUSD",
+  "source_data_root": "C:\\Users\\windows\\AppData\\Local\\CodexMT5WickRebreakR3\\20261014_094513_6f6042e2",
+  "terminal_live_trading_enabled": false,
+  "copied_history": [
+    "2024.hcc",
+    "2025.hcc"
+  ],
+  "date_to": "2025.01.18",
+  "server": "VantageTradingLtd-Live",
+  "run_order": [
+    "engine_harness",
+    "a_pivot_diagnostic",
+    "b_pivot_diagnostic",
+    "b_trendline_diagnostic",
+    "b_first_diagnostic",
+    "a_orders_smoke",
+    "a_obstacle_skip",
+    "a_obstacle_cap"
+  ],
+  "purpose": "VISUAL_RECONSTRUCTION_QA_NOT_PROFITABILITY",
+  "model": "4: every tick based on real ticks",
+  "date_from": "2025.01.06",
+  "copied_ticks": [
+    "202412.tkc",
+    "202501.tkc"
+  ],
+  "source_sha256": {
+    "Wave33EngineHarness": "1AEB055F901DA56CE25C4E3C7231887F11F7F2B8F748E172B18E3506261B5D73",
+    "Wave33VisualVerifier": "B948B739E47BE6ED9AFE7FFEEA13EF19EE3D91B8E01DBD3B74992760F8D5EC08"
+  }
+}

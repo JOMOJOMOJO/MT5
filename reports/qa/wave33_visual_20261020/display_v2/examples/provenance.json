@@ -1,0 +1,21 @@
+{
+  "trading_code_present": false,
+  "swing_paths": true,
+  "show_panel": false,
+  "source_batch": "reports/qa/wave33_visual_20261020/20261020_134635_b2cb2b0b",
+  "kind": "NORMAL_CHART_RECORDED_EVENT_REPLAY",
+  "cases_per_arm": 3,
+  "selected_cases": [
+    0,
+    1,
+    4
+  ],
+  "arms": [
+    "A",
+    "B"
+  ],
+  "tester_screenshot": false,
+  "signal_recalculation": false,
+  "custom_symbols": "Actual XAUUSD M1 bars, separately bounded at each case decision, no later bars",
+  "diagnostic_labels": false
+}

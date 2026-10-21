@@ -1,0 +1,19 @@
+{
+  "expert": "Wave33VisualVerifier",
+  "run_id": "b_visual",
+  "inputs": {
+    "InpRunTag": "wave33_20261020_173724_075de4c4_b_visual",
+    "InpDraw": "true",
+    "InpScreenshots": "true",
+    "InpScreenshotLimit": 100,
+    "InpEnableTesterOrders": "false",
+    "InpTriggerMode": 0,
+    "InpPattern": 1
+  },
+  "visual_mode": true,
+  "chart_period": "M1",
+  "tag": "wave33_20261020_173724_075de4c4_b_visual",
+  "date_from": "2025.01.06",
+  "model": 4,
+  "date_to": "2025.01.18"
+}

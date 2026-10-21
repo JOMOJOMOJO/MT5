@@ -1,0 +1,20 @@
+{
+  "scope": "CAUSAL_EXECUTION_AND_SOURCE_NOT_PROFITABILITY",
+  "runs": [
+    {
+      "run": "reports\\qa\\wave33_entry_room_20261021\\logic_validation\\20261021_105423_c2bca693\\a_orders_smoke",
+      "checks": 70,
+      "minimum": 0.25,
+      "violations": [],
+      "passed": true
+    },
+    {
+      "run": "reports\\qa\\wave33_entry_room_20261021\\logic_validation\\20261021_105423_c2bca693\\b_orders_smoke",
+      "checks": 559,
+      "minimum": 0.25,
+      "violations": [],
+      "passed": true
+    }
+  ],
+  "passed": true
+}
