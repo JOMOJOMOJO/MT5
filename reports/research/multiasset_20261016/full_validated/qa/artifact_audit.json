@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "cells": 216,
+  "independently_recomputed_outcomes": 4320,
+  "protected_files_unchanged": 97,
+  "input_hashes_verified": true,
+  "same_current_source_hashes": true,
+  "completed_required": true,
+  "holdout_2026_used": false
+}

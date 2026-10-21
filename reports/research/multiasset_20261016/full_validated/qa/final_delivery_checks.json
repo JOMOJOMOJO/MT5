@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "original_source_hashes_unchanged": true,
+  "protected_files_unchanged": 97,
+  "tests": {
+    "tests": 141,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "reporting_hashes_verified": true,
+  "baseline_means_match_primary": true,
+  "barrier_rates_sum_to_one": true,
+  "local_links_checked": 43
+}

@@ -1,0 +1,158 @@
+{
+  "config": {
+    "schema_version": 1,
+    "experiment": "multiasset_20261016",
+    "start": "2024-01-01",
+    "end": "2026-01-01",
+    "warmup_start": "2023-10-01",
+    "symbols": [
+      "USDJPY",
+      "EURUSD",
+      "GBPUSD",
+      "AUDUSD",
+      "USDCHF",
+      "USDCAD"
+    ],
+    "timeframes": {
+      "M1": 60,
+      "M5": 300,
+      "M15": 900,
+      "H1": 3600,
+      "H4": 14400
+    },
+    "entry_timeframes": [
+      "M5",
+      "M15",
+      "H1"
+    ],
+    "methods": [
+      "ichimoku_cloud",
+      "kijun_bounce",
+      "ema_cross",
+      "donchian",
+      "bollinger",
+      "atr_breakout"
+    ],
+    "indicators": {
+      "tenkan": 9,
+      "kijun": 26,
+      "senkou_b": 52,
+      "displacement": 26,
+      "ema_fast": 20,
+      "ema_slow": 50,
+      "atr": 14,
+      "vol_lookback": 288
+    },
+    "donchian_period": 20,
+    "bollinger_period": 20,
+    "bollinger_std": 2.0,
+    "contraction_max": 0.8,
+    "horizons": [
+      1,
+      3,
+      5,
+      10,
+      20,
+      50
+    ],
+    "primary_horizon": 10,
+    "levels": [
+      1.0
+    ],
+    "baseline_repeats": 10,
+    "bootstrap_reps": 20000,
+    "seed": 20261016,
+    "hypothesis_cells": 216,
+    "confirmatory_claims": false,
+    "minimum_candidates": 200,
+    "minimum_weeks": 30,
+    "minimum_candidates_per_year": 75,
+    "max_hold_bars": 10,
+    "tp_atr": 1.0,
+    "sl_atr": 1.0,
+    "initial_equity": 10000.0,
+    "risk_fraction": 0.001,
+    "assumed_spread_pips": {
+      "USDJPY": 1.5,
+      "EURUSD": 2.0,
+      "GBPUSD": 2.0,
+      "AUDUSD": 2.0,
+      "USDCHF": 2.0,
+      "USDCAD": 2.0
+    },
+    "slippage_pips_per_side": 0.2,
+    "commission_per_lot_roundtrip_usd": 0.0,
+    "walk_forward_validation_starts": [
+      "2024-07-01",
+      "2025-01-01",
+      "2025-07-01"
+    ],
+    "walk_forward_validation_ends": [
+      "2025-01-01",
+      "2025-07-01",
+      "2026-01-01"
+    ],
+    "embargo_seconds": 180000,
+    "data_clock_policy": "source_clock_only_until_independently_verified",
+    "promotion": "research_only_until_independent_data_and_MT5_real_tick_execution_verified"
+  },
+  "data_manifest": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\data\\manifest.json",
+  "data_manifest_sha256": "c55f92753ff7421f26f599f05d63ce76abd09279b32f5d53d4a8c685f64a61b7",
+  "source_hashes": {
+    "tools\\entry_research\\multiasset\\audit_data.py": "3163fb9fe97bb408542e8c506ea17b04a9315a642810b50a245b7af265246d2d",
+    "tools\\entry_research\\multiasset\\data.py": "b4f69120f83e06b8b93fa9fd3b1e67c989ec85569a43b336b6bdd259e6dc6e2a",
+    "tools\\entry_research\\multiasset\\execution.py": "131f17562e27a006cb7c9ce4b74521fe3e6e94d6fc595b7d10694282b48fddf3",
+    "tools\\entry_research\\multiasset\\inference.py": "01a0b2838dda2cc4862517270ddab8a86b1eb3ca0ad7dbcc012c61193d4d8ab9",
+    "tools\\entry_research\\multiasset\\report.py": "570c3697b2e146d6079217c00af242502fa708de2d8419968a892c2bdb645a73",
+    "tools\\entry_research\\multiasset\\run.py": "3d21fa9c5f62076fff6d96a711b956bdbe74fab398baa7b8d2455a0ab4ef3e4c",
+    "tools\\entry_research\\multiasset\\strategies.py": "b54189ca9d6d7eb37c009ba6e4ca7d74aed4c8b45ee8d66dd021250c78abc44b",
+    "tools\\entry_research\\multiasset\\verify.py": "170d432301a2323190473d9a79e869931b33dfcee1cfba0fdaeb1267e8278315",
+    "tools\\entry_research\\multiasset\\__init__.py": "4796ec9a876e3d9743cbb57966e3c863d873e19f70a8796c6a032026f9a3795a",
+    "tools\\entry_research\\multiasset\\signals\\atr_breakout.py": "405aa8a44d6983739e1660de2d7037456b8ecce2d4a44b13271821048776ce0a",
+    "tools\\entry_research\\multiasset\\signals\\bollinger.py": "c95acdc745a4e3bb331a94671abede7fb9d19f07a63efc92f96553597b92f95a",
+    "tools\\entry_research\\multiasset\\signals\\donchian.py": "56f700a13f7f8aac1f6ef04fc8409da059c5efbe8957ea915fe82977c3ccfe9a",
+    "tools\\entry_research\\multiasset\\signals\\__init__.py": "514e27d1ed1374126330a6f3a69f2c606ccf1411d9e39acf201bec859c3fc5fb",
+    "tools\\entry_research\\multiasset\\tests\\test_causality.py": "a4c1bb437f266ed492fb4bebf69a10c43ad0c7abc95f4f63a5144e011e82b220",
+    "tools\\entry_research\\multiasset\\tests\\test_execution.py": "4752b77b02dbda0a403e5362bba4a1f451df9ac02d3f1200e1e1c01a2d786cf4",
+    "tools\\entry_research\\multiasset\\tests\\test_inference.py": "9f9561bd55ae3a89d5164eb2d623c6567462eae32f95a13b51e8e17e6eb79d8b",
+    "tools\\entry_research\\multiasset\\config.json": "e30c597c6b386680d0efc5cc331aaba9b3328d6ef3d3ea7679b88a49c8f3f9db",
+    "tools\\entry_research\\evaluation.py": "79921adbb1cb5b85e214fd9e6857d6449d7af21a1058d6e7105991d9766628fb",
+    "tools\\entry_research\\features.py": "ac93af0f08ed6f169e7b9b46aac2bebb6330ff979aa196e16843b581d2f06610",
+    "tools\\entry_research\\statistics.py": "d3bb7b66abc4c98a78f411edf153c96fd5da3501c4f2ddbacf497820c74a51da",
+    "tools\\entry_research\\signals\\ema_cross.py": "596ce2f35b30a190441de01915e53f4d569c6875fa5d0d1fee2fd3b31de62c65",
+    "tools\\entry_research\\signals\\ichimoku_cloud.py": "357c5d477bb6df54b8ce528ef1b89af83eb5edcdc7f9c67f597eadb0a39cc2ae",
+    "tools\\entry_research\\signals\\kijun_bounce.py": "cc7b388a42fab5f45a8a2d8ef2e26b6ec748eb4a7f3fc1a33098257f9415e19d",
+    "tools\\entry_research\\signals\\__init__.py": "ea27ae6a9070d24b5284473779129d9c10afad0f3a6f845cebc75d93a6521e96"
+  },
+  "git_head": "bfe77a8ff319065d6913b78058bbd2f429ac40c2",
+  "git_dirty": true,
+  "seed": 20261016,
+  "pilot": false,
+  "independent_oos": false,
+  "dependencies": {
+    "numpy": "2.4.4",
+    "pandas": "3.0.1",
+    "pyarrow": "23.0.1",
+    "duckdb": "1.5.6",
+    "plotly": "6.9.0",
+    "MetaTrader5": "5.0.5640",
+    "pytest": "9.1.1"
+  },
+  "status": "completed",
+  "broker": "Infra Capital Limited",
+  "server": "Bybit-Live",
+  "holdout_2026_used": false,
+  "protected_files_unchanged": 97,
+  "output_hashes": {
+    "accounts.parquet": "68b55b7bc19d2aa6022bdb1f0bea18419840e3fc9427dc7bab3fe8bf75022bb2",
+    "annual.parquet": "ab10db7bac730b55926d9ddc7b54fcbd5b5de43c5da2b27596c7f866f0722ab9",
+    "barrier_counts.parquet": "86719490b2f3cc3ccfe2e2cf958121e7a1595b9b90fd0abf488777ed78d9f2d4",
+    "environment.parquet": "693648fcac3250932a4ab7fdfea177f4e36347b9231e9649630969a4bcf88920",
+    "inventory.parquet": "b28d1230894079cf869ba8ddb3f395d38ce9661899d97240f99a9dd2b89f47cc",
+    "monthly.parquet": "58c6f9679a5c7c480daf9cf569891c61bf6e9dbfdc00e1048ac110e5f6b7fef8",
+    "primary.parquet": "5090c4c9b5f3bfb3db3df7759e6017b4322e80b93bce93d24bfdf42113ed0ba4",
+    "summary.parquet": "cb607e997a6956af239480438d2ebcc98615533251e769f3075bf7cfc0f369d6",
+    "walk_forward.parquet": "774639d99960d9934287be4cb146a570c8414c1587be202ea56f9c53c0b5b2f2"
+  },
+  "source_unchanged_during_run": true
+}
