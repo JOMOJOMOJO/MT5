@@ -1,0 +1,8 @@
+{
+  "status": "interrupted_for_performance_only_change",
+  "reason": "conditional controls constructed thousands of full DataFrames; batched construction preserves RNG and sampled rows",
+  "parameter_changes": false,
+  "statistical_rule_changes": false,
+  "canonical_result": "../full_validated",
+  "partial_outputs_preserved": true
+}

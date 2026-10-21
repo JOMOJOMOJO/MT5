@@ -1,0 +1,14 @@
+[
+  {
+    "kind": "unconditional",
+    "exact_draw_and_audit_match": true,
+    "rows": 41710,
+    "seconds": 0.1521202000003541
+  },
+  {
+    "kind": "conditional",
+    "exact_draw_and_audit_match": true,
+    "rows": 41710,
+    "seconds": 1.0601033999992069
+  }
+]

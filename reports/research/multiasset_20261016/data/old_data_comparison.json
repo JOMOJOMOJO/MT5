@@ -1,0 +1,12 @@
+{
+  "shared_usdjpy_m5_bars": 155456,
+  "different_values": {
+    "open": 0,
+    "high": 0,
+    "low": 0,
+    "close": 0,
+    "spread": 862
+  },
+  "old_bars_missing_from_new": 0,
+  "new_bars_missing_from_old": 12433
+}

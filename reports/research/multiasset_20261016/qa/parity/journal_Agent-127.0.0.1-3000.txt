@@ -1,0 +1,21 @@
+﻿CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=EURUSD_LONG_entry actual=1.100220000000 expected=1.100220000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=EURUSD_LONG_stop actual=1.099220000000 expected=1.099220000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=EURUSD_LONG_target actual=1.101220000000 expected=1.101220000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=EURUSD_risk_per_lot actual=102.000000000002 expected=102.000000000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=floor_volume actual=0.090000000000 expected=0.090000000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=minimum_lot_rejected actual=0.000000000000 expected=0.000000000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=LONG_stop_net actual=-9.180000000000 expected=-9.180000000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=LONG_target_net actual=8.820000000000 expected=8.820000000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=LONG_stop_R actual=-1.000000000000 expected=-1.000000000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=LONG_gap_stop_fill actual=1.097980000000 expected=1.097980000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=LONG_gap_stop_net actual=-20.160000000000 expected=-20.160000000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=same_bar_ambiguous actual=1.000000000000 expected=1.000000000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=SHORT_entry actual=1.099980000000 expected=1.099980000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=SHORT_stop_net actual=-9.180000000000 expected=-9.180000000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=SHORT_target_net actual=8.820000000000 expected=8.820000000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=USDCHF_historical_conversion actual=1.111111111111 expected=1.111111111111 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=USDCAD_historical_conversion actual=0.740740740741 expected=0.740740740741 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=USDJPY_floor_volume actual=0.140000000000 expected=0.140000000000 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=USDJPY_target_conversion actual=0.006661137922 expected=0.006661137922 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY case=USDJPY_target_net actual=9.139081229248 expected=9.139081229246 result=PASS
+CS	0	13:50:52.998	MultiassetResearchParity (USDJPY,M5)	2024.01.03 00:00:00   MULTIASSET_PARITY result=PASS checks=20 failures=0 synthetic_fixture_only=true live_orders=false

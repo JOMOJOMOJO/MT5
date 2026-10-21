@@ -1,0 +1,8 @@
+{
+  "status": "failed_final_duckdb_export",
+  "error": "unquoted reserved identifier primary",
+  "event_calculation_and_csv_parquet": "completed",
+  "independent_artifact_audit": "PASS_48_cells_960_recomputations",
+  "canonical_result": "use_full_after_execution_expiry_fix_and_quoted_sql_export",
+  "profitability_was_not_a_rollout_gate": true
+}

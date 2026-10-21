@@ -1,0 +1,5 @@
+symbol,timeframe,status,n_bars,n_candidates,months,data_complete_months
+USDJPY,M5,available,167889,41105,24,True
+USDJPY,M15,available,55968,13537,24,True
+EURUSD,M5,available,167886,42209,24,True
+EURUSD,M15,available,55968,14089,24,True

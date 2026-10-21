@@ -1,0 +1,141 @@
+{
+  "config": {
+    "schema_version": 1,
+    "experiment": "multiasset_20261016",
+    "start": "2024-01-01",
+    "end": "2026-01-01",
+    "warmup_start": "2023-10-01",
+    "symbols": [
+      "USDJPY",
+      "EURUSD",
+      "GBPUSD",
+      "AUDUSD",
+      "USDCHF",
+      "USDCAD"
+    ],
+    "timeframes": {
+      "M1": 60,
+      "M5": 300,
+      "M15": 900,
+      "H1": 3600,
+      "H4": 14400
+    },
+    "entry_timeframes": [
+      "M5",
+      "M15",
+      "H1"
+    ],
+    "methods": [
+      "ichimoku_cloud",
+      "kijun_bounce",
+      "ema_cross",
+      "donchian",
+      "bollinger",
+      "atr_breakout"
+    ],
+    "indicators": {
+      "tenkan": 9,
+      "kijun": 26,
+      "senkou_b": 52,
+      "displacement": 26,
+      "ema_fast": 20,
+      "ema_slow": 50,
+      "atr": 14,
+      "vol_lookback": 288
+    },
+    "donchian_period": 20,
+    "bollinger_period": 20,
+    "bollinger_std": 2.0,
+    "contraction_max": 0.8,
+    "horizons": [
+      1,
+      3,
+      5,
+      10,
+      20,
+      50
+    ],
+    "primary_horizon": 10,
+    "levels": [
+      1.0
+    ],
+    "baseline_repeats": 10,
+    "bootstrap_reps": 20000,
+    "seed": 20261016,
+    "hypothesis_cells": 216,
+    "confirmatory_claims": false,
+    "minimum_candidates": 200,
+    "minimum_weeks": 30,
+    "minimum_candidates_per_year": 75,
+    "max_hold_bars": 10,
+    "tp_atr": 1.0,
+    "sl_atr": 1.0,
+    "initial_equity": 10000.0,
+    "risk_fraction": 0.001,
+    "assumed_spread_pips": {
+      "USDJPY": 1.5,
+      "EURUSD": 2.0,
+      "GBPUSD": 2.0,
+      "AUDUSD": 2.0,
+      "USDCHF": 2.0,
+      "USDCAD": 2.0
+    },
+    "slippage_pips_per_side": 0.2,
+    "commission_per_lot_roundtrip_usd": 0.0,
+    "walk_forward_validation_starts": [
+      "2024-07-01",
+      "2025-01-01",
+      "2025-07-01"
+    ],
+    "walk_forward_validation_ends": [
+      "2025-01-01",
+      "2025-07-01",
+      "2026-01-01"
+    ],
+    "embargo_seconds": 180000,
+    "data_clock_policy": "source_clock_only_until_independently_verified",
+    "promotion": "research_only_until_independent_data_and_MT5_real_tick_execution_verified"
+  },
+  "data_manifest": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\multiasset_20261016\\data\\manifest.json",
+  "data_manifest_sha256": "c55f92753ff7421f26f599f05d63ce76abd09279b32f5d53d4a8c685f64a61b7",
+  "source_hashes": {
+    "tools\\entry_research\\multiasset\\data.py": "12a588c6579c09ec732ee2aa3dc8ad6766cd289e6cf350ec825d25f3d2a3f866",
+    "tools\\entry_research\\multiasset\\execution.py": "89ead9833f9de581490eba338afdfcbc17d623bc444f91bd7a3ec01fa683951b",
+    "tools\\entry_research\\multiasset\\inference.py": "3286d652bc790bfcb5db042f96b194fc0bdbc805c02a9883e9763635ed2e204b",
+    "tools\\entry_research\\multiasset\\report.py": "570c3697b2e146d6079217c00af242502fa708de2d8419968a892c2bdb645a73",
+    "tools\\entry_research\\multiasset\\run.py": "d314468c4f1c14e951e066c34d3c474412091a769f36d6389e554da04f2abb9c",
+    "tools\\entry_research\\multiasset\\strategies.py": "61ff193d26047edc208011dcce7d71c0e166531ad24894dc6dca0e672bb09038",
+    "tools\\entry_research\\multiasset\\__init__.py": "4796ec9a876e3d9743cbb57966e3c863d873e19f70a8796c6a032026f9a3795a",
+    "tools\\entry_research\\multiasset\\signals\\atr_breakout.py": "405aa8a44d6983739e1660de2d7037456b8ecce2d4a44b13271821048776ce0a",
+    "tools\\entry_research\\multiasset\\signals\\bollinger.py": "c95acdc745a4e3bb331a94671abede7fb9d19f07a63efc92f96553597b92f95a",
+    "tools\\entry_research\\multiasset\\signals\\donchian.py": "56f700a13f7f8aac1f6ef04fc8409da059c5efbe8957ea915fe82977c3ccfe9a",
+    "tools\\entry_research\\multiasset\\signals\\__init__.py": "514e27d1ed1374126330a6f3a69f2c606ccf1411d9e39acf201bec859c3fc5fb",
+    "tools\\entry_research\\multiasset\\tests\\test_causality.py": "a4c1bb437f266ed492fb4bebf69a10c43ad0c7abc95f4f63a5144e011e82b220",
+    "tools\\entry_research\\multiasset\\config.json": "e30c597c6b386680d0efc5cc331aaba9b3328d6ef3d3ea7679b88a49c8f3f9db",
+    "tools\\entry_research\\evaluation.py": "79921adbb1cb5b85e214fd9e6857d6449d7af21a1058d6e7105991d9766628fb",
+    "tools\\entry_research\\features.py": "ac93af0f08ed6f169e7b9b46aac2bebb6330ff979aa196e16843b581d2f06610",
+    "tools\\entry_research\\statistics.py": "d3bb7b66abc4c98a78f411edf153c96fd5da3501c4f2ddbacf497820c74a51da",
+    "tools\\entry_research\\signals\\ema_cross.py": "596ce2f35b30a190441de01915e53f4d569c6875fa5d0d1fee2fd3b31de62c65",
+    "tools\\entry_research\\signals\\ichimoku_cloud.py": "357c5d477bb6df54b8ce528ef1b89af83eb5edcdc7f9c67f597eadb0a39cc2ae",
+    "tools\\entry_research\\signals\\kijun_bounce.py": "cc7b388a42fab5f45a8a2d8ef2e26b6ec748eb4a7f3fc1a33098257f9415e19d",
+    "tools\\entry_research\\signals\\__init__.py": "ea27ae6a9070d24b5284473779129d9c10afad0f3a6f845cebc75d93a6521e96"
+  },
+  "git_head": "bfe77a8ff319065d6913b78058bbd2f429ac40c2",
+  "git_dirty": true,
+  "seed": 20261016,
+  "pilot": true,
+  "independent_oos": false,
+  "dependencies": {
+    "numpy": "2.4.4",
+    "pandas": "3.0.1",
+    "pyarrow": "23.0.1",
+    "duckdb": "1.5.6",
+    "plotly": "6.9.0",
+    "MetaTrader5": "5.0.5640",
+    "pytest": "9.1.1"
+  },
+  "status": "running",
+  "broker": "Infra Capital Limited",
+  "server": "Bybit-Live",
+  "holdout_2026_used": false
+}
