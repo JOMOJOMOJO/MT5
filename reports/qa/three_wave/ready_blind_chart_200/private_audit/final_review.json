@@ -1,0 +1,12 @@
+{
+  "status": "COMPLETE_STOPPED_AT_20",
+  "machine_pass": 20,
+  "visual_pass": 20,
+  "public_images": 40,
+  "frozen_candidates": 200,
+  "remaining_images_generated": 0,
+  "no_grading_or_result_join": true,
+  "private_manifest_has_no_results": true,
+  "production_unchanged": true,
+  "qa_notes": "CSV CHoCH close-time interpretation corrected, all 40 points verified; 11 absent return highs omitted"
+}

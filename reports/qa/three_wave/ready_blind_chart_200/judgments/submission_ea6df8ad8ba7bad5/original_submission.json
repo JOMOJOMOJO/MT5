@@ -1,0 +1,202 @@
+[
+  {
+    "blind_id": "5a9f8cfc9e7342169b444e9125036592",
+    "overall_grade": "A",
+    "continuation_probability": 83,
+    "wave1_quality": 90,
+    "wave2_quality": 78,
+    "selling_pressure_decay": 82,
+    "higher_tf_alignment": 94,
+    "comment": "M1/M5は強い上昇後に高値圏を維持し、押しでも大きく崩れていない。M15/H1も右端に向けて上昇構造が明確で、複数時間軸がLONG方向に揃っている。"
+  },
+  {
+    "blind_id": "5f2baa1063fa4c499390fcd372ce76c6",
+    "overall_grade": "B",
+    "continuation_probability": 67,
+    "wave1_quality": 76,
+    "wave2_quality": 70,
+    "selling_pressure_decay": 69,
+    "higher_tf_alignment": 71,
+    "comment": "M5/M15は安値からの上昇が明確で、高値圏の持ち合いも比較的安定している。一方M1は振れが多く、H1も直近上昇前の下落が大きいため、完全な方向一致ではない。"
+  },
+  {
+    "blind_id": "5ff0350539f041589f8dc3fd6ee8a131",
+    "overall_grade": "B",
+    "continuation_probability": 60,
+    "wave1_quality": 70,
+    "wave2_quality": 57,
+    "selling_pressure_decay": 63,
+    "higher_tf_alignment": 49,
+    "comment": "M1では上昇基調と直近の反発が見えるが、M5/M15は大きく下げた後の戻りという性格が強い。H1も方向感が不安定で、上位足のLONG支持は限定的。"
+  },
+  {
+    "blind_id": "217d476003db4eb69445e8b9d1e87d02",
+    "overall_grade": "C",
+    "continuation_probability": 38,
+    "wave1_quality": 66,
+    "wave2_quality": 47,
+    "selling_pressure_decay": 59,
+    "higher_tf_alignment": 18,
+    "comment": "M1には底打ち後の強い戻りがあるが、M5/M15/H1はいずれも大局的には明瞭な下落構造。短期反発は見えるものの、上位足がLONG継続に強く逆行している。"
+  },
+  {
+    "blind_id": "496e7dd1995e419bb17379f87c409129",
+    "overall_grade": "C",
+    "continuation_probability": 43,
+    "wave1_quality": 44,
+    "wave2_quality": 53,
+    "selling_pressure_decay": 55,
+    "higher_tf_alignment": 36,
+    "comment": "M1/M5は右端で小幅な持ち直しがあるものの、明確な上昇波は不明瞭。M15/H1も下落後の横ばいに近く、LONG方向を積極的に支持する構造は弱い。"
+  },
+  {
+    "blind_id": "666c910ca18943f687ac656dff45ab93",
+    "overall_grade": "C",
+    "continuation_probability": 47,
+    "wave1_quality": 50,
+    "wave2_quality": 54,
+    "selling_pressure_decay": 59,
+    "higher_tf_alignment": 44,
+    "comment": "M1は緩やかに持ち直しているが、M5からH1まで値動きが荒く、その後は横ばいが中心。明確なWave1/Wave2構造を認定しにくく、方向優位性は弱い。"
+  },
+  {
+    "blind_id": "3762b200f8f341cfa35894e52292741f",
+    "overall_grade": "B",
+    "continuation_probability": 59,
+    "wave1_quality": 61,
+    "wave2_quality": 53,
+    "selling_pressure_decay": 65,
+    "higher_tf_alignment": 59,
+    "comment": "M5では一度明確に上昇した後に押しており、H1も右側では安値を切り上げている。M1/M15のノイズが大きく、右端の上昇だけではまだ強い継続形とは言いにくい。"
+  },
+  {
+    "blind_id": "07357ad758504edf9909467fea2cbd5a",
+    "overall_grade": "A",
+    "continuation_probability": 78,
+    "wave1_quality": 84,
+    "wave2_quality": 79,
+    "selling_pressure_decay": 76,
+    "higher_tf_alignment": 90,
+    "comment": "M5は大幅上昇後に高値圏を維持し、M15も底から強く切り返した後の保ち合いになっている。H1も明瞭な上昇構造で、押しがトレンド崩壊に至っていない。"
+  },
+  {
+    "blind_id": "117745a30f684770b3f612a2eaf2101f",
+    "overall_grade": "C",
+    "continuation_probability": 35,
+    "wave1_quality": 48,
+    "wave2_quality": 38,
+    "selling_pressure_decay": 50,
+    "higher_tf_alignment": 22,
+    "comment": "M1は右端で戻しているが、M5/M15はピーク形成後の下落が目立つ。H1も大きな下落後の戻りにとどまり、直近の上位足はLONGを十分支持していない。"
+  },
+  {
+    "blind_id": "a05cfee8a0354108b879e41c05aac2f1",
+    "overall_grade": "C",
+    "continuation_probability": 42,
+    "wave1_quality": 55,
+    "wave2_quality": 44,
+    "selling_pressure_decay": 48,
+    "higher_tf_alignment": 37,
+    "comment": "M1では右端に反発があるが、M5/M15は高値形成後の下落基調が残る。H1も反発後に再び売られており、LONG継続の上位足確認が弱い。"
+  },
+  {
+    "blind_id": "a18e3c125b9e41e1aab79602a6c2d735",
+    "overall_grade": "B",
+    "continuation_probability": 53,
+    "wave1_quality": 52,
+    "wave2_quality": 43,
+    "selling_pressure_decay": 55,
+    "higher_tf_alignment": 61,
+    "comment": "H1は大きく上昇した後の高値圏推移でLONG側を支えるが、M5/M15では急落と乱高下があり形が崩れている。短期足の売り圧力が十分に収束したとはまだ言いにくい。"
+  },
+  {
+    "blind_id": "b4b1409a50bc48c7a752bed82b15335c",
+    "overall_grade": "C",
+    "continuation_probability": 46,
+    "wave1_quality": 57,
+    "wave2_quality": 41,
+    "selling_pressure_decay": 57,
+    "higher_tf_alignment": 45,
+    "comment": "M15には過去の強い上昇があるが、その後は急落して右端では横ばい。M5も上昇をほぼ打ち消しており、現時点のLONG再開を示す明瞭な波は見えにくい。"
+  },
+  {
+    "blind_id": "b655597cdbb7489d96958f4aa0c1e65a",
+    "overall_grade": "A",
+    "continuation_probability": 80,
+    "wave1_quality": 88,
+    "wave2_quality": 72,
+    "selling_pressure_decay": 78,
+    "higher_tf_alignment": 76,
+    "comment": "M1/M5は安値圏から継続的に切り上げ、右端でも上方向への再加速が見える。M15も直近で強く上抜け、H1も最終部分で大きく反発しておりLONG側の整合性が高い。"
+  },
+  {
+    "blind_id": "c855afd3a60445bdad479f302d54cd46",
+    "overall_grade": "C",
+    "continuation_probability": 24,
+    "wave1_quality": 35,
+    "wave2_quality": 29,
+    "selling_pressure_decay": 45,
+    "higher_tf_alignment": 10,
+    "comment": "M5/M15/H1が揃って明瞭な下落構造で、右端まで安値方向への圧力が続いている。M1の反発だけでは上位足の下降を覆せず、LONG継続を支持する材料はかなり乏しい。"
+  },
+  {
+    "blind_id": "cde718f087f84e5db2326d3eea429498",
+    "overall_grade": "A",
+    "continuation_probability": 73,
+    "wave1_quality": 76,
+    "wave2_quality": 72,
+    "selling_pressure_decay": 74,
+    "higher_tf_alignment": 80,
+    "comment": "M1/M5は安値切り上げを伴う上昇後に浅い調整となっており、崩れ方は限定的。M15も上方向、H1も右側で明確に持ち直しており、時間軸間の整合性が比較的良い。"
+  },
+  {
+    "blind_id": "d93debd377664b2eaa0fdec1c901a800",
+    "overall_grade": "C",
+    "continuation_probability": 32,
+    "wave1_quality": 38,
+    "wave2_quality": 45,
+    "selling_pressure_decay": 48,
+    "higher_tf_alignment": 16,
+    "comment": "M5/M15には急落後の反発があるものの、その後は横ばいで明確な上昇波が形成されていない。H1は右端まで下降基調が続き、直近でも大きな売りが見える。"
+  },
+  {
+    "blind_id": "e65cdfba5b5548b8aeb81723d9d55d52",
+    "overall_grade": "B",
+    "continuation_probability": 48,
+    "wave1_quality": 50,
+    "wave2_quality": 41,
+    "selling_pressure_decay": 50,
+    "higher_tf_alignment": 44,
+    "comment": "H1は大きな上昇の履歴を持つ一方、M5/M15では直近かなり明確な下降が続いている。M1は持ち直しているが、短中期とH1の方向が噛み合っていない。"
+  },
+  {
+    "blind_id": "eb349f7c0a3643f18a1a4cb2867abd42",
+    "overall_grade": "A",
+    "continuation_probability": 82,
+    "wave1_quality": 87,
+    "wave2_quality": 76,
+    "selling_pressure_decay": 82,
+    "higher_tf_alignment": 86,
+    "comment": "M5/M15は安値圏から明確な上昇トレンドを形成し、右端でも高値圏を維持している。H1も深い安値から強く切り返しており、M1の再上昇と合わせてLONG継続を支持しやすい形。"
+  },
+  {
+    "blind_id": "fc0d9cd4dd004b51826042c546e00d4d",
+    "overall_grade": "B",
+    "continuation_probability": 68,
+    "wave1_quality": 78,
+    "wave2_quality": 67,
+    "selling_pressure_decay": 76,
+    "higher_tf_alignment": 57,
+    "comment": "M1/M5は直近の売り込みから強く切り返し、M15も右端で上方向への加速が見える。H1は大きな下落後の底固め局面に近く、上位足がまだ完全にはLONG方向へ転換していない点が弱み。"
+  },
+  {
+    "blind_id": "fdd09fb2cf194f1fbfc1eb51e0e5b077",
+    "overall_grade": "C",
+    "continuation_probability": 34,
+    "wave1_quality": 44,
+    "wave2_quality": 33,
+    "selling_pressure_decay": 40,
+    "higher_tf_alignment": 24,
+    "comment": "M1は急落後に回復しているが、M5では直近に大きな下抜けがあり低位で推移している。M15/H1も右端で売りが再び強まっており、LONG方向への継続支持は弱い。"
+  }
+]

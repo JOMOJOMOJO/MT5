@@ -1,0 +1,22 @@
+{
+  "MP_candidates.csv": {
+    "equal": true,
+    "sha256": "67300c428b2f74c57f70b001d5976b70ae208907387c8ac4cad994d147ffe88f"
+  },
+  "MP_outcomes.csv": {
+    "equal": true,
+    "sha256": "fd982fc7b21873bb0610a85f44576ef7273a2c86050b0f514d6cfc7d2bd48542"
+  },
+  "MP_phases.csv": {
+    "equal": true,
+    "sha256": "d3107542e53035f3cdd45c34a1cca21da28fc02f666d4552bfb0661d1873727d"
+  },
+  "MP_resistance.csv": {
+    "equal": true,
+    "sha256": "72de9e4316998464e357d10083e3ded969836e030fa6fd613666b492951b6dc3"
+  },
+  "MP_m1.csv": {
+    "equal": true,
+    "sha256": "f922d09c87f845b2c1159f2903c68cfd401f856caaa862c2bf49bc9b4ccb0d61"
+  }
+}

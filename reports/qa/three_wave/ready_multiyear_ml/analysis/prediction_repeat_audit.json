@@ -1,0 +1,122 @@
+[
+  {
+    "fold": "2025Q1",
+    "model": "LOGISTIC_L2",
+    "n": 46,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q1",
+    "model": "TREE_D2",
+    "n": 46,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q1",
+    "model": "TREE_D3",
+    "n": 46,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q1",
+    "model": "TREE_D4",
+    "n": 46,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q1",
+    "model": "LIGHTGBM",
+    "n": 46,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q2",
+    "model": "LOGISTIC_L2",
+    "n": 47,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q2",
+    "model": "TREE_D2",
+    "n": 47,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q2",
+    "model": "TREE_D3",
+    "n": 47,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q2",
+    "model": "TREE_D4",
+    "n": 47,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q2",
+    "model": "LIGHTGBM",
+    "n": 47,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q3",
+    "model": "LOGISTIC_L2",
+    "n": 55,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q3",
+    "model": "TREE_D2",
+    "n": 55,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q3",
+    "model": "TREE_D3",
+    "n": 55,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q3",
+    "model": "TREE_D4",
+    "n": 55,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q3",
+    "model": "LIGHTGBM",
+    "n": 55,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q4",
+    "model": "LOGISTIC_L2",
+    "n": 65,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q4",
+    "model": "TREE_D2",
+    "n": 65,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q4",
+    "model": "TREE_D3",
+    "n": 65,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q4",
+    "model": "TREE_D4",
+    "n": 65,
+    "prediction_repeat": "PASS"
+  },
+  {
+    "fold": "2025Q4",
+    "model": "LIGHTGBM",
+    "n": 65,
+    "prediction_repeat": "PASS"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "sources": [
+    {
+      "source": "C:\\Users\\windows\\AppData\\Local\\Temp\\READY_VANTAGE_2023_20260930_235209\\Tester\\Agent-127.0.0.1-3000\\logs\\20260930.log",
+      "sha256": "3a93e314f348439408422d54c5c41ae83401d2416c89865d0357536232aad9c8"
+    },
+    {
+      "source": "C:\\Users\\windows\\AppData\\Local\\Temp\\READY_VANTAGE_2023_20260930_235209\\Tester\\Agent-127.0.0.1-3000\\logs\\20261001.log",
+      "sha256": "6a75f3f6f3cc305bb0cc7d60ee907a95f848be7a9f290efb8ac82d2746632464"
+    }
+  ],
+  "first_line": 28,
+  "last_line_exclusive": 381378,
+  "marker": "testing of Experts\\USDJPY_Ready2024MLCollector.ex5 from 2023.01.01 00:00 to 2024.01.01 00:00 started"
+}

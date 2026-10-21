@@ -1,0 +1,29 @@
+=== train_Jan_10_test_11_12 TREE_D2 train=52 test=30 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.55893
+|   |--- m1_wave1_strength <= 4.09510
+|   |   |--- class: 0
+|   |--- m1_wave1_strength >  4.09510
+|   |   |--- class: 1
+|--- hour_sin >  0.55893
+|   |--- class: 1
+
+=== train_Jan_10_test_11_12 TREE_D3 train=52 test=30 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.55893
+|   |--- m1_wave1_strength <= 4.09510
+|   |   |--- class: 0
+|   |--- m1_wave1_strength >  4.09510
+|   |   |--- class: 1
+|--- hour_sin >  0.55893
+|   |--- class: 1
+
+=== train_Jan_10_test_11_12 TREE_D4 train=52 test=30 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.55893
+|   |--- m1_wave1_strength <= 4.09510
+|   |   |--- class: 0
+|   |--- m1_wave1_strength >  4.09510
+|   |   |--- class: 1
+|--- hour_sin >  0.55893
+|   |--- class: 1

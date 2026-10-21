@@ -1,0 +1,18 @@
+{
+  "TW_signals.csv": {
+    "rows": 5,
+    "exact": true
+  },
+  "TW_deals.csv": {
+    "rows": 6,
+    "exact": true
+  },
+  "TW_exits.csv": {
+    "rows": 3,
+    "exact": true
+  },
+  "TW_M15_environment_USDJPY_260922331.csv": {
+    "rows": 8,
+    "exact": true
+  }
+}

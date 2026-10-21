@@ -1,0 +1,330 @@
+目的
+現行の通常READYエントリーは変更せず、2024年1月1日〜12月31日のUSDJPYについて、
+Entry時点までに確定している情報だけから、TP1.2RがSLより先に到達するかを予測・分類できるか
+を分析してください。
+主目的はモデル精度を競うことではなく、
+「どの市場環境・どのWave1/Wave2・どのEntry直前状態ならTPへ到達しやすいか」を、人間が理解できる形で場合分けすること
+です。
+売買EA・Shared本体・Entry・SL・TPは変更しないでください。研究専用で実施してください。
+1. 対象シグナル
+2024年1年間の全通常READY候補をshadow評価してください。
+固定条件：
+- HL_ENTRY_READY
+- InpSkipLowerHL=false
+- EMAフィルターOFF
+- M1/M5 Left/Right = 2/2
+- M5ヒゲpivot
+- Entry = READY確定後の最初の利用可能Ask
+- SL = M1 reversal low - 10 points
+- TP = RR1.2
+- USDJPY
+保有ポジションやクールタイムによって候補を除外せず、全READYを独立shadow候補として記録してください。
+既存のshadow評価ロジックがある場合は、Entry/SL/TP判定仕様を変更せず再利用してください。
+2. 正解ラベル
+二値分類とします。
+target = 1 : TP1.2RがSLより先に到達
+target = 0 : SLがTPより先に到達
+
+LONGなので、Entry時のAskとその後のBidによる既存shadow判定仕様を維持してください。
+同一tick/バー内でTP/SL両方に触れる曖昧ケースがある場合は、実tick順序で判定してください。順序が確定できない場合は別フラグにして学習対象から勝手にWIN/LOSSへ振り分けないでください。
+期間末未完了はCENSOREDとして学習対象外にしてください。
+Entry後のMFE/MAE等は診断用には保存してよいですが、説明変数には絶対に使用しないでください。
+3. 最重要：未来情報禁止
+すべての特徴量は、
+Entry時刻までに市場参加者が知り得た情報のみ
+で作ってください。
+- future pivot禁止
+- Entry後OHLC禁止
+- 未確定pivot禁止
+- forming barの未来部分禁止
+- feature normalizationにも未来期間の平均・標準偏差を使用しない
+pivotはconfirmed_time <= Entry timeを必須にしてください。
+学習時の標準化・欠損補完・特徴選択もtrain期間だけでfitしてください。
+4. 特徴量
+特徴量は多めに作って構いませんが、意味が分かる名前にしてください。
+A. H1環境認識
+H1にもM15と同様の確定pivot構造を作り、Entry時点の状態を記録してください。
+- H1 regime：UP / DOWN / RANGE
+- H1 structure high / low
+- Entryのraw position
+- INSIDE / ABOVE / BELOW
+- last bullish/bearish structure break
+- minutes since last break
+- break levelまでの距離 / ATR
+- 直近上昇swing値幅 / ATR
+- 直近下降swing値幅 / ATR
+- recent_up_swing / recent_down_swing
+- 直近下降波が、その前の下降波より縮小しているか
+- 直近上昇波が、その前の上昇波より拡大しているか
+- ATR14
+- ATR14 / 過去一定期間median ATR
+H1を単純なUP/DOWNだけではなく、
+下降継続・下降衰退・上昇転換・上昇継続
+を後で推測できる材料を残してください。
+B. M15環境認識
+既存M15診断を維持しつつ、追加してください。
+- regime
+- LOW/MID/HIGH
+- raw_position
+- range_location
+- last break direction
+- minutes since break
+- recent up/down swingのATR比
+- recent up swing / down swing比
+- swing high slope
+- swing low slope
+- ATR状態
+- nearest confirmed resistance/support distance
+C. M5 Wave1
+ここは最重要です。
+Wave1の「大きさ」だけでなく、どういう価格経路で上昇したかを記録してください。
+- Wave1 price range
+- Wave1 duration bars / minutes
+- Wave1 bullish bar fraction
+- bullish body sum
+- bearish body sum
+- bullish body sum / total body sum
+- Efficiency Ratio
+- 最大途中逆行
+- 最大途中逆行 / Wave1 range
+- 最大途中逆行 / formation ATR
+- running highからの最大drawdown
+- 最大連続陰線本数
+- 平均陽線body
+- 平均陰線body
+- 陽線body / 陰線body比
+- bar close location value
+- 高値側でcloseしたbar割合
+- Wave1前半の上昇速度
+- Wave1後半の上昇速度
+- acceleration = 後半速度 / 前半速度
+- CHoCH breakout幅
+- CHoCH breakout bar body
+Wave1のATR正規化はEntry時ATRだけにしないでください。
+少なくとも以下を全部保存してください。
+- wave1_range / ATR_at_CHOCH
+- wave1_range / median_ATR_during_wave1
+- wave1_range / ATR_at_wave1_high_confirmation
+- 参考値として従来のwave1_range / ATR_at_entry
+途中逆行も同様にformation時ATRとWave1 rangeで正規化してください。
+D. M5 Wave2 / setup
+- Wave1 High→READY minutes
+- CHoCH→READY minutes
+- Wave2 retracement ratio
+- Wave2 depth / ATR
+- Wave2 bar count
+- lower high count
+- higher low count
+- failed high-test count
+- Wave1 High再試行回数
+- Wave2中のATR拡大/縮小
+E. M1 READYとEntry直前状態
+- READY_RETURN_HIGH
+- READY_WAVE1_HIGH
+- M1 Wave1 strength
+- M1 Wave2 retrace
+- M1 Wave1 efficiency
+Entry直前5分・10分・20分について、
+- net return / ATR
+- high-low range / ATR
+- realized movement
+- compression ratio
+- bullish bar fraction
+- higher-low count
+- lower-low count
+- higher-high count
+- failed high-test count
+- window上側25%にcloseしていた割合
+- window下側25%にcloseしていた割合
+- Entryがwindow rangeのどこにいるか
+特に以前の分析で候補になった
+window20_upper25_fraction
+は必ず残してください。
+F. 障害物
+- Entry→M5 Wave1 High距離R
+- Entry→M15 Structure High距離R
+- Entry→H1 Structure High距離R
+- nearest confirmed resistance R
+- TP手前のpivot数
+ただし既存研究では抵抗だけでは分離できなかったので、主仮説にはしません。
+G. 補助特徴
+- hour of day
+- Tokyo/London/New York session
+- day of week
+- spread
+- M1/M5/M15/H1 ATR
+時刻は必要ならsin/cos表現も作ってください。
+5. まず基本統計
+MLの前に以下を出してください。
+- READY件数
+- TP件数
+- SL件数
+- base win rate
+- base Expectancy R
+- PF
+各特徴についてWIN/LOSSで、
+- n
+- mean
+- median
+- Q25/Q75
+- standardized difference
+を比較してください。
+月別でもTP率を出してください。
+6. 教師あり学習
+主分析はこちらです。
+Model 1：Logistic Regression
+解釈性重視。
+- train内で欠損補完
+- train内で標準化
+- L2を基本
+- 必要ならL1も比較
+foldごとの係数の符号と大きさを保存してください。
+2024年を全部fitして係数を見て終わり、は禁止です。
+Model 2：浅いDecision Tree
+人間が場合分けできるルールを探してください。
+- max_depth = 2, 3, 4程度
+- min_samples_leafを大きめにする
+- 深い木は禁止
+train foldごとのルールと、test foldでの結果を保存してください。
+Model 3：Gradient Boosting
+sklearnのHistGradientBoosting、または利用可能ならXGBoostを使用して構いません。
+ただし複雑なモデルを本番採用する目的ではなく、
+線形モデルや浅いTreeでは見えない非線形な特徴組合せが存在するか
+の確認用です。
+permutation importanceを必ず出してください。
+SHAPが安定して使用できる場合のみSHAPも出してください。
+7. 時系列walk-forward
+ランダムtrain/test splitは禁止です。
+2024年を時間順に、例えば以下のexpanding walk-forwardで評価してください。
+Train Jan-Apr  → Test May-Jun
+Train Jan-Jun  → Test Jul-Aug
+Train Jan-Aug  → Test Sep-Oct
+Train Jan-Oct  → Test Nov-Dec
+
+データ量に応じて多少調整してよいですが、必ず時間順を守ってください。
+Purge
+trainサンプルのTP/SL決着時刻がtest開始時刻以降まで伸びている場合、そのtrainサンプルを除外してください。
+近接した同一相場局面からの情報漏洩を避けるため、必要なら短いembargoも入れてください。
+8. 評価
+Accuracyだけで判断しないでください。
+保存するもの：
+- ROC-AUC
+- PR-AUC
+- balanced accuracy
+- Brier score
+- calibration
+さらに最重要として、walk-forwardのout-of-fold予測確率を保存してください。
+予測TP確率を固定binにして、
+<0.35
+0.35-0.40
+0.40-0.45
+0.45-0.50
+0.50-0.55
+0.55-0.60
+>=0.60
+
+などで、
+- 件数
+- 実TP率
+- 平均R
+- PF
+を出してください。
+binはサンプル不足ならまとめても構いません。
+testデータを見ながら閾値を動かさないでください。
+9. 特徴量の「安定性」
+最終的に重要なのはモデル精度よりこちらです。
+各特徴について、
+- Logistic係数の符号が何foldで一致したか
+- Decision Treeで何fold使われたか
+- Gradient Boosting importance上位に何fold入ったか
+をまとめてください。
+例えば、
+Wave1 max drawdown
+Logistic 4/4同方向
+Tree 3/4で採用
+Boosting 4/4 top10
+
+のような特徴を重視してください。
+逆に1foldだけ重要な特徴は「不安定」としてください。
+10. クラスタリング
+教師あり学習とは別に補助分析として実施してください。
+TP/SLラベルを使わず、Entry時点の特徴量だけでクラスタリングしてください。
+- train期間だけで標準化
+- PCAは可視化用には使用可
+- KMeansを中心にk=2〜6程度
+- silhouette score
+- cluster size
+- cluster stability
+を確認してください。
+クラスタ確定後に初めて、
+- TP率
+- 平均R
+- PF
+を重ねてください。
+例えば、
+Cluster A
+H1下降弱まり
+M15転換中
+M5 Wave1一方向
+M1上側張り付き
+→ TP率高め
+
+のように人間が説明できるか確認してください。
+outcomeを見ながらcluster数を最適化しないでください。
+11. 特に検証したい仮説
+今回は以下を重点的に確認してください。
+仮説A
+M5 Wave1の値幅ではなく、
+- 陽線率が高い
+- 途中逆行が小さい
+- closeが高値側
+- formation時ATRに対して効率よく上昇
+したWave1の方がTP先着率が高い。
+仮説B
+READY直前に価格が上側へ張り付き、売られても下へ戻されにくい状態の方がTP先着率が高い。
+仮説C
+M15/H1の単純なUP/DOWNより、
+- 下落波縮小
+- 上昇波拡大
+- counter swing強化
+- structure break後の経過
+といった上位足の状態変化の方が予測力を持つ。
+12. 重要：過学習禁止
+今回は2024年を研究期間として使うので、
+- 全2024を見て閾値決定→同じ2024で性能評価
+- 特徴量を何度も追加して一番良い結果だけ報告
+- Decision Treeの枝を見て手動で最適化
+- test期間を見て閾値変更
+は禁止です。
+事後探索で見つかったものは、
+exploratory / hypothesis only
+と明記してください。
+13. 出力
+少なくとも以下を保存してください。
+- ready_2024_ml_dataset.csv
+- feature_definitions.md
+- walkforward_predictions.csv
+- walkforward_metrics.csv
+- feature_stability.csv
+- logistic_coefficients_by_fold.csv
+- decision_tree_rules_by_fold.txt
+- boosting_importance_by_fold.csv
+- cluster_assignments.csv
+- cluster_statistics.csv
+- 各種グラフ
+- summary.md
+14. summary.mdで答えること
+1. 2024年の全READYは何件あり、TP/SL比率はどうだったか
+2. walk-forwardでTP/SLを未知期間に対して多少でも識別できたか
+3. Logistic / Tree / Boostingのどれが最も安定したか
+4. どの特徴が複数fold・複数モデルで共通して重要だったか
+5. H1/M15の上位足情報には予測力があったか
+6. M5 Wave1の「大きさ」より「一方向性・質」の方が重要だったか
+7. READY直前の上側張り付きは再現したか
+8. クラスタごとに意味のある市場状態と成績差が確認できたか
+9. 人間が理解できる場合分け候補を最大3つ提示
+10. ただし未知期間でも再現していない条件は採用候補にしない
+最終目的は、
+「AIモデルをそのままEAに組み込むこと」ではなく、Entry時点のどの市場状態ならこの3波の3波がTP1.2Rまで走りやすいかを理解し、再現性のある少数の条件へ落とし込むこと
+です。
+売買EA・Shared本体への変更は今回は行わないでください。

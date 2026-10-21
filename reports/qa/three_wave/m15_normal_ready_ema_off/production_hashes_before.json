@@ -1,0 +1,22 @@
+{
+  "mql\\Experts\\USDJPY_M1_M5_3WaveIn3Wave_Long.mq5": "5b437b0f5cb0c82de79b3422b12b0051b836093d75cbddb627e20e9bbefc6cd3",
+  "mql\\Include\\ThreeWaveContextResearch.mqh": "d36003c9832816df280f2640215179c760b6ae928e7d566b714a0d44a538f394",
+  "mql\\Include\\ThreeWaveDrawing.mqh": "a580ea93d857560d7c7914067ab5c4a8ff7c9cac14ba00d10e70f87c0f1bf31b",
+  "mql\\Include\\ThreeWaveEntryResearch.mqh": "bdba34c20aa4941c304e936597af0dd9a2c1dfad560e85ffda810d5683ee459a",
+  "mql\\Include\\ThreeWaveExecutionBase.mqh": "c40e706ab0077c0fdc5820d46e4dfc939a79f99f3abfd76d7b7728db5458eec8",
+  "mql\\Include\\ThreeWaveFeatureObserver.mqh": "4c4df321b6562271a8073a552db1b9343cf64fb4e0b9cab476aa09d968de5945",
+  "mql\\Include\\ThreeWaveFibHLExitResearch.mqh": "a7fe1f61d837785ae4388ceb3a27949645ce59732d6bf5d3348435ff30fb130f",
+  "mql\\Include\\ThreeWaveFibHLPolicy.mqh": "c5b6ed7efa18fd308cb7a3042190d25f09417272cfca44d36cfd7ed4d36d3565",
+  "mql\\Include\\ThreeWaveFibTickPolicy.mqh": "ea252c36786a512504bb27e2a09b0483cfca2bbb8086b8f567801a30e8c1e1fc",
+  "mql\\Include\\ThreeWaveFibWave2Trigger.mqh": "99544a1164ee656f4a6ede2198d3146d598f26a7541836f10c8d16cc14a007e5",
+  "mql\\Include\\ThreeWaveHLRecognitionPolicy.mqh": "438439d48a532abb19a8b1b712cce9dcae94af26f5182876862fd5913c75aa46",
+  "mql\\Include\\ThreeWaveHLRecognitionResearch.mqh": "72f2eae6025e3304790060c10ff8392487b44549dd761a8392160c425acc5594",
+  "mql\\Include\\ThreeWaveHLResearchTrigger.mqh": "85719b7d44d0fd9d2fd7737c013cd31534d2111fc45ce7d67f41f85cce21ca0f",
+  "mql\\Include\\ThreeWaveHLTickPolicy.mqh": "6d37145942345933ef04c4f104102894222ed1283048e966489278aeadfdea00",
+  "mql\\Include\\ThreeWaveInputs.mqh": "ba563f619646c4fd0e4b3416be14c81768be79848f0c438e6c53a08e91e9f216",
+  "mql\\Include\\ThreeWaveM15PhaseResearch.mqh": "a344d18925848295c94aef991a3824ddd4d7f8e3184106894987619537f855a4",
+  "mql\\Include\\ThreeWaveOptimization.mqh": "a5bc7f24b3cb3722e6dfd683d4ab2ec1640c3aa2b371d3e22b84eb323bf76dfe",
+  "mql\\Include\\ThreeWaveStructure.mqh": "fd0cf7141439cc50aec79f8665d5fc68fb5f96e1b88e784375ccda675321c54b",
+  "mql\\Include\\M15Environment.mqh": "c973dc9da1c9219f0bd654a2d32eb3efc5f1d3145d3d670628adaab4bf9c8711",
+  "mql\\Include\\M15EnvironmentDisplay.mqh": "d5388e1e14f844c0c60d2c574b2417bbc921b4068f9c32ee251222696a2837ac"
+}

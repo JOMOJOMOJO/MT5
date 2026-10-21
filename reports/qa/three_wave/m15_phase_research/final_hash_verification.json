@@ -1,0 +1,14 @@
+{
+  "production_hashes_before.json": {
+    "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5": true,
+    "mql/Include/ThreeWaveStructure.mqh": true,
+    "mql/Include/ThreeWaveInputs.mqh": true
+  },
+  "specification_lock.json": {
+    "mql/Experts/USDJPY_3Wave_M15PhaseResearch.mq5": true,
+    "mql/Include/ThreeWaveM15PhaseResearch.mqh": true,
+    "mql/Include/PhaseResearchFrozen/ThreeWaveStructure.mqh": true,
+    "mql/Include/PhaseResearchFrozen/ThreeWaveInputs.mqh": true,
+    "tools/swing_structure/run-m15-phase-research.ps1": true
+  }
+}

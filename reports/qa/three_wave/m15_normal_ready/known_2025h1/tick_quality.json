@@ -1,0 +1,11 @@
+{
+  "warning_days": [
+    "2025.03.27"
+  ],
+  "journal_warnings": [
+    "CS\t3\t19:06:02.630\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1438 total minute bars within a day",
+    "CS\t3\t19:06:02.630\tTicks\tUSDJPY : 2025.03.27 23:59 - real ticks discarded for 1431 minutes out of 1438 total minute bars within a day",
+    "CS\t3\t19:06:03.628\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.07.01 00:00  real ticks absent for 6 minutes of 183982 total minute bars, every tick generation used",
+    "CS\t3\t19:06:03.628\tTicks\tUSDJPY : 2025.01.01 00:00 - 2025.07.01 00:00  real ticks discarded for 1431 minutes of 183982 total minute bars, every tick generation used"
+  ]
+}

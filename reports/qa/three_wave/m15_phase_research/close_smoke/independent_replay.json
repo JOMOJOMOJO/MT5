@@ -1,0 +1,17 @@
+{
+  "run": "close_smoke",
+  "bars": 10111,
+  "native_vs_python": "EXACT",
+  "prefix_lengths": [
+    100,
+    1000,
+    5055,
+    8000,
+    10094
+  ],
+  "prefix_invariance": "PASS",
+  "different_test_phase_bars_with_shorter_warmup": {
+    "2000": 0,
+    "4000": 0
+  }
+}

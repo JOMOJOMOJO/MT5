@@ -1,0 +1,95 @@
+YEAR 2018; numeric thresholds are TRAIN-standardized (diagnostic only)
+|--- num__m15_nearest_resistance_R <= -0.70
+|   |--- num__h1_nearest_resistance_R <= -0.80
+|   |   |--- class: 1
+|   |--- num__h1_nearest_resistance_R >  -0.80
+|   |   |--- class: 1
+|--- num__m15_nearest_resistance_R >  -0.70
+|   |--- num__spread_m1_atr <= -0.42
+|   |   |--- class: 0
+|   |--- num__spread_m1_atr >  -0.42
+|   |   |--- class: 0
+
+YEAR 2019; numeric thresholds are TRAIN-standardized (diagnostic only)
+|--- num__h1_nearest_resistance_R <= -0.77
+|   |--- num__m15_nearest_resistance_R <= -0.72
+|   |   |--- class: 1
+|   |--- num__m15_nearest_resistance_R >  -0.72
+|   |   |--- class: 0
+|--- num__h1_nearest_resistance_R >  -0.77
+|   |--- num__spread_m1_atr <= -0.36
+|   |   |--- class: 0
+|   |--- num__spread_m1_atr >  -0.36
+|   |   |--- class: 0
+
+YEAR 2020; numeric thresholds are TRAIN-standardized (diagnostic only)
+|--- num__hour_cos <= 1.37
+|   |--- num__m15_nearest_resistance_R <= -0.73
+|   |   |--- class: 1
+|   |--- num__m15_nearest_resistance_R >  -0.73
+|   |   |--- class: 0
+|--- num__hour_cos >  1.37
+|   |--- num__m5_wave1_distance_R <= -0.13
+|   |   |--- class: 0
+|   |--- num__m5_wave1_distance_R >  -0.13
+|   |   |--- class: 0
+
+YEAR 2021; numeric thresholds are TRAIN-standardized (diagnostic only)
+|--- num__hour_cos <= 1.38
+|   |--- num__wave1_acceleration <= -0.38
+|   |   |--- class: 1
+|   |--- num__wave1_acceleration >  -0.38
+|   |   |--- class: 0
+|--- num__hour_cos >  1.38
+|   |--- num__window5_range_atr <= -1.04
+|   |   |--- class: 0
+|   |--- num__window5_range_atr >  -1.04
+|   |   |--- class: 0
+
+YEAR 2022; numeric thresholds are TRAIN-standardized (diagnostic only)
+|--- num__spread_m1_atr <= 0.59
+|   |--- num__m15_nearest_support_R <= -1.02
+|   |   |--- class: 1
+|   |--- num__m15_nearest_support_R >  -1.02
+|   |   |--- class: 0
+|--- num__spread_m1_atr >  0.59
+|   |--- num__m15_nearest_resistance_R <= -0.79
+|   |   |--- class: 1
+|   |--- num__m15_nearest_resistance_R >  -0.79
+|   |   |--- class: 0
+
+YEAR 2023; numeric thresholds are TRAIN-standardized (diagnostic only)
+|--- num__spread_m1_atr <= 0.67
+|   |--- num__m15_nearest_support_R <= -1.00
+|   |   |--- class: 1
+|   |--- num__m15_nearest_support_R >  -1.00
+|   |   |--- class: 0
+|--- num__spread_m1_atr >  0.67
+|   |--- num__m15_nearest_resistance_R <= -0.80
+|   |   |--- class: 1
+|   |--- num__m15_nearest_resistance_R >  -0.80
+|   |   |--- class: 0
+
+YEAR 2024; numeric thresholds are TRAIN-standardized (diagnostic only)
+|--- num__spread_m1_atr <= 0.73
+|   |--- num__m15_nearest_resistance_R <= -0.31
+|   |   |--- class: 0
+|   |--- num__m15_nearest_resistance_R >  -0.31
+|   |   |--- class: 0
+|--- num__spread_m1_atr >  0.73
+|   |--- num__window20_net_return_atr <= -0.43
+|   |   |--- class: 0
+|   |--- num__window20_net_return_atr >  -0.43
+|   |   |--- class: 0
+
+YEAR 2025; numeric thresholds are TRAIN-standardized (diagnostic only)
+|--- num__spread_m1_atr <= 0.78
+|   |--- num__h1_nearest_resistance_R <= -0.68
+|   |   |--- class: 1
+|   |--- num__h1_nearest_resistance_R >  -0.68
+|   |   |--- class: 0
+|--- num__spread_m1_atr >  0.78
+|   |--- num__window20_net_return_atr <= -0.42
+|   |   |--- class: 0
+|   |--- num__window20_net_return_atr >  -0.42
+|   |   |--- class: 0

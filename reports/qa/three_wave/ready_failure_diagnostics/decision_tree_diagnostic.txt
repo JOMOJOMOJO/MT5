@@ -1,0 +1,61 @@
+ALL_DESCRIPTIVE
+
+Train n=138, max_depth=2, min_samples_leaf=15, no threshold search.
+
+|--- wave2_retrace <= 0.3980
+|   |--- class: WIN_1P2R
+|--- wave2_retrace >  0.3980
+|   |--- wave1_strength_atr <= 5.1478
+|   |   |--- class: WIN_1P2R
+|   |--- wave1_strength_atr >  5.1478
+|   |   |--- class: LOSS_NO_FOLLOWTHROUGH
+
+
+FIT_2025_CHECK_2024
+
+Train n=93, max_depth=2, min_samples_leaf=15, no threshold search.
+
+|--- wave2_retrace <= 0.6778
+|   |--- compression10 <= 0.9228
+|   |   |--- class: LOSS_NO_FOLLOWTHROUGH
+|   |--- compression10 >  0.9228
+|   |   |--- class: WIN_1P2R
+|--- wave2_retrace >  0.6778
+|   |--- wave2_retrace <= 0.8473
+|   |   |--- class: LOSS_NO_FOLLOWTHROUGH
+|   |--- wave2_retrace >  0.8473
+|   |   |--- class: LOSS_NO_FOLLOWTHROUGH
+
+
+Known-period cross-check balanced accuracy=0.2003, majority=0.2500
+
+Confusion rows=true columns=predicted: ['WIN_1P2R', 'LOSS_NO_FOLLOWTHROUGH', 'LOSS_WEAK_FOLLOWTHROUGH', 'LOSS_ALMOST_TP']
+
+[[ 2 21  0  0]
+ [ 4 10  0  0]
+ [ 2  3  0  0]
+ [ 1  2  0  0]]
+
+FIT_2024_CHECK_2025
+
+Train n=45, max_depth=2, min_samples_leaf=15, no threshold search.
+
+|--- wave1_er <= 0.7929
+|   |--- class: LOSS_NO_FOLLOWTHROUGH
+|--- wave1_er >  0.7929
+|   |--- wave1_er <= 0.9547
+|   |   |--- class: WIN_1P2R
+|   |--- wave1_er >  0.9547
+|   |   |--- class: WIN_1P2R
+
+
+Known-period cross-check balanced accuracy=0.2109, majority=0.2500
+
+Confusion rows=true columns=predicted: ['WIN_1P2R', 'LOSS_NO_FOLLOWTHROUGH', 'LOSS_WEAK_FOLLOWTHROUGH', 'LOSS_ALMOST_TP']
+
+[[17 15  0  0]
+ [22 10  0  0]
+ [ 8  9  0  0]
+ [ 9  3  0  0]]
+
+Descriptive only. Known periods, not OOS. Rules are not trading filters.

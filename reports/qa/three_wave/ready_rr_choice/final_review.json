@@ -1,0 +1,19 @@
+{
+  "status": "REVIEWED",
+  "entry_sl_original_tp_labels_unchanged": true,
+  "production_hashes_unchanged": true,
+  "training_script_hashes_unchanged": true,
+  "availability_windows_checked": 8364,
+  "calibration_splits_checked": 75,
+  "prediction_rows": 11592,
+  "paired_labels": 2082,
+  "reach_counts": {
+    "0": 1189,
+    "2": 812,
+    "1": 81
+  },
+  "rescue_fraction_of_rr12_losses": 0.06377952755905512,
+  "plots_visually_reviewed": true,
+  "verdict": "NO_PROMOTION_FREQUENCY_AND_STABILITY_FAIL",
+  "additional_diagnostics": "Post-run TP attribution only; no refit or threshold changes"
+}

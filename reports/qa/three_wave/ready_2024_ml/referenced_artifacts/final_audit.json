@@ -1,0 +1,10 @@
+{
+  "prior_q3_entry_sl_tp_parity": 46,
+  "prediction_repeat_max_tolerance": 1e-12,
+  "production_unchanged": true,
+  "shared_prior_baseline_hashes_unchanged": 20,
+  "labeled_parent_count": 82,
+  "labeled_count": 82,
+  "total_parent_count": 180,
+  "model_feature_count": 117
+}

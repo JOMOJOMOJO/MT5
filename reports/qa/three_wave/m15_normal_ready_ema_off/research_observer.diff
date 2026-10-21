@@ -1,0 +1,53 @@
+--- production
++++ research_snapshot
+@@ -3,9 +3,9 @@
+ #property description "3x3 LONG EA with selectable READY or confirmed-HL retest entry."
+ #property tester_indicator "MultiTF_3WaveIn3Wave_Visualizer_Shared.ex5"
+ #property tester_indicator "ThreeWave_EMA_Display.ex5"
+-#include "../Include/ThreeWaveInputs.mqh"
+-#include "../Include/ThreeWaveStructure.mqh"
+-#include "../Include/M15EnvironmentDisplay.mqh"
++#include "../ThreeWaveInputs.mqh"
++#include "../ThreeWaveStructure.mqh"
++#include "../M15EnvironmentDisplay.mqh"
+ 
+ enum StopMode { STOP_M1_WAVE2_LOW,STOP_M1_REVERSAL_LOW,STOP_M5_WAVE1_ORIGIN };
+ enum HLEntryMode { HL_ENTRY_READY=0, HL_ENTRY_CONFIRM=1, HL_ENTRY_RETEST=2 };
+@@ -111,8 +111,8 @@
+ string screenshot_copy="";
+ double protected_volume=0,protected_entry=0;
+ long inventory_orders=-1,inventory_positions=-1,inventory_foreign=-1;
+-#include "../Include/ThreeWaveDrawing.mqh"
+-#include "../Include/ThreeWaveExecutionBase.mqh"
++#include "../ThreeWaveDrawing.mqh"
++#include "../ThreeWaveExecutionBase.mqh"
+ 
+ string TS(const datetime t) { return t>0 ? TimeToString(t,TIME_DATE|TIME_SECONDS) : ""; }
+ double FloorStep(const double v,const double step) { return MathFloor(v/step+1e-9)*step; }
+@@ -465,7 +465,7 @@
+    }
+ }
+ 
+-#include "../Include/ThreeWaveHLResearchTrigger.mqh"
++#include "../ThreeWaveHLResearchTrigger.mqh"
+ 
+ bool GetSources(MqlRates &lower[],MqlRates &higher[])
+ {
+@@ -492,7 +492,7 @@
+    {
+       M1Pattern p; AnalyzeLowerPattern(lower,lp,setups[i],p);
+       if(p.ready && p.ready_time+TFSeconds((ENUM_TIMEFRAMES)InpLowerTF)==closed_time)
+-         M15Ready(SignalID(setups[i],p));
++         { M15Ready(SignalID(setups[i],p)); AuditShadowReady(setups[i],p); }
+       if(InpHLEntryMode==HL_ENTRY_RETEST) { HLObserve(setups[i],p,lower,now); continue; }
+       if(!p.ready || p.ready_time+TFSeconds((ENUM_TIMEFRAMES)InpLowerTF)!=closed_time) continue;
+       fresh++; digest+=(double)setups[i].break_time;
+@@ -537,7 +537,7 @@
+    }
+    Print("TW_M1 ",TS(now)," fresh_ready=",fresh," state=",execution_state," reason=",reason);
+ }
+-#include "../Include/ThreeWaveOptimization.mqh"
++#include "../ThreeWaveOptimization.mqh"
+ 
+ int OnInit()
+ {

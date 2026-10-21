@@ -1,0 +1,32 @@
+[
+  {
+    "run": "known_close_2025h1",
+    "candidates": 80,
+    "old_down": 17,
+    "prefix_cuts": [
+      8087,
+      10143,
+      20237
+    ],
+    "prefix_invariance": "PASS",
+    "future_perturbation": "PASS",
+    "deterministic_replay": "PASS",
+    "transition_invariants": "PASS",
+    "entry_sl_tp_outcome_unchanged": "PASS"
+  },
+  {
+    "run": "holdout_close_2024q3",
+    "candidates": 39,
+    "old_down": 11,
+    "prefix_cuts": [
+      7168,
+      8004,
+      14286
+    ],
+    "prefix_invariance": "PASS",
+    "future_perturbation": "PASS",
+    "deterministic_replay": "PASS",
+    "transition_invariants": "PASS",
+    "entry_sl_tp_outcome_unchanged": "PASS"
+  }
+]

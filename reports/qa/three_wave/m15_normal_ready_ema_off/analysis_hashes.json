@@ -1,0 +1,10 @@
+{
+  "shadow_candidates_with_context.csv": "95fe798a5665b8a898ca772fc59bf31495cee3784d4d4bfaba0c0df924e801ed",
+  "shadow_statistics.csv": "63b69a0b8419dcb7bb82dcf88a9637e6ac052a754cdb41a75e5b56d123288532",
+  "category_statistics.csv": "c969a5590acf5647e0625ec6f7f0b574d7899517469a8cc3331d5d0a98011884",
+  "executions_with_context.csv": "5b54a9a121c0ee18b4431231f862c76327c37800dcdee494b43ff57f11ec7398",
+  "ema_on_off_candidate_ledger.csv": "411ce3bc34e2030ce4db8ff97feba528377e7033846cd7cc8ca454b70cd72312",
+  "monthly_on_off.csv": "97fdd427a72f897cf9cdee52ced4e697dd80804ebe978aec0985a159044d0732",
+  "position_distribution.csv": "6b3e3fb395e22d89af52d4d7dde8035de5ba64725abf1e6cfd1b73591829c35c",
+  "audit.json": "cd92a805fb19bae7eb9a978e3b47763afb5526c779446bb29a4fb25689ae1b16"
+}

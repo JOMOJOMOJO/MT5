@@ -1,0 +1,1 @@
+CS	0	14:46:01.545	Ticks	USDJPY : real ticks begin from 2024.06.06 00:00:00, every tick generation used

@@ -1,0 +1,73 @@
+{
+  "native_observer": {
+    "TW_signals.csv": {
+      "rows": 5,
+      "exact": true
+    },
+    "TW_deals.csv": {
+      "rows": 10,
+      "exact": true
+    },
+    "TW_exits.csv": {
+      "rows": 5,
+      "exact": true
+    },
+    "TW_M15_environment_USDJPY_260922331.csv": {
+      "rows": 10,
+      "exact": true
+    }
+  },
+  "reproduction": {
+    "TW_signals.csv": {
+      "rows": 93,
+      "exact": true
+    },
+    "TW_deals.csv": {
+      "rows": 176,
+      "exact": true
+    },
+    "TW_exits.csv": {
+      "rows": 88,
+      "exact": true
+    },
+    "TW_M15_environment_USDJPY_260922331.csv": {
+      "rows": 181,
+      "exact": true
+    },
+    "TW_ready_paths.csv": {
+      "rows": 88,
+      "exact": true
+    },
+    "TW_ready_shadows.csv": {
+      "rows": 93,
+      "exact": true
+    }
+  },
+  "known_2025h1": {
+    "ready_count": 93,
+    "shadow_count": 93,
+    "same_ready_ids": true,
+    "causal_times": true,
+    "m15_independent_parity": true,
+    "input_diff": {
+      "InpUseEMAFilter": [
+        "true",
+        "false"
+      ]
+    }
+  },
+  "known_2024q3": {
+    "ready_count": 46,
+    "shadow_count": 46,
+    "same_ready_ids": true,
+    "causal_times": true,
+    "m15_independent_parity": true,
+    "input_diff": {
+      "InpUseEMAFilter": [
+        "true",
+        "false"
+      ]
+    }
+  },
+  "production_unchanged": true
+}

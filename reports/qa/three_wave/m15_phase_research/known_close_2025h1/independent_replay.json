@@ -1,0 +1,17 @@
+{
+  "run": "known_close_2025h1",
+  "bars": 20287,
+  "native_vs_python": "EXACT",
+  "prefix_lengths": [
+    100,
+    1000,
+    8000,
+    10143,
+    20270
+  ],
+  "prefix_invariance": "PASS",
+  "different_test_phase_bars_with_shorter_warmup": {
+    "2000": 0,
+    "4000": 0
+  }
+}

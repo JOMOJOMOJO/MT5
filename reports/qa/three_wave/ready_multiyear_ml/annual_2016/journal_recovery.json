@@ -1,0 +1,8 @@
+{
+  "source": "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\Agent-127.0.0.1-3001\\logs\\20260930.log",
+  "source_sha256": "71f88f3dbebcd0928b506382332d2ae4aafee52e714d2fe5e060f64a48da2482",
+  "run_start_line": 27,
+  "source_lines": 383059,
+  "method": "Recovered complete rotated agent journal containing the unique 2016 tester run",
+  "reran_MT5": false
+}

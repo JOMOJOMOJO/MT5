@@ -1,0 +1,505 @@
+{
+  "cache_files": [
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.all_symbols.M1.20241201.20241231.42.5F657857C70E30B8E9B492C132DECB6B.opt",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.all_symbols.M1.20241201.20241231.42.D6501A57E90A9BC29053C0B2077077F6.opt",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20241201.20241231.40.557B9E44CB712F275E9C485F59971EAF.opt",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20241201_20241231.0.1038B8F5EF8B98DB6E5776C183AAA870.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20241201_20241231.4.1038B8F5EF8B98DB6E5776C183AAA870.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20241201_20241231.4.16B3C05A999701878863D8DEA6C75CE2.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20241201_20241231.4.712B43B28E72978A72C7278BDC1056A8.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101.20250630.41.075DE63327DB4A8B2B7E51839C040AB7.opt",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101.20250630.41.99A49C911FD71EBCEF6EB811C21A5B3A.opt",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101_20250201.4.C1276BAB36239665BFC7E8F4D4D17C6D.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101_20250630.4.B8E088C7310AD83866C512729A47C548.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101_20250630.4.C1276BAB36239665BFC7E8F4D4D17C6D.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101_20250630.4.DB526D6B4E303D77D2F6F684C2B11312.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101_20260922.0.7CB83B68C7EF001B8806753C2C187CC8.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250301_20250401.0.C6CA70BF18041468B267FE6C499F3AFF.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250301_20260922.0.7CB83B68C7EF001B8806753C2C187CC8.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long_CC.USDJPY.M1.20250101_20250201.4.53C8F298DD2F41FD2F71A527994D45F2.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long_CC.USDJPY.M1.20250101_20250201.4.972ACEBD0539227DC59436F55FE6DDE4.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long_CC.USDJPY.M1.20250101_20250401.4.2E043204B8085E41C0B15B2D1648C777.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long_CC.USDJPY.M1.20250101_20250401.4.5BBFC4CF61B7A6FC0A8DB459B0AB4832.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long_CC.USDJPY.M1.20250101_20250401.4.87E25EDAD0ADEF257B9FDF6F02C10723.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long_CC.USDJPY.M1.20250101_20250401.4.98C4A2DD5878254DE68F913FBEC7D539.tst",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long_CC.USDJPY.M1.20250101_20250401.4.DC0CFD8BE6E77B0A790619C8DACC628D.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_EntryResearch.USDJPY.M1.20250101_20250401.4.167824E81F826FF7ABA51597F4DEB9A2.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_EntryResearch.USDJPY.M1.20250101_20250401.4.9878BC4C515FAD182D73EB5A0FE8C210.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_EntryResearch.USDJPY.M1.20250101_20250401.4.B5391DD02307AB6204B70EE69BB3CF45.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_EntryResearch.USDJPY.M1.20250101_20250401.4.E0D7CE98EB2D859397666B4333E2C08A.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_EntryResearch.USDJPY.M1.20250303_20250308.4.9878BC4C515FAD182D73EB5A0FE8C210.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_EntryResearch.USDJPY.M1.20250303_20250308.4.B5391DD02307AB6204B70EE69BB3CF45.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_EntryResearch.USDJPY.M1.20250501_20250801.4.167824E81F826FF7ABA51597F4DEB9A2.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_EntryResearch.USDJPY.M1.20250501_20250801.4.9878BC4C515FAD182D73EB5A0FE8C210.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_FibHLExitResearch.USDJPY.M1.20250101_20250401.4.08160BCBDFE72183792DD3E5A8084913.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_FibHLExitResearch.USDJPY.M1.20250101_20250401.4.21E8EB66081BE243C60ED2A047292783.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_FibHLExitResearch.USDJPY.M1.20250101_20250401.4.2F2AEE4E8FD7EE2EE8DDE4D8AF5DD065.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_FibHLExitResearch.USDJPY.M1.20250101_20250401.4.30F1AE3A7A581013287C706DDB83A703.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_FibHLExitResearch.USDJPY.M1.20250101_20250401.4.9190B3B1C5E47C3E6F1C29E9AAEAE135.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_FibWave2Research.USDJPY.M1.20250101_20250111.4.72266981F7A3C7707B627AC1176A563E.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_FibWave2Research.USDJPY.M1.20250101_20250201.4.72266981F7A3C7707B627AC1176A563E.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_FibWave2Research.USDJPY.M1.20250101_20250201.4.D077075265EF5DC6F9CA30CF9D5EE6CF.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_FibWave2Research.USDJPY.M1.20250101_20250401.4.72266981F7A3C7707B627AC1176A563E.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_FibWave2Research.USDJPY.M1.20250101_20250401.4.D077075265EF5DC6F9CA30CF9D5EE6CF.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_HLEntryResearch.USDJPY.M1.20250101_20250111.4.C3ECFEDB28B0F5807D55A464EB6FBECD.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_HLEntryResearch.USDJPY.M1.20250101_20250401.4.1FF59C61DD628D6A873BA3E62DDC29EE.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_HLEntryResearch.USDJPY.M1.20250101_20250401.4.C3ECFEDB28B0F5807D55A464EB6FBECD.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_HLEntryResearch.USDJPY.M1.20250101_20250401.4.DD8AE9265314E457CB63FC913DCFF60D.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_HLRecognitionResearch.USDJPY.M1.20250101_20250201.4.86416D3B885F6CE4D6798F0712C22429.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_3Wave_HLRecognitionResearch.USDJPY.M1.20250101_20250201.4.91E05C6AD19E5DA9F43A70D10C5DC1DD.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101_20250201.4.944A766FE367961A3576EE165A75C61B.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101_20250201.4.D0EE2817ED36035C7C948025F9885E49.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101_20250201.4.E0966CA76946DF1E40D101A9B4E03016.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101_20250401.0.E49CDA1815DD35105BC6EA643B777F94.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101_20250401.4.7A137A0D78A20F8920A7345DFCE6E784.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250101_20250401.4.BBE6CB74B890005A66246C79C543B027.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250214_20250215.0.B48DC9387D419E2B0B6A6D3F94801609.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250303_20250308.0.8E34A4B1B1C2039DC4AB3B94D351087D.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250303_20250308.0.EFBC46F0D4C10EC2EBD186EFE8D5D3D3.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250303_20250501.4.8E34A4B1B1C2039DC4AB3B94D351087D.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250305_20250307.0.8E34A4B1B1C2039DC4AB3B94D351087D.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250401_20250501.4.8E34A4B1B1C2039DC4AB3B94D351087D.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250401_20250501.4.BBE6CB74B890005A66246C79C543B027.tst",
+    "C:\\Users\\windows\\AppData\\Local\\Temp\\HF_QA_20260915_203728\\Tester\\cache\\USDJPY_M1_M5_3WaveIn3Wave_Long.USDJPY.M1.20250403_20250404.0.BBE6CB74B890005A66246C79C543B027.tst"
+  ],
+  "configs": [
+    {
+      "path": "reports\\qa\\three_wave\\april_real_ticks\\test.ini",
+      "dates": [
+        "FromDate=2025.04.01",
+        "ToDate=2025.05.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\cc_v2\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\cc_va\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\cc_vb\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\cc_vc\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\context_research\\discovery\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\context_research\\discovery_repeat\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\context_research\\extension\\test.ini",
+      "dates": [
+        "FromDate=2025.08.01",
+        "ToDate=2025.11.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\context_research\\replication\\test.ini",
+      "dates": [
+        "FromDate=2025.05.01",
+        "ToDate=2025.08.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\context_research\\smoke\\test.ini",
+      "dates": [
+        "FromDate=2025.03.03",
+        "ToDate=2025.03.08"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\context_research\\smoke_repeat\\test.ini",
+      "dates": [
+        "FromDate=2025.03.03",
+        "ToDate=2025.03.08"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\deferred_final\\test.ini",
+      "dates": [
+        "FromDate=2025.03.03",
+        "ToDate=2025.03.08"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\early_april\\test.ini",
+      "dates": [
+        "FromDate=2025.04.01",
+        "ToDate=2025.05.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\early_april_final\\test.ini",
+      "dates": [
+        "FromDate=2025.04.01",
+        "ToDate=2025.05.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\early_visual\\test.ini",
+      "dates": [
+        "FromDate=2025.04.03",
+        "ToDate=2025.04.04"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\early_visual_final\\test.ini",
+      "dates": [
+        "FromDate=2025.04.03",
+        "ToDate=2025.04.04"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\ema_filter_final\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.02.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\ema_filter_january\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.02.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\ema_filter_off\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.02.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\entry_holdout_choch50\\test.ini",
+      "dates": [
+        "FromDate=2025.05.01",
+        "ToDate=2025.08.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\entry_holdout_current\\test.ini",
+      "dates": [
+        "FromDate=2025.05.01",
+        "ToDate=2025.08.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\entry_smoke_choch\\test.ini",
+      "dates": [
+        "FromDate=2025.03.03",
+        "ToDate=2025.03.08"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\entry_smoke_hl\\test.ini",
+      "dates": [
+        "FromDate=2025.03.03",
+        "ToDate=2025.03.08"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\entry_train_choch50\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\entry_train_current\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\entry_train_current_origin\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\entry_train_hl\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\feature_research\\discovery\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\feature_research\\discovery_repeat\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\feature_research\\replication\\test.ini",
+      "dates": [
+        "FromDate=2025.05.01",
+        "ToDate=2025.08.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\feature_research\\smoke\\test.ini",
+      "dates": [
+        "FromDate=2025.03.03",
+        "ToDate=2025.03.08"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\feature_research\\smoke_fixed\\test.ini",
+      "dates": [
+        "FromDate=2025.03.03",
+        "ToDate=2025.03.08"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\feature_research\\smoke_repeat\\test.ini",
+      "dates": [
+        "FromDate=2025.03.03",
+        "ToDate=2025.03.08"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\fib_compare_q1_fib\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\fib_compare_q1_ready\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\fib_hl_exit_smoke\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.01.11"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\fib_hl_q1_dynamic\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\fib_hl_q1_noema_dynamic\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\fib_hl_q1_noema_static\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\fib_hl_q1_slonly\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\fib_hl_q1_static\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\fib_wave2_january\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.02.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\fib_wave2_ready\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.02.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\fib_wave2_smoke\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.01.11"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\hl_compare_q1_confirm\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\hl_compare_q1_ready\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\hl_compare_q1_retest\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\hl_entry_smoke\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.01.11"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\hl_rec_reversal_jan\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.02.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\hl_rec_right1_jan\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.02.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\m15_phase_research\\smoke\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.02.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\parity\\test.ini",
+      "dates": [
+        "FromDate=2025.03.03",
+        "ToDate=2025.03.08"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\parity_final\\test.ini",
+      "dates": [
+        "FromDate=2025.03.03",
+        "ToDate=2025.03.08"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\real_ticks\\test.ini",
+      "dates": [
+        "FromDate=2025.03.03",
+        "ToDate=2025.05.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\recovery_before\\test.ini",
+      "dates": [
+        "FromDate=2025.02.14",
+        "ToDate=2025.02.15"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\recovery_long_after\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\recovery_long_before\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\rr_baseline\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\rr_one\\test.ini",
+      "dates": [
+        "FromDate=2025.01.01",
+        "ToDate=2025.04.01"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\visual\\test.ini",
+      "dates": [
+        "FromDate=2025.03.05",
+        "ToDate=2025.03.07"
+      ]
+    },
+    {
+      "path": "reports\\qa\\three_wave\\visual_final\\test.ini",
+      "dates": [
+        "FromDate=2025.03.05",
+        "ToDate=2025.03.07"
+      ]
+    }
+  ],
+  "prospective_holdout": "2024-07-01 to 2024-10-01",
+  "qualification": "No matching ThreeWave run artifact found for this interval; not proof of no manual viewing. Other strategy research is not fully audited.",
+  "excluded_as_not_fresh": [
+    "2024-12: ThreeWave tester/optimization caches",
+    "2025-01 to 2026-09: inclusive native ThreeWave run caches, not unused even when detailed monthly research is absent"
+  ],
+  "holdout_limitations": [
+    "Retrospective earlier interval, not a chronological forward test",
+    "Some September 2024 bars are read as M15 warmup for January 2025; no July-September strategy outcome artifact found",
+    "Artifacts cannot rule out user manual chart viewing or deleted runs"
+  ]
+}

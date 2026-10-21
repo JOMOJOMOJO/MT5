@@ -1,0 +1,3 @@
+model,train_n,check_n,balanced_accuracy,majority_balanced_accuracy
+FIT_2025_CHECK_2024,93,45,0.2003105590062112,0.25
+FIT_2024_CHECK_2025,45,93,0.2109375,0.25

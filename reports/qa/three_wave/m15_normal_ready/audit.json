@@ -1,0 +1,61 @@
+{
+  "known_2025h1": {
+    "ready_candidates": 93,
+    "executions": 45,
+    "all_paths_matched": true,
+    "m15_research_parity": "PASS",
+    "final_balance": 9067.42,
+    "ledger_balance_reconciled": true,
+    "test_end_forced": 0,
+    "tick_warning_days": [
+      "2025.03.27"
+    ],
+    "categories_valid": true,
+    "signal_reasons": {
+      "EMA_ORDER_NOT_BULLISH": 46,
+      "MARKET_BUY_WITH_SLTP": 45,
+      "POSITION_OPEN": 2
+    }
+  },
+  "known_2024q3": {
+    "ready_candidates": 46,
+    "executions": 25,
+    "all_paths_matched": true,
+    "m15_research_parity": "PASS",
+    "final_balance": 10046.74,
+    "ledger_balance_reconciled": true,
+    "test_end_forced": 1,
+    "tick_warning_days": [
+      "2024.07.01",
+      "2024.07.02",
+      "2024.07.03",
+      "2024.07.04",
+      "2024.07.05",
+      "2024.07.08",
+      "2024.07.09",
+      "2024.07.10",
+      "2024.07.11",
+      "2024.07.12",
+      "2024.07.15",
+      "2024.07.16",
+      "2024.07.17",
+      "2024.07.18",
+      "2024.07.19",
+      "2024.07.22",
+      "2024.07.23",
+      "2024.07.24",
+      "2024.07.25",
+      "2024.07.26",
+      "2024.07.29",
+      "2024.07.30",
+      "2024.09.06"
+    ],
+    "categories_valid": true,
+    "signal_reasons": {
+      "MARKET_BUY_WITH_SLTP": 25,
+      "EMA_ORDER_NOT_BULLISH": 19,
+      "POSITION_OPEN": 2
+    }
+  },
+  "production_source_unchanged": true
+}

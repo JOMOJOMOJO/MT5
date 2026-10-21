@@ -1,0 +1,9 @@
+{
+  "candidate_counts": "PASS",
+  "exclusions_not_in_model": "PASS",
+  "bar_order_2083": "PASS",
+  "feature_year_audits": 10,
+  "model_repeat_checks": 40,
+  "production_unchanged": "PASS",
+  "report_complete": true
+}

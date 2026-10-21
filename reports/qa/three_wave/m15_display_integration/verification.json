@@ -1,0 +1,52 @@
+{
+  "known_close_2025h1": {
+    "candidates": 80,
+    "closed_bars": 20287,
+    "shared_core_parity": "PASS",
+    "raw_tolerance": 2e-11
+  },
+  "holdout_close_2024q3": {
+    "candidates": 39,
+    "closed_bars": 14336,
+    "shared_core_parity": "PASS",
+    "raw_tolerance": 2e-11
+  },
+  "ready": {
+    "TW_signals.csv": {
+      "rows": 17,
+      "exact": true
+    },
+    "TW_deals.csv": {
+      "rows": 33,
+      "exact": true
+    },
+    "TW_exits.csv": {
+      "rows": 16,
+      "exact": true
+    },
+    "final_balance": [
+      "9675.18 USD"
+    ],
+    "diagnostic_rows": 34,
+    "production_python_parity": "PASS"
+  },
+  "retest": {
+    "TW_signals.csv": {
+      "rows": 2,
+      "exact": true
+    },
+    "TW_deals.csv": {
+      "rows": 4,
+      "exact": true
+    },
+    "TW_exits.csv": {
+      "rows": 2,
+      "exact": true
+    },
+    "final_balance": [
+      "9985.50 USD"
+    ],
+    "diagnostic_rows": 4,
+    "production_python_parity": "PASS"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "status": "COLLECTION_AND_FIXED_ANALYSIS_REVIEWED",
+  "years": [
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "total_candidates": 2091,
+  "verified_labels": 295,
+  "recovered_2016": true,
+  "reran_MT5": false,
+  "source_hashes_unchanged": 20,
+  "prior_2025h1_entry_sl_tp_parity": 93,
+  "repeat_model_checks": 20
+}

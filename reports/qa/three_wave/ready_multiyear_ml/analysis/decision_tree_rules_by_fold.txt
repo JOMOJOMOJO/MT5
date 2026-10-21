@@ -1,0 +1,197 @@
+=== 2025Q1 TREE_D2 train=82 test=46 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.55893
+|   |--- m1_wave2_retrace <= 0.51441
+|   |   |--- class: 0
+|   |--- m1_wave2_retrace >  0.51441
+|   |   |--- class: 0
+|--- hour_sin >  0.55893
+|   |--- class: 1
+
+=== 2025Q1 TREE_D3 train=82 test=46 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.55893
+|   |--- m1_wave2_retrace <= 0.51441
+|   |   |--- class: 0
+|   |--- m1_wave2_retrace >  0.51441
+|   |   |--- m15_low_line_slope_atr_per_hour <= -0.00303
+|   |   |   |--- class: 0
+|   |   |--- m15_low_line_slope_atr_per_hour >  -0.00303
+|   |   |   |--- class: 0
+|--- hour_sin >  0.55893
+|   |--- class: 1
+
+=== 2025Q1 TREE_D4 train=82 test=46 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.55893
+|   |--- m1_wave2_retrace <= 0.51441
+|   |   |--- class: 0
+|   |--- m1_wave2_retrace >  0.51441
+|   |   |--- m15_low_line_slope_atr_per_hour <= -0.00303
+|   |   |   |--- class: 0
+|   |   |--- m15_low_line_slope_atr_per_hour >  -0.00303
+|   |   |   |--- class: 0
+|--- hour_sin >  0.55893
+|   |--- class: 1
+
+=== 2025Q2 TREE_D2 train=128 test=47 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.58248
+|   |--- h1_atr_state <= 1.26690
+|   |   |--- class: 0
+|   |--- h1_atr_state >  1.26690
+|   |   |--- class: 1
+|--- hour_sin >  0.58248
+|   |--- wave1_second_half_speed_atr <= 0.58979
+|   |   |--- class: 0
+|   |--- wave1_second_half_speed_atr >  0.58979
+|   |   |--- class: 1
+
+=== 2025Q2 TREE_D3 train=128 test=47 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.58248
+|   |--- h1_atr_state <= 1.26690
+|   |   |--- m1_wave2_retrace <= 0.51722
+|   |   |   |--- class: 0
+|   |   |--- m1_wave2_retrace >  0.51722
+|   |   |   |--- class: 0
+|   |--- h1_atr_state >  1.26690
+|   |   |--- class: 1
+|--- hour_sin >  0.58248
+|   |--- wave1_second_half_speed_atr <= 0.58979
+|   |   |--- class: 0
+|   |--- wave1_second_half_speed_atr >  0.58979
+|   |   |--- class: 1
+
+=== 2025Q2 TREE_D4 train=128 test=47 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.58248
+|   |--- h1_atr_state <= 1.26690
+|   |   |--- m1_wave2_retrace <= 0.51722
+|   |   |   |--- window20_range_atr <= 1.85142
+|   |   |   |   |--- class: 1
+|   |   |   |--- window20_range_atr >  1.85142
+|   |   |   |   |--- class: 0
+|   |   |--- m1_wave2_retrace >  0.51722
+|   |   |   |--- h1_nearest_support_R <= 5.17203
+|   |   |   |   |--- class: 0
+|   |   |   |--- h1_nearest_support_R >  5.17203
+|   |   |   |   |--- class: 0
+|   |--- h1_atr_state >  1.26690
+|   |   |--- class: 1
+|--- hour_sin >  0.58248
+|   |--- wave1_second_half_speed_atr <= 0.58979
+|   |   |--- class: 0
+|   |--- wave1_second_half_speed_atr >  0.58979
+|   |   |--- class: 1
+
+=== 2025Q3 TREE_D2 train=175 test=55 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.58248
+|   |--- m15_low_line_entry_distance_atr <= 2.29521
+|   |   |--- class: 0
+|   |--- m15_low_line_entry_distance_atr >  2.29521
+|   |   |--- class: 1
+|--- hour_sin >  0.58248
+|   |--- m1_wave2_retrace <= 0.47552
+|   |   |--- class: 0
+|   |--- m1_wave2_retrace >  0.47552
+|   |   |--- class: 1
+
+=== 2025Q3 TREE_D3 train=175 test=55 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.58248
+|   |--- m15_low_line_entry_distance_atr <= 2.29521
+|   |   |--- m1_wave2_retrace <= 0.51749
+|   |   |   |--- class: 0
+|   |   |--- m1_wave2_retrace >  0.51749
+|   |   |   |--- class: 0
+|   |--- m15_low_line_entry_distance_atr >  2.29521
+|   |   |--- wave1_mean_clv <= 0.64636
+|   |   |   |--- class: 0
+|   |   |--- wave1_mean_clv >  0.64636
+|   |   |   |--- class: 1
+|--- hour_sin >  0.58248
+|   |--- m1_wave2_retrace <= 0.47552
+|   |   |--- class: 0
+|   |--- m1_wave2_retrace >  0.47552
+|   |   |--- window5_entry_position <= 0.95436
+|   |   |   |--- class: 1
+|   |   |--- window5_entry_position >  0.95436
+|   |   |   |--- class: 1
+
+=== 2025Q3 TREE_D4 train=175 test=55 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- hour_sin <= 0.58248
+|   |--- m15_low_line_entry_distance_atr <= 2.29521
+|   |   |--- m1_wave2_retrace <= 0.51749
+|   |   |   |--- hour_sin <= -0.54821
+|   |   |   |   |--- class: 1
+|   |   |   |--- hour_sin >  -0.54821
+|   |   |   |   |--- class: 0
+|   |   |--- m1_wave2_retrace >  0.51749
+|   |   |   |--- m15_down_swing_vs_previous <= 1.04872
+|   |   |   |   |--- class: 0
+|   |   |   |--- m15_down_swing_vs_previous >  1.04872
+|   |   |   |   |--- class: 0
+|   |--- m15_low_line_entry_distance_atr >  2.29521
+|   |   |--- wave1_mean_clv <= 0.64636
+|   |   |   |--- class: 0
+|   |   |--- wave1_mean_clv >  0.64636
+|   |   |   |--- class: 1
+|--- hour_sin >  0.58248
+|   |--- m1_wave2_retrace <= 0.47552
+|   |   |--- class: 0
+|   |--- m1_wave2_retrace >  0.47552
+|   |   |--- window5_entry_position <= 0.95436
+|   |   |   |--- class: 1
+|   |   |--- window5_entry_position >  0.95436
+|   |   |   |--- class: 1
+
+=== 2025Q4 TREE_D2 train=230 test=65 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- m15_recent_down_swing_atr <= 1.40141
+|   |--- class: 0
+|--- m15_recent_down_swing_atr >  1.40141
+|   |--- hour_sin <= 0.60344
+|   |   |--- class: 0
+|   |--- hour_sin >  0.60344
+|   |   |--- class: 1
+
+=== 2025Q4 TREE_D3 train=230 test=65 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- m15_recent_down_swing_atr <= 1.40141
+|   |--- class: 0
+|--- m15_recent_down_swing_atr >  1.40141
+|   |--- hour_sin <= 0.60344
+|   |   |--- window20_net_return_atr <= 1.35710
+|   |   |   |--- class: 0
+|   |   |--- window20_net_return_atr >  1.35710
+|   |   |   |--- class: 1
+|   |--- hour_sin >  0.60344
+|   |   |--- wave1_strength_atr_choch <= 4.30103
+|   |   |   |--- class: 1
+|   |   |--- wave1_strength_atr_choch >  4.30103
+|   |   |   |--- class: 1
+
+=== 2025Q4 TREE_D4 train=230 test=65 ===
+Thresholds below are converted back to original feature units; one-hot categories remain 0/1.
+|--- m15_recent_down_swing_atr <= 1.40141
+|   |--- class: 0
+|--- m15_recent_down_swing_atr >  1.40141
+|   |--- hour_sin <= 0.60344
+|   |   |--- window20_net_return_atr <= 1.35710
+|   |   |   |--- setup_age_minutes <= 35.50000
+|   |   |   |   |--- class: 1
+|   |   |   |--- setup_age_minutes >  35.50000
+|   |   |   |   |--- class: 0
+|   |   |--- window20_net_return_atr >  1.35710
+|   |   |   |--- wave1_choch_body_atr <= 0.75531
+|   |   |   |   |--- class: 1
+|   |   |   |--- wave1_choch_body_atr >  0.75531
+|   |   |   |   |--- class: 1
+|   |--- hour_sin >  0.60344
+|   |   |--- m5_choch_break_atr <= 0.40402
+|   |   |   |--- class: 1
+|   |   |--- m5_choch_break_atr >  0.40402
+|   |   |   |--- class: 1

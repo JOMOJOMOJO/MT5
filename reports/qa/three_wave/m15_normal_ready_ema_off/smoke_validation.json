@@ -1,0 +1,21 @@
+{
+  "native_observer": {
+    "TW_signals.csv": {
+      "rows": 5,
+      "exact": true
+    },
+    "TW_deals.csv": {
+      "rows": 10,
+      "exact": true
+    },
+    "TW_exits.csv": {
+      "rows": 5,
+      "exact": true
+    },
+    "TW_M15_environment_USDJPY_260922331.csv": {
+      "rows": 10,
+      "exact": true
+    }
+  },
+  "production_unchanged": true
+}

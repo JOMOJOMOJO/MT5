@@ -1,0 +1,11 @@
+{
+  "STRUCTURE_LGBM": "PASS",
+  "COMPACT_LGBM": "PASS",
+  "TSFRESH_LGBM": "PASS",
+  "SEQUENCE_LOGISTIC": "PASS",
+  "SEQUENCE_AUG_LOGISTIC": "PASS",
+  "paired_labels": 2082,
+  "source_rows": 2091,
+  "hour_spread_allowlist": "PASS",
+  "label_counterfactual": "PASS"
+}

@@ -1,0 +1,18 @@
+{
+  "locked_after": "smoke_final vs smoke_reproduction full CSV equality, before full-period outcomes",
+  "sources": {
+    "mql/Experts/USDJPY_3Wave_M15PhaseResearch.mq5": "694e96218ce801c4e047c2e2f6e20ada12b6054ce96f3ff936efa478490551ea",
+    "mql/Include/ThreeWaveM15PhaseResearch.mqh": "7ffbaaca298b251c0cad363e510e42031cc59191526a68c699dd7a72437bd5fd",
+    "mql/Include/PhaseResearchFrozen/ThreeWaveStructure.mqh": "fd0cf7141439cc50aec79f8665d5fc68fb5f96e1b88e784375ccda675321c54b",
+    "mql/Include/PhaseResearchFrozen/ThreeWaveInputs.mqh": "ba563f619646c4fd0e4b3416be14c81768be79848f0c438e6c53a08e91e9f216",
+    "tools/swing_structure/run-m15-phase-research.ps1": "915a5224f39470c255a2173ab9423b46bdd4dce564367b34de86f6ae2075014c"
+  },
+  "known_interval": [
+    "2025-01-01",
+    "2025-07-01"
+  ],
+  "retrospective_holdout": [
+    "2024-07-01",
+    "2024-10-01"
+  ]
+}

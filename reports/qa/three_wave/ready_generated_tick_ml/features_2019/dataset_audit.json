@@ -1,0 +1,22 @@
+{
+  "m1_bars": 378776,
+  "m5_bars": 80590,
+  "m15_bars": 30863,
+  "h1_bars": 12215,
+  "candidates": 228,
+  "feature_count": 194,
+  "labels": 0,
+  "unverified": 228,
+  "tick_begin": "2024-06-06 00:00:00",
+  "warning_days": [],
+  "m15_native_parity": "PASS",
+  "prefix_ids": [
+    "1546433100/1546436700/1546437540",
+    "1553636400/1553639400/1553640720",
+    "1562811300/1562812860/1562813400",
+    "1571714100/1571716260/1571716980",
+    "1577824200/1577827860/1577828880"
+  ],
+  "future_mutation": "PASS",
+  "production_frozen_hashes": "UNCHANGED"
+}

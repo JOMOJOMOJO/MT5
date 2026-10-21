@@ -1,0 +1,40 @@
+﻿{
+    "step":  "complete",
+    "updated":  "2026-09-30T16:29:09.8058924+09:00",
+    "failed":  [
+                   {
+                       "error":  "Post-run collection audit failed",
+                       "year":  2016
+                   }
+               ],
+    "completed":  [
+                      {
+                          "candidates":  214,
+                          "verified_labels":  0,
+                          "year":  2020
+                      },
+                      {
+                          "candidates":  228,
+                          "verified_labels":  0,
+                          "year":  2019
+                      },
+                      {
+                          "candidates":  189,
+                          "verified_labels":  0,
+                          "year":  2018
+                      },
+                      {
+                          "candidates":  207,
+                          "verified_labels":  0,
+                          "year":  2017
+                      }
+                  ],
+    "years":  [
+                  2020,
+                  2019,
+                  2018,
+                  2017,
+                  2016
+              ],
+    "state":  "FINISHED_WITH_ERRORS_AWAITING_REVIEW"
+}

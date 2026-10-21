@@ -1,0 +1,10 @@
+{
+  "reports\\qa\\three_wave\\m15_phase_research\\known_close_2025h1\\MP_candidates.csv": "0eaa6006d515272575b2bb968546eb1fdd52f6b869dbc786112a01508d78716c",
+  "reports\\qa\\three_wave\\m15_phase_research\\known_close_2025h1\\MP_outcomes.csv": "9dfa201a7084cb9963b91bf2ce8d973e33206c1b70a9e36ad1292d56c1336311",
+  "reports\\qa\\three_wave\\m15_phase_research\\known_close_2025h1\\MP_phases.csv": "46a9360d111e0995955a460c93e80bab0e6756438d57be2e228c210d0521259e",
+  "reports\\qa\\three_wave\\m15_phase_research\\known_close_2025h1\\MP_resistance.csv": "62bcd78584b08bba1d4a43859e24f55dec6a3f5c37ad450dd61d513203777a18",
+  "reports\\qa\\three_wave\\m15_phase_research\\holdout_close_2024q3\\MP_candidates.csv": "b2f305f38397f79e8b01be525741cf43efde7de619111f4bcb08c9c7f3487816",
+  "reports\\qa\\three_wave\\m15_phase_research\\holdout_close_2024q3\\MP_outcomes.csv": "fe3f86a6d5aaff6246b86506278c4fd4901a09b97b530e3806b13fe0b117cb17",
+  "reports\\qa\\three_wave\\m15_phase_research\\holdout_close_2024q3\\MP_phases.csv": "f411a726bbe477a194cc8400496e48b4c34c52b6d5afcac2b5eb1b11d98fdf9d",
+  "reports\\qa\\three_wave\\m15_phase_research\\holdout_close_2024q3\\MP_resistance.csv": "3271a11fb217e554cfa681fb0347d65574268602ece73e65b4ed86273c381c3c"
+}

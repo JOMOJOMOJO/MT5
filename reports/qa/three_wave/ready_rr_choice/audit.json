@@ -1,0 +1,16 @@
+{
+  "production_unchanged": true,
+  "original_candidates": 2091,
+  "original_paired_labels": 2082,
+  "outer_candidates": 1656,
+  "outer_paired_labels": 1647,
+  "QA": [
+    "STRUCTURE_LGBM_REPEAT_PASS",
+    "COMPACT_LGBM_REPEAT_PASS",
+    "TSFRESH_LGBM_REPEAT_PASS",
+    "SEQUENCE_LOGISTIC_REPEAT_PASS",
+    "SEQUENCE_AUG_LOGISTIC_REPEAT_PASS"
+  ],
+  "augmentation_not_used_in_validation": true,
+  "independent_sample_count_not_inflated": true
+}

@@ -1,0 +1,8 @@
+{
+  "warning_days": [
+    "2025.03.27"
+  ],
+  "candidates_on_warning_days": 0,
+  "candidates_with_any_path_overlap": 0,
+  "limitation": "Daily tags cannot certify unaffected feature history; no rows excluded from primary statistics."
+}

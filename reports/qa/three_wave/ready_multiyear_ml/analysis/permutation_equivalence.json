@@ -1,0 +1,104 @@
+[
+  {
+    "model": "LogisticRegression",
+    "feature": "nearest_resistance_R",
+    "n": 46,
+    "result": "PASS"
+  },
+  {
+    "model": "LogisticRegression",
+    "feature": "m15_regime",
+    "n": 46,
+    "result": "PASS"
+  },
+  {
+    "model": "LogisticRegression",
+    "feature": "h1_nearest_resistance_R",
+    "n": 46,
+    "result": "PASS"
+  },
+  {
+    "model": "LogisticRegression",
+    "feature": "nearest_resistance_R",
+    "n": 47,
+    "result": "PASS"
+  },
+  {
+    "model": "LogisticRegression",
+    "feature": "m15_regime",
+    "n": 47,
+    "result": "PASS"
+  },
+  {
+    "model": "LogisticRegression",
+    "feature": "h1_nearest_resistance_R",
+    "n": 47,
+    "result": "PASS"
+  },
+  {
+    "model": "LGBMClassifier",
+    "feature": "nearest_resistance_R",
+    "n": 47,
+    "result": "PASS"
+  },
+  {
+    "model": "LGBMClassifier",
+    "feature": "h1_nearest_resistance_R",
+    "n": 47,
+    "result": "PASS"
+  },
+  {
+    "model": "LogisticRegression",
+    "feature": "nearest_resistance_R",
+    "n": 55,
+    "result": "PASS"
+  },
+  {
+    "model": "LogisticRegression",
+    "feature": "m15_regime",
+    "n": 55,
+    "result": "PASS"
+  },
+  {
+    "model": "LogisticRegression",
+    "feature": "h1_nearest_resistance_R",
+    "n": 55,
+    "result": "PASS"
+  },
+  {
+    "model": "LGBMClassifier",
+    "feature": "m15_regime",
+    "n": 55,
+    "result": "PASS"
+  },
+  {
+    "model": "LogisticRegression",
+    "feature": "nearest_resistance_R",
+    "n": 65,
+    "result": "PASS"
+  },
+  {
+    "model": "LogisticRegression",
+    "feature": "m15_regime",
+    "n": 65,
+    "result": "PASS"
+  },
+  {
+    "model": "LogisticRegression",
+    "feature": "h1_nearest_resistance_R",
+    "n": 65,
+    "result": "PASS"
+  },
+  {
+    "model": "LGBMClassifier",
+    "feature": "nearest_resistance_R",
+    "n": 65,
+    "result": "PASS"
+  },
+  {
+    "model": "LGBMClassifier",
+    "feature": "h1_nearest_resistance_R",
+    "n": 65,
+    "result": "PASS"
+  }
+]

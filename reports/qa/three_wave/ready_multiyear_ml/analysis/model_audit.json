@@ -1,0 +1,13 @@
+{
+  "python": "3.11.9",
+  "numpy": "2.4.4",
+  "pandas": "3.0.1",
+  "sklearn": "1.9.0",
+  "lightgbm": "4.6.0",
+  "model_input_count": 117,
+  "evaluated_folds": 4,
+  "pycaret_used": false,
+  "shap_used": false,
+  "random_split": false,
+  "hyperparameter_search": false
+}

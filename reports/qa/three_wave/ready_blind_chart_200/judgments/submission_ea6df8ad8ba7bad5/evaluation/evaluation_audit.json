@@ -1,0 +1,24 @@
+{
+  "primary_auc": 0.4343434343434343,
+  "auc_year_block_95pct": [
+    0.21212121212121215,
+    0.6464646464646464
+  ],
+  "auc_valid_replicates": 5000,
+  "exact_auc_permutation_p_greater": 0.6986603953322219,
+  "exact_auc_permutation_p_two_sided": 0.6556322934031913,
+  "permutations": 167960,
+  "unique_parent_ids": 20,
+  "unique_months": 20,
+  "unique_years": 10,
+  "rows_per_year": 2,
+  "formal_p_value_limit": "Unconditional permutation assumes exchangeable labels; temporal dependence and pilot size limit inference",
+  "annual_inference": "Two candidates per year; no yearly reproducibility claim",
+  "top_membership_frozen": true,
+  "judgments_unchanged": true,
+  "source_labels_unchanged": true,
+  "actual_prompt_model_and_variant_not_independently_verified": true,
+  "production_unchanged": true,
+  "lightgbm_compared": false,
+  "remaining_images_generated": false
+}

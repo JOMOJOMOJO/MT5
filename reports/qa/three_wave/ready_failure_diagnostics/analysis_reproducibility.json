@@ -1,0 +1,18 @@
+{
+  "csv_count": 12,
+  "identical": true,
+  "hashes": {
+    "decision_tree_cross_period.csv": "1fedb1e597d7fed84ad32ac22079fb7e71a21f4a211df9e7e10082b9541bdfa1",
+    "decision_tree_leaves.csv": "61fc8284ea23fa4786e5ead038796c6af89553bc7750659fc1a111aa66856fd0",
+    "high_position_feature_statistics.csv": "c97b520646bc98b7eaf13d71677fb6a5c50dacd8e74b92ec26426bad917b603d",
+    "known_2024q3_bar_source_differences.csv": "06c049bf8234f5d1accccaccca0516f0d3861f377f76714882b1b3f47fb6a8a4",
+    "known_2025h1_bar_source_differences.csv": "5d7457491161f3a89b7b89bc9a065b4dd3a05ac917131ecad819608f1167a30d",
+    "m15_outcome_statistics.csv": "8a00cbc24fd12ca1f435b1f26cb690f0796dc1e4f0f881ac2c6d978317ea9bab",
+    "outcome_counts.csv": "4195a8228bf5638d43a583a2474f60483441882458e753f5dcd26a3796162855",
+    "outcome_feature_statistics.csv": "7ce9d7920625c503d3583630cc9184b93b0b980b1fe328e2bf4ba5dd4fd9993b",
+    "period_direction_comparison.csv": "baa61df98fafe9740709bcb7cd68998638980a40dc607a0c1c53b3dbfe158620",
+    "period_feature_statistics.csv": "337bd5ebeadb952d7ab4c4bcabbb710698f48e5c9fdbb0a2ddfbd255aef8c108",
+    "ready_failure_analysis.csv": "cee14136f79e72b6d4ac66f85fa9a796976f0039abe1d13e1ad219e9cffd1332",
+    "ready_type_statistics.csv": "857f194460514931eb407dede27a77768916e5db07962a47c4eae0eaf585e433"
+  }
+}

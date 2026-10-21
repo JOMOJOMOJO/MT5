@@ -1,0 +1,57 @@
+CS	3	10:05:58.038	Ticks	USDJPY : 2024.06.06 23:59 - real ticks absent for 651 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.038	Ticks	USDJPY : 2024.06.06 23:59 - real ticks discarded for 787 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.046	Ticks	USDJPY : 2024.06.07 23:59 - real ticks absent for 79 minutes out of 1437 total minute bars within a day
+CS	3	10:05:58.046	Ticks	USDJPY : 2024.06.07 23:59 - real ticks discarded for 1358 minutes out of 1437 total minute bars within a day
+CS	3	10:05:58.049	Ticks	USDJPY : 2024.06.10 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.053	Ticks	USDJPY : 2024.06.11 23:59 - real ticks absent for 10 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.053	Ticks	USDJPY : 2024.06.11 23:59 - real ticks discarded for 1428 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.063	Ticks	USDJPY : 2024.06.12 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.070	Ticks	USDJPY : 2024.06.13 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.082	Ticks	USDJPY : 2024.06.14 23:59 - real ticks absent for 59 minutes out of 1436 total minute bars within a day
+CS	3	10:05:58.082	Ticks	USDJPY : 2024.06.14 23:59 - real ticks discarded for 1377 minutes out of 1436 total minute bars within a day
+CS	3	10:05:58.089	Ticks	USDJPY : 2024.06.17 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.095	Ticks	USDJPY : 2024.06.18 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.099	Ticks	USDJPY : 2024.06.19 23:59 - real ticks discarded for 1431 minutes out of 1432 total minute bars within a day
+CS	3	10:05:58.104	Ticks	USDJPY : 2024.06.20 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.109	Ticks	USDJPY : 2024.06.21 23:59 - real ticks absent for 10 minutes out of 1437 total minute bars within a day
+CS	3	10:05:58.109	Ticks	USDJPY : 2024.06.21 23:59 - real ticks discarded for 1427 minutes out of 1437 total minute bars within a day
+CS	3	10:05:58.115	Ticks	USDJPY : 2024.06.24 23:59 - real ticks absent for 1 minutes out of 1436 total minute bars within a day
+CS	3	10:05:58.115	Ticks	USDJPY : 2024.06.24 23:59 - real ticks discarded for 1435 minutes out of 1436 total minute bars within a day
+CS	3	10:05:58.126	Ticks	USDJPY : 2024.06.25 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.134	Ticks	USDJPY : 2024.06.26 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.144	Ticks	USDJPY : 2024.06.27 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.157	Ticks	USDJPY : 2024.06.28 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.166	Ticks	USDJPY : 2024.07.01 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.175	Ticks	USDJPY : 2024.07.02 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.183	Ticks	USDJPY : 2024.07.03 23:59 - real ticks absent for 2 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.183	Ticks	USDJPY : 2024.07.03 23:59 - real ticks discarded for 1436 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.192	Ticks	USDJPY : 2024.07.04 23:59 - real ticks absent for 1 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.192	Ticks	USDJPY : 2024.07.04 23:59 - real ticks discarded for 1437 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.202	Ticks	USDJPY : 2024.07.05 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.212	Ticks	USDJPY : 2024.07.08 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.219	Ticks	USDJPY : 2024.07.09 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.231	Ticks	USDJPY : 2024.07.10 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.248	Ticks	USDJPY : 2024.07.11 23:59 - real ticks absent for 1 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.248	Ticks	USDJPY : 2024.07.11 23:59 - real ticks discarded for 1437 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.262	Ticks	USDJPY : 2024.07.12 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.272	Ticks	USDJPY : 2024.07.15 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.285	Ticks	USDJPY : 2024.07.16 23:59 - real ticks absent for 2 minutes out of 1436 total minute bars within a day
+CS	3	10:05:58.285	Ticks	USDJPY : 2024.07.16 23:59 - real ticks discarded for 1434 minutes out of 1436 total minute bars within a day
+CS	3	10:05:58.301	Ticks	USDJPY : 2024.07.17 23:59 - real ticks absent for 1 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.301	Ticks	USDJPY : 2024.07.17 23:59 - real ticks discarded for 1437 minutes out of 1438 total minute bars within a day
+CS	3	10:05:58.316	Ticks	USDJPY : 2024.07.18 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.329	Ticks	USDJPY : 2024.07.19 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.344	Ticks	USDJPY : 2024.07.22 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.359	Ticks	USDJPY : 2024.07.23 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.382	Ticks	USDJPY : 2024.07.24 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.403	Ticks	USDJPY : 2024.07.25 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.420	Ticks	USDJPY : 2024.07.26 23:59 - real ticks absent for 1 minutes out of 1436 total minute bars within a day
+CS	3	10:05:58.420	Ticks	USDJPY : 2024.07.26 23:59 - real ticks discarded for 1435 minutes out of 1436 total minute bars within a day
+CS	3	10:05:58.438	Ticks	USDJPY : 2024.07.29 23:59 - all the real ticks discarded within a day
+CS	3	10:05:58.465	Ticks	USDJPY : 2024.07.30 23:59 - all the real ticks discarded within a day
+CS	3	10:05:59.104	Ticks	USDJPY : 2024.09.06 23:59 - real ticks absent for 17 minutes out of 1437 total minute bars within a day
+CS	3	10:05:59.104	Ticks	USDJPY : 2024.09.06 23:59 - real ticks discarded for 1405 minutes out of 1437 total minute bars within a day
+CS	0	10:06:00.212	Ticks	USDJPY : real ticks begin from 2024.06.06 00:00:00
+CS	3	10:06:00.212	Ticks	USDJPY : 2024.01.01 00:00 - 2025.01.01 00:00  real ticks absent for 835 minutes of 373622 total minute bars, every tick generation used
+CS	3	10:06:00.212	Ticks	USDJPY : 2024.01.01 00:00 - 2025.01.01 00:00  real ticks discarded for 56627 minutes of 373622 total minute bars, every tick generation used
+CS	3	10:06:00.212	Ticks	USDJPY : 2024.01.01 00:00 - 2025.01.01 00:00  real ticks discarded for 26 whole days

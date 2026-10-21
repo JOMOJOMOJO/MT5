@@ -1,0 +1,35 @@
+{
+  "status": "COLLECTED_PENDING_ANALYSIS",
+  "candidate_count": 192,
+  "outcomes": {
+    "SL": 118,
+    "TP": 74
+  },
+  "real_tick_begin": null,
+  "tick_provenance": "REAL_TICK_START_NOT_IDENTIFIED",
+  "warning_days": [],
+  "verified_label_count": 0,
+  "bars": {
+    "M1": {
+      "rows": 378201,
+      "first": 1671824460,
+      "last": 1703894100
+    },
+    "M5": {
+      "rows": 80589,
+      "first": 1669867200,
+      "last": 1703893800
+    },
+    "M15": {
+      "rows": 30863,
+      "first": 1664884800,
+      "last": 1703892600
+    },
+    "H1": {
+      "rows": 12215,
+      "first": 1642118400,
+      "last": 1703887200
+    }
+  },
+  "inputs_match_2024": true
+}

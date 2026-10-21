@@ -1,0 +1,13 @@
+{
+  "deterministic_csv_and_audit": true,
+  "files": [
+    "shadow_candidates_with_context.csv",
+    "shadow_statistics.csv",
+    "category_statistics.csv",
+    "executions_with_context.csv",
+    "ema_on_off_candidate_ledger.csv",
+    "monthly_on_off.csv",
+    "position_distribution.csv",
+    "audit.json"
+  ]
+}

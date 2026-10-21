@@ -1,0 +1,5 @@
+row,signal_id,entry_time,image,selection
+0,1704216900/1704220200/1704220740,2024-01-02 18:40:00,trendline_example_000.png,chronological_index_not_outcome
+60,1714765500/1714769880/1714770780,2024-05-03 21:14:00,trendline_example_060.png,chronological_index_not_outcome
+120,1726711200/1726714080/1726714440,2024-09-19 02:55:00.237000,trendline_example_120.png,chronological_index_not_outcome
+179,1735656300/1735659180/1735659540,2024-12-31 15:40:00.006000,trendline_example_179.png,chronological_index_not_outcome

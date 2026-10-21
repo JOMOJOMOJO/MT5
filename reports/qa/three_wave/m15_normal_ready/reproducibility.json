@@ -1,0 +1,30 @@
+{
+  "TW_signals.csv": {
+    "rows": 93,
+    "exact": true
+  },
+  "TW_deals.csv": {
+    "rows": 90,
+    "exact": true
+  },
+  "TW_exits.csv": {
+    "rows": 45,
+    "exact": true
+  },
+  "TW_M15_environment_USDJPY_260922331.csv": {
+    "rows": 138,
+    "exact": true
+  },
+  "TW_ready_paths.csv": {
+    "rows": 45,
+    "exact": true
+  },
+  "known_2025h1": {
+    "build": "6182",
+    "final_balance": "9067.42 USD"
+  },
+  "reproduction_2025h1": {
+    "build": "6230",
+    "final_balance": "9067.42 USD"
+  }
+}

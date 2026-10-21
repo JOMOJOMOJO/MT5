@@ -1,0 +1,9 @@
+﻿{
+    "collector_sha256":  "A7387DC6C600DE537794357DBF6B8D22D6A59FE7ABA71BF57F753E644738C861",
+    "model":  4,
+    "broker":  "VantageTradingLtd-Live",
+    "to":  "2024.01.01",
+    "from":  "2023.01.01",
+    "symbol":  "USDJPY",
+    "previous_broker":  "Bybit-Live"
+}

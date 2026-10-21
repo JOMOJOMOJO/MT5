@@ -5,6 +5,7 @@
 #property tester_indicator "ThreeWave_EMA_Display.ex5"
 #include "../Include/ThreeWaveInputs.mqh"
 #include "../Include/ThreeWaveStructure.mqh"
+#include "../Include/M15EnvironmentDisplay.mqh"
 
 enum StopMode { STOP_M1_WAVE2_LOW,STOP_M1_REVERSAL_LOW,STOP_M5_WAVE1_ORIGIN };
 enum HLEntryMode { HL_ENTRY_READY=0, HL_ENTRY_CONFIRM=1, HL_ENTRY_RETEST=2 };
@@ -490,6 +491,8 @@ void Evaluate(const datetime now)
    for(int i=0;i<ArraySize(setups);i++)
    {
       M1Pattern p; AnalyzeLowerPattern(lower,lp,setups[i],p);
+      if(p.ready && p.ready_time+TFSeconds((ENUM_TIMEFRAMES)InpLowerTF)==closed_time)
+         M15Ready(SignalID(setups[i],p));
       if(InpHLEntryMode==HL_ENTRY_RETEST) { HLObserve(setups[i],p,lower,now); continue; }
       if(!p.ready || p.ready_time+TFSeconds((ENUM_TIMEFRAMES)InpLowerTF)!=closed_time) continue;
       fresh++; digest+=(double)setups[i].break_time;
@@ -619,6 +622,7 @@ int OnInit()
    Print("TW_HL_ENTRY mode=",EnumToString(InpHLEntryMode)," near_fraction=",InpHLNearFraction);
    Recover(); Manage(); DrawTrade(); Save();
    AttachEMADisplay();
+   M15DisplayInit(InpMagicNumber);
    Print("TW_INIT equity_risk=1% RR=",InpRewardRisk," cooldown=",InpCooldownMinutes," stop=",EnumToString(InpStopMode),
          " EMA=",InpEMAFastPeriod,"/",InpEMAMiddlePeriod,"/",InpEMASlowPeriod);
    return INIT_SUCCEEDED;
@@ -651,15 +655,18 @@ void OnTick()
       Manage();
    }
    if(InpHLEntryMode==HL_ENTRY_RETEST) ProcessHLTick();
+   M15DisplayTick();
 }
 void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &req,const MqlTradeResult &res)
 {
    if(trans.symbol!=_Symbol) return;
    if(trans.type==TRADE_TRANSACTION_DEAL_ADD || trans.type==TRADE_TRANSACTION_HISTORY_ADD)
    { Recover(); Manage(); }
+   if(trans.type==TRADE_TRANSACTION_DEAL_ADD) M15Deal(trans.deal,InpMagicNumber);
 }
 void OnDeinit(const int why)
 {
+   M15DisplayDeinit();
    if(hl_csv!=INVALID_HANDLE) { FileFlush(hl_csv); FileClose(hl_csv); }
    for(int i=0;i<3;i++) if(ema_filter_handles[i]!=INVALID_HANDLE) IndicatorRelease(ema_filter_handles[i]);
    if(ema_display_name!="") ChartIndicatorDelete(0,0,ema_display_name);

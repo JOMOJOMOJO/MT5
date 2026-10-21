@@ -1,0 +1,36 @@
+﻿{
+    "step":  "complete",
+    "updated":  "2026-09-30T15:10:30.6599683+09:00",
+    "failed":  [
+
+               ],
+    "completed":  [
+                      {
+                          "candidates":  213,
+                          "verified_labels":  213,
+                          "year":  2025
+                      },
+                      {
+                          "candidates":  192,
+                          "verified_labels":  0,
+                          "year":  2023
+                      },
+                      {
+                          "candidates":  242,
+                          "verified_labels":  0,
+                          "year":  2022
+                      },
+                      {
+                          "candidates":  198,
+                          "verified_labels":  0,
+                          "year":  2021
+                      }
+                  ],
+    "years":  [
+                  2025,
+                  2023,
+                  2022,
+                  2021
+              ],
+    "state":  "COLLECTION_COMPLETE_AWAITING_ANALYSIS"
+}

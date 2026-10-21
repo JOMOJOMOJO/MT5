@@ -1,0 +1,20 @@
+[
+  {
+    "run": "known_close_2025h1",
+    "candidates": 80,
+    "prefix_invariance": "PASS",
+    "future_perturbation": "PASS",
+    "repeat_replay": "PASS",
+    "pivot_and_break_causality": "PASS",
+    "all_original_outcome_columns_unchanged": "PASS"
+  },
+  {
+    "run": "holdout_close_2024q3",
+    "candidates": 39,
+    "prefix_invariance": "PASS",
+    "future_perturbation": "PASS",
+    "repeat_replay": "PASS",
+    "pivot_and_break_causality": "PASS",
+    "all_original_outcome_columns_unchanged": "PASS"
+  }
+]

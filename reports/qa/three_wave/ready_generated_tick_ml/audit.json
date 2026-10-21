@@ -1,0 +1,337 @@
+{
+  "candidates": 2091,
+  "eligible": 2083,
+  "dual_touch": 4,
+  "production_unchanged": true,
+  "source_hashes": {
+    "mql/Experts/USDJPY_Ready2024MLCollector.ex5": "a7387dc6c600de537794357dbf6b8d22d6a59fe7aba71bf57f753e644738c861",
+    "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5": "5b437b0f5cb0c82de79b3422b12b0051b836093d75cbddb627e20e9bbefc6cd3",
+    "mql/Include/ThreeWaveStructure.mqh": "fd0cf7141439cc50aec79f8665d5fc68fb5f96e1b88e784375ccda675321c54b",
+    "mql/Include/ThreeWaveInputs.mqh": "ba563f619646c4fd0e4b3416be14c81768be79848f0c438e6c53a08e91e9f216",
+    "mql/Experts/USDJPY_Ready2024MLCollector.mq5": "3a0f70f4e5820b1c4c6a3a3c384d8fb5a03ddee69690a666b9b0b22d51f20868"
+  },
+  "features": [
+    "nearest_resistance_R",
+    "m5_wave1_distance_R",
+    "resistance_count_before_tp",
+    "wave1_strength_atr_choch",
+    "wave1_strength_atr_formation",
+    "wave1_strength_atr_confirmation",
+    "wave1_strength_atr",
+    "wave1_minutes",
+    "wave1_bullish_fraction",
+    "wave1_bullish_body_share",
+    "wave1_er",
+    "wave1_max_drawdown_range",
+    "wave1_max_drawdown_formation_atr",
+    "wave1_running_high_drawdown_atr",
+    "wave1_max_consecutive_bearish",
+    "wave1_body_ratio",
+    "wave1_mean_clv",
+    "wave1_high_close_fraction",
+    "wave1_first_half_speed_atr",
+    "wave1_second_half_speed_atr",
+    "wave1_acceleration",
+    "m5_choch_break_atr",
+    "wave1_choch_body_atr",
+    "setup_age_minutes",
+    "m5_choch_to_ready_minutes",
+    "wave2_retrace",
+    "wave2_max_pullback_atr",
+    "wave2_m5_bars",
+    "wave2_lower_high_count",
+    "wave2_higher_low_count",
+    "wave2_failed_high_tests",
+    "wave2_wave1_retests",
+    "wave2_atr_ratio",
+    "ready_return_high",
+    "m1_wave1_strength",
+    "m1_wave1_efficiency",
+    "m1_wave2_retrace",
+    "hour_sin",
+    "hour_cos",
+    "weekday_sin",
+    "weekday_cos",
+    "spread_R",
+    "spread_m1_atr",
+    "m15_regime",
+    "m15_position",
+    "m15_raw_position",
+    "m15_range_location",
+    "m15_last_break_direction",
+    "m15_minutes_since_break",
+    "m15_break_distance_atr",
+    "m15_recent_up_swing_atr",
+    "m15_recent_down_swing_atr",
+    "m15_up_down_swing_ratio",
+    "m15_up_swing_vs_previous",
+    "m15_down_swing_vs_previous",
+    "m15_atr_state",
+    "m15_nearest_resistance_R",
+    "m15_nearest_support_R",
+    "m15_high_line_slope_atr_per_hour",
+    "m15_low_line_slope_atr_per_hour",
+    "m15_high_line_entry_distance_atr",
+    "m15_low_line_entry_distance_atr",
+    "h1_regime",
+    "h1_position",
+    "h1_raw_position",
+    "h1_range_location",
+    "h1_last_break_direction",
+    "h1_minutes_since_break",
+    "h1_break_distance_atr",
+    "h1_recent_up_swing_atr",
+    "h1_recent_down_swing_atr",
+    "h1_up_down_swing_ratio",
+    "h1_up_swing_vs_previous",
+    "h1_down_swing_vs_previous",
+    "h1_atr_state",
+    "h1_nearest_resistance_R",
+    "h1_nearest_support_R",
+    "h1_high_line_slope_atr_per_hour",
+    "h1_low_line_slope_atr_per_hour",
+    "h1_high_line_entry_distance_atr",
+    "h1_low_line_entry_distance_atr",
+    "window5_net_return_atr",
+    "window5_range_atr",
+    "window5_realized_movement_atr",
+    "window5_compression_ratio",
+    "window5_bullish_fraction",
+    "window5_higher_lows",
+    "window5_lower_lows",
+    "window5_higher_highs",
+    "window5_failed_high_tests",
+    "window5_upper25_fraction",
+    "window5_lower25_fraction",
+    "window5_entry_position",
+    "window10_net_return_atr",
+    "window10_range_atr",
+    "window10_realized_movement_atr",
+    "window10_compression_ratio",
+    "window10_bullish_fraction",
+    "window10_higher_lows",
+    "window10_lower_lows",
+    "window10_higher_highs",
+    "window10_failed_high_tests",
+    "window10_upper25_fraction",
+    "window10_lower25_fraction",
+    "window10_entry_position",
+    "window20_net_return_atr",
+    "window20_range_atr",
+    "window20_realized_movement_atr",
+    "window20_compression_ratio",
+    "window20_bullish_fraction",
+    "window20_higher_lows",
+    "window20_lower_lows",
+    "window20_higher_highs",
+    "window20_failed_high_tests",
+    "window20_upper25_fraction",
+    "window20_lower25_fraction",
+    "window20_entry_position"
+  ],
+  "repeat_checks": [
+    {
+      "year": 2018,
+      "model": "LOGISTIC_L2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2018,
+      "model": "TREE_D2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2018,
+      "model": "TREE_D3",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2018,
+      "model": "TREE_D4",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2018,
+      "model": "LIGHTGBM",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2019,
+      "model": "LOGISTIC_L2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2019,
+      "model": "TREE_D2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2019,
+      "model": "TREE_D3",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2019,
+      "model": "TREE_D4",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2019,
+      "model": "LIGHTGBM",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2020,
+      "model": "LOGISTIC_L2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2020,
+      "model": "TREE_D2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2020,
+      "model": "TREE_D3",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2020,
+      "model": "TREE_D4",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2020,
+      "model": "LIGHTGBM",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2021,
+      "model": "LOGISTIC_L2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2021,
+      "model": "TREE_D2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2021,
+      "model": "TREE_D3",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2021,
+      "model": "TREE_D4",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2021,
+      "model": "LIGHTGBM",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2022,
+      "model": "LOGISTIC_L2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2022,
+      "model": "TREE_D2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2022,
+      "model": "TREE_D3",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2022,
+      "model": "TREE_D4",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2022,
+      "model": "LIGHTGBM",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2023,
+      "model": "LOGISTIC_L2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2023,
+      "model": "TREE_D2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2023,
+      "model": "TREE_D3",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2023,
+      "model": "TREE_D4",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2023,
+      "model": "LIGHTGBM",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2024,
+      "model": "LOGISTIC_L2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2024,
+      "model": "TREE_D2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2024,
+      "model": "TREE_D3",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2024,
+      "model": "TREE_D4",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2024,
+      "model": "LIGHTGBM",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2025,
+      "model": "LOGISTIC_L2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2025,
+      "model": "TREE_D2",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2025,
+      "model": "TREE_D3",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2025,
+      "model": "TREE_D4",
+      "repeat": "PASS"
+    },
+    {
+      "year": 2025,
+      "model": "LIGHTGBM",
+      "repeat": "PASS"
+    }
+  ],
+  "split": "2016-2017 initial train, expanding annual 2018-2025 tests; known historical data, not untouched OOS",
+  "outcome_exclusion_is_retrospective": true,
+  "python": "3.11.9"
+}

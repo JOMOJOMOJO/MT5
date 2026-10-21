@@ -1,0 +1,6 @@
+{
+  "mql/Experts/USDJPY_ReadyM15Audit.mq5": "a742c37aa6b7bb33d7b906411d822c7b6ad1d473f762ac1792c73601fbffba4e",
+  "mql/Experts/USDJPY_ReadyM15Audit.ex5": "7e85d29d4817ee58d58210e15525442942879559350d6c59277f8e41a16259fd",
+  "tools/swing_structure/analyze_normal_ready_m15.py": "ace0eeb864413c2ff75665db22ac80d91a4e3249913a84bde1cc033e4e1ddb63",
+  "tools/swing_structure/run-normal-ready-m15.ps1": "c2d7f5600c29aa5a9859ed836aec26825e4314063fef68739445d2982e211a8d"
+}

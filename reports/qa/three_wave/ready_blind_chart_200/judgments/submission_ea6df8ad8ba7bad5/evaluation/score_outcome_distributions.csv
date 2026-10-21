@@ -1,0 +1,11 @@
+score,outcome,n,mean,median,q25,q75
+continuation_probability,SL,11,55.81818181818182,53.0,46.5,70.0
+continuation_probability,TP,9,53.111111111111114,43.0,38.0,68.0
+wave1_quality,SL,11,61.09090909090909,57.0,50.0,76.0
+wave1_quality,TP,9,64.11111111111111,66.0,48.0,78.0
+wave2_quality,SL,11,54.72727272727273,53.0,42.0,71.0
+wave2_quality,TP,9,54.44444444444444,53.0,44.0,67.0
+selling_pressure_decay,SL,11,62.36363636363637,59.0,52.5,71.5
+selling_pressure_decay,TP,9,60.55555555555556,59.0,50.0,76.0
+higher_tf_alignment,SL,11,55.45454545454545,59.0,44.0,75.5
+higher_tf_alignment,TP,9,45.44444444444444,37.0,24.0,57.0

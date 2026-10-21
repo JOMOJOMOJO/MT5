@@ -1,0 +1,18 @@
+{
+  "run": "known_close_2025h1",
+  "candidates": 80,
+  "outcomes": 320,
+  "phase_bars": 20287,
+  "causal_assertions": "PASS",
+  "phase_counts": {
+    "RANGE_UNKNOWN": 50,
+    "DOWN": 17,
+    "WAVE2_PULLBACK": 7,
+    "WAVE1_UP": 5,
+    "WAVE3_UP": 1
+  },
+  "censored": 0,
+  "invalid": {
+    "OK": 80
+  }
+}

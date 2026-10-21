@@ -1,0 +1,9 @@
+{
+  "all_year_candidates": 2091,
+  "verified_labels": 295,
+  "model_dataset_rows": 393,
+  "oof_unique_candidates": 213,
+  "production_hashes_unchanged": true,
+  "model_features_unchanged": true,
+  "permutation_equivalence_checks": 17
+}

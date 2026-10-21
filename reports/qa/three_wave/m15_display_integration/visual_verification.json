@@ -1,0 +1,14 @@
+{
+  "TW_signals.csv": {
+    "exact_match": true,
+    "sha256_final": "10e24bbc782d260f4171a05c891bd33c175e9ccb831a7fa54d1fa02c55021e20"
+  },
+  "TW_deals.csv": {
+    "exact_match": true,
+    "sha256_final": "729978792ba0b1f17130bf381710541a1f992e20e1d80fb0f44032427af8afda"
+  },
+  "TW_exits.csv": {
+    "exact_match": true,
+    "sha256_final": "2d07b60442144482dab51eb3f3595e5adf45cda393fc8e162d9243cac8926045"
+  }
+}

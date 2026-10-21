@@ -1,0 +1,10 @@
+{
+  "known_close_2025h1": {
+    "native_H0_break_anchors_checked": 238,
+    "H0_reconstruction": "EXACT"
+  },
+  "holdout_close_2024q3": {
+    "native_H0_break_anchors_checked": 135,
+    "H0_reconstruction": "EXACT"
+  }
+}

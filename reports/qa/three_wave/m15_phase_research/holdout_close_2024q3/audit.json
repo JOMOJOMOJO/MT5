@@ -1,0 +1,16 @@
+{
+  "run": "holdout_close_2024q3",
+  "candidates": 39,
+  "outcomes": 156,
+  "phase_bars": 14336,
+  "causal_assertions": "PASS",
+  "phase_counts": {
+    "RANGE_UNKNOWN": 26,
+    "DOWN": 11,
+    "WAVE2_PULLBACK": 2
+  },
+  "censored": 0,
+  "invalid": {
+    "OK": 39
+  }
+}

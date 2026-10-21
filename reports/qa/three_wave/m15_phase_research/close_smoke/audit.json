@@ -1,0 +1,16 @@
+{
+  "run": "close_smoke",
+  "candidates": 17,
+  "outcomes": 68,
+  "phase_bars": 10111,
+  "causal_assertions": "PASS",
+  "phase_counts": {
+    "RANGE_UNKNOWN": 9,
+    "DOWN": 5,
+    "WAVE2_PULLBACK": 3
+  },
+  "censored": 4,
+  "invalid": {
+    "OK": 17
+  }
+}

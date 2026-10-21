@@ -1,0 +1,49 @@
+{
+  "known_2025h1": {
+    "m1_rows": 189980,
+    "m15_matched_rows": 12687,
+    "m15_difference_counts": {
+      "open": 0,
+      "high": 0,
+      "low": 0,
+      "close": 0
+    }
+  },
+  "known_2024q3": {
+    "m1_rows": 100797,
+    "m15_matched_rows": 6735,
+    "m15_difference_counts": {
+      "open": 1,
+      "high": 0,
+      "low": 0,
+      "close": 0
+    }
+  },
+  "causal_prefix_and_future_mutation": {
+    "candidates": 8,
+    "ids": [
+      "1735812000/1735814400/1735814880",
+      "1739956200/1739959380/1739960280",
+      "1746532200/1746534300/1746535800",
+      "1751311800/1751314080/1751314440",
+      "1719836100/1719838620/1719839280",
+      "1722258600/1722262380/1722262920",
+      "1724214600/1724224440/1724225280",
+      "1727730300/1727733480/1727734260"
+    ],
+    "result": "PASS"
+  },
+  "m5_anchor_prices": "ALL_MATCH",
+  "entry_ohlc_limits": "ALL_AT_OR_BEFORE_ENTRY",
+  "rows": 139,
+  "parents": 139,
+  "outcomes": {
+    "WIN_1P2R": 55,
+    "LOSS_NO_FOLLOWTHROUGH": 46,
+    "LOSS_WEAK_FOLLOWTHROUGH": 22,
+    "LOSS_ALMOST_TP": 15,
+    "END_CENSORED": 1
+  },
+  "original_entries_labels_unchanged": true,
+  "production_unchanged": true
+}

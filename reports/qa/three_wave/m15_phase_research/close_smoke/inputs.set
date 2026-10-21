@@ -1,0 +1,17 @@
+InpLowerTF=1
+InpHigherTF=5
+InpLowerLeftBars=1
+InpLowerRightBars=3
+InpHigherLeftBars=1
+InpHigherRightBars=1
+InpHistoryLowerBars=6000
+InpHistoryHigherBars=1800
+InpMaxSetupMinutes=240
+InpFibZoneLow=0.382
+InpFibZoneHigh=0.618
+InpRequireFibZone=false
+InpRequireCloseBreak=true
+InpHigherUseClosePivot=true
+InpSkipLowerHL=true
+InpResearchStopMode=2
+InpResearchBufferPoints=10

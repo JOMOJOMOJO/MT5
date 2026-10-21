@@ -1,0 +1,11 @@
+{
+  "sources": [
+    {
+      "source": "C:\\Users\\windows\\AppData\\Local\\Temp\\READY_BYBIT_REFRESH_20261001_004056\\Tester\\Agent-127.0.0.1-3000\\logs\\20261001.log",
+      "sha256": "42a65abdb55b11461e493e6d76e54994fb23101435957f09487f7a161c1c5932"
+    }
+  ],
+  "first_line": 27,
+  "last_line_exclusive": 381281,
+  "marker": "testing of Experts\\USDJPY_Ready2024MLCollector.ex5 from 2023.01.01 00:00 to 2024.01.01 00:00 started"
+}

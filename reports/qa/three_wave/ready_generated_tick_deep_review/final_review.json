@@ -1,0 +1,19 @@
+{
+  "result": "PASS",
+  "same_cohort_all_models": 1656,
+  "scorable_per_model": 1648,
+  "causal_calibration": "PASS",
+  "execution_intervals": "PASS",
+  "production_unchanged": "PASS",
+  "data_unchanged": "PASS",
+  "negative_controls": 30,
+  "training_QA": [
+    "FULL_REPEAT_PASS",
+    "NO_CLOCK_SPREAD_REPEAT_PASS",
+    "COMPACT_REPEAT_PASS",
+    "R_REGRESSION_REPEAT_PASS",
+    "FULL_RAW_PREVIOUS_1648_PREDICTIONS_PARITY_PASS"
+  ],
+  "report_review": "Added explicit small-sample and annual concentration findings; no model rerun",
+  "report_script_sha256": "19bd846a8da515a8d68c0c0d25da405365e50b4d98ecb21a2a69cf45453e4c81"
+}

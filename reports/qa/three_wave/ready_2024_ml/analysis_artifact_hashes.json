@@ -1,0 +1,16 @@
+{
+  "reports\\qa\\three_wave\\ready_2024_ml\\ready_2024_ml_dataset.csv": "a30af4dc8fcbd71c88d6ecac260eb776c0da4575ae58ef56dcbfaef07e39a352",
+  "reports\\qa\\three_wave\\ready_2024_ml\\feature_definitions.md": "7a7f0b71b4f2f30a38501eb17c296daea5af7f0be667038c2cf30744f85851a6",
+  "reports\\qa\\three_wave\\ready_2024_ml\\walkforward_predictions.csv": "1046e92793637b49ab15bae18768210cf894a51a14b7ab39ce8264a78d14d9fe",
+  "reports\\qa\\three_wave\\ready_2024_ml\\walkforward_metrics.csv": "c1c7f4742cae900e85b8303a8614923e577d0bc59effcd30bdb022db844beb3d",
+  "reports\\qa\\three_wave\\ready_2024_ml\\feature_stability.csv": "d7bcb083da0652f4df19b85c80500b8c35a9059abd51ab2bbdcb42d90c55b8e7",
+  "reports\\qa\\three_wave\\ready_2024_ml\\logistic_coefficients_by_fold.csv": "fad68fe6a4b4edc02872ac54bb85a2fe918c5a1eb434a46c3b966927b77e57fe",
+  "reports\\qa\\three_wave\\ready_2024_ml\\decision_tree_rules_by_fold.txt": "c4553539f0dc2a04ac3cb2484830666127b6ed9f2d8fa7a3ec37156329bc3f94",
+  "reports\\qa\\three_wave\\ready_2024_ml\\boosting_importance_by_fold.csv": "fe072c0300c505c75eb73f0a76389157ab4f9458929c9fe002f39209d6879882",
+  "reports\\qa\\three_wave\\ready_2024_ml\\cluster_assignments.csv": "9e03badc3631b8933a7b3f9ce75457e6f6ef4897342a91298010b53e49b830b5",
+  "reports\\qa\\three_wave\\ready_2024_ml\\cluster_statistics.csv": "8f3311225fd8c34c167e5247571937afc184523df49447118fe9b5754778dabb",
+  "reports\\qa\\three_wave\\ready_2024_ml\\summary.md": "d572c4b69ac387b55f40758cf53886ee034c253349e81ed0d652279e6e6dd199",
+  "tools\\swing_structure\\build_ready_2024_ml_dataset.py": "fb528ffdf4603fa52136fc392e98d8071a782ddec4709d01a96ed87505a7ae05",
+  "tools\\swing_structure\\analyze_ready_2024_ml.py": "7e5b05cb6a433a66e5bcb20c3d17750f00a661fdfc78d477b50c4dfe60b0133a",
+  "tools\\swing_structure\\report_ready_2024_ml.py": "6b68a5ca49dbf8765c9fe59f4645f5b2fd2aba0ee82f0e1eaf8159ae7b682509"
+}
