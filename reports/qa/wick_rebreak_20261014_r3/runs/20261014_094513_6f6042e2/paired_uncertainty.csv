@@ -1,0 +1,7 @@
+symbol,period,paired_n,week_blocks,mean_b_minus_a_r,ci025,ci975,limitation
+USDJPY,KNOWN_2023_2024,505,99,-0.47020057016787725,-0.5360180937623215,-0.39966659103164376,Conditional on both forming; use transition_ledger for selection/missed opportunities; known data
+USDJPY,KNOWN_2025_2026,392,89,-0.46448758549529334,-0.5436043085663269,-0.38571576491776327,Conditional on both forming; use transition_ledger for selection/missed opportunities; known data
+EURUSD,KNOWN_2023_2024,363,99,-0.43104332075082097,-0.5232756949092815,-0.34430129497763284,Conditional on both forming; use transition_ledger for selection/missed opportunities; known data
+EURUSD,KNOWN_2025_2026,338,88,-0.4405319504517396,-0.5466677752809753,-0.3375883102470297,Conditional on both forming; use transition_ledger for selection/missed opportunities; known data
+XAUUSD,KNOWN_2023_2024,394,100,-0.5190672735802105,-0.5914623302739332,-0.45049783865866083,Conditional on both forming; use transition_ledger for selection/missed opportunities; known data
+XAUUSD,KNOWN_2025_2026,360,83,-0.5442935627497612,-0.6390595394169516,-0.45641913890562025,Conditional on both forming; use transition_ledger for selection/missed opportunities; known data

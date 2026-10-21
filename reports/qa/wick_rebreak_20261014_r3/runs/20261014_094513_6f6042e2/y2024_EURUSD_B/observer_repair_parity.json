@@ -1,0 +1,42 @@
+{
+  "execution_pass": true,
+  "cash_pass": true,
+  "reference_deals": 6,
+  "candidate_deals": 6,
+  "execution_differences": [],
+  "cash_differences": [],
+  "passed": true,
+  "decision_artifacts_exact": [
+    "risk.csv",
+    "adjustment.csv",
+    "funnel.csv",
+    "rb_candidates.csv",
+    "rb_events.csv",
+    "rb_entries.csv",
+    "rb_outcomes.csv",
+    "rb_context.csv",
+    "rb_execution.csv",
+    "rb_bars.csv"
+  ],
+  "environment": {
+    "environment_exact": false,
+    "specification_differences": {
+      "EURUSD/SYMBOL_SWAP_SHORT": {
+        "before": "1.7100000000000000",
+        "after": "1.7000000000000000"
+      }
+    },
+    "comparison_usable": true,
+    "classification": "HISTORICAL_SWAP_DRIFT_EXACT_INTRADAY_LONG_EXECUTIONS_AND_CASH",
+    "evidence": {
+      "only_swap_fields": true,
+      "long_only_inputs": true,
+      "zero_applied_swap": true,
+      "all_trades_intraday_long": true,
+      "executions_exact": true,
+      "cash_exact": true
+    }
+  },
+  "old_history_not_accepted": true,
+  "scope": "Exact trading outputs; environment equality separately reported, never inferred"
+}

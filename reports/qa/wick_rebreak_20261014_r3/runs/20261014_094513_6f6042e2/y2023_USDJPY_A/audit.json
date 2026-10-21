@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "quality": {
+    "strict_real_tick_pass": false,
+    "category": "UNVERIFIED",
+    "header_real_tick_percent": null,
+    "matching_execution_blocks": 1,
+    "test_finished_in_block": true,
+    "fallback_line_count": 0,
+    "fallback_evidence": [],
+    "scope": "Expert/date plus unique telemetry input when present; ambiguous executions rejected",
+    "limit": "Header percentage may be rounded; no-fallback log is evidence, not a hash proof of historical ticks"
+  },
+  "actual": {
+    "n": 113,
+    "net": -618.42,
+    "pf": 0.8161767547210191,
+    "win_rate": 0.4336283185840708,
+    "mean_fill_r": -0.08247800111967618,
+    "exact_quote_n": 113,
+    "mean_mid_move_r": -0.014487994609809709,
+    "mean_spread_cost_r": 0.06799000650984899,
+    "mean_execution_residual_r": 0.0,
+    "commission": 0.0,
+    "swap": 0.0,
+    "fee": 0.0
+  },
+  "risk_reasons": {
+    "OK": 113
+  },
+  "risk_reasons_by_symbol": {
+    "USDJPY": {
+      "OK": 113
+    }
+  },
+  "normalized_risk_rejections": [],
+  "evidence_limit": "No same-symbol entry deal in the rejection minute; not a general proof about delayed submissions",
+  "cohort": {
+    "candidates": 448,
+    "b_triggers": 237,
+    "terminal_reasons": {
+      "B_TRIGGER": 237,
+      "PARENT_LOW_BROKEN": 192,
+      "EXPIRED": 19
+    },
+    "shadows": 685,
+    "ambiguous": 0,
+    "censored": 0
+  },
+  "r3_audit_passed": true
+}

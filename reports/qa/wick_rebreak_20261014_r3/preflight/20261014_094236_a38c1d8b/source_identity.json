@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "compiled_and_parent_match": {
+    "reference": true,
+    "wick_rebreak": true,
+    "harness": true
+  }
+}

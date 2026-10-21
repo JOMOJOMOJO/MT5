@@ -1,0 +1,12 @@
+﻿{
+    "launched_at":  "2026-10-14T09:45:11.0636667+09:00",
+    "stdout":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wick_rebreak_20261014_r3\\launch-20261014_094511.stdout.log",
+    "runner_pid":  45588,
+    "total_runs":  34,
+    "new_runs":  30,
+    "package":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wick_rebreak_20261014_r3",
+    "stderr":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wick_rebreak_20261014_r3\\launch-20261014_094511.stderr.log",
+    "script":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\scripts\\run-wick-rebreak-r3.ps1",
+    "reused_runs":  4,
+    "monitoring":  "User will notify when finished"
+}

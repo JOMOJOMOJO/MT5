@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "reaudited": [
+    "harness",
+    "qa_USDJPY_reference",
+    "qa_USDJPY_A",
+    "qa_USDJPY_B",
+    "qa_EURUSD_reference"
+  ],
+  "no_new_mt5_runs": true,
+  "old_evidence_unchanged": true
+}

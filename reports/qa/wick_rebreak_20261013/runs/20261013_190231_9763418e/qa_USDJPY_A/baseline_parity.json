@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "signal_history_environment_inputs_runtime_match": true,
+  "execution_pass": true,
+  "cash_pass": true,
+  "reference_deals": 98,
+  "candidate_deals": 98,
+  "execution_differences": [],
+  "cash_differences": []
+}

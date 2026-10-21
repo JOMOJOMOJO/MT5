@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "native_deals": 226,
+  "csv_deals": 226,
+  "missing_deals": [],
+  "extra_deals": [],
+  "duplicate_deals": []
+}

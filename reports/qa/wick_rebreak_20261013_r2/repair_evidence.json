@@ -1,0 +1,52 @@
+{
+  "old_batch": "reports\\qa\\wick_rebreak_20261013\\runs\\20261013_190231_9763418e",
+  "native_completed": 23,
+  "old_checker_passed": 22,
+  "not_launched": 11,
+  "failed_run": "y2025_USDJPY_A",
+  "failed_history_rows": 0,
+  "old_pass_does_not_prove_current_period_history": true,
+  "decisions_2024": {
+    "y2024_USDJPY_A": {
+      "SKIPPED:spread": 433,
+      "FILLED:IMMEDIATE": 49,
+      "SKIPPED:trade_cap": 7,
+      "SKIPPED:position_open": 9
+    },
+    "y2024_USDJPY_B": {
+      "FILLED:FIRST_TRIGGER_ONLY": 23,
+      "SKIPPED:spread": 220,
+      "SKIPPED:position_open": 5,
+      "SKIPPED:SAME_BAR_OLDEST_PRIORITY": 18,
+      "SKIPPED:inactive_session": 4
+    },
+    "y2024_EURUSD_A": {
+      "SKIPPED:spread": 341,
+      "FILLED:IMMEDIATE": 7,
+      "SKIPPED:position_open": 3
+    },
+    "y2024_EURUSD_B": {
+      "SKIPPED:spread": 145,
+      "FILLED:FIRST_TRIGGER_ONLY": 3,
+      "SKIPPED:position_open": 1,
+      "SKIPPED:SAME_BAR_OLDEST_PRIORITY": 8,
+      "SKIPPED:inactive_session": 5
+    },
+    "y2024_XAUUSD_A": {
+      "FILLED:IMMEDIATE": 140,
+      "SKIPPED:position_open": 39,
+      "SKIPPED:spread": 37,
+      "SKIPPED:trade_cap": 28,
+      "SKIPPED:equity_drawdown_cap": 131
+    },
+    "y2024_XAUUSD_B": {
+      "SKIPPED:spread": 20,
+      "FILLED:FIRST_TRIGGER_ONLY": 105,
+      "SKIPPED:position_open": 20,
+      "SKIPPED:SAME_BAR_OLDEST_PRIORITY": 11,
+      "SKIPPED:trade_cap": 12,
+      "SKIPPED:inactive_session": 1,
+      "SKIPPED:equity_drawdown_cap": 43
+    }
+  }
+}

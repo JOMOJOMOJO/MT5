@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "final_manifest_sources_match_compiled": {
+    "reference": true,
+    "wick_rebreak": true,
+    "harness": true
+  }
+}

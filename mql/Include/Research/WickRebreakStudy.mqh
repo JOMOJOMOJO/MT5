@@ -1,0 +1,207 @@
+// Included after the frozen M5 strategy functions. Tester-only diagnostic adapter.
+#ifndef RESEARCH_WICK_REBREAK_STUDY
+#define RESEARCH_WICK_REBREAK_STUDY
+#include "WickRebreakCore.mqh"
+input int InpRebreakMode=0; // 0 current immediate A, 1 fixed signal-high close rebreak B
+input int InpRebreakWaitBars=18;
+struct RBShadow
+  {
+   bool started,exited,written;
+   datetime entry_bar,minute,exit_minute;
+   long entry_msc,exit_msc;
+   double entry,bid0,atr,sl,tp,risk,mfe,mae,exit_price,min_bid,max_bid;
+   bool ambiguous,exit_minute_complete;
+   string outcome;
+  };
+struct RBCandidate
+  {
+   string id,group;
+   datetime signal_bar,ready_bar;
+   double high,anchor;
+   bool b_terminal,b_just_triggered;
+   RBShadow a,b;
+  };
+RBCandidate rbActive[];
+int rbCand=INVALID_HANDLE,rbEvents=INVALID_HANDLE,rbEntries=INVALID_HANDLE,rbOut=INVALID_HANDLE;
+int rbContexts=INVALID_HANDLE,rbExec=INVALID_HANDLE,rbBars=INVALID_HANDLE;
+int rbErrors=0,rbCandidates=0,rbStarts=0,rbOutcomes=0;
+string RBTime(const datetime t){return TimeToString(t,TIME_DATE|TIME_SECONDS);}
+string RBId(const datetime t){return runtimeSymbol+"_"+(string)(long)t;}
+void RBFatal(const string why){rbErrors++;Print("RB_FATAL ",why);}
+bool RBOpen()
+  {
+   if(InpSignalTimeframe!=PERIOD_M5 || InpRebreakMode<0 || InpRebreakMode>1 || InpRebreakWaitBars!=18 ||
+      !InpAdjustRoundedVolume || !InpEnableRoundBucket || InpEnableRoundShortBucket || InpEnableRoundLooseBucket ||
+      InpEnableEmaBucket || InpEnableCompressionBucket || InpEnableRsiBucket || InpEnableBreakoutBucket ||
+      InpEnableDowSweepBucket || InpEnableRangeReclaimBucket || InpEnableRangeShortBucket || InpEnableFractalTrendBucket)
+      return false;
+   rbCand=FileOpen(runtimeTelemetryFileName+".rb_candidates.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+   rbEvents=FileOpen(runtimeTelemetryFileName+".rb_events.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+   rbEntries=FileOpen(runtimeTelemetryFileName+".rb_entries.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+   rbOut=FileOpen(runtimeTelemetryFileName+".rb_outcomes.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+   rbContexts=FileOpen(runtimeTelemetryFileName+".rb_context.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+   rbExec=FileOpen(runtimeTelemetryFileName+".rb_execution.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+   rbBars=FileOpen(runtimeTelemetryFileName+".rb_bars.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+   if(rbCand<0 || rbEvents<0 || rbEntries<0 || rbOut<0 || rbContexts<0 || rbExec<0 || rbBars<0)return false;
+   FileWrite(rbCand,"id","parent_group","signal_bar","available_at","high","anchor_low","anchor_bar","anchor_confirmed","high_bar","high_confirmed");
+   FileWrite(rbEvents,"id","event","time_msc","closed_bar","closed_price","fixed_high","anchor_low","age_bars","bid","ask");
+   FileWrite(rbEntries,"id","arm","time_msc","entry_bar","ask","bid","atr","sl","tp","risk","spread_allowed");
+   FileWrite(rbOut,"id","arm","entry_msc","exit_msc","entry","sl","tp","exit_price","outcome","result_r","mfe_r","mae_r","ambiguous_exit_minute","exit_minute_complete");
+   FileWrite(rbContexts,"id","arm","decision","tf","closed_bars","history_complete","asof","regime","position","raw_position","location","structure_high","structure_low","break_direction","break_confirmed","break_minutes");
+   FileWrite(rbExec,"id","arm","time_msc","status","detail","result_deal","retcode","positions","daily_entries");
+   FileWrite(rbBars,"bar_time","available_at","observed_msc","open","high","low","close","atr");
+   return true;
+  }
+void RBContext(const string id,const string arm,const MqlTick &q)
+  {
+   for(int tf=0;tf<3;tf++)
+     {
+      MqlRates rates[];ArraySetAsSeries(rates,false);
+      int n=CopyRates(runtimeSymbol,dcTF[tf],0,1200,rates),secs=PeriodSeconds(dcTF[tf]),count=0;
+      CHTFResearchEnvironment env;env.Reset();
+      for(int j=0;j<n;j++){if(rates[j].time+secs>q.time)break;env.Step(rates,j,secs);count++;}
+      HTFResearchSnapshot s;env.Snapshot(q.time,q.ask,s);
+      bool complete=n>=1199 && count>=1198;
+      if(s.asof>q.time || s.break_confirmed>q.time)RBFatal("CONTEXT_FUTURE");
+      if(!complete){s.regime="UNKNOWN";s.position="UNKNOWN";s.location="UNKNOWN";s.raw=EMPTY_VALUE;}
+      FileWrite(rbContexts,id,arm,RBTime(q.time),EnumToString(dcTF[tf]),count,(int)complete,RBTime(s.asof),
+         s.regime,s.position,DCNumber(s.raw),s.location,DCNumber(s.high),DCNumber(s.low),s.break_direction,
+         RBTime(s.break_confirmed),DCNumber(s.break_minutes));
+     }
+  }
+void RBWriteOutcome(const string id,const string arm,RBShadow &s)
+  {
+   if(!s.started || s.written)return;
+   double result=(s.exit_price-s.entry)/s.risk;
+   FileWrite(rbOut,id,arm,s.entry_msc,s.exit_msc,DCNumber(s.entry),DCNumber(s.sl),DCNumber(s.tp),DCNumber(s.exit_price),
+      s.outcome,DCNumber(result),DCNumber(s.mfe/s.risk),DCNumber(s.mae/s.risk),(int)s.ambiguous,(int)s.exit_minute_complete);
+   s.written=true;rbOutcomes++;
+  }
+void RBUpdateShadow(const string id,const string arm,RBShadow &s,const MqlTick &q,const bool newbar)
+  {
+   if(!s.started || s.written)return;
+   datetime minute=(datetime)(q.time/60*60);
+   if(minute!=s.minute)
+     {
+      if(s.exited){s.exit_minute_complete=true;RBWriteOutcome(id,arm,s);return;}
+      s.minute=minute;s.min_bid=q.bid;s.max_bid=q.bid;
+     }
+   s.min_bid=MathMin(s.min_bid,q.bid);s.max_bid=MathMax(s.max_bid,q.bid);
+   if(s.exited){s.ambiguous=s.outcome!="TIME_EXIT" && s.min_bid<=s.sl && s.max_bid>=s.tp;return;}
+   s.mfe=MathMax(s.mfe,q.bid-s.entry);s.mae=MathMax(s.mae,s.entry-q.bid);
+   int touch=RBBarrier(q.bid,s.sl,s.tp);
+   if(touch!=0 || (newbar && iBarShift(runtimeSymbol,PERIOD_M5,s.entry_bar,false)>=InpMaxHoldBars))
+     {
+      s.exited=true;s.exit_msc=q.time_msc;s.exit_price=q.bid;s.exit_minute=minute;
+      s.outcome=touch<0?"SL":(touch>0?"TP":"TIME_EXIT");
+      s.ambiguous=s.min_bid<=s.sl && s.max_bid>=s.tp;
+     }
+  }
+void RBStart(const string id,const string arm,RBShadow &s,const MqlTick &q,const datetime bar)
+  {
+   ZeroMemory(s);s.started=true;s.entry_bar=bar;s.entry_msc=q.time_msc;s.entry=q.ask;s.bid0=q.bid;
+   s.atr=GetDistanceUnit();s.sl=NormalizePrice(q.ask-InpStopLossAtr*s.atr);
+   s.tp=NormalizePrice(q.ask+InpStopLossAtr*s.atr*InpTargetRMultiple);s.risk=q.ask-s.sl;
+   s.minute=(datetime)(q.time/60*60);s.min_bid=q.bid;s.max_bid=q.bid;
+   if(s.risk<=0 || s.atr<=0 || s.tp<=s.entry){RBFatal("INVALID_SHADOW_PRICE");return;}
+   rbStarts++;
+   FileWrite(rbEntries,id,arm,q.time_msc,RBTime(bar),DCNumber(q.ask),DCNumber(q.bid),DCNumber(s.atr),
+      DCNumber(s.sl),DCNumber(s.tp),DCNumber(s.risk),(int)IsSpreadAllowed());
+   RBContext(id,arm,q);RBUpdateShadow(id,arm,s,q,false);
+  }
+void RBEvent(const RBCandidate &c,const string event,const MqlTick &q,const datetime closed=0,const double close=0,const int age=0)
+  {FileWrite(rbEvents,c.id,event,q.time_msc,RBTime(closed),DCNumber(close),DCNumber(c.high),DCNumber(c.anchor),age,DCNumber(q.bid),DCNumber(q.ask));}
+void RBTick(const bool newbar)
+  {
+   if(ArraySize(rbActive)==0)return;
+   MqlTick q;if(!SymbolInfoTick(runtimeSymbol,q) || q.bid<=0 || q.ask<q.bid){RBFatal("NO_TICK");return;}
+   for(int i=ArraySize(rbActive)-1;i>=0;i--)
+     {
+      if(!rbActive[i].b_terminal && q.bid<rbActive[i].anchor)
+        {rbActive[i].b_terminal=true;RBEvent(rbActive[i],"PARENT_LOW_BROKEN",q);}
+      RBUpdateShadow(rbActive[i].id,"A",rbActive[i].a,q,newbar);
+      RBUpdateShadow(rbActive[i].id,"B",rbActive[i].b,q,newbar);
+      if(rbActive[i].a.written && rbActive[i].b_terminal && (!rbActive[i].b.started || rbActive[i].b.written))
+        {for(int j=i;j<ArraySize(rbActive)-1;j++)rbActive[j]=rbActive[j+1];ArrayResize(rbActive,ArraySize(rbActive)-1);}
+     }
+  }
+void RBNewBar(const MqlRates &rates[],const datetime bar)
+  {
+   MqlTick q;if(!SymbolInfoTick(runtimeSymbol,q))return;
+   FileWrite(rbBars,RBTime(rates[1].time),RBTime(q.time),q.time_msc,DCNumber(rates[1].open),DCNumber(rates[1].high),
+      DCNumber(rates[1].low),DCNumber(rates[1].close),DCNumber(GetDistanceUnit()));
+   for(int i=0;i<ArraySize(rbActive);i++)
+     {
+      rbActive[i].b_just_triggered=false;if(rbActive[i].b_terminal)continue;
+      int age=iBarShift(runtimeSymbol,PERIOD_M5,rbActive[i].ready_bar,false);
+      int result=RBWaitDecision(false,age,InpRebreakWaitBars,rbActive[i].signal_bar,rates[1].time,q.time,rates[1].close,rbActive[i].high);
+      if(result==1)
+        {
+         rbActive[i].b_terminal=true;rbActive[i].b_just_triggered=true;
+         RBEvent(rbActive[i],"B_TRIGGER",q,rates[1].time,rates[1].close,age);
+         RBStart(rbActive[i].id,"B",rbActive[i].b,q,bar);
+        }
+      else if(result==2){rbActive[i].b_terminal=true;RBEvent(rbActive[i],"EXPIRED",q,rates[1].time,rates[1].close,age);}
+     }
+  }
+void RBAdd(const MqlRates &rates[],const datetime bar)
+  {
+   MqlTick q;if(!SymbolInfoTick(runtimeSymbol,q))return;
+   PivotPoint lh,ph,ll,pl;FindRecentPivots(rates,true,lh,ph);FindRecentPivots(rates,false,ll,pl);
+   if(!lh.valid || !ll.valid || rates[1].time+300>q.time){RBFatal("INVALID_CANDIDATE");return;}
+   int n=ArraySize(rbActive);ArrayResize(rbActive,n+1);ZeroMemory(rbActive[n]);
+   rbActive[n].id=RBId(bar);rbActive[n].signal_bar=rates[1].time;rbActive[n].ready_bar=bar;
+   rbActive[n].high=rates[1].high;rbActive[n].anchor=ll.price;
+   rbActive[n].group=runtimeSymbol+"_"+(string)(long)lh.time+"_"+(string)(long)ll.time;
+   datetime lc=rates[ll.shift-InpPivotSpan-1].time,hc=rates[lh.shift-InpPivotSpan-1].time;
+   if(lc>q.time || hc>q.time)RBFatal("PIVOT_FUTURE");
+   FileWrite(rbCand,rbActive[n].id,rbActive[n].group,RBTime(rates[1].time),RBTime(q.time),DCNumber(rates[1].high),
+      DCNumber(ll.price),RBTime(ll.time),RBTime(lc),RBTime(lh.time),RBTime(hc));
+   rbCandidates++;RBStart(rbActive[n].id,"A",rbActive[n].a,q,bar);
+   if(q.bid<ll.price){rbActive[n].b_terminal=true;RBEvent(rbActive[n],"PARENT_LOW_BROKEN",q);}
+  }
+void RBExecLog(const string id,const string arm,const string status,const string detail,const bool attempted=false)
+  {
+   MqlTick q;SymbolInfoTick(runtimeSymbol,q);
+   FileWrite(rbExec,id,arm,q.time_msc,status,detail,attempted?trade.ResultDeal():0,attempted?trade.ResultRetcode():0,CountManagedPositions(),dailyTradeCount);
+  }
+void RBExecuteB(const datetime bar)
+  {
+   bool assigned=false;
+   for(int i=0;i<ArraySize(rbActive);i++)
+     {
+      if(!rbActive[i].b_just_triggered)continue;
+      if(assigned){RBExecLog(rbActive[i].id,"B","SKIPPED","SAME_BAR_OLDEST_PRIORITY");continue;}
+      assigned=true;
+      if(!IsWithinActiveSession(bar) || !CanOpenAnotherTrade(bar) || !CanOpenBucketTrade(SIGNAL_ROUND,CountManagedPositions(),0))
+        {RBExecLog(rbActive[i].id,"B","SKIPPED",DetermineEntryState());continue;}
+      // Existing ENTRY context callback must refer to this delayed candidate.
+      dcId=rbActive[i].id;dcDecision=TimeCurrent();SymbolInfoTick(runtimeSymbol,dcQuote);DCLoad(dcDecision,dcQuote.ask);
+      bool ok=OpenPosition(SIGNAL_ROUND);
+      RBExecLog(rbActive[i].id,"B",ok?"FILLED":"ORDER_NOT_FILLED","FIRST_TRIGGER_ONLY",true);
+     }
+  }
+void RBLogA(const datetime bar,const bool ok)
+  {RBExecLog(RBId(bar),"A",ok?"FILLED":"ORDER_NOT_FILLED","IMMEDIATE",true);}
+void RBClose()
+  {
+   if(rbCand==INVALID_HANDLE)return;
+   MqlTick q;SymbolInfoTick(runtimeSymbol,q);
+   for(int i=0;i<ArraySize(rbActive);i++)
+     {
+      if(!rbActive[i].b_terminal)RBEvent(rbActive[i],"END_CENSORED",q);
+      if(rbActive[i].a.started && !rbActive[i].a.written)
+        {
+         if(!rbActive[i].a.exited){rbActive[i].a.outcome="END_CENSORED";rbActive[i].a.exit_msc=q.time_msc;rbActive[i].a.exit_price=q.bid;}
+         RBWriteOutcome(rbActive[i].id,"A",rbActive[i].a);
+        }
+      if(rbActive[i].b.started && !rbActive[i].b.written)
+        {
+         if(!rbActive[i].b.exited){rbActive[i].b.outcome="END_CENSORED";rbActive[i].b.exit_msc=q.time_msc;rbActive[i].b.exit_price=q.bid;}
+         RBWriteOutcome(rbActive[i].id,"B",rbActive[i].b);
+        }
+     }
+   PrintFormat("RB_FINISH errors=%d candidates=%d starts=%d outcomes=%d",rbErrors,rbCandidates,rbStarts,rbOutcomes);
+   FileClose(rbCand);FileClose(rbEvents);FileClose(rbEntries);FileClose(rbOut);FileClose(rbContexts);FileClose(rbExec);FileClose(rbBars);
+  }
+#endif

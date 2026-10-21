@@ -1,0 +1,22 @@
+{
+  "engineering": "PASSED",
+  "strategy": "DO_NOT_PROMOTE_B",
+  "family_action": "PARK_FIXED_WICK_REBREAK_THESIS",
+  "audits": {
+    "runs": 34,
+    "period": 33,
+    "baseline": 3,
+    "ab": 15,
+    "repair": 22,
+    "harness_tests": 15
+  },
+  "new_runs": 30,
+  "reused_runs": 4,
+  "raw_candidates": 4476,
+  "formed_shadows": 6834,
+  "excluded_ambiguous_shadows": 7,
+  "known_period": true,
+  "generated_ticks": true,
+  "parameters_changed": 0,
+  "no_current_context_category_positive_in_all_four_periods": true
+}

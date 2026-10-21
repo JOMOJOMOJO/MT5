@@ -1,0 +1,19 @@
+{
+  "environment_exact": false,
+  "specification_differences": {
+    "EURUSD/SYMBOL_SWAP_SHORT": {
+      "before": "1.7100000000000000",
+      "after": "1.7000000000000000"
+    }
+  },
+  "comparison_usable": true,
+  "classification": "HISTORICAL_SWAP_DRIFT_EXACT_INTRADAY_LONG_EXECUTIONS_AND_CASH",
+  "evidence": {
+    "only_swap_fields": true,
+    "long_only_inputs": true,
+    "zero_applied_swap": true,
+    "all_trades_intraday_long": true,
+    "executions_exact": true,
+    "cash_exact": true
+  }
+}

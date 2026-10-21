@@ -1,0 +1,29 @@
+{
+  "execution_pass": true,
+  "cash_pass": true,
+  "reference_deals": 116,
+  "candidate_deals": 116,
+  "execution_differences": [],
+  "cash_differences": [],
+  "passed": true,
+  "decision_artifacts_exact": [
+    "risk.csv",
+    "adjustment.csv",
+    "funnel.csv",
+    "rb_candidates.csv",
+    "rb_events.csv",
+    "rb_entries.csv",
+    "rb_outcomes.csv",
+    "rb_context.csv",
+    "rb_execution.csv",
+    "rb_bars.csv"
+  ],
+  "environment": {
+    "environment_exact": true,
+    "specification_differences": {},
+    "comparison_usable": true,
+    "classification": "EXACT_OBSERVED_ENVIRONMENT"
+  },
+  "old_history_not_accepted": true,
+  "scope": "Exact trading outputs; environment equality separately reported, never inferred"
+}

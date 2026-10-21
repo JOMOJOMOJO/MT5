@@ -1,0 +1,72 @@
+--- r1/reference
++++ r2/reference
+@@ -3,7 +3,7 @@
+ // Tester observer only. Does not submit orders or feed trading decisions.
+ int qeFile=INVALID_HANDLE,qeConversion=INVALID_HANDLE,qeHistory=INVALID_HANDLE;
+ string qeSymbols[],qePrevious[];
+-datetime qeMinute=0;
++datetime qeMinute=0,qeTestStart=0;
+ bool qeFinished=false,qeHaveBaseline=false;
+ int qeChanges=0;
+ string QENumber(const double value){return DoubleToString(value,16);}
+@@ -55,7 +55,7 @@
+    int n=StringSplit(symbols,',',qeSymbols);if(n<1)return false;
+    ArrayResize(qePrevious,n);
+    for(int i=0;i<n;i++)qePrevious[i]="";
+-   qeHaveBaseline=false;qeFinished=false;qeChanges=0;qeMinute=0;
++   qeHaveBaseline=false;qeFinished=false;qeChanges=0;qeMinute=0;qeTestStart=TimeCurrent();
+    qeFile=FileOpen(filename+".environment.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+    qeConversion=FileOpen(filename+".conversion.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+    qeHistory=FileOpen(filename+".history.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI,';');
+@@ -63,7 +63,7 @@
+    FileWrite(qeFile,"observed_time","phase","symbol","field","value");
+    FileWrite(qeConversion,"deal","symbol","deal_time_msc","observed_time","quote_msc","bid","ask","tick_value_profit","tick_value_loss",
+       "min_volume","probe_ticks","buy_calc_ok","buy_loss_account","sell_calc_ok","sell_loss_account","account_currency");
+-   FileWrite(qeHistory,"symbol","tf","from","to","count","first","last","fingerprint","algorithm");
++   FileWrite(qeHistory,"symbol","tf","from","to","count","first","last","fingerprint","algorithm","test_start","test_end","test_count","test_first","test_last","test_months");
+    QEObserve("START");return true;
+   }
+ void QEDeal(const ulong ticket)
+@@ -90,22 +90,38 @@
+    qeFinished=true;QEObserve("END");
+    // Post-test diagnostic only; includes warm-up, never used by the EA.
+    ENUM_TIMEFRAMES tfs[]={PERIOD_M1,PERIOD_M5,PERIOD_M15,PERIOD_H1,PERIOD_H4,PERIOD_D1};
+-   datetime begin=D'2021.01.01 00:00:00',end=D'2023.03.31 23:59:59';
++   // The previous calendar year covers the preloaded warm-up. Nothing is read
++   // for this fingerprint until OnTester, after all trading has finished.
++   MqlDateTime start;TimeToStruct(qeTestStart,start);
++   start.year--;start.mon=1;start.day=1;start.hour=0;start.min=0;start.sec=0;
++   datetime begin=StructToTime(start),end=TimeCurrent();
++   if(qeTestStart<=0 || end<qeTestStart){Print("QE_FATAL_HISTORY_CLOCK");return;}
+    for(int i=0;i<ArraySize(qeSymbols);i++)
+      for(int t=0;t<ArraySize(tfs);t++)
+        {
+-        MqlRates rates[];int n=CopyRates(qeSymbols[i],tfs[t],begin,end,rates);
++        MqlRates rates[];ArraySetAsSeries(rates,false);ResetLastError();
++        int n=CopyRates(qeSymbols[i],tfs[t],begin,end,rates);int error=GetLastError();
+         double point=SymbolInfoDouble(qeSymbols[i],SYMBOL_POINT);ulong hash=14695981039346656037;
+-        if(n<=0 || point<=0){Print("QE_FATAL_HISTORY ",qeSymbols[i]," ",EnumToString(tfs[t]));continue;}
++        if(n<=0 || point<=0){Print("QE_FATAL_HISTORY ",qeSymbols[i]," ",EnumToString(tfs[t]),
++           " from=",TimeToString(begin)," to=",TimeToString(end)," count=",n," error=",error);continue;}
++        int testCount=0,lastMonth=0;datetime testFirst=0,testLast=0;string months="";
+         for(int j=0;j<n;j++)
+           {
+            QEHash(hash,(long)rates[j].time);
+            QEHash(hash,(long)MathRound(rates[j].open/point));QEHash(hash,(long)MathRound(rates[j].high/point));
+            QEHash(hash,(long)MathRound(rates[j].low/point));QEHash(hash,(long)MathRound(rates[j].close/point));
+            QEHash(hash,rates[j].tick_volume);QEHash(hash,rates[j].real_volume);QEHash(hash,rates[j].spread);
++           if(rates[j].time>=qeTestStart && rates[j].time<=end)
++             {
++              if(testCount==0)testFirst=rates[j].time;
++              testCount++;testLast=rates[j].time;
++              MqlDateTime stamp;TimeToStruct(rates[j].time,stamp);int month=stamp.year*100+stamp.mon;
++              if(month!=lastMonth){if(months!="")months+=",";months+=(string)month;lastMonth=month;}
++             }
+           }
+         FileWrite(qeHistory,qeSymbols[i],EnumToString(tfs[t]),(long)begin,(long)end,n,(long)rates[0].time,(long)rates[n-1].time,
+-                  StringFormat("%I64u",hash),"FNV64_INTEGER_WORDS_POINT_SCALED_OHLC_VOLUME_SPREAD");
++                  StringFormat("%I64u",hash),"FNV64_INTEGER_WORDS_POINT_SCALED_OHLC_VOLUME_SPREAD",
++                  (long)qeTestStart,(long)end,testCount,(long)testFirst,(long)testLast,months);
+        }
+    FileFlush(qeHistory);
+   }

@@ -1,0 +1,4 @@
+time;symbol;side;enabled;entry;sl;budget;before_reason;before_volume;before_loss;checks;after_reason;after_volume;after_loss;margin;min_volume;step;max_volume
+2024.01.08 18:10:00;EURUSD;ORDER_TYPE_BUY;1;1.09757;1.09631;65.0;OK;0.51;64.26;0;OK;0.51;64.26;559.76;0.01;0.01;100.0
+2024.02.09 17:10:00;EURUSD;ORDER_TYPE_BUY;1;1.07889;1.07747;64.57899499999999;OK;0.45;63.9;0;OK;0.45;63.9;485.5;0.01;0.01;100.0
+2024.08.23 18:15:00;EURUSD;ORDER_TYPE_BUY;1;1.1191;1.11651;64.40642000000001;OK;0.24;62.16;0;OK;0.24;62.16;268.58;0.01;0.01;100.0

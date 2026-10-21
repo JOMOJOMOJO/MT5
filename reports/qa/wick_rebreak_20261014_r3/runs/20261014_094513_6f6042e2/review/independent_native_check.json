@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "symbol": "EURUSD",
+      "arm": "A",
+      "native_net": "-1169.08",
+      "native_n": 119,
+      "native_combined_pf": 0.6570597156342495,
+      "passed": true
+    },
+    {
+      "symbol": "EURUSD",
+      "arm": "B",
+      "native_net": "-373.88",
+      "native_n": 59,
+      "native_combined_pf": 0.7547298538403002,
+      "passed": true
+    },
+    {
+      "symbol": "USDJPY",
+      "arm": "A",
+      "native_net": "-190.47",
+      "native_n": 227,
+      "native_combined_pf": 0.9690764832231763,
+      "passed": true
+    },
+    {
+      "symbol": "USDJPY",
+      "arm": "B",
+      "native_net": "-75.30",
+      "native_n": 116,
+      "native_combined_pf": 0.9754230788060774,
+      "passed": true
+    },
+    {
+      "symbol": "XAUUSD",
+      "arm": "A",
+      "native_net": "-237.42",
+      "native_n": 667,
+      "native_combined_pf": 0.987413681776398,
+      "passed": true
+    },
+    {
+      "symbol": "XAUUSD",
+      "arm": "B",
+      "native_net": "-2090.69",
+      "native_n": 432,
+      "native_combined_pf": 0.8292272920711651,
+      "passed": true
+    }
+  ],
+  "provenance_hashes_match": true
+}
