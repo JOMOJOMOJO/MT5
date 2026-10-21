@@ -1,0 +1,27 @@
+{
+  "candidate_id": "kijun_bounce:SHORT:1704155700",
+  "decision_time": 1704156030,
+  "future_candles_included": false,
+  "timeframes": {
+    "M1": {
+      "n": 100,
+      "max_close_time": 1704156000,
+      "max_available_time": 1704156030
+    },
+    "M5": {
+      "n": 100,
+      "max_close_time": 1704156000,
+      "max_available_time": 1704156030
+    },
+    "M15": {
+      "n": 100,
+      "max_close_time": 1704155400,
+      "max_available_time": 1704155400
+    },
+    "H1": {
+      "n": 100,
+      "max_close_time": 1703894400,
+      "max_available_time": 1704153600
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "git_head": "bfe77a8ff319065d6913b78058bbd2f429ac40c2",
+  "git_branch": "research/entry-candidates/2026-10-14-platform",
+  "uncommitted_code_identified_by_sha256": true,
+  "python": "3.11.9",
+  "dependencies": {
+    "pandas": "3.0.1",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "pyarrow": "23.0.1",
+    "duckdb": "1.5.6",
+    "plotly": "6.9.0",
+    "MetaTrader5": "5.0.5640",
+    "pytest": "9.1.1"
+  },
+  "code_sha256": {
+    "tools\\entry_research\\baseline.py": "6914d1825cb8d076f2faa6eb873fe5590fc4a99336f7b276575fcd77bda7d1ea",
+    "tools\\entry_research\\charts.py": "3990b5c871c3211df589523b76c21dbcf305629bfb445f3e5d2a15c6b82ffc8b",
+    "tools\\entry_research\\cli.py": "0ca17532e817bae357cb6327fc1463f28c6d60a98f152025b0a4f4eb6b58bf75",
+    "tools\\entry_research\\data.py": "fd544dc1e34cb29f68dd6dd23faf60c31e1c077ed591434f865edb21d99e2c88",
+    "tools\\entry_research\\evaluation.py": "b362b31c056b1108054c2543112c0e06ac9f1e8016176c1c8c49b3936a559122",
+    "tools\\entry_research\\features.py": "a5fc1bff27ac3b5e075ded1b3919c611d5ffeec4c3fe05d9f2ade1cd17a039c6",
+    "tools\\entry_research\\requirements.txt": "9f7b8a332e45a74baab9eaae584d0a089febe228a4f0e2e20ff77e6f55abe78c",
+    "tools\\entry_research\\statistics.py": "d3bb7b66abc4c98a78f411edf153c96fd5da3501c4f2ddbacf497820c74a51da",
+    "tools\\entry_research\\__init__.py": "27418acdb7e7ecb7e85893a589292ba71b694119754453057435d8349998dc8e",
+    "tools\\entry_research\\__main__.py": "f38fd2f2c920c29c828645e87ed64743d567aaaef7fba7a15d2c7d7f8094f91f",
+    "tools\\entry_research\\configs\\initial.json": "5f2c1684fddc212c104d5d0b409b5a7a6ee31bf7ad7e6e316630c22c6bb7e5bf",
+    "tools\\entry_research\\signals\\ema_cross.py": "596ce2f35b30a190441de01915e53f4d569c6875fa5d0d1fee2fd3b31de62c65",
+    "tools\\entry_research\\signals\\ichimoku_cloud.py": "357c5d477bb6df54b8ce528ef1b89af83eb5edcdc7f9c67f597eadb0a39cc2ae",
+    "tools\\entry_research\\signals\\kijun_bounce.py": "cc7b388a42fab5f45a8a2d8ef2e26b6ec748eb4a7f3fc1a33098257f9415e19d",
+    "tools\\entry_research\\signals\\__init__.py": "c5383e910bdff20c574a330d4b765ad6dfe1df16ead38e19972f8e1acc392edf",
+    "tools\\entry_research\\tests\\test_data.py": "9bb40f30bb03c5d0bb75abd66edb93260e8894f3e8db17339bc419f0b030b014",
+    "tools\\entry_research\\tests\\test_evaluation.py": "29abbe645fad02f655d5722a554bbfc9a9e685e4ac2f26d527c1bd9f0c7b3b93",
+    "tools\\entry_research\\tests\\test_features.py": "835bfc5acc3aedc0a48c537b6c059df8cb8a31fd378504bde825fc170491ce1e"
+  },
+  "seed": 20261014,
+  "holdout_2026_read": false,
+  "analysis_type": "research_event_study_not_MT5_strategy_test",
+  "data_dir": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\research\\entry_candidates\\data_20261014",
+  "dataset_manifest_sha256": "903927a09e335dbbcf477750d2f3bbdb0af346b78509bf4699b24c08b7d39ca2",
+  "result_sha256": {
+    "barrier_comparison.csv": "696aef6bd1f73c0cfa2d9663784fd5d934f293e8aecba9edc056adb88b139236",
+    "barrier_rates.csv": "15cee129f28c454be4a23b866e7b27c9881efa1d60b24c21a326613836f0963a",
+    "baseline_match_audit.csv": "40dfd6f5084dcb639a99e48d63ebdda0b9127a49e21d3b861e690909caecf0d7",
+    "candidate_counts.csv": "bd2cf2d0575f6e5e71d6606f6c2b0ab3e0e5bea316b34e07811b3360a8729f20",
+    "candidate_index.csv": "5d039d6d0e765e8aa004689466bb4e6690acaf1da39df049e314d42b64a6c0d7",
+    "censor_counts.csv": "b3ccbc775e99d43832d5379f9da41dd8c926e45caa1bb7e377281ba43981a3a3",
+    "environment_summary.csv": "e5f84507b45846a77fe8f037f00a9a93a0505997996095ae38f02b4abdd9735d",
+    "summary.csv": "c36a09b9dc0986d180f816bf5ad98f4a98d1856cfd9af3015ddffef902c1ad6b",
+    "touch_rates.csv": "72288209e9955e4b316033cf56db46512882d9e000b3963d4cea9776f82fa1a3"
+  }
+}

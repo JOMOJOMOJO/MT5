@@ -1,0 +1,27 @@
+{
+  "candidate_id": "ema_cross:LONG:1704160800",
+  "decision_time": 1704161100,
+  "future_candles_included": false,
+  "timeframes": {
+    "M1": {
+      "n": 100,
+      "max_close_time": 1704161100,
+      "max_available_time": 1704161100
+    },
+    "M5": {
+      "n": 100,
+      "max_close_time": 1704161100,
+      "max_available_time": 1704161100
+    },
+    "M15": {
+      "n": 100,
+      "max_close_time": 1704160800,
+      "max_available_time": 1704160800
+    },
+    "H1": {
+      "n": 100,
+      "max_close_time": 1704160800,
+      "max_available_time": 1704160800
+    }
+  }
+}

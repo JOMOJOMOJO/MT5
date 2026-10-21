@@ -1,0 +1,7 @@
+method,side,all_candidates,common_50bar,consecutive,overlap_50
+ema_cross,LONG,1478,1427,0,419
+ema_cross,SHORT,1478,1435,0,436
+ichimoku_cloud,LONG,4221,4051,0,3135
+ichimoku_cloud,SHORT,3865,3757,0,2793
+kijun_bounce,LONG,3269,3137,273,2178
+kijun_bounce,SHORT,3098,3011,258,2039

@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "run": "reports\\research\\entry_candidates\\validated_20261014",
+  "compare": null,
+  "checks": {
+    "result_csv_hashes": 9,
+    "dataset_and_original_hashes": "pass",
+    "raw_candidates": 17409,
+    "common_candidates": 16818,
+    "baseline_rows": 168180,
+    "holdout_and_time_contract": "pass",
+    "matched_baseline_strata": 31810,
+    "chart_time_audits": [
+      "ema_cross_LONG.audit.json",
+      "ema_cross_SHORT.audit.json",
+      "ichimoku_cloud_LONG.audit.json",
+      "ichimoku_cloud_SHORT.audit.json",
+      "kijun_bounce_LONG.audit.json",
+      "kijun_bounce_SHORT.audit.json"
+    ],
+    "barrier_partition": "pass"
+  }
+}

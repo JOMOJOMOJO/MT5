@@ -1,0 +1,35 @@
+{
+  "created_at": "2026-10-15T12:57:45.518050+00:00",
+  "source_sha256": {
+    "tools\\entry_research\\diagnostics\\__init__.py": "cbb11f149b1128ae7f92045d6f9ac04610f2eb1df0af4dc2f5e6fe89de75f50a",
+    "tools\\entry_research\\diagnostics\\__main__.py": "e6a5b8a9b0f5bc30f863a0f88db0d1acf6a56ac41415d9dfd346748a63a015be",
+    "tools\\entry_research\\diagnostics\\config.json": "3520f6304d90e169aa811e4e6b18011cd79f0bc6da34e443c50c803f65c68031",
+    "tools\\entry_research\\diagnostics\\environment.py": "ee3bfaca962f7ee7219be39668184a8e899b1b766d88c9171feb204eaa4c95c3",
+    "tools\\entry_research\\diagnostics\\exits.py": "dab688dd4456e6442c5986c98a52ce8a3828a2dfdac8084cfd0d36df33e9b85f",
+    "tools\\entry_research\\diagnostics\\paths.py": "bdb2c1fc99a1a8d02303ec7853d18cf15fe4958482115a362b27c03ed932d528",
+    "tools\\entry_research\\diagnostics\\README.md": "59c18661b4b8b292889745f6816b095476ecb5fd80a3f3ab6468da835440e91f",
+    "tools\\entry_research\\diagnostics\\report.py": "36877daaafadfd1d72b98ed672202e1532ada9690ee865afdb79d7b2a30a50e2",
+    "tools\\entry_research\\diagnostics\\run.py": "3767891fa8db54c5d2eb781fe64a5f4191164cf85eecad2faf9fdfc10ba2be1f",
+    "tools\\entry_research\\diagnostics\\statistics.py": "e90dd126faf7f398d8f4e6dc4224b3c3e9b3e123675a260337aba7fea3ba672e",
+    "tools\\entry_research\\diagnostics\\tests\\__init__.py": "7754a9a809288df85d24887cf6475825d8eb197e933bdaf54026d8f33aaa8e3d",
+    "tools\\entry_research\\diagnostics\\tests\\test_environment.py": "70f40aee298135fb4aa63025a35b701b9b0c5362025c53421bbc5e90743f2456",
+    "tools\\entry_research\\diagnostics\\tests\\test_exits.py": "9cdb716350d495298f4379b22ddb2c63d087179cf2e1a6b4c72fe8893ea6d149",
+    "tools\\entry_research\\diagnostics\\tests\\test_holdout_lock.py": "bba5e2729bb87ceaf9d318038328ec2df3c78694c672b38b939b13bdb60d1386",
+    "tools\\entry_research\\diagnostics\\tests\\test_paths.py": "d217a4744bb5761e2d7f7a64963f0d2eaca156492cfc5e3b2b6ec440482b5315",
+    "tools\\entry_research\\diagnostics\\tests\\test_statistics.py": "49dfc8be490e8c7dbc545244e48cb40bb1b40b04510260757f2415f46762d0be",
+    "tools\\entry_research\\diagnostics\\tests\\test_timing.py": "a058eec47805ec294066b8c0ccc8ca7b82a25fbbed639f5e509c335d567ac57d",
+    "tools\\entry_research\\diagnostics\\timing.py": "aa8d6f9d27b09a819fa8037791bebc1a5403a2ea98467989c98c92c6ea34c213",
+    "tools\\entry_research\\diagnostics\\verify.py": "2ae964e4ed8624809d83d5a6bce28d70bad753486bb740f05315db95b889f6af",
+    "tools\\entry_research\\diagnostics\\visuals.py": "1b64d977c350b7a0360b66f2980fd90b152bc45221f0f4f149954fba0a38536b"
+  },
+  "post_calculation_changes": "display scale and sample-gate masking; direct-API 2026 guards; documentation and artifact checks; no changed numerical policy",
+  "visual_qa": {
+    "dashboard_rendered": true,
+    "environment_net_delta_switch": true,
+    "small_cells_gray": true,
+    "retrospective_representative_rendered": true,
+    "javascript_errors": 0,
+    "representatives": 36
+  },
+  "artifact_audit": "artifact_audit.json"
+}

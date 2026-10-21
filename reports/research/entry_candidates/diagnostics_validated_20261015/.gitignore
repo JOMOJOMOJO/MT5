@@ -1,0 +1,7 @@
+*.parquet
+*.duckdb*
+timing_events.csv
+figures/
+plotly.min.js
+dashboard.html
+representatives/

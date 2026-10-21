@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "mode": "archived_mt5_collector",
+  "symbol": "USDJPY",
+  "point": 0.001,
+  "pip_size": 0.01,
+  "requested_start": "2024-01-01",
+  "requested_end_exclusive": "2026-01-01",
+  "timeframes": {
+    "M1": 60,
+    "M5": 300,
+    "M15": 900,
+    "H1": 3600
+  },
+  "clock_basis": "broker_server_unverified",
+  "geographic_sessions_status": "UNKNOWN_historical_server_UTC_mapping_unverified",
+  "timestamp_unit": "integer_seconds_in_source_clock",
+  "holdout_2026_locked": true,
+  "source_broker_server": "Bybit-Live",
+  "source_precedence": "original_year_source; earliest source supplies warmup; later warmup audit only",
+  "availability_semantics": "max(nominal_bar_close, collector_first_observed_time)",
+  "price_basis": "MT5_bid_OHLC",
+  "spread_basis": "archived_bar_proxy_not_execution_quote",
+  "real_tick_start": "2024-06-06",
+  "tick_sequence_available": false,
+  "limitations": [
+    "2024 data before June 6 has no verified real tick provenance",
+    "Model=4 does not guarantee every interval used actual ticks",
+    "Existing collection_quality.json records warning days including 2025-03-27",
+    "Missing nominal weekday slots include closures/holidays; no exchange calendar verified",
+    "Source bar spread may be zero or revised and is not actual round-trip execution cost",
+    "Annual collector shutdown omits some final-year closing bars"
+  ],
+  "sources": [
+    {
+      "timeframe": "M1",
+      "year": 2024,
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_2024_ml\\annual_2024\\TW_ml_bars_PERIOD_M1.csv",
+      "sha256": "17afcdfbf4cd61ac294f1c886a02971a65d542064a32a7c82b9dc4a87eb5b40f",
+      "raw_rows": 379621,
+      "selected_rows": 379621,
+      "first_raw_time": 1703274180,
+      "last_raw_time": 1735689360,
+      "spread_zero_rows": 42085
+    },
+    {
+      "timeframe": "M1",
+      "year": 2025,
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_multiyear_ml\\annual_2025\\TW_ml_bars_PERIOD_M1.csv",
+      "sha256": "c17620c7184e0b51da68e165993806a90669d978171b09904158d724eb1cc006",
+      "raw_rows": 378311,
+      "selected_rows": 372311,
+      "first_raw_time": 1735069500,
+      "last_raw_time": 1767225360,
+      "spread_zero_rows": 179515
+    },
+    {
+      "timeframe": "M5",
+      "year": 2024,
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_2024_ml\\annual_2024\\TW_ml_bars_PERIOD_M5.csv",
+      "sha256": "2a459cf045c2f3abda6e5e129f883ddf1848832963ec8b5f3cc94c4f1b278517",
+      "raw_rows": 80871,
+      "selected_rows": 80871,
+      "first_raw_time": 1701316500,
+      "last_raw_time": 1735689000,
+      "spread_zero_rows": 12839
+    },
+    {
+      "timeframe": "M5",
+      "year": 2025,
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_multiyear_ml\\annual_2025\\TW_ml_bars_PERIOD_M5.csv",
+      "sha256": "a2672c3ef41e1eef1be8bca630885351fb76c8a055013c874d311c78e090ac12",
+      "raw_rows": 80585,
+      "selected_rows": 74585,
+      "first_raw_time": 1733112000,
+      "last_raw_time": 1767225000,
+      "spread_zero_rows": 41892
+    },
+    {
+      "timeframe": "M15",
+      "year": 2024,
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_2024_ml\\annual_2024\\TW_ml_bars_PERIOD_M15.csv",
+      "sha256": "78fecbf20a9e34e886ff5d3e708b85a7b275e2a804e257bb36a785c1ce609e71",
+      "raw_rows": 30959,
+      "selected_rows": 30959,
+      "first_raw_time": 1696334400,
+      "last_raw_time": 1735687800,
+      "spread_zero_rows": 5288
+    },
+    {
+      "timeframe": "M15",
+      "year": 2025,
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_multiyear_ml\\annual_2025\\TW_ml_bars_PERIOD_M15.csv",
+      "sha256": "a8d29d69af5666dd74b7d2abdab1042ab23343f987ee87e90361393208a8347f",
+      "raw_rows": 30863,
+      "selected_rows": 24863,
+      "first_raw_time": 1727956800,
+      "last_raw_time": 1767223800,
+      "spread_zero_rows": 15022
+    },
+    {
+      "timeframe": "H1",
+      "year": 2024,
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_2024_ml\\annual_2024\\TW_ml_bars_PERIOD_H1.csv",
+      "sha256": "4e0dea4b9adb31e9ee05e80881245395d2f4ccfe724205fcba89a4e63b8e191b",
+      "raw_rows": 12239,
+      "selected_rows": 12239,
+      "first_raw_time": 1673568000,
+      "last_raw_time": 1735682400,
+      "spread_zero_rows": 1563
+    },
+    {
+      "timeframe": "H1",
+      "year": 2025,
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_multiyear_ml\\annual_2025\\TW_ml_bars_PERIOD_H1.csv",
+      "sha256": "8ba45ac49b0ec62650167e96f9bf27a5fa1daf4610ce982e6161ce246acf29f0",
+      "raw_rows": 12215,
+      "selected_rows": 6215,
+      "first_raw_time": 1705363200,
+      "last_raw_time": 1767218400,
+      "spread_zero_rows": 3927
+    }
+  ],
+  "overlap_audit": [
+    {
+      "timeframe": "M1",
+      "earlier_source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_2024_ml\\annual_2024\\TW_ml_bars_PERIOD_M1.csv",
+      "later_source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_multiyear_ml\\annual_2025\\TW_ml_bars_PERIOD_M1.csv",
+      "overlap_rows": 5999,
+      "ohlc_conflicting_rows": 0,
+      "spread_conflicting_rows": 123,
+      "resolution": "keep_original_year_source_never_revise_with_later_warmup"
+    },
+    {
+      "timeframe": "M5",
+      "earlier_source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_2024_ml\\annual_2024\\TW_ml_bars_PERIOD_M5.csv",
+      "later_source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_multiyear_ml\\annual_2025\\TW_ml_bars_PERIOD_M5.csv",
+      "overlap_rows": 5999,
+      "ohlc_conflicting_rows": 0,
+      "spread_conflicting_rows": 12,
+      "resolution": "keep_original_year_source_never_revise_with_later_warmup"
+    },
+    {
+      "timeframe": "M15",
+      "earlier_source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_2024_ml\\annual_2024\\TW_ml_bars_PERIOD_M15.csv",
+      "later_source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_multiyear_ml\\annual_2025\\TW_ml_bars_PERIOD_M15.csv",
+      "overlap_rows": 5999,
+      "ohlc_conflicting_rows": 0,
+      "spread_conflicting_rows": 15,
+      "resolution": "keep_original_year_source_never_revise_with_later_warmup"
+    },
+    {
+      "timeframe": "H1",
+      "earlier_source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_2024_ml\\annual_2024\\TW_ml_bars_PERIOD_H1.csv",
+      "later_source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\three_wave\\ready_multiyear_ml\\annual_2025\\TW_ml_bars_PERIOD_H1.csv",
+      "overlap_rows": 5999,
+      "ohlc_conflicting_rows": 0,
+      "spread_conflicting_rows": 35,
+      "resolution": "keep_original_year_source_never_revise_with_later_warmup"
+    }
+  ],
+  "outputs_sha256": {
+    "M1.parquet": "a4fa6050e35e8b98b7e28671a2076fe0a4789c6625d77f8f8de41a3b91c7aa0f",
+    "M5.parquet": "5af83e272add8504bf74e5ca4d23cf7ccd4639670b21761babaff6d465d8ba18",
+    "M15.parquet": "7b87180f9d15a9497df70ecfe05d8bab72ce4fca1472ffe2cdf5f7641971babf",
+    "H1.parquet": "b7278de8f120993ef71b36f29fc2af224a0f2ae04f18d9da8ed6a2a1a269329b",
+    "coverage.csv": "36aca1a196258e11924088a0b1a3a6efbcd521b696305533534b1e084077c9ee",
+    "gaps.csv": "845b35695a733da56ef61746c57cec80f87e5d8392a2272a8014cf39ed490cdc"
+  }
+}

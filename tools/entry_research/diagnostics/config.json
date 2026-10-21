@@ -1,0 +1,37 @@
+{
+  "source_run": "reports/research/entry_candidates/validated_20261014",
+  "data_dir": "reports/research/entry_candidates/data_20261014",
+  "seed": 20261015,
+  "bootstrap_reps": 5000,
+  "classification": {
+    "horizon": 50,
+    "threshold_atr": 0.5,
+    "immediate_bars": 3,
+    "terminal_adverse_atr": 0.25,
+    "continuation_terminal_atr": 0.5,
+    "continuation_floor_atr": 0.25,
+    "continuation_last_bars": 10,
+    "continuation_min_closes": 8
+  },
+  "timing": {
+    "conditional_wait_bars": 10,
+    "pullback_atr": 0.25,
+    "breakout_lookback": 20,
+    "max_entry_offset_bars": 11,
+    "hold_bars": 10,
+    "deadline_bars": 50
+  },
+  "environment": {
+    "min_n": 200,
+    "min_weeks": 30,
+    "peryear_min_n": 75,
+    "peryear_weeks": 15,
+    "bootstrap_reps": 20000,
+    "cell_cap": 732
+  },
+  "barrier_levels": [0.5, 1.0, 1.5],
+  "cost_grid_pips": [0.0, 0.5, 1.0, 1.9, 3.0],
+  "timing_baseline_holm_family": 72,
+  "timing_immediate_holm_family": 60,
+  "representatives_per_method_side_class": 1
+}

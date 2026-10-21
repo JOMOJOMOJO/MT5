@@ -1,0 +1,6 @@
+# Keep large reproducible local artifacts; compact results/manifests remain visible.
+**/*.parquet
+**/research.duckdb
+**/research.duckdb.wal
+**/charts/*.html
+**/charts/plotly.min.js

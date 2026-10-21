@@ -1,0 +1,17 @@
+numpy==2.4.4
+pandas==3.0.1
+scipy==1.17.1
+MetaTrader5==5.0.5640
+pyarrow==23.0.1
+duckdb==1.5.6
+plotly==6.9.0
+pytest==9.1.1
+tzdata==2025.3
+narwhals==2.25.0
+packaging==25.0
+python-dateutil==2.9.0.post0
+six==1.17.0
+colorama==0.4.6
+iniconfig==2.3.1
+pluggy==1.6.0
+pygments==2.21.0

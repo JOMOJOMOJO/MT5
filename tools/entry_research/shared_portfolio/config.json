@@ -1,0 +1,19 @@
+{
+  "initial_equity": 40000.0,
+  "risk_fraction": 0.00025,
+  "max_positions": 4,
+  "max_open_risk_fraction": 0.001,
+  "max_symbol_risk_fraction": 0.0005,
+  "daily_entry_halt_fraction": 0.03,
+  "peak_entry_halt_fraction": 0.05,
+  "assumed_leverage": 30.0,
+  "primary_mode": "hedging",
+  "sensitivity_mode": "block_opposite",
+  "common_start": "2024-08-01T08:00:00+00:00",
+  "reference_start": "2024-01-01T00:00:00+00:00",
+  "end_exclusive": "2026-01-01T00:00:00+00:00",
+  "seed": 20261019,
+  "holdout_2026_used": false,
+  "weights_optimized": false,
+  "historical_margin_verified": false
+}

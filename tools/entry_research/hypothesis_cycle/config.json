@@ -1,0 +1,22 @@
+{
+  "cycle": "hypothesis_cycle_20261019",
+  "seed": 20261019,
+  "bootstrap_reps": 5000,
+  "block_weeks": 4,
+  "hypotheses": 19,
+  "breakout_margin_atr": 0.25,
+  "rsi_period": 2,
+  "rsi_lower": 5,
+  "rsi_upper": 95,
+  "trend_ema": 200,
+  "calendar_pause": "source_Dec24_to_Jan02_inclusive",
+  "base_slippage_pips_per_side": 0.2,
+  "stress_slippage_pips_per_side": 0.7,
+  "min_positive_month_fraction": 0.6666666666666666,
+  "max_consecutive_negative_months": 3,
+  "min_active_month_fraction": 0.8,
+  "min_median_entries_per_month": 5,
+  "baseline_repeats": 5,
+  "holdout_2026_used": false,
+  "independent_oos": false
+}

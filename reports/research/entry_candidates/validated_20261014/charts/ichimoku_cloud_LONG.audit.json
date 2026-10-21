@@ -1,0 +1,27 @@
+{
+  "candidate_id": "ichimoku_cloud:LONG:1704159900",
+  "decision_time": 1704160200,
+  "future_candles_included": false,
+  "timeframes": {
+    "M1": {
+      "n": 100,
+      "max_close_time": 1704160200,
+      "max_available_time": 1704160200
+    },
+    "M5": {
+      "n": 100,
+      "max_close_time": 1704160200,
+      "max_available_time": 1704160200
+    },
+    "M15": {
+      "n": 100,
+      "max_close_time": 1704159900,
+      "max_available_time": 1704159900
+    },
+    "H1": {
+      "n": 100,
+      "max_close_time": 1704157200,
+      "max_available_time": 1704157200
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "run": "reports\\research\\entry_candidates\\validated_20261014",
+  "compare": "reports\\research\\entry_candidates\\reproduced_20261015",
+  "checks": {
+    "result_csv_hashes": 9,
+    "dataset_and_original_hashes": "pass",
+    "raw_candidates": 17409,
+    "common_candidates": 16818,
+    "baseline_rows": 168180,
+    "holdout_and_time_contract": "pass",
+    "matched_baseline_strata": 31810,
+    "chart_time_audits": [
+      "ema_cross_LONG.audit.json",
+      "ema_cross_SHORT.audit.json",
+      "ichimoku_cloud_LONG.audit.json",
+      "ichimoku_cloud_SHORT.audit.json",
+      "kijun_bounce_LONG.audit.json",
+      "kijun_bounce_SHORT.audit.json"
+    ],
+    "barrier_partition": "pass",
+    "reproducibility": {
+      "csv": [
+        {
+          "file": "barrier_comparison.csv",
+          "exact_sha256_equal": true,
+          "numeric_tolerance": 1e-12
+        },
+        {
+          "file": "barrier_rates.csv",
+          "exact_sha256_equal": true,
+          "numeric_tolerance": 1e-12
+        },
+        {
+          "file": "baseline_match_audit.csv",
+          "exact_sha256_equal": true,
+          "numeric_tolerance": 1e-12
+        },
+        {
+          "file": "candidate_counts.csv",
+          "exact_sha256_equal": true,
+          "numeric_tolerance": 1e-12
+        },
+        {
+          "file": "candidate_index.csv",
+          "exact_sha256_equal": true,
+          "numeric_tolerance": 1e-12
+        },
+        {
+          "file": "censor_counts.csv",
+          "exact_sha256_equal": true,
+          "numeric_tolerance": 1e-12
+        },
+        {
+          "file": "environment_summary.csv",
+          "exact_sha256_equal": false,
+          "numeric_tolerance": 1e-12
+        },
+        {
+          "file": "summary.csv",
+          "exact_sha256_equal": true,
+          "numeric_tolerance": 1e-12
+        },
+        {
+          "file": "touch_rates.csv",
+          "exact_sha256_equal": true,
+          "numeric_tolerance": 1e-12
+        }
+      ],
+      "exact_parquet_tables": [
+        "features",
+        "candidates",
+        "controls",
+        "summary"
+      ]
+    }
+  }
+}
