@@ -1,0 +1,904 @@
+{
+  "purpose": "Read-only native report/accounting/data integrity; no strategy changes, no new backtests, no optimization, no streak analysis.",
+  "batch": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b",
+  "deployment": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\deployment.json",
+  "runs": {
+    "a_extension_on": {
+      "summary": {
+        "initial_deposit": 5000.0,
+        "history_quality_cell": "0% リアルティック",
+        "bars": 71111,
+        "ticks": 40971991,
+        "net_profit": -581.12,
+        "gross_profit": 1767.99,
+        "gross_loss": -2349.11,
+        "profit_factor_rounded": 0.75,
+        "expected_payoff": -5.99,
+        "trades": 97,
+        "deals": 194,
+        "balance_absolute_drawdown": 624.98,
+        "balance_max_drawdown_cell": "624.98 (12.50%)",
+        "balance_relative_drawdown_cell": "12.50% (624.98)",
+        "equity_absolute_drawdown": 640.62,
+        "equity_max_drawdown_cell": "642.87 (12.85%)",
+        "equity_relative_drawdown_cell": "12.85% (642.87)"
+      },
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 27282,
+        "WAVE1_BREAK": 429,
+        "STATE": 2031,
+        "WAVE1_PROVISIONAL": 1174,
+        "WAVE1_PEAK_CONFIRMED": 371,
+        "WAVE1_EXTENSION_LOCKED": 366,
+        "WAVE2_EXTREME": 2569,
+        "FIB_TOUCH": 319,
+        "LOWER_STRUCTURE_CONFIRMED": 625,
+        "FIB_TOO_DEEP": 171,
+        "LOWER_STRUCTURE_LOST": 248,
+        "FIB_CLOSE_TOO_DEEP": 164,
+        "INVALIDATE": 264,
+        "PIVOT_TRIGGER": 141,
+        "SIGNAL": 141,
+        "RISK_CHECK": 141,
+        "SKIP": 67,
+        "COMPLETED": 141,
+        "LOWER_STRUCTURE_REJECTED": 229,
+        "INITIAL_MOVE_PROGRESS": 65,
+        "ORDER": 97,
+        "FILL": 97,
+        "POSITION_TRACKING": 97,
+        "EXIT": 97,
+        "TRENDLINE_TRIGGER": 53,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 123,
+        "WAVE1_EXTENSION_STARTED": 123,
+        "WAVE1_EXTENDED_CONFIRMED": 122,
+        "WAVE1_EXTENSION_TRACKING": 188,
+        "OPPOSITE_WAVE1_ARMED": 6,
+        "OPPOSITE_CLOSE_REQUEST": 6,
+        "OPPOSITE_CLOSE_ACCEPTED": 6,
+        "TEST_END": 1
+      },
+      "native_closed_positions": 97,
+      "cash_reconciliation": "All native completed positions matched to EA FILL and EXIT, including net cash and independent XAUUSD/USD initial risk and R.",
+      "profit_factor_exact": 0.7526212054778193,
+      "native_costs": {
+        "commission": -72.48,
+        "swap": -42.01,
+        "profit": -466.63
+      },
+      "explicit_cost_drag_commission_minus_swap_credit": 114.49,
+      "independent_balance": {
+        "final": 4418.88,
+        "absolute_drawdown": 624.98,
+        "maximum_drawdown": 624.98,
+        "maximum_relative_drawdown_percent": 12.4996
+      },
+      "missing_ea_exit_for_fills": [],
+      "native_forced_test_end_deals": [],
+      "terminal_candidate_snapshots": [
+        {
+          "setup_id": "W33_XAUUSD+_15_5_LONG_1609448400_429",
+          "event_at": "2020.12.31 23:57:59",
+          "entry_status": "CANDIDATE",
+          "wave1_extension_pending": "0",
+          "fill_at": "",
+          "signal_at": ""
+        }
+      ],
+      "terminal_candidate_censoring_is_not_a_trade": true,
+      "generated_tick_evidence": [
+        {
+          "path": "a_extension_on\\journals\\Tester\\Agent-127.0.0.1-39193\\logs\\20261022.log",
+          "line": 68,
+          "text": "XAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "path": "a_extension_on\\journals\\Tester\\logs\\20261022.log",
+          "line": 108,
+          "text": "XAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        }
+      ],
+      "source_coverage": {
+        "upper": {
+          "count": 23705,
+          "first": {
+            "bar_time": "2019.12.31 23:45:00",
+            "known_at": "2020.01.02 01:00:00"
+          },
+          "last": {
+            "bar_time": "2020.12.31 23:30:00",
+            "known_at": "2020.12.31 23:45:00"
+          },
+          "months": {
+            "2019.12": 1,
+            "2020.01": 2010,
+            "2020.02": 1824,
+            "2020.03": 2020,
+            "2020.04": 1932,
+            "2020.05": 1916,
+            "2020.06": 2024,
+            "2020.07": 2100,
+            "2020.08": 1932,
+            "2020.09": 2009,
+            "2020.10": 2024,
+            "2020.11": 1903,
+            "2020.12": 2010
+          },
+          "observed_calendar_days": 260,
+          "weekdays_without_observed_bar": [
+            "2020.01.01",
+            "2020.04.10",
+            "2020.12.25"
+          ],
+          "nonstandard_interval_count": 259,
+          "largest_gaps": [
+            {
+              "after": "2020.12.24 20:30:00",
+              "before": "2020.12.28 01:00:00",
+              "seconds": 275400
+            },
+            {
+              "after": "2020.04.09 23:45:00",
+              "before": "2020.04.13 01:00:00",
+              "seconds": 263700
+            },
+            {
+              "after": "2020.07.03 19:45:00",
+              "before": "2020.07.06 01:00:00",
+              "seconds": 191700
+            },
+            {
+              "after": "2020.11.27 20:30:00",
+              "before": "2020.11.30 01:00:00",
+              "seconds": 189000
+            },
+            {
+              "after": "2020.03.06 23:45:00",
+              "before": "2020.03.09 02:00:00",
+              "seconds": 180900
+            },
+            {
+              "after": "2020.01.03 23:45:00",
+              "before": "2020.01.06 01:00:00",
+              "seconds": 177300
+            },
+            {
+              "after": "2020.01.10 23:45:00",
+              "before": "2020.01.13 01:00:00",
+              "seconds": 177300
+            },
+            {
+              "after": "2020.01.17 23:45:00",
+              "before": "2020.01.20 01:00:00",
+              "seconds": 177300
+            },
+            {
+              "after": "2020.01.24 23:45:00",
+              "before": "2020.01.27 01:00:00",
+              "seconds": 177300
+            },
+            {
+              "after": "2020.01.31 23:45:00",
+              "before": "2020.02.03 01:00:00",
+              "seconds": 177300
+            },
+            {
+              "after": "2020.02.07 23:45:00",
+              "before": "2020.02.10 01:00:00",
+              "seconds": 177300
+            },
+            {
+              "after": "2020.02.14 23:45:00",
+              "before": "2020.02.17 01:00:00",
+              "seconds": 177300
+            }
+          ],
+          "market_closure_vs_missing_data": "NOT_INDEPENDENTLY_CLASSIFIED",
+          "sha256": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0",
+          "requested_2020_months": {
+            "2020.01": 2010,
+            "2020.02": 1824,
+            "2020.03": 2020,
+            "2020.04": 1932,
+            "2020.05": 1916,
+            "2020.06": 2024,
+            "2020.07": 2100,
+            "2020.08": 1932,
+            "2020.09": 2009,
+            "2020.10": 2024,
+            "2020.11": 1903,
+            "2020.12": 2010
+          },
+          "outside_requested_calendar_months": {
+            "2019.12": 1
+          },
+          "requested_2020_bar_count": 23704,
+          "prefix_explanation": "One previously closed 2019-12-31 candle is first available at 2020-01-02 01:00; preserved as initialization source, not discarded or counted as a 2020 trading month."
+        },
+        "lower": {
+          "count": 71111,
+          "first": {
+            "bar_time": "2019.12.31 23:55:00",
+            "known_at": "2020.01.02 01:00:00"
+          },
+          "last": {
+            "bar_time": "2020.12.31 23:50:00",
+            "known_at": "2020.12.31 23:55:00"
+          },
+          "months": {
+            "2019.12": 1,
+            "2020.01": 6029,
+            "2020.02": 5472,
+            "2020.03": 6059,
+            "2020.04": 5796,
+            "2020.05": 5748,
+            "2020.06": 6072,
+            "2020.07": 6300,
+            "2020.08": 5796,
+            "2020.09": 6025,
+            "2020.10": 6072,
+            "2020.11": 5709,
+            "2020.12": 6032
+          },
+          "observed_calendar_days": 260,
+          "weekdays_without_observed_bar": [
+            "2020.01.01",
+            "2020.04.10",
+            "2020.12.25"
+          ],
+          "nonstandard_interval_count": 259,
+          "largest_gaps": [
+            {
+              "after": "2020.12.24 20:40:00",
+              "before": "2020.12.28 01:00:00",
+              "seconds": 274800
+            },
+            {
+              "after": "2020.04.09 23:55:00",
+              "before": "2020.04.13 01:00:00",
+              "seconds": 263100
+            },
+            {
+              "after": "2020.07.03 19:55:00",
+              "before": "2020.07.06 01:00:00",
+              "seconds": 191100
+            },
+            {
+              "after": "2020.11.27 20:40:00",
+              "before": "2020.11.30 01:00:00",
+              "seconds": 188400
+            },
+            {
+              "after": "2020.03.06 23:55:00",
+              "before": "2020.03.09 02:00:00",
+              "seconds": 180300
+            },
+            {
+              "after": "2020.03.27 23:55:00",
+              "before": "2020.03.30 01:05:00",
+              "seconds": 177000
+            },
+            {
+              "after": "2020.01.03 23:55:00",
+              "before": "2020.01.06 01:00:00",
+              "seconds": 176700
+            },
+            {
+              "after": "2020.01.10 23:55:00",
+              "before": "2020.01.13 01:00:00",
+              "seconds": 176700
+            },
+            {
+              "after": "2020.01.17 23:55:00",
+              "before": "2020.01.20 01:00:00",
+              "seconds": 176700
+            },
+            {
+              "after": "2020.01.24 23:55:00",
+              "before": "2020.01.27 01:00:00",
+              "seconds": 176700
+            },
+            {
+              "after": "2020.01.31 23:55:00",
+              "before": "2020.02.03 01:00:00",
+              "seconds": 176700
+            },
+            {
+              "after": "2020.02.07 23:55:00",
+              "before": "2020.02.10 01:00:00",
+              "seconds": 176700
+            }
+          ],
+          "market_closure_vs_missing_data": "NOT_INDEPENDENTLY_CLASSIFIED",
+          "sha256": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+          "requested_2020_months": {
+            "2020.01": 6029,
+            "2020.02": 5472,
+            "2020.03": 6059,
+            "2020.04": 5796,
+            "2020.05": 5748,
+            "2020.06": 6072,
+            "2020.07": 6300,
+            "2020.08": 5796,
+            "2020.09": 6025,
+            "2020.10": 6072,
+            "2020.11": 5709,
+            "2020.12": 6032
+          },
+          "outside_requested_calendar_months": {
+            "2019.12": 1
+          },
+          "requested_2020_bar_count": 71110,
+          "prefix_explanation": "One previously closed 2019-12-31 candle is first available at 2020-01-02 01:00; preserved as initialization source, not discarded or counted as a 2020 trading month."
+        }
+      },
+      "source_files": {
+        "events.csv": "7b0099f244acb3f31be1a4f8927551430126da74fed1c53c00c2c2403d262c1b",
+        "report.htm": "052bca789d9731cb14856466a3deff6d6c15dd5327aa22c8d3557cf871662874",
+        "config.csv": "32be7c782c84cc3956e43d32eab4e1e0b45792b7f7191c5c69aba02cb026ad5d",
+        "inputs.set": "f21ad69d05449f2e9e1311ff72986db4758b4789c128c6b13d1198d1aeaa9cfe"
+      },
+      "native_exit_reasons": {
+        "DEAL_REASON_SL": 51,
+        "OPPOSITE_WAVE1_PROFIT": 6,
+        "DEAL_REASON_TP": 40
+      },
+      "profit_factor_definitions": {
+        "mt5_native_signed_deal_pf": 0.7526212054778193,
+        "mt5_gross_positive_deal_cash": 1767.99,
+        "mt5_gross_negative_deal_cash": -2349.11,
+        "whole_position_net_pf": 0.7488037139979511,
+        "whole_position_net_gross_profit": 1732.29,
+        "whole_position_net_gross_loss": -2313.41,
+        "whole_position_net_winners": 46,
+        "whole_position_net_losers": 51,
+        "explanation": "MT5 native gross/PF splits signed individual deal cash, including entry commissions as negative deals. Whole-position net PF first nets entry commission, swap and exit profit for each completed position. Both reconcile to identical total net cash; only the grouping differs."
+      }
+    },
+    "b_extension_on": {
+      "summary": {
+        "initial_deposit": 5000.0,
+        "history_quality_cell": "0% リアルティック",
+        "bars": 355233,
+        "ticks": 40971991,
+        "net_profit": -1577.51,
+        "gross_profit": 6565.37,
+        "gross_loss": -8142.88,
+        "profit_factor_rounded": 0.81,
+        "expected_payoff": -4.17,
+        "trades": 378,
+        "deals": 756,
+        "balance_absolute_drawdown": 1737.22,
+        "balance_max_drawdown_cell": "1 830.90 (35.94%)",
+        "balance_relative_drawdown_cell": "35.94% (1 830.90)",
+        "equity_absolute_drawdown": 1750.42,
+        "equity_max_drawdown_cell": "1 849.42 (36.27%)",
+        "equity_relative_drawdown_cell": "36.27% (1 849.42)"
+      },
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 117273,
+        "WAVE1_BREAK": 1340,
+        "STATE": 7464,
+        "WAVE1_PROVISIONAL": 3795,
+        "WAVE1_PEAK_CONFIRMED": 1169,
+        "WAVE1_EXTENSION_LOCKED": 1153,
+        "WAVE2_EXTREME": 10808,
+        "FIB_TOUCH": 1027,
+        "LOWER_STRUCTURE_CONFIRMED": 2702,
+        "PIVOT_TRIGGER": 538,
+        "SIGNAL": 538,
+        "RISK_CHECK": 538,
+        "SKIP": 219,
+        "COMPLETED": 538,
+        "INVALIDATE": 742,
+        "LOWER_STRUCTURE_LOST": 1083,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 408,
+        "WAVE1_EXTENSION_STARTED": 408,
+        "WAVE1_EXTENSION_TRACKING": 596,
+        "WAVE1_EXTENDED_CONFIRMED": 406,
+        "LOWER_STRUCTURE_REJECTED": 1049,
+        "FIB_CLOSE_TOO_DEEP": 424,
+        "FIB_TOO_DEEP": 463,
+        "ORDER": 378,
+        "FILL": 378,
+        "POSITION_TRACKING": 378,
+        "EXIT": 378,
+        "INITIAL_MOVE_PROGRESS": 188,
+        "TRENDLINE_TRIGGER": 200,
+        "OPPOSITE_WAVE1_ARMED": 30,
+        "OPPOSITE_CLOSE_REQUEST": 23,
+        "OPPOSITE_CLOSE_ACCEPTED": 23,
+        "TEST_END": 1
+      },
+      "native_closed_positions": 378,
+      "cash_reconciliation": "All native completed positions matched to EA FILL and EXIT, including net cash and independent XAUUSD/USD initial risk and R.",
+      "profit_factor_exact": 0.8062712455543984,
+      "native_costs": {
+        "commission": -448.74,
+        "swap": -135.32,
+        "profit": -993.45
+      },
+      "explicit_cost_drag_commission_minus_swap_credit": 584.06,
+      "independent_balance": {
+        "final": 3422.49,
+        "absolute_drawdown": 1737.22,
+        "maximum_drawdown": 1830.9,
+        "maximum_relative_drawdown_percent": 35.944543041573084
+      },
+      "missing_ea_exit_for_fills": [],
+      "native_forced_test_end_deals": [],
+      "terminal_candidate_snapshots": [
+        {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1609449000_1340",
+          "event_at": "2020.12.31 23:57:59",
+          "entry_status": "CANDIDATE",
+          "wave1_extension_pending": "0",
+          "fill_at": "",
+          "signal_at": ""
+        }
+      ],
+      "terminal_candidate_censoring_is_not_a_trade": true,
+      "generated_tick_evidence": [
+        {
+          "path": "b_extension_on\\journals\\Tester\\Agent-127.0.0.1-39193\\logs\\20261022.log",
+          "line": 68,
+          "text": "XAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "path": "b_extension_on\\journals\\Tester\\Agent-127.0.0.1-39193\\logs\\20261022.log",
+          "line": 9026,
+          "text": "XAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "path": "b_extension_on\\journals\\Tester\\logs\\20261022.log",
+          "line": 108,
+          "text": "XAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "path": "b_extension_on\\journals\\Tester\\logs\\20261022.log",
+          "line": 9074,
+          "text": "XAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        }
+      ],
+      "source_coverage": {
+        "upper": {
+          "count": 71111,
+          "first": {
+            "bar_time": "2019.12.31 23:55:00",
+            "known_at": "2020.01.02 01:00:00"
+          },
+          "last": {
+            "bar_time": "2020.12.31 23:50:00",
+            "known_at": "2020.12.31 23:55:00"
+          },
+          "months": {
+            "2019.12": 1,
+            "2020.01": 6029,
+            "2020.02": 5472,
+            "2020.03": 6059,
+            "2020.04": 5796,
+            "2020.05": 5748,
+            "2020.06": 6072,
+            "2020.07": 6300,
+            "2020.08": 5796,
+            "2020.09": 6025,
+            "2020.10": 6072,
+            "2020.11": 5709,
+            "2020.12": 6032
+          },
+          "observed_calendar_days": 260,
+          "weekdays_without_observed_bar": [
+            "2020.01.01",
+            "2020.04.10",
+            "2020.12.25"
+          ],
+          "nonstandard_interval_count": 259,
+          "largest_gaps": [
+            {
+              "after": "2020.12.24 20:40:00",
+              "before": "2020.12.28 01:00:00",
+              "seconds": 274800
+            },
+            {
+              "after": "2020.04.09 23:55:00",
+              "before": "2020.04.13 01:00:00",
+              "seconds": 263100
+            },
+            {
+              "after": "2020.07.03 19:55:00",
+              "before": "2020.07.06 01:00:00",
+              "seconds": 191100
+            },
+            {
+              "after": "2020.11.27 20:40:00",
+              "before": "2020.11.30 01:00:00",
+              "seconds": 188400
+            },
+            {
+              "after": "2020.03.06 23:55:00",
+              "before": "2020.03.09 02:00:00",
+              "seconds": 180300
+            },
+            {
+              "after": "2020.03.27 23:55:00",
+              "before": "2020.03.30 01:05:00",
+              "seconds": 177000
+            },
+            {
+              "after": "2020.01.03 23:55:00",
+              "before": "2020.01.06 01:00:00",
+              "seconds": 176700
+            },
+            {
+              "after": "2020.01.10 23:55:00",
+              "before": "2020.01.13 01:00:00",
+              "seconds": 176700
+            },
+            {
+              "after": "2020.01.17 23:55:00",
+              "before": "2020.01.20 01:00:00",
+              "seconds": 176700
+            },
+            {
+              "after": "2020.01.24 23:55:00",
+              "before": "2020.01.27 01:00:00",
+              "seconds": 176700
+            },
+            {
+              "after": "2020.01.31 23:55:00",
+              "before": "2020.02.03 01:00:00",
+              "seconds": 176700
+            },
+            {
+              "after": "2020.02.07 23:55:00",
+              "before": "2020.02.10 01:00:00",
+              "seconds": 176700
+            }
+          ],
+          "market_closure_vs_missing_data": "NOT_INDEPENDENTLY_CLASSIFIED",
+          "sha256": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+          "requested_2020_months": {
+            "2020.01": 6029,
+            "2020.02": 5472,
+            "2020.03": 6059,
+            "2020.04": 5796,
+            "2020.05": 5748,
+            "2020.06": 6072,
+            "2020.07": 6300,
+            "2020.08": 5796,
+            "2020.09": 6025,
+            "2020.10": 6072,
+            "2020.11": 5709,
+            "2020.12": 6032
+          },
+          "outside_requested_calendar_months": {
+            "2019.12": 1
+          },
+          "requested_2020_bar_count": 71110,
+          "prefix_explanation": "One previously closed 2019-12-31 candle is first available at 2020-01-02 01:00; preserved as initialization source, not discarded or counted as a 2020 trading month."
+        },
+        "lower": {
+          "count": 355233,
+          "first": {
+            "bar_time": "2019.12.31 23:58:00",
+            "known_at": "2020.01.02 01:00:00"
+          },
+          "last": {
+            "bar_time": "2020.12.31 23:56:00",
+            "known_at": "2020.12.31 23:57:00"
+          },
+          "months": {
+            "2019.12": 1,
+            "2020.01": 30112,
+            "2020.02": 27341,
+            "2020.03": 30249,
+            "2020.04": 28959,
+            "2020.05": 28720,
+            "2020.06": 30338,
+            "2020.07": 31478,
+            "2020.08": 28959,
+            "2020.09": 30100,
+            "2020.10": 30335,
+            "2020.11": 28522,
+            "2020.12": 30119
+          },
+          "observed_calendar_days": 260,
+          "weekdays_without_observed_bar": [
+            "2020.01.01",
+            "2020.04.10",
+            "2020.12.25"
+          ],
+          "nonstandard_interval_count": 277,
+          "largest_gaps": [
+            {
+              "after": "2020.12.24 20:44:00",
+              "before": "2020.12.28 01:00:00",
+              "seconds": 274560
+            },
+            {
+              "after": "2020.04.09 23:58:00",
+              "before": "2020.04.13 01:00:00",
+              "seconds": 262920
+            },
+            {
+              "after": "2020.07.03 19:59:00",
+              "before": "2020.07.06 01:00:00",
+              "seconds": 190860
+            },
+            {
+              "after": "2020.11.27 20:44:00",
+              "before": "2020.11.30 01:00:00",
+              "seconds": 188160
+            },
+            {
+              "after": "2020.03.06 23:58:00",
+              "before": "2020.03.09 02:00:00",
+              "seconds": 180120
+            },
+            {
+              "after": "2020.03.27 23:58:00",
+              "before": "2020.03.30 01:07:00",
+              "seconds": 176940
+            },
+            {
+              "after": "2020.12.04 23:56:00",
+              "before": "2020.12.07 01:00:00",
+              "seconds": 176640
+            },
+            {
+              "after": "2020.12.11 23:56:00",
+              "before": "2020.12.14 01:00:00",
+              "seconds": 176640
+            },
+            {
+              "after": "2020.12.18 23:56:00",
+              "before": "2020.12.21 01:00:00",
+              "seconds": 176640
+            },
+            {
+              "after": "2020.01.03 23:58:00",
+              "before": "2020.01.06 01:00:00",
+              "seconds": 176520
+            },
+            {
+              "after": "2020.01.10 23:58:00",
+              "before": "2020.01.13 01:00:00",
+              "seconds": 176520
+            },
+            {
+              "after": "2020.01.17 23:58:00",
+              "before": "2020.01.20 01:00:00",
+              "seconds": 176520
+            }
+          ],
+          "market_closure_vs_missing_data": "NOT_INDEPENDENTLY_CLASSIFIED",
+          "sha256": "9478f6c4511de29ed75af74fc4f160cf1bd2b3fb38b17d9a9ceb065390de2b4d",
+          "requested_2020_months": {
+            "2020.01": 30112,
+            "2020.02": 27341,
+            "2020.03": 30249,
+            "2020.04": 28959,
+            "2020.05": 28720,
+            "2020.06": 30338,
+            "2020.07": 31478,
+            "2020.08": 28959,
+            "2020.09": 30100,
+            "2020.10": 30335,
+            "2020.11": 28522,
+            "2020.12": 30119
+          },
+          "outside_requested_calendar_months": {
+            "2019.12": 1
+          },
+          "requested_2020_bar_count": 355232,
+          "prefix_explanation": "One previously closed 2019-12-31 candle is first available at 2020-01-02 01:00; preserved as initialization source, not discarded or counted as a 2020 trading month."
+        }
+      },
+      "source_files": {
+        "events.csv": "34edd41504592bc4eef36cf223d3ca1263b133017fb4a3a00aefe2419f6a7111",
+        "report.htm": "ceeb773fa2bd6cffb53b69f814954fa6fd1b5039ce7a0d7b646cf15d55e03fdb",
+        "config.csv": "28eb6fce5b6f8d50895651fa7bc0747cd106edd556ff8b7b6e1dceab00c044f1",
+        "inputs.set": "7efb42b8aa6587b3146640562e6126a2d5030f345076c9a30eb407e6ff1bbfbe"
+      },
+      "native_exit_reasons": {
+        "DEAL_REASON_SL": 190,
+        "DEAL_REASON_TP": 165,
+        "OPPOSITE_WAVE1_PROFIT": 23
+      },
+      "profit_factor_definitions": {
+        "mt5_native_signed_deal_pf": 0.8062712455543984,
+        "mt5_gross_positive_deal_cash": 6565.37,
+        "mt5_gross_negative_deal_cash": -8142.88,
+        "whole_position_net_pf": 0.8008853131918482,
+        "whole_position_net_gross_profit": 6345.11,
+        "whole_position_net_gross_loss": -7922.62,
+        "whole_position_net_winners": 187,
+        "whole_position_net_losers": 191,
+        "explanation": "MT5 native gross/PF splits signed individual deal cash, including entry commissions as negative deals. Whole-position net PF first nets entry commission, swap and exit profit for each completed position. Both reconcile to identical total net cash; only the grouping differs."
+      }
+    }
+  },
+  "provenance": {
+    "source_sha256": "286EEFC2CAAEED29912AC4BF217CC55065BB14F4838513A6E288802838FDAE57",
+    "source_matches_deployment": true,
+    "header_matches": {
+      "Wave33Visual\\BarOrder.mqh": true,
+      "Wave33Visual\\Room.mqh": true,
+      "Wave33Visual\\Engine.mqh": true,
+      "Wave33Visual\\Ledger.mqh": true,
+      "Wave33Visual\\Types.mqh": true,
+      "Wave33Visual\\Display.mqh": true,
+      "Wave33Visual\\OppositeExit.mqh": true
+    },
+    "model_requested": 4,
+    "copied_ticks": [],
+    "copied_history": [
+      "2019.hcc",
+      "2020.hcc",
+      "2021.hcc"
+    ],
+    "binary_sha256": "8f9ed61c49130f091885b4c363109a0190245ac09a094bd3ee79476ffa8f58a7"
+  },
+  "limitations": [
+    "Accepted OHLC sidecars cover all 12 months; interval gaps are enumerated without independently certifying every market minute or distinguishing holidays/closures from missing history.",
+    "Tester journals explicitly state no real ticks across the full requested period; this is generated-every-tick evidence despite requested Model=4.",
+    "Native HTML deal tables expose commission, swap and price profit. Separate DEAL_FEE is not exposed; matching EA net cash bounds unexplained aggregate fee differences. Spread/slippage are embedded in execution prices and are not separately monetized as explicit fees.",
+    "Native maximum equity drawdown is retained as reported; it is not independently reconstructed without a full marked-to-market equity series. Balance drawdown is independently reconstructed from every native deal cash movement.",
+    "Historical swap/commission schedule correctness is not independently established. The reported applied broker costs and all ledger/native net cash agree; actual 2020 costs may require historical broker specifications.",
+    "Native PF groups signed deal cash; whole-position net PF is separately retained. Win/loss clustering should use completed-position net cash signs, including costs."
+  ],
+  "status": "PASS",
+  "checks": 6719,
+  "failures": [],
+  "incomplete": [],
+  "negative_net_take_profit_case": {
+    "setup_id": "W33_XAUUSD+_5_1_LONG_1594246500_662",
+    "fill_at": "2020.07.08 23:25:00",
+    "exit_at": "2020.07.09 01:07:24",
+    "direction": "LONG",
+    "volume": 0.36,
+    "entry": 1809.05,
+    "sl": 1807.97,
+    "tp": 1810.13,
+    "actual_exit_price": 1810.21,
+    "entry_quote_from_native_journal": {
+      "bid": 1808.93,
+      "ask": 1809.05,
+      "last": 1808.93
+    },
+    "exit_quote_scope": "Actual sell fill is 1810.21; a complete independent bid/ask pair at TP time is not logged.",
+    "initial_risk_cash": 38.88,
+    "price_profit": 41.76,
+    "commission": -2.16,
+    "swap": -83.74,
+    "net_cash": -44.14,
+    "net_r": -1.1352880658436213,
+    "conclusion": "Native TP filled above the long target, with positive price profit. The charged overnight swap exceeds the price profit and causes the net loss; this is not adverse exit slippage or a mislabeled broker TP.",
+    "historical_swap_rate_verification": "UNAVAILABLE: archived config does not include swap long/short/mode/rollover-days or the historical July-2020 fee schedule. Do not infer the specific triple-swap rule.",
+    "native_deals": [
+      {
+        "time": "2020.07.08 23:25:00",
+        "deal": "350",
+        "symbol": "XAUUSD+",
+        "type": "buy",
+        "entry": "in",
+        "volume": "0.36",
+        "price": "1809.05",
+        "order": "350",
+        "commission": "-2.16",
+        "swap": "0.00",
+        "profit": "0.00",
+        "comment": "W33_XAUUSD+_5_1_LONG_1594246500"
+      },
+      {
+        "time": "2020.07.09 01:07:24",
+        "deal": "351",
+        "symbol": "XAUUSD+",
+        "type": "sell",
+        "entry": "out",
+        "volume": "0.36",
+        "price": "1810.21",
+        "order": "351",
+        "commission": "0.00",
+        "swap": "-83.74",
+        "profit": "41.76",
+        "comment": "tp 1810.13"
+      }
+    ],
+    "journal_evidence": [
+      {
+        "path": "b_extension_on\\journals\\Tester\\logs\\20261022.log",
+        "line": 23933,
+        "text": "2020.07.08 23:25:00   market buy 0.36 XAUUSD+ sl: 1807.97 tp: 1810.13 (1808.93 / 1809.05 / 1808.93)"
+      },
+      {
+        "path": "b_extension_on\\journals\\Tester\\logs\\20261022.log",
+        "line": 23958,
+        "text": "2020.07.09 01:07:24   take profit triggered #350 buy 0.36 XAUUSD+ 1809.05 sl: 1807.97 tp: 1810.13 [#351 sell 0.36 XAUUSD+ at 1810.13]"
+      },
+      {
+        "path": "b_extension_on\\journals\\Tester\\logs\\20261022.log",
+        "line": 23959,
+        "text": "2020.07.09 01:07:24   deal #351 sell 0.36 XAUUSD+ at 1810.21 done (based on order #351)"
+      }
+    ],
+    "event_evidence": [
+      {
+        "event_type": "SIGNAL",
+        "event_at": "2020.07.08 23:25:00",
+        "entry_price": "1809.0500000000",
+        "sl_price": "1807.9700000000",
+        "tp_price": "1810.1300000000",
+        "exit_price": "0.0000000000",
+        "exit_reason": "",
+        "execution_net_cash": "0.0000000000",
+        "execution_initial_risk_money": "0.0000000000",
+        "realized_r": "0.0000000000",
+        "spread_points": "12.0000000000"
+      },
+      {
+        "event_type": "ORDER",
+        "event_at": "2020.07.08 23:25:00",
+        "entry_price": "1809.0500000000",
+        "sl_price": "1807.9700000000",
+        "tp_price": "1810.1300000000",
+        "exit_price": "0.0000000000",
+        "exit_reason": "",
+        "execution_net_cash": "0.0000000000",
+        "execution_initial_risk_money": "0.0000000000",
+        "realized_r": "0.0000000000",
+        "spread_points": "12.0000000000"
+      },
+      {
+        "event_type": "FILL",
+        "event_at": "2020.07.08 23:25:00",
+        "entry_price": "1809.0500000000",
+        "sl_price": "1807.9700000000",
+        "tp_price": "1810.1300000000",
+        "exit_price": "0.0000000000",
+        "exit_reason": "",
+        "execution_net_cash": "-2.1600000000",
+        "execution_initial_risk_money": "38.8800000000",
+        "realized_r": "0.0000000000",
+        "spread_points": "12.0000000000"
+      },
+      {
+        "event_type": "EXIT",
+        "event_at": "2020.07.09 01:07:24",
+        "entry_price": "1809.0500000000",
+        "sl_price": "1807.9700000000",
+        "tp_price": "1810.1300000000",
+        "exit_price": "1810.2100000000",
+        "exit_reason": "DEAL_REASON_TP",
+        "execution_net_cash": "-44.1400000000",
+        "execution_initial_risk_money": "38.8800000000",
+        "realized_r": "-1.1352880658",
+        "spread_points": "12.0000000000"
+      }
+    ]
+  },
+  "audit_definition_corrections": {
+    "initial_failed_artifact": "native_integrity_initial_definition_fail.json",
+    "corrections": [
+      {
+        "arm": "a_extension_on",
+        "initial_pf_formula": "whole-position net cash incorrectly compared directly to native signed-deal gross/PF",
+        "corrected_native_pf": 0.7526212054778193,
+        "position_net_pf_for_comparison": 0.7488037139979511,
+        "initial_month_count": 13,
+        "annual_month_count": 12
+      },
+      {
+        "arm": "b_extension_on",
+        "initial_pf_formula": "whole-position net cash incorrectly compared directly to native signed-deal gross/PF",
+        "corrected_native_pf": 0.8062712455543984,
+        "position_net_pf_for_comparison": 0.8008853131918482,
+        "initial_month_count": 13,
+        "annual_month_count": 12
+      }
+    ],
+    "explanation": "Initial audit used the wrong grouping for native gross/PF, counted the single Dec-2019 initialization bar as a thirteenth requested month, and mistook terminal-console encoding for file corruption. Source records were not altered. The archived HTML contains no U+FFFD replacement characters."
+  }
+}

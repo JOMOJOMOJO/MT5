@@ -1,0 +1,643 @@
+{
+  "kind": "ENTRY_ONLY_RECORDED_LOG_RECONSTRUCTION",
+  "native_mt5_screenshot": false,
+  "outcome_labels_included": false,
+  "source_packet_sha256": "6a93bded7906b79cb1f397c4a607ed6019fead6cffe815665dc3bcf1a4aeed40",
+  "script_sha256": "ce439b71b5b087baed829fb81f4caa206a4ccc8d7cd3fcf8a242ba7fd18702cb",
+  "cases": [
+    {
+      "blind_id": "V001",
+      "file": "V001.png",
+      "sha256": "e8a83858a3b6021841f16f379f3af5654a9ae9e0cb8ac0f69a4f752f2769e1f9",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 11967
+    },
+    {
+      "blind_id": "V002",
+      "file": "V002.png",
+      "sha256": "0c927e94979100bf54735a95a379ee1afd662e087845a2da797299008f2efb47",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ],
+      "order_sequence": 129449
+    },
+    {
+      "blind_id": "V003",
+      "file": "V003.png",
+      "sha256": "2d24274a2b8598321a19043f679b3132084ec4b851f5580f587e526f66186a72",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 89302
+    },
+    {
+      "blind_id": "V004",
+      "file": "V004.png",
+      "sha256": "782bc9ddcbf2e746362534d4eb7ace71d8bcc230be80ec8e4aeb597294565bda",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 29466
+    },
+    {
+      "blind_id": "V005",
+      "file": "V005.png",
+      "sha256": "866edfd108009676f36714fd211deb07b0112804011d6e66e01de0854eb4c386",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 12700
+    },
+    {
+      "blind_id": "V006",
+      "file": "V006.png",
+      "sha256": "ce74d194c14cc9c0dfbb231f847591ab24752a8eb5e929869f22db0626d0a56a",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 107736
+    },
+    {
+      "blind_id": "V007",
+      "file": "V007.png",
+      "sha256": "5fd90e084238ddf41647a9ac5835eb879c72e0d81f0dd8813e1203dfbd95202f",
+      "upper_bars": 94,
+      "upper_packet_start_row": 206,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 17514
+    },
+    {
+      "blind_id": "V008",
+      "file": "V008.png",
+      "sha256": "0f4d7dad6da6737494b88d77954bdaabb266ac3c4bc7f4d5516b5af500b37133",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが3点（8点未満）"
+      ],
+      "order_sequence": 27401
+    },
+    {
+      "blind_id": "V009",
+      "file": "V009.png",
+      "sha256": "249c94d6ec9e79c093acfad2ea16de693da7777cbdb3c5e1b01410f949735a38",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 20210
+    },
+    {
+      "blind_id": "V010",
+      "file": "V010.png",
+      "sha256": "8311fad2d5a7c6ef491989c2c55ba2b27ef4f1d98cee955c9320a258a3c41e6d",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 103984
+    },
+    {
+      "blind_id": "V011",
+      "file": "V011.png",
+      "sha256": "81a1c4e67fb1e5d4b806cdfc95f556368dc51130f95a648b59be3f7e8410a681",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ],
+      "order_sequence": 8767
+    },
+    {
+      "blind_id": "V012",
+      "file": "V012.png",
+      "sha256": "0457def0e177cc7ea24d0cb3aaf6f746367e3265a6e84b712352bc14ef5eb672",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 32292
+    },
+    {
+      "blind_id": "V013",
+      "file": "V013.png",
+      "sha256": "3158b59481df9c2be419a4635c75d070eee95650a7b00ae375e100a0cc967d7c",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 144760
+    },
+    {
+      "blind_id": "V014",
+      "file": "V014.png",
+      "sha256": "6e7f708ab1ed6464055b2bdedd5c5680de8f392a52860b31149a38a33c41fb50",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 27112
+    },
+    {
+      "blind_id": "V015",
+      "file": "V015.png",
+      "sha256": "b711d6b438ca2394f47a13e62aa63eb8e831a3bf327af4cfe6576746e4c2e53d",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 21590
+    },
+    {
+      "blind_id": "V016",
+      "file": "V016.png",
+      "sha256": "248ed104521f80448b80fff4bddbae137f6a93e367fc1fd2c559973408ea309a",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 67442
+    },
+    {
+      "blind_id": "V017",
+      "file": "V017.png",
+      "sha256": "1af6dab48d3191acb6e898f1bda2d0482122944f93e94b58f5c78086fddbbad6",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが3点（8点未満）"
+      ],
+      "order_sequence": 70795
+    },
+    {
+      "blind_id": "V018",
+      "file": "V018.png",
+      "sha256": "d2ca7a8afd26ac2b38d5ebea5d33b4346b5c24c521bfa76b60431ffbc0914093",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが3点（8点未満）"
+      ],
+      "order_sequence": 14453
+    },
+    {
+      "blind_id": "V019",
+      "file": "V019.png",
+      "sha256": "e95a00a4fdf8f86c6a40f43c9de228fd2077c23d74a21000f6c1c33f69ca8209",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 3466
+    },
+    {
+      "blind_id": "V020",
+      "file": "V020.png",
+      "sha256": "4280df9a4d7d8cd1ad56fc6b5ce840552e57b93ab8beea3bd02b50637f2569e3",
+      "upper_bars": 107,
+      "upper_packet_start_row": 193,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 29400
+    },
+    {
+      "blind_id": "V021",
+      "file": "V021.png",
+      "sha256": "50db023b12d015e734b211cf22dc69281a1d8e13950f09f7d23fe6d0d6606c97",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 120258
+    },
+    {
+      "blind_id": "V022",
+      "file": "V022.png",
+      "sha256": "7fdf634b1641f22e788c08e112c80543bd86b745945da95ab34e5bc16e45f0a8",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 18505
+    },
+    {
+      "blind_id": "V023",
+      "file": "V023.png",
+      "sha256": "ce0e13c8900edbf3117f0ad3452c1f493d01e540d8e1c8aff783c7ba0115e295",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 21132
+    },
+    {
+      "blind_id": "V024",
+      "file": "V024.png",
+      "sha256": "05f53de49278b7368df7c9d32d1b2072b7b09866c2cc6713d99329baf66a4fb7",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ],
+      "order_sequence": 2325
+    },
+    {
+      "blind_id": "V025",
+      "file": "V025.png",
+      "sha256": "731582dfd1041b06194a05da4b5aaa15bc38bbdb0156359eec1010a0b79f5d70",
+      "upper_bars": 116,
+      "upper_packet_start_row": 184,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 24579
+    },
+    {
+      "blind_id": "V026",
+      "file": "V026.png",
+      "sha256": "b07410bfabab752dd49dba6d95331d29b3b79f10058ff10ff57eed2ce1623328",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 33850
+    },
+    {
+      "blind_id": "V027",
+      "file": "V027.png",
+      "sha256": "5171f799f06310ac1696d603b8eed7397f369d06fe7d5d4bb3adc2f0369d171b",
+      "upper_bars": 107,
+      "upper_packet_start_row": 193,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 31699
+    },
+    {
+      "blind_id": "V028",
+      "file": "V028.png",
+      "sha256": "4457569733ac589e37d81413fc9efc9ad83aa5b796762f929761996de357361e",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 1269
+    },
+    {
+      "blind_id": "V029",
+      "file": "V029.png",
+      "sha256": "167e30e89e3ae8f5fd7158ea1e76460c00fd518858a376b2af200891c08b4770",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 27870
+    },
+    {
+      "blind_id": "V030",
+      "file": "V030.png",
+      "sha256": "18c90d64162f4c7927dd23c343052fb9ee8f48c7ab16ef13d053140950e4b37e",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 114188
+    },
+    {
+      "blind_id": "V031",
+      "file": "V031.png",
+      "sha256": "70a41df38b3a138c8d112ebf2f260256672b3e92cef699f01680b2f668b74e02",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 2606
+    },
+    {
+      "blind_id": "V032",
+      "file": "V032.png",
+      "sha256": "67c282ea4086bf2dbcb54b1c4b48052dfe13c4649bb57832e36ec9ebce9edd73",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 72775
+    },
+    {
+      "blind_id": "V033",
+      "file": "V033.png",
+      "sha256": "eda0cb32fe68f6411b4fcc7215dce6e9b11671d1750bde41c0ed8ec3d545a84e",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 48564
+    },
+    {
+      "blind_id": "V034",
+      "file": "V034.png",
+      "sha256": "1a79683f636f1c22dadb8e235bfccc0c880ae43c930ab6d716a1d1e9e25536c1",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 137754
+    },
+    {
+      "blind_id": "V035",
+      "file": "V035.png",
+      "sha256": "2dafdc6238d849b053fe147128728dc93be08d10b1ba0651e29f373e5e53b33c",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 7488
+    },
+    {
+      "blind_id": "V036",
+      "file": "V036.png",
+      "sha256": "2800df10c9f370bf36cc1f4f052b004c5183dafbeacde7cfa0380bca0730f129",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 102313
+    },
+    {
+      "blind_id": "V037",
+      "file": "V037.png",
+      "sha256": "bd0af043ff325b56c696992e7fe83ce8c4eb29c93c7f9b0aebcde730d5b29067",
+      "upper_bars": 105,
+      "upper_packet_start_row": 195,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 46341
+    },
+    {
+      "blind_id": "V038",
+      "file": "V038.png",
+      "sha256": "c61ed49e87964da66a590b0c7986c1a40983100f5e1f7ba00ccca62f30d23cdf",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 24597
+    },
+    {
+      "blind_id": "V039",
+      "file": "V039.png",
+      "sha256": "8cdf8ed5c0eae2b06fee0f52d81c789bbf548f4d5f4323dd8bb3c187c96e9f84",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 10206
+    },
+    {
+      "blind_id": "V040",
+      "file": "V040.png",
+      "sha256": "7b3cf5724a19f545d9bc9c31e78be48c8d566b9aaba59adb911965a053792e25",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 36356
+    },
+    {
+      "blind_id": "V041",
+      "file": "V041.png",
+      "sha256": "09132c062b9969e3d6cfc3eb893a14b7e1994e363401b1f2803284f7922ef931",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 137332
+    },
+    {
+      "blind_id": "V042",
+      "file": "V042.png",
+      "sha256": "2321131272bac25a79ddd869115d680efd54366b9c2a4b86852a17984a5c702c",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ],
+      "order_sequence": 129692
+    },
+    {
+      "blind_id": "V043",
+      "file": "V043.png",
+      "sha256": "af7277ef6516182ec81ea6a936829723bd509b848fc94b3e2a7c8a0572d155a1",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 6541
+    },
+    {
+      "blind_id": "V044",
+      "file": "V044.png",
+      "sha256": "f61726d14a84ddc2a83c8b6951a687b5c7cd18eb7e259b11de611b5ece3fab64",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 94510
+    },
+    {
+      "blind_id": "V045",
+      "file": "V045.png",
+      "sha256": "3772eb26b62c5a3489948c284679080ba852f76632fc8889ae42c792a560ef53",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 40521
+    },
+    {
+      "blind_id": "V046",
+      "file": "V046.png",
+      "sha256": "177db36eb0c412ea2a7fbee53fb79228876a5084182cc9b1af103752acee02f3",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 111044
+    },
+    {
+      "blind_id": "V047",
+      "file": "V047.png",
+      "sha256": "8ecbfbe9c85edb488ee83e9c90109e5d98dd3d9d618f0e984d2ab50cbd0a9f5d",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 26910
+    },
+    {
+      "blind_id": "V048",
+      "file": "V048.png",
+      "sha256": "3a0cc9f1e848c33d27674a90bcb858aedf1cf5d96703b733bfa5b6079e022b48",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 71218
+    },
+    {
+      "blind_id": "V049",
+      "file": "V049.png",
+      "sha256": "034dc9d3e239b72127aff783b2f5282551da2c0f2497f346c88cdedbce8ce649",
+      "upper_bars": 148,
+      "upper_packet_start_row": 152,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 23761
+    },
+    {
+      "blind_id": "V050",
+      "file": "V050.png",
+      "sha256": "e7085a574ae9950305484693f9eabf761c0a9f5428af2ca970bb7e6538cd3fd7",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが5点（8点未満）"
+      ],
+      "order_sequence": 87896
+    },
+    {
+      "blind_id": "V051",
+      "file": "V051.png",
+      "sha256": "dbc963d17495b44faa003304947e8139075be3f711251a547182b04a61e55fb3",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが2点（8点未満）"
+      ],
+      "order_sequence": 4583
+    },
+    {
+      "blind_id": "V052",
+      "file": "V052.png",
+      "sha256": "a5398f60d45504ad2609762a9161437853103f12bc864bc0e4285428cc368a37",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 26200
+    },
+    {
+      "blind_id": "V053",
+      "file": "V053.png",
+      "sha256": "ec54c8ba38e2dda568b1fe059a9393af752a70cc3fa2288cd1b963650f6cc254",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 33791
+    },
+    {
+      "blind_id": "V054",
+      "file": "V054.png",
+      "sha256": "8b65eaa077e83a8b4f634d51ea19907976e8336c916fde5bed8cc52fd30e67ad",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 9661
+    },
+    {
+      "blind_id": "V055",
+      "file": "V055.png",
+      "sha256": "5b5f70be38b24dcf4dae90b2f0d58a6935d35318549b1b05077f445c7a7e3b1f",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 10754
+    },
+    {
+      "blind_id": "V056",
+      "file": "V056.png",
+      "sha256": "1e56bf623516cb2ceddec8c33e9069606d26666ac629f85e0baf6bb5b332cbaf",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 17597
+    },
+    {
+      "blind_id": "V057",
+      "file": "V057.png",
+      "sha256": "d8094201ff61b0e7dd490692817dce487551dd9042da7d6a2252947edbfc1952",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 24419
+    },
+    {
+      "blind_id": "V058",
+      "file": "V058.png",
+      "sha256": "85ba5b6452b5ef40a10d722f6885babd0de9daf4b12cc499d525dd574d3cc9ad",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 85101
+    },
+    {
+      "blind_id": "V059",
+      "file": "V059.png",
+      "sha256": "9f81c145c2e1acffc7a3cbe7f989a637404f2ffc2a1d713d9531941abbfab3eb",
+      "upper_bars": 142,
+      "upper_packet_start_row": 158,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 146713
+    },
+    {
+      "blind_id": "V060",
+      "file": "V060.png",
+      "sha256": "8e3a23c290eb651e24fc3634be9f20a5356878d0d84f9b2a21ee392ee49610db",
+      "upper_bars": 90,
+      "upper_packet_start_row": 210,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 27955
+    }
+  ],
+  "contact_sheets": {
+    "odd": [
+      "odd_01.png",
+      "odd_02.png",
+      "odd_03.png",
+      "odd_04.png",
+      "odd_05.png"
+    ],
+    "even": [
+      "even_01.png",
+      "even_02.png",
+      "even_03.png",
+      "even_04.png",
+      "even_05.png"
+    ]
+  }
+}

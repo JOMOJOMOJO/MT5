@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "counts": {
+    "a": {
+      "upper": {
+        "bars": 23705,
+        "expected_pivots": 6514,
+        "actual_pivots": 6514,
+        "exact_sequence_match": true
+      },
+      "lower": {
+        "bars": 71111,
+        "expected_pivots": 19121,
+        "actual_pivots": 19121,
+        "exact_sequence_match": true
+      }
+    },
+    "b": {
+      "upper": {
+        "bars": 71111,
+        "expected_pivots": 19121,
+        "actual_pivots": 19121,
+        "exact_sequence_match": true
+      },
+      "lower": {
+        "bars": 355233,
+        "expected_pivots": 89991,
+        "actual_pivots": 89991,
+        "exact_sequence_match": true
+      }
+    }
+  },
+  "protected_ea_files": 12,
+  "failures": [],
+  "labels_read": false,
+  "source_pivot_rule": "strict 2 left / 2 right, source row and right-confirmation known_at, chronological exact equality"
+}

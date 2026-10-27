@@ -1,0 +1,14 @@
+{
+  "launched_at": "2026-10-22T16:10:01",
+  "date_from": "2020.01.01",
+  "analysis": "DEFERRED_BY_USER",
+  "date_to_exclusive": "2021.01.01",
+  "powershell": "C:\\Users\\windows\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "user_terminal_interrupted": false,
+  "script": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_v170_2020\\launch.ps1",
+  "pid": 19344,
+  "runs": [
+    "a_extension_on",
+    "b_extension_on"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "checks": {
+    "original_annual_sources_unchanged": true,
+    "current_ea_source_unchanged": true,
+    "current_ea_binary_unchanged": true,
+    "475_original_positions_reconciled": true,
+    "475_native_cost_positions_reconciled": true,
+    "six_review_charts": true,
+    "cost_input_frozen_after_definition_repair": true,
+    "final_independent_resistance_review": true,
+    "final_review_script_hash": true
+  },
+  "ea_changed": false,
+  "new_mt5_backtest": false,
+  "optimization": false,
+  "year": 2020,
+  "symbol": "XAUUSD+",
+  "arms": {
+    "A": 97,
+    "B": 378
+  },
+  "data_execution": "generated ticks",
+  "holdout_2026_used": false,
+  "primary_next_hypothesis": "Fixed [0.5,1)R room group on a separate unused year, not EA adoption",
+  "source_sha256": {
+    "a_extension_on\\events.csv": "7b0099f244acb3f31be1a4f8927551430126da74fed1c53c00c2c2403d262c1b",
+    "a_extension_on\\upper_bars.csv": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0",
+    "b_extension_on\\events.csv": "34edd41504592bc4eef36cf223d3ca1263b133017fb4a3a00aefe2419f6a7111",
+    "b_extension_on\\upper_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418"
+  }
+}

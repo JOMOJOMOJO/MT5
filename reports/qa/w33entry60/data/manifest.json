@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "clock": "source/broker, no UTC assertion",
+  "annual_trades": 440,
+  "selected_packets": 60,
+  "random_seed": 20261023,
+  "selection": "stratified win/loss direction/arm quotas; chronological midpoint spacing; seed shuffle",
+  "observed_inputs": {
+    "reports\\backtest\\runs\\wave33_v180_2020\\analysis\\trades.csv": "b844350e0808cf5ee38a200f822fa585b393154161e71752a115b59d3d5dc056",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\events.csv": "b624db5880c0b5e4def93568dd0d889ca0566935acefc82c0068723bd97335d5",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\upper_bars.csv": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\lower_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\config.csv": "44b7abb061e1ca7e7d4c1dabef8c7ec4548aaaee981ee246f8bae1d7998c9b16",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\inputs.set": "8658167df9f624708d714285b3921f3e444be157971283e18a51c1a6a73326d3",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\events.csv": "a95db0f65dda76e40f6b8881d066160b3575cad86410e4b750c859957d9d6457",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\upper_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\lower_bars.csv": "9478f6c4511de29ed75af74fc4f160cf1bd2b3fb38b17d9a9ceb065390de2b4d",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\config.csv": "cc54848255b9f6ad0ebb443b196451cd10ecdb2ae26323c4c2bd4b37f232a68c",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\inputs.set": "3a082d5e3fcd88371fe30e227b9fd892793815886cea35eddc3904afbb9fc4f4"
+  },
+  "input_hashes_after": {
+    "reports\\backtest\\runs\\wave33_v180_2020\\analysis\\trades.csv": "b844350e0808cf5ee38a200f822fa585b393154161e71752a115b59d3d5dc056",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\events.csv": "b624db5880c0b5e4def93568dd0d889ca0566935acefc82c0068723bd97335d5",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\upper_bars.csv": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\lower_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\config.csv": "44b7abb061e1ca7e7d4c1dabef8c7ec4548aaaee981ee246f8bae1d7998c9b16",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\inputs.set": "8658167df9f624708d714285b3921f3e444be157971283e18a51c1a6a73326d3",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\events.csv": "a95db0f65dda76e40f6b8881d066160b3575cad86410e4b750c859957d9d6457",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\upper_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\lower_bars.csv": "9478f6c4511de29ed75af74fc4f160cf1bd2b3fb38b17d9a9ceb065390de2b4d",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\config.csv": "cc54848255b9f6ad0ebb443b196451cd10ecdb2ae26323c4c2bd4b37f232a68c",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\inputs.set": "3a082d5e3fcd88371fe30e227b9fd892793815886cea35eddc3904afbb9fc4f4"
+  },
+  "packets_sha256": "6a93bded7906b79cb1f397c4a607ed6019fead6cffe815665dc3bcf1a4aeed40",
+  "frozen_bins": {
+    "range_preleg": [
+      1,
+      2
+    ],
+    "range_tr14": [
+      2,
+      4
+    ],
+    "signed_close_efficiency": [
+      0.3,
+      0.6
+    ],
+    "pre_countertrend_agreement": [
+      0.6666666666666666,
+      1
+    ],
+    "outer_break_margin": "strictly greater than half point"
+  },
+  "features_sha256": "4e2afea4e3020da1d1f15d4a7d795c46ae2afdd48870b984a929f3581733cba0",
+  "packet_origin_clipping_counts": {
+    "upper_origin_clipped": 0,
+    "lower_origin_clipped": 2
+  },
+  "assertions": {
+    "orders_matched": 440,
+    "snapshot_time_cutoff_pass": 440
+  },
+  "limitations": [
+    "Generated-tick backtest source; no native screenshots or real-tick claims.",
+    "Balanced sample is for visual hypotheses, not natural annual win rate.",
+    "Bar CSV lacks global event sequence; closed_at is capped at lower trigger close.",
+    "Same-source-time H/L pivot order is unknown; raw flags preserved and normalized path reset."
+  ]
+}

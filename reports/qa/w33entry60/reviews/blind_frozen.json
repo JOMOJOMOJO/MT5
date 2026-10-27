@@ -1,0 +1,15 @@
+{
+  "status": "FROZEN_BEFORE_OUTCOME_REVEAL",
+  "frozen_at": "2026-10-23T21:11:53.412676",
+  "annotation_hashes": {
+    "reports\\qa\\w33entry60\\reviews\\odd_annotations.json": "f6c11324ec7db1e9759e604f22863c312ff4362e6a38d694ba9352e1c43a3787",
+    "reports\\qa\\w33entry60\\audit\\even_blind_review.json": "dca69c5e45b0f2a1cfc5888b5feb0db8d8b07aff4ac7924bcf80d320def934e1",
+    "reports\\qa\\w33entry60\\reviews\\root_annotations.json": "f1c527fd5c83b777926bf4cc8d72296d21734bcaa20d83bef33491973960f6c3"
+  },
+  "individual_cases": 60,
+  "packet_sha256": "6a93bded7906b79cb1f397c4a607ed6019fead6cffe815665dc3bcf1a4aeed40",
+  "render_manifest_sha256": "4c8b165d88c3d3bfae1b40633601ef044b4c830114423e993e6c3851c9f6ed02",
+  "outcome_link_opened_by_root": false,
+  "root_crosschecks": 6,
+  "posthoc_prelabel_diagnostic": "W1 origin versus interior extremes; separate audit, not one of5lockedfeaturetests"
+}

@@ -1,0 +1,5 @@
+﻿arm,hypothesis,estimate,method,repetitions,valid_repetitions,months,interval_level,family_size,lower,upper
+A,volatility,-0.1487311132656191,entry_month_cluster_bootstrap,20000,20000,12,0.9875,4,-0.6857541964448891,0.29372218421306506
+A,recognition,0.04635529437507582,entry_month_cluster_bootstrap,20000,20000,12,0.9875,4,-0.5935442839213839,0.5906112584921609
+B,volatility,-0.1322843657733107,entry_month_cluster_bootstrap,20000,20000,12,0.9875,4,-0.4221666009992619,0.20960143877728882
+B,recognition,0.12677570214864342,entry_month_cluster_bootstrap,20000,20000,12,0.9875,4,-0.22091723263824647,0.40217540444178057

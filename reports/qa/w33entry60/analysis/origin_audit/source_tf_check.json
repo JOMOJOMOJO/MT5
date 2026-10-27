@@ -1,0 +1,27 @@
+{
+  "all_order_origins": 440,
+  "checks": [
+    {
+      "arm": "A",
+      "config_upper_tf": "PERIOD_M15",
+      "source_bar_tfs": [
+        "PERIOD_M15"
+      ],
+      "order_upper_tfs": [
+        "PERIOD_M15"
+      ],
+      "pass": true
+    },
+    {
+      "arm": "B",
+      "config_upper_tf": "PERIOD_M5",
+      "source_bar_tfs": [
+        "PERIOD_M5"
+      ],
+      "order_upper_tfs": [
+        "PERIOD_M5"
+      ],
+      "pass": true
+    }
+  ]
+}

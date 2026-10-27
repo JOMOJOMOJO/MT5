@@ -1,0 +1,17 @@
+{
+  "symbol": "XAUUSD+",
+  "script": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_v180_2020\\launch.ps1",
+  "date_from": "2020.01.01",
+  "version": "1.80",
+  "analysis": "DEFERRED_BY_USER",
+  "launched_at": "2026-10-23T16:49:14.4296902+09:00",
+  "pid": 12784,
+  "date_to_exclusive": "2021.01.01",
+  "powershell": "C:\\Users\\windows\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "runs": [
+    "v180_a_both",
+    "v180_b_both"
+  ],
+  "agent_stop_after": "NATIVE_TESTER_START_CONFIRMED",
+  "user_terminal_interrupted": false
+}

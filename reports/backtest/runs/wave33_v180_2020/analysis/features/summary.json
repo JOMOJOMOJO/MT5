@@ -1,0 +1,771 @@
+{
+  "status": "PASS",
+  "definitions": {
+    "match": "direction + W1 origin time/price + upper break bar time + actual fill time, not setup ID",
+    "realized_r": "native net cash (price profit + commission + swap) / initial fill-to-SL monetary risk",
+    "cohorts": "extension flag frozen in actual FILL snapshot; signal-only extension counts reported separately",
+    "tp_policy": "max(additional10 points, current spread, one tick), inward tick rounding inside known fixed W1 endpoint; farther original target preserved; SL unchanged",
+    "examples": "largest observed R improvement and deterioration among common entries with identical fill price, SL, W1 endpoint and extended TP"
+  },
+  "summaries": {
+    "A": {
+      "old": {
+        "n": 97,
+        "wins": 46,
+        "losses": 51,
+        "breakeven": 0,
+        "net_cash": -581.12,
+        "net_r": -12.824183674264772,
+        "mean_r": -0.13220807911613167,
+        "profit_factor": 0.748803713997951,
+        "intended_actual_rr_mean": 1.0
+      },
+      "new": {
+        "n": 87,
+        "wins": 38,
+        "losses": 49,
+        "breakeven": 0,
+        "net_cash": -630.6500000000002,
+        "net_r": -13.887233125181147,
+        "mean_r": -0.1596233692549557,
+        "profit_factor": 0.722675402915503,
+        "intended_actual_rr_mean": 1.1481265735137929
+      },
+      "connected_cancellations": 27,
+      "cancellations_by_direction": {
+        "LONG": 20,
+        "SHORT": 7
+      },
+      "cancellations_with_baseline_observed_fill": 11,
+      "cancelled_candidates_baseline_observed_fills": {
+        "n": 11,
+        "wins": 7,
+        "losses": 4,
+        "breakeven": 0,
+        "net_cash": 22.479999999999983,
+        "net_r": 0.9276679318004919,
+        "mean_r": 0.08433344834549926,
+        "profit_factor": 1.1191245826930207,
+        "intended_actual_rr_mean": 1.0
+      },
+      "signal_count": 130,
+      "signal_extended_count": 22,
+      "signal_extended_directions": {
+        "LONG": 10,
+        "SHORT": 12
+      },
+      "filled_extensions": 22,
+      "filled_extension_directions": {
+        "LONG": 10,
+        "SHORT": 12
+      },
+      "common": 86,
+      "removed": 11,
+      "added": 1,
+      "removed_exact_fill_matched_to_connected_cancel": 11,
+      "common_tp_changes": 22,
+      "common_same_entry_and_sl": 86,
+      "common_r_sum_old": -13.751851606065273,
+      "common_r_sum_new": -14.857821360475285,
+      "common_win_to_loss": 2,
+      "common_loss_to_win": 0,
+      "common_effects": [
+        {
+          "cohort": "EXTENDED",
+          "n": 22,
+          "old_net_r": -0.3947206865499586,
+          "new_net_r": -1.5006901334981233,
+          "delta_r": -1.1059694469481642,
+          "old_net_cash": -18.870000000000033,
+          "new_net_cash": -75.25,
+          "win_to_loss": 2,
+          "loss_to_win": 0
+        },
+        {
+          "cohort": "UNCHANGED_TP",
+          "n": 64,
+          "old_net_r": -13.35713091951531,
+          "new_net_r": -13.357131226977163,
+          "delta_r": -3.074618535325868e-07,
+          "old_net_cash": -584.73,
+          "new_net_cash": -602.9200000000001,
+          "win_to_loss": 0,
+          "loss_to_win": 0
+        }
+      ],
+      "old_removed_observed": {
+        "n": 11,
+        "wins": 7,
+        "losses": 4,
+        "breakeven": 0,
+        "net_cash": 22.479999999999997,
+        "net_r": 0.9276679318004919,
+        "mean_r": 0.08433344834549926,
+        "profit_factor": 1.1191245826930207,
+        "intended_actual_rr_mean": 1.0
+      },
+      "new_added_observed": {
+        "n": 1,
+        "wins": 1,
+        "losses": 0,
+        "breakeven": 0,
+        "net_cash": 47.52,
+        "net_r": 0.9705882352941351,
+        "mean_r": 0.9705882352941351,
+        "profit_factor": null,
+        "intended_actual_rr_mean": 1.0
+      }
+    },
+    "B": {
+      "old": {
+        "n": 378,
+        "wins": 187,
+        "losses": 191,
+        "breakeven": 0,
+        "net_cash": -1577.5100000000004,
+        "net_r": -37.32251613887569,
+        "mean_r": -0.09873681518221082,
+        "profit_factor": 0.800885313191848,
+        "intended_actual_rr_mean": 1.0
+      },
+      "new": {
+        "n": 353,
+        "wins": 156,
+        "losses": 197,
+        "breakeven": 0,
+        "net_cash": -1254.349999999999,
+        "net_r": -27.298437233077667,
+        "mean_r": -0.07733268337982342,
+        "profit_factor": 0.8533213902749054,
+        "intended_actual_rr_mean": 1.2558750562416425
+      },
+      "connected_cancellations": 76,
+      "cancellations_by_direction": {
+        "SHORT": 36,
+        "LONG": 40
+      },
+      "cancellations_with_baseline_observed_fill": 31,
+      "cancelled_candidates_baseline_observed_fills": {
+        "n": 31,
+        "wins": 23,
+        "losses": 8,
+        "breakeven": 0,
+        "net_cash": 88.83000000000001,
+        "net_r": 2.1737275765629542,
+        "mean_r": 0.07012024440525659,
+        "profit_factor": 1.2864929368509324,
+        "intended_actual_rr_mean": 1.0
+      },
+      "signal_count": 507,
+      "signal_extended_count": 131,
+      "signal_extended_directions": {
+        "LONG": 59,
+        "SHORT": 72
+      },
+      "filled_extensions": 131,
+      "filled_extension_directions": {
+        "LONG": 59,
+        "SHORT": 72
+      },
+      "common": 346,
+      "removed": 32,
+      "added": 7,
+      "removed_exact_fill_matched_to_connected_cancel": 31,
+      "common_tp_changes": 129,
+      "common_same_entry_and_sl": 346,
+      "common_r_sum_old": -37.25061264747766,
+      "common_r_sum_new": -27.244154921525467,
+      "common_win_to_loss": 11,
+      "common_loss_to_win": 0,
+      "common_effects": [
+        {
+          "cohort": "EXTENDED",
+          "n": 129,
+          "old_net_r": -19.991550391672007,
+          "new_net_r": -9.985392895385267,
+          "delta_r": 10.006157496286747,
+          "old_net_cash": -816.2099999999995,
+          "new_net_cash": -467.93,
+          "win_to_loss": 11,
+          "loss_to_win": 0
+        },
+        {
+          "cohort": "UNCHANGED_TP",
+          "n": 217,
+          "old_net_r": -17.259062255805638,
+          "new_net_r": -17.25876202614016,
+          "delta_r": 0.00030022966547960106,
+          "old_net_cash": -757.61,
+          "new_net_cash": -780.4800000000001,
+          "win_to_loss": 0,
+          "loss_to_win": 0
+        }
+      ],
+      "old_removed_observed": {
+        "n": 32,
+        "wins": 23,
+        "losses": 9,
+        "breakeven": 0,
+        "net_cash": -3.68999999999998,
+        "net_r": -0.07190349139802177,
+        "mean_r": -0.0022469841061881803,
+        "profit_factor": 0.9908341199264744,
+        "intended_actual_rr_mean": 1.0
+      },
+      "new_added_observed": {
+        "n": 7,
+        "wins": 3,
+        "losses": 4,
+        "breakeven": 0,
+        "net_cash": -5.940000000000005,
+        "net_r": -0.054282311552221296,
+        "mean_r": -0.007754615936031614,
+        "profit_factor": 0.949991581074255,
+        "intended_actual_rr_mean": 1.1597924884285715
+      }
+    }
+  },
+  "config_differences": {
+    "A": {
+      "optimization": {
+        "old": null,
+        "new": "0"
+      },
+      "tp_wave1_policy": {
+        "old": null,
+        "new": "only extend RR TP toward the known fixed W1 endpoint; buffer=max(extra points,spread,one tick); inward tick rounding; explicit obstacle cap has priority; SL unchanged"
+      },
+      "batch_namespace": {
+        "old": null,
+        "new": "single-run tag"
+      },
+      "resolved_run_tag": {
+        "old": "wave33_20261022_161002_0ef87d9b_a_extension_on",
+        "new": "wave33_20261023_164915_831ff154_v180_a_both"
+      },
+      "allow_tester_batch_runs": {
+        "old": null,
+        "new": "true"
+      },
+      "cancel_connected_opposite": {
+        "old": null,
+        "new": "true"
+      },
+      "ea_version": {
+        "old": "1.70",
+        "new": "1.80"
+      },
+      "connected_opposite_policy": {
+        "old": null,
+        "new": "new accepted opposite W1_BREAK shares the old fixed endpoint; strictly older unsubmitted candidate only; submitted/open positions preserved"
+      },
+      "effective_draw": {
+        "old": null,
+        "new": "true"
+      },
+      "tp_wave1_buffer_points": {
+        "old": null,
+        "new": "10.0"
+      },
+      "extend_tp_to_wave1": {
+        "old": null,
+        "new": "true"
+      },
+      "input_hash": {
+        "old": null,
+        "new": "AB84B9189BD4265E"
+      }
+    },
+    "B": {
+      "optimization": {
+        "old": null,
+        "new": "0"
+      },
+      "tp_wave1_policy": {
+        "old": null,
+        "new": "only extend RR TP toward the known fixed W1 endpoint; buffer=max(extra points,spread,one tick); inward tick rounding; explicit obstacle cap has priority; SL unchanged"
+      },
+      "batch_namespace": {
+        "old": null,
+        "new": "single-run tag"
+      },
+      "resolved_run_tag": {
+        "old": "wave33_20261022_161002_0ef87d9b_b_extension_on",
+        "new": "wave33_20261023_164915_831ff154_v180_b_both"
+      },
+      "allow_tester_batch_runs": {
+        "old": null,
+        "new": "true"
+      },
+      "cancel_connected_opposite": {
+        "old": null,
+        "new": "true"
+      },
+      "ea_version": {
+        "old": "1.70",
+        "new": "1.80"
+      },
+      "connected_opposite_policy": {
+        "old": null,
+        "new": "new accepted opposite W1_BREAK shares the old fixed endpoint; strictly older unsubmitted candidate only; submitted/open positions preserved"
+      },
+      "effective_draw": {
+        "old": null,
+        "new": "true"
+      },
+      "tp_wave1_buffer_points": {
+        "old": null,
+        "new": "10.0"
+      },
+      "extend_tp_to_wave1": {
+        "old": null,
+        "new": "true"
+      },
+      "input_hash": {
+        "old": null,
+        "new": "ECEC6DE153BDEEBB"
+      }
+    }
+  },
+  "cohorts": [
+    {
+      "arm": "A",
+      "version": "1.70",
+      "cohort": "ALL",
+      "n": 97,
+      "wins": 46,
+      "losses": 51,
+      "breakeven": 0,
+      "net_cash": -581.12,
+      "net_r": -12.824183674264772,
+      "mean_r": -0.13220807911613167,
+      "profit_factor": 0.748803713997951,
+      "intended_actual_rr_mean": 1.0
+    },
+    {
+      "arm": "A",
+      "version": "1.70",
+      "cohort": "TP_EXTENDED",
+      "n": 0,
+      "wins": 0,
+      "losses": 0,
+      "breakeven": 0,
+      "net_cash": 0,
+      "net_r": 0,
+      "mean_r": null,
+      "profit_factor": null,
+      "intended_actual_rr_mean": null
+    },
+    {
+      "arm": "A",
+      "version": "1.70",
+      "cohort": "TP_NOT_EXTENDED",
+      "n": 97,
+      "wins": 46,
+      "losses": 51,
+      "breakeven": 0,
+      "net_cash": -581.12,
+      "net_r": -12.824183674264772,
+      "mean_r": -0.13220807911613167,
+      "profit_factor": 0.748803713997951,
+      "intended_actual_rr_mean": 1.0
+    },
+    {
+      "arm": "A",
+      "version": "1.80",
+      "cohort": "ALL",
+      "n": 87,
+      "wins": 38,
+      "losses": 49,
+      "breakeven": 0,
+      "net_cash": -630.6500000000002,
+      "net_r": -13.887233125181147,
+      "mean_r": -0.1596233692549557,
+      "profit_factor": 0.722675402915503,
+      "intended_actual_rr_mean": 1.1481265735137929
+    },
+    {
+      "arm": "A",
+      "version": "1.80",
+      "cohort": "TP_EXTENDED",
+      "n": 22,
+      "wins": 10,
+      "losses": 12,
+      "breakeven": 0,
+      "net_cash": -75.25000000000003,
+      "net_r": -1.5006901334981237,
+      "mean_r": -0.06821318788627835,
+      "profit_factor": 0.8708708708708708,
+      "intended_actual_rr_mean": 1.5857732679863636
+    },
+    {
+      "arm": "A",
+      "version": "1.80",
+      "cohort": "TP_NOT_EXTENDED",
+      "n": 65,
+      "wins": 28,
+      "losses": 37,
+      "breakeven": 0,
+      "net_cash": -555.4000000000002,
+      "net_r": -12.38654299168303,
+      "mean_r": -0.19056219987204662,
+      "profit_factor": 0.6716135517057886,
+      "intended_actual_rr_mean": 1.0
+    },
+    {
+      "arm": "B",
+      "version": "1.70",
+      "cohort": "ALL",
+      "n": 378,
+      "wins": 187,
+      "losses": 191,
+      "breakeven": 0,
+      "net_cash": -1577.5100000000004,
+      "net_r": -37.32251613887569,
+      "mean_r": -0.09873681518221082,
+      "profit_factor": 0.800885313191848,
+      "intended_actual_rr_mean": 1.0
+    },
+    {
+      "arm": "B",
+      "version": "1.70",
+      "cohort": "TP_EXTENDED",
+      "n": 0,
+      "wins": 0,
+      "losses": 0,
+      "breakeven": 0,
+      "net_cash": 0,
+      "net_r": 0,
+      "mean_r": null,
+      "profit_factor": null,
+      "intended_actual_rr_mean": null
+    },
+    {
+      "arm": "B",
+      "version": "1.70",
+      "cohort": "TP_NOT_EXTENDED",
+      "n": 378,
+      "wins": 187,
+      "losses": 191,
+      "breakeven": 0,
+      "net_cash": -1577.5100000000004,
+      "net_r": -37.32251613887569,
+      "mean_r": -0.09873681518221082,
+      "profit_factor": 0.800885313191848,
+      "intended_actual_rr_mean": 1.0
+    },
+    {
+      "arm": "B",
+      "version": "1.80",
+      "cohort": "ALL",
+      "n": 353,
+      "wins": 156,
+      "losses": 197,
+      "breakeven": 0,
+      "net_cash": -1254.349999999999,
+      "net_r": -27.298437233077667,
+      "mean_r": -0.07733268337982342,
+      "profit_factor": 0.8533213902749054,
+      "intended_actual_rr_mean": 1.2558750562416425
+    },
+    {
+      "arm": "B",
+      "version": "1.80",
+      "cohort": "TP_EXTENDED",
+      "n": 131,
+      "wins": 47,
+      "losses": 84,
+      "breakeven": 0,
+      "net_cash": -535.46,
+      "net_r": -11.594490701174248,
+      "mean_r": -0.08850756260438357,
+      "profit_factor": 0.852588632371807,
+      "intended_actual_rr_mean": 1.689495380559542
+    },
+    {
+      "arm": "B",
+      "version": "1.80",
+      "cohort": "TP_NOT_EXTENDED",
+      "n": 222,
+      "wins": 109,
+      "losses": 113,
+      "breakeven": 0,
+      "net_cash": -718.8900000000006,
+      "net_r": -15.703946531903417,
+      "mean_r": -0.07073849789145684,
+      "profit_factor": 0.8538624633329743,
+      "intended_actual_rr_mean": 1.0
+    }
+  ],
+  "examples": [
+    {
+      "selection": "MAX_OBSERVED_R_IMPROVEMENT",
+      "arm": "B",
+      "direction": "SHORT",
+      "entry_at": "2020.10.12 13:32:00",
+      "origin_time": "2020.10.12 11:10:00",
+      "origin_price": 1926.5,
+      "break_bar": "2020.10.12 11:30:00",
+      "old_setup_id": "W33_XAUUSD+_5_1_SHORT_1602502200_1040",
+      "new_setup_id": "W33_XAUUSD+_5_1_SHORT_1602502200_1040",
+      "old_net_r": 0.9433962264149406,
+      "new_net_r": 3.4339622641503835,
+      "delta_r": 2.490566037735443,
+      "old_net_cash": 31.0,
+      "new_net_cash": 127.4,
+      "delta_cash": 96.4,
+      "old_entry_price": 1922.85,
+      "new_entry_price": 1922.85,
+      "same_entry_price": true,
+      "old_sl": 1923.91,
+      "new_sl": 1923.91,
+      "same_sl": true,
+      "old_peak": 1919.02,
+      "new_peak": 1919.02,
+      "same_peak": true,
+      "old_tp": 1921.79,
+      "new_tp": 1919.16,
+      "tp_extended": true,
+      "old_actual_rr": 1.0,
+      "new_actual_rr": 3.4811320755,
+      "old_exit_at": "2020.10.12 13:33:33",
+      "new_exit_at": "2020.10.12 14:03:29",
+      "old_exit_reason": "DEAL_REASON_TP",
+      "new_exit_reason": "DEAL_REASON_TP",
+      "old_volume": 0.31,
+      "new_volume": 0.35,
+      "old_swap_cash": 0.0,
+      "new_swap_cash": 0.0,
+      "old_holding_minutes": 1.55,
+      "new_holding_minutes": 31.483333333333334
+    },
+    {
+      "selection": "MAX_OBSERVED_R_DETERIORATION",
+      "arm": "B",
+      "direction": "LONG",
+      "entry_at": "2020.08.21 21:21:00",
+      "origin_time": "2020.08.21 19:35:00",
+      "origin_price": 1932.05,
+      "break_bar": "2020.08.21 20:10:00",
+      "old_setup_id": "W33_XAUUSD+_5_1_LONG_1598040600_830",
+      "new_setup_id": "W33_XAUUSD+_5_1_LONG_1598040600_830",
+      "old_net_r": 0.9778597785977727,
+      "new_net_r": -1.3120716921454751,
+      "delta_r": -2.289931470743248,
+      "old_net_cash": 34.449999999999996,
+      "new_net_cash": -49.78,
+      "delta_cash": -84.22999999999999,
+      "old_entry_price": 1938.51,
+      "new_entry_price": 1938.51,
+      "same_entry_price": true,
+      "old_sl": 1935.8,
+      "new_sl": 1935.8,
+      "same_sl": true,
+      "old_peak": 1942.1,
+      "new_peak": 1942.1,
+      "same_peak": true,
+      "old_tp": 1941.22,
+      "new_tp": 1942.0,
+      "tp_extended": true,
+      "old_actual_rr": 1.0,
+      "new_actual_rr": 1.2878228782,
+      "old_exit_at": "2020.08.21 23:55:41",
+      "new_exit_at": "2020.08.24 01:05:27",
+      "old_exit_reason": "DEAL_REASON_TP",
+      "new_exit_reason": "DEAL_REASON_SL",
+      "old_volume": 0.13,
+      "new_volume": 0.14,
+      "old_swap_cash": 0.0,
+      "new_swap_cash": -10.86,
+      "old_holding_minutes": 154.68333333333334,
+      "new_holding_minutes": 3104.45
+    }
+  ],
+  "audit": {
+    "A": {
+      "source_hashes": {
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on\\events.csv": "7b0099f244acb3f31be1a4f8927551430126da74fed1c53c00c2c2403d262c1b",
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on\\report.htm": "052bca789d9731cb14856466a3deff6d6c15dd5327aa22c8d3557cf871662874",
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on\\config.csv": "32be7c782c84cc3956e43d32eab4e1e0b45792b7f7191c5c69aba02cb026ad5d",
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on\\inputs.set": "f21ad69d05449f2e9e1311ff72986db4758b4789c128c6b13d1198d1aeaa9cfe",
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on\\lower_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on\\upper_bars.csv": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\events.csv": "b624db5880c0b5e4def93568dd0d889ca0566935acefc82c0068723bd97335d5",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\report.htm": "83849191338eb3b05c5d64ab1cb0c413ee631a9b72fba02288c8efc58e5fd57d",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\config.csv": "44b7abb061e1ca7e7d4c1dabef8c7ec4548aaaee981ee246f8bae1d7998c9b16",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\inputs.set": "8658167df9f624708d714285b3921f3e444be157971283e18a51c1a6a73326d3",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\lower_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\upper_bars.csv": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0"
+      },
+      "old_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 27282,
+        "WAVE1_BREAK": 429,
+        "STATE": 2031,
+        "WAVE1_PROVISIONAL": 1174,
+        "WAVE1_PEAK_CONFIRMED": 371,
+        "WAVE1_EXTENSION_LOCKED": 366,
+        "WAVE2_EXTREME": 2569,
+        "FIB_TOUCH": 319,
+        "LOWER_STRUCTURE_CONFIRMED": 625,
+        "FIB_TOO_DEEP": 171,
+        "LOWER_STRUCTURE_LOST": 248,
+        "FIB_CLOSE_TOO_DEEP": 164,
+        "INVALIDATE": 264,
+        "PIVOT_TRIGGER": 141,
+        "SIGNAL": 141,
+        "RISK_CHECK": 141,
+        "SKIP": 67,
+        "COMPLETED": 141,
+        "LOWER_STRUCTURE_REJECTED": 229,
+        "INITIAL_MOVE_PROGRESS": 65,
+        "ORDER": 97,
+        "FILL": 97,
+        "POSITION_TRACKING": 97,
+        "EXIT": 97,
+        "TRENDLINE_TRIGGER": 53,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 123,
+        "WAVE1_EXTENSION_STARTED": 123,
+        "WAVE1_EXTENDED_CONFIRMED": 122,
+        "WAVE1_EXTENSION_TRACKING": 188,
+        "OPPOSITE_WAVE1_ARMED": 6,
+        "OPPOSITE_CLOSE_REQUEST": 6,
+        "OPPOSITE_CLOSE_ACCEPTED": 6,
+        "TEST_END": 1
+      },
+      "new_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 27282,
+        "WAVE1_BREAK": 429,
+        "STATE": 1954,
+        "WAVE1_PROVISIONAL": 1182,
+        "WAVE1_PEAK_CONFIRMED": 375,
+        "WAVE1_EXTENSION_LOCKED": 363,
+        "WAVE2_EXTREME": 2486,
+        "FIB_TOUCH": 315,
+        "LOWER_STRUCTURE_CONFIRMED": 570,
+        "FIB_TOO_DEEP": 159,
+        "LOWER_STRUCTURE_LOST": 229,
+        "FIB_CLOSE_TOO_DEEP": 152,
+        "INVALIDATE": 279,
+        "PIVOT_TRIGGER": 130,
+        "SIGNAL": 130,
+        "RISK_CHECK": 130,
+        "SKIP": 62,
+        "COMPLETED": 130,
+        "LOWER_STRUCTURE_REJECTED": 208,
+        "INITIAL_MOVE_PROGRESS": 66,
+        "ORDER": 87,
+        "FILL": 87,
+        "POSITION_TRACKING": 87,
+        "EXIT": 87,
+        "TRENDLINE_TRIGGER": 45,
+        "TP_WAVE1_EXTENDED": 22,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 123,
+        "WAVE1_EXTENSION_STARTED": 123,
+        "WAVE1_EXTENDED_CONFIRMED": 123,
+        "WAVE1_EXTENSION_TRACKING": 185,
+        "OPPOSITE_WAVE1_ARMED": 4,
+        "OPPOSITE_CLOSE_REQUEST": 4,
+        "OPPOSITE_CLOSE_ACCEPTED": 4,
+        "TEST_END": 1
+      }
+    },
+    "B": {
+      "source_hashes": {
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on\\events.csv": "34edd41504592bc4eef36cf223d3ca1263b133017fb4a3a00aefe2419f6a7111",
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on\\report.htm": "ceeb773fa2bd6cffb53b69f814954fa6fd1b5039ce7a0d7b646cf15d55e03fdb",
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on\\config.csv": "28eb6fce5b6f8d50895651fa7bc0747cd106edd556ff8b7b6e1dceab00c044f1",
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on\\inputs.set": "7efb42b8aa6587b3146640562e6126a2d5030f345076c9a30eb407e6ff1bbfbe",
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on\\lower_bars.csv": "9478f6c4511de29ed75af74fc4f160cf1bd2b3fb38b17d9a9ceb065390de2b4d",
+        "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on\\upper_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\events.csv": "a95db0f65dda76e40f6b8881d066160b3575cad86410e4b750c859957d9d6457",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\report.htm": "c065187dc469d9a983d861b98822d8d2f205b9f47c957ecde24877cb4f124426",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\config.csv": "cc54848255b9f6ad0ebb443b196451cd10ecdb2ae26323c4c2bd4b37f232a68c",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\inputs.set": "3a082d5e3fcd88371fe30e227b9fd892793815886cea35eddc3904afbb9fc4f4",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\lower_bars.csv": "9478f6c4511de29ed75af74fc4f160cf1bd2b3fb38b17d9a9ceb065390de2b4d",
+        "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\upper_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418"
+      },
+      "old_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 117273,
+        "WAVE1_BREAK": 1340,
+        "STATE": 7464,
+        "WAVE1_PROVISIONAL": 3795,
+        "WAVE1_PEAK_CONFIRMED": 1169,
+        "WAVE1_EXTENSION_LOCKED": 1153,
+        "WAVE2_EXTREME": 10808,
+        "FIB_TOUCH": 1027,
+        "LOWER_STRUCTURE_CONFIRMED": 2702,
+        "PIVOT_TRIGGER": 538,
+        "SIGNAL": 538,
+        "RISK_CHECK": 538,
+        "SKIP": 219,
+        "COMPLETED": 538,
+        "INVALIDATE": 742,
+        "LOWER_STRUCTURE_LOST": 1083,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 408,
+        "WAVE1_EXTENSION_STARTED": 408,
+        "WAVE1_EXTENSION_TRACKING": 596,
+        "WAVE1_EXTENDED_CONFIRMED": 406,
+        "LOWER_STRUCTURE_REJECTED": 1049,
+        "FIB_CLOSE_TOO_DEEP": 424,
+        "FIB_TOO_DEEP": 463,
+        "ORDER": 378,
+        "FILL": 378,
+        "POSITION_TRACKING": 378,
+        "EXIT": 378,
+        "INITIAL_MOVE_PROGRESS": 188,
+        "TRENDLINE_TRIGGER": 200,
+        "OPPOSITE_WAVE1_ARMED": 30,
+        "OPPOSITE_CLOSE_REQUEST": 23,
+        "OPPOSITE_CLOSE_ACCEPTED": 23,
+        "TEST_END": 1
+      },
+      "new_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 117273,
+        "WAVE1_BREAK": 1340,
+        "STATE": 7114,
+        "WAVE1_PROVISIONAL": 3829,
+        "WAVE1_PEAK_CONFIRMED": 1181,
+        "WAVE1_EXTENSION_LOCKED": 1145,
+        "WAVE2_EXTREME": 10282,
+        "FIB_TOUCH": 1013,
+        "LOWER_STRUCTURE_CONFIRMED": 2468,
+        "PIVOT_TRIGGER": 507,
+        "SIGNAL": 507,
+        "RISK_CHECK": 507,
+        "SKIP": 201,
+        "COMPLETED": 507,
+        "INVALIDATE": 785,
+        "LOWER_STRUCTURE_LOST": 980,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 384,
+        "WAVE1_EXTENSION_STARTED": 384,
+        "WAVE1_EXTENSION_TRACKING": 564,
+        "WAVE1_EXTENDED_CONFIRMED": 383,
+        "LOWER_STRUCTURE_REJECTED": 902,
+        "FIB_CLOSE_TOO_DEEP": 399,
+        "FIB_TOO_DEEP": 438,
+        "TP_WAVE1_EXTENDED": 131,
+        "ORDER": 353,
+        "FILL": 353,
+        "POSITION_TRACKING": 353,
+        "EXIT": 353,
+        "INITIAL_MOVE_PROGRESS": 186,
+        "TRENDLINE_TRIGGER": 187,
+        "OPPOSITE_WAVE1_ARMED": 14,
+        "OPPOSITE_CLOSE_REQUEST": 10,
+        "OPPOSITE_CLOSE_ACCEPTED": 10,
+        "TEST_END": 1
+      }
+    }
+  },
+  "limitations": [
+    "Annual comparison has both cancellation and TP extension active; it is not an isolated causal A/B test.",
+    "Earlier cancellations and longer holding can change subsequent candidate lanes, position availability, exits, equity and lot size.",
+    "No hypothetical result is assigned to canceled or otherwise unfilled candidates. Old observed fills are references only.",
+    "Cash differences include equity-based sizing feedback. R is normalized per actual initial risk.",
+    "All 2020 data were previously observed. This is descriptive in-sample research, not an OOS or profitability promotion."
+  ]
+}

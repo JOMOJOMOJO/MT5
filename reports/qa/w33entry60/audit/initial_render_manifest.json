@@ -1,0 +1,583 @@
+{
+  "kind": "ENTRY_ONLY_RECORDED_LOG_RECONSTRUCTION",
+  "native_mt5_screenshot": false,
+  "outcome_labels_included": false,
+  "source_packet_sha256": "6a93bded7906b79cb1f397c4a607ed6019fead6cffe815665dc3bcf1a4aeed40",
+  "script_sha256": "f4b57805ba57b4f843e100044ac84b951dc7a105912a8f05dfa80a0c8dfb3afb",
+  "cases": [
+    {
+      "blind_id": "V001",
+      "file": "V001.png",
+      "sha256": "3f8da6da3594fcce2354b9b007432a56f670b060cedd7be96f71162aca0a0b3e",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 11967
+    },
+    {
+      "blind_id": "V002",
+      "file": "V002.png",
+      "sha256": "a536c3330fbb2de90f3c64b815f5d478765f12a932b0f6eb41e2f35248b64dd0",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ],
+      "order_sequence": 129449
+    },
+    {
+      "blind_id": "V003",
+      "file": "V003.png",
+      "sha256": "7cd811a34fc390318b8c26f8923c5523faf8c8178bd8b4a095b460fe28504d8a",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 89302
+    },
+    {
+      "blind_id": "V004",
+      "file": "V004.png",
+      "sha256": "aaa9b7ce1f63a8e3900a15930e0d0b92a00974ee2865c2f8b027fce0d99d4603",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 29466
+    },
+    {
+      "blind_id": "V005",
+      "file": "V005.png",
+      "sha256": "4b00e5f13efdd0ca7393a71471e744c5e5d6af6a6087f672e2cf80ddbd7b8cc3",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 12700
+    },
+    {
+      "blind_id": "V006",
+      "file": "V006.png",
+      "sha256": "e7f4ad11b5ad2ece6226cf706b558851d84ccbb3552e6dd10a7924912d28c028",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 107736
+    },
+    {
+      "blind_id": "V007",
+      "file": "V007.png",
+      "sha256": "115d39e6787a233cad9994c8bb5200dc636d55cc8760c3ef23a8680915f59daf",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 17514
+    },
+    {
+      "blind_id": "V008",
+      "file": "V008.png",
+      "sha256": "c43138beeabc9ecabad51abb71f28889199a42ce6b19ffee6e2591effbc4d9c7",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが3点（8点未満）"
+      ],
+      "order_sequence": 27401
+    },
+    {
+      "blind_id": "V009",
+      "file": "V009.png",
+      "sha256": "2619ad181e0a346bbea08101ad27ab29fdc3b3ff41eb8d8b1ba387ebe6fba717",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 20210
+    },
+    {
+      "blind_id": "V010",
+      "file": "V010.png",
+      "sha256": "05be9743f97d73e9d846215bf699f13aceec15fbd6ac60d32af7efcd9c68adc2",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 103984
+    },
+    {
+      "blind_id": "V011",
+      "file": "V011.png",
+      "sha256": "da1478dceab39113453b6006b1fd524bea4146adf96a54004705d2671ca7209b",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ],
+      "order_sequence": 8767
+    },
+    {
+      "blind_id": "V012",
+      "file": "V012.png",
+      "sha256": "60d261473e827d5b54b947e1f8958bea0e387e7884275dd94908010caf5547f2",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 32292
+    },
+    {
+      "blind_id": "V013",
+      "file": "V013.png",
+      "sha256": "568a6adbeaee37ae67e3e5007cec48a5a6449e43387c1b220ba6d3f4e28a3da1",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 144760
+    },
+    {
+      "blind_id": "V014",
+      "file": "V014.png",
+      "sha256": "a8851f2e1025095ef091d335f0b15c304ea27f9e5e32b44f183f9e9e3efb032c",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 27112
+    },
+    {
+      "blind_id": "V015",
+      "file": "V015.png",
+      "sha256": "e3bca7b5755a5e814a6011579a0b521af0dbf059e21df8237a845d4f8851c46c",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 21590
+    },
+    {
+      "blind_id": "V016",
+      "file": "V016.png",
+      "sha256": "4b3890dda20ae5831d0740c563d73f762c56932a2c38e6d4850514d6219ba242",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 67442
+    },
+    {
+      "blind_id": "V017",
+      "file": "V017.png",
+      "sha256": "b78a71703f5544d48b7722fcb25bc46c905ac4e9ee55724fc3635c451c47a246",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが3点（8点未満）"
+      ],
+      "order_sequence": 70795
+    },
+    {
+      "blind_id": "V018",
+      "file": "V018.png",
+      "sha256": "cb9b4b474ec65dec68e5426d4e7edfe525b08478fd3246b227c98c52a08c7806",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが3点（8点未満）"
+      ],
+      "order_sequence": 14453
+    },
+    {
+      "blind_id": "V019",
+      "file": "V019.png",
+      "sha256": "3123d52fd960aa10c307622f710badd599ab4d43153a1e8489ab70236da7362d",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 3466
+    },
+    {
+      "blind_id": "V020",
+      "file": "V020.png",
+      "sha256": "aaa392e5cafe1d7a6854b16dc14eca2f442b32fb421b96abafda6a70f9be2a2d",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 29400
+    },
+    {
+      "blind_id": "V021",
+      "file": "V021.png",
+      "sha256": "440d4d4af345e0689211bcacd398c9e5f23852bb560728ef8fac1e736f55f488",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 120258
+    },
+    {
+      "blind_id": "V022",
+      "file": "V022.png",
+      "sha256": "ec6407b7329b45d6c7daa2573c07e5cc241fbf43920829f481d847fab23e142c",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 18505
+    },
+    {
+      "blind_id": "V023",
+      "file": "V023.png",
+      "sha256": "bc369be922407a268723b950206fa0789798f8193b68bbaec631c918c49dced1",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 21132
+    },
+    {
+      "blind_id": "V024",
+      "file": "V024.png",
+      "sha256": "13e31cc566c7d9668c5dd0afccddce816a985ac2d6d19699c248f188342dd566",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ],
+      "order_sequence": 2325
+    },
+    {
+      "blind_id": "V025",
+      "file": "V025.png",
+      "sha256": "dd2fb0d78d37fccf79ce930f86b9ff27ea6a32d03cd163b77f9f7263894a9354",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 24579
+    },
+    {
+      "blind_id": "V026",
+      "file": "V026.png",
+      "sha256": "7d9889a7484e537c41d9aeebd70a69ffcf693ce517cc541af3e05c1a3b01d808",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 33850
+    },
+    {
+      "blind_id": "V027",
+      "file": "V027.png",
+      "sha256": "cee3e68796cc92fdba58920c3a1be551d749ed4b1a420a531ce8eff10ff64ca8",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 31699
+    },
+    {
+      "blind_id": "V028",
+      "file": "V028.png",
+      "sha256": "3b81a392fcf1b6f3b6035290992fd0a0ed288c96084622a582f08a7a401f4cb1",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 1269
+    },
+    {
+      "blind_id": "V029",
+      "file": "V029.png",
+      "sha256": "c6df3a25da4b0d9c8de45f8c36b8431efd7494b10cd559e93dc8bcb4f2aa9f40",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 27870
+    },
+    {
+      "blind_id": "V030",
+      "file": "V030.png",
+      "sha256": "2bbeedd44f2d4eb62484d1cd3563cf779b91a65d65d2cb2b9adaefa8fdd6e7a1",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 114188
+    },
+    {
+      "blind_id": "V031",
+      "file": "V031.png",
+      "sha256": "87c27220a78ca66f51579c21ee369dfdea428a23a0454f5f60af19211d04268e",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 2606
+    },
+    {
+      "blind_id": "V032",
+      "file": "V032.png",
+      "sha256": "3ad9e9710b3c83ac09ef52de88bcbe2c875a691c3453cb2910f27cdd8b81a367",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 72775
+    },
+    {
+      "blind_id": "V033",
+      "file": "V033.png",
+      "sha256": "023e867dae92c82616d0122c65739e5f904ac05ca58c244cb687690aed702fdb",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 48564
+    },
+    {
+      "blind_id": "V034",
+      "file": "V034.png",
+      "sha256": "f7d0eff638434ec12921f9a497070b33a782e1ee3dff6d1d3735b16c76d6f020",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 137754
+    },
+    {
+      "blind_id": "V035",
+      "file": "V035.png",
+      "sha256": "7399be7d6f21398c5f05a2e5be8d685762fdc34dd138fec7b3fcb08f058b2a22",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 7488
+    },
+    {
+      "blind_id": "V036",
+      "file": "V036.png",
+      "sha256": "0205c6cffbab731c293903b1433f8081b632ea205ea6b5f35780dddb0f24975f",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 102313
+    },
+    {
+      "blind_id": "V037",
+      "file": "V037.png",
+      "sha256": "2aca3572def91e1baa9353ad1683be7785adc6359f4c74d2dbc05d7b556adbdd",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 46341
+    },
+    {
+      "blind_id": "V038",
+      "file": "V038.png",
+      "sha256": "c42a0c885a059b3b79219990ef6a81a6853e50f4a79eb5a36d3af1f919c48240",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 24597
+    },
+    {
+      "blind_id": "V039",
+      "file": "V039.png",
+      "sha256": "2689d13dae2684c906f2b0c4e6a5906e7325e461c8c81de9653a59ad9e5dc008",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 10206
+    },
+    {
+      "blind_id": "V040",
+      "file": "V040.png",
+      "sha256": "a66382d1c161f06848c842706115863073b3ae9d2286fe0b62287446ea35ffff",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 36356
+    },
+    {
+      "blind_id": "V041",
+      "file": "V041.png",
+      "sha256": "21cfe7d41d35969ddd219850bc20017300c07d4532f4fee80c8c827581e62278",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 137332
+    },
+    {
+      "blind_id": "V042",
+      "file": "V042.png",
+      "sha256": "eb69be2a726115dc99ca5f1c2ae004634f96aefdcedd526a24019ed3f9716b2f",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ],
+      "order_sequence": 129692
+    },
+    {
+      "blind_id": "V043",
+      "file": "V043.png",
+      "sha256": "86d0a4865d318b0f99d13de1c7306fc8d7ea23d6ac17714e6e8b4ff3668ad274",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 6541
+    },
+    {
+      "blind_id": "V044",
+      "file": "V044.png",
+      "sha256": "179bdcfaf05443d0145cb4474654ddfb9ca7510e40324163f13c21019cbcdb1a",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 94510
+    },
+    {
+      "blind_id": "V045",
+      "file": "V045.png",
+      "sha256": "e29a373a542d712608fd94eb2557f2257f20b2337b55d6e1f86d84d8c3e85262",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 40521
+    },
+    {
+      "blind_id": "V046",
+      "file": "V046.png",
+      "sha256": "8988c4a2540bfa932476204a22a6d3cadca33145a072f9593e217942dfd934a2",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 111044
+    },
+    {
+      "blind_id": "V047",
+      "file": "V047.png",
+      "sha256": "bca5c562c5ebac7f7c5aec157ba55040191eaf04b9813a2bb222dd7c8d7da1de",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 26910
+    },
+    {
+      "blind_id": "V048",
+      "file": "V048.png",
+      "sha256": "512525f89b440671277d55d009679b4cc60f25ad5af83496ab80c5661fe43b94",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 71218
+    },
+    {
+      "blind_id": "V049",
+      "file": "V049.png",
+      "sha256": "5ae69c9df61eec9c330fe05f413cbe54dc9973d002a1b86055d25e5114db808e",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 23761
+    },
+    {
+      "blind_id": "V050",
+      "file": "V050.png",
+      "sha256": "e13574ba2f639521dfbc1df3b454b7df07b64f859ba337cc6c7d155c6ea77a6e",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが5点（8点未満）"
+      ],
+      "order_sequence": 87896
+    },
+    {
+      "blind_id": "V051",
+      "file": "V051.png",
+      "sha256": "4eb01bc65d6f18df6003c0fa2e699bc8de5b2f308ec624d8f0dd6a157c036a52",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが2点（8点未満）"
+      ],
+      "order_sequence": 4583
+    },
+    {
+      "blind_id": "V052",
+      "file": "V052.png",
+      "sha256": "f11851a1e9d87c1b04fd9dafd697bde65108e8e399875fd5352ce336107e94d5",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 26200
+    },
+    {
+      "blind_id": "V053",
+      "file": "V053.png",
+      "sha256": "9fc3011ff5ddf44611e0f8d6bdccb657ba1a0ada04fa70b97b52815e217b8b12",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 33791
+    },
+    {
+      "blind_id": "V054",
+      "file": "V054.png",
+      "sha256": "ef217bd11af7d3f986e7e761bd0ab2231e83ec1f0a14977143438dc534d72fa8",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 9661
+    },
+    {
+      "blind_id": "V055",
+      "file": "V055.png",
+      "sha256": "4583091166fddc5ea9c0a910843f7a545785cec62f70ef59848ff53beb44b02c",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 10754
+    },
+    {
+      "blind_id": "V056",
+      "file": "V056.png",
+      "sha256": "bb4a7536cf0e900ee303a8a8806605dca32ad36fecbf04433b62e379bb224b53",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 17597
+    },
+    {
+      "blind_id": "V057",
+      "file": "V057.png",
+      "sha256": "1c61e3f29ea035bc8789cc90ff8bd0a0035f990ba736c5a53cc9aa71b5dbf379",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 24419
+    },
+    {
+      "blind_id": "V058",
+      "file": "V058.png",
+      "sha256": "5a4194fcd268339a3bf21306a1db042694f4c386162cb46945c25399b10061be",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 85101
+    },
+    {
+      "blind_id": "V059",
+      "file": "V059.png",
+      "sha256": "7de2ae81c19da3ced24a53ac19f4220259cda102f928b3274262f75962fe53e3",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 146713
+    },
+    {
+      "blind_id": "V060",
+      "file": "V060.png",
+      "sha256": "ac0e50cdfdd8c33aa3bd9813e49f59a6ece268d7af0c145dd371bd64abffa19f",
+      "upper_bars": 300,
+      "lower_bars": 180,
+      "warnings": [],
+      "order_sequence": 27955
+    }
+  ],
+  "contact_sheets": {
+    "odd": [
+      "odd_01.png",
+      "odd_02.png",
+      "odd_03.png",
+      "odd_04.png",
+      "odd_05.png"
+    ],
+    "even": [
+      "even_01.png",
+      "even_02.png",
+      "even_03.png",
+      "even_04.png",
+      "even_05.png"
+    ]
+  }
+}

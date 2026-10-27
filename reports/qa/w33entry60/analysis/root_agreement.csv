@@ -1,0 +1,4 @@
+﻿feature,n,matches,agreement_fraction,note
+prior_structure,6,4,0.6666666666666666,"Root review is an internal reproducibility check, not independent ground truth."
+w1_progress,6,4,0.6666666666666666,"Root review is an internal reproducibility check, not independent ground truth."
+break_scope,6,6,1.0,"Root review is an internal reproducibility check, not independent ground truth."

@@ -1,0 +1,246 @@
+{
+  "reviewer": "entry60_blind_odd",
+  "render_manifest_sha256": "4c8b165d88c3d3bfae1b40633601ef044b4c830114423e993e6c3851c9f6ed02",
+  "cases": [
+    {
+      "blind_id": "V001",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "HIGH",
+      "concern": "①直前は上昇後の戻りで、継続した下降転換ではない。外側高値の上抜け幅は小さい。"
+    },
+    {
+      "blind_id": "V003",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "下降継続の中の戻り崩れ。①は途中に往復を挟み、既知P6安値を終値で更新していない。"
+    },
+    {
+      "blind_id": "V005",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "①は先行下降の延長。初めの戻りが大きく、外側安値の下抜けはヒゲが中心。"
+    },
+    {
+      "blind_id": "V007",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "下降・横ばいの後の急騰を短い売り①で戻す形。直近8点の安値まで距離が残る。"
+    },
+    {
+      "blind_id": "V009",
+      "prior_structure": "CLEAR_COUNTERTREND",
+      "w1_progress": "CLEAN",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "HIGH",
+      "concern": "P4→P6→P8の高値切下げを①が外側高値まで終値で越える。②は①に対して深め。"
+    },
+    {
+      "blind_id": "V011",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "UNCLEAR",
+      "confidence": "MID",
+      "concern": "既知上位ピボットは7点のみ。直前は上昇継続後の押しで、8点の外側境界は判定しない。"
+    },
+    {
+      "blind_id": "V013",
+      "prior_structure": "CLEAR_COUNTERTREND",
+      "w1_progress": "CLEAN",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "下降構造は明確だが、①終点はP2高値に届かず、直近8点の内側にとどまる。"
+    },
+    {
+      "blind_id": "V015",
+      "prior_structure": "CLEAR_COUNTERTREND",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "上昇継続への売り①だが、8点の安値付近を割らず、①内部も戻りが大きい。"
+    },
+    {
+      "blind_id": "V017",
+      "prior_structure": "UNCLEAR",
+      "w1_progress": "CLEAN",
+      "break_scope": "UNCLEAR",
+      "confidence": "LOW",
+      "concern": "既知上位ピボットは3点のみ。下降は直近1往復で、①は以前の高値圏へ戻る形。"
+    },
+    {
+      "blind_id": "V019",
+      "prior_structure": "CLEAR_COUNTERTREND",
+      "w1_progress": "CLEAN",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "長い下降に対して①が小さく、P8高値すら明確には越えていない。外側高値はかなり上に残る。"
+    },
+    {
+      "blind_id": "V021",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "下降後の戻りを再び売る形で、①の前半は往復が多い。P8の先行安値より上で①が止まる。"
+    },
+    {
+      "blind_id": "V023",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "急騰後の下落と横ばいが混在。①は先行安値帯に達するが、外側安値の終値突破には至らない。"
+    },
+    {
+      "blind_id": "V025",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "①は高値手前までの長い往復上昇で、P6の外側高値を越えない。"
+    },
+    {
+      "blind_id": "V027",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "HIGH",
+      "concern": "①より前も上昇が優勢。①は外側高値を大幅に越えるが、②の横ばい・下落が長い。"
+    },
+    {
+      "blind_id": "V029",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "HIGH",
+      "concern": "①は明瞭な外側突破だが、先行構造は上昇と短い戻りの混在で、長い下降の転換ではない。"
+    },
+    {
+      "blind_id": "V031",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "急騰後の戻り高値は下がる一方、安値は重なる。①はP4の外側高値を越えない。"
+    },
+    {
+      "blind_id": "V033",
+      "prior_structure": "CLEAR_COUNTERTREND",
+      "w1_progress": "CLEAN",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "先行上昇は明確。①は高値圏の横ばい後の下落だが、8点の安値帯はまだ下にある。"
+    },
+    {
+      "blind_id": "V035",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "暴落・急反発・再下落が混在。①は横ばいを挟む小さな再下落で、外側安値は遠い。"
+    },
+    {
+      "blind_id": "V037",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "HIGH",
+      "concern": "①の認定区間が長く、途中の横ばいと戻りを一つの波にまとめている。外側高値は終値で越える。"
+    },
+    {
+      "blind_id": "V039",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "大きな往復の内側で反発。①内にも複数の戻りがあり、P6の高値を越えていない。"
+    },
+    {
+      "blind_id": "V041",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "①の起点より低い安値を区間途中で付けてから反発しており、青線が実際の波の始点とずれる。"
+    },
+    {
+      "blind_id": "V043",
+      "prior_structure": "CLEAR_COUNTERTREND",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "強い上昇中の小さな下落。①区間中に起点より高い値があり、外側安値は割れていない。"
+    },
+    {
+      "blind_id": "V045",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "既知8点はレンジ内の往復。①は外側安値をヒゲで少し割るが、確定終値は帯内にある。"
+    },
+    {
+      "blind_id": "V047",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "HIGH",
+      "concern": "先行下降の継続型。①は8点安値を終値で割るが、②で割った安値帯まで戻している。"
+    },
+    {
+      "blind_id": "V049",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "HIGH",
+      "concern": "①前は下降後の小さな往復。①は外側高値を大きく越えるが、②の形成が非常に長い。"
+    },
+    {
+      "blind_id": "V051",
+      "prior_structure": "UNCLEAR",
+      "w1_progress": "CLEAN",
+      "break_scope": "UNCLEAR",
+      "confidence": "LOW",
+      "concern": "既知上位ピボットが2点のみで先行構造を判定できない。②は①の上昇幅に対して急な下落。"
+    },
+    {
+      "blind_id": "V053",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "HIGH",
+      "concern": "①前は安値切上げと高値切下げが同時にあり、下降トレンドより収束に近い。①は外側高値を終値突破。"
+    },
+    {
+      "blind_id": "V055",
+      "prior_structure": "CLEAR_COUNTERTREND",
+      "w1_progress": "CLEAN",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "HIGH",
+      "concern": "P2以降は高安切上げが続き、①は外側安値を終値で下抜く。②は割った安値帯付近まで戻る。"
+    },
+    {
+      "blind_id": "V057",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "UNCLEAR",
+      "confidence": "MID",
+      "concern": "①の安値更新は大きな下ヒゲが中心。外側安値と最終陰線の終値が近く、終値突破は図だけでは断定しない。"
+    },
+    {
+      "blind_id": "V059",
+      "prior_structure": "CLEAR_COUNTERTREND",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "HIGH",
+      "concern": "先行上昇を外側安値まで崩す①だが、途中で明瞭な戻りを挟む長い下落区間を一つの波としている。"
+    }
+  ]
+}

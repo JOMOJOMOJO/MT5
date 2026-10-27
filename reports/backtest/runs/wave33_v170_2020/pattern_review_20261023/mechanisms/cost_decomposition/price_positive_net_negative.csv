@@ -1,0 +1,2 @@
+﻿arm,setup_id,entry_at,exit_at,entry_deal,exit_deal,direction,entry_price,exit_price,sl_price,volume,initial_risk_cash,order_room_band,exit_reason,price_profit_cash,price_profit_r,commission_cash,commission_r,swap_cash,swap_r,net_cash,net_r
+B,W33_XAUUSD+_5_1_LONG_1594246500_662,2020-07-08 23:25:00,2020-07-09 01:07:24,350,351,LONG,1809.05,1810.21,1807.97,0.36,38.87999999999738,GE_1,DEAL_REASON_TP,41.76,1.0740740740741463,-2.16,-0.0555555555555593,-83.74,-2.1538065843622847,-44.14,-1.135288065843698

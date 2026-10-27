@@ -1,0 +1,168 @@
+{
+  "status": "PASS",
+  "label_reveal_phase": "AFTER_BOTH_REVIEWS_FROZEN",
+  "source_trades": 440,
+  "selected": 60,
+  "outcomes": {
+    "LOSS": 30,
+    "WIN": 30
+  },
+  "directions": {
+    "LONG": 30,
+    "SHORT": 30
+  },
+  "arms": {
+    "B": 30,
+    "A": 30
+  },
+  "strata": [
+    {
+      "arm": "A",
+      "direction": "LONG",
+      "outcome": "WIN",
+      "available": 18,
+      "requested": 8,
+      "selected": 8,
+      "indices": [
+        1,
+        3,
+        5,
+        7,
+        10,
+        12,
+        14,
+        16
+      ]
+    },
+    {
+      "arm": "A",
+      "direction": "SHORT",
+      "outcome": "WIN",
+      "available": 20,
+      "requested": 7,
+      "selected": 7,
+      "indices": [
+        1,
+        4,
+        7,
+        10,
+        12,
+        15,
+        18
+      ]
+    },
+    {
+      "arm": "B",
+      "direction": "LONG",
+      "outcome": "WIN",
+      "available": 70,
+      "requested": 7,
+      "selected": 7,
+      "indices": [
+        5,
+        15,
+        25,
+        35,
+        45,
+        55,
+        65
+      ]
+    },
+    {
+      "arm": "B",
+      "direction": "SHORT",
+      "outcome": "WIN",
+      "available": 86,
+      "requested": 8,
+      "selected": 8,
+      "indices": [
+        5,
+        16,
+        26,
+        37,
+        48,
+        59,
+        69,
+        80
+      ]
+    },
+    {
+      "arm": "A",
+      "direction": "LONG",
+      "outcome": "LOSS",
+      "available": 20,
+      "requested": 7,
+      "selected": 7,
+      "indices": [
+        1,
+        4,
+        7,
+        10,
+        12,
+        15,
+        18
+      ]
+    },
+    {
+      "arm": "A",
+      "direction": "SHORT",
+      "outcome": "LOSS",
+      "available": 29,
+      "requested": 8,
+      "selected": 8,
+      "indices": [
+        1,
+        5,
+        9,
+        12,
+        16,
+        19,
+        23,
+        27
+      ]
+    },
+    {
+      "arm": "B",
+      "direction": "LONG",
+      "outcome": "LOSS",
+      "available": 104,
+      "requested": 8,
+      "selected": 8,
+      "indices": [
+        6,
+        19,
+        32,
+        45,
+        58,
+        71,
+        84,
+        97
+      ]
+    },
+    {
+      "arm": "B",
+      "direction": "SHORT",
+      "outcome": "LOSS",
+      "available": 93,
+      "requested": 7,
+      "selected": 7,
+      "indices": [
+        6,
+        19,
+        33,
+        46,
+        59,
+        73,
+        86
+      ]
+    }
+  ],
+  "deterministic_selection_reproduced": true,
+  "native_net_cash_verified": true,
+  "input_hashes": {
+    "reports\\backtest\\runs\\wave33_v180_2020\\analysis\\trades.csv": "b844350e0808cf5ee38a200f822fa585b393154161e71752a115b59d3d5dc056",
+    "reports\\backtest\\runs\\wave33_v180_2020\\analysis\\integrity\\native_positions.csv": "6804150193e75df1a0b32032f90e419b965cb45e1082e5cfb753f78dd2a87f57",
+    "reports\\qa\\w33entry60\\data\\labels\\label_key.csv": "c5b4c2dc73ced9da4e1a1e78eedb91e177825df9d4bd7b18b1789da38422a857"
+  },
+  "failures": []
+}

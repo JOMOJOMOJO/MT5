@@ -1,0 +1,29 @@
+{
+  "tag": "wave33_20261022_161002_0ef87d9b_a_extension_on",
+  "visual_mode": false,
+  "chart_period": "M5",
+  "date_from": "2020.01.01",
+  "model": 4,
+  "symbol": "XAUUSD+",
+  "date_to": "2021.01.01",
+  "expert": "Wave33VisualVerifier",
+  "inputs": {
+    "InpRunTag": "wave33_20261022_161002_0ef87d9b_a_extension_on",
+    "InpDraw": "true",
+    "InpScreenshots": "true",
+    "InpPattern": 0,
+    "InpRejectDeepFib": "false",
+    "InpAuditOppositeExitTicks": "true",
+    "InpExitOnOppositeWave1": "true",
+    "InpRejectDeepFibClose": "true",
+    "InpRewardR": 1.0,
+    "InpLowerRecognition": 2,
+    "InpEnableTesterOrders": "true",
+    "InpStrictWaveLifecycle": "true",
+    "InpTriggerMode": 0,
+    "InpExtendWave1BeforeFib": "true",
+    "InpMinWave1RoomR": 0.25,
+    "InpMagic": "3320261022"
+  },
+  "run_id": "a_extension_on"
+}

@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-23T21:14:43.9082163+09:00",
+  "protected_files": 12,
+  "files": [
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\Wave33VisualVerifier.mq5",
+      "before_sha256": "A0BF2812B81BFDB52F1C9FC9E5008A1DDB5B003F507861FB570ED820A00B1A88",
+      "after_sha256": "A0BF2812B81BFDB52F1C9FC9E5008A1DDB5B003F507861FB570ED820A00B1A88",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\Wave33VisualVerifier.ex5",
+      "before_sha256": "13B6B35D3EAD8DA0A6771A38276A52EEC0E50560F2DFCB87A775EDB81C9FBE27",
+      "after_sha256": "13B6B35D3EAD8DA0A6771A38276A52EEC0E50560F2DFCB87A775EDB81C9FBE27",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\BarOrder.mqh",
+      "before_sha256": "EC300C19F85750A4A7B4A8122579DBB522D2BDF4538BA2F70F2C98176FEA095F",
+      "after_sha256": "EC300C19F85750A4A7B4A8122579DBB522D2BDF4538BA2F70F2C98176FEA095F",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\ConnectedWave.mqh",
+      "before_sha256": "386FFFC767345722D3E887FA2ACBB7ABB05CCDF82FAB71429F9EABBB1EBB4A93",
+      "after_sha256": "386FFFC767345722D3E887FA2ACBB7ABB05CCDF82FAB71429F9EABBB1EBB4A93",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\Display.mqh",
+      "before_sha256": "7F6EBA269E7818AAB23165131F1FCAB6F3860741BDD3E8973D7544F46084F12B",
+      "after_sha256": "7F6EBA269E7818AAB23165131F1FCAB6F3860741BDD3E8973D7544F46084F12B",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\Engine.mqh",
+      "before_sha256": "F13F93AEEE1FD7F4A08C85EDA16E5A617BF2984D6152238ED337AF27F396C8EC",
+      "after_sha256": "F13F93AEEE1FD7F4A08C85EDA16E5A617BF2984D6152238ED337AF27F396C8EC",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\Ledger.mqh",
+      "before_sha256": "03B97B230BD6124867E135C51F20B65DEB16C28960CDAD8A73072B700961305A",
+      "after_sha256": "03B97B230BD6124867E135C51F20B65DEB16C28960CDAD8A73072B700961305A",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\OppositeExit.mqh",
+      "before_sha256": "E36E4BF55441561498641AC6C556B5AE5042DA7AC7B90639BE3CDA04A2D639DA",
+      "after_sha256": "E36E4BF55441561498641AC6C556B5AE5042DA7AC7B90639BE3CDA04A2D639DA",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\Room.mqh",
+      "before_sha256": "ECD3A1841A9F9DFE481AC43C35CA869A0D15492228FF553F7F0810133A0FC757",
+      "after_sha256": "ECD3A1841A9F9DFE481AC43C35CA869A0D15492228FF553F7F0810133A0FC757",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\TesterRun.mqh",
+      "before_sha256": "2E6B183C2CC398F8394DF65C7A42AB4150C432AAD9EB1891FEC5669D587E3048",
+      "after_sha256": "2E6B183C2CC398F8394DF65C7A42AB4150C432AAD9EB1891FEC5669D587E3048",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\Types.mqh",
+      "before_sha256": "BC72C41867B6746A3192467320EE5EE998CF4EEF5E6705109B1C06BEFEAB48F4",
+      "after_sha256": "BC72C41867B6746A3192467320EE5EE998CF4EEF5E6705109B1C06BEFEAB48F4",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\Wave1Target.mqh",
+      "before_sha256": "2CECD65D839A3328F9DD06FB86A252199121ADB3634C141C8B51641E8A71AF3F",
+      "after_sha256": "2CECD65D839A3328F9DD06FB86A252199121ADB3634C141C8B51641E8A71AF3F",
+      "unchanged": true
+    }
+  ]
+}

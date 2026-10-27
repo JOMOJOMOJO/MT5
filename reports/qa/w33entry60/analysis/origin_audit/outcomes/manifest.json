@@ -1,0 +1,25 @@
+{
+  "n": 440,
+  "inputs": {
+    "reports\\qa\\w33entry60\\analysis\\origin_audit\\origins_all.csv": "0696ec77976ae17b3f29b20a1317add2f06b7fb988708951785edb8421e8b9ac",
+    "reports\\qa\\w33entry60\\data\\labels\\features_all.csv": "7faf9bc9b4d6dd2d028f7c95c9766462184fd3dfa4fc3ba8a5e5ef8459060c13",
+    "reports\\qa\\w33entry60\\reviews\\blind_frozen.json": "4768f85528b25076402aab31ba26b4a64f42a174bae97a6f34f8e82b928ecd1c"
+  },
+  "input_hashes_after": {
+    "reports\\qa\\w33entry60\\analysis\\origin_audit\\origins_all.csv": "0696ec77976ae17b3f29b20a1317add2f06b7fb988708951785edb8421e8b9ac",
+    "reports\\qa\\w33entry60\\data\\labels\\features_all.csv": "7faf9bc9b4d6dd2d028f7c95c9766462184fd3dfa4fc3ba8a5e5ef8459060c13",
+    "reports\\qa\\w33entry60\\reviews\\blind_frozen.json": "4768f85528b25076402aab31ba26b4a64f42a174bae97a6f34f8e82b928ecd1c"
+  },
+  "result_labels_read": true,
+  "primary_five_features_unchanged": true,
+  "status": "POSTHOC_ENGINEERING_DIAGNOSTIC_NOT_PREREGISTERED_NOT_OOS",
+  "threshold": "same prelabel halfpoint origin test; no new fitted thresholds",
+  "inference": "Observed exit-dependent R only; no exclusion implemented or recommended by this audit alone",
+  "outputs": {
+    "origin_group_metrics.csv": "15ad3be3ecf480a29ffc4a291f8389e4c1e22f4372a2cce0a3892fde05e38224",
+    "origin_outcomes_all.csv": "836e5ea49f477bd46d8a760d7c85b705a98a2fec8a9040b7a3f8821f7c83b581",
+    "origin_timing_metrics.csv": "9c3e0f5b5040331ced85d3c263f73c7fb1460d23a123d477903b70fc2cc934be",
+    "selected60_origin_outcomes.csv": "e30a98916d224c7783015235ccc25a28e09e679cc101f9614a094b750cf57e6b",
+    "visual_anchor_cases.csv": "90c52f319f21c65aa757b341e4a4a8cd7ae29ea1e89a59f097fd941db5b97605"
+  }
+}

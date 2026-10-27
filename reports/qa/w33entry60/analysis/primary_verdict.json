@@ -1,0 +1,16 @@
+{
+  "primary_verdict": "DIRECTION_CONSISTENT_A_B_AND_BOTH_HALVES_IN_SAMPLE",
+  "required_strata": [
+    "ARM:A",
+    "ARM:B",
+    "HALF:H1",
+    "HALF:H2"
+  ],
+  "required_results": {
+    "ARM:A": "SUPPORTS",
+    "ARM:B": "SUPPORTS",
+    "HALF:H1": "SUPPORTS",
+    "HALF:H2": "SUPPORTS"
+  },
+  "note": "Descriptive only; no sampling uncertainty or independent replication established."
+}

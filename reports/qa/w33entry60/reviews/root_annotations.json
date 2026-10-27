@@ -1,0 +1,56 @@
+{
+  "reviewer": "root_independent_spot_check",
+  "selection": "V005,V016,V027,V038,V049,V060 predetermined evenly spaced, before opening labels",
+  "render_manifest_sha256": "4c8b165d88c3d3bfae1b40633601ef044b4c830114423e993e6c3851c9f6ed02",
+  "cases": [
+    {
+      "blind_id": "V005",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "MID",
+      "concern": "①前も大きくは下降しており、上昇トレンドの転換というより継続にも見える。①安値のヒゲは前安値の下だが、終値は灰帯内に残る。"
+    },
+    {
+      "blind_id": "V016",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "前高値1730前後を反復する帯の内側に①が収まる。直前の山谷も単純な下降継続ではない。"
+    },
+    {
+      "blind_id": "V027",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "HIGH",
+      "concern": "①は終値で前高値群を明確に超えるが、①前から山谷は上昇しており新規転換より上昇継続にも見える。②は長い横ばいから押しへ移る。"
+    },
+    {
+      "blind_id": "V038",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CLEAN",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "MID",
+      "concern": "①前の高値は1944〜1946付近を反復し、安値はやや上昇。①はその帯を終値で下抜く。強い上昇トレンドの否定かは曖昧。"
+    },
+    {
+      "blind_id": "V049",
+      "prior_structure": "CLEAR_COUNTERTREND",
+      "w1_progress": "CLEAN",
+      "break_scope": "OUTER_RANGE_CLEAR",
+      "confidence": "MID",
+      "concern": "前半は下降し直前は小さな往復に移る。①は前高値群を大きく超える。②が長く、下位足最後の急反発でENTRYとなる。"
+    },
+    {
+      "blind_id": "V060",
+      "prior_structure": "RANGE_OR_MIXED",
+      "w1_progress": "CHOPPY_OR_MIXED",
+      "break_scope": "INTERNAL_ONLY",
+      "confidence": "HIGH",
+      "concern": "大きな前高安範囲の内側で①が終わり、上昇中の往復も残る。直前ジグザグは上下方向が混在している。"
+    }
+  ],
+  "outcomes_opened": false
+}

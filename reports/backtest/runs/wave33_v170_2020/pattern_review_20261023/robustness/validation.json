@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "input_trade_count": 475,
+  "original_integrity_checks": 6719,
+  "source_sha256": {
+    "a_extension_on\\events.csv": "7b0099f244acb3f31be1a4f8927551430126da74fed1c53c00c2c2403d262c1b",
+    "a_extension_on\\upper_bars.csv": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0",
+    "b_extension_on\\events.csv": "34edd41504592bc4eef36cf223d3ca1263b133017fb4a3a00aefe2419f6a7111",
+    "b_extension_on\\upper_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418"
+  },
+  "trades_sha256": "269d51e36b15aedee6d53e81809711a187fc2b7fc3f045059a46c96a270a1138",
+  "definition_sha256": "8c8a05a023714fe999f926281ad80f35aeb7e64b0d760e8d594c41a1f039fa9a",
+  "script_sha256": "f36074f74dadc6f18cf1ef528e3a0fd92f0f6bc7f3a11d760926577395da053c",
+  "per_arm": {
+    "A": {
+      "n": 97,
+      "reconciliation": "FILL/EXIT, direction, recognition, cash, risk, R, outcome, as-of upper context",
+      "net_cash": -581.1199999999998,
+      "sum_r": -12.82418367426483
+    },
+    "B": {
+      "n": 378,
+      "reconciliation": "FILL/EXIT, direction, recognition, cash, risk, R, outcome, as-of upper context",
+      "net_cash": -1577.51,
+      "sum_r": -37.32251613887651
+    }
+  },
+  "signal_context_difference_count": 0,
+  "no_new_test_or_ea_changes": true,
+  "main_comparisons": 4,
+  "period_split_is_oos": false,
+  "resampling_seed": 20261023
+}

@@ -1,0 +1,10 @@
+{
+  "purpose": "Accounting decomposition of the same 475 executed positions, not a simulation of different trading costs or exits.",
+  "source_positions": "pattern_review_20261023/resistance/trades.csv",
+  "native_source": "Original A/B report.htm deal tables, matched in/out sequentially after asserting no overlapping positions and matching recorded times, direction, volume, entry/exit price, net cash and initial money risk.",
+  "components": "price_profit + entry/exit commission + entry/exit swap = net cash; each component divided by the original execution_initial_risk_money gives additive R components.",
+  "groups": ["ALL", "order_room_band=0.25_TO_0.5", "order_room_band=0.5_TO_1", "order_room_band=GE_1"],
+  "periods": ["ALL", "entry before 2020-07-01", "entry at/after 2020-07-01"],
+  "extra_descriptions": ["Nonzero swap count, negative swap burden and positive swap credits", "Count of price-profit positive but whole-position net negative outcomes"],
+  "limitations": ["Price-profit component still includes spread and slippage in the executed prices.", "No separate deal fee field in native HTML; all-in match to EA net cash is asserted.", "Applied commissions/swaps are what this tester charged, not independently verified historical 2020 broker schedules.", "No new entry-hour split, parameter search, alternative-cost backtest or removal of positions."]
+}

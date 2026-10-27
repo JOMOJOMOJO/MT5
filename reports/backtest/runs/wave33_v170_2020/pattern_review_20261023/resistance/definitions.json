@@ -1,0 +1,20 @@
+{
+  "scope": "Known ORDER information, completed original positions; descriptive only",
+  "features_fixed_before_analysis": [
+    "0.25_TO_0.5/0.5_TO_1/GE_1 W1 room",
+    "TP beyond nearest prior outside-W1 M15/H1 pivot",
+    "Prior pivot within +/-0.1 initial risk of W1"
+  ],
+  "external_level": "Confirmed M15/H1 same-side pivot, entire source bar closed at/before current W1 origin; beyond executable entry. Current W1 never counted as external.",
+  "definition_repair": "A higher-TF pivot source bar can open before W1 origin but contain part of W1. Require source_time + PeriodSeconds(tf) <= W1 origin. Initial bar-start-only outputs retained in resistance_initial_barstart; no threshold sweep or outcome-based selection.",
+  "spent_policy": "Remove after an observed upper-TF close strictly crosses by more than half a point. A uses M15 closes, B uses M5 closes. Diagnostic assumption, not a video rule.",
+  "causality": "Pivot event sequence strictly before ORDER; pivot known_at and closed bar known_at <= ORDER event time",
+  "limitations": [
+    "Known registry starts with native prospective warmup, not all older market levels",
+    "Near band is fixed 0.1R, no sweep",
+    "All 2020 is already observed, splits are not OOS",
+    "Dense or unbroken levels do not prove human importance",
+    "A and B overlap the same underlying market; they are not independent replications"
+  ],
+  "run_manifest_sha256": "1f4daf38415201380b0190ca6942c30666b8d5678a071b1ecf31c79a9ca2da3f"
+}

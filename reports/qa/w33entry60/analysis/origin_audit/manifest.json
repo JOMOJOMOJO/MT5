@@ -1,0 +1,33 @@
+{
+  "n": 440,
+  "inputs": {
+    "reports\\qa\\w33entry60\\data\\features_causal.csv": "4e2afea4e3020da1d1f15d4a7d795c46ae2afdd48870b984a929f3581733cba0",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\events.csv": "b624db5880c0b5e4def93568dd0d889ca0566935acefc82c0068723bd97335d5",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\upper_bars.csv": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\config.csv": "44b7abb061e1ca7e7d4c1dabef8c7ec4548aaaee981ee246f8bae1d7998c9b16",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\events.csv": "a95db0f65dda76e40f6b8881d066160b3575cad86410e4b750c859957d9d6457",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\upper_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\config.csv": "cc54848255b9f6ad0ebb443b196451cd10ecdb2ae26323c4c2bd4b37f232a68c"
+  },
+  "input_hashes_after": {
+    "reports\\qa\\w33entry60\\data\\features_causal.csv": "4e2afea4e3020da1d1f15d4a7d795c46ae2afdd48870b984a929f3581733cba0",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\events.csv": "b624db5880c0b5e4def93568dd0d889ca0566935acefc82c0068723bd97335d5",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\upper_bars.csv": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\config.csv": "44b7abb061e1ca7e7d4c1dabef8c7ec4548aaaee981ee246f8bae1d7998c9b16",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\events.csv": "a95db0f65dda76e40f6b8881d066160b3575cad86410e4b750c859957d9d6457",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\upper_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+    "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\config.csv": "cc54848255b9f6ad0ebb443b196451cd10ecdb2ae26323c4c2bd4b37f232a68c"
+  },
+  "result_labels_read": false,
+  "changed_original_five_features": false,
+  "source_reason": "Blind visual reviewers noticed later source extremes beyond blue W1 origins.",
+  "status": "POSTHOC_ENGINEERING_DIAGNOSTIC; no profit filter or EA adoption",
+  "strict_interior": "origin source time < bar source time < fixed peak source time",
+  "peak_bar": "Separate only; OHLC cannot establish whether origin or peak extreme occurred first",
+  "threshold": "strictly more than half symbol point beyond origin",
+  "outputs": {
+    "origins_all.csv": "0696ec77976ae17b3f29b20a1317add2f06b7fb988708951785edb8421e8b9ac",
+    "origin_breaches.csv": "8f7f983ff409472ec66b3737cfcb23e43bca0e7cb50cc3902c1d34f7cf2c8604",
+    "summary_no_outcomes.csv": "915e14f19cfc253466e5a0eec613795eb9d359a679a8985e6c31dd9e55ea1ea6"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "purpose": "Fixed descriptive loss/profit mechanism review; no strategy edits, extra MT5 runs, parameter search, simulated exits, or promotion.",
+  "created_before_aggregation": true,
+  "source_batch": "reports/backtest/runs/wave33_v170_2020/20261022_161002_0ef87d9b",
+  "source_trade_accounting": "reports/backtest/runs/wave33_v170_2020/analysis/trades.csv",
+  "population": "All 475 completed positions, separately A=M15/M5 and B=M5/M1; wins/losses use execution net cash, not SL/TP names.",
+  "time_basis": "Broker/source timestamps; no unverified UTC conversion.",
+  "entry_features": "Use each setup's ORDER event strictly preceding its FILL in native event sequence. Realized fills/outcomes do not redefine feature buckets. Latest upper bars are limited to known_at <= ORDER event_at.",
+  "axes": {
+    "sl_upper_tr14": {"formula": "abs(ORDER.entry_price - ORDER.sl_price) / arithmetic_mean(last 14 closed upper true ranges)", "bins": ["LT_1", "1_TO_2", "GE_2"], "edges": [1.0, 2.0]},
+    "sl_wave1": {"formula": "abs(ORDER.entry_price - ORDER.sl_price) / abs(ORDER.wave1_peak_price - ORDER.wave1_start_price)", "bins": ["LT_0.5", "0.5_TO_1", "GE_1"], "edges": [0.5, 1.0]},
+    "exit_mechanism": {"formula": "Recorded final exit_reason", "role": "Post-entry outcome decomposition only; never a prospective entry feature"}
+  },
+  "holding_time": "Post-entry explanation only: median minutes by exit mechanism and net WIN/LOSS.",
+  "half_split": "Entry date < 2020-07-01 is H1; otherwise H2. No held-out claim: entire year has already been inspected.",
+  "metrics": ["n", "wins", "losses", "win_rate", "mean_r", "net_r", "pf_r", "net_cash", "pf_cash", "h1_n", "h1_mean_r", "h2_n", "h2_mean_r"],
+  "small_sample": "n < 30 is explicitly flagged; half-year sign changes also flagged. Flags are descriptive, not significance tests.",
+  "examples": "First chronologically completed eligible position for each arm and fixed sl_upper_tr14 LT_1/GE_2 x net WIN/LOSS, plus the first opposite-W1 profit exit; no best/worst selection.",
+  "limitations": ["Observed trades are selected by the existing EA; this does not evaluate rejected candidates.", "One year, generated ticks and historical cost uncertainty; no out-of-sample inference.", "Fixed buckets are interpretable units, not thresholds recommended for adoption.", "No counterfactual conclusion from actual TP/SL or opposite-W1 exits."]
+}

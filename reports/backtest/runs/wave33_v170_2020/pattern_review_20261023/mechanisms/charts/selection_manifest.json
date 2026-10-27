@@ -1,0 +1,95 @@
+{
+  "selection": "From resistance/cases.csv, first entry by (entry_at, setup_id) for each A/B x net WIN/LOSS; no magnitude selection.",
+  "purpose": "Post-hoc trade review reconstruction from recorded lower bars and ORDER snapshots; not an MT5 screenshot and not an ex-ante replay.",
+  "chosen": [
+    {
+      "arm": "A",
+      "outcome": "WIN",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1594099800_204",
+      "entry_at": "2020-07-07 08:40:00"
+    },
+    {
+      "arm": "A",
+      "outcome": "LOSS",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1590973200_161",
+      "entry_at": "2020-06-01 05:20:00"
+    },
+    {
+      "arm": "B",
+      "outcome": "WIN",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1593547800_630",
+      "entry_at": "2020-06-30 20:31:00"
+    },
+    {
+      "arm": "B",
+      "outcome": "LOSS",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1592878200_600",
+      "entry_at": "2020-06-23 03:09:00"
+    }
+  ],
+  "constraints": [
+    "No EA changes or MT5 run.",
+    "Candles after ORDER are review context only and never recompute entry features.",
+    "All purple levels must be known by ORDER; drawn from ORDER to the finite chart end only.",
+    "Wave anchor source times differ from the explicitly shown confirmation/availability times.",
+    "R1/R2 are analysis-reconstructed levels, not the original EA nearest-obstacle line."
+  ],
+  "source_hashes": {
+    "reports\\backtest\\runs\\wave33_v170_2020\\pattern_review_20261023\\resistance\\cases.csv": "21a52d01f4bb8f1ec0ca793c51c090bcbe5ce3e8b571ac9a4ae72a68af172e91",
+    "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on\\lower_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+    "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on\\events.csv": "7b0099f244acb3f31be1a4f8927551430126da74fed1c53c00c2c2403d262c1b",
+    "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on\\lower_bars.csv": "9478f6c4511de29ed75af74fc4f160cf1bd2b3fb38b17d9a9ceb065390de2b4d",
+    "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on\\events.csv": "34edd41504592bc4eef36cf223d3ca1263b133017fb4a3a00aefe2419f6a7111"
+  },
+  "rendered": [
+    {
+      "arm": "A",
+      "outcome": "WIN",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1594099800_204",
+      "file": "a_win_first.png",
+      "plotted_lower_bars": 102,
+      "net_r": 0.9760765550239235,
+      "order_at": "2020.07.07 08:40:00",
+      "confirmation_at": "2020.07.07 06:30:00",
+      "external_price": 1781.61,
+      "near_wave1_price": null
+    },
+    {
+      "arm": "A",
+      "outcome": "LOSS",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1590973200_161",
+      "file": "a_loss_first.png",
+      "plotted_lower_bars": 202,
+      "net_r": -1.0128022759601707,
+      "order_at": "2020.06.01 05:20:00",
+      "confirmation_at": "2020.06.01 01:45:00",
+      "external_price": 1741.92,
+      "near_wave1_price": null
+    },
+    {
+      "arm": "B",
+      "outcome": "WIN",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1593547800_630",
+      "file": "b_win_first.png",
+      "plotted_lower_bars": 73,
+      "net_r": 0.9934640522875817,
+      "order_at": "2020.06.30 20:31:00",
+      "confirmation_at": "2020.06.30 20:30:00",
+      "external_price": 1780.83,
+      "near_wave1_price": null
+    },
+    {
+      "arm": "B",
+      "outcome": "LOSS",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1592878200_600",
+      "file": "b_loss_first.png",
+      "plotted_lower_bars": 158,
+      "net_r": -1.0466666666666666,
+      "order_at": "2020.06.23 03:09:00",
+      "confirmation_at": "2020.06.23 02:35:00",
+      "external_price": 1758.56,
+      "near_wave1_price": 1756.86
+    }
+  ],
+  "script_hash": "740b01906a637d415003f14a756fe13189d9371a1af825563cc7ee8ab65cb9ef"
+}

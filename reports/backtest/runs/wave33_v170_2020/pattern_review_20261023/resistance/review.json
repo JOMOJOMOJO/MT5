@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "scope": "Read-only independent review; no EA/new MT5 runs/additional bootstrap",
+  "trades": 475,
+  "groups_checked": 54,
+  "nearest_and_near_level_checks": 950,
+  "arms": {
+    "A": {
+      "joined": 97,
+      "pivots": 8161,
+      "duplicate_pivot_keys": 0,
+      "min_room": 0.2587412587412504,
+      "max_room": 2.769531250000027,
+      "order_join_unique": true,
+      "event_time_nondecreasing": true,
+      "bar_known_at_nondecreasing": true
+    },
+    "B": {
+      "joined": 378,
+      "pivots": 8161,
+      "duplicate_pivot_keys": 0,
+      "min_room": 0.2610837438423546,
+      "max_room": 4.176470588235126,
+      "order_join_unique": true,
+      "event_time_nondecreasing": true,
+      "bar_known_at_nondecreasing": true
+    }
+  },
+  "source_sha256": {
+    "trades.csv": "79084fa95e4dfbb1ad72e0028eab6e595e9a63f6be816c2a61d84bf2cf5be03b",
+    "groups.csv": "a63d8a2655a0744c254319f374b59106fb7e6dd4792c163d670b266dd85d3479",
+    "definitions.json": "c68866b37fad692c299ad997f27fb2cbff17541037f0e17aaf878e9592c025cf"
+  },
+  "script_sha256": "0875765c9a1adbba5d3f274c94615dbdfb02c6e8e22b0cd51ea01b2d5e66a7d7",
+  "findings": [],
+  "notes": [
+    "Independent level reconstruction repeated on all 475: confirmed pivot rows strictly preceding ORDER, entire source bar closes at/before W1 origin; all 950 nearest/near decisions matched.",
+    "Boundaries are [0.25,0.5), [0.5,1), >=1; observed minimum validates first label.",
+    "NO_OBSERVED_BLOCK / NEAR are registry observations, not absence proofs or human resistance truth.",
+    "available_external_pivots counts all prior same-side candidates beyond entry, including candidates inside W1; does not count only outside-W1 levels.",
+    "A uses M15 close retirement; B uses M5 close retirement; different feature construction across arms is explicitly stated.",
+    "The middle room bucket is a descriptive post-hoc weak subgroup, not a positive-expectancy rule or causal filter result."
+  ],
+  "definition_revision": "Require entire source bar source_time + TF seconds <= W1 origin, rather than source bar open time only. Semantic external-level correction, not future-information repair or outcome-threshold selection.",
+  "revision_reaudit": {
+    "trades": 475,
+    "level_checks": 950,
+    "groups": 54,
+    "all_room_and_cash_unchanged": true,
+    "counts": {
+      "A": {
+        "joined": 97,
+        "blocked_previous": 32,
+        "blocked_current": 32,
+        "near_previous": 22,
+        "near_current": 22
+      },
+      "B": {
+        "joined": 378,
+        "blocked_previous": 55,
+        "blocked_current": 54,
+        "near_previous": 45,
+        "near_current": 44
+      }
+    },
+    "classification_change_count": 1,
+    "changes": [
+      {
+        "arm": "B",
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1605119700_1146",
+        "entry_at": "2020-11-11 19:05:00",
+        "changes": {
+          "external_tp_blocked": {
+            "previous": "BLOCKED",
+            "current": "NO_OBSERVED_BLOCK"
+          },
+          "near_wave1": {
+            "previous": "NEAR_0.1R",
+            "current": "NO_OBSERVED_NEAR"
+          }
+        }
+      }
+    ]
+  }
+}

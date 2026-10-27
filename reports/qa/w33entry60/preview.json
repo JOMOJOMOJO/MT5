@@ -1,0 +1,8 @@
+{
+  "port": 58735,
+  "bind": "127.0.0.1",
+  "url": "http://127.0.0.1:58735/index.html",
+  "read_only": true,
+  "pid": 28372,
+  "scope": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33entry60"
+}

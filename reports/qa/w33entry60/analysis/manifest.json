@@ -1,0 +1,48 @@
+{
+  "inputs": {
+    "reports\\qa\\w33entry60\\reviews\\odd_annotations.json": "f6c11324ec7db1e9759e604f22863c312ff4362e6a38d694ba9352e1c43a3787",
+    "reports\\qa\\w33entry60\\audit\\even_blind_review.json": "dca69c5e45b0f2a1cfc5888b5feb0db8d8b07aff4ac7924bcf80d320def934e1",
+    "reports\\qa\\w33entry60\\reviews\\blind_frozen.json": "4768f85528b25076402aab31ba26b4a64f42a174bae97a6f34f8e82b928ecd1c",
+    "reports\\qa\\w33entry60\\charts\\render_manifest.json": "4c8b165d88c3d3bfae1b40633601ef044b4c830114423e993e6c3851c9f6ed02",
+    "reports\\qa\\w33entry60\\data\\manifest.json": "e11dcc907ac1b099dda9d968c1d8e20831a1f76d67e4428f605688434f6cadbc",
+    "reports\\qa\\w33entry60\\data\\labels\\label_key.csv": "c5b4c2dc73ced9da4e1a1e78eedb91e177825df9d4bd7b18b1789da38422a857",
+    "reports\\qa\\w33entry60\\data\\labels\\features_all.csv": "7faf9bc9b4d6dd2d028f7c95c9766462184fd3dfa4fc3ba8a5e5ef8459060c13",
+    "reports\\qa\\w33entry60\\reviews\\root_annotations.json": "f1c527fd5c83b777926bf4cc8d72296d21734bcaa20d83bef33491973960f6c3"
+  },
+  "input_hashes_after": {
+    "reports\\qa\\w33entry60\\reviews\\odd_annotations.json": "f6c11324ec7db1e9759e604f22863c312ff4362e6a38d694ba9352e1c43a3787",
+    "reports\\qa\\w33entry60\\audit\\even_blind_review.json": "dca69c5e45b0f2a1cfc5888b5feb0db8d8b07aff4ac7924bcf80d320def934e1",
+    "reports\\qa\\w33entry60\\reviews\\blind_frozen.json": "4768f85528b25076402aab31ba26b4a64f42a174bae97a6f34f8e82b928ecd1c",
+    "reports\\qa\\w33entry60\\charts\\render_manifest.json": "4c8b165d88c3d3bfae1b40633601ef044b4c830114423e993e6c3851c9f6ed02",
+    "reports\\qa\\w33entry60\\data\\manifest.json": "e11dcc907ac1b099dda9d968c1d8e20831a1f76d67e4428f605688434f6cadbc",
+    "reports\\qa\\w33entry60\\data\\labels\\label_key.csv": "c5b4c2dc73ced9da4e1a1e78eedb91e177825df9d4bd7b18b1789da38422a857",
+    "reports\\qa\\w33entry60\\data\\labels\\features_all.csv": "7faf9bc9b4d6dd2d028f7c95c9766462184fd3dfa4fc3ba8a5e5ef8459060c13",
+    "reports\\qa\\w33entry60\\reviews\\root_annotations.json": "f1c527fd5c83b777926bf4cc8d72296d21734bcaa20d83bef33491973960f6c3"
+  },
+  "comparison": "five fixed feature definitions and bins; no fitted cutoffs or combined entry filters",
+  "annual_n": 440,
+  "selected_n": 60,
+  "remainder_n": 380,
+  "case_control_sample": "30 wins / 30 losses; visual group counts do not estimate annual win rate",
+  "chronology": "All 440 and remaining 380 are observed 2020 in-sample; neither is OOS",
+  "profits": "Net realized R under the unchanged v1.80 exits and historical test costs",
+  "excluded_inferences": [
+    "No EA adoption",
+    "No live-readiness claim",
+    "No independent p-value claim",
+    "No optimized threshold",
+    "No causal treatment-effect estimate"
+  ],
+  "outputs": {
+    "cohort_totals.csv": "26232b325b5c32475b3624411424464682bc5f40322f85ddb9378500e7380222",
+    "feature_missing.csv": "4026a053e46f9528564ab73817ccc0940eb726e9633723fc132570aec9ae68b2",
+    "fixed_feature_groups.csv": "f46f749558aecf78267db8bf254227b7048f30ceb175762d127694163cda2ea9",
+    "gallery_cases.json": "92259a083a2578af89a61a0b3eb7233183b92f362ac4dae1ee9353046023ace3",
+    "primary_contrasts.csv": "eccf6c8eb0b5a5328072110804fd7d55499d1fa8fb1b79ddb8171a03388627f4",
+    "primary_verdict.json": "147e8eee36c1e8d91f4aabb47eb17dafdc89ac34f65956f25742aefcb20f0cc6",
+    "root_agreement.csv": "56a899328547cdebdf6f0a965d7659c3a929d10e71ab66ddf150bb3160a4cf80",
+    "root_agreement_pairs.csv": "ea827f7f30a93d8f812cafb191e2e68e4883e3894c064fafadece61548641ffe",
+    "visual_annotations_unblinded.csv": "7d226524cf9f7c7c5be2aa1c803835a08b4fe1700628a444ef510b3942a6cf9f",
+    "visual_category_counts.csv": "e25b120ecbf5a2136f98190eb7715469b34fbf4bb2374fa651d71452b8158086"
+  }
+}

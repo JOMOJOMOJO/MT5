@@ -1,0 +1,307 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>3波3波｜①と前ジグザグ60件</title>
+<style>body{margin:0;background:#edf2f7;color:#233247;font-family:Meiryo,sans-serif}main{max-width:1800px;margin:auto;padding:18px}h1{font-size:25px;margin:8px 0}p{line-height:1.7}.toolbar{position:sticky;top:0;z-index:3;background:#fff;border:1px solid #cbd5e1;padding:12px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;border-radius:9px}button,select{font:inherit;padding:7px;border:1px solid #94a3b8;border-radius:5px;background:white}button{cursor:pointer}#grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:18px 0}article{background:#fff;border:2px solid #d3dce6;border-radius:8px;overflow:hidden;scroll-margin-top:100px}article:target{box-shadow:0 0 0 4px #e4ae3f}article header{padding:12px;display:flex;justify-content:space-between;gap:10px}img{width:100%;height:auto;display:block}.result,.notes{display:none}.show-results .result{display:inline}.show-notes .notes{display:block}.show-results article[data-result=LOSS]{border-color:#bc5454}.show-results article[data-result=WIN]{border-color:#21876a}.notes,details{padding:10px 14px;border-top:1px solid #e3e8ef;font-size:13px}details p{font-family:monospace;font-size:12px}.muted{font-size:13px;color:#596b80}a{color:#1d6798}[hidden]{display:none!important}@media(max-width:950px){#grid{grid-template-columns:1fr}h1{font-size:21px}}</style>
+<main><h1>①と、その前のジグザグ｜60件のエントリー直前比較</h1>
+<p>勝ち30・負け30をA/B・LONG/SHORTに分散。最初は勝敗と観察メモを隠しています。画像を押すと原寸で開きます。<br>上段：①と前の既知ジグザグ。下段：②の内部。エントリー後の足・決済結果は描いていません。</p>
+<p class="muted">MT5直接スクリーンショットではなく、原本の確定足・ORDERログからの再構成です。横軸は足数、日時は各カードの詳細にあります。勝敗を均等に抽出したため、この60件の割合は年間勝率ではありません。灰帯がない事例は前8点不足などで外側突破を判定できません。</p>
+<div class="toolbar"><select id="arm"><option value="">A/Bすべて</option><option>A</option><option>B</option></select><select id="side"><option value="">買い・売り両方</option><option value="LONG">LONG</option><option value="SHORT">SHORT</option></select><select id="result" disabled><option value="">勝ち・負け両方</option><option value="WIN">勝ち30件</option><option value="LOSS">負け30件</option></select><select id="scope"><option value="">突破範囲すべて</option><option value="OUTER_RANGE_CLEAR">外側突破と観察</option><option value="INTERNAL_ONLY">内側と観察</option><option value="UNCLEAR">判定不能</option></select><button id="reveal">勝敗とR損益を表示</button><button id="notes">観察メモを表示</button><span id="count"></span></div><section id="grid"><article id="V001" data-arm="B" data-side="LONG" data-result="LOSS" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V001　B：M5 × M1　LONG</b><span class="result">負け　-1.034R</span></header>
+<a href="charts/V001.png" target="_blank"><img src="charts/V001.png" alt="V001 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲を終値突破</b><p>①直前は上昇後の戻りで、継続した下降転換ではない。外側高値の上抜け幅は小さい。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-01-30 20:50:00<br>①起点 2020-01-30 18:50:00 / 1579.44<br>①終点 2020-01-30 19:45:00 / 1585.98<br>①終点を知った時刻 2020-01-30 20:00:00<br>候補発生 2020-01-30 19:40:00</p></details>
+</article><article id="V002" data-arm="B" data-side="LONG" data-result="WIN" data-scope="UNCLEAR">
+<header><b>V002　B：M5 × M1　LONG</b><span class="result">勝ち　+0.982R</span></header>
+<a href="charts/V002.png" target="_blank"><img src="charts/V002.png" alt="V002 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 判定不能</b><p>高値低下と大きな往復が混在。①は素直だが事前7点で外側8点の範囲を確定できない。</p><small>確信度：中</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-11-02 18:45:00<br>①起点 2020-11-02 17:35:00 / 1887.54<br>①終点 2020-11-02 18:10:00 / 1895.02<br>①終点を知った時刻 2020-11-02 18:25:00<br>候補発生 2020-11-02 17:55:00</p></details>
+</article><article id="V003" data-arm="B" data-side="SHORT" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V003　B：M5 × M1　SHORT</b><span class="result">負け　-1.021R</span></header>
+<a href="charts/V003.png" target="_blank"><img src="charts/V003.png" alt="V003 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>下降継続の中の戻り崩れ。①は途中に往復を挟み、既知P6安値を終値で更新していない。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-08-03 16:07:00<br>①起点 2020-08-03 15:05:00 / 1972.59<br>①終点 2020-08-03 15:45:00 / 1965.97<br>①終点を知った時刻 2020-08-03 16:00:00<br>候補発生 2020-08-03 15:45:00</p></details>
+</article><article id="V004" data-arm="A" data-side="LONG" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V004　A：M15 × M5　LONG</b><span class="result">勝ち　+0.993R</span></header>
+<a href="charts/V004.png" target="_blank"><img src="charts/V004.png" alt="V004 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>①前に高値安値が大きく往復。①内も交互の実体と長いヒゲが多く、直前の高値群より下。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-10-15 17:55:00<br>①起点 2020-10-15 15:15:00 / 1889.59<br>①終点 2020-10-15 16:45:00 / 1902.23<br>①終点を知った時刻 2020-10-15 17:30:00<br>候補発生 2020-10-15 16:45:00</p></details>
+</article><article id="V005" data-arm="A" data-side="SHORT" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V005　A：M15 × M5　SHORT</b><span class="result">負け　-1.014R</span></header>
+<a href="charts/V005.png" target="_blank"><img src="charts/V005.png" alt="V005 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>①は先行下降の延長。初めの戻りが大きく、外側安値の下抜けはヒゲが中心。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-05-11 19:10:00<br>①起点 2020-05-11 15:45:00 / 1708.24<br>①終点 2020-05-11 18:00:00 / 1691.98<br>①終点を知った時刻 2020-05-11 18:45:00<br>候補発生 2020-05-11 17:15:00</p></details>
+</article><article id="V006" data-arm="B" data-side="SHORT" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V006　B：M5 × M1　SHORT</b><span class="result">負け　-1.048R</span></header>
+<a href="charts/V006.png" target="_blank"><img src="charts/V006.png" alt="V006 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：素直に進む ／ 前高安範囲の内側</b><p>直前に段階的な上昇があり①の下落も滑らか。ただし①安値は上昇前の安値より上。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-09-14 08:56:00<br>①起点 2020-09-14 06:15:00 / 1951.71<br>①終点 2020-09-14 08:15:00 / 1944.93<br>①終点を知った時刻 2020-09-14 08:30:00<br>候補発生 2020-09-14 07:05:00</p></details>
+</article><article id="V007" data-arm="B" data-side="SHORT" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V007　B：M5 × M1　SHORT</b><span class="result">負け　-1.050R</span></header>
+<a href="charts/V007.png" target="_blank"><img src="charts/V007.png" alt="V007 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲の内側</b><p>下降・横ばいの後の急騰を短い売り①で戻す形。直近8点の安値まで距離が残る。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-02-13 04:34:00<br>①起点 2020-02-13 02:40:00 / 1572.60<br>①終点 2020-02-13 03:45:00 / 1569.10<br>①終点を知った時刻 2020-02-13 04:00:00<br>候補発生 2020-02-13 03:25:00</p></details>
+</article><article id="V008" data-arm="A" data-side="LONG" data-result="WIN" data-scope="UNCLEAR">
+<header><b>V008　A：M15 × M5　LONG</b><span class="result">勝ち　+0.987R</span></header>
+<a href="charts/V008.png" target="_blank"><img src="charts/V008.png" alt="V008 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 判定不能</b><p>広い表示では上昇継続内の小さな押しからの①。事前3点のため外側8点の判定は不能。</p><small>確信度：中</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-09-29 11:00:00<br>①起点 2020-09-29 08:30:00 / 1875.55<br>①終点 2020-09-29 10:00:00 / 1884.66<br>①終点を知った時刻 2020-09-29 10:45:00<br>候補発生 2020-09-29 10:00:00</p></details>
+</article><article id="V009" data-arm="A" data-side="LONG" data-result="WIN" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V009　A：M15 × M5　LONG</b><span class="result">勝ち　+0.006R</span></header>
+<a href="charts/V009.png" target="_blank"><img src="charts/V009.png" alt="V009 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：素直に進む ／ 前高安範囲を終値突破</b><p>P4→P6→P8の高値切下げを①が外側高値まで終値で越える。②は①に対して深め。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-07-23 21:55:00<br>①起点 2020-07-23 16:30:00 / 1869.84<br>①終点 2020-07-23 18:45:00 / 1898.37<br>①終点を知った時刻 2020-07-23 19:30:00<br>候補発生 2020-07-23 17:30:00</p></details>
+</article><article id="V010" data-arm="B" data-side="SHORT" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V010　B：M5 × M1　SHORT</b><span class="result">勝ち　+0.986R</span></header>
+<a href="charts/V010.png" target="_blank"><img src="charts/V010.png" alt="V010 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>①前は同じ価格帯を往復。①内に大きな戻しを挟み、安値は事前レンジ下端まで届かない。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-09-04 01:12:00<br>①起点 2020-09-03 21:30:00 / 1938.49<br>①終点 2020-09-03 22:55:00 / 1928.92<br>①終点を知った時刻 2020-09-03 23:10:00<br>候補発生 2020-09-03 22:25:00</p></details>
+</article><article id="V011" data-arm="A" data-side="LONG" data-result="LOSS" data-scope="UNCLEAR">
+<header><b>V011　A：M15 × M5　LONG</b><span class="result">負け　-1.018R</span></header>
+<a href="charts/V011.png" target="_blank"><img src="charts/V011.png" alt="V011 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 判定不能</b><p>既知上位ピボットは7点のみ。直前は上昇継続後の押しで、8点の外側境界は判定しない。</p><small>確信度：中</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-03-30 19:30:00<br>①起点 2020-03-30 15:15:00 / 1615.28<br>①終点 2020-03-30 16:45:00 / 1624.00<br>①終点を知った時刻 2020-03-30 17:30:00<br>候補発生 2020-03-30 16:45:00</p></details>
+</article><article id="V012" data-arm="A" data-side="SHORT" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V012　A：M15 × M5　SHORT</b><span class="result">勝ち　+1.000R</span></header>
+<a href="charts/V012.png" target="_blank"><img src="charts/V012.png" alt="V012 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>直前後半は上昇だが以前は横ばい。①内に戻しが多く、以前の押し安値群の上で止まる。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-11-12 21:15:00<br>①起点 2020-11-12 17:30:00 / 1883.87<br>①終点 2020-11-12 20:15:00 / 1874.28<br>①終点を知った時刻 2020-11-12 21:00:00<br>候補発生 2020-11-12 20:15:00</p></details>
+</article><article id="V013" data-arm="B" data-side="LONG" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V013　B：M5 × M1　LONG</b><span class="result">勝ち　+0.979R</span></header>
+<a href="charts/V013.png" target="_blank"><img src="charts/V013.png" alt="V013 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：素直に進む ／ 前高安範囲の内側</b><p>下降構造は明確だが、①終点はP2高値に届かず、直近8点の内側にとどまる。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-12-08 01:08:00<br>①起点 2020-12-07 22:00:00 / 1858.08<br>①終点 2020-12-07 23:15:00 / 1865.53<br>①終点を知った時刻 2020-12-07 23:30:00<br>候補発生 2020-12-07 22:30:00</p></details>
+</article><article id="V014" data-arm="A" data-side="SHORT" data-result="LOSS" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V014　A：M15 × M5　SHORT</b><span class="result">負け　-1.015R</span></header>
+<a href="charts/V014.png" target="_blank"><img src="charts/V014.png" alt="V014 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲を終値突破</b><p>直前は高安切上げが一貫せず重なる。①後半の下落は明瞭で事前最安値より下に実体が進む。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-09-25 17:10:00<br>①起点 2020-09-25 10:30:00 / 1875.19<br>①終点 2020-09-25 14:00:00 / 1852.91<br>①終点を知った時刻 2020-09-25 14:45:00<br>候補発生 2020-09-25 12:45:00</p></details>
+</article><article id="V015" data-arm="A" data-side="SHORT" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V015　A：M15 × M5　SHORT</b><span class="result">負け　-1.010R</span></header>
+<a href="charts/V015.png" target="_blank"><img src="charts/V015.png" alt="V015 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>上昇継続への売り①だが、8点の安値付近を割らず、①内部も戻りが大きい。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-08-06 21:15:00<br>①起点 2020-08-06 17:00:00 / 2069.67<br>①終点 2020-08-06 18:30:00 / 2049.32<br>①終点を知った時刻 2020-08-06 19:15:00<br>候補発生 2020-08-06 18:15:00</p></details>
+</article><article id="V016" data-arm="B" data-side="LONG" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V016　B：M5 × M1　LONG</b><span class="result">負け　-1.027R</span></header>
+<a href="charts/V016.png" target="_blank"><img src="charts/V016.png" alt="V016 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲の内側</b><p>直前は同水準の高値と安値を繰り返す。①の反発は速いが高値は以前の高値群の内側。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-06-12 03:59:00<br>①起点 2020-06-12 03:10:00 / 1722.22<br>①終点 2020-06-12 03:40:00 / 1728.99<br>①終点を知った時刻 2020-06-12 03:55:00<br>候補発生 2020-06-12 03:40:00</p></details>
+</article><article id="V017" data-arm="B" data-side="LONG" data-result="WIN" data-scope="UNCLEAR">
+<header><b>V017　B：M5 × M1　LONG</b><span class="result">勝ち　+0.981R</span></header>
+<a href="charts/V017.png" target="_blank"><img src="charts/V017.png" alt="V017 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>判定不能 ／ ①：素直に進む ／ 判定不能</b><p>既知上位ピボットは3点のみ。下降は直近1往復で、①は以前の高値圏へ戻る形。</p><small>確信度：低</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-06-19 14:10:00<br>①起点 2020-06-19 12:30:00 / 1727.53<br>①終点 2020-06-19 13:00:00 / 1732.21<br>①終点を知った時刻 2020-06-19 13:15:00<br>候補発生 2020-06-19 13:00:00</p></details>
+</article><article id="V018" data-arm="A" data-side="LONG" data-result="LOSS" data-scope="UNCLEAR">
+<header><b>V018　A：M15 × M5　LONG</b><span class="result">負け　-1.023R</span></header>
+<a href="charts/V018.png" target="_blank"><img src="charts/V018.png" alt="V018 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：往復が多い／混在 ／ 判定不能</b><p>下降後の安値圏で長く横ばいになり、最後の短い反発で①。事前3点で外側範囲は不明。</p><small>確信度：中</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-05-27 11:10:00<br>①起点 2020-05-27 07:00:00 / 1704.81<br>①終点 2020-05-27 10:00:00 / 1710.51<br>①終点を知った時刻 2020-05-27 10:45:00<br>候補発生 2020-05-27 10:15:00</p></details>
+</article><article id="V019" data-arm="A" data-side="LONG" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V019　A：M15 × M5　LONG</b><span class="result">勝ち　+0.982R</span></header>
+<a href="charts/V019.png" target="_blank"><img src="charts/V019.png" alt="V019 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：素直に進む ／ 前高安範囲の内側</b><p>長い下降に対して①が小さく、P8高値すら明確には越えていない。外側高値はかなり上に残る。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-02-05 02:25:00<br>①起点 2020-02-04 19:45:00 / 1549.08<br>①終点 2020-02-04 22:45:00 / 1555.44<br>①終点を知った時刻 2020-02-04 23:30:00<br>候補発生 2020-02-04 22:15:00</p></details>
+</article><article id="V020" data-arm="A" data-side="SHORT" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V020　A：M15 × M5　SHORT</b><span class="result">負け　-1.019R</span></header>
+<a href="charts/V020.png" target="_blank"><img src="charts/V020.png" alt="V020 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>直前は上昇が進むが①下落中に直前波ほどの戻しを繰り返す。①終点のヒゲだけが以前の安値近傍。</p><small>確信度：中</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-10-15 08:35:00<br>①起点 2020-10-14 16:45:00 / 1912.90<br>①終点 2020-10-15 04:00:00 / 1892.02<br>①終点を知った時刻 2020-10-15 04:45:00<br>候補発生 2020-10-14 19:00:00</p></details>
+</article><article id="V021" data-arm="B" data-side="SHORT" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V021　B：M5 × M1　SHORT</b><span class="result">勝ち　+0.064R</span></header>
+<a href="charts/V021.png" target="_blank"><img src="charts/V021.png" alt="V021 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>下降後の戻りを再び売る形で、①の前半は往復が多い。P8の先行安値より上で①が止まる。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-10-12 05:42:00<br>①起点 2020-10-12 04:30:00 / 1930.27<br>①終点 2020-10-12 05:10:00 / 1923.98<br>①終点を知った時刻 2020-10-12 05:25:00<br>候補発生 2020-10-12 05:05:00</p></details>
+</article><article id="V022" data-arm="A" data-side="SHORT" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V022　A：M15 × M5　SHORT</b><span class="result">勝ち　+0.976R</span></header>
+<a href="charts/V022.png" target="_blank"><img src="charts/V022.png" alt="V022 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲の内側</b><p>事前は高値・安値が広く重なる。①の短い下落は滑らかだが以前の安値を終値で越えない。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-07-07 08:40:00<br>①起点 2020-07-07 04:00:00 / 1787.12<br>①終点 2020-07-07 05:45:00 / 1782.61<br>①終点を知った時刻 2020-07-07 06:30:00<br>候補発生 2020-07-07 05:45:00</p></details>
+</article><article id="V023" data-arm="A" data-side="SHORT" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V023　A：M15 × M5　SHORT</b><span class="result">勝ち　+0.995R</span></header>
+<a href="charts/V023.png" target="_blank"><img src="charts/V023.png" alt="V023 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲の内側</b><p>急騰後の下落と横ばいが混在。①は先行安値帯に達するが、外側安値の終値突破には至らない。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-08-03 12:55:00<br>①起点 2020-08-03 09:00:00 / 1977.58<br>①終点 2020-08-03 10:30:00 / 1970.10<br>①終点を知った時刻 2020-08-03 11:15:00<br>候補発生 2020-08-03 10:30:00</p></details>
+</article><article id="V024" data-arm="A" data-side="SHORT" data-result="WIN" data-scope="UNCLEAR">
+<header><b>V024　A：M15 × M5　SHORT</b><span class="result">勝ち　+0.980R</span></header>
+<a href="charts/V024.png" target="_blank"><img src="charts/V024.png" alt="V024 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：素直に進む ／ 判定不能</b><p>直前の高値安値が連続して上がり①は連続陰線で下落。事前7点のため外側8点判定は保留。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-01-24 01:35:00<br>①起点 2020-01-23 20:00:00 / 1567.97<br>①終点 2020-01-23 21:00:00 / 1560.34<br>①終点を知った時刻 2020-01-23 21:45:00<br>候補発生 2020-01-23 21:00:00</p></details>
+</article><article id="V025" data-arm="B" data-side="LONG" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V025　B：M5 × M1　LONG</b><span class="result">負け　-1.014R</span></header>
+<a href="charts/V025.png" target="_blank"><img src="charts/V025.png" alt="V025 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>①は高値手前までの長い往復上昇で、P6の外側高値を越えない。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-03-02 09:16:00<br>①起点 2020-03-02 04:45:00 / 1590.95<br>①終点 2020-03-02 07:35:00 / 1605.48<br>①終点を知った時刻 2020-03-02 07:50:00<br>候補発生 2020-03-02 05:20:00</p></details>
+</article><article id="V026" data-arm="A" data-side="SHORT" data-result="LOSS" data-scope="UNCLEAR">
+<header><b>V026　A：M15 × M5　SHORT</b><span class="result">負け　-0.935R</span></header>
+<a href="charts/V026.png" target="_blank"><img src="charts/V026.png" alt="V026 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 判定不能</b><p>①の大半は高値圏の横ばいで、終盤2本ほどで急落。旧最安値への接近がヒゲか終値か判別しづらい。</p><small>確信度：中</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-11-26 19:00:00<br>①起点 2020-11-26 15:00:00 / 1815.26<br>①終点 2020-11-26 16:45:00 / 1805.79<br>①終点を知った時刻 2020-11-26 17:30:00<br>候補発生 2020-11-26 16:45:00</p></details>
+</article><article id="V027" data-arm="A" data-side="LONG" data-result="WIN" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V027　A：M15 × M5　LONG</b><span class="result">勝ち　+2.513R</span></header>
+<a href="charts/V027.png" target="_blank"><img src="charts/V027.png" alt="V027 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲を終値突破</b><p>①より前も上昇が優勢。①は外側高値を大幅に越えるが、②の横ばい・下落が長い。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-11-06 07:15:00<br>①起点 2020-11-05 13:00:00 / 1914.61<br>①終点 2020-11-05 18:15:00 / 1952.75<br>①終点を知った時刻 2020-11-05 19:00:00<br>候補発生 2020-11-05 14:00:00</p></details>
+</article><article id="V028" data-arm="A" data-side="LONG" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V028　A：M15 × M5　LONG</b><span class="result">負け　-1.020R</span></header>
+<a href="charts/V028.png" target="_blank"><img src="charts/V028.png" alt="V028 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>以前の下降は明瞭。①は上昇後に停滞と押しを挟み、以前の戻り高値群をまだ越えていない。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-01-14 15:35:00<br>①起点 2020-01-14 07:30:00 / 1536.16<br>①終点 2020-01-14 13:00:00 / 1546.03<br>①終点を知った時刻 2020-01-14 13:45:00<br>候補発生 2020-01-14 08:30:00</p></details>
+</article><article id="V029" data-arm="A" data-side="LONG" data-result="LOSS" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V029　A：M15 × M5　LONG</b><span class="result">負け　-1.018R</span></header>
+<a href="charts/V029.png" target="_blank"><img src="charts/V029.png" alt="V029 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲を終値突破</b><p>①は明瞭な外側突破だが、先行構造は上昇と短い戻りの混在で、長い下降の転換ではない。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-10-01 21:50:00<br>①起点 2020-10-01 17:00:00 / 1896.33<br>①終点 2020-10-01 18:30:00 / 1912.13<br>①終点を知った時刻 2020-10-01 19:15:00<br>候補発生 2020-10-01 18:15:00</p></details>
+</article><article id="V030" data-arm="B" data-side="LONG" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V030　B：M5 × M1　LONG</b><span class="result">負け　-1.037R</span></header>
+<a href="charts/V030.png" target="_blank"><img src="charts/V030.png" alt="V030 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>事前高値がほぼ同値で往復。描画①の起点より下の安値が①の途中にあり、後半だけ急反発する。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-09-28 01:43:00<br>①起点 2020-09-25 23:20:00 / 1861.12<br>①終点 2020-09-28 01:20:00 / 1865.79<br>①終点を知った時刻 2020-09-28 01:35:00<br>候補発生 2020-09-28 01:05:00</p></details>
+</article><article id="V031" data-arm="A" data-side="LONG" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V031　A：M15 × M5　LONG</b><span class="result">負け　-1.015R</span></header>
+<a href="charts/V031.png" target="_blank"><img src="charts/V031.png" alt="V031 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲の内側</b><p>急騰後の戻り高値は下がる一方、安値は重なる。①はP4の外側高値を越えない。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-01-27 15:00:00<br>①起点 2020-01-27 09:30:00 / 1576.83<br>①終点 2020-01-27 13:00:00 / 1586.29<br>①終点を知った時刻 2020-01-27 13:45:00<br>候補発生 2020-01-27 11:00:00</p></details>
+</article><article id="V032" data-arm="B" data-side="SHORT" data-result="LOSS" data-scope="UNCLEAR">
+<header><b>V032　B：M5 × M1　SHORT</b><span class="result">負け　-1.035R</span></header>
+<a href="charts/V032.png" target="_blank"><img src="charts/V032.png" alt="V032 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 判定不能</b><p>直前の山谷に一方向性が乏しい。①は概ね下向きだが事前安値すれすれで終値突破を断定しづらい。</p><small>確信度：中</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-06-24 19:51:00<br>①起点 2020-06-24 18:05:00 / 1776.02<br>①終点 2020-06-24 19:10:00 / 1760.61<br>①終点を知った時刻 2020-06-24 19:25:00<br>候補発生 2020-06-24 18:35:00</p></details>
+</article><article id="V033" data-arm="B" data-side="SHORT" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V033　B：M5 × M1　SHORT</b><span class="result">勝ち　+0.044R</span></header>
+<a href="charts/V033.png" target="_blank"><img src="charts/V033.png" alt="V033 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：素直に進む ／ 前高安範囲の内側</b><p>先行上昇は明確。①は高値圏の横ばい後の下落だが、8点の安値帯はまだ下にある。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-04-29 06:33:00<br>①起点 2020-04-29 04:50:00 / 1712.20<br>①終点 2020-04-29 05:50:00 / 1708.32<br>①終点を知った時刻 2020-04-29 06:05:00<br>候補発生 2020-04-29 05:35:00</p></details>
+</article><article id="V034" data-arm="B" data-side="SHORT" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V034　B：M5 × M1　SHORT</b><span class="result">勝ち　+0.973R</span></header>
+<a href="charts/V034.png" target="_blank"><img src="charts/V034.png" alt="V034 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>直前の上昇は段階的。①線の大半は高値圏で横ばい、最後の急落でも以前の最安値は下に残る。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-11-20 01:34:00<br>①起点 2020-11-19 22:55:00 / 1867.40<br>①終点 2020-11-20 01:00:00 / 1861.06<br>①終点を知った時刻 2020-11-20 01:15:00<br>候補発生 2020-11-20 01:00:00</p></details>
+</article><article id="V035" data-arm="A" data-side="SHORT" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V035　A：M15 × M5　SHORT</b><span class="result">勝ち　+0.999R</span></header>
+<a href="charts/V035.png" target="_blank"><img src="charts/V035.png" alt="V035 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>暴落・急反発・再下落が混在。①は横ばいを挟む小さな再下落で、外側安値は遠い。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-03-16 12:30:00<br>①起点 2020-03-16 07:45:00 / 1550.89<br>①終点 2020-03-16 11:00:00 / 1529.48<br>①終点を知った時刻 2020-03-16 11:45:00<br>候補発生 2020-03-16 10:15:00</p></details>
+</article><article id="V036" data-arm="B" data-side="LONG" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V036　B：M5 × M1　LONG</b><span class="result">負け　-1.019R</span></header>
+<a href="charts/V036.png" target="_blank"><img src="charts/V036.png" alt="V036 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>直前は急な下降。描画①起点の後にさらに安値を掘ってから反発し、以前の戻り高値までは遠い。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-09-01 18:16:00<br>①起点 2020-09-01 17:20:00 / 1969.71<br>①終点 2020-09-01 18:00:00 / 1978.97<br>①終点を知った時刻 2020-09-01 18:15:00<br>候補発生 2020-09-01 18:00:00</p></details>
+</article><article id="V037" data-arm="B" data-side="LONG" data-result="LOSS" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V037　B：M5 × M1　LONG</b><span class="result">負け　-1.014R</span></header>
+<a href="charts/V037.png" target="_blank"><img src="charts/V037.png" alt="V037 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲を終値突破</b><p>①の認定区間が長く、途中の横ばいと戻りを一つの波にまとめている。外側高値は終値で越える。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-04-23 15:44:00<br>①起点 2020-04-23 10:20:00 / 1710.44<br>①終点 2020-04-23 14:45:00 / 1732.25<br>①終点を知った時刻 2020-04-23 15:00:00<br>候補発生 2020-04-23 11:05:00</p></details>
+</article><article id="V038" data-arm="A" data-side="SHORT" data-result="LOSS" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V038　A：M15 × M5　SHORT</b><span class="result">負け　-1.007R</span></header>
+<a href="charts/V038.png" target="_blank"><img src="charts/V038.png" alt="V038 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲を終値突破</b><p>直前の小さな戻しは重なりが多い。①は比較的素直に下げ、以前の押し安値の外へ実体が進む。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-09-03 13:00:00<br>①起点 2020-09-03 05:00:00 / 1951.08<br>①終点 2020-09-03 10:00:00 / 1927.16<br>①終点を知った時刻 2020-09-03 10:45:00<br>候補発生 2020-09-03 07:30:00</p></details>
+</article><article id="V039" data-arm="A" data-side="LONG" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V039　A：M15 × M5　LONG</b><span class="result">勝ち　+0.016R</span></header>
+<a href="charts/V039.png" target="_blank"><img src="charts/V039.png" alt="V039 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>大きな往復の内側で反発。①内にも複数の戻りがあり、P6の高値を越えていない。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-04-16 02:20:00<br>①起点 2020-04-15 19:00:00 / 1708.82<br>①終点 2020-04-15 22:45:00 / 1723.97<br>①終点を知った時刻 2020-04-15 23:30:00<br>候補発生 2020-04-15 22:45:00</p></details>
+</article><article id="V040" data-arm="A" data-side="SHORT" data-result="LOSS" data-scope="UNCLEAR">
+<header><b>V040　A：M15 × M5　SHORT</b><span class="result">負け　-1.014R</span></header>
+<a href="charts/V040.png" target="_blank"><img src="charts/V040.png" alt="V040 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 判定不能</b><p>直前は下降と戻しが混在。①内部でも戻しを挟み、以前のレンジ下端の終値突破は明確でない。</p><small>確信度：中</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-12-18 12:15:00<br>①起点 2020-12-18 07:15:00 / 1886.72<br>①終点 2020-12-18 10:15:00 / 1877.41<br>①終点を知った時刻 2020-12-18 11:00:00<br>候補発生 2020-12-18 08:30:00</p></details>
+</article><article id="V041" data-arm="B" data-side="LONG" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V041　B：M5 × M1　LONG</b><span class="result">負け　-1.033R</span></header>
+<a href="charts/V041.png" target="_blank"><img src="charts/V041.png" alt="V041 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>①の起点より低い安値を区間途中で付けてから反発しており、青線が実際の波の始点とずれる。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-11-19 12:06:00<br>①起点 2020-11-19 10:10:00 / 1857.54<br>①終点 2020-11-19 11:45:00 / 1865.64<br>①終点を知った時刻 2020-11-19 12:00:00<br>候補発生 2020-11-19 11:10:00</p></details>
+</article><article id="V042" data-arm="B" data-side="SHORT" data-result="LOSS" data-scope="UNCLEAR">
+<header><b>V042　B：M5 × M1　SHORT</b><span class="result">負け　-1.026R</span></header>
+<a href="charts/V042.png" target="_blank"><img src="charts/V042.png" alt="V042 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 判定不能</b><p>以前は下降、その後に単発の急上昇。①内の戻しが大きく、事前7点のため外側8点は不明。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-11-03 05:42:00<br>①起点 2020-11-03 04:00:00 / 1898.65<br>①終点 2020-11-03 05:10:00 / 1890.69<br>①終点を知った時刻 2020-11-03 05:25:00<br>候補発生 2020-11-03 04:55:00</p></details>
+</article><article id="V043" data-arm="A" data-side="SHORT" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V043　A：M15 × M5　SHORT</b><span class="result">負け　-1.017R</span></header>
+<a href="charts/V043.png" target="_blank"><img src="charts/V043.png" alt="V043 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>強い上昇中の小さな下落。①区間中に起点より高い値があり、外側安値は割れていない。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-03-06 04:40:00<br>①起点 2020-03-06 01:45:00 / 1674.93<br>①終点 2020-03-06 03:45:00 / 1667.63<br>①終点を知った時刻 2020-03-06 04:30:00<br>候補発生 2020-03-06 03:45:00</p></details>
+</article><article id="V044" data-arm="B" data-side="LONG" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V044　B：M5 × M1　LONG</b><span class="result">勝ち　+0.993R</span></header>
+<a href="charts/V044.png" target="_blank"><img src="charts/V044.png" alt="V044 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：素直に進む ／ 前高安範囲の内側</b><p>直前の高値低下が明瞭。①反発は速いが以前の戻り高値群の下にとどまる。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-08-14 07:09:00<br>①起点 2020-08-14 05:55:00 / 1944.75<br>①終点 2020-08-14 06:25:00 / 1953.36<br>①終点を知った時刻 2020-08-14 06:40:00<br>候補発生 2020-08-14 06:20:00</p></details>
+</article><article id="V045" data-arm="B" data-side="SHORT" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V045　B：M5 × M1　SHORT</b><span class="result">負け　-1.030R</span></header>
+<a href="charts/V045.png" target="_blank"><img src="charts/V045.png" alt="V045 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>既知8点はレンジ内の往復。①は外側安値をヒゲで少し割るが、確定終値は帯内にある。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-04-08 09:39:00<br>①起点 2020-04-08 08:15:00 / 1651.03<br>①終点 2020-04-08 09:05:00 / 1643.31<br>①終点を知った時刻 2020-04-08 09:20:00<br>候補発生 2020-04-08 08:40:00</p></details>
+</article><article id="V046" data-arm="B" data-side="LONG" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V046　B：M5 × M1　LONG</b><span class="result">勝ち　+0.965R</span></header>
+<a href="charts/V046.png" target="_blank"><img src="charts/V046.png" alt="V046 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲の内側</b><p>直前は下降後の上昇と戻しが混在。①自体は滑らかだが以前の高値より低い。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-09-21 06:08:00<br>①起点 2020-09-21 04:55:00 / 1950.79<br>①終点 2020-09-21 05:30:00 / 1954.46<br>①終点を知った時刻 2020-09-21 05:45:00<br>候補発生 2020-09-21 05:30:00</p></details>
+</article><article id="V047" data-arm="A" data-side="SHORT" data-result="WIN" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V047　A：M15 × M5　SHORT</b><span class="result">勝ち　+0.575R</span></header>
+<a href="charts/V047.png" target="_blank"><img src="charts/V047.png" alt="V047 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲を終値突破</b><p>先行下降の継続型。①は8点安値を終値で割るが、②で割った安値帯まで戻している。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-09-24 11:20:00<br>①起点 2020-09-24 04:15:00 / 1868.85<br>①終点 2020-09-24 09:45:00 / 1848.95<br>①終点を知った時刻 2020-09-24 10:30:00<br>候補発生 2020-09-24 05:45:00</p></details>
+</article><article id="V048" data-arm="B" data-side="SHORT" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V048　B：M5 × M1　SHORT</b><span class="result">勝ち　+1.751R</span></header>
+<a href="charts/V048.png" target="_blank"><img src="charts/V048.png" alt="V048 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲の内側</b><p>①直前の上昇は強いが事前の山谷は切上げが一貫しない。①下落の終点も以前の最安値より上。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-06-22 06:38:00<br>①起点 2020-06-22 04:55:00 / 1758.64<br>①終点 2020-06-22 06:10:00 / 1749.12<br>①終点を知った時刻 2020-06-22 06:25:00<br>候補発生 2020-06-22 05:40:00</p></details>
+</article><article id="V049" data-arm="A" data-side="LONG" data-result="WIN" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V049　A：M15 × M5　LONG</b><span class="result">勝ち　+0.998R</span></header>
+<a href="charts/V049.png" target="_blank"><img src="charts/V049.png" alt="V049 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲を終値突破</b><p>①前は下降後の小さな往復。①は外側高値を大きく越えるが、②の形成が非常に長い。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-08-27 16:10:00<br>①起点 2020-08-26 15:30:00 / 1902.58<br>①終点 2020-08-27 01:00:00 / 1955.02<br>①終点を知った時刻 2020-08-27 01:45:00<br>候補発生 2020-08-26 16:45:00</p></details>
+</article><article id="V050" data-arm="B" data-side="SHORT" data-result="WIN" data-scope="UNCLEAR">
+<header><b>V050　B：M5 × M1　SHORT</b><span class="result">勝ち　+0.985R</span></header>
+<a href="charts/V050.png" target="_blank"><img src="charts/V050.png" alt="V050 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 判定不能</b><p>以前の高値は低下し、売りに必要な持続上昇ではない。①は速いが事前5点で外側8点は未確定。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-07-30 08:08:00<br>①起点 2020-07-30 06:55:00 / 1965.66<br>①終点 2020-07-30 07:15:00 / 1959.10<br>①終点を知った時刻 2020-07-30 07:30:00<br>候補発生 2020-07-30 07:15:00</p></details>
+</article><article id="V051" data-arm="A" data-side="LONG" data-result="WIN" data-scope="UNCLEAR">
+<header><b>V051　A：M15 × M5　LONG</b><span class="result">勝ち　+0.972R</span></header>
+<a href="charts/V051.png" target="_blank"><img src="charts/V051.png" alt="V051 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>判定不能 ／ ①：素直に進む ／ 判定不能</b><p>既知上位ピボットが2点のみで先行構造を判定できない。②は①の上昇幅に対して急な下落。</p><small>確信度：低</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-02-14 09:55:00<br>①起点 2020-02-14 05:00:00 / 1573.07<br>①終点 2020-02-14 09:00:00 / 1576.46<br>①終点を知った時刻 2020-02-14 09:45:00<br>候補発生 2020-02-14 07:15:00</p></details>
+</article><article id="V052" data-arm="B" data-side="SHORT" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V052　B：M5 × M1　SHORT</b><span class="result">勝ち　+0.974R</span></header>
+<a href="charts/V052.png" target="_blank"><img src="charts/V052.png" alt="V052 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲の内側</b><p>以前の大きな下落と戻しが混在。①下落は短く素直だが以前の急落安値よりかなり上。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-03-04 23:09:00<br>①起点 2020-03-04 22:15:00 / 1641.27<br>①終点 2020-03-04 22:35:00 / 1637.01<br>①終点を知った時刻 2020-03-04 22:50:00<br>候補発生 2020-03-04 22:35:00</p></details>
+</article><article id="V053" data-arm="A" data-side="LONG" data-result="LOSS" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V053　A：M15 × M5　LONG</b><span class="result">負け　-1.016R</span></header>
+<a href="charts/V053.png" target="_blank"><img src="charts/V053.png" alt="V053 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲を終値突破</b><p>①前は安値切上げと高値切下げが同時にあり、下降トレンドより収束に近い。①は外側高値を終値突破。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-11-26 12:50:00<br>①起点 2020-11-26 07:45:00 / 1806.81<br>①終点 2020-11-26 09:45:00 / 1818.25<br>①終点を知った時刻 2020-11-26 10:30:00<br>候補発生 2020-11-26 09:00:00</p></details>
+</article><article id="V054" data-arm="B" data-side="LONG" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V054　B：M5 × M1　LONG</b><span class="result">勝ち　+0.970R</span></header>
+<a href="charts/V054.png" target="_blank"><img src="charts/V054.png" alt="V054 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：往復が多い／混在 ／ 前高安範囲の内側</b><p>以前の山谷が重なる。描画①の起点を後から下回って反発しており、以前の高値までは届かない。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-01-24 16:33:00<br>①起点 2020-01-24 14:45:00 / 1557.52<br>①終点 2020-01-24 16:00:00 / 1562.53<br>①終点を知った時刻 2020-01-24 16:15:00<br>候補発生 2020-01-24 15:35:00</p></details>
+</article><article id="V055" data-arm="B" data-side="SHORT" data-result="WIN" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V055　B：M5 × M1　SHORT</b><span class="result">勝ち　+1.416R</span></header>
+<a href="charts/V055.png" target="_blank"><img src="charts/V055.png" alt="V055 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：素直に進む ／ 前高安範囲を終値突破</b><p>P2以降は高安切上げが続き、①は外側安値を終値で下抜く。②は割った安値帯付近まで戻る。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-01-28 18:11:00<br>①起点 2020-01-28 16:40:00 / 1578.01<br>①終点 2020-01-28 17:40:00 / 1567.42<br>①終点を知った時刻 2020-01-28 17:55:00<br>候補発生 2020-01-28 17:05:00</p></details>
+</article><article id="V056" data-arm="A" data-side="LONG" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V056　A：M15 × M5　LONG</b><span class="result">負け　-1.028R</span></header>
+<a href="charts/V056.png" target="_blank"><img src="charts/V056.png" alt="V056 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：素直に進む ／ 前高安範囲の内側</b><p>直前後半の下降から素直に反発。①高値のヒゲは旧高値近傍だが実体はその内側に見える。</p><small>確信度：中</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-06-26 14:20:00<br>①起点 2020-06-26 08:30:00 / 1757.96<br>①終点 2020-06-26 11:45:00 / 1766.70<br>①終点を知った時刻 2020-06-26 12:30:00<br>候補発生 2020-06-26 10:15:00</p></details>
+</article><article id="V057" data-arm="A" data-side="SHORT" data-result="WIN" data-scope="UNCLEAR">
+<header><b>V057　A：M15 × M5　SHORT</b><span class="result">勝ち　+1.134R</span></header>
+<a href="charts/V057.png" target="_blank"><img src="charts/V057.png" alt="V057 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 判定不能</b><p>①の安値更新は大きな下ヒゲが中心。外側安値と最終陰線の終値が近く、終値突破は図だけでは断定しない。</p><small>確信度：中</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-09-02 06:10:00<br>①起点 2020-09-02 03:00:00 / 1973.36<br>①終点 2020-09-02 04:00:00 / 1958.82<br>①終点を知った時刻 2020-09-02 04:45:00<br>候補発生 2020-09-02 04:00:00</p></details>
+</article><article id="V058" data-arm="B" data-side="LONG" data-result="LOSS" data-scope="INTERNAL_ONLY">
+<header><b>V058　B：M5 × M1　LONG</b><span class="result">負け　-1.030R</span></header>
+<a href="charts/V058.png" target="_blank"><img src="charts/V058.png" alt="V058 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：往復・混在・同方向継続 ／ ①：素直に進む ／ 前高安範囲の内側</b><p>直前後半は下向きだが以前の高安は重なりが多い。①反発が素直でも以前の高値まで距離が残る。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-07-23 22:37:00<br>①起点 2020-07-23 21:15:00 / 1879.09<br>①終点 2020-07-23 22:00:00 / 1889.67<br>①終点を知った時刻 2020-07-23 22:15:00<br>候補発生 2020-07-23 21:55:00</p></details>
+</article><article id="V059" data-arm="B" data-side="SHORT" data-result="LOSS" data-scope="OUTER_RANGE_CLEAR">
+<header><b>V059　B：M5 × M1　SHORT</b><span class="result">負け　-1.032R</span></header>
+<a href="charts/V059.png" target="_blank"><img src="charts/V059.png" alt="V059 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：往復が多い／混在 ／ 前高安範囲を終値突破</b><p>先行上昇を外側安値まで崩す①だが、途中で明瞭な戻りを挟む長い下落区間を一つの波としている。</p><small>確信度：高</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-12-11 01:34:00<br>①起点 2020-12-10 16:50:00 / 1850.01<br>①終点 2020-12-10 20:00:00 / 1830.21<br>①終点を知った時刻 2020-12-10 20:15:00<br>候補発生 2020-12-10 17:20:00</p></details>
+</article><article id="V060" data-arm="B" data-side="LONG" data-result="WIN" data-scope="INTERNAL_ONLY">
+<header><b>V060　B：M5 × M1　LONG</b><span class="result">勝ち　+1.020R</span></header>
+<a href="charts/V060.png" target="_blank"><img src="charts/V060.png" alt="V060 エントリー直前の比較図" loading="lazy"></a>
+<div class="notes"><b>①前：持続する逆方向トレンド ／ ①：素直に進む ／ 前高安範囲の内側</b><p>直前の戻り高値が下がる局面から①が反発。途中の押しはあるが以前の波より小さく、最高値は未突破。</p><small>確信度：中</small></div>
+<details><summary>注文時点の日時・アンカー情報</summary><p>ORDER 2020-03-09 21:02:00<br>①起点 2020-03-09 19:10:00 / 1661.79<br>①終点 2020-03-09 20:25:00 / 1676.66<br>①終点を知った時刻 2020-03-09 20:40:00<br>候補発生 2020-03-09 19:50:00</p></details>
+</article></section><p class="muted">観察は勝敗を伏せて固定後に照合しました。画像の形だけで除外条件へ採用したものではありません。<a href="README.md">分析レポート</a> ／ <a href="analysis/visual_annotations_unblinded.csv">全60件と観察記録CSV</a></p></main>
+<script>const body=document.body;const selects=['arm','side','result','scope'].map(x=>document.getElementById(x));const cards=[...document.querySelectorAll('article')];function filter(){let n=0;cards.forEach(c=>{let show=selects.every(s=>!s.value||c.dataset[s.id]===s.value);c.hidden=!show;if(show)n++});document.getElementById('count').textContent=n+' / 60件'}selects.forEach(s=>s.addEventListener('change',filter));document.getElementById('reveal').onclick=function(){let shown=body.classList.toggle('show-results');this.textContent=shown?'勝敗とR損益を隠す':'勝敗とR損益を表示';selects[2].disabled=!shown;if(!shown)selects[2].value='';filter()};document.getElementById('notes').onclick=function(){let shown=body.classList.toggle('show-notes');this.textContent=shown?'観察メモを隠す':'観察メモを表示'};filter();</script></html>

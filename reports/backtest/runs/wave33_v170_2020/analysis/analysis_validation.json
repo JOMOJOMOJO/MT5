@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "independent_native_checks": 6719,
+  "trade_count": 475,
+  "groups_and_streak_totals": [
+    {
+      "arm": "A",
+      "trades": 97,
+      "counts_totals_known_times": "PASS"
+    },
+    {
+      "arm": "B",
+      "trades": 378,
+      "counts_totals_known_times": "PASS"
+    }
+  ],
+  "causal_upper_context": "PASS",
+  "report_links": "PASS",
+  "ea_changed": false,
+  "analysis_script_sha256": "5B8C366DE5A26B2622381F25E557CF10BE636D04F26C58120938BAA72FF23505"
+}

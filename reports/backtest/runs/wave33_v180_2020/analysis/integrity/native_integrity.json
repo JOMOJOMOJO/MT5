@@ -1,0 +1,789 @@
+{
+  "status": "PASS",
+  "checks": 13827,
+  "failures": [],
+  "runs": {
+    "v180_A": {
+      "path": "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both",
+      "summary": {
+        "period": "M5 (2020.01.01 - 2021.01.01)",
+        "quality": "0% リアルティック",
+        "bars": 71111,
+        "ticks": 40971991,
+        "initial_deposit": 5000.0,
+        "net": -630.65,
+        "gross_profit": 1673.46,
+        "gross_loss": -2304.11,
+        "pf": 0.73,
+        "trades": 87,
+        "deals": 174,
+        "balance_dd": "678.17 (13.44%)",
+        "equity_dd": "693.37 (13.70%)",
+        "long": "38 (47.37%)",
+        "short": "49 (40.82%)",
+        "wins": "38 (43.68%)",
+        "losses": "49 (56.32%)",
+        "win_streak": "4 (241.02)",
+        "loss_streak": "6 (-257.75)"
+      },
+      "closed_positions": 87,
+      "native_pf_exact": 0.7262934495314893,
+      "position_net_pf": 0.7226754029155031,
+      "position_net_wins": 38,
+      "position_net_losses": 49,
+      "price_profit": -521.8,
+      "commission": -66.06,
+      "swap": -42.79,
+      "sum_net_r": -13.887233125180915,
+      "mean_net_r": -0.15962336925495305,
+      "final_balance": 4369.35,
+      "independently_recomputed_balance_dd": 678.17,
+      "independently_recomputed_balance_dd_percent": 13.435707040289092,
+      "equity_dd_independent": false,
+      "price_positive_net_negative": [],
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 27282,
+        "WAVE1_BREAK": 429,
+        "STATE": 1954,
+        "WAVE1_PROVISIONAL": 1182,
+        "WAVE1_PEAK_CONFIRMED": 375,
+        "WAVE1_EXTENSION_LOCKED": 363,
+        "WAVE2_EXTREME": 2486,
+        "FIB_TOUCH": 315,
+        "LOWER_STRUCTURE_CONFIRMED": 570,
+        "FIB_TOO_DEEP": 159,
+        "LOWER_STRUCTURE_LOST": 229,
+        "FIB_CLOSE_TOO_DEEP": 152,
+        "INVALIDATE": 279,
+        "PIVOT_TRIGGER": 130,
+        "SIGNAL": 130,
+        "RISK_CHECK": 130,
+        "SKIP": 62,
+        "COMPLETED": 130,
+        "LOWER_STRUCTURE_REJECTED": 208,
+        "INITIAL_MOVE_PROGRESS": 66,
+        "ORDER": 87,
+        "FILL": 87,
+        "POSITION_TRACKING": 87,
+        "EXIT": 87,
+        "TRENDLINE_TRIGGER": 45,
+        "TP_WAVE1_EXTENDED": 22,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 123,
+        "WAVE1_EXTENSION_STARTED": 123,
+        "WAVE1_EXTENDED_CONFIRMED": 123,
+        "WAVE1_EXTENSION_TRACKING": 185,
+        "OPPOSITE_WAVE1_ARMED": 4,
+        "OPPOSITE_CLOSE_REQUEST": 4,
+        "OPPOSITE_CLOSE_ACCEPTED": 4,
+        "TEST_END": 1
+      },
+      "generated_tick_evidence": [
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_164915_831ff154\\Tester\\logs\\20261023.log",
+          "text": "FH\t3\t16:50:39.581\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_164915_831ff154\\Tester\\logs\\20261023.log",
+          "text": "NF\t0\t16:52:04.302\tCore 1\tXAUUSD+,M5: 40971991 ticks, 71111 bars generated. Environment synchronized in 0:00:00.294. Test passed in 0:01:30.832 (including ticks preprocessing 0:00:01.781)."
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_164915_831ff154\\Tester\\logs\\20261023.log",
+          "text": "IN\t3\t16:52:36.264\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_164915_831ff154\\Tester\\logs\\20261023.log",
+          "text": "PL\t0\t16:59:10.025\tCore 1\tXAUUSD+,M1: 40971991 ticks, 355233 bars generated. Environment synchronized in 0:00:00.021. Test passed in 0:06:39.869 (including ticks preprocessing 0:00:01.671)."
+        }
+      ],
+      "source_coverage": {
+        "upper_bars.csv": {
+          "rows": 23705,
+          "in_year_rows": 23704,
+          "pre_year_rows": 1,
+          "first_bar": "2019.12.31 23:45:00",
+          "last_bar": "2020.12.31 23:30:00",
+          "last_known": "2020.12.31 23:45:00",
+          "monthly_rows": {
+            "2020.01": 2010,
+            "2020.02": 1824,
+            "2020.03": 2020,
+            "2020.04": 1932,
+            "2020.05": 1916,
+            "2020.06": 2024,
+            "2020.07": 2100,
+            "2020.08": 1932,
+            "2020.09": 2009,
+            "2020.10": 2024,
+            "2020.11": 1903,
+            "2020.12": 2010
+          },
+          "sha256": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0"
+        },
+        "lower_bars.csv": {
+          "rows": 71111,
+          "in_year_rows": 71110,
+          "pre_year_rows": 1,
+          "first_bar": "2019.12.31 23:55:00",
+          "last_bar": "2020.12.31 23:50:00",
+          "last_known": "2020.12.31 23:55:00",
+          "monthly_rows": {
+            "2020.01": 6029,
+            "2020.02": 5472,
+            "2020.03": 6059,
+            "2020.04": 5796,
+            "2020.05": 5748,
+            "2020.06": 6072,
+            "2020.07": 6300,
+            "2020.08": 5796,
+            "2020.09": 6025,
+            "2020.10": 6072,
+            "2020.11": 5709,
+            "2020.12": 6032
+          },
+          "sha256": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418"
+        }
+      },
+      "input_hashes": {
+        "events.csv": "b624db5880c0b5e4def93568dd0d889ca0566935acefc82c0068723bd97335d5",
+        "config.csv": "44b7abb061e1ca7e7d4c1dabef8c7ec4548aaaee981ee246f8bae1d7998c9b16",
+        "report.htm": "83849191338eb3b05c5d64ab1cb0c413ee631a9b72fba02288c8efc58e5fd57d",
+        "run.json": "1ff53647c199c3cbe9c9575ad0c506cb31b6c4744aeb35d202aa19c17f109c4d",
+        "inputs.set": "8658167df9f624708d714285b3921f3e444be157971283e18a51c1a6a73326d3"
+      }
+    },
+    "v180_B": {
+      "path": "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both",
+      "summary": {
+        "period": "M1 (2020.01.01 - 2021.01.01)",
+        "quality": "0% リアルティック",
+        "bars": 355233,
+        "ticks": 40971991,
+        "initial_deposit": 5000.0,
+        "net": -1254.35,
+        "gross_profit": 7496.36,
+        "gross_loss": -8750.71,
+        "pf": 0.86,
+        "trades": 353,
+        "deals": 706,
+        "balance_dd": "1 770.56 (32.97%)",
+        "equity_dd": "1 789.59 (33.29%)",
+        "long": "174 (40.23%)",
+        "short": "179 (48.04%)",
+        "wins": "156 (44.19%)",
+        "losses": "197 (55.81%)",
+        "win_streak": "11 (597.02)",
+        "loss_streak": "8 (-377.52)"
+      },
+      "closed_positions": 353,
+      "native_pf_exact": 0.8566573455182493,
+      "position_net_pf": 0.8533213902749047,
+      "position_net_wins": 156,
+      "position_net_losses": 197,
+      "price_profit": -854.07,
+      "commission": -446.34,
+      "swap": 46.06,
+      "sum_net_r": -27.298437233077728,
+      "mean_net_r": -0.07733268337982359,
+      "final_balance": 3745.65,
+      "independently_recomputed_balance_dd": 1770.56,
+      "independently_recomputed_balance_dd_percent": 32.96634958227902,
+      "equity_dd_independent": false,
+      "price_positive_net_negative": [],
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 117273,
+        "WAVE1_BREAK": 1340,
+        "STATE": 7114,
+        "WAVE1_PROVISIONAL": 3829,
+        "WAVE1_PEAK_CONFIRMED": 1181,
+        "WAVE1_EXTENSION_LOCKED": 1145,
+        "WAVE2_EXTREME": 10282,
+        "FIB_TOUCH": 1013,
+        "LOWER_STRUCTURE_CONFIRMED": 2468,
+        "PIVOT_TRIGGER": 507,
+        "SIGNAL": 507,
+        "RISK_CHECK": 507,
+        "SKIP": 201,
+        "COMPLETED": 507,
+        "INVALIDATE": 785,
+        "LOWER_STRUCTURE_LOST": 980,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 384,
+        "WAVE1_EXTENSION_STARTED": 384,
+        "WAVE1_EXTENSION_TRACKING": 564,
+        "WAVE1_EXTENDED_CONFIRMED": 383,
+        "LOWER_STRUCTURE_REJECTED": 902,
+        "FIB_CLOSE_TOO_DEEP": 399,
+        "FIB_TOO_DEEP": 438,
+        "TP_WAVE1_EXTENDED": 131,
+        "ORDER": 353,
+        "FILL": 353,
+        "POSITION_TRACKING": 353,
+        "EXIT": 353,
+        "INITIAL_MOVE_PROGRESS": 186,
+        "TRENDLINE_TRIGGER": 187,
+        "OPPOSITE_WAVE1_ARMED": 14,
+        "OPPOSITE_CLOSE_REQUEST": 10,
+        "OPPOSITE_CLOSE_ACCEPTED": 10,
+        "TEST_END": 1
+      },
+      "generated_tick_evidence": [
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_164915_831ff154\\Tester\\logs\\20261023.log",
+          "text": "FH\t3\t16:50:39.581\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_164915_831ff154\\Tester\\logs\\20261023.log",
+          "text": "NF\t0\t16:52:04.302\tCore 1\tXAUUSD+,M5: 40971991 ticks, 71111 bars generated. Environment synchronized in 0:00:00.294. Test passed in 0:01:30.832 (including ticks preprocessing 0:00:01.781)."
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_164915_831ff154\\Tester\\logs\\20261023.log",
+          "text": "IN\t3\t16:52:36.264\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_164915_831ff154\\Tester\\logs\\20261023.log",
+          "text": "PL\t0\t16:59:10.025\tCore 1\tXAUUSD+,M1: 40971991 ticks, 355233 bars generated. Environment synchronized in 0:00:00.021. Test passed in 0:06:39.869 (including ticks preprocessing 0:00:01.671)."
+        }
+      ],
+      "source_coverage": {
+        "upper_bars.csv": {
+          "rows": 71111,
+          "in_year_rows": 71110,
+          "pre_year_rows": 1,
+          "first_bar": "2019.12.31 23:55:00",
+          "last_bar": "2020.12.31 23:50:00",
+          "last_known": "2020.12.31 23:55:00",
+          "monthly_rows": {
+            "2020.01": 6029,
+            "2020.02": 5472,
+            "2020.03": 6059,
+            "2020.04": 5796,
+            "2020.05": 5748,
+            "2020.06": 6072,
+            "2020.07": 6300,
+            "2020.08": 5796,
+            "2020.09": 6025,
+            "2020.10": 6072,
+            "2020.11": 5709,
+            "2020.12": 6032
+          },
+          "sha256": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418"
+        },
+        "lower_bars.csv": {
+          "rows": 355233,
+          "in_year_rows": 355232,
+          "pre_year_rows": 1,
+          "first_bar": "2019.12.31 23:58:00",
+          "last_bar": "2020.12.31 23:56:00",
+          "last_known": "2020.12.31 23:57:00",
+          "monthly_rows": {
+            "2020.01": 30112,
+            "2020.02": 27341,
+            "2020.03": 30249,
+            "2020.04": 28959,
+            "2020.05": 28720,
+            "2020.06": 30338,
+            "2020.07": 31478,
+            "2020.08": 28959,
+            "2020.09": 30100,
+            "2020.10": 30335,
+            "2020.11": 28522,
+            "2020.12": 30119
+          },
+          "sha256": "9478f6c4511de29ed75af74fc4f160cf1bd2b3fb38b17d9a9ceb065390de2b4d"
+        }
+      },
+      "input_hashes": {
+        "events.csv": "a95db0f65dda76e40f6b8881d066160b3575cad86410e4b750c859957d9d6457",
+        "config.csv": "cc54848255b9f6ad0ebb443b196451cd10ecdb2ae26323c4c2bd4b37f232a68c",
+        "report.htm": "c065187dc469d9a983d861b98822d8d2f205b9f47c957ecde24877cb4f124426",
+        "run.json": "c84a29eecf9bfdfd0af321fdd0ddd6affddc3b09e1cc1b91f0e6cbda28f56742",
+        "inputs.set": "3a082d5e3fcd88371fe30e227b9fd892793815886cea35eddc3904afbb9fc4f4"
+      }
+    },
+    "v170_A": {
+      "path": "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on",
+      "summary": {
+        "period": "M5 (2020.01.01 - 2021.01.01)",
+        "quality": "0% リアルティック",
+        "bars": 71111,
+        "ticks": 40971991,
+        "initial_deposit": 5000.0,
+        "net": -581.12,
+        "gross_profit": 1767.99,
+        "gross_loss": -2349.11,
+        "pf": 0.75,
+        "trades": 97,
+        "deals": 194,
+        "balance_dd": "624.98 (12.50%)",
+        "equity_dd": "642.87 (12.85%)",
+        "long": "47 (51.06%)",
+        "short": "50 (44.00%)",
+        "wins": "46 (47.42%)",
+        "losses": "51 (52.58%)",
+        "win_streak": "4 (171.78)",
+        "loss_streak": "6 (-259.30)"
+      },
+      "closed_positions": 97,
+      "native_pf_exact": 0.7526212054778193,
+      "position_net_pf": 0.7488037139979511,
+      "position_net_wins": 46,
+      "position_net_losses": 51,
+      "price_profit": -466.63,
+      "commission": -72.48,
+      "swap": -42.01,
+      "sum_net_r": -12.824183674264829,
+      "mean_net_r": -0.13220807911613225,
+      "final_balance": 4418.88,
+      "independently_recomputed_balance_dd": 624.98,
+      "independently_recomputed_balance_dd_percent": 12.4996,
+      "equity_dd_independent": false,
+      "price_positive_net_negative": [],
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 27282,
+        "WAVE1_BREAK": 429,
+        "STATE": 2031,
+        "WAVE1_PROVISIONAL": 1174,
+        "WAVE1_PEAK_CONFIRMED": 371,
+        "WAVE1_EXTENSION_LOCKED": 366,
+        "WAVE2_EXTREME": 2569,
+        "FIB_TOUCH": 319,
+        "LOWER_STRUCTURE_CONFIRMED": 625,
+        "FIB_TOO_DEEP": 171,
+        "LOWER_STRUCTURE_LOST": 248,
+        "FIB_CLOSE_TOO_DEEP": 164,
+        "INVALIDATE": 264,
+        "PIVOT_TRIGGER": 141,
+        "SIGNAL": 141,
+        "RISK_CHECK": 141,
+        "SKIP": 67,
+        "COMPLETED": 141,
+        "LOWER_STRUCTURE_REJECTED": 229,
+        "INITIAL_MOVE_PROGRESS": 65,
+        "ORDER": 97,
+        "FILL": 97,
+        "POSITION_TRACKING": 97,
+        "EXIT": 97,
+        "TRENDLINE_TRIGGER": 53,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 123,
+        "WAVE1_EXTENSION_STARTED": 123,
+        "WAVE1_EXTENDED_CONFIRMED": 122,
+        "WAVE1_EXTENSION_TRACKING": 188,
+        "OPPOSITE_WAVE1_ARMED": 6,
+        "OPPOSITE_CLOSE_REQUEST": 6,
+        "OPPOSITE_CLOSE_ACCEPTED": 6,
+        "TEST_END": 1
+      },
+      "generated_tick_evidence": [
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261022_161002_0ef87d9b\\Tester\\logs\\20261022.log",
+          "text": "GS\t3\t16:11:30.371\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261022_161002_0ef87d9b\\Tester\\logs\\20261022.log",
+          "text": "KH\t0\t16:12:50.969\tCore 1\tXAUUSD+,M5: 40971991 ticks, 71111 bars generated. Environment synchronized in 0:00:00.933. Test passed in 0:01:26.718 (including ticks preprocessing 0:00:01.391)."
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261022_161002_0ef87d9b\\Tester\\logs\\20261022.log",
+          "text": "LR\t3\t16:13:16.499\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261022_161002_0ef87d9b\\Tester\\logs\\20261022.log",
+          "text": "DG\t0\t16:19:30.990\tCore 1\tXAUUSD+,M1: 40971991 ticks, 355233 bars generated. Environment synchronized in 0:00:00.021. Test passed in 0:06:20.600 (including ticks preprocessing 0:00:01.453)."
+        }
+      ],
+      "source_coverage": {
+        "upper_bars.csv": {
+          "rows": 23705,
+          "in_year_rows": 23704,
+          "pre_year_rows": 1,
+          "first_bar": "2019.12.31 23:45:00",
+          "last_bar": "2020.12.31 23:30:00",
+          "last_known": "2020.12.31 23:45:00",
+          "monthly_rows": {
+            "2020.01": 2010,
+            "2020.02": 1824,
+            "2020.03": 2020,
+            "2020.04": 1932,
+            "2020.05": 1916,
+            "2020.06": 2024,
+            "2020.07": 2100,
+            "2020.08": 1932,
+            "2020.09": 2009,
+            "2020.10": 2024,
+            "2020.11": 1903,
+            "2020.12": 2010
+          },
+          "sha256": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0"
+        },
+        "lower_bars.csv": {
+          "rows": 71111,
+          "in_year_rows": 71110,
+          "pre_year_rows": 1,
+          "first_bar": "2019.12.31 23:55:00",
+          "last_bar": "2020.12.31 23:50:00",
+          "last_known": "2020.12.31 23:55:00",
+          "monthly_rows": {
+            "2020.01": 6029,
+            "2020.02": 5472,
+            "2020.03": 6059,
+            "2020.04": 5796,
+            "2020.05": 5748,
+            "2020.06": 6072,
+            "2020.07": 6300,
+            "2020.08": 5796,
+            "2020.09": 6025,
+            "2020.10": 6072,
+            "2020.11": 5709,
+            "2020.12": 6032
+          },
+          "sha256": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418"
+        }
+      },
+      "input_hashes": {
+        "events.csv": "7b0099f244acb3f31be1a4f8927551430126da74fed1c53c00c2c2403d262c1b",
+        "config.csv": "32be7c782c84cc3956e43d32eab4e1e0b45792b7f7191c5c69aba02cb026ad5d",
+        "report.htm": "052bca789d9731cb14856466a3deff6d6c15dd5327aa22c8d3557cf871662874",
+        "run.json": "bcbe9fedb38972effc09916d3daa55f61f6442d710f962076f4c270ba7530a12",
+        "inputs.set": "f21ad69d05449f2e9e1311ff72986db4758b4789c128c6b13d1198d1aeaa9cfe"
+      }
+    },
+    "v170_B": {
+      "path": "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on",
+      "summary": {
+        "period": "M1 (2020.01.01 - 2021.01.01)",
+        "quality": "0% リアルティック",
+        "bars": 355233,
+        "ticks": 40971991,
+        "initial_deposit": 5000.0,
+        "net": -1577.51,
+        "gross_profit": 6565.37,
+        "gross_loss": -8142.88,
+        "pf": 0.81,
+        "trades": 378,
+        "deals": 756,
+        "balance_dd": "1 830.90 (35.94%)",
+        "equity_dd": "1 849.42 (36.27%)",
+        "long": "191 (46.07%)",
+        "short": "187 (52.94%)",
+        "wins": "187 (49.47%)",
+        "losses": "191 (50.53%)",
+        "win_streak": "12 (336.31)",
+        "loss_streak": "8 (-261.83)"
+      },
+      "closed_positions": 378,
+      "native_pf_exact": 0.8062712455543984,
+      "position_net_pf": 0.8008853131918482,
+      "position_net_wins": 187,
+      "position_net_losses": 191,
+      "price_profit": -993.45,
+      "commission": -448.74,
+      "swap": -135.32,
+      "sum_net_r": -37.3225161388765,
+      "mean_net_r": -0.09873681518221297,
+      "final_balance": 3422.49,
+      "independently_recomputed_balance_dd": 1830.9,
+      "independently_recomputed_balance_dd_percent": 35.944543041573084,
+      "equity_dd_independent": false,
+      "price_positive_net_negative": [
+        {
+          "run": "v170_B",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1594246500_662",
+          "entry_at": "2020.07.08 23:25:00",
+          "exit_at": "2020.07.09 01:07:24",
+          "direction": "LONG",
+          "entry_price": 1809.05,
+          "exit_price": 1810.21,
+          "volume": 0.36,
+          "price_profit": 41.76,
+          "commission": -2.16,
+          "swap": -83.74,
+          "net_cash": -44.14,
+          "risk_cash": 38.88,
+          "net_r": -1.1352880658436213,
+          "exit_reason": "DEAL_REASON_TP",
+          "native_comment": "tp 1810.13"
+        }
+      ],
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 117273,
+        "WAVE1_BREAK": 1340,
+        "STATE": 7464,
+        "WAVE1_PROVISIONAL": 3795,
+        "WAVE1_PEAK_CONFIRMED": 1169,
+        "WAVE1_EXTENSION_LOCKED": 1153,
+        "WAVE2_EXTREME": 10808,
+        "FIB_TOUCH": 1027,
+        "LOWER_STRUCTURE_CONFIRMED": 2702,
+        "PIVOT_TRIGGER": 538,
+        "SIGNAL": 538,
+        "RISK_CHECK": 538,
+        "SKIP": 219,
+        "COMPLETED": 538,
+        "INVALIDATE": 742,
+        "LOWER_STRUCTURE_LOST": 1083,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 408,
+        "WAVE1_EXTENSION_STARTED": 408,
+        "WAVE1_EXTENSION_TRACKING": 596,
+        "WAVE1_EXTENDED_CONFIRMED": 406,
+        "LOWER_STRUCTURE_REJECTED": 1049,
+        "FIB_CLOSE_TOO_DEEP": 424,
+        "FIB_TOO_DEEP": 463,
+        "ORDER": 378,
+        "FILL": 378,
+        "POSITION_TRACKING": 378,
+        "EXIT": 378,
+        "INITIAL_MOVE_PROGRESS": 188,
+        "TRENDLINE_TRIGGER": 200,
+        "OPPOSITE_WAVE1_ARMED": 30,
+        "OPPOSITE_CLOSE_REQUEST": 23,
+        "OPPOSITE_CLOSE_ACCEPTED": 23,
+        "TEST_END": 1
+      },
+      "generated_tick_evidence": [
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261022_161002_0ef87d9b\\Tester\\logs\\20261022.log",
+          "text": "GS\t3\t16:11:30.371\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261022_161002_0ef87d9b\\Tester\\logs\\20261022.log",
+          "text": "KH\t0\t16:12:50.969\tCore 1\tXAUUSD+,M5: 40971991 ticks, 71111 bars generated. Environment synchronized in 0:00:00.933. Test passed in 0:01:26.718 (including ticks preprocessing 0:00:01.391)."
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261022_161002_0ef87d9b\\Tester\\logs\\20261022.log",
+          "text": "LR\t3\t16:13:16.499\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+        },
+        {
+          "file": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261022_161002_0ef87d9b\\Tester\\logs\\20261022.log",
+          "text": "DG\t0\t16:19:30.990\tCore 1\tXAUUSD+,M1: 40971991 ticks, 355233 bars generated. Environment synchronized in 0:00:00.021. Test passed in 0:06:20.600 (including ticks preprocessing 0:00:01.453)."
+        }
+      ],
+      "source_coverage": {
+        "upper_bars.csv": {
+          "rows": 71111,
+          "in_year_rows": 71110,
+          "pre_year_rows": 1,
+          "first_bar": "2019.12.31 23:55:00",
+          "last_bar": "2020.12.31 23:50:00",
+          "last_known": "2020.12.31 23:55:00",
+          "monthly_rows": {
+            "2020.01": 6029,
+            "2020.02": 5472,
+            "2020.03": 6059,
+            "2020.04": 5796,
+            "2020.05": 5748,
+            "2020.06": 6072,
+            "2020.07": 6300,
+            "2020.08": 5796,
+            "2020.09": 6025,
+            "2020.10": 6072,
+            "2020.11": 5709,
+            "2020.12": 6032
+          },
+          "sha256": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418"
+        },
+        "lower_bars.csv": {
+          "rows": 355233,
+          "in_year_rows": 355232,
+          "pre_year_rows": 1,
+          "first_bar": "2019.12.31 23:58:00",
+          "last_bar": "2020.12.31 23:56:00",
+          "last_known": "2020.12.31 23:57:00",
+          "monthly_rows": {
+            "2020.01": 30112,
+            "2020.02": 27341,
+            "2020.03": 30249,
+            "2020.04": 28959,
+            "2020.05": 28720,
+            "2020.06": 30338,
+            "2020.07": 31478,
+            "2020.08": 28959,
+            "2020.09": 30100,
+            "2020.10": 30335,
+            "2020.11": 28522,
+            "2020.12": 30119
+          },
+          "sha256": "9478f6c4511de29ed75af74fc4f160cf1bd2b3fb38b17d9a9ceb065390de2b4d"
+        }
+      },
+      "input_hashes": {
+        "events.csv": "34edd41504592bc4eef36cf223d3ca1263b133017fb4a3a00aefe2419f6a7111",
+        "config.csv": "28eb6fce5b6f8d50895651fa7bc0747cd106edd556ff8b7b6e1dceab00c044f1",
+        "report.htm": "ceeb773fa2bd6cffb53b69f814954fa6fd1b5039ce7a0d7b646cf15d55e03fdb",
+        "run.json": "b5bf6eeb127340c913dcaf44ac076653c38f318ec3316fd798b2cb02543667ff",
+        "inputs.set": "7efb42b8aa6587b3146640562e6126a2d5030f345076c9a30eb407e6ff1bbfbe"
+      }
+    }
+  },
+  "comparison": {
+    "A": {
+      "trades": {
+        "old": 97,
+        "new": 87
+      },
+      "net": {
+        "old": -581.12,
+        "new": -630.65
+      },
+      "pf": {
+        "old": 0.75,
+        "new": 0.73
+      },
+      "balance_dd": {
+        "old": "624.98 (12.50%)",
+        "new": "678.17 (13.44%)"
+      },
+      "equity_dd": {
+        "old": "642.87 (12.85%)",
+        "new": "693.37 (13.70%)"
+      },
+      "source_bars_identical": {
+        "upper_bars.csv": true,
+        "lower_bars.csv": true
+      },
+      "configuration_differences": {
+        "allow_tester_batch_runs": [
+          null,
+          "true"
+        ],
+        "batch_namespace": [
+          null,
+          "single-run tag"
+        ],
+        "cancel_connected_opposite": [
+          null,
+          "true"
+        ],
+        "connected_opposite_policy": [
+          null,
+          "new accepted opposite W1_BREAK shares the old fixed endpoint"
+        ],
+        "ea_version": [
+          "1.70",
+          "1.80"
+        ],
+        "effective_draw": [
+          null,
+          "true"
+        ],
+        "extend_tp_to_wave1": [
+          null,
+          "true"
+        ],
+        "input_hash": [
+          null,
+          "AB84B9189BD4265E"
+        ],
+        "optimization": [
+          null,
+          "0"
+        ],
+        "resolved_run_tag": [
+          "wave33_20261022_161002_0ef87d9b_a_extension_on",
+          "wave33_20261023_164915_831ff154_v180_a_both"
+        ],
+        "tp_wave1_buffer_points": [
+          null,
+          "10.0"
+        ],
+        "tp_wave1_policy": [
+          null,
+          "only extend RR TP toward the known fixed W1 endpoint"
+        ]
+      }
+    },
+    "B": {
+      "trades": {
+        "old": 378,
+        "new": 353
+      },
+      "net": {
+        "old": -1577.51,
+        "new": -1254.35
+      },
+      "pf": {
+        "old": 0.81,
+        "new": 0.86
+      },
+      "balance_dd": {
+        "old": "1 830.90 (35.94%)",
+        "new": "1 770.56 (32.97%)"
+      },
+      "equity_dd": {
+        "old": "1 849.42 (36.27%)",
+        "new": "1 789.59 (33.29%)"
+      },
+      "source_bars_identical": {
+        "upper_bars.csv": true,
+        "lower_bars.csv": true
+      },
+      "configuration_differences": {
+        "allow_tester_batch_runs": [
+          null,
+          "true"
+        ],
+        "batch_namespace": [
+          null,
+          "single-run tag"
+        ],
+        "cancel_connected_opposite": [
+          null,
+          "true"
+        ],
+        "connected_opposite_policy": [
+          null,
+          "new accepted opposite W1_BREAK shares the old fixed endpoint"
+        ],
+        "ea_version": [
+          "1.70",
+          "1.80"
+        ],
+        "effective_draw": [
+          null,
+          "true"
+        ],
+        "extend_tp_to_wave1": [
+          null,
+          "true"
+        ],
+        "input_hash": [
+          null,
+          "ECEC6DE153BDEEBB"
+        ],
+        "optimization": [
+          null,
+          "0"
+        ],
+        "resolved_run_tag": [
+          "wave33_20261022_161002_0ef87d9b_b_extension_on",
+          "wave33_20261023_164915_831ff154_v180_b_both"
+        ],
+        "tp_wave1_buffer_points": [
+          null,
+          "10.0"
+        ],
+        "tp_wave1_policy": [
+          null,
+          "only extend RR TP toward the known fixed W1 endpoint"
+        ]
+      }
+    }
+  },
+  "source_provenance": {
+    "deployment_sha256": "1ae01b9939aa89165393876af14dd415d4e4246dbc7dad1fdf17868ed425f3dd",
+    "source_sha256": "A0BF2812B81BFDB52F1C9FC9E5008A1DDB5B003F507861FB570ED820A00B1A88",
+    "runtime_binary_sha256": "059e223cac59fff37176c891acf1da4369f1423bfdf7526c1b501b6930c788b0",
+    "validated_binary_sha256": "13B6B35D3EAD8DA0A6771A38276A52EEC0E50560F2DFCB87A775EDB81C9FBE27",
+    "runtime_binary_equals_deployed": false,
+    "note": "The annual runner rebuilt the same source/header set; the recompiled EX5 differs from the earlier deployed binary."
+  },
+  "limitations": [
+    "Equity DD is native report evidence; full tick equity path is not independently reconstructed.",
+    "2020 history contains generated ticks only despite requested model 4. Not a real-tick validation.",
+    "12 months are observed, but market closure versus missing historical bars is not independently classified.",
+    "Historical commission/swap correctness for 2020 is unverified; current tester symbol contract costs are preserved.",
+    "Old/new comparison combines two policy additions and intervening tester batching changes; it cannot isolate per-rule causal profitability."
+  ]
+}

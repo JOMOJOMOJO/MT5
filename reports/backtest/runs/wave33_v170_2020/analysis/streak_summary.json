@@ -1,0 +1,132 @@
+{
+  "batch": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b",
+  "seed": 20261022,
+  "permutations": 9999,
+  "definition": "Completed positions ordered by actual EXIT then event order; net after booked costs; zero breaks streak; clusters>=3 are retrospective only",
+  "contextual_features": "Frozen FILL snapshot plus only upper bars known by entry. TR mean14, prior100 TR mean14, path efficiency12. No future MFE/MAE.",
+  "prior_two_known": "Only EXIT events available before FILL, including row order for equal timestamps",
+  "inference": "Single-year descriptive study; shuffle preserves overall win/loss counts but assumes exchangeability; overlapping regimes/feature groups are not independent confirmations",
+  "multiplicity": "Holm correction across both arms and all three streak/run statistics (six tests); feature groups are descriptive, no hypothesis-test screen",
+  "source_sha256": {
+    "a_extension_on\\events.csv": "7b0099f244acb3f31be1a4f8927551430126da74fed1c53c00c2c2403d262c1b",
+    "a_extension_on\\upper_bars.csv": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0",
+    "b_extension_on\\events.csv": "34edd41504592bc4eef36cf223d3ca1263b133017fb4a3a00aefe2419f6a7111",
+    "b_extension_on\\upper_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418"
+  },
+  "results": {
+    "A": {
+      "summary": {
+        "arm": "A",
+        "n": 97,
+        "wins": 46,
+        "losses": 51,
+        "flats": 0,
+        "win_rate": 0.4742268041237113,
+        "sum_r": -12.82418367426483,
+        "mean_r": -0.13220807911613222,
+        "median_r": -0.9348013816925733,
+        "mean_win_r": 0.8550080420139187,
+        "mean_loss_r": -1.0226383060177466,
+        "observed_payoff_breakeven_winrate": 0.5446384017361828,
+        "pf_r": 0.7541119080239439,
+        "net_cash": -581.1199999999998,
+        "pf_cash": 0.748803713997951,
+        "max_win_streak": 4,
+        "max_loss_streak": 6,
+        "closed_r_drawdown": 13.80855867426483,
+        "unclosed_filled_setups": [],
+        "streaks_ge3": {
+          "LOSS": 7,
+          "WIN": 6
+        },
+        "overlapping_positions": 0
+      },
+      "permutation": {
+        "max_win_streak": {
+          "observed": 4,
+          "permutation_p05_p95": [
+            4.0,
+            8.0
+          ],
+          "one_sided_p": 0.9728,
+          "holm_adjusted_p_family6": 1
+        },
+        "max_loss_streak": {
+          "observed": 6,
+          "permutation_p05_p95": [
+            4.0,
+            9.0
+          ],
+          "one_sided_p": 0.6461,
+          "holm_adjusted_p_family6": 1
+        },
+        "outcome_runs": {
+          "observed": 50,
+          "permutation_p05_p95": [
+            41.0,
+            57.0
+          ],
+          "one_sided_p": 0.5902,
+          "holm_adjusted_p_family6": 1
+        }
+      }
+    },
+    "B": {
+      "summary": {
+        "arm": "B",
+        "n": 378,
+        "wins": 187,
+        "losses": 191,
+        "flats": 0,
+        "win_rate": 0.4947089947089947,
+        "sum_r": -37.32251613887651,
+        "mean_r": -0.09873681518221297,
+        "median_r": -1.0063481299388735,
+        "mean_win_r": 0.8721404261384532,
+        "mean_loss_r": -1.0492815488312421,
+        "observed_payoff_breakeven_winrate": 0.5460963611846853,
+        "pf_r": 0.8137717718598073,
+        "net_cash": -1577.51,
+        "pf_cash": 0.8008853131918481,
+        "max_win_streak": 12,
+        "max_loss_streak": 8,
+        "closed_r_drawdown": 45.20687550914872,
+        "unclosed_filled_setups": [],
+        "streaks_ge3": {
+          "LOSS": 27,
+          "WIN": 23
+        },
+        "overlapping_positions": 0
+      },
+      "permutation": {
+        "max_win_streak": {
+          "observed": 12,
+          "permutation_p05_p95": [
+            6.0,
+            11.0
+          ],
+          "one_sided_p": 0.0337,
+          "holm_adjusted_p_family6": 0.2022
+        },
+        "max_loss_streak": {
+          "observed": 8,
+          "permutation_p05_p95": [
+            6.0,
+            11.0
+          ],
+          "one_sided_p": 0.5584,
+          "holm_adjusted_p_family6": 1
+        },
+        "outcome_runs": {
+          "observed": 184,
+          "permutation_p05_p95": [
+            174.0,
+            206.0
+          ],
+          "one_sided_p": 0.2893,
+          "holm_adjusted_p_family6": 1
+        }
+      }
+    }
+  }
+}

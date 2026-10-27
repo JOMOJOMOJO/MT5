@@ -1,0 +1,59 @@
+{
+  "selection": "From resistance/trades.csv, ORDER room band 0.5_TO_1, net LOSS, each arm A/B closest entry to 2020-07-01, tie entry_at/setup_id; no magnitude selection.",
+  "purpose": "Post-hoc trade review reconstruction from recorded lower bars and ORDER snapshots; not an MT5 screenshot and not an ex-ante replay.",
+  "chosen": [
+    {
+      "arm": "A",
+      "outcome": "LOSS",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1590788700_160",
+      "entry_at": "2020-05-29 23:40:00"
+    },
+    {
+      "arm": "B",
+      "outcome": "LOSS",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1593640800_637",
+      "entry_at": "2020-07-01 23:20:00"
+    }
+  ],
+  "constraints": [
+    "No EA changes or MT5 run.",
+    "Candles after ORDER are review context only and never recompute entry features.",
+    "All purple levels must be known by ORDER; drawn from ORDER to the finite chart end only.",
+    "Wave anchor source times differ from the explicitly shown confirmation/availability times.",
+    "R1/R2 are analysis-reconstructed levels, not the original EA nearest-obstacle line."
+  ],
+  "source_hashes": {
+    "reports\\backtest\\runs\\wave33_v170_2020\\pattern_review_20261023\\resistance\\trades.csv": "79084fa95e4dfbb1ad72e0028eab6e595e9a63f6be816c2a61d84bf2cf5be03b",
+    "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on\\lower_bars.csv": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418",
+    "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on\\events.csv": "7b0099f244acb3f31be1a4f8927551430126da74fed1c53c00c2c2403d262c1b",
+    "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on\\lower_bars.csv": "9478f6c4511de29ed75af74fc4f160cf1bd2b3fb38b17d9a9ceb065390de2b4d",
+    "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on\\events.csv": "34edd41504592bc4eef36cf223d3ca1263b133017fb4a3a00aefe2419f6a7111"
+  },
+  "rendered": [
+    {
+      "arm": "A",
+      "outcome": "LOSS",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1590788700_160",
+      "file": "a_loss_middle.png",
+      "plotted_lower_bars": 66,
+      "net_r": -1.2240683598385949,
+      "order_at": "2020.05.29 23:40:00",
+      "confirmation_at": "2020.05.29 22:45:00",
+      "external_price": 1726.22,
+      "near_wave1_price": null
+    },
+    {
+      "arm": "B",
+      "outcome": "LOSS",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1593640800_637",
+      "file": "b_loss_middle.png",
+      "plotted_lower_bars": 170,
+      "net_r": -2.2456310679611646,
+      "order_at": "2020.07.01 23:20:00",
+      "confirmation_at": "2020.07.01 22:45:00",
+      "external_price": 1784.12,
+      "near_wave1_price": null
+    }
+  ],
+  "script_hash": "740b01906a637d415003f14a756fe13189d9371a1af825563cc7ee8ab65cb9ef"
+}

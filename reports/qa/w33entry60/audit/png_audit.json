@@ -1,0 +1,496 @@
+{
+  "status": "PASS",
+  "case_pngs": 60,
+  "contact_sheets": 10,
+  "labels_read": false,
+  "failures": [],
+  "source_packet_sha256": "6a93bded7906b79cb1f397c4a607ed6019fead6cffe815665dc3bcf1a4aeed40",
+  "renderer_script_sha256": "ce439b71b5b087baed829fb81f4caa206a4ccc8d7cd3fcf8a242ba7fd18702cb",
+  "all_pngs_source_cutoff_audited": true,
+  "full_pngs_visually_inspected_by_this_reviewer": 30,
+  "other_30_visual_review": "independent odd reviewer; freeze pending at this audit time",
+  "pre8_source_points_clipped": [],
+  "cases": [
+    {
+      "blind_id": "V001",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V002",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ]
+    },
+    {
+      "blind_id": "V003",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V004",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V005",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V006",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V007",
+      "hash_match": true,
+      "upper_bars": 94,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V008",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが3点（8点未満）"
+      ]
+    },
+    {
+      "blind_id": "V009",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V010",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V011",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ]
+    },
+    {
+      "blind_id": "V012",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V013",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V014",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V015",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V016",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V017",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが3点（8点未満）"
+      ]
+    },
+    {
+      "blind_id": "V018",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが3点（8点未満）"
+      ]
+    },
+    {
+      "blind_id": "V019",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V020",
+      "hash_match": true,
+      "upper_bars": 107,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V021",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V022",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V023",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V024",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ]
+    },
+    {
+      "blind_id": "V025",
+      "hash_match": true,
+      "upper_bars": 116,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V026",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V027",
+      "hash_match": true,
+      "upper_bars": 107,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V028",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V029",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V030",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V031",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V032",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V033",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V034",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V035",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V036",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V037",
+      "hash_match": true,
+      "upper_bars": 105,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V038",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V039",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V040",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V041",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V042",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが7点（8点未満）"
+      ]
+    },
+    {
+      "blind_id": "V043",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V044",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V045",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V046",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V047",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V048",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V049",
+      "hash_match": true,
+      "upper_bars": 148,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V050",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが5点（8点未満）"
+      ]
+    },
+    {
+      "blind_id": "V051",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": [
+        "①前の確定pivotが2点（8点未満）"
+      ]
+    },
+    {
+      "blind_id": "V052",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V053",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V054",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V055",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V056",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V057",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V058",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V059",
+      "hash_match": true,
+      "upper_bars": 142,
+      "lower_bars": 180,
+      "warnings": []
+    },
+    {
+      "blind_id": "V060",
+      "hash_match": true,
+      "upper_bars": 90,
+      "lower_bars": 180,
+      "warnings": []
+    }
+  ],
+  "sheets": [
+    {
+      "file": "odd_01.png",
+      "sha256": "5c26ef016b180228166908341133381934b2d5b62920eedb39339bf6262dba46"
+    },
+    {
+      "file": "odd_02.png",
+      "sha256": "e8445abdd8d6a5169180dffe47179c85c65947539667f390f64f31f67b020a00"
+    },
+    {
+      "file": "odd_03.png",
+      "sha256": "4cde00bf79dd644f59677670fecc7ead412df4acba42305b5c340bd61c6148e6"
+    },
+    {
+      "file": "odd_04.png",
+      "sha256": "4416ac559dd8fa5a82bcd3b4ec7be95aab8d65ff4ead1fe3ab315e882c461990"
+    },
+    {
+      "file": "odd_05.png",
+      "sha256": "c01633ec63136f05378eb463e646a383544f06e5a001722319e4c5c856af6990"
+    },
+    {
+      "file": "even_01.png",
+      "sha256": "85e305d0fcb7123c0997c8267d97bb630526b7a508acc6e2da6a6f24652ffd69"
+    },
+    {
+      "file": "even_02.png",
+      "sha256": "0b0295ef98bd71251fc32624bc7a9c6ea5fb1758db1e9b8d76e94fc8c1cc8a5e"
+    },
+    {
+      "file": "even_03.png",
+      "sha256": "ce2afe40a49bc0f2c2bdc5221cefbd6124b7416847e4f9614d78f2670c0b5596"
+    },
+    {
+      "file": "even_04.png",
+      "sha256": "1cc9cd4d884cd650abc39f73f44ee36a60c44d85527a0a4f8b0d29dc08a0fad7"
+    },
+    {
+      "file": "even_05.png",
+      "sha256": "3f12bf60652ed2a730ffeee487271fd309f34b22c72c910e478c781f98a26535"
+    }
+  ],
+  "semantic_guard": "Renderer reads causal packets only; static code review confirms no label/exit file access, dates, P/L or future candles in display text."
+}
