@@ -1,0 +1,101 @@
+<div id="wave33-resistance-comparison">
+  <h3>ロング：抵抗候補の選び方</h3>
+  <div class="text-small text-muted">同じ波形・同じエントリー時点の模式図／価格は仮例</div>
+  <div class="w33-comparison">
+    <section aria-labelledby="w33-current-title">
+      <h3 id="w33-current-title">現状：最も近い水準を選ぶ</h3>
+      <div class="w33-diagram" data-mode="current"></div>
+    </section>
+    <section aria-labelledby="w33-proposal-title">
+      <h3 id="w33-proposal-title">整理案：①高値を主な抵抗候補に</h3>
+      <div class="w33-diagram" data-mode="proposal"></div>
+    </section>
+  </div>
+  <div class="w33-key text-small">
+    <span><i class="w33-swatch w33-main"></i>選んだ抵抗候補</span>
+    <span><i class="w33-swatch w33-trigger"></i>下位足の突破判定線</span>
+    <span><i class="w33-swatch w33-reference"></i>参考の過去水準</span>
+  </div>
+  <div class="text-small text-muted">エントリー後の値動きは描いていません。右は未実装の整理案です。</div>
+</div>
+<style>
+  #wave33-resistance-comparison { color:var(--foreground); }
+  #wave33-resistance-comparison .w33-comparison { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; margin-top:16px; }
+  #wave33-resistance-comparison section { min-width:0; }
+  #wave33-resistance-comparison .w33-diagram { width:100%; }
+  #wave33-resistance-comparison .w33-diagram svg { display:block; width:100%; overflow:visible; }
+  #wave33-resistance-comparison .w33-diagram text { fill:var(--foreground); font-size:12px; font-weight:400; }
+  #wave33-resistance-comparison .w33-diagram .secondary { fill:var(--muted-foreground); }
+  #wave33-resistance-comparison .w33-diagram .history { fill:none; stroke:var(--muted-foreground); stroke-width:1.3; }
+  #wave33-resistance-comparison .w33-diagram .w1 { fill:none; stroke:var(--viz-series-1); stroke-width:3; }
+  #wave33-resistance-comparison .w33-diagram .w2 { fill:none; stroke:var(--viz-series-2); stroke-width:3; }
+  #wave33-resistance-comparison .w33-diagram .selected { stroke:var(--viz-series-3); stroke-width:2.5; }
+  #wave33-resistance-comparison .w33-diagram .reference { stroke:var(--border); stroke-width:1; stroke-dasharray:3 5; }
+  #wave33-resistance-comparison .w33-diagram .trigger { stroke:var(--foreground); stroke-width:1.3; stroke-dasharray:6 4; }
+  #wave33-resistance-comparison .w33-diagram .leader { fill:none; stroke:var(--muted-foreground); stroke-width:1; }
+  #wave33-resistance-comparison .w33-key { display:flex; gap:10px 22px; flex-wrap:wrap; margin:4px 0 12px; }
+  #wave33-resistance-comparison .w33-key span { display:inline-flex; align-items:center; gap:7px; }
+  #wave33-resistance-comparison .w33-swatch { display:inline-block; width:22px; height:0; border-top:2px solid; }
+  #wave33-resistance-comparison .w33-main { border-color:var(--viz-series-3); }
+  #wave33-resistance-comparison .w33-trigger { border-color:var(--foreground); border-top-style:dashed; }
+  #wave33-resistance-comparison .w33-reference { border-color:var(--muted-foreground); border-top-style:dotted; }
+  @media(max-width:760px) { #wave33-resistance-comparison .w33-comparison { grid-template-columns:1fr; gap:16px; } }
+</style>
+<script>
+(() => {
+  const root=document.getElementById('wave33-resistance-comparison');
+  const ns='http://www.w3.org/2000/svg';
+  const price={old:1894.4, peak:1908, trigger:1892, entry:1894, low:1880, origin:1860};
+  const observed=[[.04,1884],[.09,1894.4],[.14,1881],[.20,1860],[.28,1883],[.40,1908],[.45,1896],[.48,1899],[.52,1887],[.56,1892],[.62,1880],[.70,1888],[.76,1885],[.87,1894]];
+  function draw(container) {
+    const proposal=container.dataset.mode==='proposal';
+    const w=Math.max(290,container.getBoundingClientRect().width);
+    const h=396;
+    const left=18,right=w-18,top=51,bottom=342;
+    const pmin=Math.min(...observed.map(p=>p[1]))-3;
+    const pmax=Math.max(...observed.map(p=>p[1]))+3;
+    const x=f=>left+(right-left)*f;
+    const y=p=>bottom-(p-pmin)/(pmax-pmin)*(bottom-top);
+    const svg=document.createElementNS(ns,'svg');
+    svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+    svg.setAttribute('height',h);
+    svg.setAttribute('role','img');
+    svg.setAttribute('aria-label',proposal?'整理案。第1波高値1908を主な抵抗候補とし、細かな過去水準1894.4は参考として残す。下位足判定線1892を突破し1894でエントリーする模式図。':'現状。既知の水準のうち、買値1894のすぐ上にある小さな過去高値1894.4が最近接抵抗として選ばれる模式図。第1波高値1908も候補に含む。');
+    function el(tag,attrs,parent=svg) {const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);parent.appendChild(e);return e;}
+    function text(tx,ty,str,attrs={}) {const e=el('text',{x:tx,y:ty,...attrs});e.textContent=str;return e;}
+    function line(a,b,c,d,cls) {return el('line',{x1:a,y1:b,x2:c,y2:d,class:cls});}
+    const path=pts=>pts.map((p,i)=>`${i?'L':'M'}${x(p[0])},${y(p[1])}`).join(' ');
+    el('path',{d:path(observed),class:'history'});
+    el('path',{d:path([[.20,price.origin],[.40,price.peak]]),class:'w1'});
+    el('path',{d:path([[.40,price.peak],[.62,price.low]]),class:'w2'});
+    // Each level begins only after its illustrative confirmation time.
+    const peakStart=.45, oldStart=.15, triggerStart=.63, end=.96;
+    line(x(oldStart),y(price.old),x(end),y(price.old),proposal?'reference':'selected');
+    line(x(peakStart),y(price.peak),x(end),y(price.peak),proposal?'selected':'reference');
+    line(x(triggerStart),y(price.trigger),x(.87),y(price.trigger),'trigger');
+    text(left,18,'価格（仮例）',{class:'axis-title','data-axis':'y'});
+    text(right,380,'時間 →',{class:'axis-title','data-axis':'x','text-anchor':'end'});
+    text(x(.40)-8,y(price.peak)-13,'①',{'text-anchor':'end'});
+    text(x(.62)-8,y(price.low)+24,'② 押し',{'text-anchor':'end'});
+    text(right,y(price.peak)-12,proposal?'主な抵抗候補：①高値 1908':'①高値 1908',{'text-anchor':'end'});
+    const labelY=y(price.old)-42;
+    text(right,labelY,proposal?'参考：小さな過去高値 1894.4':'選択：小さな過去高値 1894.4',{'text-anchor':'end',class:proposal?'secondary':''});
+    el('path',{d:`M${x(.88)},${labelY+5}L${x(.92)},${y(price.old)-4}`,class:'leader'});
+    el('circle',{cx:x(.09),cy:y(price.old),r:3.5,fill:'var(--muted-foreground)'});
+    el('circle',{cx:x(.40),cy:y(price.peak),r:3.8,fill:'var(--viz-series-1)'});
+    el('circle',{cx:x(.87),cy:y(price.entry),r:5.5,fill:'var(--viz-series-4)'});
+    text(right,y(price.entry)+24,'ENTRY 1894',{'text-anchor':'end'});
+    el('path',{d:`M${x(.87)},${y(price.entry)+7}L${x(.87)},${y(price.entry)+12}`,class:'leader'});
+    const triggerTextY=y(price.trigger)+116;
+    text(right,triggerTextY,'下位足の突破判定線 1892',{'text-anchor':'end'});
+    el('path',{d:`M${x(.70)},${y(price.trigger)+5}L${x(.76)},${triggerTextY-14}`,class:'leader'});
+    text(x(.20),y(price.origin)+21,'①の起点',{'text-anchor':'middle'});
+    line(x(.87),bottom+3,x(.87),bottom+13,'leader');
+    text(x(.87),bottom+29,'判断時点',{'text-anchor':'middle',class:'secondary'});
+    container.replaceChildren(svg);
+  }
+  const containers=[...root.querySelectorAll('.w33-diagram')];
+  const observer=new ResizeObserver(entries=>entries.forEach(e=>draw(e.target)));
+  containers.forEach(c=>{observer.observe(c);draw(c);});
+})();
+</script>
