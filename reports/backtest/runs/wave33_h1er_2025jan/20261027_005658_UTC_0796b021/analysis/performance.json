@@ -1,0 +1,2264 @@
+{
+  "summary": {
+    "off": {
+      "entries": 29,
+      "wins": 8,
+      "losses": 21,
+      "flat": 0,
+      "net_cash": -536.9100000000001,
+      "net_r": -12.070001636872213,
+      "mean_r": -0.41620695299559346,
+      "net_r_per_original_29": -0.41620695299559357,
+      "pf_net_position": 0.412622527568703,
+      "win_rate": 0.27586206896551724,
+      "max_loss_streak_final_exit_order": 8,
+      "max_win_r": 1.764957264957265,
+      "max_loss_r": -1.0526315789473684,
+      "active_entry_days": 18,
+      "sides": {
+        "LONG": {
+          "entries": 13,
+          "wins": 5,
+          "losses": 8,
+          "flat": 0,
+          "net_cash": -115.70000000000002,
+          "net_r": -2.762281470486048,
+          "mean_r": -0.21248319003738833,
+          "net_r_per_original_29": -0.09525108518917408,
+          "pf_net_position": 0.6830310667908608,
+          "win_rate": 0.38461538461538464,
+          "max_loss_streak_final_exit_order": 3,
+          "max_win_r": 1.764957264957265,
+          "max_loss_r": -1.0476190476190477,
+          "active_entry_days": 11
+        },
+        "SHORT": {
+          "entries": 16,
+          "wins": 3,
+          "losses": 13,
+          "flat": 0,
+          "net_cash": -421.2100000000001,
+          "net_r": -9.307720166386163,
+          "mean_r": -0.5817325103991352,
+          "net_r_per_original_29": -0.32095586780641944,
+          "pf_net_position": 0.23285251156522058,
+          "win_rate": 0.1875,
+          "max_loss_streak_final_exit_order": 6,
+          "max_win_r": 0.9948453608247423,
+          "max_loss_r": -1.0526315789473684,
+          "active_entry_days": 12
+        }
+      },
+      "costs": {
+        "price_profit": -512.23,
+        "commission": -34.92,
+        "swap": 10.24,
+        "fee": 0.0
+      },
+      "partial_positions": 8,
+      "raw_deal_count": 66,
+      "h1_observation_count": 39,
+      "h1_outcomes": {
+        "ALLOW": 39
+      },
+      "final_balance_raw": 4463.089999999998
+    },
+    "on": {
+      "entries": 16,
+      "wins": 5,
+      "losses": 11,
+      "flat": 0,
+      "net_cash": -255.43,
+      "net_r": -5.415114841270959,
+      "mean_r": -0.33844467757943497,
+      "net_r_per_original_29": -0.18672809797486065,
+      "pf_net_position": 0.5179656538969618,
+      "win_rate": 0.3125,
+      "max_loss_streak_final_exit_order": 4,
+      "max_win_r": 1.764957264957265,
+      "max_loss_r": -1.0526315789473684,
+      "active_entry_days": 13,
+      "sides": {
+        "LONG": {
+          "entries": 7,
+          "wins": 3,
+          "losses": 4,
+          "flat": 0,
+          "net_cash": -5.930000000000007,
+          "net_r": -0.1346012938895107,
+          "mean_r": -0.0192287562699301,
+          "net_r_per_original_29": -0.004641423927224507,
+          "pf_net_position": 0.9693824865757953,
+          "win_rate": 0.42857142857142855,
+          "max_loss_streak_final_exit_order": 2,
+          "max_win_r": 1.764957264957265,
+          "max_loss_r": -1.0392670157068062,
+          "active_entry_days": 7
+        },
+        "SHORT": {
+          "entries": 9,
+          "wins": 2,
+          "losses": 7,
+          "flat": 0,
+          "net_cash": -249.50000000000003,
+          "net_r": -5.2805135473814495,
+          "mean_r": -0.5867237274868277,
+          "net_r_per_original_29": -0.18208667404763618,
+          "pf_net_position": 0.2579263577419547,
+          "win_rate": 0.2222222222222222,
+          "max_loss_streak_final_exit_order": 4,
+          "max_win_r": 0.9948453608247423,
+          "max_loss_r": -1.0526315789473684,
+          "active_entry_days": 8
+        }
+      },
+      "costs": {
+        "price_profit": -235.75000000000003,
+        "commission": -19.680000000000003,
+        "swap": 0.0,
+        "fee": 0.0
+      },
+      "partial_positions": 5,
+      "raw_deal_count": 37,
+      "h1_observation_count": 39,
+      "h1_outcomes": {
+        "ALLOW": 21,
+        "WOULD_SKIP_PRECEDENCE": 5,
+        "SKIP": 13
+      },
+      "final_balance_raw": 4744.569999999997
+    }
+  },
+  "comparison": {
+    "original_entries": 29,
+    "retained": 16,
+    "removed": 13,
+    "new": 0,
+    "removed_original_outcomes": {
+      "entries": 13,
+      "wins": 3,
+      "losses": 10,
+      "flat": 0,
+      "net_cash": -294.94,
+      "net_r": -6.65488679560125,
+      "mean_r": -0.5119143688924039,
+      "net_r_per_original_29": -0.22947885502073276,
+      "pf_net_position": 0.27343942454549935,
+      "win_rate": 0.23076923076923078,
+      "max_loss_streak_final_exit_order": 5,
+      "max_win_r": 1.4431279620853081,
+      "max_loss_r": -1.0476190476190477,
+      "active_entry_days": 8
+    },
+    "new_on_outcomes": {
+      "entries": 0,
+      "wins": 0,
+      "losses": 0,
+      "flat": 0,
+      "net_cash": 0,
+      "net_r": 0,
+      "mean_r": null,
+      "net_r_per_original_29": 0.0,
+      "pf_net_position": null,
+      "win_rate": null,
+      "max_loss_streak_final_exit_order": 0,
+      "max_win_r": null,
+      "max_loss_r": null,
+      "active_entry_days": 0
+    },
+    "delta_cash": 281.4800000000001,
+    "delta_r": 6.6548867956012545,
+    "retained_changes": [
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1735832700_5",
+        "r_delta": 0.0,
+        "cash_delta": 0.0,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1737040200_57",
+        "r_delta": 0.0,
+        "cash_delta": 0.0,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1737389100_71",
+        "r_delta": 0.0,
+        "cash_delta": 0.0,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1737466200_75",
+        "r_delta": 0.0,
+        "cash_delta": 4.169999999999995,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1737541800_80",
+        "r_delta": 0.0,
+        "cash_delta": -5.460000000000001,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1738044300_96",
+        "r_delta": 0.0,
+        "cash_delta": 4.1299999999999955,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1738265400_108",
+        "r_delta": 0.0,
+        "cash_delta": -6.059999999999995,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1735804800_3",
+        "r_delta": 0.0,
+        "cash_delta": 0.0,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1736177100_15",
+        "r_delta": 0.0,
+        "cash_delta": 0.0,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1736314500_25",
+        "r_delta": 0.0,
+        "cash_delta": 0.0,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1736517600_39",
+        "r_delta": 0.0,
+        "cash_delta": 0.0,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1736790600_44",
+        "r_delta": 0.0,
+        "cash_delta": 0.0,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1737035700_56",
+        "r_delta": 0.0,
+        "cash_delta": 0.0,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1737106800_61",
+        "r_delta": 0.0,
+        "cash_delta": -2.8399999999999963,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1738152900_102",
+        "r_delta": 0.0,
+        "cash_delta": -3.6000000000000014,
+        "same_entry": true,
+        "same_exit": true
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1738180800_104",
+        "r_delta": 0.0,
+        "cash_delta": -3.799999999999997,
+        "same_entry": true,
+        "same_exit": true
+      }
+    ]
+  },
+  "audit": [
+    {
+      "check": "w33h1_20261027_005658_UTC_0796b021_off_raw_deals.csv_rectangular",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "w33h1_20261027_005658_UTC_0796b021_off_events.csv_rectangular",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "w33h1_20261027_005658_UTC_0796b021_off_daytrade.csv_24_columns",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "w33h1_20261027_005658_UTC_0796b021_off_daytrade.csv_rectangular",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "w33h1_20261027_005658_UTC_0796b021_off_h1_efficiency.csv_rectangular",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_unique_fill_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_all_positions_closed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_risk_frozen_once_per_fill",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_unique_deal_tickets",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_raw_all_positions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736320500_26_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736320500_26_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736320500_26_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736320500_26_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736320500_26_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736320500_26_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736341200_29_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736341200_29_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736341200_29_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736341200_29_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736341200_29_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736341200_29_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736364000_31_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736364000_31_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736364000_31_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736364000_31_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736364000_31_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736364000_31_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736370900_32_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736370900_32_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736370900_32_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736370900_32_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736370900_32_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1736370900_32_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736854500_49_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736854500_49_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736854500_49_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736854500_49_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736854500_49_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736854500_49_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736923200_53_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736923200_53_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736923200_53_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736923200_53_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736923200_53_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736923200_53_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737085800_60_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737085800_60_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737085800_60_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737085800_60_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737085800_60_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737085800_60_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737140400_66_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737140400_66_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737140400_66_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737140400_66_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737140400_66_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737140400_66_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737669300_85_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737669300_85_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737669300_85_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737669300_85_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737669300_85_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737669300_85_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737741300_91_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737741300_91_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737741300_91_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737741300_91_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737741300_91_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737741300_91_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738165800_103_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738165800_103_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738165800_103_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738165800_103_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738165800_103_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738165800_103_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738314600_112_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738314600_112_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738314600_112_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738314600_112_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738314600_112_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738314600_112_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738363200_116_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738363200_116_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738363200_116_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738363200_116_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738363200_116_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738363200_116_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "w33h1_20261027_005658_UTC_0796b021_on_raw_deals.csv_rectangular",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "w33h1_20261027_005658_UTC_0796b021_on_events.csv_rectangular",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "w33h1_20261027_005658_UTC_0796b021_on_daytrade.csv_24_columns",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "w33h1_20261027_005658_UTC_0796b021_on_daytrade.csv_rectangular",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "w33h1_20261027_005658_UTC_0796b021_on_h1_efficiency.csv_rectangular",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_unique_fill_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_all_positions_closed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_risk_frozen_once_per_fill",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_unique_deal_tickets",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_deal_matched",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_raw_all_positions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1735804800_3_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1735832700_5_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736177100_15_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736314500_25_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736517600_39_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1736790600_44_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737035700_56_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737040200_57_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1737106800_61_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737389100_71_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737466200_75_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1737541800_80_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738044300_96_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738152900_102_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_SHORT_1738180800_104_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_one_entry_no_reversal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_flat_volume",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_cash_event_raw",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_positive_original_risk",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_immutable_r_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "W33_XAUUSD+_5_1_LONG_1738265400_108_risk_matches_exit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_original_count_29",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "definitions": {
+    "R": "net profit + commissions + swap + fee over immutable initial monetary risk",
+    "unit": "one completed entry position; outgoing partial deals combined",
+    "clock": "broker/source encoded timestamps; naive epoch arithmetic preserves source fields, no UTC offset claim",
+    "native_report_pf": "native PF groups exit legs differently; separate from net-position PF here"
+  }
+}

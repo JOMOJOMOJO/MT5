@@ -1,0 +1,812 @@
+{
+  "status": "PASS_WITH_DATA_LIMITATIONS",
+  "passed": 67,
+  "check_count": 67,
+  "pure_real_tick_gate": "NOT_PASSED",
+  "checks": [
+    {
+      "name": "off_native_finished",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_shutdown_only_after_completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_no_unclassified_engine_error_found",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "off_native_requested_period",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_native_rounded_quality_label_and_requested_mode",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_45_policy_tests",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_lower_bars_chronological",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_lower_bars_closed_before_known",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_upper_bars_chronological",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_upper_bars_closed_before_known",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_reaches_mar31_close",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_54_actual_native_inputs_match_frozen",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_54_inputs_match_january_except_tag",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_available_runtime_artifact_hashes_unchanged",
+      "pass": true,
+      "detail": {
+        "changed": [],
+        "missing_not_rechecked": [
+          "terminal64.exe",
+          "metatester64.exe"
+        ]
+      }
+    },
+    {
+      "name": "off_private_ini_hash_unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_all_native_h1_decimal_formula",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "off_all_native_h1_closed_before_decision",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "off_all_h1_gate_outcomes",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "off_all_positions_fully_closed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_raw_deals_match_native_count",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_native_trades_equal_exit_legs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_raw_net_matches_report",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_raw_net_matches_final_balance",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_native_pf_rounding_matches",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_test_end_candidate_unfilled",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_no_test_end_forced_deals",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "off_test_end_reaches_final_market_tick",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_last_actual_deal_before_test_end",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_native_finished",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_shutdown_only_after_completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_no_unclassified_engine_error_found",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "on_native_requested_period",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_native_rounded_quality_label_and_requested_mode",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_45_policy_tests",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_lower_bars_chronological",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_lower_bars_closed_before_known",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_upper_bars_chronological",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_upper_bars_closed_before_known",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_reaches_mar31_close",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_54_actual_native_inputs_match_frozen",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_54_inputs_match_january_except_tag",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_available_runtime_artifact_hashes_unchanged",
+      "pass": true,
+      "detail": {
+        "changed": [],
+        "missing_not_rechecked": [
+          "terminal64.exe",
+          "metatester64.exe"
+        ]
+      }
+    },
+    {
+      "name": "on_private_ini_hash_unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_all_native_h1_decimal_formula",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "on_all_native_h1_closed_before_decision",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "on_all_h1_gate_outcomes",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "on_all_positions_fully_closed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_raw_deals_match_native_count",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_native_trades_equal_exit_legs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_raw_net_matches_report",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_raw_net_matches_final_balance",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_native_pf_rounding_matches",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_test_end_candidate_unfilled",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_no_test_end_forced_deals",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "on_test_end_reaches_final_market_tick",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_last_actual_deal_before_test_end",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "same_actual_lower_bars_byte_hash",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "same_actual_upper_bars_byte_hash",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "same_actual_tick_and_generated_bar_counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "same_tick_fallback_warning_signatures",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "single_behavioral_flag_plus_run_tag",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "only_expected_native_config_differences",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "same_native_h1_windows_for_matching_decisions",
+      "pass": true,
+      "detail": {
+        "matching_decisions": 91,
+        "unequal": [],
+        "off_only": 0,
+        "on_only": 1
+      }
+    },
+    {
+      "name": "initial_cache_symbol_fingerprints_equal",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "protected125_current_hashes_unchanged",
+      "pass": true,
+      "detail": {
+        "files": 125,
+        "changed": []
+      }
+    },
+    {
+      "name": "deployment34_current_hashes_unchanged",
+      "pass": true,
+      "detail": {
+        "files": 34,
+        "changed": []
+      }
+    },
+    {
+      "name": "frozen_job_hashes_match_prepared_state",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "arms": {
+    "off": {
+      "native_report": {
+        "エキスパート": "Wave33H1EfficiencyVerifier",
+        "銘柄": "1",
+        "期間": "M1 (2025.02.01 - 2025.04.01)",
+        "パラメータ": "InpPattern=1",
+        "会社": "Infra Capital Limited",
+        "通貨": "USD",
+        "初期証拠金": "5 000.00",
+        "レバレッジ": "1:100",
+        "ヒストリー品質": "100% リアルティック",
+        "バー": "56327",
+        "ティック": "8306849",
+        "総損益": "-289.67",
+        "残高絶対ドローダウン": "356.15",
+        "証拠金絶対ドローダウン": "377.27",
+        "総利益": "1 627.88",
+        "残高最大ドローダウン": "426.55 (8.41%)",
+        "証拠金最大ドローダウン": "474.42 (9.31%)",
+        "総損失": "-1 917.55",
+        "残高相対ドローダウン": "8.41% (426.55)",
+        "証拠金相対ドローダウン": "9.31% (474.42)",
+        "プロフィットファクター": "0.85",
+        "期待利得": "-2.79",
+        "証拠金維持率": "10126.01%",
+        "リカバリファクター": "-0.61",
+        "シャープレシオ": "-5.00",
+        "Z-Score": "-0.66 (49.07%)",
+        "AHPR": "0.9995 (-0.05%)",
+        "LR Correlation": "-0.43",
+        "OnTester 結果": "0",
+        "GHPR": "0.9994 (-0.06%)",
+        "LR Standard Error": "77.20",
+        "取引数": "104",
+        "ショート (勝率 %)": "58 (53.45%)",
+        "ロング (勝率 %)": "46 (63.04%)",
+        "約定数": "175",
+        "勝ちトレード (勝率 %)": "60 (57.69%)",
+        "負けトレード (負率 %)": "44 (42.31%)",
+        "最大 勝ちトレード": "76.23",
+        "最大 負けトレード": "-67.52",
+        "平均 勝ちトレード": "27.13",
+        "平均 負けトレード": "-41.81",
+        "最大 連勝数 (金額)": "8 (218.62)",
+        "最大 連敗数 (金額)": "6 (-248.32)",
+        "最大 連勝利益額 (数)": "218.62 (8)",
+        "最大 連敗損失額 (数)": "-248.32 (6)",
+        "平均 連勝利益額 (数)": "3",
+        "平均 連敗数": "2",
+        "Correlation (Profits,MFE)": "0.85",
+        "Correlation (Profits,MAE)": "0.79",
+        "Correlation (MFE,MAE)": "0.6200",
+        "ポジション最短保持時間": "0:00:44",
+        "ポジション最長保持時間": "4:45:00",
+        "ポジション平均保持時間": "0:50:28"
+      },
+      "actual_ticks": 8306849,
+      "generated_m1_bars": 56327,
+      "bars": {
+        "lower_bars": {
+          "count": 56327,
+          "first": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M1",
+            "bar_time": "2025.01.31 23:56:00",
+            "closed_at": "2025.01.31 23:57:00",
+            "known_at": "2025.02.03 01:00:03",
+            "open": "2799.3400000000",
+            "high": "2799.7400000000",
+            "low": "2798.1600000000",
+            "close": "2799.3100000000"
+          },
+          "last": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M1",
+            "bar_time": "2025.03.31 23:56:00",
+            "closed_at": "2025.03.31 23:57:00",
+            "known_at": "2025.03.31 23:57:00",
+            "open": "3123.6100000000",
+            "high": "3124.2900000000",
+            "low": "3123.4500000000",
+            "close": "3124.2900000000"
+          },
+          "sha256": "6db817e26e27affa18288dc84028df757c82af5ad623c30cad4e907caff772e1"
+        },
+        "upper_bars": {
+          "count": 11283,
+          "first": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M5",
+            "bar_time": "2025.01.31 23:55:00",
+            "closed_at": "2025.02.01 00:00:00",
+            "known_at": "2025.02.03 01:00:03",
+            "open": "2800.5300000000",
+            "high": "2800.5300000000",
+            "low": "2798.0800000000",
+            "close": "2799.3100000000"
+          },
+          "last": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M5",
+            "bar_time": "2025.03.31 23:50:00",
+            "closed_at": "2025.03.31 23:55:00",
+            "known_at": "2025.03.31 23:55:00",
+            "open": "3123.8600000000",
+            "high": "3124.4500000000",
+            "low": "3123.7700000000",
+            "close": "3123.9800000000"
+          },
+          "sha256": "1dbfc202fd5059d5d5ffa4f46dbe6cf8c1fc1a4b5baf8e0b49fbbef7f15ea113"
+        }
+      },
+      "unique_entry_positions": 71,
+      "native_exit_legs": 104,
+      "raw_deals": 175,
+      "cash_components": {
+        "profit": "-175.6000000000",
+        "commission": "-77.7600000000",
+        "swap": "-36.3100000000",
+        "fee": "0E-10"
+      },
+      "net_cash": "-289.6700000000",
+      "final_balance": "4710.33",
+      "native_pf_exact": "0.8489374462204375374827253527",
+      "max_equity_dd": "474.42 (9.31%)",
+      "max_balance_dd": "426.55 (8.41%)",
+      "native_h1_rows": 91,
+      "native_h1_valid": 91,
+      "test_end": [
+        {
+          "event_at": "2025.03.31 23:57:54",
+          "event_type": "TEST_END",
+          "reason": "CENSORED_AT_STOP reason=1",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1743455700_243",
+          "state": "LOWER_COUNTERTREND",
+          "entry_status": "CANDIDATE",
+          "signal_at": "",
+          "order_sent_at": "",
+          "fill_at": "",
+          "entry_price": "0.0000000000"
+        }
+      ],
+      "forced_end_deals": [],
+      "last_actual_deal": {
+        "deal_ticket": "176",
+        "order_ticket": "176",
+        "position_id": "175",
+        "time_msc": "1743448306692",
+        "entry": "DEAL_ENTRY_OUT",
+        "type": "DEAL_TYPE_SELL",
+        "volume": "0.12000000",
+        "price": "3112.5300000000",
+        "profit": "-43.0800000000",
+        "commission": "0.0000000000",
+        "swap": "0.0000000000",
+        "fee": "0.0000000000",
+        "comment": "sl 3112.56",
+        "reason": "DEAL_REASON_SL",
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1743442200_240"
+      },
+      "data_quality": {
+        "pure_real_tick_gate": "NOT_PASSED",
+        "native_rounded_report": "100% リアルティック",
+        "absent_minutes_generated": 6,
+        "discarded_minutes_generated": 14,
+        "total_generated_fallback_minutes": 20,
+        "total_minute_bars": 56327,
+        "fallback_percentage": 0.03550695048555755,
+        "last_prices_absent_bid_used_minute_bars": 2741,
+        "tick_warnings": [
+          "XAUUSD+ : 2025.02.27 23:59 - real ticks discarded for 5 minutes out of 1378 total minute bars within a day",
+          "XAUUSD+ : 2025.02.27 23:59 - 169 tick prices mismatch for 5 minute bars",
+          "XAUUSD+ : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1378 total minute bars within a day",
+          "XAUUSD+ : 2025.03.27 23:59 - real ticks discarded for 9 minutes out of 1378 total minute bars within a day",
+          "XAUUSD+ : 2025.03.27 23:59 - 1297 tick prices mismatch for 9 minute bars",
+          "XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 56327 total minute bars, every tick generation used",
+          "XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  real ticks discarded for 14 minutes of 56327 total minute bars, every tick generation used",
+          "XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  last prices absent for 2741 minute bars, bid prices used"
+        ]
+      },
+      "trade_market_closed_rejection_count": 16,
+      "trade_market_closed_rejections": [
+        "2025.03.20 01:00:29   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:30   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:31   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:32   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:34   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:43   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:44   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:45   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:46   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:47   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:48   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:49   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:51   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:53   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:54   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]",
+        "2025.03.20 01:00:55   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]"
+      ],
+      "runtime_artifacts_missing_not_rechecked": [
+        "terminal64.exe",
+        "metatester64.exe"
+      ],
+      "journal_sha256": "eccee31a2f20945bfcfc5556691575af496c34a97a0a7f8d97d9d7dab52ed4f8",
+      "report_sha256": "f6fa9da1ca63796b5991282d9c49dad679750f7f57f48cd94acf072a66a25664",
+      "conservative_warning_day_exposure_sensitivity": {
+        "exposed_positions": 2,
+        "exposed_net_cash": "-84.0000000000",
+        "remaining_positions": 69,
+        "remaining_net_cash": "-205.6700000000",
+        "caveat": "Flag entire warning dates, not exact bad minutes; arithmetic removal only, no equity/lot/candidate path rerun and no data-correction claim."
+      }
+    },
+    "on": {
+      "native_report": {
+        "エキスパート": "Wave33H1EfficiencyVerifier",
+        "銘柄": "1",
+        "期間": "M1 (2025.02.01 - 2025.04.01)",
+        "パラメータ": "InpPattern=1",
+        "会社": "Infra Capital Limited",
+        "通貨": "USD",
+        "初期証拠金": "5 000.00",
+        "レバレッジ": "1:100",
+        "ヒストリー品質": "100% リアルティック",
+        "バー": "56327",
+        "ティック": "8306849",
+        "総損益": "-400.64",
+        "残高絶対ドローダウン": "473.80",
+        "証拠金絶対ドローダウン": "489.88",
+        "総利益": "731.00",
+        "残高最大ドローダウン": "496.90 (9.89%)",
+        "証拠金最大ドローダウン": "539.73 (10.69%)",
+        "総損失": "-1 131.64",
+        "残高相対ドローダウン": "9.89% (496.90)",
+        "証拠金相対ドローダウン": "10.69% (539.73)",
+        "プロフィットファクター": "0.65",
+        "期待利得": "-8.18",
+        "証拠金維持率": "10117.57%",
+        "リカバリファクター": "-0.74",
+        "シャープレシオ": "-5.00",
+        "Z-Score": "-0.57 (42.45%)",
+        "AHPR": "0.9983 (-0.17%)",
+        "LR Correlation": "-0.78",
+        "OnTester 結果": "0",
+        "GHPR": "0.9983 (-0.17%)",
+        "LR Standard Error": "68.00",
+        "取引数": "49",
+        "ショート (勝率 %)": "22 (50.00%)",
+        "ロング (勝率 %)": "27 (48.15%)",
+        "約定数": "85",
+        "勝ちトレード (勝率 %)": "24 (48.98%)",
+        "負けトレード (負率 %)": "25 (51.02%)",
+        "最大 勝ちトレード": "76.23",
+        "最大 負けトレード": "-67.52",
+        "平均 勝ちトレード": "30.46",
+        "平均 負けトレード": "-43.76",
+        "最大 連勝数 (金額)": "4 (101.42)",
+        "最大 連敗数 (金額)": "6 (-270.08)",
+        "最大 連勝利益額 (数)": "101.42 (4)",
+        "最大 連敗損失額 (数)": "-270.08 (6)",
+        "平均 連勝利益額 (数)": "2",
+        "平均 連敗数": "2",
+        "Correlation (Profits,MFE)": "0.90",
+        "Correlation (Profits,MAE)": "0.74",
+        "Correlation (MFE,MAE)": "0.6429",
+        "ポジション最短保持時間": "0:00:44",
+        "ポジション最長保持時間": "4:45:00",
+        "ポジション平均保持時間": "0:46:47"
+      },
+      "actual_ticks": 8306849,
+      "generated_m1_bars": 56327,
+      "bars": {
+        "lower_bars": {
+          "count": 56327,
+          "first": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M1",
+            "bar_time": "2025.01.31 23:56:00",
+            "closed_at": "2025.01.31 23:57:00",
+            "known_at": "2025.02.03 01:00:03",
+            "open": "2799.3400000000",
+            "high": "2799.7400000000",
+            "low": "2798.1600000000",
+            "close": "2799.3100000000"
+          },
+          "last": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M1",
+            "bar_time": "2025.03.31 23:56:00",
+            "closed_at": "2025.03.31 23:57:00",
+            "known_at": "2025.03.31 23:57:00",
+            "open": "3123.6100000000",
+            "high": "3124.2900000000",
+            "low": "3123.4500000000",
+            "close": "3124.2900000000"
+          },
+          "sha256": "6db817e26e27affa18288dc84028df757c82af5ad623c30cad4e907caff772e1"
+        },
+        "upper_bars": {
+          "count": 11283,
+          "first": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M5",
+            "bar_time": "2025.01.31 23:55:00",
+            "closed_at": "2025.02.01 00:00:00",
+            "known_at": "2025.02.03 01:00:03",
+            "open": "2800.5300000000",
+            "high": "2800.5300000000",
+            "low": "2798.0800000000",
+            "close": "2799.3100000000"
+          },
+          "last": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M5",
+            "bar_time": "2025.03.31 23:50:00",
+            "closed_at": "2025.03.31 23:55:00",
+            "known_at": "2025.03.31 23:55:00",
+            "open": "3123.8600000000",
+            "high": "3124.4500000000",
+            "low": "3123.7700000000",
+            "close": "3123.9800000000"
+          },
+          "sha256": "1dbfc202fd5059d5d5ffa4f46dbe6cf8c1fc1a4b5baf8e0b49fbbef7f15ea113"
+        }
+      },
+      "unique_entry_positions": 36,
+      "native_exit_legs": 49,
+      "raw_deals": 85,
+      "cash_components": {
+        "profit": "-341.6400000000",
+        "commission": "-37.6800000000",
+        "swap": "-21.3200000000",
+        "fee": "0E-10"
+      },
+      "net_cash": "-400.6400000000",
+      "final_balance": "4599.36",
+      "native_pf_exact": "0.6459651479269025485136615885",
+      "max_equity_dd": "539.73 (10.69%)",
+      "max_balance_dd": "496.90 (9.89%)",
+      "native_h1_rows": 92,
+      "native_h1_valid": 92,
+      "test_end": [
+        {
+          "event_at": "2025.03.31 23:57:54",
+          "event_type": "TEST_END",
+          "reason": "CENSORED_AT_STOP reason=1",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1743455700_243",
+          "state": "LOWER_COUNTERTREND",
+          "entry_status": "CANDIDATE",
+          "signal_at": "",
+          "order_sent_at": "",
+          "fill_at": "",
+          "entry_price": "0.0000000000"
+        }
+      ],
+      "forced_end_deals": [],
+      "last_actual_deal": {
+        "deal_ticket": "86",
+        "order_ticket": "86",
+        "position_id": "84",
+        "time_msc": "1743439607471",
+        "entry": "DEAL_ENTRY_OUT",
+        "type": "DEAL_TYPE_BUY",
+        "volume": "0.04000000",
+        "price": "3104.0300000000",
+        "profit": "54.4400000000",
+        "commission": "0.0000000000",
+        "swap": "0.0000000000",
+        "fee": "0.0000000000",
+        "comment": "sl 3104.02",
+        "reason": "DEAL_REASON_SL",
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1743436800_239"
+      },
+      "data_quality": {
+        "pure_real_tick_gate": "NOT_PASSED",
+        "native_rounded_report": "100% リアルティック",
+        "absent_minutes_generated": 6,
+        "discarded_minutes_generated": 14,
+        "total_generated_fallback_minutes": 20,
+        "total_minute_bars": 56327,
+        "fallback_percentage": 0.03550695048555755,
+        "last_prices_absent_bid_used_minute_bars": 2741,
+        "tick_warnings": [
+          "XAUUSD+ : 2025.02.27 23:59 - real ticks discarded for 5 minutes out of 1378 total minute bars within a day",
+          "XAUUSD+ : 2025.02.27 23:59 - 169 tick prices mismatch for 5 minute bars",
+          "XAUUSD+ : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1378 total minute bars within a day",
+          "XAUUSD+ : 2025.03.27 23:59 - real ticks discarded for 9 minutes out of 1378 total minute bars within a day",
+          "XAUUSD+ : 2025.03.27 23:59 - 1297 tick prices mismatch for 9 minute bars",
+          "XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 56327 total minute bars, every tick generation used",
+          "XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  real ticks discarded for 14 minutes of 56327 total minute bars, every tick generation used",
+          "XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  last prices absent for 2741 minute bars, bid prices used"
+        ]
+      },
+      "trade_market_closed_rejection_count": 0,
+      "trade_market_closed_rejections": [],
+      "runtime_artifacts_missing_not_rechecked": [
+        "terminal64.exe",
+        "metatester64.exe"
+      ],
+      "journal_sha256": "ca5be2fe76499b4d21ba91e45fb211320d390a488e02b48311c7949d7c8f2b07",
+      "report_sha256": "52580830ff81c0f877d6385331f9ed70ebbddd909d10c9e17deb290dcbb03552",
+      "conservative_warning_day_exposure_sensitivity": {
+        "exposed_positions": 1,
+        "exposed_net_cash": "-36.0000000000",
+        "remaining_positions": 35,
+        "remaining_net_cash": "-364.6400000000",
+        "caveat": "Flag entire warning dates, not exact bad minutes; arithmetic removal only, no equity/lot/candidate path rerun and no data-correction claim."
+      }
+    }
+  },
+  "input_diff": {
+    "InpRunTag": [
+      "w33h1fm_20261027_013515_UTC_d6dba4c3_off",
+      "w33h1fm_20261027_013515_UTC_d6dba4c3_on"
+    ],
+    "InpSkipH1LowEfficiency": [
+      "false",
+      "true"
+    ]
+  },
+  "config_diff": {
+    "resolved_run_tag": [
+      "w33h1fm_20261027_013515_UTC_d6dba4c3_off",
+      "w33h1fm_20261027_013515_UTC_d6dba4c3_on"
+    ],
+    "input_hash": [
+      "445E295F935C7A8D",
+      "CBD7C388007F17EE"
+    ],
+    "skip_h1_low_efficiency": [
+      "false",
+      "true"
+    ]
+  },
+  "h1_matching_decisions": 91,
+  "limitations": [
+    "Native rounded report says100% real ticks, but journals explicitly show20 of56327 minute bars used generated ticks (6absent,14discarded), and2741last-price-absent bars usedBid. Both arms have the same warnings. This is a mixed real/generated tick comparison, not a pure real-tick validation.",
+    "TEST_END censorship applies to one unfilled candidate, not an open position. All actual positions close before test end, so terminal-forced-close exclusion has zero effect on this report's realized P/L.",
+    "Runtime terminal/tester executable files are absent from TEMP after the run, so post-run binary hashes cannot be rechecked. Prelaunch frozen hashes and verification document their launch identity; remaining artifacts are checked normally.",
+    "M1/M5 bars and matching H1 windows are identical across arms; complete executable tick streams were not independently exported.",
+    "OFF has16MarketClosed partial-close rejections Mar20 01:00:29–55; retry succeeds01:01:00, remaining halfSLcloses01:19:36. These are real tester execution outcomes, not initialization/test-completion failures.",
+    "Historical broker specifications and source-time UTC offset are not independently reconstructed.",
+    "Continuous Feb-Mar run; retain entry-month attribution and account/equity path rather than pretending each month reset to5000.",
+    "No profitability/promotion implied by engineering PASS; both runs remain negative and native results worsen with ON."
+  ]
+}

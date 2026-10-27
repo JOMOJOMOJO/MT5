@@ -1,0 +1,7 @@
+﻿fixture,er,expected,status
+monotone_up,1,1,PASS
+monotone_down,1,1,PASS
+alternating,0,0,PASS
+single_v_turn,0,0,PASS
+flat_is_undefined,,,PASS
+exact_threshold,0.25,0.25,PASS

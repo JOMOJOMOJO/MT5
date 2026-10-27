@@ -1,0 +1,18 @@
+﻿{
+    "status":  "PRELAUNCH_PASS",
+    "batch":  "20261027_013515_UTC_d6dba4c3",
+    "period":  "2025.02.01-2025.04.01",
+    "arm_count":  2,
+    "input_count":  54,
+    "different_parameters":  [
+                                 "InpRunTag",
+                                 "InpSkipH1LowEfficiency"
+                             ],
+    "non_tag_differences_vs_january":  0,
+    "equal_cache_files":  5,
+    "equal_symbols":  true,
+    "binary_unchanged_vs_january":  true,
+    "native_status":  "NOT_STARTED",
+    "tests":  "same compiled45tests perarm willrun atOnInit",
+    "stop_after_launch":  true
+}

@@ -1,0 +1,68 @@
+{
+  "metric_version": "NATIVE_H1_CLOSED_ER12_025_V1",
+  "formula": "ER=abs(C12-C0)/sum(i=1..12,abs(Ci-C(i-1))); roundtrip=1-ER",
+  "status": "PASS_OBSERVED_WINDOWS_WITH_DECLARED_PARTIAL_HOUR_LIMITATION",
+  "input_window": "13 observed closed H1 closes, 12 price differences; not 12 elapsed hours",
+  "rows_by_arm": {
+    "off": 39,
+    "on": 39
+  },
+  "distinct_paired_decisions": 39,
+  "total_math_rows": 78,
+  "runtime_policy_tests_per_arm": 45,
+  "runtime_policy_tests_total": 90,
+  "max_decimal_numeric_error": "5E-16",
+  "formula_mismatches": 0,
+  "causal_future_or_forming_rows": 0,
+  "window_or_gap_metadata_mismatches": 0,
+  "paired_window_or_er_mismatches": 0,
+  "repeated_native_close_mismatches": 0,
+  "decimal_threshold_classification_mismatches": 0,
+  "tick_rounded_classification_mismatches": 0,
+  "minimum_observed_distance_to_threshold": "0.00197889182058369148606595612975667695228343532958",
+  "unavailable_observations": 0,
+  "missing_branch": "No missing native decision occurred; handling is demonstrated by fixtures only, not market runtime.",
+  "outcome_counts": {
+    "off": {
+      "ALLOW": 39
+    },
+    "on": {
+      "ALLOW": 21,
+      "WOULD_SKIP_PRECEDENCE": 5,
+      "SKIP": 13
+    }
+  },
+  "unique_native_h1_closes_logged": 345,
+  "independent_decimal_fixtures": 6,
+  "gap_windows_per_arm": {
+    "off": 17,
+    "on": 17
+  },
+  "span_hours_min": 12.0,
+  "span_hours_max": 61.0,
+  "last_close_age_seconds_max": 3360,
+  "proxy_status_counts_by_arm": {
+    "off": {
+      "PROXY_UNAVAILABLE_STARTUP": 1,
+      "EQUAL": 38
+    },
+    "on": {
+      "PROXY_UNAVAILABLE_STARTUP": 1,
+      "EQUAL": 38
+    }
+  },
+  "native_partial_jan20_hour_logged": false,
+  "partial_hour_parity": "UNOBSERVABLE: Jan20 21:00 native H1 is absent from every logged decision window; no parity assertion.",
+  "startup_proxy": "Native pre-start H1 exists; prospective M5 proxy lacks 13 complete closes at first query.",
+  "source_clock": "broker/source time; UTC mapping is unverified",
+  "source_hashes": {
+    "off": {
+      "w33h1_20261027_005658_UTC_0796b021_off_h1_efficiency.csv": "812989acb893dec51ce4190cdfb1d66343b820f60e0c04186dcd956eedfb92a9",
+      "w33h1_20261027_005658_UTC_0796b021_off_upper_bars.csv": "c7945a2cf0ae4ccf05eb1e82cd6de70aca54eda34307b426982a8ae35747bb67"
+    },
+    "on": {
+      "w33h1_20261027_005658_UTC_0796b021_on_h1_efficiency.csv": "fbd52d64468c391ef960ef26c4868c18a0af9dd86a04340acb6dc66514a1fa22",
+      "w33h1_20261027_005658_UTC_0796b021_on_upper_bars.csv": "c7945a2cf0ae4ccf05eb1e82cd6de70aca54eda34307b426982a8ae35747bb67"
+    }
+  }
+}

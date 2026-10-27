@@ -1,0 +1,274 @@
+﻿[
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_off_chop.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off_chop.csv",
+        "size":  412166,
+        "sha256":  "f10748560b3611486da409dad8740dd935224383a2a18bd5a8375ffab2c35f4e"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_off_config.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off_config.csv",
+        "size":  7431,
+        "sha256":  "a5be37a4a7adcea92feba1b5029f173142dd507d64626fcc4de42462516c313b"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_off_context.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off_context.csv",
+        "size":  154850,
+        "sha256":  "d07c4c271f9c864b8994ee28fde1c2d4ea27640dd4a2ef6b59083e282504ff00"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_off_daytrade.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off_daytrade.csv",
+        "size":  39888,
+        "sha256":  "d8a5c7549845ff60f6ff7ec0a6632328df639c846b37154b3056f9b53a51119c"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_off_events.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off_events.csv",
+        "size":  16881450,
+        "sha256":  "9620f1ad06e4b4ce437d225453174c9021763fcb35c74a02b91374dda96ad060"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_off_h1efficiency_policy_tests.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off_h1efficiency_policy_tests.csv",
+        "size":  1256,
+        "sha256":  "79ed876dfddb5776e0e40812b04f954a8c7859a6ede53189b66d7bd5c8cbce67"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_off_h1_efficiency.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off_h1_efficiency.csv",
+        "size":  33512,
+        "sha256":  "812989acb893dec51ce4190cdfb1d66343b820f60e0c04186dcd956eedfb92a9"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_off_lower_bars.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off_lower_bars.csv",
+        "size":  4313368,
+        "sha256":  "a29cbb37bfc67c5ce768fda2c6515c6ff72dfd0cac96c0c666ce99449c696aeb"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_off_partial.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off_partial.csv",
+        "size":  22021,
+        "sha256":  "a9fe45d8d4cf59460a8e126142b7db041b8f2345481bf8d6b87def4db2b46bf1"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_off_raw_deals.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off_raw_deals.csv",
+        "size":  14442,
+        "sha256":  "c4855001651cebc6abd38b1394882dc496c124677244301f7b81b1977458cf1e"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_off_upper_bars.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off_upper_bars.csv",
+        "size":  864065,
+        "sha256":  "c7945a2cf0ae4ccf05eb1e82cd6de70aca54eda34307b426982a8ae35747bb67"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\off\\w33h1_20261027_005658_UTC_0796b021_off-holding.png",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off-holding.png",
+        "size":  10999,
+        "sha256":  "fe0c5c59875ea5888a01563be17c1f0a630206b936dfbc23632e9a749349becc"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\off\\w33h1_20261027_005658_UTC_0796b021_off-hst.png",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off-hst.png",
+        "size":  27107,
+        "sha256":  "c41a41ef2fbf3dbfcb50dc36c431bbd6f5b52c106ccff866b204fed6dd22399b"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\off\\w33h1_20261027_005658_UTC_0796b021_off-mfemae.png",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off-mfemae.png",
+        "size":  27069,
+        "sha256":  "451f051bc3d2110cab5fced04af0daa3146207860c24d48f639604663429bf31"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\off\\w33h1_20261027_005658_UTC_0796b021_off.htm",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off.htm",
+        "size":  105312,
+        "sha256":  "607761baabce307a91dde14252636b8605de89a649faaaf40d7833b6d9fa8556"
+    },
+    {
+        "arm":  "off",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\off\\w33h1_20261027_005658_UTC_0796b021_off.png",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\w33h1_20261027_005658_UTC_0796b021_off.png",
+        "size":  7780,
+        "sha256":  "0b4d4778f16e04b3cec4b542a6214ef0509ee40b8d8a8e8af68a98c01eb97608"
+    },
+    {
+        "arm":  "off",
+        "kind":  "account_redacted_utf8",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\off\\Tester\\Agent-127.0.0.1-39410\\logs\\20261027.log",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\off\\source\\agent_journal.log",
+        "size":  618827,
+        "sha256":  "3fdf3bd81177570ea5d10df82b78debbacc21f847f19a74138a5e6fb01f52974"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_on_chop.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on_chop.csv",
+        "size":  405095,
+        "sha256":  "471043ad915a802e8bc57c32bee0b782e7aa64bb7f3656003d733972fde9f717"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_on_config.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on_config.csv",
+        "size":  7429,
+        "sha256":  "b7838bdfdef02b4ad8ab171eaaa543e3bcfce71b6284668229bddb3f10ecf9cd"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_on_context.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on_context.csv",
+        "size":  156098,
+        "sha256":  "595d639d232ac3427817744b775fb65affa92c377381a75d0e57a177006c9613"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_on_daytrade.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on_daytrade.csv",
+        "size":  24286,
+        "sha256":  "2ccae27608e43be6344f9f081db7812db81f38141823cd96c48439f494c0e7fe"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_on_events.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on_events.csv",
+        "size":  16683878,
+        "sha256":  "417a682325bf6aab0d770cccdb6af1682c618de0a4a8bc5a754e4bae504345a0"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_on_h1efficiency_policy_tests.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on_h1efficiency_policy_tests.csv",
+        "size":  1256,
+        "sha256":  "79ed876dfddb5776e0e40812b04f954a8c7859a6ede53189b66d7bd5c8cbce67"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_on_h1_efficiency.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on_h1_efficiency.csv",
+        "size":  33540,
+        "sha256":  "fbd52d64468c391ef960ef26c4868c18a0af9dd86a04340acb6dc66514a1fa22"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_on_lower_bars.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on_lower_bars.csv",
+        "size":  4313368,
+        "sha256":  "a29cbb37bfc67c5ce768fda2c6515c6ff72dfd0cac96c0c666ce99449c696aeb"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_on_partial.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on_partial.csv",
+        "size":  13114,
+        "sha256":  "732ca6c534111201de79b1d0c3b133098bbd69e9a893974d5cc8cb30c8a24b65"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_on_raw_deals.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on_raw_deals.csv",
+        "size":  8130,
+        "sha256":  "477d5789654b5913976730fc377e8a452c565e58c93e5787d4d7e9305b6ecdef"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33h1_20261027_005658_UTC_0796b021_on_upper_bars.csv",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on_upper_bars.csv",
+        "size":  864065,
+        "sha256":  "c7945a2cf0ae4ccf05eb1e82cd6de70aca54eda34307b426982a8ae35747bb67"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\on\\w33h1_20261027_005658_UTC_0796b021_on-holding.png",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on-holding.png",
+        "size":  10231,
+        "sha256":  "087847d9ada075a723357cdfe3e9006c8dbe09a689c67d2e0ae91f8e7c43ad3e"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\on\\w33h1_20261027_005658_UTC_0796b021_on-hst.png",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on-hst.png",
+        "size":  27619,
+        "sha256":  "5386ae23e37d3c49339009eccb782e54e58e1250aaf6153af570d049f6663adb"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\on\\w33h1_20261027_005658_UTC_0796b021_on-mfemae.png",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on-mfemae.png",
+        "size":  24679,
+        "sha256":  "fe73c1b7baccf943df902296214b114545e56a1a0d3b29e06c9e2cf0110227b6"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\on\\w33h1_20261027_005658_UTC_0796b021_on.htm",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on.htm",
+        "size":  75646,
+        "sha256":  "faee5f113448b7b8e561b6f7c028bed7ca2346bd1231b41433a66a729bd0a614"
+    },
+    {
+        "arm":  "on",
+        "kind":  "original",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\on\\w33h1_20261027_005658_UTC_0796b021_on.png",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\w33h1_20261027_005658_UTC_0796b021_on.png",
+        "size":  8134,
+        "sha256":  "51e0aeac782b8c72ed15cf4964208025dd74b9569b53057fc37f533e1b7e5001"
+    },
+    {
+        "arm":  "on",
+        "kind":  "account_redacted_utf8",
+        "source":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33H1ER\\20261027_005658_UTC_0796b021\\on\\Tester\\Agent-127.0.0.1-39411\\logs\\20261027.log",
+        "file":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_h1er_2025jan\\20261027_005658_UTC_0796b021\\on\\source\\agent_journal.log",
+        "size":  582995,
+        "sha256":  "52bc578b65258db49b5b7eb76a25f5b22a420184275b6e5db02a233b391b70eb"
+    }
+]

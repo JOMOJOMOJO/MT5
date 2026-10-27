@@ -1,0 +1,7 @@
+CS	0	09:57:59.409	History	XAUUSD+: history synchronized from 2024.01.02 to 2025.01.31
+CS	0	09:58:00.323	Ticks	XAUUSD+: history ticks synchronized from 2025.01.02 to 2025.01.31
+CS	0	09:58:00.374	Tester	XAUUSD+,M1 (Bybit-Live): generating based on real ticks
+CS	0	09:58:01.245	Ticks	XAUUSD+ : real ticks begin from 2025.01.02 00:00:00
+CS	0	09:58:18.160	Tester	final balance 4463.09 USD
+CS	0	09:58:18.210	Tester	XAUUSD+,M1: 4010784 ticks, 30163 bars generated. Environment synchronized in 0:00:02.092. Test passed in 0:00:17.899 (including ticks preprocessing 0:00:00.735).
+CS	0	09:58:18.211	Tester	test Experts\Wave33H1EfficiencyVerifier.ex5 on XAUUSD+,M1 thread finished

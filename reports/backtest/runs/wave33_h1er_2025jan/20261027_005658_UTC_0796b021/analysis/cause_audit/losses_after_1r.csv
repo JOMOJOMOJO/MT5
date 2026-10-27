@@ -1,0 +1,2 @@
+arm,setup_id,direction,fill_at,exit_at,net_r,loss,max_favorable_r,reached_1r,partial_filled,exit_reason,entry,initial_sl,initial_risk_price
+off,W33_XAUUSD+_5_1_SHORT_1736341200_29,SHORT,2025.01.08 14:17:00,2025.01.08 14:47:46,-0.0304347826086956,True,1.452173913,True,True,DEAL_REASON_SL,2649.3,2651.6,2.3

@@ -1,0 +1,17 @@
+﻿{
+    "status":  "PRELAUNCH_PASS",
+    "batch":  "20261027_005658_UTC_0796b021",
+    "arm_count":  2,
+    "input_count":  54,
+    "differences":  [
+                        "InpRunTag",
+                        "InpSkipH1LowEfficiency"
+                    ],
+    "equal_cache_files":  4,
+    "equal_symbols":  true,
+    "policy":  "ER12 \u003c= 0.25; roundtrip \u003e= 0.75",
+    "period":  "2025-01",
+    "native_status":  "NOT_STARTED",
+    "runtime_policy_tests":  "45 COMPILED; EXECUTION PENDING",
+    "stop_after_launch":  true
+}

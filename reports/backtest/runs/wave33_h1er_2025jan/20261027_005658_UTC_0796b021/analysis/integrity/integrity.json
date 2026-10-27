@@ -1,0 +1,641 @@
+{
+  "status": "PASS",
+  "check_count": 52,
+  "passed": 52,
+  "checks": [
+    {
+      "name": "off_native_test_passed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_shutdown_after_completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_no_tick_fallback_or_engine_error_found",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "off_native_100pct_real_ticks",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_report_requested_full_month",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_native_model_real_ticks",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_45_policy_tests_pass",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_lower_bars_strictly_chronological",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_lower_bars_closed_before_known",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_upper_bars_strictly_chronological",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_upper_bars_closed_before_known",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_last_export_reaches_jan31_close",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_every_position_fully_closed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_raw_deal_count_matches_report",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_native_trade_count_is_exit_leg_count",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_raw_net_matches_native_gross_difference",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_raw_net_matches_native_final_balance",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_gross_profit_reconciles",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_gross_loss_reconciles",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_native_pf_rounding_matches",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_54_actual_native_inputs_match_frozen_set",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "off_runtime_binaries_unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_native_test_passed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_shutdown_after_completion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_no_tick_fallback_or_engine_error_found",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "on_native_100pct_real_ticks",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_report_requested_full_month",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_native_model_real_ticks",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_45_policy_tests_pass",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_lower_bars_strictly_chronological",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_lower_bars_closed_before_known",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_upper_bars_strictly_chronological",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_upper_bars_closed_before_known",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_last_export_reaches_jan31_close",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_every_position_fully_closed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_raw_deal_count_matches_report",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_native_trade_count_is_exit_leg_count",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_raw_net_matches_native_gross_difference",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_raw_net_matches_native_final_balance",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_gross_profit_reconciles",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_gross_loss_reconciles",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_native_pf_rounding_matches",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_54_actual_native_inputs_match_frozen_set",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "on_runtime_binaries_unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "equal_actual_lower_bars_byte_hash",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "equal_actual_upper_bars_byte_hash",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "equal_actual_native_tick_and_bar_counts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "one_strategy_input_diff_plus_log_namespace",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "three_expected_config_differences",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "same_frozen_initial_cache_and_symbols",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "protected_existing_all_source_hashes_unchanged",
+      "pass": true,
+      "detail": {
+        "files": 125,
+        "changes": []
+      }
+    },
+    {
+      "name": "deployment_all_source_hashes_unchanged",
+      "pass": true,
+      "detail": {
+        "files": 34,
+        "changes": []
+      }
+    }
+  ],
+  "arms": {
+    "off": {
+      "native_report": {
+        "エキスパート": "Wave33H1EfficiencyVerifier",
+        "銘柄": "1",
+        "期間": "M1 (2025.01.01 - 2025.02.01)",
+        "パラメータ": "InpPattern=1",
+        "会社": "Infra Capital Limited",
+        "通貨": "USD",
+        "初期証拠金": "5 000.00",
+        "レバレッジ": "1:100",
+        "ヒストリー品質": "100% リアルティック",
+        "バー": "30163",
+        "ティック": "4010784",
+        "総損益": "-536.91",
+        "残高絶対ドローダウン": "540.51",
+        "証拠金絶対ドローダウン": "542.55",
+        "総利益": "410.17",
+        "残高最大ドローダウン": "548.19 (10.95%)",
+        "証拠金最大ドローダウン": "562.47 (11.20%)",
+        "総損失": "-947.08",
+        "残高相対ドローダウン": "10.95% (548.19)",
+        "証拠金相対ドローダウン": "11.20% (562.47)",
+        "プロフィットファクター": "0.43",
+        "期待利得": "-14.51",
+        "証拠金維持率": "8828.69%",
+        "リカバリファクター": "-0.95",
+        "シャープレシオ": "-5.00",
+        "Z-Score": "-2.26 (97.56%)",
+        "AHPR": "0.9970 (-0.30%)",
+        "LR Correlation": "-0.92",
+        "OnTester 結果": "0",
+        "GHPR": "0.9969 (-0.31%)",
+        "LR Standard Error": "68.72",
+        "取引数": "37",
+        "ショート (勝率 %)": "20 (35.00%)",
+        "ロング (勝率 %)": "17 (52.94%)",
+        "約定数": "66",
+        "勝ちトレード (勝率 %)": "16 (43.24%)",
+        "負けトレード (負率 %)": "21 (56.76%)",
+        "最大 勝ちトレード": "55.67",
+        "最大 負けトレード": "-50.16",
+        "平均 勝ちトレード": "25.64",
+        "平均 負けトレード": "-43.44",
+        "最大 連勝数 (金額)": "6 (157.07)",
+        "最大 連敗数 (金額)": "8 (-370.34)",
+        "最大 連勝利益額 (数)": "157.07 (6)",
+        "最大 連敗損失額 (数)": "-370.34 (8)",
+        "平均 連勝利益額 (数)": "3",
+        "平均 連敗数": "4",
+        "Correlation (Profits,MFE)": "0.82",
+        "Correlation (Profits,MAE)": "0.86",
+        "Correlation (MFE,MAE)": "0.6172",
+        "ポジション最短保持時間": "0:01:00",
+        "ポジション最長保持時間": "3:56:08",
+        "ポジション平均保持時間": "0:42:40"
+      },
+      "requested_period": "2025.01.01--2025.02.01",
+      "ticks": 4010784,
+      "generated_m1_bars": 30163,
+      "bars": {
+        "lower_bars": {
+          "rows": 30163,
+          "first": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M1",
+            "bar_time": "2024.12.31 23:57:00",
+            "closed_at": "2024.12.31 23:58:00",
+            "known_at": "2025.01.02 01:00:02",
+            "open": "2624.6700000000",
+            "high": "2624.7000000000",
+            "low": "2624.3800000000",
+            "close": "2624.5600000000"
+          },
+          "last": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M1",
+            "bar_time": "2025.01.31 23:55:00",
+            "closed_at": "2025.01.31 23:56:00",
+            "known_at": "2025.01.31 23:56:00",
+            "open": "2800.5300000000",
+            "high": "2800.5300000000",
+            "low": "2798.0800000000",
+            "close": "2799.3400000000"
+          },
+          "sha256": "a29cbb37bfc67c5ce768fda2c6515c6ff72dfd0cac96c0c666ce99449c696aeb"
+        },
+        "upper_bars": {
+          "rows": 6042,
+          "first": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M5",
+            "bar_time": "2024.12.31 23:55:00",
+            "closed_at": "2025.01.01 00:00:00",
+            "known_at": "2025.01.02 01:00:02",
+            "open": "2624.6200000000",
+            "high": "2624.7000000000",
+            "low": "2624.3800000000",
+            "close": "2624.5600000000"
+          },
+          "last": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M5",
+            "bar_time": "2025.01.31 23:50:00",
+            "closed_at": "2025.01.31 23:55:00",
+            "known_at": "2025.01.31 23:55:00",
+            "open": "2800.9400000000",
+            "high": "2802.1900000000",
+            "low": "2800.3300000000",
+            "close": "2800.5300000000"
+          },
+          "sha256": "c7945a2cf0ae4ccf05eb1e82cd6de70aca54eda34307b426982a8ae35747bb67"
+        }
+      },
+      "policy_checks": 45,
+      "raw_deals": 66,
+      "unique_positions": 29,
+      "entry_legs": 29,
+      "exit_legs": 37,
+      "raw_cash_components": {
+        "profit": "-512.2300000000",
+        "commission": "-34.9200000000",
+        "swap": "10.2400000000",
+        "fee": "0E-10"
+      },
+      "raw_net": "-536.9100000000",
+      "final_balance": "4463.09",
+      "gross_profit": "410.1700000000",
+      "gross_loss": "-947.08",
+      "profit_factor_unrounded_native_convention": "0.4330890737846855598259914685",
+      "per_position_net": {
+        "2": "-51.6000000000",
+        "4": "59.2800000000",
+        "7": "-38.4600000000",
+        "9": "-50.0000000000",
+        "11": "-48.1000000000",
+        "13": "-1.4000000000",
+        "16": "-41.3600000000",
+        "18": "66.9900000000",
+        "21": "46.3200000000",
+        "24": "40.4000000000",
+        "27": "-46.0800000000",
+        "29": "-49.2800000000",
+        "31": "-45.2400000000",
+        "33": "-48.4200000000",
+        "35": "-49.2800000000",
+        "37": "-48.2800000000",
+        "39": "-47.0400000000",
+        "41": "-47.6400000000",
+        "43": "41.7000000000",
+        "46": "-43.6800000000",
+        "48": "-37.9200000000",
+        "50": "41.1300000000",
+        "53": "78.4700000000",
+        "56": "-46.8000000000",
+        "58": "-41.1600000000",
+        "60": "-45.6000000000",
+        "62": "-42.4200000000",
+        "64": "-44.3200000000",
+        "66": "2.8800000000"
+      },
+      "journal_sha256": "a068dd2ce7a9a960ee5e0a4227d04910908089b48d5f78ab40dcca44801054d6",
+      "report_sha256": "607761baabce307a91dde14252636b8605de89a649faaaf40d7833b6d9fa8556",
+      "runtime_binaries_sha256": {
+        "terminal64.exe": "8b13c3119f29a4de564ef12d633b62dc54d652c538c10c232067ef01b8518d4d",
+        "metatester64.exe": "5033d9d45d669cebd735e8a6be20b54d74b75274f885c9a0e48e52d872104efb",
+        "MQL5/Experts/Wave33H1EfficiencyVerifier.ex5": "ce91b1877fc89800d6d98893e84b4968aeb25b2b2f92d83f7e5aa03f941dac12"
+      }
+    },
+    "on": {
+      "native_report": {
+        "エキスパート": "Wave33H1EfficiencyVerifier",
+        "銘柄": "1",
+        "期間": "M1 (2025.01.01 - 2025.02.01)",
+        "パラメータ": "InpPattern=1",
+        "会社": "Infra Capital Limited",
+        "通貨": "USD",
+        "初期証拠金": "5 000.00",
+        "レバレッジ": "1:100",
+        "ヒストリー品質": "100% リアルティック",
+        "バー": "30163",
+        "ティック": "4010784",
+        "総損益": "-255.43",
+        "残高絶対ドローダウン": "255.43",
+        "証拠金絶対ドローダウン": "255.43",
+        "総利益": "281.19",
+        "残高最大ドローダウン": "263.11 (5.25%)",
+        "証拠金最大ドローダウン": "275.35 (5.49%)",
+        "総損失": "-536.62",
+        "残高相対ドローダウン": "5.25% (263.11)",
+        "証拠金相対ドローダウン": "5.49% (275.35)",
+        "プロフィットファクター": "0.52",
+        "期待利得": "-12.16",
+        "証拠金維持率": "8766.74%",
+        "リカバリファクター": "-0.93",
+        "シャープレシオ": "-5.00",
+        "Z-Score": "-0.89 (62.65%)",
+        "AHPR": "0.9975 (-0.25%)",
+        "LR Correlation": "-0.85",
+        "OnTester 結果": "0",
+        "GHPR": "0.9975 (-0.25%)",
+        "LR Standard Error": "41.93",
+        "取引数": "21",
+        "ショート (勝率 %)": "11 (36.36%)",
+        "ロング (勝率 %)": "10 (60.00%)",
+        "約定数": "37",
+        "勝ちトレード (勝率 %)": "10 (47.62%)",
+        "負けトレード (負率 %)": "11 (52.38%)",
+        "最大 勝ちトレード": "58.60",
+        "最大 負けトレード": "-50.16",
+        "平均 勝ちトレード": "28.12",
+        "平均 負けトレード": "-46.99",
+        "最大 連勝数 (金額)": "4 (88.76)",
+        "最大 連敗数 (金額)": "4 (-187.74)",
+        "最大 連勝利益額 (数)": "88.76 (4)",
+        "最大 連敗損失額 (数)": "-187.74 (4)",
+        "平均 連勝利益額 (数)": "3",
+        "平均 連敗数": "2",
+        "Correlation (Profits,MFE)": "0.92",
+        "Correlation (Profits,MAE)": "0.93",
+        "Correlation (MFE,MAE)": "0.8525",
+        "ポジション最短保持時間": "0:04:23",
+        "ポジション最長保持時間": "2:11:40",
+        "ポジション平均保持時間": "0:30:33"
+      },
+      "requested_period": "2025.01.01--2025.02.01",
+      "ticks": 4010784,
+      "generated_m1_bars": 30163,
+      "bars": {
+        "lower_bars": {
+          "rows": 30163,
+          "first": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M1",
+            "bar_time": "2024.12.31 23:57:00",
+            "closed_at": "2024.12.31 23:58:00",
+            "known_at": "2025.01.02 01:00:02",
+            "open": "2624.6700000000",
+            "high": "2624.7000000000",
+            "low": "2624.3800000000",
+            "close": "2624.5600000000"
+          },
+          "last": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M1",
+            "bar_time": "2025.01.31 23:55:00",
+            "closed_at": "2025.01.31 23:56:00",
+            "known_at": "2025.01.31 23:56:00",
+            "open": "2800.5300000000",
+            "high": "2800.5300000000",
+            "low": "2798.0800000000",
+            "close": "2799.3400000000"
+          },
+          "sha256": "a29cbb37bfc67c5ce768fda2c6515c6ff72dfd0cac96c0c666ce99449c696aeb"
+        },
+        "upper_bars": {
+          "rows": 6042,
+          "first": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M5",
+            "bar_time": "2024.12.31 23:55:00",
+            "closed_at": "2025.01.01 00:00:00",
+            "known_at": "2025.01.02 01:00:02",
+            "open": "2624.6200000000",
+            "high": "2624.7000000000",
+            "low": "2624.3800000000",
+            "close": "2624.5600000000"
+          },
+          "last": {
+            "symbol": "XAUUSD+",
+            "tf": "PERIOD_M5",
+            "bar_time": "2025.01.31 23:50:00",
+            "closed_at": "2025.01.31 23:55:00",
+            "known_at": "2025.01.31 23:55:00",
+            "open": "2800.9400000000",
+            "high": "2802.1900000000",
+            "low": "2800.3300000000",
+            "close": "2800.5300000000"
+          },
+          "sha256": "c7945a2cf0ae4ccf05eb1e82cd6de70aca54eda34307b426982a8ae35747bb67"
+        }
+      },
+      "policy_checks": 45,
+      "raw_deals": 37,
+      "unique_positions": 16,
+      "entry_legs": 16,
+      "exit_legs": 21,
+      "raw_cash_components": {
+        "profit": "-235.7500000000",
+        "commission": "-19.6800000000",
+        "swap": "0E-10",
+        "fee": "0E-10"
+      },
+      "raw_net": "-255.4300000000",
+      "final_balance": "4744.57",
+      "gross_profit": "281.1900000000",
+      "gross_loss": "-536.62",
+      "profit_factor_unrounded_native_convention": "0.5240020871380120010435690060",
+      "per_position_net": {
+        "2": "-51.6000000000",
+        "4": "59.2800000000",
+        "7": "-38.4600000000",
+        "9": "-50.0000000000",
+        "11": "46.3200000000",
+        "14": "40.4000000000",
+        "17": "-45.2400000000",
+        "19": "-48.4200000000",
+        "21": "-51.1200000000",
+        "23": "-47.6400000000",
+        "25": "45.8700000000",
+        "28": "-49.1400000000",
+        "30": "82.6000000000",
+        "33": "-50.4000000000",
+        "35": "-49.4000000000",
+        "37": "-48.4800000000"
+      },
+      "journal_sha256": "a69c2e871b4b659b6e6bfb19a6b97b499ea474a669adf50003b4e95d0dc02f53",
+      "report_sha256": "faee5f113448b7b8e561b6f7c028bed7ca2346bd1231b41433a66a729bd0a614",
+      "runtime_binaries_sha256": {
+        "terminal64.exe": "8b13c3119f29a4de564ef12d633b62dc54d652c538c10c232067ef01b8518d4d",
+        "metatester64.exe": "5033d9d45d669cebd735e8a6be20b54d74b75274f885c9a0e48e52d872104efb",
+        "MQL5/Experts/Wave33H1EfficiencyVerifier.ex5": "ce91b1877fc89800d6d98893e84b4968aeb25b2b2f92d83f7e5aa03f941dac12"
+      }
+    }
+  },
+  "actual_input_diff": {
+    "InpSkipH1LowEfficiency": [
+      "false",
+      "true"
+    ],
+    "InpRunTag": [
+      "w33h1_20261027_005658_UTC_0796b021_off",
+      "w33h1_20261027_005658_UTC_0796b021_on"
+    ]
+  },
+  "actual_config_diff": {
+    "resolved_run_tag": [
+      "w33h1_20261027_005658_UTC_0796b021_off",
+      "w33h1_20261027_005658_UTC_0796b021_on"
+    ],
+    "skip_h1_low_efficiency": [
+      "false",
+      "true"
+    ],
+    "input_hash": [
+      "445E295F935C7A8D",
+      "CBD7C388007F17EE"
+    ]
+  },
+  "source_hash_audits": {
+    "protected_existing": {
+      "files": 125,
+      "changes": []
+    },
+    "deployment": {
+      "files": 34,
+      "changes": []
+    }
+  },
+  "limitations": [
+    "100% real tick quality and no fallback warnings are MT5 report/journal evidence, not an independent tick-by-tick reconstruction.",
+    "No full tick-stream export was captured; identical generated ticks count and byte-identical M1/M5 bars plus matching initial caches are strong equality evidence, not proof of byte-identical executable tick streams.",
+    "January1 absence is a source market holiday/session absence; first real ticks are January2, not premature incomplete test. Bars exported at January2 initialization include one already-closed Dec31 bar.",
+    "The last forming M1 candle is not exported as closed; observed closed-bar series end January31 23:55 known23:56.",
+    "Native trade count37/21 counts exit legs including partial closes; actual unique entry positions are29/16.",
+    "Runtime historical symbol specifications/current contract assumptions and broker-time UTC mapping were not independently reconstructed.",
+    "One in-sample month; engineering PASS does not imply profitability, universality, or promotion. Both arms remain net negative."
+  ]
+}

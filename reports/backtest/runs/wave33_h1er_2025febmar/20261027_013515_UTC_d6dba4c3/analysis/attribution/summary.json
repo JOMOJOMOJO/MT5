@@ -1,0 +1,540 @@
+{
+  "off": {
+    "n": 71,
+    "wins": 31,
+    "losses": 40,
+    "winning_r": 32.71771785538421,
+    "losing_r": -39.13736146815424,
+    "winning_cash": 1488.6499999999999,
+    "losing_cash": -1778.3200000000002,
+    "net_r": -6.4196436127700345,
+    "net_cash": -289.66999999999996,
+    "mean_r": -0.09041751567281739,
+    "pf_r": 0.8359714765648255,
+    "pf_cash": 0.8371103063565611
+  },
+  "on": {
+    "n": 36,
+    "wins": 12,
+    "losses": 24,
+    "winning_r": 16.052692833063603,
+    "losing_r": -24.454023411231482,
+    "winning_cash": 692.18,
+    "losing_cash": -1092.8200000000002,
+    "net_r": -8.401330578167881,
+    "net_cash": -400.64000000000004,
+    "mean_r": -0.2333702938379967,
+    "pf_r": 0.6564438318845628,
+    "pf_cash": 0.6333888472026499
+  },
+  "retained_off": {
+    "n": 35,
+    "wins": 11,
+    "losses": 24,
+    "winning_r": 14.475948647017091,
+    "losing_r": -24.454023411231482,
+    "winning_cash": 658.74,
+    "losing_cash": -1106.42,
+    "net_r": -9.978074764214393,
+    "net_cash": -447.67999999999995,
+    "mean_r": -0.2850878504061255,
+    "pf_r": 0.5919659273888008,
+    "pf_cash": 0.5953796930641166
+  },
+  "removed": {
+    "n": 36,
+    "wins": 20,
+    "losses": 16,
+    "winning_r": 18.241769208367117,
+    "losing_r": -14.683338056922757,
+    "winning_cash": 829.9099999999999,
+    "losing_cash": -671.9,
+    "net_r": 3.5584311514443585,
+    "net_cash": 158.01,
+    "mean_r": 0.09884530976234329,
+    "pf_r": 1.2423448358710685,
+    "pf_cash": 1.2351689239470158
+  },
+  "new": {
+    "n": 1,
+    "wins": 1,
+    "losses": 0,
+    "winning_r": 1.5767441860465115,
+    "losing_r": 0.0,
+    "winning_cash": 67.8,
+    "losing_cash": 0.0,
+    "net_r": 1.5767441860465115,
+    "net_cash": 67.8,
+    "mean_r": 1.5767441860465115,
+    "pf_r": null,
+    "pf_cash": null
+  },
+  "all_closed": true,
+  "trade_match_identity": "setup_id validated against immutable direction/candidate/start and executable entry",
+  "common_count": 35,
+  "matched_field_differences": {
+    "direction": 0,
+    "candidate": 0,
+    "wave1_start": 0,
+    "wave1_peak": 0,
+    "entry": 0,
+    "initial_sl": 0,
+    "risk_price": 0,
+    "exit_msc": 0,
+    "entry_msc": 0,
+    "exit_reason": 0,
+    "exit_price": 0,
+    "er": 0,
+    "partial_out_deals": 0
+  },
+  "retained_net_r_delta": -3.3306690738754696e-16,
+  "removed_r_avoided": -3.5584311514443585,
+  "new_r": 1.5767441860465115,
+  "net_r_improvement": -1.9816869653978468,
+  "attribution_r_residual": 5.551115123125783e-16,
+  "cash_remainder_retained": -20.76000000000002,
+  "risk_money_changed": 7,
+  "volume_changed": 7,
+  "h1_rows_off": 91,
+  "h1_rows_on": 92,
+  "h1_on_outcomes": {
+    "ALLOW": 47,
+    "SKIP": 36,
+    "WOULD_SKIP_PRECEDENCE": 9
+  },
+  "event_counts_off": {
+    "PIVOT_CONFIRMED": 18667,
+    "WAVE2_EXTREME": 2040,
+    "STATE": 1336,
+    "WAVE1_PROVISIONAL": 681,
+    "LOWER_STRUCTURE_CONFIRMED": 487,
+    "WAVE1_BREAK": 243,
+    "WAVE1_PEAK_CONFIRMED": 205,
+    "LOWER_STRUCTURE_REJECTED": 196,
+    "WAVE1_EXTENSION_LOCKED": 194,
+    "WAVE1_EXTENSION_TRACKING": 193,
+    "LOWER_STRUCTURE_LOST": 185,
+    "FIB_TOUCH": 172,
+    "INVALIDATE": 142,
+    "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 101,
+    "WAVE1_EXTENSION_STARTED": 101,
+    "WAVE1_EXTENDED_CONFIRMED": 100,
+    "PIVOT_TRIGGER": 91,
+    "SIGNAL": 91,
+    "H1_ER_ENTRY_FILTER": 91,
+    "RISK_CHECK": 91,
+    "CHOP_ENTRY_FILTER": 91,
+    "PRIOR_CONTEXT_FILTER": 91,
+    "COMPLETED": 91,
+    "FIB_TOO_DEEP": 83,
+    "FIB_CLOSE_TOO_DEEP": 71,
+    "ORDER": 71,
+    "FILL": 71,
+    "DAYTRADE_RISK_FROZEN": 71,
+    "DAY_PARTIAL_FROZEN": 71,
+    "POSITION_TRACKING": 71,
+    "EXIT": 71,
+    "DAYTRADE_POSITION_CLOSED": 71,
+    "DAY_PARTIAL_REQUEST": 49,
+    "STEP_SL_STAGE": 47,
+    "STEP_SL_REQUEST": 47,
+    "STEP_SL_ACCEPTED": 47,
+    "STEP_SL_CONFIRMED": 47,
+    "HALF_VOLUME_ROUNDED_DOWN": 34,
+    "DAY_PARTIAL_TOUCH": 33,
+    "DAY_PARTIAL_ACCEPTED": 33,
+    "PARTIAL_EXIT": 33,
+    "DAY_PARTIAL_FILLED": 33,
+    "DAYTRADE_PARTIAL_CLOSE": 33,
+    "DAY_PARTIAL_REQUEST_SETTLED": 33,
+    "TRENDLINE_TRIGGER": 33,
+    "SKIP": 29,
+    "INITIAL_MOVE_PROGRESS": 17,
+    "DAY_PARTIAL_REJECTED": 16,
+    "OPPOSITE_WAVE1_ARMED": 5,
+    "OPPOSITE_CLOSE_REQUEST": 5,
+    "OPPOSITE_CLOSE_ACCEPTED": 5,
+    "INIT": 1,
+    "DAYTRADE_CLOSE_REQUEST": 1,
+    "DAYTRADE_CLOSE_ACCEPTED": 1,
+    "TEST_END": 1
+  },
+  "event_counts_on": {
+    "PIVOT_CONFIRMED": 18667,
+    "WAVE2_EXTREME": 2048,
+    "STATE": 1305,
+    "WAVE1_PROVISIONAL": 682,
+    "LOWER_STRUCTURE_CONFIRMED": 488,
+    "WAVE1_BREAK": 243,
+    "WAVE1_PEAK_CONFIRMED": 206,
+    "LOWER_STRUCTURE_REJECTED": 196,
+    "WAVE1_EXTENSION_LOCKED": 195,
+    "WAVE1_EXTENSION_TRACKING": 193,
+    "LOWER_STRUCTURE_LOST": 185,
+    "FIB_TOUCH": 173,
+    "INVALIDATE": 142,
+    "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 101,
+    "WAVE1_EXTENSION_STARTED": 101,
+    "WAVE1_EXTENDED_CONFIRMED": 100,
+    "PIVOT_TRIGGER": 92,
+    "SIGNAL": 92,
+    "H1_ER_ENTRY_FILTER": 92,
+    "RISK_CHECK": 92,
+    "CHOP_ENTRY_FILTER": 92,
+    "PRIOR_CONTEXT_FILTER": 92,
+    "COMPLETED": 92,
+    "FIB_TOO_DEEP": 84,
+    "FIB_CLOSE_TOO_DEEP": 71,
+    "SKIP": 64,
+    "ORDER": 36,
+    "FILL": 36,
+    "DAYTRADE_RISK_FROZEN": 36,
+    "DAY_PARTIAL_FROZEN": 36,
+    "POSITION_TRACKING": 36,
+    "EXIT": 36,
+    "DAYTRADE_POSITION_CLOSED": 36,
+    "TRENDLINE_TRIGGER": 33,
+    "STEP_SL_STAGE": 27,
+    "STEP_SL_REQUEST": 27,
+    "STEP_SL_ACCEPTED": 27,
+    "STEP_SL_CONFIRMED": 27,
+    "HALF_VOLUME_ROUNDED_DOWN": 20,
+    "INITIAL_MOVE_PROGRESS": 17,
+    "DAY_PARTIAL_TOUCH": 13,
+    "DAY_PARTIAL_REQUEST": 13,
+    "DAY_PARTIAL_ACCEPTED": 13,
+    "PARTIAL_EXIT": 13,
+    "DAY_PARTIAL_FILLED": 13,
+    "DAYTRADE_PARTIAL_CLOSE": 13,
+    "DAY_PARTIAL_REQUEST_SETTLED": 13,
+    "OPPOSITE_WAVE1_ARMED": 2,
+    "OPPOSITE_CLOSE_REQUEST": 2,
+    "OPPOSITE_CLOSE_ACCEPTED": 2,
+    "INIT": 1,
+    "DAYTRADE_CLOSE_REQUEST": 1,
+    "DAYTRADE_CLOSE_ACCEPTED": 1,
+    "TEST_END": 1
+  },
+  "raw_deal_cash_off": -289.66999999999996,
+  "raw_deal_cash_on": -400.64000000000004,
+  "caveats": [
+    "Two subsequent native months with fixed preregistered threshold; only two months and not proof of a general edge.",
+    "R is frozen initial monetary risk and includes original/full position entry commission, all partial exits, swap, fee.",
+    "Dynamic lot sizes depend on equity; cash improvement is not a pure fixed-lot entry-filter effect.",
+    "H1 filter rejection count must not be equated to removed actual OFF fills: H1 gate precedes busy/weekend/volume guards.",
+    "Native H1 is observed bars over session gaps, not consecutive elapsed hours."
+  ],
+  "retained_normalized_deal_signatures_identical": 35,
+  "retained_normalized_deal_signatures_changed": 0,
+  "months": {
+    "2025.02": {
+      "off": {
+        "n": 28,
+        "wins": 12,
+        "losses": 16,
+        "winning_r": 10.877918427096034,
+        "losing_r": -14.697045509449879,
+        "winning_cash": 499.87999999999994,
+        "losing_cash": -668.3,
+        "net_r": -3.8191270823538455,
+        "net_cash": -168.42000000000004,
+        "mean_r": -0.1363973957983516,
+        "pf_r": 0.7401432090621051,
+        "pf_cash": 0.7479874307945533
+      },
+      "on": {
+        "n": 16,
+        "wins": 4,
+        "losses": 12,
+        "winning_r": 4.393992584941627,
+        "losing_r": -11.508346068860652,
+        "winning_cash": 197.88,
+        "losing_cash": -511.2200000000001,
+        "net_r": -7.1143534839190234,
+        "net_cash": -313.34000000000003,
+        "mean_r": -0.44464709274493897,
+        "pf_r": 0.38180921555973335,
+        "pf_cash": 0.38707405813544066
+      },
+      "removed": {
+        "n": 12,
+        "wins": 8,
+        "losses": 4,
+        "winning_r": 6.483925842154408,
+        "losing_r": -3.188699440589228,
+        "winning_cash": 294.07,
+        "losing_cash": -151.5,
+        "net_r": 3.2952264015651798,
+        "net_cash": 142.57,
+        "mean_r": 0.27460220013043163,
+        "pf_r": 2.033407651916001,
+        "pf_cash": 1.941056105610561
+      },
+      "new": {
+        "n": 0,
+        "wins": 0,
+        "losses": 0,
+        "winning_r": 0.0,
+        "losing_r": 0.0,
+        "winning_cash": 0.0,
+        "losing_cash": 0.0,
+        "net_r": 0.0,
+        "net_cash": 0.0,
+        "mean_r": null,
+        "pf_r": null,
+        "pf_cash": null
+      },
+      "retained_net_r_delta": 2.220446049250313e-16
+    },
+    "2025.03": {
+      "off": {
+        "n": 43,
+        "wins": 19,
+        "losses": 24,
+        "winning_r": 21.839799428288174,
+        "losing_r": -24.44031595870436,
+        "winning_cash": 988.7700000000001,
+        "losing_cash": -1110.02,
+        "net_r": -2.60051653041619,
+        "net_cash": -121.25000000000001,
+        "mean_r": -0.060477128614329995,
+        "pf_r": 0.8935972622117424,
+        "pf_cash": 0.8907677339147043
+      },
+      "on": {
+        "n": 20,
+        "wins": 8,
+        "losses": 12,
+        "winning_r": 11.658700248121974,
+        "losing_r": -12.94567734237083,
+        "winning_cash": 494.3,
+        "losing_cash": -581.6,
+        "net_r": -1.286977094248857,
+        "net_cash": -87.30000000000003,
+        "mean_r": -0.06434885471244285,
+        "pf_r": 0.900586345525806,
+        "pf_cash": 0.8498968363136176
+      },
+      "removed": {
+        "n": 24,
+        "wins": 12,
+        "losses": 12,
+        "winning_r": 11.757843366212708,
+        "losing_r": -11.49463861633353,
+        "winning_cash": 535.84,
+        "losing_cash": -520.4000000000001,
+        "net_r": 0.2632047498791792,
+        "net_cash": 15.440000000000005,
+        "mean_r": 0.010966864578299132,
+        "pf_r": 1.0228980447897833,
+        "pf_cash": 1.0296694850115296
+      },
+      "new": {
+        "n": 1,
+        "wins": 1,
+        "losses": 0,
+        "winning_r": 1.5767441860465115,
+        "losing_r": 0.0,
+        "winning_cash": 67.8,
+        "losing_cash": 0.0,
+        "net_r": 1.5767441860465115,
+        "net_cash": 67.8,
+        "mean_r": 1.5767441860465115,
+        "pf_r": null,
+        "pf_cash": null
+      },
+      "retained_net_r_delta": -5.551115123125783e-16
+    }
+  },
+  "censored_candidates": {
+    "off": [
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1743455700_243",
+        "entry_status": "CANDIDATE",
+        "state": "LOWER_COUNTERTREND",
+        "entry_price": 0.0,
+        "reason": "CENSORED_AT_STOP reason=1"
+      }
+    ],
+    "on": [
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1743455700_243",
+        "entry_status": "CANDIDATE",
+        "state": "LOWER_COUNTERTREND",
+        "entry_price": 0.0,
+        "reason": "CENSORED_AT_STOP reason=1"
+      }
+    ]
+  },
+  "raw_deal_reason_counts": {
+    "off": {
+      "DEAL_REASON_EXPERT": 110,
+      "DEAL_REASON_SL": 65
+    },
+    "on": {
+      "DEAL_REASON_EXPERT": 52,
+      "DEAL_REASON_SL": 33
+    }
+  },
+  "raw_setup_id_sets_match_fills": {
+    "off": true,
+    "on": true
+  },
+  "effect_day_count": 26,
+  "effect_positive_days": 11,
+  "effect_negative_days": 15,
+  "effect_best_day": {
+    "day": "2025.03.26",
+    "r": 2.0503899401487216
+  },
+  "effect_worst_day": {
+    "day": "2025.02.20",
+    "r": -2.071499718967222
+  },
+  "effect_top3_absolute_days_share": 0.231890024531922,
+  "effect_leave_one_affected_day_out_min_r": -4.032076905546569,
+  "effect_leave_one_affected_day_out_max_r": 0.08981275356937424,
+  "mean_r_improvement_per_actual_trade": -0.14295277816517932,
+  "cash_reduction_fraction": -0.38309110366969334,
+  "r_reduction_fraction": -0.3086911182196861,
+  "removed_ids_equal_h1_skip_ids_this_batch": true,
+  "new_branches": [
+    {
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1741327500_141",
+      "off_candidate_events": [
+        {
+          "event_at": "2025.03.07 06:10:00",
+          "event_type": "WAVE1_BREAK",
+          "reason": "",
+          "entry_status": "CANDIDATE",
+          "state": "WAVE1_BREAK_CANDIDATE"
+        },
+        {
+          "event_at": "2025.03.07 06:10:00",
+          "event_type": "SKIP",
+          "reason": "ACTIVE_SETUP_SAME_DIRECTION",
+          "entry_status": "SKIPPED",
+          "state": "WAVE1_TOP_TRACKING"
+        }
+      ],
+      "off_same_direction_position_open_at_candidate": [
+        {
+          "arm": "off",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1741314900_140",
+          "direction": "LONG",
+          "fill_at": "2025.03.07 03:37:00",
+          "exit_at": "2025.03.07 08:00:49",
+          "day": "2025.03.07",
+          "month": "2025.03",
+          "candidate": "2025.03.07 02:40:00",
+          "wave1_start": "2025.03.07 02:10:00",
+          "wave1_peak": "2025.03.07 02:40:00",
+          "entry": 2905.1,
+          "initial_sl": 2901.21,
+          "risk_price": 3.89,
+          "risk_money": 46.68,
+          "volume": 0.12,
+          "net_cash": 45.72,
+          "net_r": 0.9794344473007712,
+          "exit_reason": "DEAL_REASON_SL",
+          "exit_price": 2908.93,
+          "exit_msc": 1741334449748,
+          "entry_msc": 1741318620095,
+          "mfe_r": 1.9074550129,
+          "er": 0.0281146637265712,
+          "roundtrip": 0.971885336273429,
+          "h1_decision": "2025.03.07 03:37:00",
+          "h1_precedence": "ELIGIBLE",
+          "partial_out_deals": 1,
+          "commission": -0.72,
+          "swap": 0.0,
+          "fee": 0.0,
+          "gross_profit": 46.44,
+          "signal_at": "2025.03.07 03:37:00"
+        }
+      ]
+    }
+  ],
+  "off_partial_execution_rejections": [
+    {
+      "event_at": "2025.03.20 01:00:29",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:30",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:31",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:32",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:34",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:43",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:44",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:45",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:46",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:47",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:48",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:49",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:51",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:53",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:54",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    },
+    {
+      "event_at": "2025.03.20 01:00:55",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1742424600_196",
+      "reason": "send 10018 Market closed"
+    }
+  ]
+}

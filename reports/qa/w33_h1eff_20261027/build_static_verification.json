@@ -1,0 +1,445 @@
+{
+  "qa_status": "BUILD_STATIC_PASS_NATIVE_PENDING",
+  "created_at_utc": "2026-10-27T00:56:47.770296+00:00",
+  "checks": [
+    {
+      "check": "previous_sources_presets_unchanged",
+      "pass": true,
+      "detail": {
+        "count": 125,
+        "changed": []
+      }
+    },
+    {
+      "check": "include_exists_Engine.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Engine.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_ConnectedPair.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_ConnectedPair.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_ConnectedWave.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_ConnectedWave.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_ChopDisplay.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_ChopDisplay.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Display.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Display.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_LabelLayout.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_LabelLayout.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Ledger.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Ledger.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Room.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Room.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_BarOrder.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_BarOrder.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_OppositeExit.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_OppositeExit.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_TesterRun.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_TesterRun.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Wave1Target.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Wave1Target.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Chop.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Chop.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_PriorContext.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_PriorContext.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_ScaleOut.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_ScaleOut.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_DayTrade.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_DayTrade.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_DayTradePartial.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_DayTradePartial.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_DayTrade.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_DayTrade.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_H1EfficiencyTests.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_H1EfficiencyTests.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_H1Efficiency.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_H1Efficiency.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_DayTradePartialExecution.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_DayTradePartialExecution.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_DayTradePartialStops.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_DayTradePartialStops.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_H1EfficiencyExecution.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_H1EfficiencyExecution.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_H1EfficiencyTests.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_H1EfficiencyTests.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_exists_H1Efficiency.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "include_inside_repository_H1Efficiency.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "compile_clean_Wave33H1EfficiencyVerifier",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "binary_exists_Wave33H1EfficiencyVerifier",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "binary_fresh_Wave33H1EfficiencyVerifier",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "compile_clean_Wave33H1EfficiencyTests",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "binary_exists_Wave33H1EfficiencyTests",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "binary_fresh_Wave33H1EfficiencyTests",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "ea_exact_54_unique_inputs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "preset_inputs_OFF",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "tester_orders_enabled_OFF",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "v191_exits_fixed_OFF",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "policy_flag_OFF",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "preset_inputs_ON",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "tester_orders_enabled_ON",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "v191_exits_fixed_ON",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "policy_flag_ON",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "one_decision_parameter_only",
+      "pass": true,
+      "detail": [
+        "InpSkipH1LowEfficiency"
+      ]
+    },
+    {
+      "check": "default_policy_disabled",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "45_runtime_checks_declared_not_executed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "offline_analysis_python_compiles",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "powershell_syntax",
+      "pass": true,
+      "detail": {
+        "pass": true,
+        "errors": [],
+        "files": 2
+      }
+    }
+  ],
+  "protected_count": 125,
+  "source_closure_count": 25,
+  "policy_tests": "45 COMPILED; NATIVE EXECUTION PENDING",
+  "native_performance": "NOT_STARTED",
+  "independent_review": "reports/backtest/analysis/wave33_h1_er_compare_20261027/independent_definition_review.md"
+}

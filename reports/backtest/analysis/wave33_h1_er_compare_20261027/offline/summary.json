@@ -1,0 +1,499 @@
+{
+  "protocol": {
+    "lookback": 12,
+    "threshold": 0.25,
+    "skip_inclusive": true,
+    "missing": "ALLOW_WITH_STATUS",
+    "as_of": "ORDER order_sent_at; constituents closed_at AND known_at <= cutoff",
+    "definition": "abs(C[-1]-C[-13])/sum(abs(diff(last13closedH1closes)))",
+    "cash": "saved native cash/initial cash risk, zero for screened trades; no equity/resizing replay",
+    "source_clock": "broker/source; UTC offset unknown",
+    "comparison": "fixed saved-entry screen; not native A/B"
+  },
+  "audit": [
+    {
+      "run": "gold_v180",
+      "source_m5": 5515,
+      "complete_h1": 459,
+      "incomplete_observed_h1": 2,
+      "closed_entries": 28,
+      "first_order": "2025.01.02 08:50:00",
+      "last_source_event": "2025.01.30 03:01:00",
+      "prefix_invariance_checks": 28,
+      "source_sha256": {
+        "config": "112f8f35dfb6e7032d99bb894078de789fb36225a995e6a8985aced58c3e2b44",
+        "events": "27ed086ca1214c0e623de3e75517a69012256373dc59f44f46a8d695dbcb3bee",
+        "upper_bars": "55be7d657822bbf540e78b3c3f7f9e04ea359ee0654835bb432580523cdfc581"
+      }
+    },
+    {
+      "run": "gold_v190",
+      "source_m5": 5069,
+      "complete_h1": 421,
+      "incomplete_observed_h1": 3,
+      "closed_entries": 23,
+      "first_order": "2025.01.02 08:50:00",
+      "last_source_event": "2025.01.28 11:54:00",
+      "prefix_invariance_checks": 23,
+      "source_sha256": {
+        "config": "52dc103fff2d0797277ba0ac3dacbb13d359bd0b5c46f94355fa7fc31e3e50b9",
+        "events": "fe26feb2187a1883cda965553a36be3466e983fd73e5f867580ce3ae06e59362",
+        "upper_bars": "203947f961605b7c878c4f1f3005457ed2f243f75b4b5815d781a933ea91f84f"
+      }
+    },
+    {
+      "run": "usd_v180",
+      "source_m5": 17568,
+      "complete_h1": 1463,
+      "incomplete_observed_h1": 2,
+      "closed_entries": 80,
+      "first_order": "2025.01.02 20:17:00",
+      "last_source_event": "2025.03.27 23:57:59",
+      "prefix_invariance_checks": 80,
+      "source_sha256": {
+        "config": "7a4d590eccc216c459b5afa20ea5fd75eb4b4bd7d40d8a37e5e044f76b43b855",
+        "events": "3d05323c69623529685b38287a4a094b5f9e186cc59554d19a7fcd7113e55a57",
+        "upper_bars": "52fc395dcf7c2b2529130b24a915707b103a2141109362b23b1d929f270ac06f"
+      }
+    }
+  ],
+  "order_fill_feature_drift_count": 0,
+  "summaries": [
+    {
+      "run": "gold_v180",
+      "month": "2025-01",
+      "original_entry_count": 28,
+      "missing_allowed": 1,
+      "baseline": {
+        "n": 28,
+        "wins": 8,
+        "losses": 20,
+        "flat": 0,
+        "entry_days": 16,
+        "net_r": -9.7074344954,
+        "mean_r_per_executed": -0.3466940891214286,
+        "pf_r": 0.5187094426359162,
+        "net_saved_cash": -469.77,
+        "pf_saved_cash": 0.5055052631578948,
+        "gross_win_r": 10.4621581693,
+        "gross_loss_r": 20.169592664699998,
+        "max_loss_streak_exit_order": 9,
+        "additive_exit_order_max_drawdown_r": 11.410087878099997
+      },
+      "filter_on": {
+        "n": 16,
+        "wins": 5,
+        "losses": 11,
+        "flat": 0,
+        "entry_days": 12,
+        "net_r": -5.1908655125,
+        "mean_r_per_executed": -0.32442909453125,
+        "pf_r": 0.531630353657387,
+        "net_saved_cash": -271.0,
+        "pf_saved_cash": 0.49323060812327024,
+        "gross_win_r": 5.8919737642,
+        "gross_loss_r": 11.0828392767,
+        "max_loss_streak_exit_order": 4,
+        "additive_exit_order_max_drawdown_r": 6.428760789099999
+      },
+      "removed": {
+        "n": 12,
+        "wins": 3,
+        "losses": 9,
+        "flat": 0,
+        "entry_days": 7,
+        "net_r": -4.5165689829,
+        "mean_r_per_executed": -0.376380748575,
+        "pf_r": 0.5029501968365734,
+        "net_saved_cash": -198.76999999999998,
+        "pf_saved_cash": 0.5213129756285522,
+        "gross_win_r": 4.5701844051,
+        "gross_loss_r": 9.086753388,
+        "max_loss_streak_exit_order": 6,
+        "additive_exit_order_max_drawdown_r": 6.072504100500001
+      },
+      "delta_net_r": 4.516568982899999,
+      "baseline_r_per_original_entry": -0.3466940891214286,
+      "filter_on_r_per_original_entry": -0.18538805401785716,
+      "delta_r_per_original_entry": 0.1613060351035714,
+      "trade_retention_fraction": 0.5714285714285714,
+      "removed_win_fraction": 0.375,
+      "removed_loss_fraction": 0.45,
+      "baseline_exposure_proxy": {
+        "max_concurrent_original_1r_slots": 1,
+        "total_original_1r_slot_hours": 67.87138888888889
+      },
+      "filter_exposure_proxy": {
+        "max_concurrent_original_1r_slots": 1,
+        "total_original_1r_slot_hours": 6.767222222222222
+      },
+      "uncertainty": {
+        "entry_day_clusters": 16,
+        "bootstrap_replicates": 10000,
+        "seed": 331227,
+        "paired_delta_r_per_original_entry_95pct": [
+          -0.124625317389513,
+          0.424133117009489
+        ],
+        "paired_delta_total_r_resampled_days_95pct": [
+          -3.1971175151,
+          11.9229562323225
+        ],
+        "bootstrap_fraction_delta_positive": 0.8798,
+        "leave_one_day_out_delta_r_min": 2.503383123,
+        "leave_one_day_out_delta_r_max": 6.860831278,
+        "leave_one_day_out_sign_positive_count": 16,
+        "largest_day_abs_delta_r": 2.3442622951
+      }
+    },
+    {
+      "run": "gold_v190",
+      "month": "2025-01",
+      "original_entry_count": 23,
+      "missing_allowed": 1,
+      "baseline": {
+        "n": 23,
+        "wins": 4,
+        "losses": 18,
+        "flat": 1,
+        "entry_days": 15,
+        "net_r": -9.4988119489,
+        "mean_r_per_executed": -0.4129918238652174,
+        "pf_r": 0.44664133209978313,
+        "net_saved_cash": -451.27,
+        "pf_saved_cash": 0.4454507471490366,
+        "gross_win_r": 7.6669297299,
+        "gross_loss_r": 17.1657416788,
+        "max_loss_streak_exit_order": 8,
+        "additive_exit_order_max_drawdown_r": 15.1658359407
+      },
+      "filter_on": {
+        "n": 13,
+        "wins": 3,
+        "losses": 9,
+        "flat": 1,
+        "entry_days": 11,
+        "net_r": -2.3119760508000002,
+        "mean_r_per_executed": -0.1778443116,
+        "pf_r": 0.7449063191164231,
+        "net_saved_cash": -114.77000000000001,
+        "pf_saved_cash": 0.7355164308429737,
+        "gross_win_r": 6.7512670793,
+        "gross_loss_r": 9.0632431301,
+        "max_loss_streak_exit_order": 4,
+        "additive_exit_order_max_drawdown_r": 7.063337391999999
+      },
+      "removed": {
+        "n": 10,
+        "wins": 1,
+        "losses": 9,
+        "flat": 0,
+        "entry_days": 6,
+        "net_r": -7.1868358981,
+        "mean_r_per_executed": -0.71868358981,
+        "pf_r": 0.11300991232474986,
+        "net_saved_cash": -336.5,
+        "pf_saved_cash": 0.11405402559106946,
+        "gross_win_r": 0.9156626506,
+        "gross_loss_r": 8.1024985487,
+        "max_loss_streak_exit_order": 9,
+        "additive_exit_order_max_drawdown_r": 8.1024985487
+      },
+      "delta_net_r": 7.1868358981,
+      "baseline_r_per_original_entry": -0.4129918238652174,
+      "filter_on_r_per_original_entry": -0.10052069786086958,
+      "delta_r_per_original_entry": 0.31247112600434784,
+      "trade_retention_fraction": 0.5652173913043478,
+      "removed_win_fraction": 0.25,
+      "removed_loss_fraction": 0.5,
+      "baseline_exposure_proxy": {
+        "max_concurrent_original_1r_slots": 1,
+        "total_original_1r_slot_hours": 32.3125
+      },
+      "filter_exposure_proxy": {
+        "max_concurrent_original_1r_slots": 1,
+        "total_original_1r_slot_hours": 16.360833333333332
+      },
+      "uncertainty": {
+        "entry_day_clusters": 15,
+        "bootstrap_replicates": 10000,
+        "seed": 331227,
+        "paired_delta_r_per_original_entry_95pct": [
+          0.015867737090447365,
+          0.5220580979515321
+        ],
+        "paired_delta_total_r_resampled_days_95pct": [
+          0.29618612210000006,
+          15.123939031444996
+        ],
+        "bootstrap_fraction_delta_positive": 0.9876,
+        "leave_one_day_out_delta_r_min": 4.1436618242000005,
+        "leave_one_day_out_delta_r_max": 8.1024985487,
+        "leave_one_day_out_sign_positive_count": 15,
+        "largest_day_abs_delta_r": 3.0431740739
+      }
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-01",
+      "original_entry_count": 32,
+      "missing_allowed": 0,
+      "baseline": {
+        "n": 32,
+        "wins": 11,
+        "losses": 21,
+        "flat": 0,
+        "entry_days": 16,
+        "net_r": -9.7941312358,
+        "mean_r_per_executed": -0.30606660111875,
+        "pf_r": 0.578337142328341,
+        "net_saved_cash": -451.31,
+        "pf_saved_cash": 0.5815740921017254,
+        "gross_win_r": 13.4332672832,
+        "gross_loss_r": 23.227398519,
+        "max_loss_streak_exit_order": 5,
+        "additive_exit_order_max_drawdown_r": 11.946470711199998
+      },
+      "filter_on": {
+        "n": 19,
+        "wins": 9,
+        "losses": 10,
+        "flat": 0,
+        "entry_days": 12,
+        "net_r": 1.2166440340999998,
+        "mean_r_per_executed": 0.06403389653157893,
+        "pf_r": 1.1200245884849298,
+        "net_saved_cash": 62.76999999999999,
+        "pf_saved_cash": 1.1342444073741393,
+        "gross_win_r": 11.3532672832,
+        "gross_loss_r": 10.1366232491,
+        "max_loss_streak_exit_order": 3,
+        "additive_exit_order_max_drawdown_r": 4.3848950635
+      },
+      "removed": {
+        "n": 13,
+        "wins": 2,
+        "losses": 11,
+        "flat": 0,
+        "entry_days": 11,
+        "net_r": -11.0107752699,
+        "mean_r_per_executed": -0.8469827130692308,
+        "pf_r": 0.15889051313733912,
+        "net_saved_cash": -514.08,
+        "pf_saved_cash": 0.15863897481219622,
+        "gross_win_r": 2.08,
+        "gross_loss_r": 13.0907752699,
+        "max_loss_streak_exit_order": 6,
+        "additive_exit_order_max_drawdown_r": 11.0107752699
+      },
+      "delta_net_r": 11.0107752699,
+      "baseline_r_per_original_entry": -0.30606660111875,
+      "filter_on_r_per_original_entry": 0.03802012606562499,
+      "delta_r_per_original_entry": 0.344086727184375,
+      "trade_retention_fraction": 0.59375,
+      "removed_win_fraction": 0.18181818181818182,
+      "removed_loss_fraction": 0.5238095238095238,
+      "baseline_exposure_proxy": {
+        "max_concurrent_original_1r_slots": 1,
+        "total_original_1r_slot_hours": 124.9125
+      },
+      "filter_exposure_proxy": {
+        "max_concurrent_original_1r_slots": 1,
+        "total_original_1r_slot_hours": 67.51777777777778
+      },
+      "uncertainty": {
+        "entry_day_clusters": 16,
+        "bootstrap_replicates": 10000,
+        "seed": 331227,
+        "paired_delta_r_per_original_entry_95pct": [
+          0.0966380723300339,
+          0.6209535928950984
+        ],
+        "paired_delta_total_r_resampled_days_95pct": [
+          2.9699489874000005,
+          19.458342487624996
+        ],
+        "bootstrap_fraction_delta_positive": 0.996,
+        "leave_one_day_out_delta_r_min": 8.2086919366,
+        "leave_one_day_out_delta_r_max": 12.0907752699,
+        "leave_one_day_out_sign_positive_count": 16,
+        "largest_day_abs_delta_r": 2.8020833333
+      }
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-02",
+      "original_entry_count": 18,
+      "missing_allowed": 0,
+      "baseline": {
+        "n": 18,
+        "wins": 7,
+        "losses": 11,
+        "flat": 0,
+        "entry_days": 13,
+        "net_r": -0.7325035665999998,
+        "mean_r_per_executed": -0.04069464258888888,
+        "pf_r": 0.9353291908124046,
+        "net_saved_cash": -39.56,
+        "pf_saved_cash": 0.9240370213909905,
+        "gross_win_r": 10.594145594,
+        "gross_loss_r": 11.3266491606,
+        "max_loss_streak_exit_order": 4,
+        "additive_exit_order_max_drawdown_r": 4.5579385922
+      },
+      "filter_on": {
+        "n": 11,
+        "wins": 3,
+        "losses": 8,
+        "flat": 0,
+        "entry_days": 9,
+        "net_r": -1.1597117928999998,
+        "mean_r_per_executed": -0.1054283448090909,
+        "pf_r": 0.8592230570283504,
+        "net_saved_cash": -67.86000000000001,
+        "pf_saved_cash": 0.8208080274623712,
+        "gross_win_r": 7.0782266679,
+        "gross_loss_r": 8.2379384608,
+        "max_loss_streak_exit_order": 4,
+        "additive_exit_order_max_drawdown_r": 4.6637768336
+      },
+      "removed": {
+        "n": 7,
+        "wins": 4,
+        "losses": 3,
+        "flat": 0,
+        "entry_days": 5,
+        "net_r": 0.4272082263,
+        "mean_r_per_executed": 0.061029746614285715,
+        "pf_r": 1.1383128003304623,
+        "net_saved_cash": 28.300000000000004,
+        "pf_saved_cash": 1.1991835585585586,
+        "gross_win_r": 3.5159189261,
+        "gross_loss_r": 3.0887106998,
+        "max_loss_streak_exit_order": 2,
+        "additive_exit_order_max_drawdown_r": 2.0813577586000003
+      },
+      "delta_net_r": -0.4272082263,
+      "baseline_r_per_original_entry": -0.04069464258888888,
+      "filter_on_r_per_original_entry": -0.06442843293888888,
+      "delta_r_per_original_entry": -0.02373379035,
+      "trade_retention_fraction": 0.6111111111111112,
+      "removed_win_fraction": 0.5714285714285714,
+      "removed_loss_fraction": 0.2727272727272727,
+      "baseline_exposure_proxy": {
+        "max_concurrent_original_1r_slots": 1,
+        "total_original_1r_slot_hours": 9.786666666666667
+      },
+      "filter_exposure_proxy": {
+        "max_concurrent_original_1r_slots": 1,
+        "total_original_1r_slot_hours": 6.9238888888888885
+      },
+      "uncertainty": {
+        "entry_day_clusters": 13,
+        "bootstrap_replicates": 10000,
+        "seed": 331227,
+        "paired_delta_r_per_original_entry_95pct": [
+          -0.33361677188130434,
+          0.3192861269559338
+        ],
+        "paired_delta_total_r_resampled_days_95pct": [
+          -6.672315662,
+          5.157676217000001
+        ],
+        "bootstrap_fraction_delta_positive": 0.459,
+        "leave_one_day_out_delta_r_min": -1.4740832262999999,
+        "leave_one_day_out_delta_r_max": 1.3668751314,
+        "leave_one_day_out_sign_positive_count": 2,
+        "largest_day_abs_delta_r": 1.7940833577
+      }
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-03",
+      "original_entry_count": 30,
+      "missing_allowed": 0,
+      "baseline": {
+        "n": 30,
+        "wins": 14,
+        "losses": 16,
+        "flat": 0,
+        "entry_days": 14,
+        "net_r": -1.9732493265000002,
+        "mean_r_per_executed": -0.06577497755,
+        "pf_r": 0.8782909733677062,
+        "net_saved_cash": -102.82000000000002,
+        "pf_saved_cash": 0.8582242874674241,
+        "gross_win_r": 14.2395935587,
+        "gross_loss_r": 16.2128428852,
+        "max_loss_streak_exit_order": 3,
+        "additive_exit_order_max_drawdown_r": 4.1600451011
+      },
+      "filter_on": {
+        "n": 15,
+        "wins": 9,
+        "losses": 6,
+        "flat": 0,
+        "entry_days": 10,
+        "net_r": 3.0489598269,
+        "mean_r_per_executed": 0.20326398846,
+        "pf_r": 1.5024290217152874,
+        "net_saved_cash": 138.13,
+        "pf_saved_cash": 1.5268316869445822,
+        "gross_win_r": 9.1173987409,
+        "gross_loss_r": 6.068438914,
+        "max_loss_streak_exit_order": 2,
+        "additive_exit_order_max_drawdown_r": 2.0684389139999997
+      },
+      "removed": {
+        "n": 15,
+        "wins": 5,
+        "losses": 10,
+        "flat": 0,
+        "entry_days": 11,
+        "net_r": -5.0222091534,
+        "mean_r_per_executed": -0.33481394356,
+        "pf_r": 0.5049281192213886,
+        "net_saved_cash": -240.95000000000002,
+        "pf_saved_cash": 0.47963458880442295,
+        "gross_win_r": 5.1221948178000005,
+        "gross_loss_r": 10.1444039712,
+        "max_loss_streak_exit_order": 4,
+        "additive_exit_order_max_drawdown_r": 7.209004928000001
+      },
+      "delta_net_r": 5.0222091534,
+      "baseline_r_per_original_entry": -0.06577497755,
+      "filter_on_r_per_original_entry": 0.10163199423,
+      "delta_r_per_original_entry": 0.16740697178000002,
+      "trade_retention_fraction": 0.5,
+      "removed_win_fraction": 0.35714285714285715,
+      "removed_loss_fraction": 0.625,
+      "baseline_exposure_proxy": {
+        "max_concurrent_original_1r_slots": 1,
+        "total_original_1r_slot_hours": 13.767222222222223
+      },
+      "filter_exposure_proxy": {
+        "max_concurrent_original_1r_slots": 1,
+        "total_original_1r_slot_hours": 7.876666666666667
+      },
+      "uncertainty": {
+        "entry_day_clusters": 14,
+        "bootstrap_replicates": 10000,
+        "seed": 331227,
+        "paired_delta_r_per_original_entry_95pct": [
+          -0.040673015570892854,
+          0.3381634668359729
+        ],
+        "paired_delta_total_r_resampled_days_95pct": [
+          -1.0998918414499999,
+          10.987506427345
+        ],
+        "bootstrap_fraction_delta_positive": 0.9447,
+        "leave_one_day_out_delta_r_min": 3.9773292163000002,
+        "leave_one_day_out_delta_r_max": 6.159709153400001,
+        "leave_one_day_out_sign_positive_count": 14,
+        "largest_day_abs_delta_r": 1.1375
+      }
+    }
+  ],
+  "native_gate": "DO_NOT_LAUNCH: USD February effect reverses; gold1.80 January remains negative; selected exploratory sample not pristine OOS"
+}

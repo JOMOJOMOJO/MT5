@@ -1,0 +1,49 @@
+CS	0	10:39:59.460	History	XAUUSD+: history synchronized from 2024.01.02 to 2025.04.01
+CS	0	10:40:00.462	Ticks	XAUUSD+: history ticks synchronized from 2025.02.03 to 2025.03.31
+CS	0	10:40:00.535	Tester	XAUUSD+,M1 (Bybit-Live): generating based on real ticks
+CS	3	10:40:01.021	Ticks	XAUUSD+ : 2025.02.27 23:59 - real ticks discarded for 5 minutes out of 1378 total minute bars within a day
+CS	3	10:40:01.021	Ticks	XAUUSD+ : 2025.02.27 23:59 - 169 tick prices mismatch for 5 minute bars
+CS	3	10:40:01.377	Ticks	XAUUSD+ : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1378 total minute bars within a day
+CS	3	10:40:01.377	Ticks	XAUUSD+ : 2025.03.27 23:59 - real ticks discarded for 9 minutes out of 1378 total minute bars within a day
+CS	3	10:40:01.377	Ticks	XAUUSD+ : 2025.03.27 23:59 - 1297 tick prices mismatch for 9 minute bars
+CS	0	10:40:01.405	Ticks	XAUUSD+ : real ticks begin from 2025.02.03 00:00:00
+CS	3	10:40:01.405	Ticks	XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 56327 total minute bars, every tick generation used
+CS	3	10:40:01.405	Ticks	XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  real ticks discarded for 14 minutes of 56327 total minute bars, every tick generation used
+CS	3	10:40:01.405	Ticks	XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  last prices absent for 2741 minute bars, bid prices used
+CS	2	10:40:31.814	Trades	2025.03.20 01:00:29   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.814	Trades	2025.03.20 01:00:30   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.814	Trades	2025.03.20 01:00:31   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.815	Trades	2025.03.20 01:00:32   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.815	Trades	2025.03.20 01:00:34   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.815	Trades	2025.03.20 01:00:43   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.815	Trades	2025.03.20 01:00:44   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.816	Trades	2025.03.20 01:00:45   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.816	Trades	2025.03.20 01:00:46   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.816	Trades	2025.03.20 01:00:47   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.816	Trades	2025.03.20 01:00:48   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.817	Trades	2025.03.20 01:00:49   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.817	Trades	2025.03.20 01:00:51   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.817	Trades	2025.03.20 01:00:53   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.817	Trades	2025.03.20 01:00:54   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	2	10:40:31.817	Trades	2025.03.20 01:00:55   failed market sell 0.1 XAUUSD+, close #131 buy 0.2 XAUUSD+ 3046.21 [Market closed]
+CS	0	10:40:31.817	Wave33H1EfficiencyVerifier (XAUUSD+,M1)	2025.03.20 01:01:00   W33 2025.03.20 01:01:00 W33_XAUUSD+_5_1_LONG_1742424600_196 DAY_PARTIAL_REQUEST OBSERVATION volume=0.10000000; SL unchanged; await confirmed deals
+CS	0	10:40:31.817	Trade	2025.03.20 01:01:00   market sell 0.1 XAUUSD+, close #131 (3049.00 / 3049.07)
+CS	0	10:40:31.817	Trades	2025.03.20 01:01:00   deal #132 sell 0.1 XAUUSD+ at 3049.00 done (based on order #132)
+CS	0	10:40:31.817	Trade	2025.03.20 01:01:00   deal performed [#132 sell 0.1 XAUUSD+ at 3049.00]
+CS	0	10:40:31.817	Trade	2025.03.20 01:01:00   order performed sell 0.1 at 3049.00 [#132 sell 0.1 XAUUSD+ at 3049.00]
+CS	0	10:40:31.819	Wave33H1EfficiencyVerifier (XAUUSD+,M1)	2025.03.20 01:01:00   W33 2025.03.20 01:01:00 W33_XAUUSD+_5_1_LONG_1742424600_196 DAY_PARTIAL_ACCEPTED OBSERVATION order=132
+CS	0	10:40:31.819	Wave33H1EfficiencyVerifier (XAUUSD+,M1)	2025.03.20 01:01:00   W33 2025.03.20 01:01:00 W33_XAUUSD+_5_1_LONG_1742424600_196 PARTIAL_EXIT OBSERVATION DAY_PARTIAL_TP1
+CS	0	10:40:31.819	Wave33H1EfficiencyVerifier (XAUUSD+,M1)	2025.03.20 01:01:00   W33 2025.03.20 01:01:00 W33_XAUUSD+_5_1_LONG_1742424600_196 DAY_PARTIAL_FILLED OBSERVATION deal=132 volume=0.10000000 confirmed=0.10000000
+CS	0	10:40:31.819	Wave33H1EfficiencyVerifier (XAUUSD+,M1)	2025.03.20 01:01:00   W33 2025.03.20 01:01:00 W33_XAUUSD+_5_1_LONG_1742424600_196 DAYTRADE_PARTIAL_CLOSE OBSERVATION DAY_PARTIAL_TP1
+CS	0	10:40:31.819	Wave33H1EfficiencyVerifier (XAUUSD+,M1)	2025.03.20 01:01:00   W33 2025.03.20 01:01:00 W33_XAUUSD+_5_1_LONG_1742424600_196 DAY_PARTIAL_REQUEST_SETTLED OBSERVATION confirmed order deal volume accounted; retry only remaining part of original half
+CS	0	10:40:31.849	Trade	2025.03.20 01:19:36   stop loss triggered #131 buy 0.1 XAUUSD+ 3046.21 sl: 3048.50 [#133 sell 0.1 XAUUSD+ at 3048.50]
+CS	0	10:40:31.849	Trades	2025.03.20 01:19:36   deal #133 sell 0.1 XAUUSD+ at 3048.49 done (based on order #133)
+CS	0	10:40:31.849	Trade	2025.03.20 01:19:36   deal performed [#133 sell 0.1 XAUUSD+ at 3048.49]
+CS	0	10:40:31.849	Trade	2025.03.20 01:19:36   order performed sell 0.1 at 3048.49 [#133 sell 0.1 XAUUSD+ at 3048.50]
+CS	0	10:40:31.849	Wave33H1EfficiencyVerifier (XAUUSD+,M1)	2025.03.20 01:19:36   W33 2025.03.20 01:19:36 W33_XAUUSD+_5_1_LONG_1742424600_196 EXIT OBSERVATION DEAL_REASON_SL
+CS	0	10:40:31.849	Wave33H1EfficiencyVerifier (XAUUSD+,M1)	2025.03.20 01:19:36   W33 2025.03.20 01:19:36 W33_XAUUSD+_5_1_LONG_1742424600_196 DAYTRADE_POSITION_CLOSED OBSERVATION DEAL_REASON_SL
+CS	0	10:40:31.850	Wave33H1EfficiencyVerifier (XAUUSD+,M1)	2025.03.20 01:19:36   W33 2025.03.20 01:19:36 W33_XAUUSD+_5_1_LONG_1742424600_196 COMPLETED OBSERVATION 
+CS	0	10:40:43.474	Tester	final balance 4710.33 USD
+CS	0	10:40:43.474	Wave33H1EfficiencyVerifier (XAUUSD+,M1)	2025.03.31 23:57:54   W33 2025.03.31 23:57:54 W33_XAUUSD+_5_1_LONG_1743455700_243 TEST_END OBSERVATION CENSORED_AT_STOP reason=1
+CS	0	10:40:43.498	Tester	XAUUSD+,M1: 8306849 ticks, 56327 bars generated. Environment synchronized in 0:00:01.791. Test passed in 0:00:43.047 (including ticks preprocessing 0:00:00.734).
+CS	0	10:40:43.498	Tester	test Experts\Wave33H1EfficiencyVerifier.ex5 on XAUUSD+,M1 thread finished

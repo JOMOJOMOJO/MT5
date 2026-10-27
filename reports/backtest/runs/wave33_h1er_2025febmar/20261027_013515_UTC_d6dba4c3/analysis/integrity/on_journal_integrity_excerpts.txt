@@ -1,0 +1,16 @@
+CS	0	10:39:58.071	History	XAUUSD+: history synchronized from 2024.01.02 to 2025.04.01
+CS	0	10:39:58.966	Ticks	XAUUSD+: history ticks synchronized from 2025.02.03 to 2025.03.31
+CS	0	10:39:59.024	Tester	XAUUSD+,M1 (Bybit-Live): generating based on real ticks
+CS	3	10:39:59.523	Ticks	XAUUSD+ : 2025.02.27 23:59 - real ticks discarded for 5 minutes out of 1378 total minute bars within a day
+CS	3	10:39:59.523	Ticks	XAUUSD+ : 2025.02.27 23:59 - 169 tick prices mismatch for 5 minute bars
+CS	3	10:39:59.870	Ticks	XAUUSD+ : 2025.03.27 23:59 - real ticks absent for 6 minutes out of 1378 total minute bars within a day
+CS	3	10:39:59.870	Ticks	XAUUSD+ : 2025.03.27 23:59 - real ticks discarded for 9 minutes out of 1378 total minute bars within a day
+CS	3	10:39:59.870	Ticks	XAUUSD+ : 2025.03.27 23:59 - 1297 tick prices mismatch for 9 minute bars
+CS	0	10:39:59.905	Ticks	XAUUSD+ : real ticks begin from 2025.02.03 00:00:00
+CS	3	10:39:59.905	Ticks	XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  real ticks absent for 6 minutes of 56327 total minute bars, every tick generation used
+CS	3	10:39:59.905	Ticks	XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  real ticks discarded for 14 minutes of 56327 total minute bars, every tick generation used
+CS	3	10:39:59.905	Ticks	XAUUSD+ : 2025.02.01 00:00 - 2025.04.01 00:00  last prices absent for 2741 minute bars, bid prices used
+CS	0	10:40:35.434	Tester	final balance 4599.36 USD
+CS	0	10:40:35.434	Wave33H1EfficiencyVerifier (XAUUSD+,M1)	2025.03.31 23:57:54   W33 2025.03.31 23:57:54 W33_XAUUSD+_5_1_LONG_1743455700_243 TEST_END OBSERVATION CENSORED_AT_STOP reason=1
+CS	0	10:40:35.458	Tester	XAUUSD+,M1: 8306849 ticks, 56327 bars generated. Environment synchronized in 0:00:01.345. Test passed in 0:00:36.505 (including ticks preprocessing 0:00:00.750).
+CS	0	10:40:35.459	Tester	test Experts\Wave33H1EfficiencyVerifier.ex5 on XAUUSD+,M1 thread finished
