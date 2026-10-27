@@ -2,15 +2,15 @@
 param(
  [string]$TerminalRoot="$env:LOCALAPPDATA\CodexMT5Wave33\20261020_134635_b2cb2b0b",
  [string]$EvidenceBatch='reports/qa/wave33_visual_20261020/20261020_134635_b2cb2b0b',
- [ValidatePattern('^[A-Za-z0-9][A-Za-z0-9_.#-]*$')][string]$SourceSymbol='XAUUSD',
+ [ValidatePattern('^[A-Za-z0-9][A-Za-z0-9_.#+-]*$')][string]$SourceSymbol='XAUUSD',
  [string]$Output='reports/qa/wave33_visual_20261020/recorded_drawing_review_final',
  [ValidateSet('A','B')][string[]]$Arms=@('A','B'),
- [ValidateRange(0,4)][int[]]$Cases=@(0,1,2,3,4),
+ [ValidateRange(0,19)][int[]]$Cases=@(0,1,2,3,4),
  [switch]$Execute
 )
 $ErrorActionPreference='Stop'
 if($null -eq $Arms -or $Arms.Count -eq 0){throw 'Select at least one arm (A or B)'}
-if($null -eq $Cases -or $Cases.Count -eq 0){throw 'Select at least one case (0 through 4)'}
+if($null -eq $Cases -or $Cases.Count -eq 0){throw 'Select at least one case (0 through 19)'}
 $Arms=@($Arms|ForEach-Object{$_.ToUpperInvariant()})
 if(@($Arms|Select-Object -Unique).Count -ne $Arms.Count){throw 'Duplicate arms are not supported'}
 if(@($Cases|Select-Object -Unique).Count -ne $Cases.Count){throw 'Duplicate cases are not supported'}

@@ -19,11 +19,16 @@ private:
    W33TriggerMode m_trigger_mode;
    string m_ids[],m_levels[],m_trends[];
    bool m_decision_live[],m_risk_live[];
+   int m_revision[];
    W33Pivot m_previous[2];
    datetime m_plot_previous[2];
    bool m_have_previous[2];
    string m_last_path[2],m_seen[];
    string Name(const string id,const string suffix){return m_prefix+W33Hash(id)+"_"+suffix;}
+   // Revision zero retains the original names for old recorded CSVs. Every
+   // later anchor set owns distinct objects so a re-anchor cannot rewrite it.
+   string RevisionSuffix(const string suffix,const int revision){return suffix+(revision>0?"_r"+IntegerToString(revision):"");}
+   string WaveName(const string id,const string suffix,const int revision){return Name(id,RevisionSuffix(suffix,revision));}
    string TF(const ENUM_TIMEFRAMES tf){string t=EnumToString(tf);StringReplace(t,"PERIOD_","");return t;}
    int Step(){return (int)MathMax(60,MathMax(PeriodSeconds((ENUM_TIMEFRAMES)_Period),PeriodSeconds(m_lower)));}
    string Clock(const datetime t){return TimeToString(t,TIME_DATE|TIME_SECONDS);}
@@ -44,12 +49,41 @@ private:
       if(s.lower_unmet_reason!="" && StringLen(detail+unmet)<=120)detail+=unmet;
       return detail;
      }
+   bool Wave1TargetExtended(const W33Setup &s,const datetime at)
+     {
+      // The final decision snapshot owns the target. A later drawing event
+      // must never turn an unapproved/capped target into a W1 extension.
+      return s.tp_extended_to_wave1 && s.tp_rr_price>0 && s.tp_wave1_target_price>0 &&
+             s.wave1_peak_known_at>0 && s.wave1_peak_known_at<=at &&
+             s.direction*(s.tp_price-s.tp_rr_price)>_Point*0.5;
+     }
+   void RiskCaptions(const W33Setup &s,const datetime at)
+     {
+      bool extended=Wave1TargetExtended(s,at);
+      Text(Name(s.setup_id,"SL_label"),at+Step(),s.sl_price,"SL",clrTomato,ANCHOR_LEFT_LOWER);
+      Text(Name(s.setup_id,"TP_label"),at+Step(),s.tp_price,extended?"TP ①手前":"TP",clrLimeGreen,
+           extended?(s.direction>0?ANCHOR_LEFT_UPPER:ANCHOR_LEFT_LOWER):ANCHOR_LEFT_LOWER);
+      // Compact ASCII tooltips retain numeric prices and availability dates
+      // on builds that truncate long/native-language object tooltips.
+      string finalTip="TP "+DoubleToString(s.tp_price,_Digits)+" | actual "+DoubleToString(s.actual_rr,2)+"R";
+      if(s.tp_rr_price>0)finalTip+=" | RR-only "+DoubleToString(s.tp_rr_price,_Digits);
+      if(s.tp_adjustment_reason!="" && StringLen(finalTip+" | "+s.tp_adjustment_reason)<=120)finalTip+=" | "+s.tp_adjustment_reason;
+      Tip(Name(s.setup_id,"TP"),finalTip);
+      if(extended)
+        {
+         string sourceTip="W1 "+DoubleToString(s.wave1_peak_price,_Digits)+" | swing "+Clock(s.wave1_peak_time)+
+                          " | known "+Clock(s.wave1_peak_known_at)+" | buffer "+DoubleToString(s.tp_wave1_buffer_points,2)+"pt";
+         Tip(Name(s.setup_id,"TP_label"),sourceTip);
+        }
+      else Tip(Name(s.setup_id,"TP_label"),finalTip);
+     }
    void Tip(const string name,const string text){if(m_enabled && ObjectFind(0,name)>=0)ObjectSetString(0,name,OBJPROP_TOOLTIP,text);}
    int Lane(const string id)
      {
       for(int i=0;i<ArraySize(m_ids);i++)if(m_ids[i]==id)return i;
       int n=ArraySize(m_ids);ArrayResize(m_ids,n+1);ArrayResize(m_levels,n+1);ArrayResize(m_trends,n+1);
       ArrayResize(m_decision_live,n+1);ArrayResize(m_risk_live,n+1);
+      ArrayResize(m_revision,n+1);m_revision[n]=0;
       m_ids[n]=id;m_levels[n]="";m_trends[n]="";m_decision_live[n]=true;m_risk_live[n]=false;return n;
      }
    void Text(const string name,const datetime at,const double price,const string text,const color c,const int anchor=ANCHOR_LEFT_LOWER,const int size=9)
@@ -108,9 +142,9 @@ private:
       ObjectMove(0,name,1,end,p);ObjectSetInteger(0,name,OBJPROP_RAY_RIGHT,false);
       if(mute && !m_details)ObjectSetInteger(0,name,OBJPROP_COLOR,clrSlateGray);
      }
-   void FibEnd(const string id,const datetime at)
+   void FibEnd(const string id,const datetime at,const int revision=0)
      {
-      string n=Name(id,"fib");if(ObjectFind(0,n)<0)return;
+      string n=WaveName(id,"fib",revision);if(ObjectFind(0,n)<0)return;
       datetime a=(datetime)ObjectGetInteger(0,n,OBJPROP_TIME,0);
       ObjectMove(0,n,1,(datetime)MathMax((long)a+Step(),(long)at),ObjectGetDouble(0,n,OBJPROP_PRICE,1));
      }
@@ -118,7 +152,7 @@ private:
      {
       if(!m_decision_live[lane])return;
       CloseLine(Name(m_ids[lane],"upper_break"),at);CloseLine(m_levels[lane],at);CloseLine(m_trends[lane],at);
-      FibEnd(m_ids[lane],at);m_decision_live[lane]=false;
+      FibEnd(m_ids[lane],at,m_revision[lane]);m_decision_live[lane]=false;
      }
    void CloseRisk(const int lane,const datetime at)
      {
@@ -134,13 +168,38 @@ private:
         {
          if(m_decision_live[i])
            {
-            ExtendLine(Name(m_ids[i],"upper_break"),at);ExtendLine(m_levels[i],at);ExtendLine(m_trends[i],at);FibEnd(m_ids[i],at);
+            ExtendLine(Name(m_ids[i],"upper_break"),at);ExtendLine(m_levels[i],at);ExtendLine(m_trends[i],at);FibEnd(m_ids[i],at,m_revision[i]);
            }
          if(m_risk_live[i])
            {
             ExtendLine(Name(m_ids[i],"SL"),at);ExtendLine(Name(m_ids[i],"TP"),at);ExtendLine(Name(m_ids[i],"obstacle"),at);ExtendLine(Name(m_ids[i],"wave1_room"),at);
            }
         }
+     }
+   void ArchiveAnchors(const W33Setup &s,const int lane,const datetime at)
+     {
+      string id=s.setup_id;int revision=s.wave1_revision;
+      FibEnd(id,at,revision);
+      string old=WaveName(id,"W1",revision),caption=WaveName(id,"W1_known",revision);
+      if(ObjectFind(0,old)>=0)
+        {
+         ObjectSetInteger(0,old,OBJPROP_COLOR,clrSlateGray);ObjectSetInteger(0,old,OBJPROP_WIDTH,1);ObjectSetInteger(0,old,OBJPROP_STYLE,STYLE_DASH);
+         Tip(old,"W1 r"+IntegerToString(revision)+" superseded "+Clock(at)+" | original swing "+Clock(s.wave1_peak_time)+" | originally known "+Clock(s.wave1_peak_known_at));
+        }
+      if(ObjectFind(0,caption)>=0)
+        {
+         ObjectSetString(0,caption,OBJPROP_TEXT,"①旧終点 r"+IntegerToString(revision));ObjectSetInteger(0,caption,OBJPROP_COLOR,clrSlateGray);
+         Tip(caption,"W1 r"+IntegerToString(revision)+" | swing "+Clock(s.wave1_peak_time)+" | known "+Clock(s.wave1_peak_known_at)+" | superseded "+Clock(at));
+        }
+      string fib=WaveName(id,"fib",revision);if(ObjectFind(0,fib)>=0)ObjectSetInteger(0,fib,OBJPROP_COLOR,clrSlateGray);
+      string leg=WaveName(id,"W2_leg",revision),label=WaveName(id,"W2",revision);
+      if(ObjectFind(0,leg)>=0){ObjectSetInteger(0,leg,OBJPROP_COLOR,clrSlateGray);ObjectSetInteger(0,leg,OBJPROP_WIDTH,1);ObjectSetInteger(0,leg,OBJPROP_STYLE,STYLE_DOT);}
+      if(ObjectFind(0,label)>=0){ObjectSetInteger(0,label,OBJPROP_COLOR,clrSlateGray);ObjectSetString(0,label,OBJPROP_TEXT,"②旧観測 r"+IntegerToString(revision));}
+      // Dots remain as contemporaneous observation history, never as a new
+      // orange W2 after the anchors have been withdrawn.
+      string history=WaveName(id,"W2_history",revision)+"_";
+      for(int j=0;j<ObjectsTotal(0);j++){string n=ObjectName(0,j);if(StringFind(n,history)==0)ObjectSetInteger(0,n,OBJPROP_COLOR,clrSlateGray);}
+      CloseLine(m_levels[lane],at);CloseLine(m_trends[lane],at);m_levels[lane]="";m_trends[lane]="";
      }
    datetime PlotTime(const datetime source,const double price,const ENUM_TIMEFRAMES tf,const bool high,const datetime known)
      {
@@ -180,8 +239,27 @@ private:
          // Keep the first adoption timestamp when SIGNAL and RISK_CHECK carry
          // the same immutable source snapshot on the same execution tick.
          datetime labelAt=adopted+Step();
-         Text(Name(id,suffix+"_label"),labelAt,price,label,c,
-              firstWave?(s.direction>0?ANCHOR_LEFT_UPPER:ANCHOR_LEFT_LOWER):(s.direction>0?ANCHOR_LEFT_LOWER:ANCHOR_LEFT_UPPER),8);
+         double labelPrice=price;
+         double risk=s.entry_price>0 && s.sl_price>0?MathAbs(s.entry_price-s.sl_price):0;
+         bool closeReferences=false;
+         // Separate nearby reference captions by role. The horizontal source
+         // levels keep their exact prices; only the text occupies a new lane.
+         if(risk>0 && s.wave1_peak_price>0 && s.nearest_obstacle_price>0 &&
+            MathAbs(s.wave1_peak_price-s.nearest_obstacle_price)<risk*0.15)
+           {
+            closeReferences=true;
+            double hi=MathMax(s.wave1_peak_price,s.nearest_obstacle_price),lo=MathMin(s.wave1_peak_price,s.nearest_obstacle_price);
+            if(firstWave)labelPrice=s.direction>0?hi+risk*0.02:lo-risk*0.02;
+            else labelPrice=s.direction>0?lo-risk*0.02:hi+risk*0.02;
+           }
+         if(MathAbs(labelPrice-price)>_Point*0.1)
+           {
+            Segment(Name(id,suffix+"_caption_leader"),adopted,price,labelAt,labelPrice,c,false,1,STYLE_DOT);
+            Tip(Name(id,suffix+"_caption_leader"),detail);
+           }
+         int captionAnchor=s.direction>0?ANCHOR_LEFT_LOWER:ANCHOR_LEFT_UPPER;
+         if(!firstWave && closeReferences)captionAnchor=s.direction>0?ANCHOR_LEFT_UPPER:ANCHOR_LEFT_LOWER;
+         Text(Name(id,suffix+"_label"),labelAt,labelPrice,label,c,captionAnchor,8);
          Tip(Name(id,suffix+"_label"),detail);
          if(source>0)
            {
@@ -257,6 +335,7 @@ private:
      }
    string Reason(const string reason)
      {
+      if(StringFind(reason,"CONNECTED_OPPOSITE_W1_CANDIDATE")>=0)return "接続する逆①候補";
       if(StringFind(reason,"INITIAL_MOVE_MISSED")>=0)return "初動を逃したため終了";
       if(StringFind(reason,"WAVE1_ROOM_TOO_SMALL")>=0)return "①終点まで余地不足";
       if(StringFind(reason,"WAVE1_ORIGIN_BROKEN")>=0)return "起点を突破";
@@ -264,6 +343,7 @@ private:
       if(StringFind(reason,"ACTIVE_SETUP_SAME_DIRECTION")>=0)return "別の波を監視中";
       if(StringFind(reason,"NO_LOWER_REVERSAL")>=0)return "転換なし";
       if(StringFind(reason,"OBSTACLE")>=0)return "抵抗が近い";
+      if(StringFind(reason,"FIB_CLOSE_TOO_DEEP")>=0)return "上位足終値の押しが深い";
       if(StringFind(reason,"FIB_TOO_DEEP")>=0)return "押しが深い";
       if(StringFind(reason,"CENSORED")>=0)return "検証終了";
       return "条件未成立";
@@ -272,7 +352,7 @@ public:
    void Init(const string prefix,const bool enabled)
      {
       m_prefix=prefix;m_enabled=enabled;m_serial=0;m_panel=false;m_details=false;m_paths=true;m_panel_clean=false;m_trigger_mode=W33_PIVOT_BREAK;
-      ArrayResize(m_ids,0);ArrayResize(m_levels,0);ArrayResize(m_trends,0);ArrayResize(m_seen,0);ArrayResize(m_decision_live,0);ArrayResize(m_risk_live,0);
+      ArrayResize(m_ids,0);ArrayResize(m_levels,0);ArrayResize(m_trends,0);ArrayResize(m_seen,0);ArrayResize(m_decision_live,0);ArrayResize(m_risk_live,0);ArrayResize(m_revision,0);
       for(int i=0;i<2;i++){m_have_previous[i]=false;m_last_path[i]="";m_plot_previous[i]=0;ZeroMemory(m_previous[i]);}
       if(enabled){ChartSetInteger(0,CHART_SHIFT,true);ChartSetDouble(0,CHART_SHIFT_SIZE,20.0);}
      }
@@ -287,6 +367,9 @@ public:
       W33Setup s=e.setup;string id=s.setup_id;if(id=="")return;
       int lane=Lane(id);
       string unique=IntegerToString(++m_serial),info=id+" | "+e.event_type+" | known "+Clock(e.at);
+      if(e.event_type=="WAVE1_EXTENSION_PREVIOUS_ANCHORS")ArchiveAnchors(s,lane,e.at);
+      if(e.event_type=="WAVE1_EXTENSION_STARTED" || e.event_type=="WAVE1_EXTENSION_TRACKING" || e.event_type=="WAVE1_EXTENDED_CONFIRMED")
+         m_revision[lane]=s.wave1_revision;
       if(e.event_type=="WAVE1_BREAK")
         {
          Level(id,"upper_break",e.at,s.upper_break_level,clrSteelBlue,STYLE_DASH);
@@ -310,29 +393,50 @@ public:
          Tip(Name(id,"provisional_history_"+unique),info+" | provisional extreme "+Clock(s.wave1_provisional_time));
          Tip(Name(id,"provisional"),info+" | provisional W1, not a confirmed swing");
         }
-      if(e.event_type=="WAVE1_PEAK_CONFIRMED")
+      if(e.event_type=="WAVE1_EXTENSION_STARTED" || e.event_type=="WAVE1_EXTENSION_TRACKING")
+        {
+         datetime a=PlotTime(s.wave1_start_time,s.wave1_start_price,s.upper_tf,s.direction<0,e.at);
+         string provisional=WaveName(id,"provisional",s.wave1_revision),caption=WaveName(id,"extension_tracking",s.wave1_revision);
+         Segment(provisional,a,s.wave1_start_price,s.wave1_provisional_time,s.wave1_provisional_price,clrSlateGray,false,1,STYLE_DOT);
+         Tip(provisional,"W1 r"+IntegerToString(s.wave1_revision)+" PROVISIONAL | observed "+Clock(e.at)+" | extreme "+Clock(s.wave1_provisional_time));
+         Text(caption,s.wave1_provisional_time,s.wave1_provisional_price,"①延長中 r"+IntegerToString(s.wave1_revision),clrSlateGray,s.direction>0?ANCHOR_LEFT_LOWER:ANCHOR_LEFT_UPPER,9);
+         Tip(caption,"W1 extension started "+Clock(s.wave1_extension_started_at)+" | known "+Clock(e.at)+" | endpoint not confirmed");
+         Dot(Name(id,"ext_seen_"+unique),e.at,s.wave1_provisional_price,clrSlateGray);
+         Tip(Name(id,"ext_seen_"+unique),"W1 r"+IntegerToString(s.wave1_revision)+" extreme observed "+Clock(e.at));
+        }
+      if((e.event_type=="WAVE1_PEAK_CONFIRMED" || e.event_type=="WAVE1_EXTENDED_CONFIRMED") && s.wave1_peak_known_at<=e.at)
         {
          datetime a=PlotTime(s.wave1_start_time,s.wave1_start_price,s.upper_tf,s.direction<0,e.at);
          datetime b=PlotTime(s.wave1_peak_time,s.wave1_peak_price,s.upper_tf,s.direction>0,e.at);
-         ObjectDelete(0,Name(id,"provisional"));Segment(Name(id,"W1"),a,s.wave1_start_price,b,s.wave1_peak_price,clrDodgerBlue,false,3);
-         Tip(Name(id,"W1"),info+" | start "+Clock(s.wave1_start_time)+" | peak "+Clock(s.wave1_peak_time));
-         Text(Name(id,"W1_known"),b,s.wave1_peak_price,"① 第1波",clrDodgerBlue,s.direction>0?ANCHOR_LEFT_LOWER:ANCHOR_LEFT_UPPER,10);
-         Tip(Name(id,"W1_known"),info+" | swing at "+Clock(s.wave1_peak_time)+" | confirmed "+Clock(s.wave1_peak_known_at));
+         int revision=s.wave1_revision;m_revision[lane]=revision;
+         ObjectDelete(0,WaveName(id,"provisional",revision));ObjectDelete(0,WaveName(id,"extension_tracking",revision));
+         string line=WaveName(id,"W1",revision),caption=WaveName(id,"W1_known",revision);
+         Segment(line,a,s.wave1_start_price,b,s.wave1_peak_price,clrDodgerBlue,false,3);
+         Tip(line,"W1 r"+IntegerToString(revision)+" | start "+Clock(s.wave1_start_time)+" | peak "+Clock(s.wave1_peak_time)+" | known "+Clock(s.wave1_peak_known_at));
+         Text(caption,b,s.wave1_peak_price,revision>0?"① 第1波 延長r"+IntegerToString(revision):"① 第1波",clrDodgerBlue,s.direction>0?ANCHOR_LEFT_LOWER:ANCHOR_LEFT_UPPER,10);
+         Tip(caption,"W1 r"+IntegerToString(revision)+" | swing "+Clock(s.wave1_peak_time)+" | confirmed "+Clock(s.wave1_peak_known_at));
+         if(revision>0)
+           {
+            Dot(WaveName(id,"ext_known",revision),e.at,s.wave1_peak_price,clrDodgerBlue,2);
+            Tip(WaveName(id,"ext_known",revision),"W1 r"+IntegerToString(revision)+" confirmed now "+Clock(e.at)+" | swing "+Clock(s.wave1_peak_time));
+           }
         }
-      if(m_decision_live[lane] && s.wave1_peak_fixed && s.fib_382_price>0)
+      if(m_decision_live[lane] && s.wave1_peak_fixed && s.fib_382_price>0 && s.wave1_peak_known_at<=e.at &&
+         e.event_type!="WAVE1_EXTENSION_PREVIOUS_ANCHORS")
         {
-         string n=Name(id,"fib");
+         string n=WaveName(id,"fib",s.wave1_revision);
          if(ObjectFind(0,n)<0)ObjectCreate(0,n,OBJ_RECTANGLE,0,s.wave1_peak_known_at,s.fib_382_price,e.at,s.fib_618_price);
-         FibEnd(id,e.at);ObjectSetInteger(0,n,OBJPROP_COLOR,clrDarkOrange);ObjectSetInteger(0,n,OBJPROP_STYLE,STYLE_DOT);
-         ObjectSetInteger(0,n,OBJPROP_FILL,false);ObjectSetInteger(0,n,OBJPROP_BACK,true);Tip(n,id+" | Fib 38.2-61.8% | anchors known "+Clock(s.wave1_peak_known_at));
+         FibEnd(id,e.at,s.wave1_revision);ObjectSetInteger(0,n,OBJPROP_COLOR,clrDarkOrange);ObjectSetInteger(0,n,OBJPROP_STYLE,STYLE_DOT);
+         ObjectSetInteger(0,n,OBJPROP_FILL,false);ObjectSetInteger(0,n,OBJPROP_BACK,true);Tip(n,"W1 r"+IntegerToString(s.wave1_revision)+" | Fib 38.2-61.8% | anchors known "+Clock(s.wave1_peak_known_at));
         }
       if((e.event_type=="WAVE2_EXTREME" || e.event_type=="FIB_TOUCH") && s.wave2_extreme_price>0)
         {
          datetime peak=PlotTime(s.wave1_peak_time,s.wave1_peak_price,s.upper_tf,s.direction>0,e.at);
-         Segment(Name(id,"W2_leg"),peak,s.wave1_peak_price,s.wave2_extreme_time,s.wave2_extreme_price,clrDarkOrange,false,2);
-         Dot(Name(id,"W2_history_"+unique),s.wave2_extreme_time,s.wave2_extreme_price,clrDarkOrange);Tip(Name(id,"W2_history_"+unique),info+" | extreme "+Clock(s.wave2_extreme_time)+" | deepest "+DoubleToString(s.retracement_ratio*100,1)+"%");
-         Text(Name(id,"W2"),s.wave2_extreme_time,s.wave2_extreme_price,"② 押し・戻り",clrDarkOrange,s.direction>0?ANCHOR_LEFT_UPPER:ANCHOR_LEFT_LOWER,10);
-         Tip(Name(id,"W2"),info+" | latest observed extreme "+Clock(s.wave2_extreme_time)+" | deepest "+DoubleToString(s.retracement_ratio*100,1)+"%");
+         string leg=WaveName(id,"W2_leg",s.wave1_revision),label=WaveName(id,"W2",s.wave1_revision),history=WaveName(id,"W2_history",s.wave1_revision)+"_"+unique;
+         Segment(leg,peak,s.wave1_peak_price,s.wave2_extreme_time,s.wave2_extreme_price,clrDarkOrange,false,2);
+         Dot(history,s.wave2_extreme_time,s.wave2_extreme_price,clrDarkOrange);Tip(history,info+" | extreme "+Clock(s.wave2_extreme_time)+" | deepest "+DoubleToString(s.retracement_ratio*100,1)+"%");
+         Text(label,s.wave2_extreme_time,s.wave2_extreme_price,"② 押し・戻り"+(s.wave1_revision>0?" r"+IntegerToString(s.wave1_revision):""),clrDarkOrange,s.direction>0?ANCHOR_LEFT_UPPER:ANCHOR_LEFT_LOWER,10);
+         Tip(label,info+" | latest observed extreme "+Clock(s.wave2_extreme_time)+" | deepest "+DoubleToString(s.retracement_ratio*100,1)+"%");
          if(m_details)Text(Name(id,"W2_detail_"+unique),e.at,s.wave2_extreme_price,"W2 "+DoubleToString(s.retracement_ratio*100,1)+"%",clrDarkOrange);
         }
       if(e.event_type=="LOWER_STRUCTURE_CONFIRMED" || e.event_type=="TRIGGER_LINE_UPDATED")
@@ -359,22 +463,85 @@ public:
          Text(Name(id,"entry_text"),e.at,price,(s.direction>0?"ENTRY 買い":"ENTRY 売り")+(e.event_type=="FILL"?" 約定":""),clrLimeGreen,s.direction>0?ANCHOR_LEFT_UPPER:ANCHOR_LEFT_LOWER,10);
          Tip(Name(id,"entry_text"),LowerTip(s,e.at));
          Level(id,"SL",e.at,s.sl_price,clrTomato);Level(id,"TP",e.at,s.tp_price,clrLimeGreen);
-         Text(Name(id,"SL_label"),e.at+Step(),s.sl_price,"SL",clrTomato,ANCHOR_LEFT_LOWER);Text(Name(id,"TP_label"),e.at+Step(),s.tp_price,"TP",clrLimeGreen,ANCHOR_LEFT_LOWER);
+         RiskCaptions(s,e.at);
         }
       if(e.event_type=="SIGNAL")CloseDecision(lane,e.at);
       // POSITION_TRACKING is an engine acknowledgement drained later than
       // immediate trade callbacks. It must not reopen lines after an EXIT.
       if(e.event_type=="ORDER" || e.event_type=="FILL")m_risk_live[lane]=true;
+      if(e.event_type=="OPPOSITE_WAVE1_ARMED")
+        {
+         double price=s.entry_price-s.direction*MathAbs(s.entry_price-s.sl_price)*0.12;
+         string n=Name(id,"opposite_wait");Text(n,e.at,price,"逆①：プラス決済待ち",clrGold,s.direction>0?ANCHOR_LEFT_UPPER:ANCHOR_LEFT_LOWER,8);
+         Tip(n,"source "+s.opposite_setup_id+" | opposite swing "+Clock(s.opposite_wave_peak_time)+" | known "+Clock(s.opposite_wave_known_at)+" | SL/TP retained; net profit after estimated costs must exceed zero");
+         Dot(Name(id,"opposite_known"),e.at,s.entry_price,clrGold,1);Tip(Name(id,"opposite_known"),info+" | source "+s.opposite_setup_id);
+        }
+      if(e.event_type=="EXIT" && s.exit_reason=="OPPOSITE_WAVE1_PROFIT" && s.exit_price>0)
+        {
+         string n=Name(id,"opposite_exit");Dot(n,e.at,s.exit_price,clrGold,2);
+         Tip(n,"fill "+DoubleToString(s.exit_price,_Digits)+" | "+DoubleToString(s.realized_r,4)+"R | broker "+s.exit_deal_reason+" | known "+Clock(e.at));
+         Text(Name(id,"opposite_exit_text"),e.at,s.exit_price,"EXIT 逆① 利益決済",clrGold,s.direction>0?ANCHOR_LEFT_LOWER:ANCHOR_LEFT_UPPER,9);
+         Tip(Name(id,"opposite_exit_text"),"source "+s.opposite_setup_id+" | actual "+DoubleToString(s.realized_r,4)+"R | known "+Clock(e.at));
+        }
       if(e.event_type=="COMPLETED" || e.event_type=="INVALIDATE")CloseDecision(lane,e.at);
       if(e.event_type=="EXIT" || e.event_type=="TEST_END" || e.event_type=="SKIP")
         {CloseDecision(lane,e.at);CloseRisk(lane,e.at);}
       if(e.event_type=="SKIP" || e.event_type=="INVALIDATE" || e.event_type=="TEST_END")
         {
          double p=s.entry_price;if(p<=0)p=s.wave2_extreme_price;if(p<=0)p=s.upper_break_level;
-         string n=Name(id,"skip_"+unique);Text(n,e.at,p,"見送り: "+Reason(e.reason),clrIndianRed,s.direction>0?ANCHOR_LEFT_LOWER:ANCHOR_LEFT_UPPER,8);
+         if(e.reason=="FIB_CLOSE_TOO_DEEP" && s.fib_close_price>0)p=s.fib_close_price;
+         double textPrice=p;datetime textAt=e.at;
+         bool connected=e.reason=="CONNECTED_OPPOSITE_W1_CANDIDATE" && s.connected_opposite_cancelled &&
+                        s.connected_opposite_known_at>0 && s.connected_opposite_known_at<=e.at &&
+                        s.connected_shared_time>0 && s.connected_shared_time<=s.connected_opposite_known_at;
+         if(connected)
+           {
+            // The point marks when the opposite candidate could be known.
+            // Its common older swing remains provenance in the tooltip;
+            // no horizontal decision line is backdated to that swing.
+            double span=MathAbs(s.wave1_peak_price-s.wave1_start_price);
+            textPrice=p-s.direction*span*0.04;textAt=e.at+Step();
+            string point=Name(id,"opposite_cancel_known"),leader=Name(id,"opposite_cancel_leader");
+            Dot(point,e.at,p,clrIndianRed,2);
+            Tip(point,"shared swing "+Clock(s.connected_shared_time)+" "+DoubleToString(s.connected_shared_price,_Digits)+
+                      " | candidate known "+Clock(s.connected_opposite_known_at));
+            Segment(leader,e.at,p,textAt,textPrice,clrIndianRed,false,1,STYLE_DOT);
+            Tip(leader,"source "+s.connected_opposite_setup_id+" | shared "+Clock(s.connected_shared_time)+
+                       " "+DoubleToString(s.connected_shared_price,_Digits));
+           }
+         if(e.reason=="FIB_CLOSE_TOO_DEEP" && s.fib_close_price>0)
+           {
+            // A pre-entry close rejection has no SL width yet. Use a small
+            // part of the fixed W1 span for caption spacing, retaining the
+            // actual observed close as a point and a finite leader.
+            textPrice=p-s.direction*MathAbs(s.wave1_peak_price-s.wave1_start_price)*0.04;textAt=e.at+Step();
+            string observed="FIB_CLOSE_TOO_DEEP close "+DoubleToString(p,_Digits)+" known "+TimeToString(e.at,TIME_DATE|TIME_MINUTES);
+            Dot(Name(id,"fib_close_point_"+unique),e.at,p,clrIndianRed,1);Tip(Name(id,"fib_close_point_"+unique),observed);
+            Segment(Name(id,"fib_close_leader_"+unique),e.at,p,textAt,textPrice,clrIndianRed,false,1,STYLE_DOT);Tip(Name(id,"fib_close_leader_"+unique),observed);
+           }
+         if(s.entry_price>0 && s.sl_price>0 && !connected)
+           {
+            // Caption spacing only: the signal/SL/TP and reference lines are
+            // unchanged. A native-price point and short leader retain the
+            // exact rejected signal location without colliding with captions.
+            double risk=MathAbs(s.entry_price-s.sl_price);
+            textPrice=p-s.direction*risk*0.12;textAt=e.at+Step();
+            string priceTip="SKIP price "+DoubleToString(p,_Digits)+" "+StringSubstr(e.reason,0,48)+" known "+TimeToString(e.at,TIME_DATE|TIME_MINUTES);
+            Dot(Name(id,"skipped_price_"+unique),e.at,p,clrIndianRed,1);Tip(Name(id,"skipped_price_"+unique),priceTip);
+            Segment(Name(id,"skipped_leader_"+unique),e.at,p,textAt,textPrice,clrIndianRed,false,1,STYLE_DOT);Tip(Name(id,"skipped_leader_"+unique),priceTip);
+           }
+         string caption="見送り: "+Reason(e.reason);
+         if(e.reason=="FIB_CLOSE_TOO_DEEP")caption="見送り: "+TF(s.upper_tf)+"終値の押し "+DoubleToString(s.fib_close_ratio*100,1)+"%";
+         string n=Name(id,"skip_"+unique);Text(n,textAt,textPrice,caption,clrIndianRed,s.direction>0?ANCHOR_LEFT_UPPER:ANCHOR_LEFT_LOWER,8);
          string skipDetail=StringSubstr(e.reason,0,48)+" unmet "+StringSubstr(s.lower_unmet_reason,0,40)+" known "+TimeToString(e.at,TIME_DATE|TIME_MINUTES);
          if(s.lower_recognition!="" && StringLen(skipDetail+" "+s.lower_recognition)<=120)skipDetail+=" "+s.lower_recognition;
          Tip(n,skipDetail);
+         if(connected)Tip(n,"source "+s.connected_opposite_setup_id+" | candidate known "+Clock(s.connected_opposite_known_at));
+         if(e.reason=="FIB_CLOSE_TOO_DEEP")
+           {
+            string closeTip="FIB_CLOSE_TOO_DEEP "+TF(s.upper_tf)+" "+DoubleToString(s.fib_close_ratio*100,2)+"% bar "+ShortClock(s.fib_close_bar_time)+" known "+TimeToString(s.fib_close_known_at,TIME_DATE|TIME_MINUTES);
+            Tip(n,closeTip);
+           }
          if(s.sl_price>0 && ObjectFind(0,Name(id,"SL"))<0)Level(id,"skip_SL",e.at,s.sl_price,clrTomato);
          if(s.tp_price>0 && ObjectFind(0,Name(id,"TP"))<0)Level(id,"skip_TP",e.at,s.tp_price,clrLimeGreen);
         }

@@ -62,10 +62,26 @@ struct W33Setup
    bool wave1_peak_fixed;
    datetime wave1_provisional_time;
    double wave1_provisional_price;
+   int wave1_revision;            // 0 is the first fixed endpoint; each extension starts a new revision.
+   bool wave1_extension_pending;  // New CLOSED upper extreme, still waiting for a confirmed upper pivot.
+   datetime wave1_extension_started_at;
+   datetime wave1_extension_known_at; // Confirmation availability of the latest extended endpoint; 0 while pending.
+   datetime wave1_previous_peak_time;
+   double wave1_previous_peak_price;
+   datetime wave1_previous_peak_known_at;
+   bool wave1_extension_locked;   // Sticky first minimum-retracement observation, separate from zone intersection.
+   datetime wave1_extension_lock_bar_time;
+   datetime wave1_extension_lock_known_at;
+   string wave1_extension_lock_reason;
    double fib_382_price;
    double fib_618_price;
    datetime fib_touch_at;
    datetime fib_touch_known_at;
+   datetime fib_close_bar_time;    // First upper candle closing beyond the fixed maximum Fib retracement.
+   datetime fib_close_at;
+   datetime fib_close_known_at;    // Current availability; never backdated when W1 becomes fixed later.
+   double fib_close_price;
+   double fib_close_ratio;
    datetime wave2_start_time;
    datetime wave2_extreme_time;
    double wave2_extreme_price;
@@ -109,6 +125,11 @@ struct W33Setup
    double entry_price;
    double sl_price;
    double tp_price;
+   double tp_rr_price;             // Original RR-only TP before the optional W1 extension/cap.
+   double tp_wave1_target_price;   // Fixed W1 endpoint minus/plus the executable buffer.
+   double tp_wave1_buffer_points;
+   bool tp_extended_to_wave1;
+   string tp_adjustment_reason;
    double risk_points;
    double intended_rr;
    double actual_rr;
@@ -129,6 +150,20 @@ struct W33Setup
    string skip_reason;
    datetime exit_at;
    string exit_reason;
+   string exit_deal_reason;        // Broker DEAL_REASON retained separately from strategy exit reason.
+   double exit_price;
+   bool opposite_exit_armed;
+   string opposite_setup_id;
+   datetime opposite_wave_known_at;
+   datetime opposite_wave_peak_time;
+   double opposite_wave_price;
+   datetime opposite_exit_requested_at;
+   double opposite_exit_net_estimate;
+   double opposite_exit_cost_estimate;
+   double execution_net_cash;
+   double execution_initial_risk_money;
+   ulong execution_position_id;
+   ulong opposite_close_order_ticket;
    double realized_r;
    double spread_points;
    bool fib_touched;
@@ -136,6 +171,11 @@ struct W33Setup
    bool lower_structure_confirmed;
    bool signal_emitted;
    bool position_open;
+   bool connected_opposite_cancelled;
+   string connected_opposite_setup_id;
+   datetime connected_opposite_known_at;
+   datetime connected_shared_time;
+   double connected_shared_price;
    int upper_bars_elapsed;
    datetime last_updated_at;
   };

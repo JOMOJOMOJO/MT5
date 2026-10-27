@@ -3,7 +3,7 @@
 param(
  [string]$SourceDataRoot="$env:LOCALAPPDATA\CodexMT5WickRebreakR3\20261014_094513_6f6042e2",
  [string]$RuntimeRoot='',
- [ValidatePattern('^[A-Za-z0-9][A-Za-z0-9_.#-]*$')][string]$Symbol='XAUUSD',
+ [ValidatePattern('^[A-Za-z0-9][A-Za-z0-9_.#+-]*$')][string]$Symbol='XAUUSD',
  [ValidateRange(0,4)][int]$Model=4,
  [ValidateRange(1,100000000)][double]$Deposit=10000,
  [string]$OutputRoot='reports\qa\wave33_visual_20261020',
@@ -25,6 +25,24 @@ $runs=@(
  [pscustomobject]@{id='lifecycle_harness';expert='Wave33LifecycleHarness';period='M1';inputs=@{}},
  [pscustomobject]@{id='recognition_harness';expert='Wave33RecognitionHarness';period='M1';inputs=@{}},
  [pscustomobject]@{id='room_harness';expert='Wave33RoomHarness';period='M1';inputs=@{}},
+ [pscustomobject]@{id='fib_close_harness';expert='Wave33FibCloseHarness';period='M1';inputs=@{}},
+ [pscustomobject]@{id='opposite_exit_harness';expert='Wave33OppositeExitHarness';period='M1';inputs=@{}},
+ [pscustomobject]@{id='extension_harness';expert='Wave33ExtensionHarness';period='M1';inputs=@{}},
+ [pscustomobject]@{id='tester_run_harness';expert='Wave33TesterRunHarness';period='M1';inputs=@{}},
+ [pscustomobject]@{id='connected_harness';expert='Wave33ConnectedHarness';period='M1';inputs=@{}},
+ [pscustomobject]@{id='target_harness';expert='Wave33TargetHarness';period='M1';inputs=@{}},
+ [pscustomobject]@{id='a_extension_off';expert='Wave33VisualVerifier';period='M5';inputs=@{InpPattern=0;InpTriggerMode=0;InpEnableTesterOrders='true';InpExtendWave1BeforeFib='false';InpRejectDeepFib='false';InpRejectDeepFibClose='true';InpStrictWaveLifecycle='true';InpMagic='3320261022';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0;InpExitOnOppositeWave1='true';InpAuditOppositeExitTicks='true'}},
+ [pscustomobject]@{id='a_extension_on';expert='Wave33VisualVerifier';period='M5';inputs=@{InpPattern=0;InpTriggerMode=0;InpEnableTesterOrders='true';InpExtendWave1BeforeFib='true';InpRejectDeepFib='false';InpRejectDeepFibClose='true';InpStrictWaveLifecycle='true';InpMagic='3320261022';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0;InpExitOnOppositeWave1='true';InpAuditOppositeExitTicks='true'}},
+ [pscustomobject]@{id='b_extension_off';expert='Wave33VisualVerifier';period='M1';inputs=@{InpPattern=1;InpTriggerMode=0;InpEnableTesterOrders='true';InpExtendWave1BeforeFib='false';InpRejectDeepFib='false';InpRejectDeepFibClose='true';InpStrictWaveLifecycle='true';InpMagic='3320261022';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0;InpExitOnOppositeWave1='true';InpAuditOppositeExitTicks='true'}},
+ [pscustomobject]@{id='b_extension_on';expert='Wave33VisualVerifier';period='M1';inputs=@{InpPattern=1;InpTriggerMode=0;InpEnableTesterOrders='true';InpExtendWave1BeforeFib='true';InpRejectDeepFib='false';InpRejectDeepFibClose='true';InpStrictWaveLifecycle='true';InpMagic='3320261022';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0;InpExitOnOppositeWave1='true';InpAuditOppositeExitTicks='true'}},
+ [pscustomobject]@{id='a_opposite_exit_off';expert='Wave33VisualVerifier';period='M5';inputs=@{InpPattern=0;InpTriggerMode=0;InpEnableTesterOrders='true';InpRejectDeepFib='false';InpRejectDeepFibClose='true';InpStrictWaveLifecycle='true';InpMagic='3320261021';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0;InpExitOnOppositeWave1='false';InpAuditOppositeExitTicks='true'}},
+ [pscustomobject]@{id='a_opposite_exit_on';expert='Wave33VisualVerifier';period='M5';inputs=@{InpPattern=0;InpTriggerMode=0;InpEnableTesterOrders='true';InpRejectDeepFib='false';InpRejectDeepFibClose='true';InpStrictWaveLifecycle='true';InpMagic='3320261021';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0;InpExitOnOppositeWave1='true';InpAuditOppositeExitTicks='true'}},
+ [pscustomobject]@{id='b_opposite_exit_off';expert='Wave33VisualVerifier';period='M1';inputs=@{InpPattern=1;InpTriggerMode=0;InpEnableTesterOrders='true';InpRejectDeepFib='false';InpRejectDeepFibClose='true';InpStrictWaveLifecycle='true';InpMagic='3320261021';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0;InpExitOnOppositeWave1='false';InpAuditOppositeExitTicks='true'}},
+ [pscustomobject]@{id='b_opposite_exit_on';expert='Wave33VisualVerifier';period='M1';inputs=@{InpPattern=1;InpTriggerMode=0;InpEnableTesterOrders='true';InpRejectDeepFib='false';InpRejectDeepFibClose='true';InpStrictWaveLifecycle='true';InpMagic='3320261021';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0;InpExitOnOppositeWave1='true';InpAuditOppositeExitTicks='true'}},
+ [pscustomobject]@{id='a_fib_close_off';expert='Wave33VisualVerifier';period='M5';inputs=@{InpPattern=0;InpTriggerMode=0;InpEnableTesterOrders='true';InpRejectDeepFib='false';InpRejectDeepFibClose='false';InpStrictWaveLifecycle='true';InpMagic='3320261021';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0}},
+ [pscustomobject]@{id='a_fib_close_on';expert='Wave33VisualVerifier';period='M5';inputs=@{InpPattern=0;InpTriggerMode=0;InpEnableTesterOrders='true';InpRejectDeepFib='false';InpRejectDeepFibClose='true';InpStrictWaveLifecycle='true';InpMagic='3320261021';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0}},
+ [pscustomobject]@{id='b_fib_close_off';expert='Wave33VisualVerifier';period='M1';inputs=@{InpPattern=1;InpTriggerMode=0;InpEnableTesterOrders='true';InpRejectDeepFib='false';InpRejectDeepFibClose='false';InpStrictWaveLifecycle='true';InpMagic='3320261021';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0}},
+ [pscustomobject]@{id='b_fib_close_on';expert='Wave33VisualVerifier';period='M1';inputs=@{InpPattern=1;InpTriggerMode=0;InpEnableTesterOrders='true';InpRejectDeepFib='false';InpRejectDeepFibClose='true';InpStrictWaveLifecycle='true';InpMagic='3320261021';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0}},
  [pscustomobject]@{id='a_pivot_diagnostic';expert='Wave33VisualVerifier';period='M5';inputs=@{InpPattern=0;InpTriggerMode=0;InpEnableTesterOrders='false'}},
  [pscustomobject]@{id='b_pivot_diagnostic';expert='Wave33VisualVerifier';period='M1';inputs=@{InpPattern=1;InpTriggerMode=0;InpEnableTesterOrders='false'}},
  [pscustomobject]@{id='b_trendline_diagnostic';expert='Wave33VisualVerifier';period='M1';inputs=@{InpPattern=1;InpTriggerMode=1;InpEnableTesterOrders='false'}},
@@ -42,6 +60,27 @@ $runs=@(
  [pscustomobject]@{id='a_visual';expert='Wave33VisualVerifier';period='M5';visual=1;inputs=@{InpPattern=0;InpTriggerMode=0;InpEnableTesterOrders='false'}},
  [pscustomobject]@{id='b_visual';expert='Wave33VisualVerifier';period='M1';visual=1;inputs=@{InpPattern=1;InpTriggerMode=0;InpEnableTesterOrders='false'}}
 )
+foreach($waveArm in @('a','b')){
+ foreach($wavePolicy in @('base','cancel','target','both')){
+  $waveInputs=@{InpPattern=([int]($waveArm -eq 'b'));InpTriggerMode=0;InpEnableTesterOrders='true';InpExtendWave1BeforeFib='true';InpRejectDeepFib='false';InpRejectDeepFibClose='true';InpStrictWaveLifecycle='true';InpMagic='3320261022';InpLowerRecognition=2;InpMinWave1RoomR=0.25;InpRewardR=1.0;InpRiskPercent=1.0;InpExitOnOppositeWave1='true';InpAuditOppositeExitTicks='true';InpCancelConnectedOpposite=(@{base='false';cancel='true';target='false';both='true'}[$wavePolicy]);InpExtendTPToWave1=(@{base='false';cancel='false';target='true';both='true'}[$wavePolicy]);InpTPWave1BufferPoints=10.0}
+  $runs+=[pscustomobject]@{id=('v180_'+$waveArm+'_'+$wavePolicy);expert='Wave33VisualVerifier';period=(@{a='M5';b='M1'}[$waveArm]);inputs=$waveInputs}
+ }
+}
+foreach($run in $runs){
+ if($run.expert -eq 'Wave33VisualVerifier' -and !$run.inputs.ContainsKey('InpCancelConnectedOpposite')){
+  $run.inputs.InpCancelConnectedOpposite='false';$run.inputs.InpExtendTPToWave1='false'
+ }
+ if($run.expert -eq 'Wave33VisualVerifier' -and !$run.inputs.ContainsKey('InpExtendWave1BeforeFib')){
+  $run.inputs.InpExtendWave1BeforeFib='false'
+ }
+ # Existing QA arms retain their original exits despite the v1.60 user default.
+ if($run.expert -eq 'Wave33VisualVerifier' -and !$run.inputs.ContainsKey('InpExitOnOppositeWave1')){
+  $run.inputs.InpExitOnOppositeWave1='false'
+ }
+ if($run.id -in @('a_legacy_orders','a_strict_orders','a_v130_control','a_recognition_only','a_room_only','a_v140_full')){
+  $run.inputs.InpRejectDeepFibClose='false'
+ }
+}
 if($OnlyRuns.Count -gt 0){
  foreach($requested in $OnlyRuns){if($requested -notin $runs.id){throw "Unknown run: $requested"}}
  $runs=@($runs|Where-Object{$_.id -in $OnlyRuns})
@@ -110,7 +149,7 @@ try{
  }
  SaveJson @{status='COMPILING';batch_id=$batch;output=$output;terminal_root=$terminalRoot} (Join-Path $output 'status.json')
  $sourceHashes=@{}
- foreach($name in @('Wave33EngineHarness','Wave33DisplayHarness','Wave33LifecycleHarness','Wave33RecognitionHarness','Wave33RoomHarness','Wave33VisualVerifier')){
+ foreach($name in @('Wave33EngineHarness','Wave33DisplayHarness','Wave33LifecycleHarness','Wave33RecognitionHarness','Wave33RoomHarness','Wave33FibCloseHarness','Wave33OppositeExitHarness','Wave33ExtensionHarness','Wave33TesterRunHarness','Wave33ConnectedHarness','Wave33TargetHarness','Wave33VisualVerifier')){
   $source=if($name.EndsWith('Harness')){Join-Path $repo ('mql\Experts\tests\'+$name+'.mq5')}else{Join-Path $repo ('mql\Experts\'+$name+'.mq5')}
   $expertRelative=if($name.EndsWith('Harness')){'tests\'+$name}else{$name}
   $target=Join-Path $terminalRoot ('MQL5\Experts\'+$expertRelative+'.mq5')

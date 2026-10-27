@@ -127,20 +127,25 @@ def audit_run(run_dir: Path) -> dict:
     if harness_path.exists():
         fields, rows = read_csv(harness_path)
         tests = [r for r in rows if r.get("test", "").upper() != "FINAL"]
-        failed = [r for r in tests if r.get("passed", "").lower() not in {"1", "true", "yes", "pass", "passed"}]
+        unavailable = [r for r in tests if r.get("passed", "").lower() == "unavailable"]
+        available = [r for r in tests if r not in unavailable]
+        failed = [r for r in available if r.get("passed", "").lower() not in {"1", "true", "yes", "pass", "passed"}]
         if not tests:
             violations.append({"check": "harness_has_assertions"})
         violations.extend({"check": "harness_assertion", **r} for r in failed)
         display_test = run.get("expert", "") == "Wave33DisplayHarness"
         lifecycle_test = run.get("expert", "") == "Wave33LifecycleHarness"
-        extra_kind = {"Wave33RecognitionHarness": "recognition_harness", "Wave33RoomHarness": "room_harness"}.get(run.get("expert", ""))
-        summary = {"run_id": run_id, "kind": extra_kind or ("display_harness" if display_test else "lifecycle_harness" if lifecycle_test else "engine_harness"), "assertions": len(tests),
-                   "passed": len(tests) - len(failed), "failed": len(failed), "violations": violations,
+        extra_kind = {"Wave33RecognitionHarness": "recognition_harness", "Wave33RoomHarness": "room_harness",
+                      "Wave33FibCloseHarness": "fib_close_harness", "Wave33OppositeExitHarness": "opposite_exit_harness",
+                      "Wave33ExtensionHarness": "extension_harness", "Wave33TesterRunHarness": "tester_run_harness",
+                      "Wave33ConnectedHarness": "connected_harness", "Wave33TargetHarness": "target_harness"}.get(run.get("expert", ""))
+        summary = {"run_id": run_id, "kind": extra_kind or ("display_harness" if display_test else "lifecycle_harness" if lifecycle_test else "engine_harness"), "assertions": len(available),
+                   "passed": len(available) - len(failed), "failed": len(failed), "unavailable": len(unavailable), "violations": violations,
                    "audit_passed": not violations}
         save_json(run_dir / "audit.json", summary)
         subject = "描画を呼び出し、線の終端と候補別の保持を確認する合成イベント" if display_test else "エンジンを呼び出し、因果順序とLONG/SHORT分岐を確認する合成入力"
         harness_lines = [f"# {run_id}: MQL5決定論テスト", "",
-                         f"実際のMT5内で{subject} {len(tests)}項目。PASS {len(tests) - len(failed)} / FAIL {len(failed)}。市場の売買事例とは区別する。", "",
+                         f"実際のMT5内で{subject} {len(available)}項目。PASS {len(available) - len(failed)} / FAIL {len(failed)} / UNAVAILABLE {len(unavailable)}。未取得をPASSへ算入しない。市場の売買事例とは区別する。", "",
                          "原本: [harness.csv](harness.csv)。", "", "| テスト | 判定 | 詳細 |", "|---|---|---|"]
         harness_lines.extend("| " + " | ".join(md_cell(r.get(key, "")) for key in ("test", "passed", "detail")) + " |" for r in tests)
         (run_dir / "review_cases.md").write_text("\n".join(harness_lines) + "\n", encoding="utf-8")

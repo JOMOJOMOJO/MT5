@@ -1,6 +1,7 @@
 #ifndef WAVE33_VISUAL_ENGINE_MQH
 #define WAVE33_VISUAL_ENGINE_MQH
 #include "Types.mqh"
+#include "ConnectedPair.mqh"
 
 // Each call appends exactly one CLOSED candle. Arrays are chronological.
 // A pivot's candle time and availability time are deliberately different.
@@ -82,7 +83,9 @@ private:
    ENUM_TIMEFRAMES m_upper_tf,m_lower_tf;
    int m_left,m_right,m_timeout;
    double m_fib_min,m_fib_max,m_point;
-   bool m_reject_deep,m_require_fib,m_strict_lifecycle;
+   bool m_reject_deep,m_require_fib,m_strict_lifecycle,m_reject_deep_close;
+   bool m_extend_wave1;
+   bool m_cancel_connected_opposite,m_skip_connected_pair,m_order_submitted[2];
    W33TriggerMode m_mode;
    W33LowerRecognitionMode m_lower_recognition;
    string m_symbol;
@@ -255,8 +258,33 @@ private:
      {
       return (datetime)MathMax(MathMax((long)h1.known_at,(long)h2.known_at),MathMax((long)l1.known_at,(long)l2.known_at));
      }
+   void CancelConnectedOpposite(const int newSlot,const datetime knownAt)
+     {
+      int oldSlot=1-newSlot;
+      if((!m_cancel_connected_opposite && !m_skip_connected_pair) || !m_has[oldSlot] ||
+         !W33ConnectedOppositeUnordered(m_setup[oldSlot],m_setup[newSlot],m_order_submitted[oldSlot],knownAt,m_point)) return;
+      if(m_skip_connected_pair)
+        {
+         if(!W33InvalidateConnectedPairUnordered(m_setup[oldSlot],m_setup[newSlot],
+                                                m_order_submitted[oldSlot],m_order_submitted[newSlot],knownAt,m_point)) return;
+         Emit(oldSlot,"INVALIDATE",knownAt,"EXCLUSION","CONNECTED_OPPOSITE_W1_BOTH");
+         Emit(newSlot,"INVALIDATE",knownAt,"EXCLUSION","CONNECTED_OPPOSITE_W1_BOTH");
+         return;
+        }
+      m_setup[oldSlot].connected_opposite_cancelled=true;
+      m_setup[oldSlot].connected_opposite_setup_id=m_setup[newSlot].setup_id;
+      m_setup[oldSlot].connected_opposite_known_at=knownAt;
+      m_setup[oldSlot].connected_shared_time=m_setup[oldSlot].wave1_peak_time;
+      m_setup[oldSlot].connected_shared_price=m_setup[oldSlot].wave1_peak_price;
+      m_setup[oldSlot].active=false;
+      m_setup[oldSlot].entry_status="INVALIDATED";
+      m_setup[oldSlot].skip_reason="CONNECTED_OPPOSITE_W1_CANDIDATE";
+      // An unsubmitted diagnostic signal is also an exclusion. Do not send it
+      // through Invalidate(), whose signalled branch normally means COMPLETED.
+      Emit(oldSlot,"INVALIDATE",knownAt,"EXCLUSION","CONNECTED_OPPOSITE_W1_CANDIDATE");
+     }
    void Create(const int direction,const MqlRates &bar,const datetime knownAt,
-               const W33Pivot &level,const W33Pivot &origin)
+               const W33Pivot &level,const W33Pivot &origin,const bool adopted=true)
      {
       int i=Slot(direction);
       ZeroMemory(m_setup[i]);
@@ -287,10 +315,15 @@ private:
       m_setup[i].h1_direction=H1Direction(direction);
       m_has[i]=true;
       m_frozen[i]=false;
+      m_order_submitted[i]=false;
       m_structure_key[i]=0;
       m_rejected_structure_key[i]=0;
       m_last_break[i]=level.time;
       Emit(i,"WAVE1_BREAK",knownAt);
+      if(adopted) CancelConnectedOpposite(i,knownAt);
+      // A paired exclusion still retains the observable WAVE1_BREAK, but it
+      // must not resume tracking or become a signal on any subsequent feed.
+      if(!m_setup[i].active) return;
       ChangeState(i,WAVE1_TOP_TRACKING,knownAt);
       Emit(i,"WAVE1_PROVISIONAL",knownAt);
      }
@@ -318,21 +351,96 @@ private:
             // exclusion, not an invisible statistical filter.
             W33Setup previousSetup=m_setup[side];
             bool frozen=m_frozen[side];
+            bool submitted=m_order_submitted[side];
             datetime structureKey=m_structure_key[side];
             datetime rejectedKey=m_rejected_structure_key[side];
-            Create(direction,bar,knownAt,level,origin);
+            Create(direction,bar,knownAt,level,origin,false);
             m_setup[side].active=false;
             m_setup[side].entry_status="SKIPPED";
             m_setup[side].skip_reason="ACTIVE_SETUP_SAME_DIRECTION";
             Emit(side,"SKIP",knownAt,"EXCLUSION","ACTIVE_SETUP_SAME_DIRECTION");
             m_setup[side]=previousSetup;
             m_frozen[side]=frozen;
+            m_order_submitted[side]=submitted;
             m_structure_key[side]=structureKey;
             m_rejected_structure_key[side]=rejectedKey;
             // m_last_break intentionally retains the consumed new level.
            }
          else Create(direction,bar,knownAt,level,origin);
         }
+     }
+   bool MinimumRetracementReached(const int slot,const MqlRates &bar) const
+     {
+      // A gap wholly beyond the band is still a qualifying pullback for the
+      // extension lock. The original exact-band FIB_TOUCH entry rule is separate.
+      int d=m_setup[slot].direction;
+      double price=d>0 ? bar.low : bar.high;
+      double span=d*(m_setup[slot].wave1_peak_price-m_setup[slot].wave1_start_price);
+      return span>0 && d*(price-m_setup[slot].fib_382_price)<=span*1e-12;
+     }
+   void ObserveExtensionLock(const int slot,const MqlRates &bar,const datetime knownAt,const bool upperBar)
+     {
+      if(!m_extend_wave1 || !m_has[slot] || !m_setup[slot].active || !m_setup[slot].wave1_peak_fixed ||
+         m_setup[slot].wave1_extension_locked || m_setup[slot].signal_emitted || m_setup[slot].position_open ||
+         bar.time<m_setup[slot].wave2_start_time || !MinimumRetracementReached(slot,bar)) return;
+      int d=m_setup[slot].direction;
+      double continuation=d>0 ? bar.high : bar.low;
+      bool ambiguous=upperBar && d*(continuation-m_setup[slot].wave1_peak_price)>0;
+      m_setup[slot].wave1_extension_locked=true;
+      m_setup[slot].wave1_extension_lock_bar_time=bar.time;
+      m_setup[slot].wave1_extension_lock_known_at=knownAt;
+      m_setup[slot].wave1_extension_lock_reason=ambiguous ? "AMBIGUOUS_EXTREME_AND_FIB_TOUCH" : "MIN_FIB_RETRACEMENT_OBSERVED";
+      Emit(slot,"WAVE1_EXTENSION_LOCKED",knownAt,"OBSERVATION",m_setup[slot].wave1_extension_lock_reason);
+     }
+   bool StartWave1Extension(const int slot,const MqlRates &bar,const datetime knownAt)
+     {
+      if(!m_extend_wave1 || !m_has[slot] || !m_setup[slot].active || !m_setup[slot].wave1_peak_fixed ||
+         m_setup[slot].wave1_extension_locked || m_setup[slot].fib_touched ||
+         m_setup[slot].signal_emitted || m_setup[slot].position_open ||
+         bar.time<m_setup[slot].wave2_start_time) return false;
+      int d=m_setup[slot].direction;
+      double price=d>0 ? bar.high : bar.low;
+      if(d*(price-m_setup[slot].wave1_peak_price)<=0) return false;
+      // Snapshot the entire prior revision before changing any anchor, W2,
+      // lower-line, risk, or obstacle field. Event rows retain all provenance.
+      Emit(slot,"WAVE1_EXTENSION_PREVIOUS_ANCHORS",knownAt,"OBSERVATION","PRE_MIN_FIB_NEW_EXTREME");
+      W33Setup previous=m_setup[slot];
+      ZeroMemory(m_setup[slot]);
+      m_setup[slot].setup_id=previous.setup_id;
+      m_setup[slot].symbol=previous.symbol;
+      m_setup[slot].upper_tf=previous.upper_tf;
+      m_setup[slot].lower_tf=previous.lower_tf;
+      m_setup[slot].direction=previous.direction;
+      m_setup[slot].state=WAVE1_TOP_TRACKING;
+      m_setup[slot].active=true;
+      m_setup[slot].candidate_detected_at=previous.candidate_detected_at;
+      m_setup[slot].upper_break_level=previous.upper_break_level;
+      m_setup[slot].upper_break_confirmed_at=previous.upper_break_confirmed_at;
+      m_setup[slot].upper_break_bar_time=previous.upper_break_bar_time;
+      m_setup[slot].upper_break_level_time=previous.upper_break_level_time;
+      m_setup[slot].upper_break_level_known_at=previous.upper_break_level_known_at;
+      m_setup[slot].wave1_start_time=previous.wave1_start_time;
+      m_setup[slot].wave1_start_price=previous.wave1_start_price;
+      m_setup[slot].wave1_start_known_at=previous.wave1_start_known_at;
+      m_setup[slot].wave1_provisional_time=bar.time;
+      m_setup[slot].wave1_provisional_price=price;
+      m_setup[slot].wave1_revision=previous.wave1_revision+1;
+      m_setup[slot].wave1_extension_pending=true;
+      m_setup[slot].wave1_extension_started_at=knownAt;
+      m_setup[slot].wave1_previous_peak_time=previous.wave1_peak_time;
+      m_setup[slot].wave1_previous_peak_price=previous.wave1_peak_price;
+      m_setup[slot].wave1_previous_peak_known_at=previous.wave1_peak_known_at;
+      m_setup[slot].upper_bars_elapsed=previous.upper_bars_elapsed;
+      m_setup[slot].entry_status="CANDIDATE";
+      m_setup[slot].lower_entry_stage="COUNTERTREND_NEGATION";
+      m_setup[slot].lower_recognition=m_lower_recognition==W33_STRICT_COUNTERTREND ? "STRICT_COUNTERTREND" : "NORMALIZED_COUNTERTREND";
+      m_setup[slot].lower_unmet_reason="WAITING_EXTENDED_WAVE1_CONFIRMATION";
+      m_setup[slot].h1_direction=H1Direction(d);
+      m_frozen[slot]=false;
+      m_structure_key[slot]=0;
+      m_rejected_structure_key[slot]=0;
+      Emit(slot,"WAVE1_EXTENSION_STARTED",knownAt,"OBSERVATION","PRE_MIN_FIB_NEW_EXTREME");
+      return true;
      }
    void ObserveWave2(const int slot,const MqlRates &bar,const datetime knownAt)
      {
@@ -352,6 +460,7 @@ private:
          Invalidate(slot,knownAt,"WAVE1_ORIGIN_BROKEN");
          return;
         }
+      ObserveExtensionLock(slot,bar,knownAt,false);
       double price=d>0 ? bar.low : bar.high;
       bool newExtreme=(m_setup[slot].wave2_extreme_time==0 || (d>0 ? price<m_setup[slot].wave2_extreme_price : price>m_setup[slot].wave2_extreme_price));
       if(newExtreme)
@@ -380,6 +489,29 @@ private:
         }
       if(m_setup[slot].active && (d>0 ? bar.low<=m_setup[slot].wave1_start_price : bar.high>=m_setup[slot].wave1_start_price))
          Invalidate(slot,knownAt,"WAVE1_ORIGIN_BROKEN");
+     }
+   void ObserveUpperFibClose(const int slot,const MqlRates &bar,const datetime knownAt)
+     {
+      if(!m_has[slot] || !m_setup[slot].active || !m_setup[slot].wave1_peak_fixed ||
+         m_setup[slot].signal_emitted || m_setup[slot].position_open || m_setup[slot].fib_close_bar_time>0 ||
+         bar.time<m_setup[slot].wave2_start_time || knownAt<bar.time+PeriodSeconds(m_upper_tf) ||
+         knownAt<m_setup[slot].wave1_peak_known_at) return;
+      // Strictly beyond the fixed 61.8% (or configured maximum) boundary.
+      // A wick beyond it or a close exactly on it is not a close violation.
+      int d=m_setup[slot].direction;
+      double span=d*(m_setup[slot].wave1_peak_price-m_setup[slot].wave1_start_price);
+      if(span<=0) return;
+      // Decimal prices and the multiplication by 0.618 may differ by one
+      // binary rounding unit at mathematical equality. This is arithmetic
+      // tolerance only, many orders smaller than a tradable price point.
+      if(d*(bar.close-m_setup[slot].fib_618_price)>=-span*1e-12) return;
+      m_setup[slot].fib_close_bar_time=bar.time;
+      m_setup[slot].fib_close_at=bar.time+PeriodSeconds(m_upper_tf);
+      m_setup[slot].fib_close_known_at=knownAt;
+      m_setup[slot].fib_close_price=bar.close;
+      m_setup[slot].fib_close_ratio=d*(m_setup[slot].wave1_peak_price-bar.close)/span;
+      Emit(slot,"FIB_CLOSE_TOO_DEEP",knownAt,m_reject_deep_close ? "EXCLUSION" : "MEASUREMENT","FIB_CLOSE_TOO_DEEP");
+      if(m_reject_deep_close) Invalidate(slot,knownAt,"FIB_CLOSE_TOO_DEEP");
      }
    bool SameWave2(const W33Setup &s,const datetime time,const double price) const
      {
@@ -664,13 +796,22 @@ private:
             Invalidate(slot,knownAt,"WAVE1_ORIGIN_BROKEN");
             continue;
            }
-         if(m_setup[slot].wave1_peak_fixed) continue;
+         if(m_setup[slot].wave1_peak_fixed)
+           {
+            // Upper bars are fed first on equal close times. Inspect the old
+            // threshold BEFORE reanchoring: its OHLC cannot establish whether
+            // the new extreme or a same-bar qualifying pullback came first.
+            ObserveExtensionLock(slot,bar,knownAt,true);
+            ObserveUpperFibClose(slot,bar,knownAt);
+            if(m_setup[slot].active) StartWave1Extension(slot,bar,knownAt);
+            continue;
+           }
          double price=d>0 ? bar.high : bar.low;
          if(d*(price-m_setup[slot].wave1_provisional_price)>0)
            {
             m_setup[slot].wave1_provisional_price=price;
             m_setup[slot].wave1_provisional_time=bar.time;
-            Emit(slot,"WAVE1_PROVISIONAL",knownAt);
+            Emit(slot,m_setup[slot].wave1_extension_pending ? "WAVE1_EXTENSION_TRACKING" : "WAVE1_PROVISIONAL",knownAt);
            }
          for(int j=0;j<ArraySize(confirmed);j++)
            {
@@ -685,8 +826,23 @@ private:
             m_setup[slot].wave2_start_time=p.time+PeriodSeconds(m_upper_tf);
             m_setup[slot].fib_382_price=p.price-d*span*m_fib_min;
             m_setup[slot].fib_618_price=p.price-d*span*m_fib_max;
-            Emit(slot,"WAVE1_PEAK_CONFIRMED",knownAt);
+            bool extended=m_setup[slot].wave1_extension_pending;
+            m_setup[slot].wave1_extension_pending=false;
+            if(extended) m_setup[slot].wave1_extension_known_at=knownAt;
+            Emit(slot,extended ? "WAVE1_EXTENDED_CONFIRMED" : "WAVE1_PEAK_CONFIRMED",knownAt);
             ChangeState(slot,WAVE2_RETRACEMENT,knownAt);
+            // Upper closes observed while W1 was provisional become testable
+            // only now against these fixed anchors. Preserve their original
+            // candle/close times, record this CURRENT knowledge time, and check
+            // the earliest breach before any lower-history characterization.
+            int upperCount=ArraySize(m_upper.bars),upperFirst=upperCount;
+            while(upperFirst>0 && m_upper.bars[upperFirst-1].time>=m_setup[slot].wave2_start_time) upperFirst--;
+            for(int k=upperFirst;k<upperCount && m_setup[slot].active;k++)
+              {
+               ObserveExtensionLock(slot,m_upper.bars[k],knownAt,true);
+               ObserveUpperFibClose(slot,m_upper.bars[k],knownAt);
+              }
+            if(!m_setup[slot].active) break;
             // Characterize already closed retracement candles at CURRENT knowledge
             // time. These observations never run the Trigger() function.
             int lowerCount=ArraySize(m_lower.bars),first=lowerCount;
@@ -719,6 +875,10 @@ public:
       m_fib_min=0.382; m_fib_max=0.618;
       m_point=0.01;
       m_reject_deep=false; m_require_fib=true;
+      m_reject_deep_close=false;
+      m_extend_wave1=false;
+      m_cancel_connected_opposite=false;
+      m_skip_connected_pair=false;
       m_strict_lifecycle=true;
       m_mode=W33_PIVOT_BREAK;
       m_lower_recognition=W33_STRICT_COUNTERTREND;
@@ -738,6 +898,10 @@ public:
    void SetTriggerMode(const W33TriggerMode mode) { m_mode=mode; }
    void SetLowerRecognition(const W33LowerRecognitionMode mode) { m_lower_recognition=mode; }
    void SetLifecyclePolicy(const bool strict=true) { m_strict_lifecycle=strict; }
+   void SetDeepFibClosePolicy(const bool reject=false) { m_reject_deep_close=reject; }
+   void SetWave1ExtensionPolicy(const bool enabled=false) { m_extend_wave1=enabled; }
+   void SetConnectedOppositePolicy(const bool enabled=false) { m_cancel_connected_opposite=enabled; }
+   void SetConnectedPairPolicy(const bool enabled=false) { m_skip_connected_pair=enabled; }
    void Reset(const string symbol)
      {
       m_symbol=symbol; m_serial=0;
@@ -755,6 +919,7 @@ public:
          m_setup[i].upper_tf=m_upper_tf;
          m_setup[i].lower_tf=m_lower_tf;
          m_has[i]=false; m_frozen[i]=false;
+         m_order_submitted[i]=false;
          m_last_break[i]=0; m_structure_key[i]=0;
          m_rejected_structure_key[i]=0;
         }
@@ -848,8 +1013,9 @@ public:
            {
             // Final risk/order failures relinquish this direction's lane. An
             // accepted open position and an untriggered candidate cannot be
-            // completed through this API; the caller owns pending-order safety.
-            if(!m_setup[i].active || !m_setup[i].signal_emitted || m_setup[i].position_open ||
+            // completed through this API. The caller marks submission before
+            // OrderSend and releases that guard only for a rejected request.
+            if(!m_setup[i].active || !m_setup[i].signal_emitted || m_setup[i].position_open || m_order_submitted[i] ||
                knownAt<m_setup[i].signal_known_at || knownAt<m_setup[i].last_updated_at) return false;
             m_setup[i].active=false;
             m_setup[i].entry_status="UNORDERED_COMPLETED";
@@ -859,11 +1025,24 @@ public:
            }
       return false;
      }
+   bool MarkOrderSubmitted(const string setupId,const bool submitted,const datetime knownAt)
+     {
+      for(int i=0;i<2;i++)
+         if(m_has[i] && m_setup[i].setup_id==setupId)
+           {
+            if(!m_setup[i].active || !m_setup[i].signal_emitted || m_setup[i].position_open ||
+               knownAt<m_setup[i].signal_known_at || knownAt<m_setup[i].last_updated_at) return false;
+            m_order_submitted[i]=submitted;
+            return true;
+           }
+      return false;
+     }
    bool MarkExecution(const string setupId,const bool positionOpen,const datetime knownAt)
      {
       for(int i=0;i<2;i++)
          if(m_has[i] && m_setup[i].setup_id==setupId)
            {
+            m_order_submitted[i]=false;
             m_setup[i].position_open=positionOpen;
             if(positionOpen)
               {

@@ -1,10 +1,14 @@
 #property strict
-#property version "1.40"
+#property version "1.80"
 #property description "3-wave in 3-wave v1.0: causal visual observation, tester orders optional."
 #include "../Include/Wave33Visual/Engine.mqh"
 #include "../Include/Wave33Visual/Display.mqh"
 #include "../Include/Wave33Visual/Ledger.mqh"
 #include "../Include/Wave33Visual/Room.mqh"
+#include "../Include/Wave33Visual/BarOrder.mqh"
+#include "../Include/Wave33Visual/OppositeExit.mqh"
+#include "../Include/Wave33Visual/TesterRun.mqh"
+#include "../Include/Wave33Visual/Wave1Target.mqh"
 
 enum W33Pattern {M15_M5=0,M5_M1=1};
 enum W33ObstacleMode {DISPLAY_ONLY=0,SKIP_IF_BLOCKED=1,CAP_TP=2};
@@ -15,16 +19,24 @@ input int InpSwingRight=2;
 input double InpFibMin=0.382;
 input double InpFibMax=0.618;
 input bool InpRequireFibTouch=true;
+input bool InpExtendWave1BeforeFib=true; // シグナル前・初回Fib38.2%到達前の高安更新で①終点を再追跡
 input bool InpRejectDeepFib=false;
+input bool InpRejectDeepFibClose=true; // 上位足の確定終値がFib61.8%より深ければ候補終了（ヒゲは許容）
 input bool InpStrictWaveLifecycle=true; // 同じ第2波に属する転換だけを使い、初動を逃した候補を終了
 input W33LowerRecognitionMode InpLowerRecognition=W33_NORMALIZED_OR_SIMPLE; // 確定した山谷を整理し、短い押し・戻りの反応突破も区別して追跡
 input double InpMinWave1RoomR=0.25; // ①終点まで残す最小余地（SL幅=1R、0で比較用OFF）
 input int InpTimeoutUpperBars=96;
 input W33ObstacleMode InpObstacleMode=DISPLAY_ONLY;
-input double InpRewardR=1.0;
+input double InpRewardR=1.0; // リスクリワード比（SL=1に対するTP倍率）
+input bool InpExtendTPToWave1=true; // 基本TPが①の手前なら、①極値の少し手前まで利益方向へ延長
+input double InpTPWave1BufferPoints=10.0; // ①手前の追加余裕（ポイント。実際はスプレッド・1ティック以上）
 input double InpRiskPercent=1.0;
 input double InpSLExtraPoints=10.0;
 input bool InpEnableTesterOrders=false; // 過去データで売買する（MT5テスター内のみ）
+input bool InpAllowTesterBatchRuns=true; // 全銘柄一括テストなど、最適化扱いのテスター実行を許可
+input bool InpCancelConnectedOpposite=true; // ①終点から逆方向①候補が出たら、古い未発注候補を終了
+input bool InpExitOnOppositeWave1=true; // 保有後に逆方向の青い①が確定したら、推定コスト込み損益がプラスの最初のティックで決済
+input bool InpAuditOppositeExitTicks=false; // 決済待ち全ティックの監査CSV（検証用）
 input ulong InpMagic=3320261020;
 input uint InpDeviationPoints=20;
 input bool InpDraw=true;
@@ -46,6 +58,11 @@ datetime g_lastOpen[4];
 bool g_ready=false;
 string g_prefix,g_lastReason="",g_tag;
 int g_shots=0;
+int g_exit_tick_file=INVALID_HANDLE;
+int g_run_claim=INVALID_HANDLE;
+bool g_effective_draw=false;
+string g_input_hash="";
+ulong g_knowledge_order=0,g_tick_order=0;
 W33Setup g_last;
 struct W33Execution
   {
@@ -56,8 +73,33 @@ struct W33Execution
    double exit_volume;
    double filled_volume;
    bool pending;
+   ulong fill_order_key;
+   double entry_costs;
+   W33OppositeExitState opposite;
+   ulong close_order_ticket;
+   uint close_request_id;
+   double close_prior_exit_volume;
   };
 W33Execution g_records[];
+
+bool TesterExecutionContext()
+  {
+   return W33TesterContextAllowed((bool)MQLInfoInteger(MQL_TESTER),(bool)MQLInfoInteger(MQL_OPTIMIZATION),InpAllowTesterBatchRuns);
+  }
+string RunInputHash()
+  {
+   string value="1.80|"+EnumToString(InpPattern)+"|"+EnumToString(InpTriggerMode);
+   value+="|"+(string)InpSwingLeft+"|"+(string)InpSwingRight+"|"+DoubleToString(InpFibMin,16)+"|"+DoubleToString(InpFibMax,16);
+   value+="|"+(string)InpRequireFibTouch+"|"+(string)InpExtendWave1BeforeFib+"|"+(string)InpRejectDeepFib+"|"+(string)InpRejectDeepFibClose;
+   value+="|"+(string)InpStrictWaveLifecycle+"|"+EnumToString(InpLowerRecognition)+"|"+DoubleToString(InpMinWave1RoomR,16);
+   value+="|"+(string)InpTimeoutUpperBars+"|"+EnumToString(InpObstacleMode)+"|"+DoubleToString(InpRewardR,16)+"|"+DoubleToString(InpRiskPercent,16);
+   value+="|"+DoubleToString(InpSLExtraPoints,16)+"|"+(string)InpEnableTesterOrders+"|"+(string)InpAllowTesterBatchRuns;
+   value+="|"+(string)InpCancelConnectedOpposite+"|"+(string)InpExtendTPToWave1+"|"+DoubleToString(InpTPWave1BufferPoints,16);
+   value+="|"+(string)InpExitOnOppositeWave1+"|"+(string)InpAuditOppositeExitTicks+"|"+(string)InpMagic+"|"+(string)InpDeviationPoints;
+   value+="|"+(string)InpDraw+"|"+(string)InpShowInfoPanel+"|"+(string)InpDiagnosticLabels+"|"+(string)InpShowSwingPaths;
+   value+="|"+(string)InpKeepObjects+"|"+(string)InpScreenshots+"|"+(string)InpScreenshotLimit+"|"+InpManualLevels;
+   return W33Hash(value);
+  }
 
 int RecordIndex(const string id)
   {
@@ -69,8 +111,12 @@ void MergeExecution(W33Setup &s)
    int i=RecordIndex(s.setup_id);if(i<0)return;
    W33Setup saved=g_records[i].setup;
    s.entry_price=saved.entry_price;s.sl_price=saved.sl_price;s.tp_price=saved.tp_price;
+   s.tp_rr_price=saved.tp_rr_price;s.tp_wave1_target_price=saved.tp_wave1_target_price;
+   s.tp_wave1_buffer_points=saved.tp_wave1_buffer_points;s.tp_extended_to_wave1=saved.tp_extended_to_wave1;
+   s.tp_adjustment_reason=saved.tp_adjustment_reason;
    s.risk_points=saved.risk_points;s.intended_rr=saved.intended_rr;
-   s.order_sent_at=saved.order_sent_at;s.fill_at=saved.fill_at;s.entry_status=saved.entry_status;
+   s.order_sent_at=saved.order_sent_at;s.fill_at=saved.fill_at;
+   if(!s.connected_opposite_cancelled)s.entry_status=saved.entry_status;
    if(s.skip_reason=="")s.skip_reason=saved.skip_reason;s.exit_at=saved.exit_at;s.exit_reason=saved.exit_reason;
    s.realized_r=saved.realized_r;s.spread_points=saved.spread_points;
    s.nearest_obstacle_price=saved.nearest_obstacle_price;s.nearest_obstacle_tf=saved.nearest_obstacle_tf;
@@ -80,6 +126,12 @@ void MergeExecution(W33Setup &s)
    s.wave1_room_price=saved.wave1_room_price;s.wave1_room_r=saved.wave1_room_r;s.wave1_room_rejected=saved.wave1_room_rejected;
    s.h1_direction=saved.h1_direction;
    s.actual_rr=saved.actual_rr;s.candle_body_ratio=saved.candle_body_ratio;s.candle_body_atr=saved.candle_body_atr;
+   s.exit_deal_reason=saved.exit_deal_reason;s.exit_price=saved.exit_price;
+   s.opposite_exit_armed=saved.opposite_exit_armed;s.opposite_setup_id=saved.opposite_setup_id;
+   s.opposite_wave_known_at=saved.opposite_wave_known_at;s.opposite_wave_peak_time=saved.opposite_wave_peak_time;s.opposite_wave_price=saved.opposite_wave_price;
+   s.opposite_exit_requested_at=saved.opposite_exit_requested_at;s.opposite_exit_net_estimate=saved.opposite_exit_net_estimate;s.opposite_exit_cost_estimate=saved.opposite_exit_cost_estimate;
+   s.execution_net_cash=saved.execution_net_cash;s.execution_initial_risk_money=saved.execution_initial_risk_money;
+   s.execution_position_id=saved.execution_position_id;s.opposite_close_order_ticket=saved.opposite_close_order_ticket;
   }
 double PriceRound(const double p,const int direction)
   {
@@ -97,6 +149,111 @@ void Publish(W33Event &e)
 void Emit(W33Setup &s,const string event,const string kind,const string reason)
   {
    W33Event e;ZeroMemory(e);e.at=TimeCurrent();e.event_type=event;e.reason_kind=kind;e.reason=reason;e.setup=s;Publish(e);
+  }
+bool OwnedPosition(const int record,ulong &ticket)
+  {
+   ticket=0;
+   if(record<0 || record>=ArraySize(g_records) || g_records[record].position_id==0)return false;
+   for(int p=PositionsTotal()-1;p>=0;p--)
+     {
+      ulong candidate=PositionGetTicket(p);if(candidate==0)continue;
+      if(PositionGetString(POSITION_SYMBOL)!=_Symbol || (ulong)PositionGetInteger(POSITION_MAGIC)!=InpMagic ||
+         (ulong)PositionGetInteger(POSITION_IDENTIFIER)!=g_records[record].position_id)continue;
+      long type=PositionGetInteger(POSITION_TYPE);
+      if((type==POSITION_TYPE_BUY?1:-1)!=g_records[record].setup.direction)return false;
+      ticket=candidate;return true;
+     }
+   return false;
+  }
+bool AcceptedDeal(const uint retcode)
+  {return retcode==TRADE_RETCODE_DONE || retcode==TRADE_RETCODE_DONE_PARTIAL || retcode==TRADE_RETCODE_PLACED;}
+void ArmOppositeExit(const W33Event &source,const ulong orderKey)
+  {
+   if(!InpExitOnOppositeWave1 || !InpEnableTesterOrders || !TesterExecutionContext() ||
+      source.event_type!="WAVE1_PEAK_CONFIRMED")return;
+   for(int i=0;i<ArraySize(g_records);i++)
+     {
+      ulong ticket;if(!OwnedPosition(i,ticket))continue;
+      if(!W33ArmOppositeExit(g_records[i].opposite,g_records[i].setup.direction,g_records[i].setup.fill_at,g_records[i].fill_order_key,
+                            source.setup.setup_id,source.setup.direction,source.at,orderKey))continue;
+      W33Setup s=g_records[i].setup;s.opposite_exit_armed=true;s.opposite_setup_id=source.setup.setup_id;
+      s.opposite_wave_known_at=source.at;s.opposite_wave_peak_time=source.setup.wave1_peak_time;s.opposite_wave_price=source.setup.wave1_peak_price;
+      g_records[i].setup=s;
+      Emit(s,"OPPOSITE_WAVE1_ARMED","OBSERVATION","source="+s.opposite_setup_id+" | first profitable executable quote after blue W1 confirmation");
+     }
+  }
+void AuditOppositeTick(const int index,const ulong ticket,const MqlTick &tick,const double volume,
+                       const double quoteProfit,const double swap,const double entryCostRate,const double net,const string status)
+  {
+   if(g_exit_tick_file==INVALID_HANDLE)return;
+   FileWrite(g_exit_tick_file,g_records[index].setup.setup_id,W33Time(TimeCurrent()),(long)tick.time_msc,(long)g_tick_order,(long)g_knowledge_order,
+      (long)ticket,(long)g_records[index].position_id,DoubleToString(tick.bid,10),DoubleToString(tick.ask,10),DoubleToString(volume,8),
+      DoubleToString(quoteProfit,10),DoubleToString(g_records[index].net_cash,10),DoubleToString(swap,10),DoubleToString(entryCostRate,10),
+      DoubleToString(entryCostRate*volume,10),DoubleToString(net,10),g_records[index].opposite.request_pending?1:0,
+      g_records[index].opposite.attempts,status,g_records[index].setup.opposite_setup_id);
+  }
+void CloseOppositeRejected(const int index,const string reason)
+  {
+   W33ResolveOppositeExitRequest(g_records[index].opposite,true);
+   W33Setup s=g_records[index].setup;Emit(s,"OPPOSITE_CLOSE_REJECTED","OBSERVATION",reason);
+   g_records[index].close_order_ticket=0;g_records[index].close_request_id=0;
+  }
+void ManageOppositeExits()
+  {
+   // This guard also applies on normal demo/live charts: no closing or SL/TP changes there.
+   if(!InpExitOnOppositeWave1 || !InpEnableTesterOrders || !TesterExecutionContext())return;
+   MqlTick tick;if(!SymbolInfoTick(_Symbol,tick) || tick.bid<=0 || tick.ask<tick.bid)return;
+   for(int i=0;i<ArraySize(g_records);i++)
+     {
+      if(!g_records[i].opposite.armed)continue;
+      ulong ticket;if(!OwnedPosition(i,ticket))continue;
+      if(g_records[i].opposite.request_pending)
+        {
+         // An IOC partial fill may leave a remainder. An active close order still owns it.
+         bool activeOrder=g_records[i].close_order_ticket>0 && OrderSelect(g_records[i].close_order_ticket);
+         if(!activeOrder && g_records[i].exit_volume>g_records[i].close_prior_exit_volume+1e-8)
+            W33ResolveOppositeExitRequest(g_records[i].opposite,true);
+         else if(!activeOrder && g_records[i].close_order_ticket>0 && HistoryOrderSelect(g_records[i].close_order_ticket))
+           {
+            ENUM_ORDER_STATE state=(ENUM_ORDER_STATE)HistoryOrderGetInteger(g_records[i].close_order_ticket,ORDER_STATE);
+            if(state==ORDER_STATE_CANCELED || state==ORDER_STATE_REJECTED || state==ORDER_STATE_EXPIRED)
+               CloseOppositeRejected(i,"close order terminated "+EnumToString(state));
+           }
+        }
+      // History/order selection does not change the selected position, but reselect the exact ticket explicitly.
+      if(!PositionSelectByTicket(ticket))continue;
+      double volume=PositionGetDouble(POSITION_VOLUME),open=PositionGetDouble(POSITION_PRICE_OPEN),swap=PositionGetDouble(POSITION_SWAP),quoteProfit=0;
+      int direction=g_records[i].setup.direction;double closePrice=direction>0?tick.bid:tick.ask;
+      if(!OrderCalcProfit(direction>0?ORDER_TYPE_BUY:ORDER_TYPE_SELL,_Symbol,volume,open,closePrice,quoteProfit))
+        {AuditOppositeTick(i,ticket,tick,volume,0,swap,0,0,"PROFIT_CALC_FAILED");continue;}
+      double entryCostRate=g_records[i].filled_volume>0?g_records[i].entry_costs/g_records[i].filled_volume:0;
+      double net=W33OppositeNetEstimate(quoteProfit,g_records[i].net_cash,swap,entryCostRate,volume);
+      g_records[i].setup.opposite_exit_net_estimate=net;g_records[i].setup.opposite_exit_cost_estimate=entryCostRate*volume;
+      bool ready=W33ShouldRequestOppositeExit(g_records[i].opposite,true,true,true,net);
+      AuditOppositeTick(i,ticket,tick,volume,quoteProfit,swap,entryCostRate,net,ready?"READY":(g_records[i].opposite.request_pending?"REQUEST_PENDING":"WAIT_PROFIT"));
+      if(!ready)continue;
+      MqlTradeRequest closeRequest;MqlTradeResult closeResult;MqlTradeCheckResult check;
+      ZeroMemory(closeRequest);ZeroMemory(closeResult);ZeroMemory(check);
+      closeRequest.action=TRADE_ACTION_DEAL;closeRequest.position=ticket;closeRequest.symbol=_Symbol;closeRequest.magic=InpMagic;
+      closeRequest.type=direction>0?ORDER_TYPE_SELL:ORDER_TYPE_BUY;closeRequest.volume=volume;closeRequest.price=closePrice;
+      closeRequest.deviation=InpDeviationPoints;closeRequest.comment="W33_OPPOSITE_W1_PROFIT";
+      long filling=SymbolInfoInteger(_Symbol,SYMBOL_FILLING_MODE);
+      closeRequest.type_filling=(filling&SYMBOL_FILLING_FOK)!=0?ORDER_FILLING_FOK:((filling&SYMBOL_FILLING_IOC)!=0?ORDER_FILLING_IOC:ORDER_FILLING_RETURN);
+      W33MarkOppositeExitRequested(g_records[i].opposite,TimeCurrent(),++g_knowledge_order);
+      g_records[i].close_prior_exit_volume=g_records[i].exit_volume;
+      g_records[i].setup.opposite_exit_requested_at=TimeCurrent();
+      W33Setup s=g_records[i].setup;
+      if(!OrderCheck(closeRequest,check))
+        {CloseOppositeRejected(i,"ORDER_CHECK "+IntegerToString((int)check.retcode)+" "+check.comment);continue;}
+      Emit(s,"OPPOSITE_CLOSE_REQUEST","OBSERVATION","net_estimate="+DoubleToString(net,10)+" | bid="+DoubleToString(tick.bid,_Digits)+" ask="+DoubleToString(tick.ask,_Digits));
+      bool sent=OrderSend(closeRequest,closeResult);
+      g_records[i].close_order_ticket=closeResult.order;g_records[i].close_request_id=closeResult.request_id;
+      if(!sent || !AcceptedDeal(closeResult.retcode))
+         CloseOppositeRejected(i,"ORDER_SEND "+IntegerToString((int)closeResult.retcode)+" "+closeResult.comment);
+      else {s.opposite_close_order_ticket=closeResult.order;g_records[i].setup.opposite_close_order_ticket=closeResult.order;
+         Emit(s,"OPPOSITE_CLOSE_ACCEPTED","OBSERVATION","order="+IntegerToString((long)closeResult.order)+" | retcode="+IntegerToString((int)closeResult.retcode));}
+     }
+   if(g_exit_tick_file!=INVALID_HANDLE)FileFlush(g_exit_tick_file);
   }
 void Screenshot(const W33Setup &s,const string event)
   {
@@ -144,20 +301,33 @@ bool Plan(W33Setup &s,string &why)
    double risk=s.direction*(s.entry_price-s.sl_price);s.risk_points=risk/_Point;s.intended_rr=InpRewardR;
    if(s.wave2_extreme_price<=0 || risk<=0){why="INVALID_STRUCTURAL_SL";return false;}
    s.tp_price=PriceRound(s.entry_price+s.direction*risk*InpRewardR,s.direction);
+   s.tp_rr_price=s.tp_price;
+   W33Wave1TargetResult target=W33ExtendTargetToWave1(InpExtendTPToWave1,s.direction,s.entry_price,s.tp_rr_price,
+      s.wave1_peak_fixed,s.wave1_peak_price,_Point,SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE),_Digits,
+      s.spread_points,InpTPWave1BufferPoints);
+   s.tp_price=target.final_tp;s.tp_wave1_target_price=target.desired_target;
+   s.tp_wave1_buffer_points=target.effective_buffer_points;s.tp_extended_to_wave1=target.applied;
+   s.tp_adjustment_reason=target.reason;
    Obstacle(s);
    bool roomAllowed=W33CheckWave1Room(s,InpMinWave1RoomR);
    if(InpObstacleMode==CAP_TP && s.nearest_obstacle_price>0)
      {
       double capped=PriceRound(s.nearest_obstacle_price-s.direction*(InpSLExtraPoints+s.spread_points)*_Point,-s.direction);
-      if(s.direction*(capped-s.tp_price)<0)s.tp_price=capped;
+      if(s.direction*(capped-s.tp_price)<0)
+        {
+         s.tp_price=capped;
+         if(target.applied)s.tp_adjustment_reason="WAVE1_EXTENSION_CAPPED_BY_OBSTACLE";
+        }
      }
+   s.tp_extended_to_wave1=target.applied && s.direction*(s.tp_price-s.tp_rr_price)>0;
    if(s.direction*(s.tp_price-s.entry_price)<=0){why="OBSTACLE_CAP_NONPOSITIVE_RR";return false;}
    s.actual_rr=s.direction*(s.tp_price-s.entry_price)/risk;
    if(!roomAllowed){why="WAVE1_ROOM_TOO_SMALL";return false;}
    double reference=s.direction>0?tick.bid:tick.ask;
    if(s.direction*(reference-s.sl_price)<minDist || s.direction*(s.tp_price-reference)<minDist)
      {why="BROKER_STOPS_OR_FREEZE_LEVEL";return false;}
-   if(InpObstacleMode==SKIP_IF_BLOCKED && s.nearest_obstacle_price>0 && s.obstacle_distance_r<InpRewardR)
+   double requiredRR=InpExtendTPToWave1 ? s.actual_rr : InpRewardR;
+   if(InpObstacleMode==SKIP_IF_BLOCKED && s.nearest_obstacle_price>0 && s.obstacle_distance_r<requiredRR)
      {why="OBSTACLE_NEAR";return false;}
    return true;
   }
@@ -180,6 +350,7 @@ void HandleSignal(W33Event &signal)
    string reason="";bool valid=Plan(s,reason);
    s.entry_status=valid?"DIAGNOSTIC_SIGNAL":"SIGNAL_RISK_REJECTED";
    signal.setup=s;Publish(signal); // Always preserve ENTRY, SL and TP, including order-disabled signals.
+   if(s.tp_extended_to_wave1)Emit(s,"TP_WAVE1_EXTENDED","OBSERVATION",s.tp_adjustment_reason);
    int n=ArraySize(g_records);ArrayResize(g_records,n+1);ZeroMemory(g_records[n]);g_records[n].setup=s;
    s.state=RESISTANCE_AND_RISK_CHECK;Emit(s,"RISK_CHECK","OBSERVATION","actual_rr="+DoubleToString(s.actual_rr,6));
    if(!valid)
@@ -192,7 +363,7 @@ void HandleSignal(W33Event &signal)
      }
    if(!InpEnableTesterOrders)
      {s.entry_status="DIAGNOSTIC_ONLY";Emit(s,"ORDER_DISABLED","OBSERVATION","tester orders disabled");g_records[n].setup=s;Screenshot(s,"SIGNAL");return;}
-   if(!MQLInfoInteger(MQL_TESTER) || MQLInfoInteger(MQL_OPTIMIZATION))reason="TESTER_ONLY_ORDER_GUARD";
+   if(!TesterExecutionContext())reason="TESTER_ONLY_ORDER_GUARD";
    else if(PositionBusy())reason="SYMBOL_POSITION_BUSY";
    else if(SymbolInfoInteger(_Symbol,SYMBOL_TRADE_MODE)==SYMBOL_TRADE_MODE_DISABLED)reason="SYMBOL_TRADE_DISABLED";
    if(reason!="")
@@ -217,13 +388,20 @@ void HandleSignal(W33Event &signal)
    if(!OrderCheck(request,check))
      {s.entry_status="SKIPPED";s.skip_reason="ORDER_CHECK "+IntegerToString((int)check.retcode)+" "+check.comment;
       Emit(s,"SKIP","EXCLUSION",s.skip_reason);g_records[n].setup=s;return;}
+   bool marked=g_engine.MarkOrderSubmitted(s.setup_id,true,TimeCurrent());
+   if(!marked && InpCancelConnectedOpposite)
+     {
+      s.entry_status="SKIPPED";s.skip_reason="SETUP_NOT_ACTIVE_AT_ORDER_SEND";
+      Emit(s,"SKIP","EXCLUSION",s.skip_reason);g_records[n].setup=s;return;
+     }
    s.order_sent_at=TimeCurrent();s.entry_status="ORDER_SENT";
    g_records[n].setup=s;g_records[n].initial_risk_money=(-loss)*volume;g_records[n].pending=true;
    Emit(s,"ORDER","OBSERVATION","volume="+DoubleToString(volume,8)+" risk_budget="+DoubleToString(budget,2));
    bool sent=OrderSend(request,result);
    if(!sent || (result.retcode!=TRADE_RETCODE_DONE && result.retcode!=TRADE_RETCODE_DONE_PARTIAL && result.retcode!=TRADE_RETCODE_PLACED))
      {s.entry_status="ORDER_REJECTED";s.skip_reason="ORDER_SEND "+IntegerToString((int)result.retcode)+" "+result.comment;
-      g_records[n].pending=false;Emit(s,"SKIP","EXCLUSION",s.skip_reason);g_records[n].setup=s;}
+      g_records[n].pending=false;g_engine.MarkOrderSubmitted(s.setup_id,false,TimeCurrent());
+      Emit(s,"SKIP","EXCLUSION",s.skip_reason);g_records[n].setup=s;}
    Screenshot(s,"ORDER");
   }
 void Drain()
@@ -231,8 +409,10 @@ void Drain()
    W33Event events[];g_engine.Drain(events);
    for(int i=0;i<ArraySize(events);i++)
      {
+      ulong orderKey=++g_knowledge_order;
       if(events[i].event_type=="SIGNAL")HandleSignal(events[i]);
       else {MergeExecution(events[i].setup);Publish(events[i]);
+         ArmOppositeExit(events[i],orderKey);
          if(events[i].event_type=="INVALIDATE" || events[i].event_type=="SKIP")Screenshot(events[i].setup,events[i].event_type);}
      }
   }
@@ -251,10 +431,14 @@ void FeedClosed()
       g_lastOpen[f]=current;
      }
    int n=ArraySize(pending);
-   for(int i=0;i<n;i++)for(int j=i+1;j<n;j++)
-      if(pending[j].time+PeriodSeconds(periods[j])<pending[i].time+PeriodSeconds(periods[i]))
-        {MqlRates tmp=pending[i];pending[i]=pending[j];pending[j]=tmp;ENUM_TIMEFRAMES tf=periods[i];periods[i]=periods[j];periods[j]=tf;}
-   for(int i=0;i<n;i++){g_engine.Feed(periods[i],pending[i],now);Drain();}
+   W33SortClosedBars(pending,periods);
+   for(int i=0;i<n;i++)
+     {
+      bool accepted=g_engine.Feed(periods[i],pending[i],now);
+      if(accepted && periods[i]==g_upper)g_ledger.WriteUpperBar(_Symbol,g_upper,pending[i],now);
+      if(accepted && periods[i]==g_lower)g_ledger.WriteLowerBar(_Symbol,g_lower,pending[i],now);
+      Drain();
+     }
   }
 void Panel()
   {
@@ -272,12 +456,22 @@ void Panel()
 bool Config()
   {
    int file=FileOpen(g_tag+"_config.csv",FILE_WRITE|FILE_CSV|FILE_ANSI|FILE_COMMON, ';',CP_UTF8);
-   if(file==INVALID_HANDLE)return false;
+   if(file==INVALID_HANDLE){Print("Wave33 INIT_CONFIG_OPEN_FAILED symbol=",_Symbol," tag=",g_tag," error=",GetLastError());return false;}
    FileWrite(file,"parameter","value");
-   FileWrite(file,"version","1.0");FileWrite(file,"ea_version","1.40");FileWrite(file,"symbol",_Symbol);FileWrite(file,"upper_tf",EnumToString(g_upper));FileWrite(file,"lower_tf",EnumToString(g_lower));
+   FileWrite(file,"version","1.0");FileWrite(file,"ea_version","1.80");FileWrite(file,"symbol",_Symbol);FileWrite(file,"upper_tf",EnumToString(g_upper));FileWrite(file,"lower_tf",EnumToString(g_lower));
    FileWrite(file,"resolved_run_tag",g_tag);
+   FileWrite(file,"allow_tester_batch_runs",InpAllowTesterBatchRuns);FileWrite(file,"optimization",MQLInfoInteger(MQL_OPTIMIZATION));
+   FileWrite(file,"effective_draw",g_effective_draw);FileWrite(file,"input_hash",g_input_hash);
+   FileWrite(file,"batch_namespace",MQLInfoInteger(MQL_OPTIMIZATION)?"symbol/context hash + exclusive persistent claim":"single-run tag");
    FileWrite(file,"swing_left",InpSwingLeft);FileWrite(file,"swing_right",InpSwingRight);FileWrite(file,"fib_min",InpFibMin);FileWrite(file,"fib_max",InpFibMax);
    FileWrite(file,"require_fib_touch",InpRequireFibTouch);FileWrite(file,"reject_deep_fib",InpRejectDeepFib);FileWrite(file,"timeout_upper_bars",InpTimeoutUpperBars);
+   FileWrite(file,"reject_deep_fib_close",InpRejectDeepFibClose);
+   FileWrite(file,"extend_wave1_before_fib",InpExtendWave1BeforeFib);
+   FileWrite(file,"wave1_extension_assumption","active pre-signal only; before first minimum Fib penetration; closed upper new extreme; re-confirm upper pivot; fixed origin; no revival");
+   FileWrite(file,"wave1_extension_ambiguity","same upper candle new extreme and old minimum retracement: lock without extension; OHLC order unknown");
+   FileWrite(file,"wave1_extension_exit_identity","extension confirmation has separate event type; never a fresh opposite W1 exit source");
+   FileWrite(file,"deep_fib_close_basis","upper timeframe closed candle; strict beyond configured fib_max; wick alone allowed; pre-signal only");
+   FileWrite(file,"equal_close_feed_order","H1 M15 M5 M1; upper before lower, including backlog");
    FileWrite(file,"strict_wave_lifecycle",InpStrictWaveLifecycle);FileWrite(file,"initial_move_boundary","strict lower close beyond fixed W1 after prior qualifying pullback; same-bar valid signal allowed");
    FileWrite(file,"lower_wave2_binding","countertrend extreme price matches current deepest W2 within half a point; equal-price retest allowed");
    FileWrite(file,"lower_recognition_mode",EnumToString(InpLowerRecognition));
@@ -285,38 +479,76 @@ bool Config()
    FileWrite(file,"minimum_wave1_room_r",InpMinWave1RoomR);FileWrite(file,"wave1_room_assumption","signed executable quote to fixed W1 endpoint divided by rounded structural stop risk; zero disables");
    FileWrite(file,"obstacle_source_policy","all known swing highs and lows; source trace and W1 room separate; no claim of current importance");
    FileWrite(file,"trigger_mode",EnumToString(InpTriggerMode));FileWrite(file,"obstacle_mode",EnumToString(InpObstacleMode));FileWrite(file,"reward_r",InpRewardR);
+   FileWrite(file,"cancel_connected_opposite",InpCancelConnectedOpposite);
+   FileWrite(file,"connected_opposite_policy","new accepted opposite W1_BREAK shares the old fixed endpoint; strictly older unsubmitted candidate only; submitted/open positions preserved");
+   FileWrite(file,"extend_tp_to_wave1",InpExtendTPToWave1);FileWrite(file,"tp_wave1_buffer_points",InpTPWave1BufferPoints);
+   FileWrite(file,"tp_wave1_policy","only extend RR TP toward the known fixed W1 endpoint; buffer=max(extra points,spread,one tick); inward tick rounding; explicit obstacle cap has priority; SL unchanged");
    FileWrite(file,"risk_percent",InpRiskPercent);FileWrite(file,"sl_extra_points",InpSLExtraPoints);FileWrite(file,"tester_orders",InpEnableTesterOrders);
+   FileWrite(file,"exit_on_opposite_wave1",InpExitOnOppositeWave1);FileWrite(file,"audit_opposite_exit_ticks",InpAuditOppositeExitTicks);
+   FileWrite(file,"opposite_exit_trigger","WAVE1_PEAK_CONFIRMED known after actual fill; same upper/lower pair; sticky first opposite source");
+   FileWrite(file,"opposite_exit_profit_basis","current executable bid/ask profit + booked cash + remaining swap - estimated exit commission/fee; strict >0; no SL/TP change");
+   FileWrite(file,"opposite_exit_fee_estimate","remaining volume times observed negative entry commission+fee per filled volume; future fee/slippage unknown, actual net not guaranteed");
    FileWrite(file,"magic",InpMagic);FileWrite(file,"deviation_points",InpDeviationPoints);FileWrite(file,"manual_levels_display_only",InpManualLevels);
    FileWrite(file,"draw",InpDraw);FileWrite(file,"keep_objects",InpKeepObjects);FileWrite(file,"screenshots",InpScreenshots);FileWrite(file,"screenshot_limit",InpScreenshotLimit);
    FileWrite(file,"show_info_panel",InpShowInfoPanel);FileWrite(file,"diagnostic_labels",InpDiagnosticLabels);FileWrite(file,"show_swing_paths",InpShowSwingPaths);
    FileWrite(file,"tester",MQLInfoInteger(MQL_TESTER));FileWrite(file,"visual",MQLInfoInteger(MQL_VISUAL_MODE));FileWrite(file,"terminal_build",TerminalInfoInteger(TERMINAL_BUILD));
    FileWrite(file,"chart_tf",EnumToString((ENUM_TIMEFRAMES)_Period));FileWrite(file,"point",_Point);FileWrite(file,"tick_size",SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE));
+   FileWrite(file,"account_currency",AccountInfoString(ACCOUNT_CURRENCY));FileWrite(file,"symbol_currency_profit",SymbolInfoString(_Symbol,SYMBOL_CURRENCY_PROFIT));
+   FileWrite(file,"symbol_calc_mode",SymbolInfoInteger(_Symbol,SYMBOL_TRADE_CALC_MODE));
    FileWrite(file,"volume_min",SymbolInfoDouble(_Symbol,SYMBOL_VOLUME_MIN));FileWrite(file,"volume_step",SymbolInfoDouble(_Symbol,SYMBOL_VOLUME_STEP));FileWrite(file,"contract_size",SymbolInfoDouble(_Symbol,SYMBOL_TRADE_CONTRACT_SIZE));
    FileWrite(file,"stops_level",SymbolInfoInteger(_Symbol,SYMBOL_TRADE_STOPS_LEVEL));FileWrite(file,"freeze_level",SymbolInfoInteger(_Symbol,SYMBOL_TRADE_FREEZE_LEVEL));
    FileClose(file);return true;
   }
 int OnInit()
   {
-   if(InpSwingLeft<1 || InpSwingRight<1 || InpFibMin<=0 || InpFibMax<=InpFibMin || InpFibMax>=1 || InpRewardR<=0 || InpRiskPercent<=0 || InpRiskPercent>100 || InpTimeoutUpperBars<1 || InpSLExtraPoints<0 || InpMinWave1RoomR<0)return INIT_PARAMETERS_INCORRECT;
-   if(MQLInfoInteger(MQL_OPTIMIZATION)){Print("Wave33 visual verification does not permit optimization.");return INIT_FAILED;}
+   if(InpSwingLeft<1 || InpSwingRight<1 || InpFibMin<=0 || InpFibMax<=InpFibMin || InpFibMax>=1 || InpRewardR<=0 || InpRiskPercent<=0 || InpRiskPercent>100 || InpTimeoutUpperBars<1 || InpSLExtraPoints<0 || InpMinWave1RoomR<0 || !MathIsValidNumber(InpTPWave1BufferPoints) || InpTPWave1BufferPoints<0)
+     {Print("Wave33 INIT_PARAMETERS_INCORRECT: check swings, Fib, RR, risk, timeout and SL/room inputs.");return INIT_PARAMETERS_INCORRECT;}
+   bool optimizing=(bool)MQLInfoInteger(MQL_OPTIMIZATION);
+   if(optimizing && !InpAllowTesterBatchRuns)
+     {Print("Wave33 INIT_BATCH_DISABLED: Market Watch all-symbol runs also use optimization mode. Set InpAllowTesterBatchRuns=true.");return INIT_FAILED;}
    g_tag=InpRunTag;if(g_tag=="")return INIT_PARAMETERS_INCORRECT;
    StringReplace(g_tag,"/","_");StringReplace(g_tag,"\\","_");StringReplace(g_tag,":","_");
-   if(FileIsExist(g_tag+"_events.csv",FILE_COMMON))
+   g_input_hash=RunInputHash();
+   if(optimizing)
+     {
+      string requested=g_tag,problem="";
+      string context=W33Hash(TerminalInfoString(TERMINAL_DATA_PATH)+"|"+g_input_hash+"|"+EnumToString((ENUM_TIMEFRAMES)_Period));
+      if(!W33ReserveBatchRunTag(requested,_Symbol,context,g_tag,g_run_claim,problem))
+        {Print("Wave33 INIT_BATCH_TAG_FAILED symbol=",_Symbol," ",problem);return INIT_FAILED;}
+     }
+   else if(FileIsExist(g_tag+"_events.csv",FILE_COMMON))
       g_tag+="_"+IntegerToString((long)TimeLocal())+"_"+IntegerToString((long)GetTickCount());
    Print("Wave33 resolved run tag: ",g_tag);
    g_upper=InpPattern==M15_M5?PERIOD_M15:PERIOD_M5;g_lower=InpPattern==M15_M5?PERIOD_M5:PERIOD_M1;
    g_frames[0]=PERIOD_H1;g_frames[1]=PERIOD_M15;g_frames[2]=PERIOD_M5;g_frames[3]=PERIOD_M1;
-   for(int i=0;i<4;i++){g_lastOpen[i]=iTime(_Symbol,g_frames[i],0);if(g_lastOpen[i]==0)return INIT_FAILED;}
+   for(int i=0;i<4;i++)
+     {
+      ResetLastError();g_lastOpen[i]=iTime(_Symbol,g_frames[i],0);
+      if(g_lastOpen[i]==0){Print("Wave33 INIT_HISTORY_NOT_READY symbol=",_Symbol," tf=",EnumToString(g_frames[i])," error=",GetLastError());return INIT_FAILED;}
+     }
    g_engine.Configure(g_upper,g_lower,InpSwingLeft,InpSwingRight,InpFibMin,InpFibMax,InpTimeoutUpperBars,InpRejectDeepFib,InpRequireFibTouch);
    g_engine.Reset(_Symbol);g_engine.SetTriggerMode(InpTriggerMode);g_engine.SetPoint(_Point);g_engine.SetLifecyclePolicy(InpStrictWaveLifecycle);
    g_engine.SetLowerRecognition(InpLowerRecognition);
-   if(!g_ledger.Open(g_tag) || !Config())return INIT_FAILED;
+   g_engine.SetDeepFibClosePolicy(InpRejectDeepFibClose);
+   g_engine.SetWave1ExtensionPolicy(InpExtendWave1BeforeFib);
+   g_engine.SetConnectedOppositePolicy(InpCancelConnectedOpposite);
+   g_effective_draw=InpDraw && !optimizing;
+   ResetLastError();
+   if(!g_ledger.Open(g_tag)){Print("Wave33 INIT_LEDGER_OPEN_FAILED symbol=",_Symbol," tag=",g_tag," error=",GetLastError());return INIT_FAILED;}
+   if(!Config())return INIT_FAILED;
+   if(InpAuditOppositeExitTicks)
+     {
+      g_exit_tick_file=FileOpen(g_tag+"_opposite_ticks.csv",FILE_WRITE|FILE_CSV|FILE_ANSI|FILE_COMMON|FILE_SHARE_READ,';',CP_UTF8);
+      if(g_exit_tick_file==INVALID_HANDLE){Print("Wave33 INIT_TICK_AUDIT_OPEN_FAILED symbol=",_Symbol," tag=",g_tag," error=",GetLastError());g_ledger.Close();return INIT_FAILED;}
+      FileWrite(g_exit_tick_file,"setup_id","known_at","tick_time_msc","tick_order","knowledge_order","position_ticket","position_id","bid","ask","volume",
+         "quote_profit","booked_cash","remaining_swap","entry_cost_rate","estimated_exit_cost","net_estimate","request_pending","attempts","status","opposite_setup_id");
+     }
    g_prefix="W33_"+W33Hash(g_tag)+"_"+IntegerToString((int)InpPattern)+"_";
-   g_display.Init(g_prefix,InpDraw);ZeroMemory(g_last);
+   g_display.Init(g_prefix,g_effective_draw);ZeroMemory(g_last);
    g_display.SetFrames(g_upper,g_lower);
    g_display.ConfigureVisuals(InpShowInfoPanel,InpDiagnosticLabels,InpShowSwingPaths);g_display.SetTriggerMode(InpTriggerMode);
    string levels[];int count=StringSplit(InpManualLevels,';',levels);
-   for(int j=0;InpDraw && j<count;j++)
+   for(int j=0;g_effective_draw && j<count;j++)
      {
       double p=StringToDouble(levels[j]);if(p<=0)continue;
       string name=g_prefix+"MANUAL_DISPLAY_ONLY_"+IntegerToString(j);
@@ -329,9 +561,18 @@ int OnInit()
    Emit(initial,"INIT","OBSERVATION","SEARCH_STRUCTURE | prospective warmup | max(stops,freeze) SL buffer | manual display only");
    g_ready=true;return INIT_SUCCEEDED;
   }
-void OnTick(){if(!g_ready)return;FeedClosed();static datetime last=0;if(last!=TimeCurrent()){last=TimeCurrent();Panel();}}
+void OnTick(){if(!g_ready)return;g_tick_order++;FeedClosed();ManageOppositeExits();static datetime last=0;if(last!=TimeCurrent()){last=TimeCurrent();Panel();}}
 void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &request,const MqlTradeResult &result)
   {
+   if(g_ready && trans.type==TRADE_TRANSACTION_REQUEST && request.magic==InpMagic && request.symbol==_Symbol)
+     {
+      for(int i=0;i<ArraySize(g_records);i++)
+         if(g_records[i].opposite.request_pending && result.request_id==g_records[i].close_request_id)
+           {
+            if(!AcceptedDeal(result.retcode))CloseOppositeRejected(i,"TRADE_TRANSACTION_REQUEST "+IntegerToString((int)result.retcode)+" "+result.comment);
+            else if(result.order>0){g_records[i].close_order_ticket=result.order;g_records[i].setup.opposite_close_order_ticket=result.order;}
+           }
+     }
    if(!g_ready || trans.type!=TRADE_TRANSACTION_DEAL_ADD || !HistoryDealSelect(trans.deal))return;
    if(HistoryDealGetString(trans.deal,DEAL_SYMBOL)!=_Symbol || (ulong)HistoryDealGetInteger(trans.deal,DEAL_MAGIC)!=InpMagic)return;
    ulong pos=(ulong)HistoryDealGetInteger(trans.deal,DEAL_POSITION_ID);
@@ -347,6 +588,8 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &
    g_records[index].net_cash+=HistoryDealGetDouble(trans.deal,DEAL_PROFIT)+HistoryDealGetDouble(trans.deal,DEAL_COMMISSION)+HistoryDealGetDouble(trans.deal,DEAL_SWAP)+HistoryDealGetDouble(trans.deal,DEAL_FEE);
    if(entry==DEAL_ENTRY_IN)
      {
+      if(g_records[index].fill_order_key==0)g_records[index].fill_order_key=++g_knowledge_order;
+      g_records[index].entry_costs+=MathMax(0,-HistoryDealGetDouble(trans.deal,DEAL_COMMISSION))+MathMax(0,-HistoryDealGetDouble(trans.deal,DEAL_FEE));
       g_records[index].position_id=pos;double prior=g_records[index].filled_volume;
       s.entry_price=(s.entry_price*prior+price*volume)/(prior+volume);g_records[index].filled_volume+=volume;
       s.fill_at=when;s.risk_points=MathAbs(s.entry_price-s.sl_price)/_Point;s.entry_status="FILLED";s.state=POSITION_TRACKING;
@@ -360,6 +603,7 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &
       if(OrderCalcProfit(s.direction>0?ORDER_TYPE_BUY:ORDER_TYPE_SELL,_Symbol,g_records[index].filled_volume,s.entry_price,s.sl_price,risk))
          g_records[index].initial_risk_money=MathAbs(risk);
       else Emit(s,"RISK_RECALC_FAILED","MEASUREMENT","fill risk uses pre-order estimate error="+IntegerToString(GetLastError()));
+      s.execution_net_cash=g_records[index].net_cash;s.execution_initial_risk_money=g_records[index].initial_risk_money;s.execution_position_id=pos;
       g_records[index].pending=false;
       g_engine.MarkExecution(s.setup_id,true,TimeCurrent());Emit(s,"FILL","OBSERVATION","position filled");
      }
@@ -367,22 +611,42 @@ void OnTradeTransaction(const MqlTradeTransaction &trans,const MqlTradeRequest &
      {
       g_records[index].exit_volume+=volume;
       bool closed=g_records[index].exit_volume>=g_records[index].filled_volume-1e-8;
-      s.exit_at=when;s.exit_reason=EnumToString((ENUM_DEAL_REASON)HistoryDealGetInteger(trans.deal,DEAL_REASON));
+      s.exit_at=when;s.exit_price=price;s.exit_deal_reason=EnumToString((ENUM_DEAL_REASON)HistoryDealGetInteger(trans.deal,DEAL_REASON));
+      ulong dealOrder=(ulong)HistoryDealGetInteger(trans.deal,DEAL_ORDER);
+      // Transaction delivery order is not guaranteed. A deal can arrive before
+      // the REQUEST callback that supplies a previously unassigned order ticket.
+      if(g_records[index].opposite.request_pending && g_records[index].close_order_ticket==0 &&
+         (StringFind(HistoryDealGetString(trans.deal,DEAL_COMMENT),"W33_OPPOSITE_W1_PROFIT")==0 ||
+          StringFind(HistoryOrderGetString(dealOrder,ORDER_COMMENT),"W33_OPPOSITE_W1_PROFIT")==0))
+         g_records[index].close_order_ticket=dealOrder;
+      bool oppositeDeal=g_records[index].close_order_ticket>0 && dealOrder==g_records[index].close_order_ticket;
+      s.exit_reason=oppositeDeal?"OPPOSITE_WAVE1_PROFIT":s.exit_deal_reason;
       s.realized_r=g_records[index].initial_risk_money>0?g_records[index].net_cash/g_records[index].initial_risk_money:0;
+      s.execution_net_cash=g_records[index].net_cash;s.execution_initial_risk_money=g_records[index].initial_risk_money;s.execution_position_id=pos;
+      s.opposite_close_order_ticket=g_records[index].close_order_ticket;
       s.entry_status=closed?"CLOSED":"PARTIAL_EXIT";
       Emit(s,closed?"EXIT":"PARTIAL_EXIT","OBSERVATION",s.exit_reason);
-      if(closed)g_engine.MarkExecution(s.setup_id,false,TimeCurrent());
+      if(closed){g_engine.MarkExecution(s.setup_id,false,TimeCurrent());W33ResolveOppositeExitRequest(g_records[index].opposite,false);}
      }
-   g_records[index].setup=s;Panel();
+   // MarkExecution queues observations at the actual callback time. Publish
+   // them now: a fast SL/TP may arrive before the next closed candle, and
+   // deferring the fill acknowledgement would backdate rows after that EXIT.
+   g_records[index].setup=s;Drain();Panel();
   }
 void OnDeinit(const int reason)
   {
-   if(!g_ready)return;
+   if(!g_ready)
+     {
+      g_ledger.Close();if(g_exit_tick_file!=INVALID_HANDLE){FileClose(g_exit_tick_file);g_exit_tick_file=INVALID_HANDLE;}
+      W33ReleaseBatchRunTag(g_run_claim);return;
+     }
    Drain();
    for(int d=-1;d<=1;d+=2)
      {
       W33Setup s;g_engine.GetActive(d,s);if(s.setup_id=="" || !s.active)continue;
       MergeExecution(s);Emit(s,"TEST_END","OBSERVATION","CENSORED_AT_STOP reason="+IntegerToString(reason));
      }
-   g_ledger.Close();if(!InpKeepObjects)g_display.Clear();ChartRedraw();g_ready=false;
+   g_ledger.Close();if(g_exit_tick_file!=INVALID_HANDLE){FileClose(g_exit_tick_file);g_exit_tick_file=INVALID_HANDLE;}
+   W33ReleaseBatchRunTag(g_run_claim);
+   if(!InpKeepObjects)g_display.Clear();ChartRedraw();g_ready=false;
   }

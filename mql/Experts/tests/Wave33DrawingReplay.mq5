@@ -35,6 +35,19 @@ void Field(W33Setup &s,const string k,const string v)
    else if(k=="wave1_peak_time")s.wave1_peak_time=StringToTime(v);
    else if(k=="wave1_peak_price")s.wave1_peak_price=StringToDouble(v);
    else if(k=="wave1_peak_known_at")s.wave1_peak_known_at=StringToTime(v);
+   else if(k=="wave1_revision")s.wave1_revision=(int)StringToInteger(v);
+   else if(k=="wave1_extension_pending")s.wave1_extension_pending=v=="1" || v=="true";
+   else if(k=="wave1_extension_started_at")s.wave1_extension_started_at=StringToTime(v);
+   else if(k=="wave1_extension_known_at")s.wave1_extension_known_at=StringToTime(v);
+   else if(k=="wave1_previous_peak_time")s.wave1_previous_peak_time=StringToTime(v);
+   else if(k=="wave1_previous_peak_known_at")s.wave1_previous_peak_known_at=StringToTime(v);
+   else if(k=="wave1_previous_peak_price")s.wave1_previous_peak_price=StringToDouble(v);
+   else if(k=="wave1_extension_locked")s.wave1_extension_locked=v=="1" || v=="true";
+   else if(k=="wave1_extension_lock_bar_time")s.wave1_extension_lock_bar_time=StringToTime(v);
+   else if(k=="wave1_extension_lock_known_at")s.wave1_extension_lock_known_at=StringToTime(v);
+   else if(k=="wave1_extension_lock_reason")s.wave1_extension_lock_reason=v;
+   else if(k=="wave1_provisional_time")s.wave1_provisional_time=StringToTime(v);
+   else if(k=="wave1_provisional_price")s.wave1_provisional_price=StringToDouble(v);
    else if(k=="wave1_start_known_at")s.wave1_start_known_at=StringToTime(v);
    else if(k=="wave2_extreme_known_at")s.wave2_extreme_known_at=StringToTime(v);
    else if(k=="lower_structure_known_at")s.lower_structure_known_at=StringToTime(v);
@@ -62,12 +75,41 @@ void Field(W33Setup &s,const string k,const string v)
    else if(k=="entry_price")s.entry_price=StringToDouble(v);
    else if(k=="sl_price")s.sl_price=StringToDouble(v);
    else if(k=="tp_price")s.tp_price=StringToDouble(v);
+   else if(k=="tp_rr_price")s.tp_rr_price=StringToDouble(v);
+   else if(k=="tp_wave1_target_price")s.tp_wave1_target_price=StringToDouble(v);
+   else if(k=="tp_wave1_buffer_points")s.tp_wave1_buffer_points=StringToDouble(v);
+   else if(k=="tp_extended_to_wave1")s.tp_extended_to_wave1=v=="1" || v=="true";
+   else if(k=="tp_adjustment_reason")s.tp_adjustment_reason=v;
    else if(k=="risk_points")s.risk_points=StringToDouble(v);
    else if(k=="intended_rr")s.intended_rr=StringToDouble(v);
+   else if(k=="actual_rr")s.actual_rr=StringToDouble(v);
    else if(k=="obstacle_distance_r")s.obstacle_distance_r=StringToDouble(v);
    else if(k=="wave1_room_price")s.wave1_room_price=StringToDouble(v);
    else if(k=="wave1_room_r")s.wave1_room_r=StringToDouble(v);
    else if(k=="wave1_room_rejected")s.wave1_room_rejected=v=="1" || v=="true";
+   else if(k=="fib_close_bar_time")s.fib_close_bar_time=StringToTime(v);
+   else if(k=="fib_close_at")s.fib_close_at=StringToTime(v);
+   else if(k=="fib_close_known_at")s.fib_close_known_at=StringToTime(v);
+   else if(k=="fib_close_price")s.fib_close_price=StringToDouble(v);
+   else if(k=="fib_close_ratio")s.fib_close_ratio=StringToDouble(v);
+   else if(k=="opposite_exit_armed")s.opposite_exit_armed=v=="1" || v=="true";
+   else if(k=="opposite_setup_id")s.opposite_setup_id=v;
+   else if(k=="opposite_wave_known_at")s.opposite_wave_known_at=StringToTime(v);
+   else if(k=="opposite_wave_peak_time")s.opposite_wave_peak_time=StringToTime(v);
+   else if(k=="opposite_wave_price")s.opposite_wave_price=StringToDouble(v);
+   else if(k=="opposite_exit_requested_at")s.opposite_exit_requested_at=StringToTime(v);
+   else if(k=="opposite_exit_net_estimate")s.opposite_exit_net_estimate=StringToDouble(v);
+   else if(k=="opposite_exit_cost_estimate")s.opposite_exit_cost_estimate=StringToDouble(v);
+   else if(k=="connected_opposite_cancelled")s.connected_opposite_cancelled=v=="1" || v=="true";
+   else if(k=="connected_opposite_setup_id")s.connected_opposite_setup_id=v;
+   else if(k=="connected_opposite_known_at")s.connected_opposite_known_at=StringToTime(v);
+   else if(k=="connected_shared_time")s.connected_shared_time=StringToTime(v);
+   else if(k=="connected_shared_price")s.connected_shared_price=StringToDouble(v);
+   else if(k=="exit_at")s.exit_at=StringToTime(v);
+   else if(k=="exit_price")s.exit_price=StringToDouble(v);
+   else if(k=="exit_reason")s.exit_reason=v;
+   else if(k=="exit_deal_reason")s.exit_deal_reason=v;
+   else if(k=="realized_r")s.realized_r=StringToDouble(v);
    else if(k=="nearest_obstacle_price")s.nearest_obstacle_price=StringToDouble(v);
    else if(k=="nearest_obstacle_tf")s.nearest_obstacle_tf=TF(v);
    else if(k=="nearest_obstacle_time")s.nearest_obstacle_time=StringToTime(v);
@@ -161,25 +203,35 @@ void OnTimer()
      {
       if(InpSingleCase && current>InpStartCase){EventKillTimer();FileClose(resultFile);resultFile=INVALID_HANDLE;if(InpCloseWhenDone)TerminalClose(0);return;}
       bool found=false;ZeroMemory(snapshot);
-      for(int i=0;i<ArraySize(rows);i++)if(rows[i].index==current){found=true;cutoff=rows[i].cutoff;if(rows[i].event.setup.setup_id!="")snapshot=rows[i].event.setup;}
+      for(int i=0;i<ArraySize(rows);i++)if(rows[i].index==current)
+        {
+         found=true;cutoff=rows[i].cutoff;
+         // A joined review also contains the opposite source's events. Its
+         // final snapshot must not replace the primary candidate under review.
+         if(rows[i].event.setup.setup_id!="" && (rows[i].event.setup.setup_id==rows[i].id || snapshot.setup_id==""))snapshot=rows[i].event.setup;
+        }
       if(!found){EventKillTimer();FileClose(resultFile);resultFile=INVALID_HANDLE;if(InpCloseWhenDone)TerminalClose(0);else ExpertRemove();return;}
       datetime from=cutoff-86400;
+      // A seconds-level EXIT must not expose the eventual OHLC of its still
+      // forming source M1 candle. Retain only M1 bars closed by the cutoff;
+      // the actual exit point is still drawn at its known time and price.
+      datetime closedM1Through=(datetime)((long)cutoff/60*60)-1;
       if(snapshot.wave1_start_time>0)from=(datetime)MathMin((long)from,(long)snapshot.wave1_start_time-14400);
       MqlRates history[];
       if(InpPrepareCustom)
         {
-         int copied=CopyRates(InpSourceSymbol,PERIOD_M1,from,cutoff-1,history);
+         int copied=CopyRates(InpSourceSymbol,PERIOD_M1,from,closedM1Through,history);
          if(copied<1&&tries++<30)return;
          string custom=InpSymbolPrefix+"_"+IntegerToString(current);
          bool created=CustomSymbolCreate(custom,"Wave33RecordedReview",InpSourceSymbol);
          if(!created&&!SymbolInfoInteger(custom,SYMBOL_CUSTOM)){Print("Custom symbol preparation failed ",custom);TerminalClose(1);return;}
-         int updated=CustomRatesReplace(custom,from,cutoff-1,history);
+         int updated=CustomRatesReplace(custom,from,closedM1Through,history);
          bool selected=SymbolSelect(custom,true);
          Print("DRAW_ONLY custom ",custom," bars=",copied," updated=",updated," selected=",selected," last=",TimeToString(cutoff));
          FileWrite(resultFile,current,snapshot.setup_id,TimeToString(cutoff,TIME_DATE|TIME_SECONDS),"CUSTOM_SYMBOL_PREPARATION_NO_FUTURE_BARS",updated,0,custom,updated>0?1:0);FileFlush(resultFile);
          current++;tries=0;return;
         }
-      int copied=CopyRates(_Symbol,(ENUM_TIMEFRAMES)_Period,from,cutoff-1,history);
+      int copied=CopyRates(_Symbol,(ENUM_TIMEFRAMES)_Period,from,closedM1Through,history);
       int shift=iBarShift(_Symbol,(ENUM_TIMEFRAMES)_Period,cutoff,false);
       if((copied<1||shift<0)&&tries++<30)return;
       if(current>0)display.Clear();display.Init("W33R_"+W33Hash(InpRenderTag)+"_",true);display.SetFrames(snapshot.upper_tf,snapshot.lower_tf);
@@ -196,9 +248,11 @@ void OnTimer()
       if(shift>=0){bool nav=ChartNavigate(0,CHART_END,-shift);if(!nav)Print("Replay navigate failed ",GetLastError());}
       double lo=DBL_MAX,hi=0;
       IncludePrice(snapshot.wave1_start_price,lo,hi);IncludePrice(snapshot.wave1_peak_price,lo,hi);
+      IncludePrice(snapshot.wave1_provisional_price,lo,hi);IncludePrice(snapshot.wave1_previous_peak_price,lo,hi);
       IncludePrice(snapshot.wave2_extreme_price,lo,hi);IncludePrice(snapshot.upper_break_level,lo,hi);
       IncludePrice(snapshot.entry_price,lo,hi);IncludePrice(snapshot.sl_price,lo,hi);IncludePrice(snapshot.tp_price,lo,hi);
       IncludePrice(snapshot.first_progress_price,lo,hi);
+      IncludePrice(snapshot.opposite_wave_price,lo,hi);IncludePrice(snapshot.exit_price,lo,hi);
       IncludePrice(snapshot.nearest_obstacle_price,lo,hi);
       if(hi>lo){double pad=(hi-lo)*0.08;ChartSetInteger(0,CHART_SCALEFIX,true);ChartSetDouble(0,CHART_FIXED_MIN,lo-pad);ChartSetDouble(0,CHART_FIXED_MAX,hi+pad);}
       ChartRedraw();phase=1;tries=0;return;

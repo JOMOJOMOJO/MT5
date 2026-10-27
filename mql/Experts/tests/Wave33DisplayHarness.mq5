@@ -6,6 +6,8 @@
 input string InpRunTag="display_harness";
 CWave33Display g_display;
 int g_file=INVALID_HANDLE,g_passed=0,g_failed=0;
+int g_unavailable=0;
+bool g_tooltips_readable=false;
 string g_prefix="W33DisplayTest_";
 datetime g_base=D'2025.06.02 00:00:00';
 
@@ -17,6 +19,20 @@ void Check(const string name,const bool pass,const string detail)
    if(pass)g_passed++;else g_failed++;
    FileWrite(g_file,name,pass?"PASS":"FAIL",detail);
    Print("W33_DISPLAY_TEST ",pass?"PASS ":"FAIL ",name," ",detail);
+  }
+void Unavailable(const string name,const string detail)
+  {
+   g_unavailable++;
+   FileWrite(g_file,name,"UNAVAILABLE",detail);
+   Print("W33_DISPLAY_TEST UNAVAILABLE ",name," ",detail);
+  }
+void DetectTooltipReadback()
+  {
+   string name=g_prefix+"tooltip_probe";
+   ObjectCreate(0,name,OBJ_TEXT,0,g_base,3000.0);
+   ObjectSetString(0,name,OBJPROP_TOOLTIP,"W33 tooltip probe");
+   g_tooltips_readable=ObjectGetString(0,name,OBJPROP_TOOLTIP)=="W33 tooltip probe";
+   ObjectDelete(0,name);
   }
 void Fixture(W33Setup &s,const string id,const int direction=1)
   {
@@ -130,16 +146,292 @@ void TestSourceTraceAndRoomRejection()
    ClockEvent(at+step*11);
    Check("wave1_reference_stops_at_exit",End(Obj("OWN_W1","wave1_room"))==ended && ended==at+step*8,"W1 reference follows and ends with the real position");
   }
+void TestOppositeWaveExit(const int direction,const int index)
+  {
+   int step=Step();datetime fill=g_base+step*(80+index*40),known=fill+step*2,actual=known+step*5;
+   string id=direction>0?"OPP_LONG_POSITION":"OPP_SHORT_POSITION",suffix=direction>0?"_LONG":"_SHORT";
+   W33Setup s;Fixture(s,id,direction);s.fill_at=fill;s.position_open=true;
+   s.sl_price=s.entry_price-direction*10.0;s.tp_price=s.entry_price+direction*10.0;
+   Emit(s,"SIGNAL",fill);Emit(s,"FILL",fill);
+   string wait=Obj(id,"opposite_wait"),point=Obj(id,"opposite_known"),exitPoint=Obj(id,"opposite_exit"),caption=Obj(id,"opposite_exit_text");
+   Check("no_opposite_cause_before_observation"+suffix,ObjectFind(0,wait)<0 && ObjectFind(0,point)<0,
+         "An ordinary fill alone does not claim an opposite-wave decision existed");
+   s.opposite_exit_armed=true;s.opposite_setup_id=direction>0?"SOURCE_SHORT_W1":"SOURCE_LONG_W1";
+   s.opposite_wave_peak_time=fill-step*5;s.opposite_wave_known_at=known;s.opposite_wave_price=s.entry_price-direction*2.0;
+   Emit(s,"OPPOSITE_WAVE1_ARMED",known);
+   Check("opposite_wait_at_known_time"+suffix,ObjectFind(0,wait)>=0 &&
+         (datetime)ObjectGetInteger(0,wait,OBJPROP_TIME,0)==known && known>s.opposite_wave_peak_time,
+         "The warning is placed when the opposite first wave became known, not on its older swing candle");
+   Check("opposite_observation_point_at_known_time"+suffix,ObjectFind(0,point)>=0 &&
+         (datetime)ObjectGetInteger(0,point,OBJPROP_TIME,0)==known && MathAbs(ObjectGetDouble(0,point,OBJPROP_PRICE,0)-s.entry_price)<1e-9,
+         "The knowledge-time marker identifies the existing position's entry level without backdating");
+   string waitText=ObjectGetString(0,wait,OBJPROP_TEXT);
+   Check("opposite_wait_caption_explains_pending_profit"+suffix,StringFind(waitText,"逆①")>=0 && StringFind(waitText,"プラス決済待ち")>=0 &&
+         (color)ObjectGetInteger(0,wait,OBJPROP_COLOR)==clrGold && (color)ObjectGetInteger(0,point,OBJPROP_COLOR)==clrGold,
+         "Gold identifies a pending positive-net exit and is distinct from a new green entry");
+   if(g_tooltips_readable)
+     {
+      string tip=ObjectGetString(0,wait,OBJPROP_TOOLTIP);
+      Check("opposite_wait_source_and_known_tooltip"+suffix,StringFind(tip,s.opposite_setup_id)>=0 &&
+            StringFind(tip,"known "+TimeToString(known,TIME_DATE|TIME_SECONDS))>=0 &&
+            StringFind(tip,TimeToString(s.opposite_wave_peak_time,TIME_DATE|TIME_SECONDS))>=0,
+            "The warning exposes the source setup, original swing date and actual knowledge date separately");
+     }
+   else Unavailable("opposite_wait_source_and_known_tooltip"+suffix,
+                    "This tester cannot read even a short TOOLTIP probe; verify source and full known time in normal-chart replay inventory");
+   ClockEvent(known+step*3);
+   Check("opposite_wait_keeps_original_protection"+suffix,End(Obj(id,"SL"))==known+step*3 && End(Obj(id,"TP"))==known+step*3 &&
+         MathAbs(ObjectGetDouble(0,Obj(id,"SL"),OBJPROP_PRICE,0)-s.sl_price)<1e-9 &&
+         MathAbs(ObjectGetDouble(0,Obj(id,"TP"),OBJPROP_PRICE,0)-s.tp_price)<1e-9 && ObjectFind(0,exitPoint)<0,
+         "Arming leaves original stop/target prices active and creates no premature exit marker");
+   s.exit_reason="OPPOSITE_WAVE1_PROFIT";s.exit_deal_reason="EXPERT";s.exit_price=s.entry_price+direction*0.25;
+   s.exit_at=actual;s.opposite_exit_requested_at=known+step*3;s.realized_r=0.025;
+   Emit(s,"PARTIAL_EXIT",actual-step);
+   Check("partial_exit_does_not_claim_flat"+suffix,ObjectFind(0,exitPoint)<0 && End(Obj(id,"SL"))==actual-step,
+         "A partial close does not draw the completed-position exit or end residual risk lines");
+   Emit(s,"EXIT",actual);
+   Check("opposite_exit_at_actual_fill"+suffix,ObjectFind(0,exitPoint)>=0 &&
+         (datetime)ObjectGetInteger(0,exitPoint,OBJPROP_TIME,0)==actual && actual>s.opposite_exit_requested_at &&
+         MathAbs(ObjectGetDouble(0,exitPoint,OBJPROP_PRICE,0)-s.exit_price)<1e-9 &&
+         MathAbs(s.exit_price-s.sl_price)>1.0 && MathAbs(s.exit_price-s.tp_price)>1.0,
+         "The exit point uses the actual close fill time and price rather than request time, entry, SL or TP");
+   string exitText=ObjectGetString(0,caption,OBJPROP_TEXT);
+   Check("opposite_exit_caption_causal_reason"+suffix,StringFind(exitText,"EXIT")>=0 && StringFind(exitText,"逆①")>=0 &&
+         StringFind(exitText,"利益決済")>=0 && (color)ObjectGetInteger(0,caption,OBJPROP_COLOR)==clrGold &&
+         (datetime)ObjectGetInteger(0,caption,OBJPROP_TIME,0)==actual &&
+         MathAbs(ObjectGetDouble(0,caption,OBJPROP_PRICE,0)-s.exit_price)<1e-9,
+         "The close caption explicitly gives the opposite-first-wave profit reason at the fill location");
+   if(g_tooltips_readable)
+     {
+      string tip=ObjectGetString(0,caption,OBJPROP_TOOLTIP),fillTip=ObjectGetString(0,exitPoint,OBJPROP_TOOLTIP);
+      Check("opposite_exit_tooltip_execution_trace"+suffix,StringFind(tip,s.opposite_setup_id)>=0 &&
+            StringFind(tip,"actual "+DoubleToString(s.realized_r,4)+"R")>=0 &&
+            StringFind(fillTip,"fill "+DoubleToString(s.exit_price,_Digits))>=0 && StringFind(fillTip,"broker EXPERT")>=0,
+            "The exit trace retains the opposing source, realized R, actual fill price and broker reason");
+     }
+   else Unavailable("opposite_exit_tooltip_execution_trace"+suffix,
+                    "This tester cannot read TOOLTIP; verify source, actual fill, realized R and broker reason in normal-chart replay inventory");
+   ClockEvent(actual+step*20);Emit(s,"COMPLETED",actual+step*21);
+   Check("opposite_exit_stops_risk_at_actual_fill"+suffix,End(Obj(id,"SL"))==actual && End(Obj(id,"TP"))==actual &&
+         End(Obj(id,"obstacle"))==actual && End(Obj(id,"wave1_room"))==actual &&
+         !ObjectGetInteger(0,Obj(id,"SL"),OBJPROP_RAY_RIGHT) && !ObjectGetInteger(0,Obj(id,"TP"),OBJPROP_RAY_RIGHT),
+         "All position risk/reference lines stop at the actual close and remain finite after later observations");
+  }
+void TestOrdinaryExitCaption()
+  {
+   int step=Step();W33Setup s;Fixture(s,"ORDINARY_EXIT");datetime at=g_base+step*170;
+   Emit(s,"FILL",at);s.exit_reason="TP";s.exit_price=s.tp_price;
+   Emit(s,"EXIT",at+step*2);
+   Check("ordinary_tp_not_labeled_opposite_exit",ObjectFind(0,Obj(s.setup_id,"opposite_exit"))<0 &&
+         ObjectFind(0,Obj(s.setup_id,"opposite_exit_text"))<0,
+         "A broker target close is not mislabeled as the new opposite-wave policy");
+  }
+void TestWave1Extension(const int direction,const int index)
+  {
+   int step=Step();string id=direction>0?"EXT_LONG":"EXT_SHORT",tag=direction>0?"_LONG":"_SHORT";
+   datetime peak=g_base+step*(200+index*60),known=peak+step*3,started=known+step*3;
+   W33Setup s;Fixture(s,id,direction);s.candidate_detected_at=peak-step*3;s.wave1_start_time=peak-step*6;
+   s.wave1_start_price=3000;s.wave1_peak_time=peak;s.wave1_peak_price=3000+direction*30;
+   s.wave1_peak_known_at=known;s.wave1_peak_fixed=true;
+   s.fib_382_price=s.wave1_peak_price-direction*30*0.382;s.fib_618_price=s.wave1_peak_price-direction*30*0.618;
+   s.wave2_extreme_time=known;s.wave2_extreme_price=s.wave1_peak_price-direction*3;
+   g_display.SetTriggerMode(W33_PIVOT_BREAK);Emit(s,"WAVE1_BREAK",s.candidate_detected_at);
+   Emit(s,"WAVE1_PEAK_CONFIRMED",known);Emit(s,"WAVE2_EXTREME",known+step);
+   Emit(s,"LOWER_STRUCTURE_CONFIRMED",known+step*2);
+   string oldLine=Obj(id,"W1"),oldCaption=Obj(id,"W1_known"),oldFib=Obj(id,"fib"),oldW2=Obj(id,"W2_leg");
+   double originalPrice=ObjectGetDouble(0,oldLine,OBJPROP_PRICE,1),originalW2=ObjectGetDouble(0,oldW2,OBJPROP_PRICE,1);
+   datetime originalEnd=End(oldLine);
+   Emit(s,"WAVE1_EXTENSION_PREVIOUS_ANCHORS",started);
+   Check("extension_archives_old_wave"+tag,ObjectFind(0,oldLine)>=0 && End(oldLine)==originalEnd &&
+         MathAbs(ObjectGetDouble(0,oldLine,OBJPROP_PRICE,1)-originalPrice)<1e-9 &&
+         (color)ObjectGetInteger(0,oldLine,OBJPROP_COLOR)==clrSlateGray && ObjectGetInteger(0,oldLine,OBJPROP_STYLE)==STYLE_DASH &&
+         ObjectGetInteger(0,oldLine,OBJPROP_WIDTH)==1 && StringFind(ObjectGetString(0,oldCaption,OBJPROP_TEXT),"旧終点")>=0,
+         "The original endpoint remains at its original time/price as gray dashed history, with an explicit superseded caption");
+   Check("extension_closes_old_fib_at_observation"+tag,End(oldFib)==started &&
+         (color)ObjectGetInteger(0,oldFib,OBJPROP_COLOR)==clrSlateGray &&
+         (datetime)ObjectGetInteger(0,oldFib,OBJPROP_TIME,0)==known,
+         "The previous band preserves its first availability and stops when the extension became known");
+   Check("extension_archives_old_pullback"+tag,ObjectFind(0,oldW2)>=0 &&
+         (color)ObjectGetInteger(0,oldW2,OBJPROP_COLOR)==clrSlateGray &&
+         StringFind(ObjectGetString(0,Obj(id,"W2"),OBJPROP_TEXT),"旧観測")>=0 &&
+         MathAbs(ObjectGetDouble(0,oldW2,OBJPROP_PRICE,1)-originalW2)<1e-9,
+         "The abandoned W2 remains separate gray evidence rather than an orange current pullback");
+   string lower="";for(int j=0;j<ObjectsTotal(0);j++){string n=ObjectName(0,j);if(StringFind(n,Obj(id,"lower_level_"))==0)lower=n;}
+   Check("extension_closes_old_lower_trigger"+tag,lower!="" && End(lower)==started && !ObjectGetInteger(0,lower,OBJPROP_RAY_RIGHT),
+         "A trigger derived from the old W2 stops at re-anchoring");
+   s.wave1_previous_peak_time=s.wave1_peak_time;s.wave1_previous_peak_known_at=s.wave1_peak_known_at;s.wave1_previous_peak_price=s.wave1_peak_price;
+   s.wave1_revision=1;s.wave1_extension_pending=true;s.wave1_extension_started_at=started;
+   s.wave1_peak_fixed=false;s.wave1_peak_time=0;s.wave1_peak_price=0;s.wave1_peak_known_at=0;
+   s.fib_382_price=0;s.fib_618_price=0;s.wave2_extreme_time=0;s.wave2_extreme_price=0;
+   s.wave1_provisional_time=started-step;s.wave1_provisional_price=originalPrice+direction*4;
+   Emit(s,"WAVE1_EXTENSION_STARTED",started);
+   Check("extension_pending_has_no_fixed_anchors"+tag,ObjectFind(0,Obj(id,"provisional_r1"))>=0 &&
+         (color)ObjectGetInteger(0,Obj(id,"provisional_r1"),OBJPROP_COLOR)==clrSlateGray &&
+         StringFind(ObjectGetString(0,Obj(id,"extension_tracking_r1"),OBJPROP_TEXT),"延長中")>=0 &&
+         ObjectFind(0,Obj(id,"W1_r1"))<0 && ObjectFind(0,Obj(id,"fib_r1"))<0 && ObjectFind(0,Obj(id,"W2_leg_r1"))<0,
+         "A newly observed extension is visibly provisional and cannot imply confirmed W1, new Fib, or a completed correction");
+   datetime tracking=started+step*2;s.wave1_provisional_time=tracking-step;s.wave1_provisional_price=originalPrice+direction*7;
+   Emit(s,"WAVE1_EXTENSION_TRACKING",tracking);ClockEvent(tracking+step);
+   Check("extension_provisional_updates_without_rewriting_history"+tag,End(Obj(id,"provisional_r1"))==s.wave1_provisional_time &&
+         MathAbs(ObjectGetDouble(0,Obj(id,"provisional_r1"),OBJPROP_PRICE,1)-s.wave1_provisional_price)<1e-9 &&
+         End(oldFib)==started && End(oldLine)==originalEnd && MathAbs(ObjectGetDouble(0,oldLine,OBJPROP_PRICE,1)-originalPrice)<1e-9,
+         "Only the current provisional leg moves; old anchors and retired bands remain unchanged");
+   datetime confirmed=tracking+step*3;s.wave1_peak_fixed=true;s.wave1_extension_pending=false;
+   s.wave1_peak_time=s.wave1_provisional_time;s.wave1_peak_price=s.wave1_provisional_price;
+   s.wave1_peak_known_at=confirmed;s.wave1_extension_known_at=confirmed;
+   s.fib_382_price=s.wave1_peak_price-direction*37*0.382;s.fib_618_price=s.wave1_peak_price-direction*37*0.618;
+   Emit(s,"WAVE1_EXTENDED_CONFIRMED",confirmed);
+   string currentLine=Obj(id,"W1_r1"),currentFib=Obj(id,"fib_r1"),point=Obj(id,"ext_known_r1");
+   Check("extension_confirmed_owns_new_blue_leg"+tag,ObjectFind(0,currentLine)>=0 && currentLine!=oldLine &&
+         (color)ObjectGetInteger(0,currentLine,OBJPROP_COLOR)==clrDodgerBlue && ObjectGetInteger(0,currentLine,OBJPROP_WIDTH)==3 &&
+         MathAbs(ObjectGetDouble(0,currentLine,OBJPROP_PRICE,1)-s.wave1_peak_price)<1e-9 &&
+         ObjectFind(0,Obj(id,"provisional_r1"))<0 && ObjectFind(0,Obj(id,"extension_tracking_r1"))<0,
+         "Only after confirmation is a new blue revision created and its temporary tracking caption removed");
+   Check("extension_new_fib_starts_when_confirmed"+tag,ObjectFind(0,currentFib)>=0 &&
+         (datetime)ObjectGetInteger(0,currentFib,OBJPROP_TIME,0)==confirmed && confirmed>s.wave1_peak_time && End(oldFib)==started &&
+         (color)ObjectGetInteger(0,currentFib,OBJPROP_COLOR)==clrDarkOrange,
+         "The recomputed band begins at the new knowledge time and does not fill the intervening unknown history");
+   Check("extension_confirmation_has_separate_known_marker"+tag,ObjectFind(0,point)>=0 &&
+         (datetime)ObjectGetInteger(0,point,OBJPROP_TIME,0)==confirmed &&
+         (datetime)ObjectGetInteger(0,Obj(id,"W1_known_r1"),OBJPROP_TIME,0)==s.wave1_peak_time,
+         "Retrospective swing location and actual confirmation availability are marked separately");
+   if(g_tooltips_readable)
+     Check("extension_tooltip_retains_provenance"+tag,StringFind(ObjectGetString(0,oldCaption,OBJPROP_TOOLTIP),"known "+TimeToString(known,TIME_DATE|TIME_SECONDS))>=0 &&
+           StringFind(ObjectGetString(0,point,OBJPROP_TOOLTIP),"confirmed now "+TimeToString(confirmed,TIME_DATE|TIME_SECONDS))>=0,
+           "Both old and revised source dates retain their actual knowledge-time provenance");
+   else Unavailable("extension_tooltip_retains_provenance"+tag,"This tester cannot read TOOLTIP; old and revised confirmation timestamps require recorded normal-chart inventory");
+   s.wave2_extreme_time=confirmed+step;s.wave2_extreme_price=s.wave1_peak_price-direction*4;
+   Emit(s,"WAVE2_EXTREME",confirmed+step*2);
+   Check("extension_new_pullback_is_distinct"+tag,ObjectFind(0,Obj(id,"W2_leg_r1"))>=0 &&
+         (color)ObjectGetInteger(0,Obj(id,"W2_leg_r1"),OBJPROP_COLOR)==clrDarkOrange &&
+         (color)ObjectGetInteger(0,oldW2,OBJPROP_COLOR)==clrSlateGray &&
+         MathAbs(ObjectGetDouble(0,oldW2,OBJPROP_PRICE,1)-originalW2)<1e-9,
+         "A correction under the new anchors cannot overwrite the retired correction");
+   datetime secondStart=confirmed+step*4;Emit(s,"WAVE1_EXTENSION_PREVIOUS_ANCHORS",secondStart);
+   s.wave1_revision=2;s.wave1_extension_pending=true;s.wave1_peak_fixed=false;s.wave1_peak_known_at=0;
+   s.wave1_extension_started_at=secondStart;s.wave1_provisional_time=secondStart-step;s.wave1_provisional_price+=direction*4;
+   Emit(s,"WAVE1_EXTENSION_STARTED",secondStart);
+   s.wave1_peak_fixed=true;s.wave1_extension_pending=false;s.wave1_peak_time=s.wave1_provisional_time;
+   s.wave1_peak_price=s.wave1_provisional_price;s.wave1_peak_known_at=secondStart+step*3;s.wave1_extension_known_at=s.wave1_peak_known_at;
+   Emit(s,"WAVE1_EXTENDED_CONFIRMED",s.wave1_peak_known_at);ClockEvent(secondStart+step*10);
+   Check("multiple_extensions_keep_each_revision_finite"+tag,ObjectFind(0,Obj(id,"W1_r2"))>=0 &&
+         (color)ObjectGetInteger(0,currentLine,OBJPROP_COLOR)==clrSlateGray &&
+         (color)ObjectGetInteger(0,Obj(id,"W1_r2"),OBJPROP_COLOR)==clrDodgerBlue &&
+         End(oldFib)==started && End(currentFib)==secondStart && End(Obj(id,"fib_r2"))==secondStart+step*10 &&
+         !ObjectGetInteger(0,oldLine,OBJPROP_RAY_RIGHT) && !ObjectGetInteger(0,currentLine,OBJPROP_RAY_RIGHT) &&
+         !ObjectGetInteger(0,Obj(id,"W1_r2"),OBJPROP_RAY_RIGHT),
+         "Repeated re-anchoring preserves separately dated finite revisions instead of rewriting one continuous band");
+   Check("extension_events_cannot_create_trade"+tag,ObjectFind(0,Obj(id,"entry_text"))<0 && ObjectFind(0,Obj(id,"SL"))<0 &&
+         ObjectFind(0,Obj(id,"TP"))<0 && ObjectFind(0,Obj(id,"opposite_wait"))<0,
+         "Display-only extension events do not imply a signal, order, protection, or opposite-wave exit");
+   Emit(s,"TEST_END",secondStart+step*11);datetime ended=End(Obj(id,"fib_r2"));ClockEvent(secondStart+step*20);
+   Check("extended_candidate_terminal_stops_current_band"+tag,End(Obj(id,"fib_r2"))==ended && ended==secondStart+step*11 && End(currentFib)==secondStart,
+         "Ending the setup stops only its current revision and cannot reopen any older Fib band");
+  }
+void TestConnectedOppositeCandidate(const int direction,const int index)
+  {
+   int step=Step();datetime at=g_base+step*(500+index*30);
+   string id=direction>0?"CONNECTED_CANCEL_LONG":"CONNECTED_CANCEL_SHORT",tag=direction>0?"_LONG":"_SHORT";
+   W33Setup s;Fixture(s,id,direction);s.entry_price=0;s.sl_price=0;s.tp_price=0;
+   s.wave1_peak_fixed=true;s.wave2_extreme_price=3008;s.wave2_extreme_time=at-step;
+   Emit(s,"WAVE1_BREAK",at-step*3);Emit(s,"WAVE1_PEAK_CONFIRMED",at-step*2);
+   string point=Obj(id,"opposite_cancel_known"),leader=Obj(id,"opposite_cancel_leader");
+   Check("connected_cancel_not_drawn_before_candidate"+tag,ObjectFind(0,point)<0 && ObjectFind(0,leader)<0,
+         "A known older W1 alone cannot claim that a future opposite candidate already existed");
+   s.connected_opposite_cancelled=true;s.connected_opposite_setup_id="NEW_OPPOSITE_"+id;
+   s.connected_opposite_known_at=at;s.connected_shared_time=s.wave1_peak_time;s.connected_shared_price=s.wave1_peak_price;
+   W33Event e;ZeroMemory(e);e.at=at;e.event_type="INVALIDATE";e.reason_kind="EXCLUSION";
+   e.reason="CONNECTED_OPPOSITE_W1_CANDIDATE";e.setup=s;g_display.Event(e);
+   string caption="";
+   for(int i=0;i<ObjectsTotal(0);i++){string n=ObjectName(0,i);if(StringFind(n,Obj(id,"skip_"))==0)caption=n;}
+   Check("connected_cancel_marks_candidate_known_time"+tag,ObjectFind(0,point)>=0 &&
+         (datetime)ObjectGetInteger(0,point,OBJPROP_TIME,0)==at && at>s.connected_shared_time,
+         "The red observation point is at candidate availability, never its older shared swing");
+   Check("connected_cancel_caption_explains_reason"+tag,caption!="" &&
+         StringFind(ObjectGetString(0,caption,OBJPROP_TEXT),"接続する逆①候補")>=0 &&
+         (color)ObjectGetInteger(0,caption,OBJPROP_COLOR)==clrIndianRed,
+         "The cancelled old setup explicitly gives the connected opposite-candidate reason");
+   Check("connected_cancel_leader_finite"+tag,ObjectFind(0,leader)>=0 &&
+         (datetime)ObjectGetInteger(0,leader,OBJPROP_TIME,0)==at && End(leader)==at+step &&
+         !ObjectGetInteger(0,leader,OBJPROP_RAY_RIGHT) && !ObjectGetInteger(0,leader,OBJPROP_RAY_LEFT),
+         "The causal point and spaced caption use a finite one-bar leader");
+   Check("connected_cancel_does_not_claim_trade"+tag,ObjectFind(0,Obj(id,"entry_text"))<0 && ObjectFind(0,Obj(id,"SL"))<0 &&
+         ObjectFind(0,Obj(id,"TP"))<0 && ObjectFind(0,Obj(id,"opposite_wait"))<0,
+         "Pre-order invalidation is distinct from an entry or the existing post-fill positive exit");
+   if(g_tooltips_readable)
+      Check("connected_cancel_provenance_tooltips"+tag,
+            StringFind(ObjectGetString(0,caption,OBJPROP_TOOLTIP),s.connected_opposite_setup_id)>=0 &&
+            StringFind(ObjectGetString(0,caption,OBJPROP_TOOLTIP),TimeToString(at,TIME_DATE|TIME_SECONDS))>=0 &&
+            StringFind(ObjectGetString(0,point,OBJPROP_TOOLTIP),TimeToString(s.connected_shared_time,TIME_DATE|TIME_SECONDS))>=0 &&
+            StringFind(ObjectGetString(0,point,OBJPROP_TOOLTIP),DoubleToString(s.connected_shared_price,_Digits))>=0,
+            "Caption and point retain the opposite source ID, candidate known time and common native swing");
+   else Unavailable("connected_cancel_provenance_tooltips"+tag,"This tester cannot read TOOLTIP; verify source and shared swing in recorded normal-chart inventory");
+   ClockEvent(at+step*10);
+   Check("connected_cancel_stays_closed"+tag,End(Obj(id,"upper_break"))==at && End(Obj(id,"fib"))==at && End(leader)==at+step,
+         "Later observed market time cannot extend the cancelled setup or its cancellation leader");
+   W33Setup future=s;future.setup_id=id+"_FUTURE";future.connected_opposite_known_at=at+step*20;e.setup=future;g_display.Event(e);
+   Check("connected_future_source_not_drawn"+tag,ObjectFind(0,Obj(future.setup_id,"opposite_cancel_known"))<0 &&
+         ObjectFind(0,Obj(future.setup_id,"opposite_cancel_leader"))<0,
+         "An invalid snapshot cannot reveal an opposite source before its availability time");
+  }
+void TestWave1TargetExtension(const int direction,const int index)
+  {
+   int step=Step();datetime at=g_base+step*(600+index*30);
+   string id=direction>0?"TARGET_EXTEND_LONG":"TARGET_EXTEND_SHORT",tag=direction>0?"_LONG":"_SHORT";
+   W33Setup s;Fixture(s,id,direction);s.wave1_peak_fixed=true;
+   s.wave1_start_price=direction>0?2990:3024;s.wave1_peak_price=s.entry_price+direction*13;
+   s.sl_price=s.entry_price-direction*10;s.tp_rr_price=s.entry_price+direction*10;
+   s.tp_wave1_target_price=s.wave1_peak_price-direction*0.1;s.tp_price=s.tp_wave1_target_price;
+   s.tp_wave1_buffer_points=0.1/_Point;s.tp_extended_to_wave1=true;s.actual_rr=1.29;s.tp_adjustment_reason="TP_WAVE1_EXTENDED";
+   Emit(s,"TP_WAVE1_EXTENDED",at);
+   Check("target_adjustment_alone_not_entry"+tag,ObjectFind(0,Obj(id,"TP"))<0 && ObjectFind(0,Obj(id,"entry_text"))<0,
+         "A target adjustment diagnostic alone never draws an entry or an executable risk line");
+   Emit(s,"SIGNAL",at);
+   Check("extended_target_uses_final_fixed_price"+tag,ObjectFind(0,Obj(id,"TP"))>=0 &&
+         MathAbs(ObjectGetDouble(0,Obj(id,"TP"),OBJPROP_PRICE,0)-s.tp_price)<1e-9 &&
+         s.direction*(s.tp_price-s.tp_rr_price)>0 && !ObjectGetInteger(0,Obj(id,"TP"),OBJPROP_RAY_RIGHT),
+         "The green target has the final W1-buffer price, rather than the original RR-only target");
+   Check("extended_target_caption_identifies_w1"+tag,ObjectGetString(0,Obj(id,"TP_label"),OBJPROP_TEXT)=="TP ①手前" &&
+         (datetime)ObjectGetInteger(0,Obj(id,"TP"),OBJPROP_TIME,0)==at,
+         "The compact caption distinguishes the W1 target without adding a fixed chart panel");
+   if(g_tooltips_readable)
+      Check("extended_target_tooltips_separate_rr_source"+tag,
+            StringFind(ObjectGetString(0,Obj(id,"TP"),OBJPROP_TOOLTIP),"RR-only "+DoubleToString(s.tp_rr_price,_Digits))>=0 &&
+            StringFind(ObjectGetString(0,Obj(id,"TP"),OBJPROP_TOOLTIP),"actual 1.29R")>=0 &&
+            StringFind(ObjectGetString(0,Obj(id,"TP_label"),OBJPROP_TOOLTIP),"known "+TimeToString(s.wave1_peak_known_at,TIME_DATE|TIME_SECONDS))>=0,
+            "Risk tooltip records original RR-only target and actual RR; caption tooltip records known W1 source");
+   else Unavailable("extended_target_tooltips_separate_rr_source"+tag,"This tester cannot read TOOLTIP; final/base prices and W1 known time require recorded normal-chart inventory");
+   double fixed=s.tp_price;Emit(s,"FILL",at+step);s.tp_price+=direction*5;Emit(s,"TP_WAVE1_EXTENDED",at+step*2);
+   Check("later_adjustment_event_cannot_reanchor_target"+tag,MathAbs(ObjectGetDouble(0,Obj(id,"TP"),OBJPROP_PRICE,0)-fixed)<1e-9 &&
+         ObjectGetString(0,Obj(id,"TP_label"),OBJPROP_TEXT)=="TP ①手前",
+         "A supplementary diagnostic after fill cannot rewrite the original target");
+   Emit(s,"EXIT",at+step*3);ClockEvent(at+step*8);
+   Check("extended_target_line_ends_at_exit"+tag,End(Obj(id,"TP"))==at+step*3 && !ObjectGetInteger(0,Obj(id,"TP"),OBJPROP_RAY_RIGHT),
+         "Extended targets retain the ordinary finite position lifecycle");
+   W33Setup ordinary=s;ordinary.setup_id=id+"_CAPPED";ordinary.tp_extended_to_wave1=false;
+   ordinary.tp_price=ordinary.tp_rr_price-direction;ordinary.tp_adjustment_reason="CAP_TP";Emit(ordinary,"SIGNAL",at+step*9);
+   Check("cancelled_extension_keeps_plain_tp_caption"+tag,ObjectGetString(0,Obj(ordinary.setup_id,"TP_label"),OBJPROP_TEXT)=="TP" &&
+         MathAbs(ObjectGetDouble(0,Obj(ordinary.setup_id,"TP"),OBJPROP_PRICE,0)-ordinary.tp_price)<1e-9,
+         "A final cap below the RR target is not misleadingly labelled as a W1 extension");
+   W33Setup future=s;future.setup_id=id+"_UNKNOWN";future.wave1_peak_known_at=at+step*20;Emit(future,"SIGNAL",at+step*10);
+   Check("future_w1_not_claimed_as_target_source"+tag,ObjectGetString(0,Obj(future.setup_id,"TP_label"),OBJPROP_TEXT)=="TP",
+         "Unknown W1 provenance cannot be presented as a known W1 target source");
+  }
 int OnInit()
   {
    g_file=FileOpen("W33Harness_"+InpRunTag+".csv",FILE_WRITE|FILE_CSV|FILE_ANSI|FILE_COMMON,',');
    if(g_file==INVALID_HANDLE)return INIT_FAILED;
    FileWrite(g_file,"test","passed","detail");
+   DetectTooltipReadback();
    g_display.Init(g_prefix,true);g_display.SetFrames(PERIOD_M15,PERIOD_M5);g_display.SetTriggerMode(W33_PIVOT_BREAK);
    TestCandidatesAndOrders();TestTrendAndEnd();TestSourceTraceAndRoomRejection();
-   FileWrite(g_file,"FINAL",g_failed==0?"PASS":"FAIL",StringFormat("passed=%d failed=%d",g_passed,g_failed));
+   TestOppositeWaveExit(1,0);TestOppositeWaveExit(-1,1);TestOrdinaryExitCaption();
+   TestWave1Extension(1,0);TestWave1Extension(-1,1);
+   TestConnectedOppositeCandidate(1,0);TestConnectedOppositeCandidate(-1,1);
+   TestWave1TargetExtension(1,0);TestWave1TargetExtension(-1,1);
+   FileWrite(g_file,"FINAL",g_failed==0?"PASS":"FAIL",StringFormat("passed=%d failed=%d unavailable=%d",g_passed,g_failed,g_unavailable));
    FileFlush(g_file);FileClose(g_file);g_file=INVALID_HANDLE;
-   PrintFormat("W33_DISPLAY_HARNESS_FINAL passed=%d failed=%d",g_passed,g_failed);
+   PrintFormat("W33_DISPLAY_HARNESS_FINAL passed=%d failed=%d unavailable=%d",g_passed,g_failed,g_unavailable);
    return INIT_SUCCEEDED;
   }
 void OnTick(){if(MQLInfoInteger(MQL_TESTER))TesterStop();}

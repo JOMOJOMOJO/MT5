@@ -42,3 +42,27 @@ mql/Include/TickShockTwoStage*.mqh -text whitespace=trailing-space,space-before-
 docs/research/tick_shock/two_stage*.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
 reports/backtest/batches/two_stage_development_20260913/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
 reports/analysis/tick_shock/two_stage_ml_20260913/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+
+# Preserve Wave33 tester evidence as recorded.
+reports/backtest/runs/wave33_*/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/backtest/analysis/wave33_*/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/qa/w33*/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/qa/wave33_*/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+
+# Large raw tester exports are stored with Git LFS.
+/reports/backtest/runs/wave33_v170_2020/20261022_161002_0ef87d9b/b_extension_on/events.csv filter=lfs diff=lfs merge=lfs -text
+/reports/backtest/runs/wave33_v180_2020/20261023_164915_831ff154/v180_b_both/events.csv filter=lfs diff=lfs merge=lfs -text
+/reports/backtest/runs/wave33_v185_2020/20261026_100045_50909ab6/v185_b_scale_off/context.csv filter=lfs diff=lfs merge=lfs -text
+/reports/backtest/runs/wave33_v185_2020/20261026_100045_50909ab6/v185_b_scale_off/events.csv filter=lfs diff=lfs merge=lfs -text
+/reports/backtest/runs/wave33_v185_2020/20261026_100045_50909ab6/v185_b_scale_on/context.csv filter=lfs diff=lfs merge=lfs -text
+/reports/backtest/runs/wave33_v185_2020/20261026_100045_50909ab6/v185_b_scale_on/events.csv filter=lfs diff=lfs merge=lfs -text
+/reports/backtest/runs/wave33_v185_prior_2020/20261026_164002_b8936809/v185_b_prior_off/context.csv filter=lfs diff=lfs merge=lfs -text
+/reports/backtest/runs/wave33_v185_prior_2020/20261026_164002_b8936809/v185_b_prior_off/events.csv filter=lfs diff=lfs merge=lfs -text
+/reports/backtest/runs/wave33_v185_prior_2020/20261026_164002_b8936809/v185_b_prior_on/context.csv filter=lfs diff=lfs merge=lfs -text
+/reports/backtest/runs/wave33_v185_prior_2020/20261026_164002_b8936809/v185_b_prior_on/events.csv filter=lfs diff=lfs merge=lfs -text
+/reports/backtest/runs/wave33_v185_prior_2020/compatibility/previous_off/context.csv filter=lfs diff=lfs merge=lfs -text
+/reports/backtest/runs/wave33_v185_prior_2020/compatibility/previous_off/events.csv filter=lfs diff=lfs merge=lfs -text
+
+# Preserve recorded tester configuration formatting.
+reports/backtest/wave33-v1*-orders-visual.ini whitespace=-blank-at-eof
+reports/presets/wave33-v1*-orders.set whitespace=-blank-at-eof
