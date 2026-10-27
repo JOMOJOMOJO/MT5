@@ -1,0 +1,6 @@
+﻿{
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33LabelReplay\\run_70576633",
+    "status":  "FAIL",
+    "reason":  "The process cannot access the file \u0027C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\ld_70576633_assertions.csv\u0027 because it is being used by another process.",
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_pair_layout_20261025\\display\\run_70576633"
+}

@@ -1,0 +1,30 @@
+test;result;detail
+LABEL_CHART_GEOMETRY;AVAILABLE;width=1284 height=374; headless absence is not visual proof
+visual_geometry_available;PASS;
+before_screenshot_requested;PASS;
+before_screenshot_saved;PASS;
+label_logical_anchors_stable_initial;PASS;
+label_boxes_clamped_initial;PASS;
+label_boxes_no_overlap_initial;PASS;
+label_all_visible_initial;PASS;20 / 20
+label_ownership_excludes_unrelated;PASS;
+label_finite_leaders;PASS;20
+label_leader_true_source_anchors;PASS;
+label_logical_anchors_stable_repeat;PASS;
+label_boxes_clamped_repeat;PASS;
+label_boxes_no_overlap_repeat;PASS;
+label_all_visible_repeat;PASS;20 / 20
+label_logical_anchors_stable_zoom;PASS;
+label_boxes_clamped_zoom;PASS;
+label_boxes_no_overlap_zoom;PASS;
+label_all_visible_zoom;PASS;0 / 20
+offscreen_viewport_applied;PASS;min=1099.70 max=1149.70 anchor=999.70
+offscreen_restores_original_font_colour;PASS;font0=10
+label_logical_anchors_stable_return_from_offscreen;PASS;
+label_boxes_clamped_return_from_offscreen;PASS;
+label_boxes_no_overlap_return_from_offscreen;PASS;
+label_all_visible_return_from_offscreen;PASS;20 / 20
+after_screenshot_requested;PASS;
+after_screenshot_saved;PASS;
+label_off_restores_originals;PASS;
+SUMMARY;PASS;27 checks; 0 failures

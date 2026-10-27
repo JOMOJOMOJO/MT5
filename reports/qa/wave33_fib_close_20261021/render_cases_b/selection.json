@@ -1,0 +1,52 @@
+[
+  {
+    "index": 0,
+    "setup_id": "W33_XAUUSD+_5_1_LONG_1546442400_3",
+    "direction": "LONG",
+    "decision_at": "2019.01.02 15:40:00",
+    "event": "INVALIDATE",
+    "reason": "FIB_CLOSE_TOO_DEEP",
+    "wick_ratio": "0.0000000000",
+    "close_ratio": "0.6715542522"
+  },
+  {
+    "index": 1,
+    "setup_id": "W33_XAUUSD+_5_1_SHORT_1546454100_4",
+    "direction": "SHORT",
+    "decision_at": "2019.01.02 19:10:00",
+    "event": "INVALIDATE",
+    "reason": "FIB_CLOSE_TOO_DEEP",
+    "wick_ratio": "0.6227272727",
+    "close_ratio": "0.6204545455"
+  },
+  {
+    "index": 2,
+    "setup_id": "W33_XAUUSD+_5_1_LONG_1546529700_8",
+    "direction": "LONG",
+    "decision_at": "2019.01.03 16:20:00",
+    "event": "FILL",
+    "reason": "position filled",
+    "wick_ratio": "0.5927927928",
+    "close_ratio": "0.0000000000"
+  },
+  {
+    "index": 3,
+    "setup_id": "W33_XAUUSD+_5_1_SHORT_1546430100_2",
+    "direction": "SHORT",
+    "decision_at": "2019.01.02 12:54:00",
+    "event": "FILL",
+    "reason": "position filled",
+    "wick_ratio": "0.6468085106",
+    "close_ratio": "0.0000000000"
+  },
+  {
+    "index": 4,
+    "setup_id": "W33_XAUUSD+_5_1_SHORT_1546630800_9",
+    "direction": "SHORT",
+    "decision_at": "2019.01.04 20:28:00",
+    "event": "FILL",
+    "reason": "position filled",
+    "wick_ratio": "0.6772151899",
+    "close_ratio": "0.0000000000"
+  }
+]

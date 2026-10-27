@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "scope": "Frozen v1.71 EX5 versus v1.80 both flags OFF; original fields only",
+  "arms": {
+    "A": {
+      "events": {
+        "v171_rows": 785,
+        "v180_rows": 785,
+        "compared_original_columns": 121,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "upper_bars": {
+        "v171_rows": 460,
+        "v180_rows": 460,
+        "compared_original_columns": 9,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "lower_bars": {
+        "v171_rows": 1380,
+        "v180_rows": 1380,
+        "compared_original_columns": 9,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "opposite_ticks": {
+        "v171_rows": 1,
+        "v180_rows": 1,
+        "compared_original_columns": 20,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "both_features_disabled": true
+    },
+    "B": {
+      "events": {
+        "v171_rows": 3195,
+        "v180_rows": 3195,
+        "compared_original_columns": 121,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "upper_bars": {
+        "v171_rows": 1380,
+        "v180_rows": 1380,
+        "compared_original_columns": 9,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "lower_bars": {
+        "v171_rows": 6889,
+        "v180_rows": 6889,
+        "compared_original_columns": 9,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "opposite_ticks": {
+        "v171_rows": 5727,
+        "v180_rows": 5727,
+        "compared_original_columns": 20,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "both_features_disabled": true
+    }
+  }
+}

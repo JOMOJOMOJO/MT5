@@ -1,0 +1,27 @@
+{
+  "files": [
+    {
+      "path": "presets\\wave33\\Wave33Chop_v182_A_FilterOn.set",
+      "sha256": "382864d30e218710a3681496a42a558a1dfe2c65f40b18531f6770ef4a0035d5",
+      "parameters": 39
+    },
+    {
+      "path": "presets\\wave33\\Wave33Chop_v182_A_FilterOff.set",
+      "sha256": "b6a9bea416a687cf7aa27d555586f770b2d43f6e2c3e7891dfdd6e33a4412f0b",
+      "parameters": 39
+    },
+    {
+      "path": "presets\\wave33\\Wave33Chop_v182_B_FilterOn.set",
+      "sha256": "ebefd57f792047ce667b5cea15c23c8ee6370027b8e2e8e1e01f293b906a03b2",
+      "parameters": 39
+    },
+    {
+      "path": "presets\\wave33\\Wave33Chop_v182_B_FilterOff.set",
+      "sha256": "bb27790e858106cb1e8784907a706322834911b8941866eb748b7d48ada12d2b",
+      "parameters": 39
+    }
+  ],
+  "orders": "tester only, enabled in these four comparison presets",
+  "risk_percent": 1.0,
+  "formula_threshold": 0.5
+}

@@ -1,0 +1,85 @@
+parameter;value
+version;1.0
+ea_version;1.82
+symbol;XAUUSD
+upper_tf;PERIOD_M15
+lower_tf;PERIOD_M5
+resolved_run_tag;cf_1be3fa95_1
+chop_diagnostic;false
+chop_labels;false
+skip_choppy_wave1;false
+chop_effective_observation;false
+chop_observation_policy;filter ON forces causal pivot observation and CSV even if diagnostic OFF
+chop_formula_version;LOWER_PIVOT_BACKTRACK_V1
+chop_threshold;0.5
+chop_policy;optional entry-only filter; known lower pivots strictly inside fixed W1 anchors; sum adverse moves / positive directional span
+chop_formula;sum(max(0,-direction*(path[i]-path[i-1]))) / (direction*(peak-start)); normalize same-side interior pivots to most extreme; fixed anchors
+chop_exclusion_policy;enabled AND status CHOPPY only; ratio >= fixed 0.5; SIGNAL prefix before any submission or ORDER_DISABLED; canonical SKIP CHOPPY_WAVE1; release unsubmitted lane
+chop_missing_policy;UNAVAILABLE allows entry with explicit measurement reason; numeric zero is never substituted for missing evidence
+allow_tester_batch_runs;true
+optimization;0
+effective_draw;false
+input_hash;6F1A405E2F1F7214
+batch_namespace;single-run tag
+swing_left;2
+swing_right;2
+fib_min;0.382
+fib_max;0.618
+require_fib_touch;true
+reject_deep_fib;false
+timeout_upper_bars;96
+reject_deep_fib_close;true
+extend_wave1_before_fib;true
+wave1_extension_assumption;active pre-signal only; before first minimum Fib penetration; closed upper new extreme; re-confirm upper pivot; fixed origin; no revival
+wave1_extension_ambiguity;same upper candle new extreme and old minimum retracement: lock without extension; OHLC order unknown
+wave1_extension_exit_identity;extension confirmation has separate event type; never a fresh opposite W1 exit source
+deep_fib_close_basis;upper timeframe closed candle; strict beyond configured fib_max; wick alone allowed; pre-signal only
+equal_close_feed_order;H1 M15 M5 M1; upper before lower, including backlog
+strict_wave_lifecycle;true
+initial_move_boundary;strict lower close beyond fixed W1 after prior qualifying pullback; same-bar valid signal allowed
+lower_wave2_binding;countertrend extreme price matches current deepest W2 within half a point; equal-price retest allowed
+lower_recognition_mode;W33_NORMALIZED_OR_SIMPLE
+simple_reaction_assumption;confirmed deepest W2 then first confirmed opposite reaction pivot; fresh close break, no invented lower wave count
+minimum_wave1_room_r;0.25
+wave1_room_assumption;signed executable quote to fixed W1 endpoint divided by rounded structural stop risk; zero disables
+obstacle_source_policy;all known swing highs and lows; source trace and W1 room separate; no claim of current importance
+trigger_mode;W33_PIVOT_BREAK
+obstacle_mode;DISPLAY_ONLY
+reward_r;1.0
+cancel_connected_opposite;true
+connected_opposite_policy;new accepted opposite W1_BREAK shares the old fixed endpoint; strictly older unsubmitted candidate only; submitted/open positions preserved
+extend_tp_to_wave1;true
+tp_wave1_buffer_points;10.0
+tp_wave1_policy;only extend RR TP toward the known fixed W1 endpoint; buffer=max(extra points,spread,one tick); inward tick rounding; explicit obstacle cap has priority; SL unchanged
+risk_percent;1.0
+sl_extra_points;10.0
+tester_orders;false
+exit_on_opposite_wave1;true
+audit_opposite_exit_ticks;false
+opposite_exit_trigger;WAVE1_PEAK_CONFIRMED known after actual fill; same upper/lower pair; sticky first opposite source
+opposite_exit_profit_basis;current executable bid/ask profit + booked cash + remaining swap - estimated exit commission/fee; strict >0; no SL/TP change
+opposite_exit_fee_estimate;remaining volume times observed negative entry commission+fee per filled volume; future fee/slippage unknown, actual net not guaranteed
+magic;3320261020
+deviation_points;20
+manual_levels_display_only;
+draw;false
+keep_objects;false
+screenshots;false
+screenshot_limit;12
+show_info_panel;false
+diagnostic_labels;false
+show_swing_paths;true
+tester;1
+visual;0
+terminal_build;6230
+chart_tf;PERIOD_M1
+point;0.01
+tick_size;0.01
+account_currency;USD
+symbol_currency_profit;USD
+symbol_calc_mode;4
+volume_min;0.01
+volume_step;0.01
+contract_size;100.0
+stops_level;20
+freeze_level;0

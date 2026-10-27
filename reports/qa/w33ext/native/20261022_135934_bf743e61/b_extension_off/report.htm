@@ -1,0 +1,608 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>ストラテジーテスターレポート</title>
+    <meta name="generator" content="strategy tester">
+    <style type="text/css">
+    <!--
+    @media screen {
+      td { font: 8pt  Tahoma,Arial; }
+      th { font: 10pt Tahoma,Arial; }
+    }
+    @media print {
+      td { font: 7pt Tahoma,Arial; }
+      th { font: 9pt Tahoma,Arial; }
+    }
+    .msdate { mso-number-format:"General Date"; }
+    .mspt   { mso-number-format:\#\,\#\#0\.00;  }
+    body {margin:1px;}
+    //-->
+    </style>
+  </head>
+<body>
+<div align="center">
+<table cellspacing="1" cellpadding="3" border="0">
+   <tr align="center">
+      <td colspan="13"><div style="font: 14pt Tahoma"><b>ストラテジーテスターレポート</b><br></div></td>
+   </tr>
+   <tr align="center">
+      <td colspan="13"><div style="font: 10pt Tahoma"><b>Bybit-Live (Build 6230)</b><br></div></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr>
+      <td colspan="13" align="center"><div style="font: 10pt Tahoma"><b>設定</b></div></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">エキスパート:</td>
+      <td nowrap colspan="10" align="left"><b>Wave33VisualVerifier</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">銘柄:</td>
+      <td nowrap colspan="10" align="left"><b>XAUUSD+</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">期間:</td>
+      <td nowrap colspan="10" align="left"><b>M1 (2020.10.01 - 2020.11.18)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">パラメータ:</td>
+      <td nowrap colspan="10" align="left"><b>InpPattern=1</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpTriggerMode=0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpSwingLeft=2</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpSwingRight=2</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpFibMin=0.382</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpFibMax=0.618</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRequireFibTouch=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpExtendWave1BeforeFib=false</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRejectDeepFib=false</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRejectDeepFibClose=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpStrictWaveLifecycle=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpLowerRecognition=2</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpMinWave1RoomR=0.25</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpTimeoutUpperBars=96</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpObstacleMode=0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRewardR=1</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRiskPercent=1.0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpSLExtraPoints=10.0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpEnableTesterOrders=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpExitOnOppositeWave1=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpAuditOppositeExitTicks=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpMagic=3320261022</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpDeviationPoints=20</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpDraw=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpShowInfoPanel=false</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpDiagnosticLabels=false</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpShowSwingPaths=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpKeepObjects=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpScreenshots=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpScreenshotLimit=12</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRunTag=wave33_20261022_135934_bf743e61_b_extension_off</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpManualLevels=</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >会社:</td>
+      <td nowrap colspan="10" align="left"><b>Infra Capital Limited</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >通貨:</td>
+      <td nowrap colspan="10" align="left"><b>USD</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >初期証拠金:</td>
+      <td nowrap colspan="10" align="left"><b>5 000.00</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >レバレッジ:</td>
+      <td nowrap colspan="10" align="left"><b>1:100</b></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr>
+      <td colspan="13" align="center"><div style="font: 10pt Tahoma"><b>結果</b></div></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">ヒストリー品質:</td>
+      <td nowrap><b>0% リアルティック</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">バー:</td>
+      <td nowrap><b>46883</b></td>
+      <td nowrap colspan="3">ティック:</td>
+      <td nowrap><b>5034690</b></td>
+      <td nowrap colspan="3">銘柄:</td>
+      <td nowrap colspan="2"><b>1</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">総損益:</td>
+      <td nowrap><b>227.46</b></td>
+      <td nowrap colspan="3">残高絶対ドローダウン:</td>
+      <td nowrap><b>59.83</b></td>
+      <td nowrap colspan="3">証拠金絶対ドローダウン:</td>
+      <td nowrap colspan="2"><b>95.62</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">総利益:</td>
+      <td nowrap><b>1 120.84</b></td>
+      <td nowrap colspan="3">残高最大ドローダウン:</td>
+      <td nowrap><b>245.88 (4.65%)</b></td>
+      <td nowrap colspan="3">証拠金最大ドローダウン:</td>
+      <td nowrap colspan="2"><b>283.21 (5.32%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">総損失:</td>
+      <td nowrap><b>-893.38</b></td>
+      <td nowrap colspan="3">残高相対ドローダウン:</td>
+      <td nowrap><b>4.65% (245.88)</b></td>
+      <td nowrap colspan="3">証拠金相対ドローダウン:</td>
+      <td nowrap colspan="2"><b>5.32% (283.21)</b></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr align="right">
+      <td nowrap colspan="3">プロフィットファクター:</td>
+      <td nowrap><b>1.25</b></td>
+      <td nowrap colspan="3">期待利得:</td>
+      <td nowrap><b>5.29</b></td>
+      <td nowrap colspan="3">証拠金維持率:</td>
+      <td nowrap colspan="2"><b>8970.41%</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">リカバリファクター:</td>
+      <td nowrap><b>0.80</b></td>
+      <td nowrap colspan="3">シャープレシオ:</td>
+      <td nowrap><b>10.51</b></td>
+      <td nowrap colspan="3">Z-Score:</td>
+      <td nowrap colspan="2"><b>-0.53 (40.39%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">AHPR:</td>
+      <td nowrap><b>1.0011 (0.11%)</b></td>
+      <td nowrap colspan="3">LR Correlation:</td>
+      <td nowrap><b>0.62</b></td>
+      <td nowrap colspan="3">OnTester 結果:</td>
+      <td nowrap colspan="2"><b>0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">GHPR:</td>
+      <td nowrap><b>1.0010 (0.10%)</b></td>
+      <td nowrap colspan="3">LR Standard Error:</td>
+      <td nowrap><b>71.85</b></td>
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="2"><b></b></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr align="right">
+      <td nowrap colspan="3">取引数:</td>
+      <td nowrap><b>43</b></td>
+      <td nowrap colspan="3">ショート (勝率 %):</td>
+      <td nowrap><b>25 (64.00%)</b></td>
+      <td nowrap colspan="3">ロング (勝率 %):</td>
+      <td nowrap colspan="2"><b>18 (61.11%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">約定数:</td>
+      <td nowrap><b>86</b></td>
+      <td nowrap colspan="3">勝ちトレード (勝率 %):</td>
+      <td nowrap><b>27 (62.79%)</b></td>
+      <td nowrap colspan="3">負けトレード (負率 %):</td>
+      <td nowrap colspan="2"><b>16 (37.21%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">最大 勝ちトレード:</td>
+      <td nowrap><b>52.80</b></td>
+      <td nowrap colspan="3">最大 負けトレード:</td>
+      <td nowrap colspan="2"><b>-73.05</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">平均 勝ちトレード:</td>
+      <td nowrap><b>41.51</b></td>
+      <td nowrap colspan="3">平均 負けトレード:</td>
+      <td nowrap colspan="2"><b>-51.61</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">最大 連勝数 (金額):</td>
+      <td nowrap><b>9 (361.79)</b></td>
+      <td nowrap colspan="3">最大 連敗数 (金額):</td>
+      <td nowrap colspan="2"><b>3 (-175.41)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">最大 連勝利益額 (数):</td>
+      <td nowrap><b>361.79 (9)</b></td>
+      <td nowrap colspan="3">最大 連敗損失額 (数):</td>
+      <td nowrap colspan="2"><b>-175.41 (3)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">平均 連勝利益額 (数):</td>
+      <td nowrap><b>3</b></td>
+      <td nowrap colspan="3">平均 連敗数:</td>
+      <td nowrap colspan="2"><b>2</b></td>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261022_135934_bf743e61_b_extension_off.png" title="現金残高グラフ" width=820 height=200 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261022_135934_bf743e61_b_extension_off-hst.png" width=860 height=400 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">Correlation (Profits,MFE):</td>
+      <td nowrap><b>0.73</b></td>
+      <td nowrap colspan="3">Correlation (Profits,MAE):</td>
+      <td nowrap><b>0.87</b></td>
+      <td nowrap colspan="3">Correlation (MFE,MAE):</td>
+      <td nowrap colspan="2"><b>0.6356</b></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261022_135934_bf743e61_b_extension_off-mfemae.png" width=860 height=400 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">ポジション最短保持時間:</td>
+      <td nowrap><b>0:01:59</b></td>
+      <td nowrap colspan="3">ポジション最長保持時間:</td>
+      <td nowrap><b>4:05:38</b></td>
+      <td nowrap colspan="3">ポジション平均保持時間:</td>
+      <td nowrap colspan="2"><b>0:39:43</b></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261022_135934_bf743e61_b_extension_off-holding.png" width=860 height=200 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+</table>
+<table cellspacing="1" cellpadding="3" border="0">
+   <tr>
+      <td style="width: 90px;height: 10px"></td>
+      <td style="width: 40px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 70px;"></td>
+      <td style="width: 70px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 100px;"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13" style="height: 25px"><div style="font: 10pt Tahoma"><b>注文</b></div></th>
+   </tr>
+   <tr align="center" bgcolor="#E5F0FC">
+      <td nowrap style="height: 30px"><b>約定時刻</b></td>
+      <td nowrap><b>注文</b></td>
+      <td nowrap><b>銘柄</b></td>
+      <td nowrap><b>タイプ</b></td>
+      <td nowrap colspan="2"><b>数量</b></td>
+      <td nowrap><b>価格</b></td>
+      <td nowrap><b>決済逆指値(S/L)</b></td>
+      <td nowrap><b>決済指値(T/P)</b></td>
+      <td nowrap colspan="2"><b>時間</b></td>
+      <td nowrap><b>状況</b></td>
+      <td nowrap><b>コメント</b></td>
+   </tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.01 09:57:00</td><td>2</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.29 / 0.29</td><td>0.00</td><td>1895.49</td><td>1898.93</td><td colspan="2">2020.10.01 09:57:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1601543400</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.01 10:00:40</td><td>3</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.29 / 0.29</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.01 10:00:40</td><td>filled</td><td>tp 1898.93</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.01 11:09:00</td><td>4</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.2 / 0.2</td><td>0.00</td><td>1898.08</td><td>1893.12</td><td colspan="2">2020.10.01 11:09:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160154790</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.01 12:55:30</td><td>5</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.2 / 0.2</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.01 12:55:30</td><td>filled</td><td>sl 1898.08</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.02 12:25:00</td><td>6</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.19 / 0.19</td><td>0.00</td><td>1909.52</td><td>1904.36</td><td colspan="2">2020.10.02 12:25:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160163910</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.02 12:52:36</td><td>7</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.19 / 0.19</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.02 12:52:36</td><td>filled</td><td>sl 1909.52</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.06 07:13:00</td><td>8</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.31 / 0.31</td><td>0.00</td><td>1912.80</td><td>1909.64</td><td colspan="2">2020.10.06 07:13:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160195800</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.06 08:11:38</td><td>9</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.31 / 0.31</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.06 08:11:38</td><td>filled</td><td>W33_OPPOSITE_W1_PROFIT</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.06 11:10:00</td><td>10</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.34 / 0.34</td><td>0.00</td><td>1911.12</td><td>1908.26</td><td colspan="2">2020.10.06 11:10:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160198050</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.06 11:25:29</td><td>11</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.34 / 0.34</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.06 11:25:29</td><td>filled</td><td>tp 1908.26</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.07 04:21:00</td><td>12</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.4 / 0.4</td><td>0.00</td><td>1879.41</td><td>1876.93</td><td colspan="2">2020.10.07 04:21:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160204170</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.07 04:28:04</td><td>13</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.4 / 0.4</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.07 04:28:04</td><td>filled</td><td>tp 1876.93</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.07 21:16:00</td><td>14</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.29 / 0.29</td><td>0.00</td><td>1887.64</td><td>1884.24</td><td colspan="2">2020.10.07 21:16:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160210410</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.07 21:19:35</td><td>15</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.29 / 0.29</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.07 21:19:35</td><td>filled</td><td>sl 1887.64</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.08 03:37:00</td><td>16</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.29 / 0.29</td><td>0.00</td><td>1886.91</td><td>1883.57</td><td colspan="2">2020.10.08 03:37:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160212600</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.08 03:48:06</td><td>17</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.29 / 0.29</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.08 03:48:06</td><td>filled</td><td>sl 1886.91</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.08 06:06:00</td><td>18</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.38 / 0.38</td><td>0.00</td><td>1888.16</td><td>1885.62</td><td colspan="2">2020.10.08 06:06:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160213590</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.08 06:28:01</td><td>19</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.38 / 0.38</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.08 06:28:01</td><td>filled</td><td>tp 1885.62</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.09 10:33:00</td><td>20</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.25 / 0.25</td><td>0.00</td><td>1907.45</td><td>1911.37</td><td colspan="2">2020.10.09 10:33:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1602237600</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.09 10:52:26</td><td>21</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.25 / 0.25</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.09 10:52:26</td><td>filled</td><td>tp 1911.37</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.09 22:18:00</td><td>22</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.37 / 0.37</td><td>0.00</td><td>1925.67</td><td>1928.37</td><td colspan="2">2020.10.09 22:18:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1602277500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.09 22:56:37</td><td>23</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.37 / 0.37</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.09 22:56:37</td><td>filled</td><td>tp 1928.37</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.12 04:40:00</td><td>24</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.13 / 0.13</td><td>0.00</td><td>1930.63</td><td>1922.99</td><td colspan="2">2020.10.12 04:40:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160247130</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.12 04:46:35</td><td>25</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.13 / 0.13</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.12 04:46:35</td><td>filled</td><td>W33_OPPOSITE_W1_PROFIT</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.12 05:42:00</td><td>26</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.36 / 0.36</td><td>0.00</td><td>1927.77</td><td>1924.95</td><td colspan="2">2020.10.12 05:42:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160247880</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.12 06:10:30</td><td>27</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.36 / 0.36</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.12 06:10:30</td><td>filled</td><td>W33_OPPOSITE_W1_PROFIT</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.15 21:16:00</td><td>28</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.26 / 0.26</td><td>0.00</td><td>1903.94</td><td>1907.84</td><td colspan="2">2020.10.15 21:16:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1602793200</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.15 22:36:15</td><td>29</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.26 / 0.26</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.15 22:36:15</td><td>filled</td><td>tp 1907.84</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.16 06:56:00</td><td>30</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.6 / 0.6</td><td>0.00</td><td>1907.25</td><td>1905.55</td><td colspan="2">2020.10.16 06:56:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160282950</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.16 07:06:29</td><td>31</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.6 / 0.6</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.16 07:06:29</td><td>filled</td><td>tp 1905.55</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.16 18:21:00</td><td>32</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.2 / 0.2</td><td>0.00</td><td>1904.06</td><td>1898.92</td><td colspan="2">2020.10.16 18:21:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160286940</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.16 18:23:05</td><td>33</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.2 / 0.2</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.16 18:23:05</td><td>filled</td><td>tp 1898.92</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.19 21:35:00</td><td>34</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.27 / 0.27</td><td>0.00</td><td>1907.59</td><td>1903.83</td><td colspan="2">2020.10.19 21:35:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160313880</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.19 21:48:25</td><td>35</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.27 / 0.27</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.19 21:48:25</td><td>filled</td><td>tp 1903.83</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.20 22:22:00</td><td>36</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.33 / 0.33</td><td>0.00</td><td>1909.54</td><td>1912.74</td><td colspan="2">2020.10.20 22:22:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1603224900</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.20 22:48:38</td><td>37</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.33 / 0.33</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.20 22:48:38</td><td>filled</td><td>sl 1909.54</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.21 20:43:00</td><td>38</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.27 / 0.27</td><td>0.00</td><td>1926.66</td><td>1922.92</td><td colspan="2">2020.10.21 20:43:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160331040</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.21 21:57:38</td><td>39</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.27 / 0.27</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.21 21:57:38</td><td>filled</td><td>tp 1922.92</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.23 22:26:00</td><td>40</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.27 / 0.27</td><td>0.00</td><td>1900.73</td><td>1904.59</td><td colspan="2">2020.10.23 22:26:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1603482000</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.26 01:08:00</td><td>41</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.27 / 0.27</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.26 01:08:00</td><td>filled</td><td>sl 1900.73</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.26 05:12:00</td><td>42</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.38 / 0.38</td><td>0.00</td><td>1899.37</td><td>1896.69</td><td colspan="2">2020.10.26 05:12:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160368660</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.26 05:24:40</td><td>43</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.38 / 0.38</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.26 05:24:40</td><td>filled</td><td>sl 1899.37</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.27 19:16:00</td><td>44</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.23 / 0.23</td><td>0.00</td><td>1907.76</td><td>1912.20</td><td colspan="2">2020.10.27 19:16:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1603822500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.27 19:36:59</td><td>45</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.23 / 0.23</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.27 19:36:59</td><td>filled</td><td>sl 1907.76</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.30 10:34:00</td><td>46</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.17 / 0.17</td><td>0.00</td><td>1868.14</td><td>1873.82</td><td colspan="2">2020.10.30 10:34:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1604050500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.30 11:01:59</td><td>47</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.17 / 0.17</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.30 11:01:59</td><td>filled</td><td>tp 1873.82</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.30 18:16:00</td><td>48</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.18 / 0.18</td><td>0.00</td><td>1880.59</td><td>1886.19</td><td colspan="2">2020.10.30 18:16:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1604080800</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.30 18:22:46</td><td>49</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.18 / 0.18</td><td>0.00</td><td></td><td></td><td colspan="2">2020.10.30 18:22:46</td><td>filled</td><td>sl 1880.59</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.02 18:45:00</td><td>50</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.17 / 0.17</td><td>0.00</td><td>1889.75</td><td>1895.45</td><td colspan="2">2020.11.02 18:45:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1604339400</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.02 22:50:38</td><td>51</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.17 / 0.17</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.02 22:50:38</td><td>filled</td><td>tp 1895.45</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.03 05:42:00</td><td>52</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.22 / 0.22</td><td>0.00</td><td>1894.18</td><td>1889.58</td><td colspan="2">2020.11.03 05:42:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160437900</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.03 09:11:37</td><td>53</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.22 / 0.22</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.03 09:11:37</td><td>filled</td><td>sl 1894.18</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.04 11:54:00</td><td>54</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.16 / 0.16</td><td>0.00</td><td>1894.78</td><td>1888.62</td><td colspan="2">2020.11.04 11:54:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160448910</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.04 12:30:38</td><td>55</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.16 / 0.16</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.04 12:30:38</td><td>filled</td><td>tp 1888.62</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.04 17:13:00</td><td>56</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.06 / 0.06</td><td>0.00</td><td>1895.92</td><td>1910.98</td><td colspan="2">2020.11.04 17:13:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1604495400</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.04 19:14:30</td><td>57</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.06 / 0.06</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.04 19:14:30</td><td>filled</td><td>sl 1895.92</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.05 02:49:00</td><td>58</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.36 / 0.36</td><td>0.00</td><td>1905.15</td><td>1907.93</td><td colspan="2">2020.11.05 02:49:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1604541000</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.05 02:51:57</td><td>59</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.36 / 0.36</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.05 02:51:57</td><td>filled</td><td>sl 1905.15</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.09 10:56:00</td><td>60</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.26 / 0.26</td><td>0.00</td><td>1956.75</td><td>1960.49</td><td colspan="2">2020.11.09 10:56:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1604916300</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.09 11:02:39</td><td>61</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.26 / 0.26</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.09 11:02:39</td><td>filled</td><td>tp 1960.49</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.09 20:02:00</td><td>62</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.16 / 0.16</td><td>0.00</td><td>1863.85</td><td>1857.71</td><td colspan="2">2020.11.09 20:02:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160495110</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.09 20:22:14</td><td>63</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.16 / 0.16</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.09 20:22:14</td><td>filled</td><td>tp 1857.71</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.10 03:26:00</td><td>64</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.14 / 0.14</td><td>0.00</td><td>1867.11</td><td>1874.11</td><td colspan="2">2020.11.10 03:26:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1604972700</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.10 03:59:29</td><td>65</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.14 / 0.14</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.10 03:59:29</td><td>filled</td><td>tp 1874.11</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.10 09:52:00</td><td>66</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.17 / 0.17</td><td>0.00</td><td>1883.27</td><td>1889.13</td><td colspan="2">2020.11.10 09:52:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1604995500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.10 10:00:40</td><td>67</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.17 / 0.17</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.10 10:00:40</td><td>filled</td><td>W33_OPPOSITE_W1_PROFIT</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.10 16:07:00</td><td>68</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.19 / 0.19</td><td>0.00</td><td>1878.86</td><td>1873.56</td><td colspan="2">2020.11.10 16:07:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160502160</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.10 16:08:59</td><td>69</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.19 / 0.19</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.10 16:08:59</td><td>filled</td><td>sl 1878.86</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.10 21:41:00</td><td>70</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.25 / 0.25</td><td>0.00</td><td>1875.86</td><td>1879.84</td><td colspan="2">2020.11.10 21:41:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1605042300</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.10 22:03:26</td><td>71</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.25 / 0.25</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.10 22:03:26</td><td>filled</td><td>sl 1875.86</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.11 03:25:00</td><td>72</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.28 / 0.28</td><td>0.00</td><td>1876.81</td><td>1880.37</td><td colspan="2">2020.11.11 03:25:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1605060600</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.11 03:32:39</td><td>73</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.28 / 0.28</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.11 03:32:39</td><td>filled</td><td>tp 1880.37</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.11 06:02:00</td><td>74</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.33 / 0.33</td><td>0.00</td><td>1882.11</td><td>1879.01</td><td colspan="2">2020.11.11 06:02:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160507260</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.11 06:09:31</td><td>75</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.33 / 0.33</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.11 06:09:31</td><td>filled</td><td>tp 1879.01</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.11 19:05:00</td><td>76</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.26 / 0.26</td><td>0.00</td><td>1865.09</td><td>1861.11</td><td colspan="2">2020.11.11 19:05:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160511970</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.11 19:22:03</td><td>77</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.26 / 0.26</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.11 19:22:03</td><td>filled</td><td>tp 1861.11</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.12 02:06:00</td><td>78</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.24 / 0.24</td><td>0.00</td><td>1866.88</td><td>1862.56</td><td colspan="2">2020.11.12 02:06:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160514460</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.12 03:06:16</td><td>79</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.24 / 0.24</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.12 03:06:16</td><td>filled</td><td>sl 1866.88</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.12 06:05:00</td><td>80</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.42 / 0.42</td><td>0.00</td><td>1871.65</td><td>1869.23</td><td colspan="2">2020.11.12 06:05:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160515900</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.12 07:16:35</td><td>81</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.42 / 0.42</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.12 07:16:35</td><td>filled</td><td>sl 1871.65</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.16 15:31:00</td><td>82</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.1 / 0.1</td><td>0.00</td><td>1871.50</td><td>1881.52</td><td colspan="2">2020.11.16 15:31:00</td><td>filled</td><td>W33_XAUUSD+_5_1_LONG_1605537300</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.16 15:37:15</td><td>83</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.1 / 0.1</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.16 15:37:15</td><td>filled</td><td>tp 1881.52</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.17 02:33:00</td><td>84</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.28 / 0.28</td><td>0.00</td><td>1891.86</td><td>1888.28</td><td colspan="2">2020.11.17 02:33:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160555500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.17 02:50:12</td><td>85</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.28 / 0.28</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.17 02:50:12</td><td>filled</td><td>tp 1888.28</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.17 23:35:00</td><td>86</td><td>XAUUSD+</td><td>sell</td><td colspan="2">0.26 / 0.26</td><td>0.00</td><td>1882.54</td><td>1878.56</td><td colspan="2">2020.11.17 23:35:00</td><td>filled</td><td>W33_XAUUSD+_5_1_SHORT_160565160</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.17 23:58:59</td><td>87</td><td>XAUUSD+</td><td>buy</td><td colspan="2">0.26 / 0.26</td><td>0.00</td><td></td><td></td><td colspan="2">2020.11.17 23:58:59</td><td>filled</td><td>end of test</td></tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13" style="height: 25px"><div style="font: 10pt Tahoma"><b>約定</b></div></th>
+   </tr>
+   <tr align="center" bgcolor="#E5F0FC">
+      <td nowrap style="height: 30px"><b>時間</b></td>
+      <td nowrap><b>約定</b></td>
+      <td nowrap><b>銘柄</b></td>
+      <td nowrap><b>タイプ</b></td>
+      <td nowrap><b>新規・決済</b></td>
+      <td nowrap><b>数量</b></td>
+      <td nowrap><b>価格</b></td>
+      <td nowrap><b>注文</b></td>
+      <td nowrap><b>手数料</b></td>
+      <td nowrap><b>スワップ</b></td>
+      <td nowrap><b>損益</b></td>
+      <td nowrap><b>残高</b></td>
+      <td nowrap><b>コメント</b></td>
+   </tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.01 00:00:00</td><td>1</td><td></td><td>balance</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>5 000.00</td><td>5 000.00</td><td></td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.01 09:57:00</td><td>2</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.29</td><td>1897.21</td><td>2</td><td>-1.74</td><td>0.00</td><td>0.00</td><td>4 998.26</td><td>W33_XAUUSD+_5_1_LONG_1601543400</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.01 10:00:40</td><td>3</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.29</td><td>1898.94</td><td>3</td><td>0.00</td><td>0.00</td><td>50.17</td><td>5 048.43</td><td>tp 1898.93</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.01 11:09:00</td><td>4</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.2</td><td>1895.60</td><td>4</td><td>-1.20</td><td>0.00</td><td>0.00</td><td>5 047.23</td><td>W33_XAUUSD+_5_1_SHORT_160154790</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.01 12:55:30</td><td>5</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.2</td><td>1898.08</td><td>5</td><td>0.00</td><td>0.00</td><td>-49.60</td><td>4 997.63</td><td>sl 1898.08</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.02 12:25:00</td><td>6</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.19</td><td>1906.94</td><td>6</td><td>-1.14</td><td>0.00</td><td>0.00</td><td>4 996.49</td><td>W33_XAUUSD+_5_1_SHORT_160163910</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.02 12:52:36</td><td>7</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.19</td><td>1909.52</td><td>7</td><td>0.00</td><td>0.00</td><td>-49.02</td><td>4 947.47</td><td>sl 1909.52</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.06 07:13:00</td><td>8</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.31</td><td>1911.22</td><td>8</td><td>-1.86</td><td>0.00</td><td>0.00</td><td>4 945.61</td><td>W33_XAUUSD+_5_1_SHORT_160195800</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.06 08:11:38</td><td>9</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.31</td><td>1911.08</td><td>9</td><td>0.00</td><td>0.00</td><td>4.34</td><td>4 949.95</td><td>W33_OPPOSITE_W1_PROFIT</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.06 11:10:00</td><td>10</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.34</td><td>1909.69</td><td>10</td><td>-2.04</td><td>0.00</td><td>0.00</td><td>4 947.91</td><td>W33_XAUUSD+_5_1_SHORT_160198050</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.06 11:25:29</td><td>11</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.34</td><td>1908.26</td><td>11</td><td>0.00</td><td>0.00</td><td>48.62</td><td>4 996.53</td><td>tp 1908.26</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.07 04:21:00</td><td>12</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.4</td><td>1878.17</td><td>12</td><td>-2.40</td><td>0.00</td><td>0.00</td><td>4 994.13</td><td>W33_XAUUSD+_5_1_SHORT_160204170</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.07 04:28:04</td><td>13</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.4</td><td>1876.91</td><td>13</td><td>0.00</td><td>0.00</td><td>50.40</td><td>5 044.53</td><td>tp 1876.93</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.07 21:16:00</td><td>14</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.29</td><td>1885.94</td><td>14</td><td>-1.74</td><td>0.00</td><td>0.00</td><td>5 042.79</td><td>W33_XAUUSD+_5_1_SHORT_160210410</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.07 21:19:35</td><td>15</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.29</td><td>1887.67</td><td>15</td><td>0.00</td><td>0.00</td><td>-50.17</td><td>4 992.62</td><td>sl 1887.64</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.08 03:37:00</td><td>16</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.29</td><td>1885.24</td><td>16</td><td>-1.74</td><td>0.00</td><td>0.00</td><td>4 990.88</td><td>W33_XAUUSD+_5_1_SHORT_160212600</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.08 03:48:06</td><td>17</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.29</td><td>1886.91</td><td>17</td><td>0.00</td><td>0.00</td><td>-48.43</td><td>4 942.45</td><td>sl 1886.91</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.08 06:06:00</td><td>18</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.38</td><td>1886.89</td><td>18</td><td>-2.28</td><td>0.00</td><td>0.00</td><td>4 940.17</td><td>W33_XAUUSD+_5_1_SHORT_160213590</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.08 06:28:01</td><td>19</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.38</td><td>1885.62</td><td>19</td><td>0.00</td><td>0.00</td><td>48.26</td><td>4 988.43</td><td>tp 1885.62</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.09 10:33:00</td><td>20</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.25</td><td>1909.41</td><td>20</td><td>-1.50</td><td>0.00</td><td>0.00</td><td>4 986.93</td><td>W33_XAUUSD+_5_1_LONG_1602237600</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.09 10:52:26</td><td>21</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.25</td><td>1911.39</td><td>21</td><td>0.00</td><td>0.00</td><td>49.50</td><td>5 036.43</td><td>tp 1911.37</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.09 22:18:00</td><td>22</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.37</td><td>1927.02</td><td>22</td><td>-2.22</td><td>0.00</td><td>0.00</td><td>5 034.21</td><td>W33_XAUUSD+_5_1_LONG_1602277500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.09 22:56:37</td><td>23</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.37</td><td>1928.39</td><td>23</td><td>0.00</td><td>0.00</td><td>50.69</td><td>5 084.90</td><td>tp 1928.37</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.12 04:40:00</td><td>24</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.13</td><td>1926.81</td><td>24</td><td>-0.78</td><td>0.00</td><td>0.00</td><td>5 084.12</td><td>W33_XAUUSD+_5_1_SHORT_160247130</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.12 04:46:35</td><td>25</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.13</td><td>1926.65</td><td>25</td><td>0.00</td><td>0.00</td><td>2.08</td><td>5 086.20</td><td>W33_OPPOSITE_W1_PROFIT</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.12 05:42:00</td><td>26</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.36</td><td>1926.36</td><td>26</td><td>-2.16</td><td>0.00</td><td>0.00</td><td>5 084.04</td><td>W33_XAUUSD+_5_1_SHORT_160247880</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.12 06:10:30</td><td>27</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.36</td><td>1926.21</td><td>27</td><td>0.00</td><td>0.00</td><td>5.40</td><td>5 089.44</td><td>W33_OPPOSITE_W1_PROFIT</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.15 21:16:00</td><td>28</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.26</td><td>1905.89</td><td>28</td><td>-1.56</td><td>0.00</td><td>0.00</td><td>5 087.88</td><td>W33_XAUUSD+_5_1_LONG_1602793200</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.15 22:36:15</td><td>29</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.26</td><td>1907.84</td><td>29</td><td>0.00</td><td>0.00</td><td>50.70</td><td>5 138.58</td><td>tp 1907.84</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.16 06:56:00</td><td>30</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.6</td><td>1906.40</td><td>30</td><td>-3.60</td><td>0.00</td><td>0.00</td><td>5 134.98</td><td>W33_XAUUSD+_5_1_SHORT_160282950</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.16 07:06:29</td><td>31</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.6</td><td>1905.54</td><td>31</td><td>0.00</td><td>0.00</td><td>51.60</td><td>5 186.58</td><td>tp 1905.55</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.16 18:21:00</td><td>32</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.2</td><td>1901.49</td><td>32</td><td>-1.20</td><td>0.00</td><td>0.00</td><td>5 185.38</td><td>W33_XAUUSD+_5_1_SHORT_160286940</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.16 18:23:05</td><td>33</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.2</td><td>1898.85</td><td>33</td><td>0.00</td><td>0.00</td><td>52.80</td><td>5 238.18</td><td>tp 1898.92</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.19 21:35:00</td><td>34</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.27</td><td>1905.71</td><td>34</td><td>-1.62</td><td>0.00</td><td>0.00</td><td>5 236.56</td><td>W33_XAUUSD+_5_1_SHORT_160313880</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.19 21:48:25</td><td>35</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.27</td><td>1903.83</td><td>35</td><td>0.00</td><td>0.00</td><td>50.76</td><td>5 287.32</td><td>tp 1903.83</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.20 22:22:00</td><td>36</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.33</td><td>1911.14</td><td>36</td><td>-1.98</td><td>0.00</td><td>0.00</td><td>5 285.34</td><td>W33_XAUUSD+_5_1_LONG_1603224900</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.20 22:48:38</td><td>37</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.33</td><td>1909.54</td><td>37</td><td>0.00</td><td>0.00</td><td>-52.80</td><td>5 232.54</td><td>sl 1909.54</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.21 20:43:00</td><td>38</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.27</td><td>1924.79</td><td>38</td><td>-1.62</td><td>0.00</td><td>0.00</td><td>5 230.92</td><td>W33_XAUUSD+_5_1_SHORT_160331040</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.21 21:57:38</td><td>39</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.27</td><td>1922.91</td><td>39</td><td>0.00</td><td>0.00</td><td>50.76</td><td>5 281.68</td><td>tp 1922.92</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.23 22:26:00</td><td>40</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.27</td><td>1902.66</td><td>40</td><td>-1.62</td><td>0.00</td><td>0.00</td><td>5 280.06</td><td>W33_XAUUSD+_5_1_LONG_1603482000</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.26 01:08:00</td><td>41</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.27</td><td>1900.73</td><td>41</td><td>0.00</td><td>-20.94</td><td>-52.11</td><td>5 207.01</td><td>sl 1900.73</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.26 05:12:00</td><td>42</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.38</td><td>1898.03</td><td>42</td><td>-2.28</td><td>0.00</td><td>0.00</td><td>5 204.73</td><td>W33_XAUUSD+_5_1_SHORT_160368660</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.26 05:24:40</td><td>43</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.38</td><td>1899.38</td><td>43</td><td>0.00</td><td>0.00</td><td>-51.30</td><td>5 153.43</td><td>sl 1899.37</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.27 19:16:00</td><td>44</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.23</td><td>1909.98</td><td>44</td><td>-1.38</td><td>0.00</td><td>0.00</td><td>5 152.05</td><td>W33_XAUUSD+_5_1_LONG_1603822500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.27 19:36:59</td><td>45</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.23</td><td>1907.76</td><td>45</td><td>0.00</td><td>0.00</td><td>-51.06</td><td>5 100.99</td><td>sl 1907.76</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.30 10:34:00</td><td>46</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.17</td><td>1870.98</td><td>46</td><td>-1.02</td><td>0.00</td><td>0.00</td><td>5 099.97</td><td>W33_XAUUSD+_5_1_LONG_1604050500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.30 11:01:59</td><td>47</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.17</td><td>1873.83</td><td>47</td><td>0.00</td><td>0.00</td><td>48.45</td><td>5 148.42</td><td>tp 1873.82</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.10.30 18:16:00</td><td>48</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.18</td><td>1883.39</td><td>48</td><td>-1.08</td><td>0.00</td><td>0.00</td><td>5 147.34</td><td>W33_XAUUSD+_5_1_LONG_1604080800</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.10.30 18:22:46</td><td>49</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.18</td><td>1880.57</td><td>49</td><td>0.00</td><td>0.00</td><td>-50.76</td><td>5 096.58</td><td>sl 1880.59</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.02 18:45:00</td><td>50</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.17</td><td>1892.60</td><td>50</td><td>-1.02</td><td>0.00</td><td>0.00</td><td>5 095.56</td><td>W33_XAUUSD+_5_1_LONG_1604339400</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.02 22:50:38</td><td>51</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.17</td><td>1895.46</td><td>51</td><td>0.00</td><td>0.00</td><td>48.62</td><td>5 144.18</td><td>tp 1895.45</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.03 05:42:00</td><td>52</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.22</td><td>1891.88</td><td>52</td><td>-1.32</td><td>0.00</td><td>0.00</td><td>5 142.86</td><td>W33_XAUUSD+_5_1_SHORT_160437900</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.03 09:11:37</td><td>53</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.22</td><td>1894.18</td><td>53</td><td>0.00</td><td>0.00</td><td>-50.60</td><td>5 092.26</td><td>sl 1894.18</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.04 11:54:00</td><td>54</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.16</td><td>1891.70</td><td>54</td><td>-0.96</td><td>0.00</td><td>0.00</td><td>5 091.30</td><td>W33_XAUUSD+_5_1_SHORT_160448910</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.04 12:30:38</td><td>55</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.16</td><td>1888.61</td><td>55</td><td>0.00</td><td>0.00</td><td>49.44</td><td>5 140.74</td><td>tp 1888.62</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.04 17:13:00</td><td>56</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.06</td><td>1903.45</td><td>56</td><td>-0.36</td><td>0.00</td><td>0.00</td><td>5 140.38</td><td>W33_XAUUSD+_5_1_LONG_1604495400</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.04 19:14:30</td><td>57</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.06</td><td>1895.92</td><td>57</td><td>0.00</td><td>0.00</td><td>-45.18</td><td>5 095.20</td><td>sl 1895.92</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.05 02:49:00</td><td>58</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.36</td><td>1906.54</td><td>58</td><td>-2.16</td><td>0.00</td><td>0.00</td><td>5 093.04</td><td>W33_XAUUSD+_5_1_LONG_1604541000</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.05 02:51:57</td><td>59</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.36</td><td>1905.15</td><td>59</td><td>0.00</td><td>0.00</td><td>-50.04</td><td>5 043.00</td><td>sl 1905.15</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.09 10:56:00</td><td>60</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.26</td><td>1958.62</td><td>60</td><td>-1.56</td><td>0.00</td><td>0.00</td><td>5 041.44</td><td>W33_XAUUSD+_5_1_LONG_1604916300</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.09 11:02:39</td><td>61</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.26</td><td>1960.50</td><td>61</td><td>0.00</td><td>0.00</td><td>48.88</td><td>5 090.32</td><td>tp 1960.49</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.09 20:02:00</td><td>62</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.16</td><td>1860.78</td><td>62</td><td>-0.96</td><td>0.00</td><td>0.00</td><td>5 089.36</td><td>W33_XAUUSD+_5_1_SHORT_160495110</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.09 20:22:14</td><td>63</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.16</td><td>1857.71</td><td>63</td><td>0.00</td><td>0.00</td><td>49.12</td><td>5 138.48</td><td>tp 1857.71</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.10 03:26:00</td><td>64</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.14</td><td>1870.61</td><td>64</td><td>-0.84</td><td>0.00</td><td>0.00</td><td>5 137.64</td><td>W33_XAUUSD+_5_1_LONG_1604972700</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.10 03:59:29</td><td>65</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.14</td><td>1874.11</td><td>65</td><td>0.00</td><td>0.00</td><td>49.00</td><td>5 186.64</td><td>tp 1874.11</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.10 09:52:00</td><td>66</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.17</td><td>1886.20</td><td>66</td><td>-1.02</td><td>0.00</td><td>0.00</td><td>5 185.62</td><td>W33_XAUUSD+_5_1_LONG_1604995500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.10 10:00:40</td><td>67</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.17</td><td>1886.33</td><td>67</td><td>0.00</td><td>0.00</td><td>2.21</td><td>5 187.83</td><td>W33_OPPOSITE_W1_PROFIT</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.10 16:07:00</td><td>68</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.19</td><td>1876.21</td><td>68</td><td>-1.14</td><td>0.00</td><td>0.00</td><td>5 186.69</td><td>W33_XAUUSD+_5_1_SHORT_160502160</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.10 16:08:59</td><td>69</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.19</td><td>1878.89</td><td>69</td><td>0.00</td><td>0.00</td><td>-50.92</td><td>5 135.77</td><td>sl 1878.86</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.10 21:41:00</td><td>70</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.25</td><td>1877.85</td><td>70</td><td>-1.50</td><td>0.00</td><td>0.00</td><td>5 134.27</td><td>W33_XAUUSD+_5_1_LONG_1605042300</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.10 22:03:26</td><td>71</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.25</td><td>1875.86</td><td>71</td><td>0.00</td><td>0.00</td><td>-49.75</td><td>5 084.52</td><td>sl 1875.86</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.11 03:25:00</td><td>72</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.28</td><td>1878.59</td><td>72</td><td>-1.68</td><td>0.00</td><td>0.00</td><td>5 082.84</td><td>W33_XAUUSD+_5_1_LONG_1605060600</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.11 03:32:39</td><td>73</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.28</td><td>1880.38</td><td>73</td><td>0.00</td><td>0.00</td><td>50.12</td><td>5 132.96</td><td>tp 1880.37</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.11 06:02:00</td><td>74</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.33</td><td>1880.56</td><td>74</td><td>-1.98</td><td>0.00</td><td>0.00</td><td>5 130.98</td><td>W33_XAUUSD+_5_1_SHORT_160507260</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.11 06:09:31</td><td>75</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.33</td><td>1879.00</td><td>75</td><td>0.00</td><td>0.00</td><td>51.48</td><td>5 182.46</td><td>tp 1879.01</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.11 19:05:00</td><td>76</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.26</td><td>1863.10</td><td>76</td><td>-1.56</td><td>0.00</td><td>0.00</td><td>5 180.90</td><td>W33_XAUUSD+_5_1_SHORT_160511970</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.11 19:22:03</td><td>77</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.26</td><td>1861.10</td><td>77</td><td>0.00</td><td>0.00</td><td>52.00</td><td>5 232.90</td><td>tp 1861.11</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.12 02:06:00</td><td>78</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.24</td><td>1864.72</td><td>78</td><td>-1.44</td><td>0.00</td><td>0.00</td><td>5 231.46</td><td>W33_XAUUSD+_5_1_SHORT_160514460</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.12 03:06:16</td><td>79</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.24</td><td>1866.88</td><td>79</td><td>0.00</td><td>0.00</td><td>-51.84</td><td>5 179.62</td><td>sl 1866.88</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.12 06:05:00</td><td>80</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.42</td><td>1870.44</td><td>80</td><td>-2.52</td><td>0.00</td><td>0.00</td><td>5 177.10</td><td>W33_XAUUSD+_5_1_SHORT_160515900</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.12 07:16:35</td><td>81</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.42</td><td>1871.66</td><td>81</td><td>0.00</td><td>0.00</td><td>-51.24</td><td>5 125.86</td><td>sl 1871.65</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.16 15:31:00</td><td>82</td><td>XAUUSD+</td><td>buy</td><td>in</td><td>0.1</td><td>1876.51</td><td>82</td><td>-0.60</td><td>0.00</td><td>0.00</td><td>5 125.26</td><td>W33_XAUUSD+_5_1_LONG_1605537300</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.16 15:37:15</td><td>83</td><td>XAUUSD+</td><td>sell</td><td>out</td><td>0.1</td><td>1881.52</td><td>83</td><td>0.00</td><td>0.00</td><td>50.10</td><td>5 175.36</td><td>tp 1881.52</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.17 02:33:00</td><td>84</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.28</td><td>1890.07</td><td>84</td><td>-1.68</td><td>0.00</td><td>0.00</td><td>5 173.68</td><td>W33_XAUUSD+_5_1_SHORT_160555500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.17 02:50:12</td><td>85</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.28</td><td>1888.27</td><td>85</td><td>0.00</td><td>0.00</td><td>50.40</td><td>5 224.08</td><td>tp 1888.28</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2020.11.17 23:35:00</td><td>86</td><td>XAUUSD+</td><td>sell</td><td>in</td><td>0.26</td><td>1880.55</td><td>86</td><td>-1.56</td><td>0.00</td><td>0.00</td><td>5 222.52</td><td>W33_XAUUSD+_5_1_SHORT_160565160</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2020.11.17 23:58:59</td><td>87</td><td>XAUUSD+</td><td>buy</td><td>out</td><td>0.26</td><td>1880.36</td><td>87</td><td>0.00</td><td>0.00</td><td>4.94</td><td>5 227.46</td><td>end of test</td></tr>
+   <tr align="right">
+      <td nowrap colspan="8" style="height: 30px"></td>
+      <td nowrap><b>-67.62</b></td>
+      <td nowrap><b>-20.94</b></td>
+      <td nowrap><b>316.02</b></td>
+      <td nowrap><b>5 227.46</b></td>
+      <td nowrap></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+   </tr>
+</table>
+</div>
+</body>
+</html>

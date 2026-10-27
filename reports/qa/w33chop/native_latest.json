@@ -1,0 +1,54 @@
+{
+  "status": "PARTIAL_UI_LIMITATION",
+  "native_batch": "reports\\qa\\w33chop\\native\\20261024_174150_e33026ba",
+  "core": {
+    "status": "PASS",
+    "checks": 24,
+    "failures": 0
+  },
+  "actual_selected_case_parity": {
+    "status": "PASS",
+    "checks": 60,
+    "failures": 0,
+    "asserted_fields": [
+      "status",
+      "ratio_when_available"
+    ],
+    "csv": "reports\\qa\\w33chop\\native\\20261024_174150_e33026ba\\w33chop_20261024_174150_e33026ba_parity.csv"
+  },
+  "ui": {
+    "status": "PARTIAL",
+    "checks": 11,
+    "passed": 10,
+    "failed": 1,
+    "failed_test": "tooltip_retains_full_setup_id",
+    "mql_visual_mode": 1,
+    "chart_id": 12345,
+    "event": "first_OnTick_after_OnInit",
+    "redraw_before_read": true,
+    "tooltip_readback_length": 0,
+    "tooltip_readback_error": 0,
+    "limitation": "ObjectSetString succeeds but ObjectGetString tooltip is empty in this native tester. Full hover content and final appearance not verified; source/known metadata are preserved in CSV."
+  },
+  "orders": 0,
+  "compile": {
+    "Wave33ChopDiagnostic": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "Wave33ChopHarness": {
+      "errors": 0,
+      "warnings": 0
+    }
+  },
+  "original_ea_unchanged": true,
+  "files": {
+    "mql\\Experts\\Wave33VisualVerifier.mq5": "a0bf2812b81bfdb52f1c9fc9e5008a1ddb5b003f507861fb570ed820a00b1a88",
+    "mql\\Experts\\Wave33ChopDiagnostic.mq5": "2d762f16923a6e6a183633623cf48c4603d3c7a9ddeab899981cdf846fc39da9",
+    "mql\\Experts\\Wave33ChopDiagnostic.ex5": "70f5db6d4dbb460d30b08d6e462dbe658f9d1ec1f9108e036ec7003694231b2e",
+    "mql\\Experts\\tests\\Wave33ChopHarness.mq5": "ad9777cbd96765107d8b771e219985a820f237eed837c7cab661612ee6d83b95",
+    "mql\\Experts\\tests\\Wave33ChopHarness.ex5": "e3a68e597f92f98c3db487f3947f463091205a5a5b2974c20ec3ccfb44ae5688",
+    "mql\\Include\\Wave33Visual\\Chop.mqh": "642bac45e5cd3b16ad655d4ac9af3f5cc5711edb11633277357a2756129d3dc3"
+  },
+  "no_more_ui_attempts": true
+}

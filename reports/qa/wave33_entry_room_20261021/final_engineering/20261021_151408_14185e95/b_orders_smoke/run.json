@@ -1,0 +1,19 @@
+{
+  "date_from": "2025.01.06",
+  "run_id": "b_orders_smoke",
+  "visual_mode": false,
+  "expert": "Wave33VisualVerifier",
+  "model": 4,
+  "chart_period": "M1",
+  "date_to": "2025.01.18",
+  "inputs": {
+    "InpRunTag": "wave33_20261021_151408_14185e95_b_orders_smoke",
+    "InpDraw": "true",
+    "InpScreenshots": "true",
+    "InpPattern": 1,
+    "InpTriggerMode": 0,
+    "InpEnableTesterOrders": "true"
+  },
+  "tag": "wave33_20261021_151408_14185e95_b_orders_smoke",
+  "symbol": "XAUUSD"
+}

@@ -1,0 +1,712 @@
+{
+  "kind": "INDEPENDENT_NORMAL_CHART_RECORDED_B_LIFECYCLE_REVIEW",
+  "cases": 5,
+  "armed_cases": 4,
+  "ordinary_cases": 1,
+  "images_viewed": 5,
+  "checks": 97,
+  "passed": 97,
+  "failed": 0,
+  "all_pass": true,
+  "synthetic_tooltip_unavailable_resolution": "Native recorded normal-chart readback verifies equivalent source, swing and known time, actual exit price/broker/known and source/realized-R fields in all four observed armed cases. Synthetic nonvisual four UNAVAILABLE rows remain unaltered.",
+  "csv_handling": "Objects inventory has 13 columns; split only the first 12 semicolons so an unquoted semicolon inside tooltip is retained within the final tooltip field.",
+  "visual_limitations": [
+    "Opposite-source first-wave and original second-wave captions overlap at their shared turning point in B0/B3. Gold pending and completed-exit captions remain legible.",
+    "B3 old background candle highs extend above the displayed price scale. Right-side current entry, wait, exit, SL and TP evidence is visible."
+  ],
+  "cases_detail": [
+    {
+      "case": 0,
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1546630800_9",
+      "direction": "SHORT",
+      "armed": true,
+      "fill_at": "2019.01.04 20:28:00",
+      "entry_price": "1283.9200000000",
+      "exit_at": "2019.01.04 20:59:26",
+      "exit_price": "1283.7900000000",
+      "exit_reason": "OPPOSITE_WAVE1_PROFIT",
+      "realized_r": "0.0432098765",
+      "image": "reports\\qa\\w33opp\\imgB\\W33R_882D2B722F734352_0.png",
+      "image_sha256": "38a7b312fb19683e7ac0960e07b7a320af8554a15e51e141bc575578c12fcc75",
+      "object_inventory_sha256": "1503a3577c29e9ebdd92695323dc59abd8556aa910484fa4e4715a0f2a079193",
+      "tooltip_delimiter_tail_rejoined": 1,
+      "viewed_by_agent": true,
+      "opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1546632900_10",
+      "opposite_peak_at": "2019.01.04 20:20:00",
+      "opposite_known_at": "2019.01.04 20:35:00",
+      "wait_tooltip": "source W33_XAUUSD+_5_1_LONG_1546632900_10 | opposite swing 2019.01.04 20:20:00 | known 2019.01.04 20:35:00 | SL/TP retained; net profit after estimated costs m",
+      "exit_point_tooltip": "fill 1283.79 | 0.0432R | broker DEAL_REASON_EXPERT | known 2019.01.04 20:59:26",
+      "exit_caption_tooltip": "source W33_XAUUSD+_5_1_LONG_1546632900_10 | actual 0.0432R | known 2019.01.04 20:59:26"
+    },
+    {
+      "case": 1,
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1546938300_17",
+      "direction": "SHORT",
+      "armed": true,
+      "fill_at": "2019.01.08 10:19:00",
+      "entry_price": "1282.6500000000",
+      "exit_at": "2019.01.08 12:08:36",
+      "exit_price": "1282.5200000000",
+      "exit_reason": "OPPOSITE_WAVE1_PROFIT",
+      "realized_r": "0.0460526316",
+      "image": "reports\\qa\\w33opp\\imgB\\W33R_892D2D0565619D4F_1.png",
+      "image_sha256": "6e56fff068d5c4d9508013529e84b277ebd72f464e21e2c11e431d44a6b08f2a",
+      "object_inventory_sha256": "f22a6379db68ef9d35fdbe32f6ac431a876a730445d6d166fde6011f8bcebc59",
+      "tooltip_delimiter_tail_rejoined": 1,
+      "viewed_by_agent": true,
+      "opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1546945500_18",
+      "opposite_peak_at": "2019.01.08 11:15:00",
+      "opposite_known_at": "2019.01.08 11:30:00",
+      "wait_tooltip": "source W33_XAUUSD+_5_1_LONG_1546945500_18 | opposite swing 2019.01.08 11:15:00 | known 2019.01.08 11:30:00 | SL/TP retained; net profit after estimated costs m",
+      "exit_point_tooltip": "fill 1282.52 | 0.0461R | broker DEAL_REASON_EXPERT | known 2019.01.08 12:08:36",
+      "exit_caption_tooltip": "source W33_XAUUSD+_5_1_LONG_1546945500_18 | actual 0.0461R | known 2019.01.08 12:08:36"
+    },
+    {
+      "case": 2,
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1546951800_19",
+      "direction": "LONG",
+      "armed": true,
+      "fill_at": "2019.01.08 13:21:00",
+      "entry_price": "1283.2100000000",
+      "exit_at": "2019.01.08 13:30:00",
+      "exit_price": "1283.3400000000",
+      "exit_reason": "OPPOSITE_WAVE1_PROFIT",
+      "realized_r": "0.0853658537",
+      "image": "reports\\qa\\w33opp\\imgB\\W33R_862D284CFDF0CBF8_2.png",
+      "image_sha256": "aa39fbfbf351a4b689da7b08e9eb385460aaee0931bdbf3206d8a0b13b7c30e2",
+      "object_inventory_sha256": "2a74b94ae4c62d93ce87f36ff5c54ab39161d29fff3e8480af114b51e85a5774",
+      "tooltip_delimiter_tail_rejoined": 1,
+      "viewed_by_agent": true,
+      "opposite_setup_id": "W33_XAUUSD+_5_1_SHORT_1546953000_20",
+      "opposite_peak_at": "2019.01.08 13:15:00",
+      "opposite_known_at": "2019.01.08 13:30:00",
+      "wait_tooltip": "source W33_XAUUSD+_5_1_SHORT_1546953000_20 | opposite swing 2019.01.08 13:15:00 | known 2019.01.08 13:30:00 | SL/TP retained; net profit after estimated costs ",
+      "exit_point_tooltip": "fill 1283.34 | 0.0854R | broker DEAL_REASON_EXPERT | known 2019.01.08 13:30:00",
+      "exit_caption_tooltip": "source W33_XAUUSD+_5_1_SHORT_1546953000_20 | actual 0.0854R | known 2019.01.08 13:30:00"
+    },
+    {
+      "case": 3,
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1547636700_43",
+      "direction": "SHORT",
+      "armed": true,
+      "fill_at": "2019.01.16 15:38:00",
+      "entry_price": "1290.3600000000",
+      "exit_at": "2019.01.16 15:41:39",
+      "exit_price": "1290.2300000000",
+      "exit_reason": "OPPOSITE_WAVE1_PROFIT",
+      "realized_r": "0.0823529412",
+      "image": "reports\\qa\\w33opp\\imgB\\W33R_872D29DF7094AE95_3.png",
+      "image_sha256": "63dc1fd2762318c5e1a660f9c2e90532f79a668f2cc695ad8cb40ae120bb25c1",
+      "object_inventory_sha256": "df9313715464aa6e9baffce95b38efbdc8d71911af5cf3964dd9d00ff809f32f",
+      "tooltip_delimiter_tail_rejoined": 1,
+      "viewed_by_agent": true,
+      "opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1547651100_44",
+      "opposite_peak_at": "2019.01.16 15:25:00",
+      "opposite_known_at": "2019.01.16 15:40:00",
+      "wait_tooltip": "source W33_XAUUSD+_5_1_LONG_1547651100_44 | opposite swing 2019.01.16 15:25:00 | known 2019.01.16 15:40:00 | SL/TP retained; net profit after estimated costs m",
+      "exit_point_tooltip": "fill 1290.23 | 0.0824R | broker DEAL_REASON_EXPERT | known 2019.01.16 15:41:39",
+      "exit_caption_tooltip": "source W33_XAUUSD+_5_1_LONG_1547651100_44 | actual 0.0824R | known 2019.01.16 15:41:39"
+    },
+    {
+      "case": 4,
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1546430100_2",
+      "direction": "SHORT",
+      "armed": false,
+      "fill_at": "2019.01.02 12:54:00",
+      "entry_price": "1287.0000000000",
+      "exit_at": "2019.01.02 14:00:26",
+      "exit_price": "1285.7200000000",
+      "exit_reason": "DEAL_REASON_TP",
+      "realized_r": "0.9531250000",
+      "image": "reports\\qa\\w33opp\\imgB\\W33R_842D25265978BE0E_4.png",
+      "image_sha256": "d125b65aa0069533880f6f000ea3953406bb16bda0b6ed3e533cec3e23ca93cd",
+      "object_inventory_sha256": "f85876980a929f36e4da79181ad21e07e72d1f231608585fbc7ca193b0dfeec5",
+      "tooltip_delimiter_tail_rejoined": 0,
+      "viewed_by_agent": true
+    }
+  ],
+  "check_details": [
+    {
+      "case": 0,
+      "check": "render_saved_and_image",
+      "passed": true,
+      "detail": "W33R_882D2B722F734352_0.png"
+    },
+    {
+      "case": 0,
+      "check": "normal_chart_object_count",
+      "passed": true,
+      "detail": "153 objects from completed normal-chart inventory"
+    },
+    {
+      "case": 0,
+      "check": "no_infinite_rays",
+      "passed": true,
+      "detail": "Every recorded object reports both rays disabled"
+    },
+    {
+      "case": 0,
+      "check": "finite_line_time_order",
+      "passed": true,
+      "detail": "59 finite trend segments"
+    },
+    {
+      "case": 0,
+      "check": "single_actual_fill_and_exit",
+      "passed": true,
+      "detail": "One filled position lifecycle, no duplicate entry"
+    },
+    {
+      "case": 0,
+      "check": "SL_original_price_retained",
+      "passed": true,
+      "detail": "Original stop is unchanged through final actual exit"
+    },
+    {
+      "case": 0,
+      "check": "TP_original_price_retained",
+      "passed": true,
+      "detail": "Original target is unchanged through final actual exit"
+    },
+    {
+      "case": 0,
+      "check": "SL_stops_actual_exit",
+      "passed": true,
+      "detail": "SL ends 2019.01.04 20:59:26 == actual EXIT 2019.01.04 20:59:26"
+    },
+    {
+      "case": 0,
+      "check": "TP_stops_actual_exit",
+      "passed": true,
+      "detail": "TP ends 2019.01.04 20:59:26 == actual EXIT 2019.01.04 20:59:26"
+    },
+    {
+      "case": 0,
+      "check": "obstacle_stops_actual_exit",
+      "passed": true,
+      "detail": "obstacle ends 2019.01.04 20:59:26 == actual EXIT 2019.01.04 20:59:26"
+    },
+    {
+      "case": 0,
+      "check": "wave1_room_stops_actual_exit",
+      "passed": true,
+      "detail": "wave1_room ends 2019.01.04 20:59:26 == actual EXIT 2019.01.04 20:59:26"
+    },
+    {
+      "case": 0,
+      "check": "arm_after_actual_fill",
+      "passed": true,
+      "detail": "2019.01.04 20:28:00 actual fill -> 2019.01.04 20:35:00 opposite known"
+    },
+    {
+      "case": 0,
+      "check": "arm_matches_source_confirmation",
+      "passed": true,
+      "detail": "W33_XAUUSD+_5_1_LONG_1546632900_10"
+    },
+    {
+      "case": 0,
+      "check": "wait_source_peak_known_tooltip",
+      "passed": true,
+      "detail": "source W33_XAUUSD+_5_1_LONG_1546632900_10 | opposite swing 2019.01.04 20:20:00 | known 2019.01.04 20:35:00 | SL/TP retained; net profit after estimated costs m"
+    },
+    {
+      "case": 0,
+      "check": "wait_actual_known_position",
+      "passed": true,
+      "detail": "known marker 2019.01.04 20:35:00 at entry 1283.92"
+    },
+    {
+      "case": 0,
+      "check": "wait_semantics_gold",
+      "passed": true,
+      "detail": "逆①：プラス決済待ち"
+    },
+    {
+      "case": 0,
+      "check": "exit_caption_source_R_known_tooltip",
+      "passed": true,
+      "detail": "source W33_XAUUSD+_5_1_LONG_1546632900_10 | actual 0.0432R | known 2019.01.04 20:59:26"
+    },
+    {
+      "case": 0,
+      "check": "exit_point_actual_fill_broker_known_tooltip",
+      "passed": true,
+      "detail": "fill 1283.79 | 0.0432R | broker DEAL_REASON_EXPERT | known 2019.01.04 20:59:26"
+    },
+    {
+      "case": 0,
+      "check": "exit_actual_time_and_price",
+      "passed": true,
+      "detail": "actual close 2019.01.04 20:59:26 @ 1283.7900000000"
+    },
+    {
+      "case": 0,
+      "check": "exit_causal_reason_gold",
+      "passed": true,
+      "detail": "EXIT 逆① 利益決済"
+    },
+    {
+      "case": 0,
+      "check": "exit_positive_actual_R",
+      "passed": true,
+      "detail": "0.0432098765"
+    },
+    {
+      "case": 1,
+      "check": "render_saved_and_image",
+      "passed": true,
+      "detail": "W33R_892D2D0565619D4F_1.png"
+    },
+    {
+      "case": 1,
+      "check": "normal_chart_object_count",
+      "passed": true,
+      "detail": "187 objects from completed normal-chart inventory"
+    },
+    {
+      "case": 1,
+      "check": "no_infinite_rays",
+      "passed": true,
+      "detail": "Every recorded object reports both rays disabled"
+    },
+    {
+      "case": 1,
+      "check": "finite_line_time_order",
+      "passed": true,
+      "detail": "66 finite trend segments"
+    },
+    {
+      "case": 1,
+      "check": "single_actual_fill_and_exit",
+      "passed": true,
+      "detail": "One filled position lifecycle, no duplicate entry"
+    },
+    {
+      "case": 1,
+      "check": "SL_original_price_retained",
+      "passed": true,
+      "detail": "Original stop is unchanged through final actual exit"
+    },
+    {
+      "case": 1,
+      "check": "TP_original_price_retained",
+      "passed": true,
+      "detail": "Original target is unchanged through final actual exit"
+    },
+    {
+      "case": 1,
+      "check": "SL_stops_actual_exit",
+      "passed": true,
+      "detail": "SL ends 2019.01.08 12:08:36 == actual EXIT 2019.01.08 12:08:36"
+    },
+    {
+      "case": 1,
+      "check": "TP_stops_actual_exit",
+      "passed": true,
+      "detail": "TP ends 2019.01.08 12:08:36 == actual EXIT 2019.01.08 12:08:36"
+    },
+    {
+      "case": 1,
+      "check": "obstacle_stops_actual_exit",
+      "passed": true,
+      "detail": "obstacle ends 2019.01.08 12:08:36 == actual EXIT 2019.01.08 12:08:36"
+    },
+    {
+      "case": 1,
+      "check": "wave1_room_stops_actual_exit",
+      "passed": true,
+      "detail": "wave1_room ends 2019.01.08 12:08:36 == actual EXIT 2019.01.08 12:08:36"
+    },
+    {
+      "case": 1,
+      "check": "arm_after_actual_fill",
+      "passed": true,
+      "detail": "2019.01.08 10:19:00 actual fill -> 2019.01.08 11:30:00 opposite known"
+    },
+    {
+      "case": 1,
+      "check": "arm_matches_source_confirmation",
+      "passed": true,
+      "detail": "W33_XAUUSD+_5_1_LONG_1546945500_18"
+    },
+    {
+      "case": 1,
+      "check": "wait_source_peak_known_tooltip",
+      "passed": true,
+      "detail": "source W33_XAUUSD+_5_1_LONG_1546945500_18 | opposite swing 2019.01.08 11:15:00 | known 2019.01.08 11:30:00 | SL/TP retained; net profit after estimated costs m"
+    },
+    {
+      "case": 1,
+      "check": "wait_actual_known_position",
+      "passed": true,
+      "detail": "known marker 2019.01.08 11:30:00 at entry 1282.65"
+    },
+    {
+      "case": 1,
+      "check": "wait_semantics_gold",
+      "passed": true,
+      "detail": "逆①：プラス決済待ち"
+    },
+    {
+      "case": 1,
+      "check": "exit_caption_source_R_known_tooltip",
+      "passed": true,
+      "detail": "source W33_XAUUSD+_5_1_LONG_1546945500_18 | actual 0.0461R | known 2019.01.08 12:08:36"
+    },
+    {
+      "case": 1,
+      "check": "exit_point_actual_fill_broker_known_tooltip",
+      "passed": true,
+      "detail": "fill 1282.52 | 0.0461R | broker DEAL_REASON_EXPERT | known 2019.01.08 12:08:36"
+    },
+    {
+      "case": 1,
+      "check": "exit_actual_time_and_price",
+      "passed": true,
+      "detail": "actual close 2019.01.08 12:08:36 @ 1282.5200000000"
+    },
+    {
+      "case": 1,
+      "check": "exit_causal_reason_gold",
+      "passed": true,
+      "detail": "EXIT 逆① 利益決済"
+    },
+    {
+      "case": 1,
+      "check": "exit_positive_actual_R",
+      "passed": true,
+      "detail": "0.0460526316"
+    },
+    {
+      "case": 2,
+      "check": "render_saved_and_image",
+      "passed": true,
+      "detail": "W33R_862D284CFDF0CBF8_2.png"
+    },
+    {
+      "case": 2,
+      "check": "normal_chart_object_count",
+      "passed": true,
+      "detail": "111 objects from completed normal-chart inventory"
+    },
+    {
+      "case": 2,
+      "check": "no_infinite_rays",
+      "passed": true,
+      "detail": "Every recorded object reports both rays disabled"
+    },
+    {
+      "case": 2,
+      "check": "finite_line_time_order",
+      "passed": true,
+      "detail": "38 finite trend segments"
+    },
+    {
+      "case": 2,
+      "check": "single_actual_fill_and_exit",
+      "passed": true,
+      "detail": "One filled position lifecycle, no duplicate entry"
+    },
+    {
+      "case": 2,
+      "check": "SL_original_price_retained",
+      "passed": true,
+      "detail": "Original stop is unchanged through final actual exit"
+    },
+    {
+      "case": 2,
+      "check": "TP_original_price_retained",
+      "passed": true,
+      "detail": "Original target is unchanged through final actual exit"
+    },
+    {
+      "case": 2,
+      "check": "SL_stops_actual_exit",
+      "passed": true,
+      "detail": "SL ends 2019.01.08 13:30:00 == actual EXIT 2019.01.08 13:30:00"
+    },
+    {
+      "case": 2,
+      "check": "TP_stops_actual_exit",
+      "passed": true,
+      "detail": "TP ends 2019.01.08 13:30:00 == actual EXIT 2019.01.08 13:30:00"
+    },
+    {
+      "case": 2,
+      "check": "obstacle_stops_actual_exit",
+      "passed": true,
+      "detail": "obstacle ends 2019.01.08 13:30:00 == actual EXIT 2019.01.08 13:30:00"
+    },
+    {
+      "case": 2,
+      "check": "wave1_room_stops_actual_exit",
+      "passed": true,
+      "detail": "wave1_room ends 2019.01.08 13:30:00 == actual EXIT 2019.01.08 13:30:00"
+    },
+    {
+      "case": 2,
+      "check": "arm_after_actual_fill",
+      "passed": true,
+      "detail": "2019.01.08 13:21:00 actual fill -> 2019.01.08 13:30:00 opposite known"
+    },
+    {
+      "case": 2,
+      "check": "arm_matches_source_confirmation",
+      "passed": true,
+      "detail": "W33_XAUUSD+_5_1_SHORT_1546953000_20"
+    },
+    {
+      "case": 2,
+      "check": "wait_source_peak_known_tooltip",
+      "passed": true,
+      "detail": "source W33_XAUUSD+_5_1_SHORT_1546953000_20 | opposite swing 2019.01.08 13:15:00 | known 2019.01.08 13:30:00 | SL/TP retained; net profit after estimated costs "
+    },
+    {
+      "case": 2,
+      "check": "wait_actual_known_position",
+      "passed": true,
+      "detail": "known marker 2019.01.08 13:30:00 at entry 1283.21"
+    },
+    {
+      "case": 2,
+      "check": "wait_semantics_gold",
+      "passed": true,
+      "detail": "逆①：プラス決済待ち"
+    },
+    {
+      "case": 2,
+      "check": "exit_caption_source_R_known_tooltip",
+      "passed": true,
+      "detail": "source W33_XAUUSD+_5_1_SHORT_1546953000_20 | actual 0.0854R | known 2019.01.08 13:30:00"
+    },
+    {
+      "case": 2,
+      "check": "exit_point_actual_fill_broker_known_tooltip",
+      "passed": true,
+      "detail": "fill 1283.34 | 0.0854R | broker DEAL_REASON_EXPERT | known 2019.01.08 13:30:00"
+    },
+    {
+      "case": 2,
+      "check": "exit_actual_time_and_price",
+      "passed": true,
+      "detail": "actual close 2019.01.08 13:30:00 @ 1283.3400000000"
+    },
+    {
+      "case": 2,
+      "check": "exit_causal_reason_gold",
+      "passed": true,
+      "detail": "EXIT 逆① 利益決済"
+    },
+    {
+      "case": 2,
+      "check": "exit_positive_actual_R",
+      "passed": true,
+      "detail": "0.0853658537"
+    },
+    {
+      "case": 3,
+      "check": "render_saved_and_image",
+      "passed": true,
+      "detail": "W33R_872D29DF7094AE95_3.png"
+    },
+    {
+      "case": 3,
+      "check": "normal_chart_object_count",
+      "passed": true,
+      "detail": "233 objects from completed normal-chart inventory"
+    },
+    {
+      "case": 3,
+      "check": "no_infinite_rays",
+      "passed": true,
+      "detail": "Every recorded object reports both rays disabled"
+    },
+    {
+      "case": 3,
+      "check": "finite_line_time_order",
+      "passed": true,
+      "detail": "91 finite trend segments"
+    },
+    {
+      "case": 3,
+      "check": "single_actual_fill_and_exit",
+      "passed": true,
+      "detail": "One filled position lifecycle, no duplicate entry"
+    },
+    {
+      "case": 3,
+      "check": "SL_original_price_retained",
+      "passed": true,
+      "detail": "Original stop is unchanged through final actual exit"
+    },
+    {
+      "case": 3,
+      "check": "TP_original_price_retained",
+      "passed": true,
+      "detail": "Original target is unchanged through final actual exit"
+    },
+    {
+      "case": 3,
+      "check": "SL_stops_actual_exit",
+      "passed": true,
+      "detail": "SL ends 2019.01.16 15:41:39 == actual EXIT 2019.01.16 15:41:39"
+    },
+    {
+      "case": 3,
+      "check": "TP_stops_actual_exit",
+      "passed": true,
+      "detail": "TP ends 2019.01.16 15:41:39 == actual EXIT 2019.01.16 15:41:39"
+    },
+    {
+      "case": 3,
+      "check": "obstacle_stops_actual_exit",
+      "passed": true,
+      "detail": "obstacle ends 2019.01.16 15:41:39 == actual EXIT 2019.01.16 15:41:39"
+    },
+    {
+      "case": 3,
+      "check": "wave1_room_stops_actual_exit",
+      "passed": true,
+      "detail": "wave1_room ends 2019.01.16 15:41:39 == actual EXIT 2019.01.16 15:41:39"
+    },
+    {
+      "case": 3,
+      "check": "arm_after_actual_fill",
+      "passed": true,
+      "detail": "2019.01.16 15:38:00 actual fill -> 2019.01.16 15:40:00 opposite known"
+    },
+    {
+      "case": 3,
+      "check": "arm_matches_source_confirmation",
+      "passed": true,
+      "detail": "W33_XAUUSD+_5_1_LONG_1547651100_44"
+    },
+    {
+      "case": 3,
+      "check": "wait_source_peak_known_tooltip",
+      "passed": true,
+      "detail": "source W33_XAUUSD+_5_1_LONG_1547651100_44 | opposite swing 2019.01.16 15:25:00 | known 2019.01.16 15:40:00 | SL/TP retained; net profit after estimated costs m"
+    },
+    {
+      "case": 3,
+      "check": "wait_actual_known_position",
+      "passed": true,
+      "detail": "known marker 2019.01.16 15:40:00 at entry 1290.36"
+    },
+    {
+      "case": 3,
+      "check": "wait_semantics_gold",
+      "passed": true,
+      "detail": "逆①：プラス決済待ち"
+    },
+    {
+      "case": 3,
+      "check": "exit_caption_source_R_known_tooltip",
+      "passed": true,
+      "detail": "source W33_XAUUSD+_5_1_LONG_1547651100_44 | actual 0.0824R | known 2019.01.16 15:41:39"
+    },
+    {
+      "case": 3,
+      "check": "exit_point_actual_fill_broker_known_tooltip",
+      "passed": true,
+      "detail": "fill 1290.23 | 0.0824R | broker DEAL_REASON_EXPERT | known 2019.01.16 15:41:39"
+    },
+    {
+      "case": 3,
+      "check": "exit_actual_time_and_price",
+      "passed": true,
+      "detail": "actual close 2019.01.16 15:41:39 @ 1290.2300000000"
+    },
+    {
+      "case": 3,
+      "check": "exit_causal_reason_gold",
+      "passed": true,
+      "detail": "EXIT 逆① 利益決済"
+    },
+    {
+      "case": 3,
+      "check": "exit_positive_actual_R",
+      "passed": true,
+      "detail": "0.0823529412"
+    },
+    {
+      "case": 4,
+      "check": "render_saved_and_image",
+      "passed": true,
+      "detail": "W33R_842D25265978BE0E_4.png"
+    },
+    {
+      "case": 4,
+      "check": "normal_chart_object_count",
+      "passed": true,
+      "detail": "173 objects from completed normal-chart inventory"
+    },
+    {
+      "case": 4,
+      "check": "no_infinite_rays",
+      "passed": true,
+      "detail": "Every recorded object reports both rays disabled"
+    },
+    {
+      "case": 4,
+      "check": "finite_line_time_order",
+      "passed": true,
+      "detail": "74 finite trend segments"
+    },
+    {
+      "case": 4,
+      "check": "single_actual_fill_and_exit",
+      "passed": true,
+      "detail": "One filled position lifecycle, no duplicate entry"
+    },
+    {
+      "case": 4,
+      "check": "SL_original_price_retained",
+      "passed": true,
+      "detail": "Original stop is unchanged through final actual exit"
+    },
+    {
+      "case": 4,
+      "check": "TP_original_price_retained",
+      "passed": true,
+      "detail": "Original target is unchanged through final actual exit"
+    },
+    {
+      "case": 4,
+      "check": "SL_stops_actual_exit",
+      "passed": true,
+      "detail": "SL ends 2019.01.02 14:00:26 == actual EXIT 2019.01.02 14:00:26"
+    },
+    {
+      "case": 4,
+      "check": "TP_stops_actual_exit",
+      "passed": true,
+      "detail": "TP ends 2019.01.02 14:00:26 == actual EXIT 2019.01.02 14:00:26"
+    },
+    {
+      "case": 4,
+      "check": "obstacle_stops_actual_exit",
+      "passed": true,
+      "detail": "obstacle ends 2019.01.02 14:00:26 == actual EXIT 2019.01.02 14:00:26"
+    },
+    {
+      "case": 4,
+      "check": "wave1_room_stops_actual_exit",
+      "passed": true,
+      "detail": "wave1_room ends 2019.01.02 14:00:26 == actual EXIT 2019.01.02 14:00:26"
+    },
+    {
+      "case": 4,
+      "check": "ordinary_no_false_opposite_caption",
+      "passed": true,
+      "detail": "Ordinary TP has neither opposite wait marker nor custom profit-exit caption"
+    },
+    {
+      "case": 4,
+      "check": "ordinary_reason_retained",
+      "passed": true,
+      "detail": "DEAL_REASON_TP"
+    }
+  ]
+}

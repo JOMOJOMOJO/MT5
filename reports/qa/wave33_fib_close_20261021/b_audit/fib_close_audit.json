@@ -1,0 +1,1137 @@
+{
+  "scope": "UPPER_CLOSED_FIB_OFF_ON_ENGINEERING_NOT_PROFIT_OPTIMIZATION",
+  "status": "PASS",
+  "passed": true,
+  "inputs": {
+    "off": {
+      "events.csv": {
+        "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_off\\events.csv",
+        "sha256": "fc48f84360069831fc0401d4c3ecfd09c6b7f00970da7113080dcf08eabd8845"
+      },
+      "config.csv": {
+        "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_off\\config.csv",
+        "sha256": "7d09d8f1a905887972bfb83acfe2b15478a23b42d7d902cfad3d50014622e2ec"
+      },
+      "run.json": {
+        "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_off\\run.json",
+        "sha256": "bffbf2662c1c8e7fcbd29a67f51c3fe36ff95b0138858de02f3f63f37b9499f7"
+      },
+      "upper_bars.csv": {
+        "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_off\\upper_bars.csv",
+        "sha256": "be94da10cfa63642c735ef31636a964c14193d538c2e248a5c549b285993216b"
+      }
+    },
+    "on": {
+      "events.csv": {
+        "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_on\\events.csv",
+        "sha256": "f22dc3b098cbbc7d7c17151f20d47eea24e4ef75cee8638b973e13919d76a0ab"
+      },
+      "config.csv": {
+        "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_on\\config.csv",
+        "sha256": "6b201e0124bf6d14c00cd4b572ec0e3f5333a7bda5d5f2a8e4ae090d0fc87074"
+      },
+      "run.json": {
+        "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_on\\run.json",
+        "sha256": "55859fca3013e14a0dfce64c4c4e836b6689af89d80c598d6c1ba31a12cdfcdb"
+      },
+      "upper_bars.csv": {
+        "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_on\\upper_bars.csv",
+        "sha256": "be94da10cfa63642c735ef31636a964c14193d538c2e248a5c549b285993216b"
+      }
+    }
+  },
+  "configuration": {
+    "trading_differences_other_than_guard": {},
+    "allowed_metadata_and_guard_differences": {
+      "reject_deep_fib_close": {
+        "off": "false",
+        "on": "true"
+      },
+      "resolved_run_tag": {
+        "off": "wave33_20261021_163401_1d44785f_b_fib_close_off",
+        "on": "wave33_20261021_163401_1d44785f_b_fib_close_on"
+      }
+    },
+    "missing_core_fields": {
+      "off": [],
+      "on": []
+    }
+  },
+  "period": {
+    "status": "VERIFIED",
+    "values": {
+      "date_from": {
+        "off": "2019.01.02",
+        "on": "2019.01.02"
+      },
+      "date_to": {
+        "off": "2019.01.17",
+        "on": "2019.01.17"
+      },
+      "symbol": {
+        "off": "XAUUSD+",
+        "on": "XAUUSD+"
+      },
+      "chart_period": {
+        "off": "M1",
+        "on": "M1"
+      },
+      "model": {
+        "off": 4,
+        "on": 4
+      }
+    }
+  },
+  "candidate_coverage": {
+    "identity_fields": [
+      "symbol",
+      "upper_tf",
+      "lower_tf",
+      "direction",
+      "upper_break_bar_time",
+      "upper_break_level_time",
+      "upper_break_level",
+      "wave1_start_time",
+      "wave1_start_price"
+    ],
+    "matched": 45,
+    "off_count": 45,
+    "on_count": 45,
+    "missing_on": [],
+    "missing_off": []
+  },
+  "runs": {
+    "off": {
+      "rows": 5844,
+      "event_counts": {
+        "COMPLETED": 27,
+        "EXIT": 17,
+        "FIB_CLOSE_TOO_DEEP": 14,
+        "FIB_TOO_DEEP": 23,
+        "FIB_TOUCH": 36,
+        "FILL": 17,
+        "INIT": 1,
+        "INITIAL_MOVE_PROGRESS": 2,
+        "INVALIDATE": 12,
+        "LOWER_STRUCTURE_CONFIRMED": 99,
+        "LOWER_STRUCTURE_LOST": 43,
+        "LOWER_STRUCTURE_REJECTED": 85,
+        "ORDER": 17,
+        "PIVOT_CONFIRMED": 4510,
+        "PIVOT_TRIGGER": 27,
+        "POSITION_TRACKING": 17,
+        "RISK_CHECK": 27,
+        "SIGNAL": 27,
+        "SKIP": 16,
+        "STATE": 270,
+        "TRENDLINE_TRIGGER": 12,
+        "WAVE1_BREAK": 45,
+        "WAVE1_PEAK_CONFIRMED": 38,
+        "WAVE1_PROVISIONAL": 109,
+        "WAVE2_EXTREME": 353
+      },
+      "candidates": 45,
+      "signals": 27,
+      "orders": 17,
+      "fills": 17,
+      "skips": 16,
+      "invalidations": 12,
+      "exits": 17,
+      "candidate_directions": {
+        "LONG": 24,
+        "SHORT": 21
+      },
+      "skip_reasons": {
+        "WAVE1_ROOM_TOO_SMALL": 7,
+        "SYMBOL_POSITION_BUSY": 3,
+        "ACTIVE_SETUP_SAME_DIRECTION": 6
+      },
+      "invalidation_reasons": {
+        "WAVE1_ORIGIN_BROKEN": 8,
+        "INITIAL_MOVE_MISSED": 2,
+        "TIMEOUT|NO_LOWER_REVERSAL": 2
+      },
+      "ancillary_realized_r": {
+        "scope": "CLOSED_SETUPS_ONLY_NOT_OPTIMIZATION_OR_PROMOTION",
+        "basis": "last EXIT per setup; do not sum cumulative PARTIAL_EXIT rows",
+        "cost_basis": "EA-recorded realized_r; current EA includes profit, commission, swap and fee. This auditor does not independently reconcile broker cash deals.",
+        "closed_setups": 17,
+        "numeric_exit_r": 17,
+        "total_r": 1.3175483367999992,
+        "mean_r": 0.07750284334117645,
+        "median_r": 0.9189189189,
+        "positive": 10,
+        "negative": 7,
+        "zero": 0,
+        "unclosed_filled_setups": []
+      },
+      "run": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_off",
+      "guard_enabled": false,
+      "independent_upper_close_audit": {
+        "status": "VERIFIED",
+        "source_bars": 3036,
+        "fixed_candidate_checks": 38,
+        "source_time_gaps": [
+          {
+            "after_bar": "2018.12.31 23:55:00",
+            "before_bar": "2019.01.02 01:00:00",
+            "elapsed_seconds": 90300
+          },
+          {
+            "after_bar": "2019.01.02 23:55:00",
+            "before_bar": "2019.01.03 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.03 23:55:00",
+            "before_bar": "2019.01.04 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.04 23:55:00",
+            "before_bar": "2019.01.07 01:00:00",
+            "elapsed_seconds": 176700
+          },
+          {
+            "after_bar": "2019.01.07 23:55:00",
+            "before_bar": "2019.01.08 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.08 23:55:00",
+            "before_bar": "2019.01.09 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.09 23:55:00",
+            "before_bar": "2019.01.10 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.10 23:55:00",
+            "before_bar": "2019.01.11 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.11 23:55:00",
+            "before_bar": "2019.01.14 01:00:00",
+            "elapsed_seconds": 176700
+          },
+          {
+            "after_bar": "2019.01.14 23:55:00",
+            "before_bar": "2019.01.15 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.15 23:55:00",
+            "before_bar": "2019.01.16 01:00:00",
+            "elapsed_seconds": 3900
+          }
+        ],
+        "broker_history_completeness": "NOT_VERIFIED_GAPS_MAY_BE_MARKET_CLOSURES_OR_MISSING_DATA",
+        "equal_boundary_observations": 0,
+        "equality_status": "NOT_OBSERVED_NATIVE_REQUIRES_HARNESS",
+        "wick_only_deep_observations": 34,
+        "verified_upper_preemptions": [],
+        "unverified_same_tick_terminals": [],
+        "source_coverage_gaps": []
+      },
+      "setups": {
+        "W33_XAUUSD+_5_1_LONG_1546410900_1": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546410900_1",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546430100_2": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546430100_2",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1546442400_3": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546442400_3",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.02 15:30:00",
+            "closed_at": "2019.01.02 15:35:00",
+            "known_at": "2019.01.02 15:40:00",
+            "close": "1285.0700000000",
+            "ratio": "0.6715542521994134897360703812"
+          }
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546454100_4": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546454100_4",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.02 19:05:00",
+            "closed_at": "2019.01.02 19:10:00",
+            "known_at": "2019.01.02 19:10:00",
+            "close": "1286.0400000000",
+            "ratio": "0.6204545454545454545454545455"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1546512300_5": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546512300_5",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546513500_6": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546513500_6",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546518600_7": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546518600_7",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.03 12:55:00",
+            "closed_at": "2019.01.03 13:00:00",
+            "known_at": "2019.01.03 13:00:00",
+            "close": "1288.1900000000",
+            "ratio": "0.6349206349206349206349206349"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1546529700_8": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546529700_8",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546630800_9": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546630800_9",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1546632900_10": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546632900_10",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.04 20:55:00",
+            "closed_at": "2019.01.04 21:00:00",
+            "known_at": "2019.01.04 21:00:00",
+            "close": "1283.5400000000",
+            "ratio": "0.7663551401869158878504672897"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1546639500_11": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546639500_11",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546835100_12": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546835100_12",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.07 04:55:00",
+            "closed_at": "2019.01.07 05:00:00",
+            "known_at": "2019.01.07 05:00:00",
+            "close": "1289.2700000000",
+            "ratio": "0.6583850931677018633540372671"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1546842000_13": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546842000_13",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.07 06:45:00",
+            "closed_at": "2019.01.07 06:50:00",
+            "known_at": "2019.01.07 06:50:00",
+            "close": "1288.9000000000",
+            "ratio": "0.8641975308641975308641975309"
+          }
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546843500_14": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546843500_14",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        },
+        "W33_XAUUSD+_5_1_LONG_1546869600_15": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546869600_15",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.07 14:20:00",
+            "closed_at": "2019.01.07 14:25:00",
+            "known_at": "2019.01.07 14:25:00",
+            "close": "1290.9200000000",
+            "ratio": "0.7272727272727272727272727273"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1546901700_16": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546901700_16",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546938300_17": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546938300_17",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1546945500_18": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546945500_18",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1546951800_19": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546951800_19",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546953000_20": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546953000_20",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        },
+        "W33_XAUUSD+_5_1_LONG_1546955100_21": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546955100_21",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        },
+        "W33_XAUUSD+_5_1_LONG_1546975800_22": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546975800_22",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.08 20:20:00",
+            "closed_at": "2019.01.08 20:25:00",
+            "known_at": "2019.01.08 20:25:00",
+            "close": "1285.0900000000",
+            "ratio": "0.6205787781350482315112540193"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1547004300_23": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547004300_23",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        },
+        "W33_XAUUSD+_5_1_LONG_1547023200_24": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547023200_24",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547030400_25": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547030400_25",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547043600_26": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547043600_26",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.09 14:45:00",
+            "closed_at": "2019.01.09 14:50:00",
+            "known_at": "2019.01.09 14:50:00",
+            "close": "1281.3100000000",
+            "ratio": "0.7185628742514970059880239521"
+          }
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547113800_27": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547113800_27",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.10 10:00:00",
+            "closed_at": "2019.01.10 10:05:00",
+            "known_at": "2019.01.10 10:05:00",
+            "close": "1296.1100000000",
+            "ratio": "0.7720588235294117647058823529"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1547168700_28": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547168700_28",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547195100_29": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547195100_29",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.11 09:05:00",
+            "closed_at": "2019.01.11 09:10:00",
+            "known_at": "2019.01.11 09:10:00",
+            "close": "1293.6500000000",
+            "ratio": "0.6945454545454545454545454545"
+          }
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547202300_30": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547202300_30",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547234400_31": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547234400_31",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547453400_32": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547453400_32",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547475600_33": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547475600_33",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.14 14:55:00",
+            "closed_at": "2019.01.14 15:00:00",
+            "known_at": "2019.01.14 15:00:00",
+            "close": "1295.3000000000",
+            "ratio": "0.7698412698412698412698412698"
+          }
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547526900_34": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547526900_34",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547540700_35": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547540700_35",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547551200_36": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547551200_36",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.15 11:50:00",
+            "closed_at": "2019.01.15 11:55:00",
+            "known_at": "2019.01.15 11:55:00",
+            "close": "1288.9600000000",
+            "ratio": "0.7035175879396984924623115578"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1547553000_37": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547553000_37",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547567100_38": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547567100_38",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547581200_39": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547581200_39",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.15 20:45:00",
+            "closed_at": "2019.01.15 20:50:00",
+            "known_at": "2019.01.15 20:50:00",
+            "close": "1288.4500000000",
+            "ratio": "0.6565656565656565656565656566"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1547583900_40": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547583900_40",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547610300_41": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547610300_41",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547613300_42": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547613300_42",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547636700_43": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547636700_43",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547651100_44": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547651100_44",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547676600_45": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547676600_45",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        }
+      }
+    },
+    "on": {
+      "rows": 5682,
+      "event_counts": {
+        "COMPLETED": 20,
+        "EXIT": 12,
+        "FIB_CLOSE_TOO_DEEP": 15,
+        "FIB_TOO_DEEP": 20,
+        "FIB_TOUCH": 35,
+        "FILL": 12,
+        "INIT": 1,
+        "INITIAL_MOVE_PROGRESS": 1,
+        "INVALIDATE": 22,
+        "LOWER_STRUCTURE_CONFIRMED": 82,
+        "LOWER_STRUCTURE_LOST": 33,
+        "LOWER_STRUCTURE_REJECTED": 77,
+        "ORDER": 12,
+        "PIVOT_CONFIRMED": 4510,
+        "PIVOT_TRIGGER": 20,
+        "POSITION_TRACKING": 12,
+        "RISK_CHECK": 20,
+        "SIGNAL": 20,
+        "SKIP": 11,
+        "STATE": 230,
+        "TRENDLINE_TRIGGER": 9,
+        "WAVE1_BREAK": 45,
+        "WAVE1_PEAK_CONFIRMED": 40,
+        "WAVE1_PROVISIONAL": 114,
+        "WAVE2_EXTREME": 309
+      },
+      "candidates": 45,
+      "signals": 20,
+      "orders": 12,
+      "fills": 12,
+      "skips": 11,
+      "invalidations": 22,
+      "exits": 12,
+      "candidate_directions": {
+        "LONG": 24,
+        "SHORT": 21
+      },
+      "skip_reasons": {
+        "WAVE1_ROOM_TOO_SMALL": 7,
+        "ACTIVE_SETUP_SAME_DIRECTION": 3,
+        "SYMBOL_POSITION_BUSY": 1
+      },
+      "invalidation_reasons": {
+        "FIB_CLOSE_TOO_DEEP": 15,
+        "WAVE1_ORIGIN_BROKEN": 4,
+        "TIMEOUT|NO_LOWER_REVERSAL": 2,
+        "INITIAL_MOVE_MISSED": 1
+      },
+      "ancillary_realized_r": {
+        "scope": "CLOSED_SETUPS_ONLY_NOT_OPTIMIZATION_OR_PROMOTION",
+        "basis": "last EXIT per setup; do not sum cumulative PARTIAL_EXIT rows",
+        "cost_basis": "EA-recorded realized_r; current EA includes profit, commission, swap and fee. This auditor does not independently reconcile broker cash deals.",
+        "closed_setups": 12,
+        "numeric_exit_r": 12,
+        "total_r": 1.2807257928000004,
+        "mean_r": 0.10672714939999998,
+        "median_r": 0.92536855035,
+        "positive": 7,
+        "negative": 5,
+        "zero": 0,
+        "unclosed_filled_setups": []
+      },
+      "run": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_on",
+      "guard_enabled": true,
+      "independent_upper_close_audit": {
+        "status": "VERIFIED",
+        "source_bars": 3036,
+        "fixed_candidate_checks": 40,
+        "source_time_gaps": [
+          {
+            "after_bar": "2018.12.31 23:55:00",
+            "before_bar": "2019.01.02 01:00:00",
+            "elapsed_seconds": 90300
+          },
+          {
+            "after_bar": "2019.01.02 23:55:00",
+            "before_bar": "2019.01.03 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.03 23:55:00",
+            "before_bar": "2019.01.04 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.04 23:55:00",
+            "before_bar": "2019.01.07 01:00:00",
+            "elapsed_seconds": 176700
+          },
+          {
+            "after_bar": "2019.01.07 23:55:00",
+            "before_bar": "2019.01.08 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.08 23:55:00",
+            "before_bar": "2019.01.09 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.09 23:55:00",
+            "before_bar": "2019.01.10 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.10 23:55:00",
+            "before_bar": "2019.01.11 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.11 23:55:00",
+            "before_bar": "2019.01.14 01:00:00",
+            "elapsed_seconds": 176700
+          },
+          {
+            "after_bar": "2019.01.14 23:55:00",
+            "before_bar": "2019.01.15 01:00:00",
+            "elapsed_seconds": 3900
+          },
+          {
+            "after_bar": "2019.01.15 23:55:00",
+            "before_bar": "2019.01.16 01:00:00",
+            "elapsed_seconds": 3900
+          }
+        ],
+        "broker_history_completeness": "NOT_VERIFIED_GAPS_MAY_BE_MARKET_CLOSURES_OR_MISSING_DATA",
+        "equal_boundary_observations": 0,
+        "equality_status": "NOT_OBSERVED_NATIVE_REQUIRES_HARNESS",
+        "wick_only_deep_observations": 24,
+        "verified_upper_preemptions": [],
+        "unverified_same_tick_terminals": [],
+        "source_coverage_gaps": []
+      },
+      "setups": {
+        "W33_XAUUSD+_5_1_LONG_1546410900_1": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546410900_1",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546430100_2": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546430100_2",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1546442400_3": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546442400_3",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.02 15:30:00",
+            "closed_at": "2019.01.02 15:35:00",
+            "known_at": "2019.01.02 15:40:00",
+            "close": "1285.0700000000",
+            "ratio": "0.6715542521994134897360703812"
+          }
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546454100_4": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546454100_4",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.02 19:05:00",
+            "closed_at": "2019.01.02 19:10:00",
+            "known_at": "2019.01.02 19:10:00",
+            "close": "1286.0400000000",
+            "ratio": "0.6204545454545454545454545455"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1546512300_5": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546512300_5",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546513500_6": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546513500_6",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546518600_7": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546518600_7",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.03 12:55:00",
+            "closed_at": "2019.01.03 13:00:00",
+            "known_at": "2019.01.03 13:00:00",
+            "close": "1288.1900000000",
+            "ratio": "0.6349206349206349206349206349"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1546529700_8": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546529700_8",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546630800_9": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546630800_9",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1546632900_10": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546632900_10",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.04 20:55:00",
+            "closed_at": "2019.01.04 21:00:00",
+            "known_at": "2019.01.04 21:00:00",
+            "close": "1283.5400000000",
+            "ratio": "0.7663551401869158878504672897"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1546639500_11": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546639500_11",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546835100_12": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546835100_12",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.07 04:55:00",
+            "closed_at": "2019.01.07 05:00:00",
+            "known_at": "2019.01.07 05:00:00",
+            "close": "1289.2700000000",
+            "ratio": "0.6583850931677018633540372671"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1546842000_13": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546842000_13",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.07 06:45:00",
+            "closed_at": "2019.01.07 06:50:00",
+            "known_at": "2019.01.07 06:50:00",
+            "close": "1288.9000000000",
+            "ratio": "0.8641975308641975308641975309"
+          }
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546843500_14": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546843500_14",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        },
+        "W33_XAUUSD+_5_1_LONG_1546869600_15": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546869600_15",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.07 14:20:00",
+            "closed_at": "2019.01.07 14:25:00",
+            "known_at": "2019.01.07 14:25:00",
+            "close": "1290.9200000000",
+            "ratio": "0.7272727272727272727272727273"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1546901700_16": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546901700_16",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546938300_17": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546938300_17",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1546945500_18": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546945500_18",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1546951800_19": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546951800_19",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1546953000_20": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1546953000_20",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        },
+        "W33_XAUUSD+_5_1_LONG_1546955100_21": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546955100_21",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        },
+        "W33_XAUUSD+_5_1_LONG_1546975800_22": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1546975800_22",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.08 20:20:00",
+            "closed_at": "2019.01.08 20:25:00",
+            "known_at": "2019.01.08 20:25:00",
+            "close": "1285.0900000000",
+            "ratio": "0.6205787781350482315112540193"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1547004300_23": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547004300_23",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.09 04:00:00",
+            "closed_at": "2019.01.09 04:05:00",
+            "known_at": "2019.01.09 04:05:00",
+            "close": "1285.5700000000",
+            "ratio": "0.6502057613168724279835390947"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1547023200_24": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547023200_24",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547030400_25": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547030400_25",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547043600_26": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547043600_26",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.09 14:45:00",
+            "closed_at": "2019.01.09 14:50:00",
+            "known_at": "2019.01.09 14:50:00",
+            "close": "1281.3100000000",
+            "ratio": "0.7185628742514970059880239521"
+          }
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547113800_27": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547113800_27",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.10 10:00:00",
+            "closed_at": "2019.01.10 10:05:00",
+            "known_at": "2019.01.10 10:05:00",
+            "close": "1296.1100000000",
+            "ratio": "0.7720588235294117647058823529"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1547168700_28": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547168700_28",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547195100_29": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547195100_29",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.11 09:05:00",
+            "closed_at": "2019.01.11 09:10:00",
+            "known_at": "2019.01.11 09:10:00",
+            "close": "1293.6500000000",
+            "ratio": "0.6945454545454545454545454545"
+          }
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547202300_30": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547202300_30",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547234400_31": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547234400_31",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547453400_32": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547453400_32",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547475600_33": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547475600_33",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.14 14:55:00",
+            "closed_at": "2019.01.14 15:00:00",
+            "known_at": "2019.01.14 15:00:00",
+            "close": "1295.3000000000",
+            "ratio": "0.7698412698412698412698412698"
+          }
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547526900_34": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547526900_34",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547540700_35": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547540700_35",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547551200_36": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547551200_36",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.15 11:50:00",
+            "closed_at": "2019.01.15 11:55:00",
+            "known_at": "2019.01.15 11:55:00",
+            "close": "1288.9600000000",
+            "ratio": "0.7035175879396984924623115578"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1547553000_37": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547553000_37",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547567100_38": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547567100_38",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547581200_39": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547581200_39",
+          "deep_events": 1,
+          "raw_status": "VERIFIED",
+          "first_expected_close": {
+            "bar_time": "2019.01.15 20:45:00",
+            "closed_at": "2019.01.15 20:50:00",
+            "known_at": "2019.01.15 20:50:00",
+            "close": "1288.4500000000",
+            "ratio": "0.6565656565656565656565656566"
+          }
+        },
+        "W33_XAUUSD+_5_1_LONG_1547583900_40": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547583900_40",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547610300_41": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547610300_41",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547613300_42": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547613300_42",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_SHORT_1547636700_43": {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1547636700_43",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547651100_44": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547651100_44",
+          "deep_events": 0,
+          "raw_status": "VERIFIED",
+          "first_expected_close": null
+        },
+        "W33_XAUUSD+_5_1_LONG_1547676600_45": {
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1547676600_45",
+          "deep_events": 0,
+          "raw_status": "NO_FIXED_W1"
+        }
+      }
+    }
+  },
+  "checks": {
+    "off_guard_disabled": 1,
+    "on_guard_enabled": 1,
+    "core_config_fields_present": 1,
+    "only_guard_changes_trading_config": 1,
+    "config_parameter_unique": 2,
+    "same_requested_native_period_and_model": 1,
+    "nonempty_native_event_stream_and_schema": 2,
+    "fib_columns_present": 2,
+    "events_in_observation_order": 11526,
+    "upper_frame_and_threshold_valid": 2,
+    "upper_source_columns_present": 2,
+    "source_upper_bar_valid": 6072,
+    "source_upper_ohlc_consistent": 6072,
+    "source_upper_bar_unique": 6072,
+    "source_upper_bars_in_feed_order": 6072,
+    "each_setup_has_one_candidate": 90,
+    "candidate_identity_fields_present": 90,
+    "first_upper_close_measurement_unique": 90,
+    "fixed_peak_confirmation_unique": 90,
+    "fixed_w1_anchors_do_not_rewrite": 2011,
+    "wave2_begins_after_fixed_peak_candle": 78,
+    "raw_oracle_fixed_anchors_valid": 78,
+    "peak_confirmation_matches_independent_right_hand_bars": 78,
+    "fixed_peak_matches_independent_upper_extreme": 78,
+    "raw_first_close_breach_is_accounted": 78,
+    "fib_measurement_belongs_to_live_fixed_candidate": 29,
+    "fib_close_is_closed_and_currently_knowable": 29,
+    "fib_ratio_from_fixed_anchors_and_close": 29,
+    "strictly_deeper_than_limit_equality_allowed": 29,
+    "measurement_or_exclusion_matches_input": 29,
+    "fib_guard_applies_before_signal_only": 29,
+    "off_measurement_does_not_exclude": 14,
+    "native_measurement_is_independent_first_upper_close": 29,
+    "recorded_ratio_matches_independent_first_source_close": 29,
+    "on_exclusion_invalidates_at_same_known_time": 15,
+    "invalidation_is_next_setup_event": 15,
+    "no_signal_order_fill_after_exclusion": 15,
+    "fib_invalidation_has_enabled_measurement": 15,
+    "off_on_independent_upper_bars_identical": 1,
+    "candidate_identity_unique": 90,
+    "all_candidates_accounted_in_both_arms": 1
+  },
+  "check_count": 38988,
+  "violations": [],
+  "limits": [
+    "All source bars are accepted upper candles logged independently by the EA adapter; no broker-data completeness proof is inferred.",
+    "Candidate coverage means every recorded WAVE1_BREAK in the OFF/ON pair; omitted opportunities are not independently reconstructed.",
+    "OHLC cannot determine intrabar high/low ordering; only final upper closes are tested.",
+    "Current-upper origin/timeout priority is checked from source bars; other unresolved same-known-tick terminal order is NOT_VERIFIED.",
+    "No observed exact equality is reported as NOT_OBSERVED; harness evidence is separate.",
+    "Realized R is a closed-setup auxiliary summary; no thresholds or winners were selected from it."
+  ]
+}

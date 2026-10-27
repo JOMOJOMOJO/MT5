@@ -1,0 +1,17 @@
+{
+  "runs": [
+    {
+      "run_id": "display_harness",
+      "kind": "display_harness",
+      "assertions": 28,
+      "passed": 28,
+      "failed": 0,
+      "violations": [],
+      "audit_passed": true
+    }
+  ],
+  "run_count": 1,
+  "audit_passed": true,
+  "video_agreement": "UNASSESSED_SOURCE_CHARTS_NOT_PROVIDED",
+  "profitability_or_promotion": "NOT_ASSESSED"
+}

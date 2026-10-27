@@ -1,0 +1,8 @@
+{
+  "kind": "NATIVE_RECORDED_DRAWING_INVENTORY_AUDIT",
+  "status": "PASS",
+  "observed_cases": 4,
+  "shortfall": [],
+  "checks": 1775,
+  "failures": []
+}

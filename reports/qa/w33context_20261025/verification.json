@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "future_bars_used": false,
+  "ea_changed": false,
+  "scope": "one-case causal context explanation; no strategy/filter update",
+  "case_data_unchanged_after_layout_fix": true,
+  "sha256": {
+    "reports\\qa\\w33context_20261025\\case.json": "4fa5f5bbdfb16ee47084cc10b33e3f557d3a447776a4397c1a660c387367220d",
+    "reports\\qa\\w33context_20261025\\before_entry.png": "d3ba80860734397d487ff8263ff1e2f9c845575e8a5552ac3ad744cd0113395c",
+    "reports\\qa\\w33context_20261025\\README.md": "5e2b320adf9f392847de478cb36d03fdc33135cdd4cec6705f646bb47acfe87c",
+    "tools\\wave33_visual\\prior_high_case.py": "c6da59d6fbb0e5fdf3b640438971f8abd4b1721c8fe555d7830127088e0a04eb"
+  }
+}

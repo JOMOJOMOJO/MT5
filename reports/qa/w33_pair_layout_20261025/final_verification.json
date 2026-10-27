@@ -1,0 +1,113 @@
+{
+  "status": "PASS",
+  "version": "1.84",
+  "integrity": [
+    {
+      "path": "mql/Experts/Wave33ChopDiagnostic.mq5",
+      "changed": true,
+      "intentional": true
+    },
+    {
+      "path": "mql/Experts/Wave33ChopDiagnostic.ex5",
+      "changed": true,
+      "intentional": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Engine.mqh",
+      "changed": true,
+      "intentional": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Display.mqh",
+      "changed": false,
+      "intentional": false
+    },
+    {
+      "path": "mql/Include/Wave33Visual/ChopDisplay.mqh",
+      "changed": true,
+      "intentional": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Chop.mqh",
+      "changed": false,
+      "intentional": false
+    },
+    {
+      "path": "mql/Include/Wave33Visual/PriorContext.mqh",
+      "changed": false,
+      "intentional": false
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Types.mqh",
+      "changed": false,
+      "intentional": false
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Ledger.mqh",
+      "changed": false,
+      "intentional": false
+    },
+    {
+      "path": "mql/Include/Wave33Visual/ConnectedWave.mqh",
+      "changed": false,
+      "intentional": false
+    },
+    {
+      "path": "mql/Experts/Wave33VisualVerifier.mq5",
+      "changed": false,
+      "intentional": false
+    },
+    {
+      "path": "mql/Experts/Wave33VisualVerifier.ex5",
+      "changed": false,
+      "intentional": false
+    }
+  ],
+  "presets": [
+    {
+      "path": "presets\\wave33\\Wave33Pair_v184_A_BothOn.set",
+      "inputs": 44,
+      "sha256": "c3cba0b4f035ce0e406f548e624fe08112b56d99fd4407b2bf5ea440d07d1355"
+    },
+    {
+      "path": "presets\\wave33\\Wave33Pair_v184_A_BothOff.set",
+      "inputs": 44,
+      "sha256": "2a325b14d9680febd3533427bbf5ba9ceca658efb37270b6f2f97af5e9bd94a9"
+    },
+    {
+      "path": "presets\\wave33\\Wave33Pair_v184_B_BothOn.set",
+      "inputs": 44,
+      "sha256": "92bf77ab544c2abb8c6d9167e1fb91104f44df2ee2956891e6455733b87559fa"
+    },
+    {
+      "path": "presets\\wave33\\Wave33Pair_v184_B_BothOff.set",
+      "inputs": 44,
+      "sha256": "d0e8ee92eb158958e99113c4c8e47c8021d8149d19d6d6402b5882f36229d20b"
+    }
+  ],
+  "native_batch": "run_f1624584",
+  "display_output": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_pair_layout_20261025\\display\\run_b562a513",
+  "display_mode": "NORMAL_CHART_LAYOUT_FIXTURE",
+  "native_assertions": 846,
+  "visual_assertions": 27,
+  "independent_csv_checks": 202,
+  "failures": 0,
+  "all_column_parity_event_rows": 912,
+  "screenshots": [
+    "display\\run_b562a513\\ld_b562a513_dense_after.png",
+    "display\\run_b562a513\\ld_b562a513_dense_before.png"
+  ],
+  "artifact_sha256": {
+    "mql/Experts/Wave33ChopDiagnostic.mq5": "32ace7a650ee3304939376aa278c7da7e76ac6043824c79813c194c268f8d498",
+    "mql/Experts/Wave33ChopDiagnostic.ex5": "c36eb5fc4ae832dbc2647885b06554a5e4653ad277e5c112f2f9f31263c267de",
+    "mql/Include/Wave33Visual/Engine.mqh": "3fb6956a2253f071eb455d60ac90ce152dab8f46c35955a5f36e5b22018a0fc8",
+    "mql/Include/Wave33Visual/ConnectedPair.mqh": "d6306f6f99344eb69497251ace838899a98f65c19c2e9e2794abe302e3fa9306",
+    "mql/Include/Wave33Visual/ChopDisplay.mqh": "606b66194724557878758f864419e65ea8efb145e0202771496468c9829fe54f",
+    "mql/Include/Wave33Visual/LabelLayout.mqh": "e00a577f97cacd3f7ebac22ca1625edb6b0e12257b750325cbb47c1090b39d23",
+    "mql/Experts/tests/Wave33PairLayoutHarness.mq5": "37eef3da3c52336d0a78517e12e2c1a953f7033b712f83a4e2ce2eb62429b395",
+    "mql/Experts/tests/Wave33PairLayoutHarness.ex5": "d9d83c60c2edc6848f351cb3244d0c3a65c4cd3f4af91714a05130f52058cb9b",
+    "mql/Experts/tests/Wave33LabelReplay.mq5": "6beb6fe49907de17fb16595cab37e113561aba56897dc10045a3533f664a8174",
+    "mql/Experts/tests/Wave33LabelReplay.ex5": "b9adde747cd533d31132a3d6db089c4fc059ff2e19afa7229603c817f12f41c1"
+  },
+  "scope": "Engineering, causal fixtures and native visual drawing. Not annual strategy profitability."
+}

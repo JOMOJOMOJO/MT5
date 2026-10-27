@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "exact_equal": true,
+  "checks": {
+    "all_nonrender_events": true,
+    "upper_bars": true,
+    "lower_bars": true,
+    "opposite_ticks": true
+  },
+  "single": "reports\\qa\\w33batch\\eng\\20261022_235504_d57c3130\\a_extension_on",
+  "batch": "reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\passes\\XAUUSD+",
+  "event_rows": [
+    1240,
+    1240
+  ],
+  "differences": [],
+  "batch_model": 4,
+  "single_model": 4,
+  "scope": "All non-render/non-TEST_END event fields, raw bars, and inverse-W1 tick audit; no profitability assessment"
+}

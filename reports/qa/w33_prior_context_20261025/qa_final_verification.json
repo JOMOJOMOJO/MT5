@@ -1,0 +1,97 @@
+{
+  "status": "PASS",
+  "native_batch": "run_8a9f584f",
+  "assertions": 1470,
+  "independent_event_checks": 67,
+  "current_source_matches_native_manifest": [
+    {
+      "field": "harness_source_sha256",
+      "path": "mql/Experts/tests/Wave33PriorContextHarness.mq5",
+      "sha256": "b97ca2b2b3a601553e67a110793c991151cf7c93536c5b3f893008b5bce9c970",
+      "matches_native_manifest": true
+    },
+    {
+      "field": "ea_source_sha256",
+      "path": "mql/Experts/Wave33ChopDiagnostic.mq5",
+      "sha256": "6ef9fd8dbef16f69a584e667cdc1a2ac94eb2409b433de0801595f77eb008548",
+      "matches_native_manifest": true
+    },
+    {
+      "field": "harness_ex5_sha256",
+      "path": "mql/Experts/tests/Wave33PriorContextHarness.ex5",
+      "sha256": "df7b710ed0f00037cd09c42047b3801ecaf212bda12adb4d10353c974dc54416",
+      "matches_native_manifest": true
+    },
+    {
+      "field": "context_source_sha256",
+      "path": "mql/Include/Wave33Visual/PriorContext.mqh",
+      "sha256": "909f116ab7bedc0695c8ae8fb30c0e247fcc854d6297da9eb87e060a534aa51d",
+      "matches_native_manifest": true
+    }
+  ],
+  "counts": [
+    {
+      "case": "off_diag_on",
+      "checks": 312,
+      "failures": 0,
+      "signals": 12,
+      "context_skips": 0,
+      "order_disabled": 12,
+      "order_events": 0
+    },
+    {
+      "case": "off_diag_off",
+      "checks": 300,
+      "failures": 0,
+      "signals": 12,
+      "context_skips": 0,
+      "order_disabled": 12,
+      "order_events": 0
+    },
+    {
+      "case": "on_diag_on",
+      "checks": 312,
+      "failures": 0,
+      "signals": 12,
+      "context_skips": 4,
+      "order_disabled": 8,
+      "order_events": 0
+    },
+    {
+      "case": "on_diag_off",
+      "checks": 312,
+      "failures": 0,
+      "signals": 12,
+      "context_skips": 4,
+      "order_disabled": 8,
+      "order_events": 0
+    },
+    {
+      "case": "on_orders_on",
+      "checks": 232,
+      "failures": 0,
+      "signals": 4,
+      "context_skips": 4,
+      "order_disabled": 0,
+      "order_events": 0
+    },
+    {
+      "case": "invalid_negative",
+      "checks": 1,
+      "failures": 0,
+      "signals": 0,
+      "context_skips": 0,
+      "order_disabled": 0,
+      "order_events": 0
+    },
+    {
+      "case": "invalid_above_one",
+      "checks": 1,
+      "failures": 0,
+      "signals": 0,
+      "context_skips": 0,
+      "order_disabled": 0,
+      "order_events": 0
+    }
+  ]
+}

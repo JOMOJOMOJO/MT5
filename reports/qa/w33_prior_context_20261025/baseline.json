@@ -1,0 +1,70 @@
+﻿{
+    "protected":  [
+                      {
+                          "path":  "mql/Experts/Wave33VisualVerifier.mq5",
+                          "sha256":  "a0bf2812b81bfdb52f1c9fc9e5008a1ddb5b003f507861fb570ed820a00b1a88"
+                      },
+                      {
+                          "path":  "mql/Experts/Wave33VisualVerifier.ex5",
+                          "sha256":  "13b6b35d3ead8da0a6771a38276a52eec0e50560f2dfcb87a775edb81c9fbe27"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/Engine.mqh",
+                          "sha256":  "f13f93aeee1fd7f4a08c85eda16e5a617bf2984d6152238ed337af27f396c8ec"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/Display.mqh",
+                          "sha256":  "7f6eba269e7818aab23165131f1fcab6f3860741bdd3e8973d7544f46084f12b"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/Types.mqh",
+                          "sha256":  "bc72c41867b6746a3192467320ee5ee998cf4eef5e6705109b1c06befeab48f4"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/Ledger.mqh",
+                          "sha256":  "03b97b230bd6124867e135c51f20b65deb16c28960cdad8a73072b700961305a"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/Room.mqh",
+                          "sha256":  "ecd3a1841a9f9dfe481ac43c35ca869a0d15492228ff553f7f0810133a0fc757"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/BarOrder.mqh",
+                          "sha256":  "ec300c19f85750a4a7b4a8122579dbb522d2bdf4538ba2f70f2c98176fea095f"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/OppositeExit.mqh",
+                          "sha256":  "e36e4bf55441561498641ac6c556b5ae5042da7ac7b90639be3cda04a2d639da"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/TesterRun.mqh",
+                          "sha256":  "2e6b183c2cc398f8394df65c7a42ab4150c432aad9eb1891fec5669d587e3048"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/Wave1Target.mqh",
+                          "sha256":  "2cecd65d839a3328f9dd06fb86a252199121adb3634c141c8b51641e8a71af3f"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/ConnectedWave.mqh",
+                          "sha256":  "386fffc767345722d3e887fa2acbb7abb05ccdf82fab71429f9eabbb1ebb4a93"
+                      }
+                  ],
+    "snapshots":  [
+                      {
+                          "path":  "mql/Experts/Wave33ChopDiagnostic.mq5",
+                          "sha256":  "d384c5472a5c4a038898feb1edb2e83823bfc434a8d5a19b78e4f2078d31873a"
+                      },
+                      {
+                          "path":  "mql/Experts/Wave33ChopDiagnostic.ex5",
+                          "sha256":  "a6a8bf3ce23f89539bf6ac0248a00ad7112468d0e9739c670d30376642673307"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/Chop.mqh",
+                          "sha256":  "f2d72b5c9c99ae21e47d90bdf6077a3aea93b422dd2831748b3695edcb124b49"
+                      },
+                      {
+                          "path":  "mql/Include/Wave33Visual/ChopDisplay.mqh",
+                          "sha256":  "b29052efec4498d330d963704819a87b64659b878bac3d38d3669436fa7421cc"
+                      }
+                  ]
+}

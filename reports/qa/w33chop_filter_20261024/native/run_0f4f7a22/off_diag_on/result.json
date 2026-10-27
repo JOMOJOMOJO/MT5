@@ -1,0 +1,15 @@
+﻿{
+    "failures":  0,
+    "case":  "off_diag_on",
+    "signals":  12,
+    "order_events":  0,
+    "filter":  false,
+    "diagnostic":  true,
+    "order_disabled":  12,
+    "status":  "PASS",
+    "orders_input":  false,
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33chop_filter_20261024\\native\\run_0f4f7a22\\off_diag_on",
+    "choppy_skips":  0,
+    "tag":  "cf_0f4f7a22_0",
+    "checks":  154
+}

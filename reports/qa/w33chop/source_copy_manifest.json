@@ -1,0 +1,65 @@
+{
+  "source": "mql\\Experts\\Wave33VisualVerifier.mq5",
+  "source_sha256": "a0bf2812b81bfdb52f1c9fc9e5008a1ddb5b003f507861fb570ed820a00b1a88",
+  "target": "mql\\Experts\\Wave33ChopDiagnostic.mq5",
+  "target_sha256": "2d762f16923a6e6a183633623cf48c4603d3c7a9ddeab899981cdf846fc39da9",
+  "changes": [
+    {
+      "old": "#property version \"1.80\"",
+      "new": "#property version \"1.81\""
+    },
+    {
+      "old": "#include \"../Include/Wave33Visual/Wave1Target.mqh\"",
+      "new": "#include \"../Include/Wave33Visual/Wave1Target.mqh\"\n#include \"../Include/Wave33Visual/Chop.mqh\""
+    },
+    {
+      "old": "input string InpRunTag=\"wave33_v1\";",
+      "new": "input string InpRunTag=\"wave33_chop_v181\";\ninput bool InpChopDiagnostic=true; // Observation only; never rejects an entry.\ninput bool InpChopLabels=true; // Compact labels at knowledge availability, no panel."
+    },
+    {
+      "old": "CWave33Engine g_engine;",
+      "new": "CWave33ChopObserver g_chop;\nCWave33Engine g_engine;"
+    },
+    {
+      "old": "string value=\"1.80|\"",
+      "new": "string value=\"1.81|\""
+    },
+    {
+      "old": "   return W33Hash(value);",
+      "new": "   value+=\"|\"+(string)InpChopDiagnostic+\"|\"+(string)InpChopLabels+\"|\"+W33_CHOP_VERSION+\"|0.5\";\n   return W33Hash(value);"
+    },
+    {
+      "old": "   g_ledger.Write(e);g_display.Event(e);",
+      "new": "   g_chop.Event(e); // Read-only observer; evaluate before the event is published.\n   g_ledger.Write(e);g_display.Event(e);"
+    },
+    {
+      "old": "      if(accepted && periods[i]==g_lower)g_ledger.WriteLowerBar(_Symbol,g_lower,pending[i],now);",
+      "new": "      if(accepted && periods[i]==g_lower)\n        {g_chop.AcceptedLowerBar(pending[i].time);g_ledger.WriteLowerBar(_Symbol,g_lower,pending[i],now);}"
+    },
+    {
+      "old": "FileWrite(file,\"ea_version\",\"1.80\")",
+      "new": "FileWrite(file,\"ea_version\",\"1.81\")"
+    },
+    {
+      "old": "   FileWrite(file,\"resolved_run_tag\",g_tag);",
+      "new": "   FileWrite(file,\"resolved_run_tag\",g_tag);\n   FileWrite(file,\"chop_diagnostic\",InpChopDiagnostic);FileWrite(file,\"chop_labels\",InpChopLabels);\n   FileWrite(file,\"chop_formula_version\",W33_CHOP_VERSION);FileWrite(file,\"chop_threshold\",W33_CHOP_THRESHOLD);\n   FileWrite(file,\"chop_policy\",\"observation only; no entry filter; known lower pivots strictly inside fixed W1 anchors; sum adverse moves / positive directional span\");"
+    },
+    {
+      "old": "   g_display.Init(g_prefix,g_effective_draw);ZeroMemory(g_last);",
+      "new": "   g_display.Init(g_prefix,g_effective_draw);ZeroMemory(g_last);\n   if(!g_chop.Open(g_tag,g_prefix,g_lower,InpChopDiagnostic,g_effective_draw && InpChopLabels))\n     {Print(\"Wave33 INIT_CHOP_CSV_OPEN_FAILED tag=\",g_tag,\" error=\",GetLastError());g_ledger.Close();return INIT_FAILED;}"
+    },
+    {
+      "old": "      g_ledger.Close();if(g_exit_tick_file!=INVALID_HANDLE){FileClose(g_exit_tick_file);g_exit_tick_file=INVALID_HANDLE;}\n      W33ReleaseBatchRunTag",
+      "new": "      g_chop.Close();g_ledger.Close();if(g_exit_tick_file!=INVALID_HANDLE){FileClose(g_exit_tick_file);g_exit_tick_file=INVALID_HANDLE;}\n      W33ReleaseBatchRunTag"
+    },
+    {
+      "old": "   g_ledger.Close();if(g_exit_tick_file!=INVALID_HANDLE){FileClose(g_exit_tick_file);g_exit_tick_file=INVALID_HANDLE;}\n   W33ReleaseBatchRunTag",
+      "new": "   g_chop.Close();g_ledger.Close();if(g_exit_tick_file!=INVALID_HANDLE){FileClose(g_exit_tick_file);g_exit_tick_file=INVALID_HANDLE;}\n   W33ReleaseBatchRunTag"
+    },
+    {
+      "old": "   if(!InpKeepObjects)g_display.Clear();ChartRedraw();g_ready=false;",
+      "new": "   if(!InpKeepObjects){g_chop.Clear();g_display.Clear();}ChartRedraw();g_ready=false;"
+    }
+  ],
+  "original_unchanged": true
+}

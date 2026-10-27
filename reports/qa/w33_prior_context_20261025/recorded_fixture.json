@@ -1,0 +1,67 @@
+{
+  "scope": "Recorded classifier input, not whole-EA historical replay; SHORT is symmetric synthetic mirror, not observed trade",
+  "source": "reports\\qa\\w33context_20261025\\case.json",
+  "source_sha256": "4fa5f5bbdfb16ee47084cc10b33e3f557d3a447776a4397c1a660c387367220d",
+  "long_order": {
+    "event_at": "2024.04.03 07:05:00",
+    "setup_id": "W33_XAUUSD+_15_5_LONG_1712124000_350",
+    "wave1_start_time": "2024.04.03 04:15:00",
+    "wave1_start_price": "2276.7200000000",
+    "wave1_peak_time": "2024.04.03 06:15:00",
+    "wave1_peak_price": "2287.9900000000",
+    "wave1_peak_known_at": "2024.04.03 07:00:00",
+    "entry_price": "2286.1400000000",
+    "sl_price": "2282.8300000000",
+    "tp_price": "2290.1200000000",
+    "nearest_obstacle_price": "2287.9900000000",
+    "nearest_obstacle_source": "WAVE1",
+    "obstacle_distance_r": "0.5589123867",
+    "h1_direction": "WITH_H1"
+  },
+  "prior_sources": [
+    {
+      "sequence": 30367,
+      "time": "2024.04.03 01:15:00",
+      "known_at": "2024.04.03 02:00:00",
+      "price": 2288.35,
+      "tf": "PERIOD_M15",
+      "label": "HH"
+    },
+    {
+      "sequence": 30375,
+      "time": "2024.04.03 01:00:00",
+      "known_at": "2024.04.03 04:00:00",
+      "price": 2288.35,
+      "tf": "PERIOD_H1",
+      "label": "HH"
+    }
+  ],
+  "latest_source_close": {
+    "PERIOD_M15": {
+      "source_time": "2024.04.03 06:45:00",
+      "closed_at": "2024.04.03 07:00:00",
+      "known_at": "2024.04.03 07:00:00",
+      "close": 2285.1
+    },
+    "PERIOD_H1": {
+      "source_time": "2024.04.03 06:00:00",
+      "closed_at": "2024.04.03 07:00:00",
+      "known_at": "2024.04.03 07:00:00",
+      "close": 2285.1,
+      "provenance": "06:00 H1 close equals 06:45 M15 close for the same recorded feed hour"
+    }
+  },
+  "fraction": 0.05,
+  "expected_halfwidth": 0.5635,
+  "expected_status": "BLOCKED",
+  "mirror_constant_for_synthetic_short": 4560,
+  "harness_anchor_known_time": {
+    "wave1_start_known_at": "2024.04.03 05:00:00",
+    "provenance": "strict 2-right M15 confirmation availability for 04:15 origin, recorded bars in case.json"
+  },
+  "all_source_artifact_hashes": {
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_chop_v181_1685577600_71895031_events.csv": "38ba742f94fe687a6b948fd2a7c25b4f5194045b6291e211a1adcc40930e1734",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_chop_v181_1685577600_71895031_upper_bars.csv": "f30e942185fa33ea43bf3029e4ba273a7167d85cb03e5bb956014435f91bc3a3",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_chop_v181_1685577600_71895031_config.csv": "a75a538ef541e15aa3375324e89e9b601df514473868792b4f4b65b158483ad4"
+  }
+}

@@ -1,0 +1,6 @@
+﻿{
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_opposite_exit_20261021\\engineering\\20261021_234603_b2636d15",
+    "status":  "FAILED",
+    "run_id":  "engine_harness",
+    "reason":  "Could not find a part of the path \u0027C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\wave33_opposite_exit_20261021\\engineering\\20261021_234603_b2636d15\\engine_harness\\images\\wave33_20261021_234603_b2636d15_engine_harness-holding.png\u0027."
+}

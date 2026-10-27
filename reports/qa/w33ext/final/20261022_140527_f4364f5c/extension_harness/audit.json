@@ -1,0 +1,10 @@
+{
+  "run_id": "extension_harness",
+  "kind": "extension_harness",
+  "assertions": 180,
+  "passed": 180,
+  "failed": 0,
+  "unavailable": 0,
+  "violations": [],
+  "audit_passed": true
+}

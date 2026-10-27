@@ -1,0 +1,1 @@
+setup_id;known_at;tick_time_msc;tick_order;knowledge_order;position_ticket;position_id;bid;ask;volume;quote_profit;booked_cash;remaining_swap;entry_cost_rate;estimated_exit_cost;net_estimate;request_pending;attempts;status;opposite_setup_id

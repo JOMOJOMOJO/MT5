@@ -1,0 +1,10 @@
+{
+  "run_id": "tester_run_harness",
+  "kind": "tester_run_harness",
+  "assertions": 38,
+  "passed": 38,
+  "failed": 0,
+  "unavailable": 0,
+  "violations": [],
+  "audit_passed": true
+}

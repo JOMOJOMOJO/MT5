@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "passed": 637,
+  "failed": 0,
+  "unavailable": 4,
+  "harnesses": {
+    "engine_harness": {
+      "run_id": "engine_harness",
+      "kind": "engine_harness",
+      "assertions": 100,
+      "passed": 100,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    "display_harness": {
+      "run_id": "display_harness",
+      "kind": "display_harness",
+      "assertions": 47,
+      "passed": 47,
+      "failed": 0,
+      "unavailable": 4,
+      "violations": [],
+      "audit_passed": true
+    },
+    "lifecycle_harness": {
+      "run_id": "lifecycle_harness",
+      "kind": "lifecycle_harness",
+      "assertions": 96,
+      "passed": 96,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    "recognition_harness": {
+      "run_id": "recognition_harness",
+      "kind": "recognition_harness",
+      "assertions": 156,
+      "passed": 156,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    "room_harness": {
+      "run_id": "room_harness",
+      "kind": "room_harness",
+      "assertions": 19,
+      "passed": 19,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    "fib_close_harness": {
+      "run_id": "fib_close_harness",
+      "kind": "fib_close_harness",
+      "assertions": 128,
+      "passed": 128,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    "opposite_exit_harness": {
+      "run_id": "opposite_exit_harness",
+      "kind": "opposite_exit_harness",
+      "assertions": 91,
+      "passed": 91,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    }
+  },
+  "compiles": {
+    "Wave33DisplayHarness.compile.log": true,
+    "Wave33EngineHarness.compile.log": true,
+    "Wave33FibCloseHarness.compile.log": true,
+    "Wave33LifecycleHarness.compile.log": true,
+    "Wave33OppositeExitHarness.compile.log": true,
+    "Wave33RecognitionHarness.compile.log": true,
+    "Wave33RoomHarness.compile.log": true,
+    "Wave33VisualVerifier.compile.log": true
+  },
+  "native_final_build": "reports\\qa\\w33opp\\final\\20261022_000609_1f6049d6",
+  "source_hash_matches_deployment": true,
+  "headers_match_deployment": true
+}

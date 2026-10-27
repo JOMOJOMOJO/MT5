@@ -1,0 +1,14 @@
+﻿{
+    "symbol":  "XAUUSD+",
+    "inputs":  {
+                   "InpRunTag":  "wave33_20261022_000609_1f6049d6_lifecycle_harness"
+               },
+    "date_from":  "2019.01.02",
+    "model":  4,
+    "chart_period":  "M1",
+    "visual_mode":  false,
+    "tag":  "wave33_20261022_000609_1f6049d6_lifecycle_harness",
+    "run_id":  "lifecycle_harness",
+    "expert":  "Wave33LifecycleHarness",
+    "date_to":  "2019.01.03"
+}

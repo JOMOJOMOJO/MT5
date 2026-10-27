@@ -1,0 +1,44 @@
+﻿{
+    "harness_ex5_sha256":  "d9d83c60c2edc6848f351cb3244d0c3a65c4cd3f4af91714a05130f52058cb9b",
+    "harness_source_sha256":  "37eef3da3c52336d0a78517e12e2c1a953f7033b712f83a4e2ce2eb62429b395",
+    "ea_source_sha256":  "32ace7a650ee3304939376aa278c7da7e76ac6043824c79813c194c268f8d498",
+    "batch":  "run_f1624584",
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33PairLayout\\run_f1624584",
+    "purpose":  "ACTUAL_EA_CONNECTED_PAIR_AND_LABEL_LAYOUT_SYNTHETIC_NO_ORDERS",
+    "status":  "PASS",
+    "cases":  [
+                  {
+                      "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_pair_layout_20261025\\native\\run_f1624584\\readable_on",
+                      "checks":  282,
+                      "failures":  0,
+                      "case":  "readable_on",
+                      "visual":  false,
+                      "orders_input":  false,
+                      "tag":  "pl_f1624584_0",
+                      "status":  "PASS",
+                      "readable":  true
+                  },
+                  {
+                      "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_pair_layout_20261025\\native\\run_f1624584\\readable_off",
+                      "checks":  282,
+                      "failures":  0,
+                      "case":  "readable_off",
+                      "visual":  false,
+                      "orders_input":  false,
+                      "tag":  "pl_f1624584_1",
+                      "status":  "PASS",
+                      "readable":  false
+                  },
+                  {
+                      "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_pair_layout_20261025\\native\\run_f1624584\\orders_on",
+                      "checks":  282,
+                      "failures":  0,
+                      "case":  "orders_on",
+                      "visual":  false,
+                      "orders_input":  true,
+                      "tag":  "pl_f1624584_2",
+                      "status":  "PASS",
+                      "readable":  true
+                  }
+              ]
+}

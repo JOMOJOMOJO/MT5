@@ -1,0 +1,647 @@
+{
+  "status": "PASS",
+  "checks": 352013,
+  "violations": 0,
+  "failures": [],
+  "incomplete": [],
+  "config_differences": {
+    "exit_on_opposite_wave1": [
+      "false",
+      "true"
+    ],
+    "resolved_run_tag": [
+      "wave33_20261021_235245_00512912_a_opposite_exit_off",
+      "wave33_20261021_235245_00512912_a_opposite_exit_on"
+    ]
+  },
+  "comparison": {
+    "common_fills": 21,
+    "off_only": 0,
+    "on_only": 1,
+    "all_fills": {
+      "off": {
+        "ALL": {
+          "closed_fills": 21,
+          "total_r": -6.7921236031999985,
+          "mean_r": -0.323434457295238,
+          "winners": 8,
+          "profit_factor_r": 0.5354405892505648,
+          "custom_exits": 0
+        },
+        "LONG": {
+          "closed_fills": 12,
+          "total_r": -9.953884730899999,
+          "mean_r": -0.8294903942416666,
+          "winners": 2,
+          "profit_factor_r": 0.16247192644033667,
+          "custom_exits": 0
+        },
+        "SHORT": {
+          "closed_fills": 9,
+          "total_r": 3.1617611277,
+          "mean_r": 0.3513067919666667,
+          "winners": 6,
+          "profit_factor_r": 2.1557270800015296,
+          "custom_exits": 0
+        }
+      },
+      "on": {
+        "ALL": {
+          "closed_fills": 22,
+          "total_r": -4.819188166,
+          "mean_r": -0.21905400754545454,
+          "winners": 11,
+          "profit_factor_r": 0.6231782452062307,
+          "custom_exits": 3
+        },
+        "LONG": {
+          "closed_fills": 13,
+          "total_r": -8.604137699499999,
+          "mean_r": -0.6618567461153846,
+          "winners": 4,
+          "profit_factor_r": 0.19137567296065608,
+          "custom_exits": 2
+        },
+        "SHORT": {
+          "closed_fills": 9,
+          "total_r": 3.7849495335,
+          "mean_r": 0.42054994816666663,
+          "winners": 7,
+          "profit_factor_r": 2.761608770832453,
+          "custom_exits": 1
+        }
+      }
+    },
+    "common_fills_metrics": {
+      "off": {
+        "ALL": {
+          "closed_fills": 21,
+          "total_r": -6.7921236032,
+          "mean_r": -0.3234344572952381,
+          "winners": 8,
+          "profit_factor_r": 0.5354405892505647,
+          "custom_exits": 0
+        },
+        "LONG": {
+          "closed_fills": 12,
+          "total_r": -9.9538847309,
+          "mean_r": -0.8294903942416667,
+          "winners": 2,
+          "profit_factor_r": 0.16247192644033664,
+          "custom_exits": 0
+        },
+        "SHORT": {
+          "closed_fills": 9,
+          "total_r": 3.1617611277000006,
+          "mean_r": 0.35130679196666675,
+          "winners": 6,
+          "profit_factor_r": 2.1557270800015296,
+          "custom_exits": 0
+        }
+      },
+      "on": {
+        "ALL": {
+          "closed_fills": 21,
+          "total_r": -4.9040938264,
+          "mean_r": -0.23352827744761903,
+          "winners": 10,
+          "profit_factor_r": 0.6165393054425632,
+          "custom_exits": 2
+        },
+        "LONG": {
+          "closed_fills": 12,
+          "total_r": -8.689043359900001,
+          "mean_r": -0.7240869466583334,
+          "winners": 3,
+          "profit_factor_r": 0.18339616532135236,
+          "custom_exits": 1
+        },
+        "SHORT": {
+          "closed_fills": 9,
+          "total_r": 3.7849495335000003,
+          "mean_r": 0.4205499481666667,
+          "winners": 7,
+          "profit_factor_r": 2.761608770832453,
+          "custom_exits": 1
+        }
+      }
+    },
+    "candidate_prefix_cutoff": "2018.11.13 23:09:52"
+  },
+  "armed_cases": [
+    {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1542073500_133",
+      "opposite_setup_id": "W33_XAUUSD+_15_5_SHORT_1542096000_134",
+      "armed_at": "2018.11.13 09:15:00",
+      "ticks": 6737,
+      "ready_ticks": 0,
+      "first_ready_at": null,
+      "requests": 0,
+      "rejections": 0
+    },
+    {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1542118500_135",
+      "opposite_setup_id": "W33_XAUUSD+_15_5_SHORT_1542144600_136",
+      "armed_at": "2018.11.13 22:45:00",
+      "ticks": 1585,
+      "ready_ticks": 1,
+      "first_ready_at": "2018.11.13 23:09:52",
+      "requests": 1,
+      "rejections": 0
+    },
+    {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1542825900_151",
+      "opposite_setup_id": "W33_XAUUSD+_15_5_LONG_1542859200_152",
+      "armed_at": "2018.11.22 06:00:00",
+      "ticks": 816,
+      "ready_ticks": 1,
+      "first_ready_at": "2018.11.22 06:30:00",
+      "requests": 1,
+      "rejections": 0
+    },
+    {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1542859200_152",
+      "opposite_setup_id": "W33_XAUUSD+_15_5_SHORT_1542868200_153",
+      "armed_at": "2018.11.22 07:30:00",
+      "ticks": 231,
+      "ready_ticks": 1,
+      "first_ready_at": "2018.11.22 07:34:32",
+      "requests": 1,
+      "rejections": 0
+    },
+    {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1543530600_160",
+      "opposite_setup_id": "W33_XAUUSD+_15_5_SHORT_1543558500_161",
+      "armed_at": "2018.11.30 07:15:00",
+      "ticks": 17638,
+      "ready_ticks": 0,
+      "first_ready_at": null,
+      "requests": 0,
+      "rejections": 0
+    }
+  ],
+  "native_cash_reconciliation": {
+    "off": [
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1526072400_24",
+        "direction": "SHORT",
+        "fill_at": "2018.05.14 15:00:00",
+        "exit_at": "2018.05.14 21:00:05",
+        "net_cash": 48.1,
+        "independent_r": 0.9840425531914894,
+        "recorded_r": 0.9840425532,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1528196400_32",
+        "direction": "LONG",
+        "fill_at": "2018.06.06 09:00:00",
+        "exit_at": "2018.06.06 12:00:07",
+        "net_cash": -51.0,
+        "independent_r": -1.0204081632653061,
+        "recorded_r": -1.0204081633,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1529287200_37",
+        "direction": "LONG",
+        "fill_at": "2018.06.19 03:00:00",
+        "exit_at": "2018.06.19 14:00:06",
+        "net_cash": -50.49,
+        "independent_r": -1.0132450331125828,
+        "recorded_r": -1.0132450331,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1529416800_40",
+        "direction": "SHORT",
+        "fill_at": "2018.06.20 04:00:00",
+        "exit_at": "2018.06.20 21:00:09",
+        "net_cash": 48.49,
+        "independent_r": 0.9841688654353562,
+        "recorded_r": 0.9841688654,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1530712800_42",
+        "direction": "SHORT",
+        "fill_at": "2018.07.05 08:00:00",
+        "exit_at": "2018.07.05 13:00:02",
+        "net_cash": 47.32,
+        "independent_r": 1.002754820936639,
+        "recorded_r": 1.0027548209,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1537507800_73",
+        "direction": "SHORT",
+        "fill_at": "2018.09.21 07:35:00",
+        "exit_at": "2018.09.21 09:45:27",
+        "net_cash": -53.0,
+        "independent_r": -1.0638297872340425,
+        "recorded_r": -1.0638297872,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1540871100_119",
+        "direction": "SHORT",
+        "fill_at": "2018.10.30 07:10:00",
+        "exit_at": "2018.10.30 10:16:41",
+        "net_cash": 47.25,
+        "independent_r": 0.9668508287292817,
+        "recorded_r": 0.9668508287,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1540912500_120",
+        "direction": "LONG",
+        "fill_at": "2018.10.30 20:35:00",
+        "exit_at": "2018.10.31 03:06:28",
+        "net_cash": -65.63,
+        "independent_r": -1.364732792680391,
+        "recorded_r": -1.3647327927,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1541025000_122",
+        "direction": "LONG",
+        "fill_at": "2018.11.01 02:10:00",
+        "exit_at": "2018.11.01 04:49:20",
+        "net_cash": 46.98,
+        "independent_r": 0.9666666666666667,
+        "recorded_r": 0.9666666667,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1542073500_133",
+        "direction": "LONG",
+        "fill_at": "2018.11.13 09:10:00",
+        "exit_at": "2018.11.13 10:07:42",
+        "net_cash": -52.25,
+        "independent_r": -1.0609137055837563,
+        "recorded_r": -1.0609137056,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1542118500_135",
+        "direction": "LONG",
+        "fill_at": "2018.11.13 17:50:00",
+        "exit_at": "2018.11.14 11:50:39",
+        "net_cash": -59.58,
+        "independent_r": -1.244360902255639,
+        "recorded_r": -1.2443609023,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1542337200_142",
+        "direction": "LONG",
+        "fill_at": "2018.11.16 06:25:00",
+        "exit_at": "2018.11.16 10:07:38",
+        "net_cash": 46.98,
+        "independent_r": 0.9642857142857143,
+        "recorded_r": 0.9642857143,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1542732300_149",
+        "direction": "SHORT",
+        "fill_at": "2018.11.20 19:10:00",
+        "exit_at": "2018.11.20 20:01:41",
+        "net_cash": 46.98,
+        "independent_r": 0.9642857142857143,
+        "recorded_r": 0.9642857143,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1542825900_151",
+        "direction": "SHORT",
+        "fill_at": "2018.11.21 22:35:00",
+        "exit_at": "2018.11.22 08:25:38",
+        "net_cash": -29.17,
+        "independent_r": -0.587157809983897,
+        "recorded_r": -0.58715781,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1543530600_160",
+        "direction": "LONG",
+        "fill_at": "2018.11.29 23:55:00",
+        "exit_at": "2018.11.30 11:50:15",
+        "net_cash": -76.41,
+        "independent_r": -1.5644963144963144,
+        "recorded_r": -1.5644963145,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1544413500_171",
+        "direction": "LONG",
+        "fill_at": "2018.12.10 06:35:00",
+        "exit_at": "2018.12.10 09:00:28",
+        "net_cash": -50.7,
+        "independent_r": -1.0483870967741935,
+        "recorded_r": -1.0483870968,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1544810400_179",
+        "direction": "LONG",
+        "fill_at": "2018.12.14 21:45:00",
+        "exit_at": "2018.12.17 01:01:00",
+        "net_cash": -68.09,
+        "independent_r": -1.46714070243482,
+        "recorded_r": -1.4671407024,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1545820200_192",
+        "direction": "SHORT",
+        "fill_at": "2018.12.26 11:55:00",
+        "exit_at": "2018.12.26 12:53:39",
+        "net_cash": -51.2,
+        "independent_r": -1.0847457627118644,
+        "recorded_r": -1.0847457627,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1545850800_195",
+        "direction": "SHORT",
+        "fill_at": "2018.12.27 04:00:00",
+        "exit_at": "2018.12.27 07:11:59",
+        "net_cash": 45.36,
+        "independent_r": 0.9953917050691244,
+        "recorded_r": 0.9953917051,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1546240500_197",
+        "direction": "LONG",
+        "fill_at": "2018.12.31 12:00:00",
+        "exit_at": "2018.12.31 15:35:40",
+        "net_cash": -47.84,
+        "independent_r": -1.0348258706467661,
+        "recorded_r": -1.0348258706,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1546477200_200",
+        "direction": "LONG",
+        "fill_at": "2019.01.03 04:10:00",
+        "exit_at": "2019.01.03 15:18:41",
+        "net_cash": -50.16,
+        "independent_r": -1.066326530612245,
+        "recorded_r": -1.0663265306,
+        "exit_reason": "DEAL_REASON_SL"
+      }
+    ],
+    "on": [
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1526072400_24",
+        "direction": "SHORT",
+        "fill_at": "2018.05.14 15:00:00",
+        "exit_at": "2018.05.14 21:00:05",
+        "net_cash": 48.1,
+        "independent_r": 0.9840425531914894,
+        "recorded_r": 0.9840425532,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1528196400_32",
+        "direction": "LONG",
+        "fill_at": "2018.06.06 09:00:00",
+        "exit_at": "2018.06.06 12:00:07",
+        "net_cash": -51.0,
+        "independent_r": -1.0204081632653061,
+        "recorded_r": -1.0204081633,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1529287200_37",
+        "direction": "LONG",
+        "fill_at": "2018.06.19 03:00:00",
+        "exit_at": "2018.06.19 14:00:06",
+        "net_cash": -50.49,
+        "independent_r": -1.0132450331125828,
+        "recorded_r": -1.0132450331,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1529416800_40",
+        "direction": "SHORT",
+        "fill_at": "2018.06.20 04:00:00",
+        "exit_at": "2018.06.20 21:00:09",
+        "net_cash": 48.49,
+        "independent_r": 0.9841688654353562,
+        "recorded_r": 0.9841688654,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1530712800_42",
+        "direction": "SHORT",
+        "fill_at": "2018.07.05 08:00:00",
+        "exit_at": "2018.07.05 13:00:02",
+        "net_cash": 47.32,
+        "independent_r": 1.002754820936639,
+        "recorded_r": 1.0027548209,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1537507800_73",
+        "direction": "SHORT",
+        "fill_at": "2018.09.21 07:35:00",
+        "exit_at": "2018.09.21 09:45:27",
+        "net_cash": -53.0,
+        "independent_r": -1.0638297872340425,
+        "recorded_r": -1.0638297872,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1540871100_119",
+        "direction": "SHORT",
+        "fill_at": "2018.10.30 07:10:00",
+        "exit_at": "2018.10.30 10:16:41",
+        "net_cash": 47.25,
+        "independent_r": 0.9668508287292817,
+        "recorded_r": 0.9668508287,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1540912500_120",
+        "direction": "LONG",
+        "fill_at": "2018.10.30 20:35:00",
+        "exit_at": "2018.10.31 03:06:28",
+        "net_cash": -65.63,
+        "independent_r": -1.364732792680391,
+        "recorded_r": -1.3647327927,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1541025000_122",
+        "direction": "LONG",
+        "fill_at": "2018.11.01 02:10:00",
+        "exit_at": "2018.11.01 04:49:20",
+        "net_cash": 46.98,
+        "independent_r": 0.9666666666666667,
+        "recorded_r": 0.9666666667,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1542073500_133",
+        "direction": "LONG",
+        "fill_at": "2018.11.13 09:10:00",
+        "exit_at": "2018.11.13 10:07:42",
+        "net_cash": -52.25,
+        "independent_r": -1.0609137055837563,
+        "recorded_r": -1.0609137056,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1542118500_135",
+        "direction": "LONG",
+        "fill_at": "2018.11.13 17:50:00",
+        "exit_at": "2018.11.13 23:09:52",
+        "net_cash": 0.98,
+        "independent_r": 0.02046783625730994,
+        "recorded_r": 0.0204678363,
+        "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1542337200_142",
+        "direction": "LONG",
+        "fill_at": "2018.11.16 06:25:00",
+        "exit_at": "2018.11.16 10:07:38",
+        "net_cash": 46.98,
+        "independent_r": 0.9642857142857143,
+        "recorded_r": 0.9642857143,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1542732300_149",
+        "direction": "SHORT",
+        "fill_at": "2018.11.20 19:10:00",
+        "exit_at": "2018.11.20 20:01:41",
+        "net_cash": 46.98,
+        "independent_r": 0.9642857142857143,
+        "recorded_r": 0.9642857143,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1542825900_151",
+        "direction": "SHORT",
+        "fill_at": "2018.11.21 22:35:00",
+        "exit_at": "2018.11.22 06:30:00",
+        "net_cash": 1.79,
+        "independent_r": 0.03603059581320451,
+        "recorded_r": 0.0360305958,
+        "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1542859200_152",
+        "direction": "LONG",
+        "fill_at": "2018.11.22 07:25:00",
+        "exit_at": "2018.11.22 07:34:32",
+        "net_cash": 4.23,
+        "independent_r": 0.08490566037735849,
+        "recorded_r": 0.0849056604,
+        "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1543530600_160",
+        "direction": "LONG",
+        "fill_at": "2018.11.29 23:55:00",
+        "exit_at": "2018.11.30 11:50:15",
+        "net_cash": -78.72,
+        "independent_r": -1.5643879173290938,
+        "recorded_r": -1.5643879173,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1544413500_171",
+        "direction": "LONG",
+        "fill_at": "2018.12.10 06:35:00",
+        "exit_at": "2018.12.10 09:00:28",
+        "net_cash": -52.0,
+        "independent_r": -1.0483870967741935,
+        "recorded_r": -1.0483870968,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1544810400_179",
+        "direction": "LONG",
+        "fill_at": "2018.12.14 21:45:00",
+        "exit_at": "2018.12.17 01:01:00",
+        "net_cash": -72.1,
+        "independent_r": -1.4672364672364673,
+        "recorded_r": -1.4672364672,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1545820200_192",
+        "direction": "SHORT",
+        "fill_at": "2018.12.26 11:55:00",
+        "exit_at": "2018.12.26 12:53:39",
+        "net_cash": -52.48,
+        "independent_r": -1.0847457627118644,
+        "recorded_r": -1.0847457627,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_SHORT_1545850800_195",
+        "direction": "SHORT",
+        "fill_at": "2018.12.27 04:00:00",
+        "exit_at": "2018.12.27 07:11:59",
+        "net_cash": 47.52,
+        "independent_r": 0.9953917050691244,
+        "recorded_r": 0.9953917051,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1546240500_197",
+        "direction": "LONG",
+        "fill_at": "2018.12.31 12:00:00",
+        "exit_at": "2018.12.31 15:35:40",
+        "net_cash": -49.92,
+        "independent_r": -1.0348258706467661,
+        "recorded_r": -1.0348258706,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_15_5_LONG_1546477200_200",
+        "direction": "LONG",
+        "fill_at": "2019.01.03 04:10:00",
+        "exit_at": "2019.01.03 15:18:41",
+        "net_cash": -50.16,
+        "independent_r": -1.066326530612245,
+        "recorded_r": -1.0663265306,
+        "exit_reason": "DEAL_REASON_SL"
+      }
+    ]
+  },
+  "limitations": [
+    "Report deal tables expose commission/swap/profit; separate DEAL_FEE is not exposed and must be zero or separately reconciled.",
+    "Tick arithmetic is independently checked; completeness of every received tester tick is evidenced by caller logging, not external tick-feed certification.",
+    "Future commission and slippage are estimates; positive requested net does not guarantee positive actual exit cash.",
+    "Candidate and fill changes after first custom close can result from earlier release of holding/side restrictions; no profitability promotion is implied."
+  ],
+  "provenance": {
+    "off": {
+      "path": "reports\\qa\\w33opp\\a\\20261021_235245_00512912\\a_opposite_exit_off",
+      "hashes": {
+        "events.csv": "0189dd7d3ef7572918c8ba05b70cf0855b00d82bbfbc1f1c29a52efe09d55390",
+        "config.csv": "3723a0ff372d37196312f0e3d870ab5f1fe88bfac4e9c53dc65c15bd5457cad9",
+        "opposite_ticks.csv": "34a1a7d6899ad78ccbe84effdb717c92ac7c3eb657aeced1cd31ddae057015b2",
+        "upper_bars.csv": "ca24048d85e5b5efc66a830384d76d5e3d29567a00fbc5636959746767dab124",
+        "report.htm": "aa1290c5310b6002d6b901c34221e4e0cca117eedb3667718b6a07e723710b72"
+      }
+    },
+    "on": {
+      "path": "reports\\qa\\w33opp\\a\\20261021_235245_00512912\\a_opposite_exit_on",
+      "hashes": {
+        "events.csv": "4871b447308735623bd1ada5f74f8052e8c2671db9142cb152357ebd5f955c22",
+        "config.csv": "7c5068277ee52d37301d0e4cddd60a686d36d000948d94e9c63b9b219611e989",
+        "opposite_ticks.csv": "48a6a456f55352271bcc1183c77fdc7e5eb2dfd15bc86819a94182a4b92293c4",
+        "upper_bars.csv": "ca24048d85e5b5efc66a830384d76d5e3d29567a00fbc5636959746767dab124",
+        "report.htm": "aa43be316b50b2ea0d80bf6ddbcd577c443eb638b2a7206d180a76304fd6d100"
+      }
+    }
+  }
+}

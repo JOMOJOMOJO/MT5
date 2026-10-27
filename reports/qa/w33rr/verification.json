@@ -1,0 +1,11 @@
+{
+  "source_changes_exactly_input_label_and_version": true,
+  "all_shared_headers_unchanged": true,
+  "rr_parameter_key": "InpRewardR",
+  "default": 1.0,
+  "minimum_exclusive": 0,
+  "opposite_exit_enabled": true,
+  "long_short_shared_tp_formula": "entry_price + direction * structural_stop_risk * InpRewardR",
+  "backtest_repeated": false,
+  "reason": "No executable decision or order code changed; preserve existing v1.60 native evidence."
+}

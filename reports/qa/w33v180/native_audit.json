@@ -1,0 +1,230 @@
+{
+  "status": "PASS",
+  "checks": 425,
+  "failures": [],
+  "runs": [
+    {
+      "run": "v180_a_base",
+      "candidates": 9,
+      "cancelled": 0,
+      "cancellations_by_direction": {},
+      "extensions": 0,
+      "orders": 3,
+      "fills": 3,
+      "ea_exits": 3,
+      "opposite_profit_exits": 1,
+      "not_closed_in_ea_ledger": 0
+    },
+    {
+      "run": "v180_a_both",
+      "candidates": 9,
+      "cancelled": 0,
+      "cancellations_by_direction": {},
+      "extensions": 0,
+      "orders": 3,
+      "fills": 3,
+      "ea_exits": 3,
+      "opposite_profit_exits": 1,
+      "not_closed_in_ea_ledger": 0
+    },
+    {
+      "run": "v180_a_cancel",
+      "candidates": 9,
+      "cancelled": 0,
+      "cancellations_by_direction": {},
+      "extensions": 0,
+      "orders": 3,
+      "fills": 3,
+      "ea_exits": 3,
+      "opposite_profit_exits": 1,
+      "not_closed_in_ea_ledger": 0
+    },
+    {
+      "run": "v180_a_target",
+      "candidates": 9,
+      "cancelled": 0,
+      "cancellations_by_direction": {},
+      "extensions": 0,
+      "orders": 3,
+      "fills": 3,
+      "ea_exits": 3,
+      "opposite_profit_exits": 1,
+      "not_closed_in_ea_ledger": 0
+    },
+    {
+      "run": "v180_b_base",
+      "candidates": 29,
+      "cancelled": 0,
+      "cancellations_by_direction": {},
+      "extensions": 0,
+      "orders": 7,
+      "fills": 7,
+      "ea_exits": 6,
+      "opposite_profit_exits": 0,
+      "not_closed_in_ea_ledger": 1
+    },
+    {
+      "run": "v180_b_both",
+      "candidates": 29,
+      "cancelled": 3,
+      "cancellations_by_direction": {
+        "LONG": 2,
+        "SHORT": 1
+      },
+      "extensions": 2,
+      "orders": 7,
+      "fills": 7,
+      "ea_exits": 6,
+      "opposite_profit_exits": 0,
+      "not_closed_in_ea_ledger": 1
+    },
+    {
+      "run": "v180_b_cancel",
+      "candidates": 29,
+      "cancelled": 3,
+      "cancellations_by_direction": {
+        "LONG": 2,
+        "SHORT": 1
+      },
+      "extensions": 0,
+      "orders": 7,
+      "fills": 7,
+      "ea_exits": 6,
+      "opposite_profit_exits": 0,
+      "not_closed_in_ea_ledger": 1
+    },
+    {
+      "run": "v180_b_target",
+      "candidates": 29,
+      "cancelled": 0,
+      "cancellations_by_direction": {},
+      "extensions": 2,
+      "orders": 7,
+      "fills": 7,
+      "ea_exits": 6,
+      "opposite_profit_exits": 0,
+      "not_closed_in_ea_ledger": 1
+    }
+  ],
+  "cancellations": [
+    {
+      "run": "v180_b_both",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1672854300_6",
+      "direction": "LONG",
+      "event_at": "2023.01.04 19:20:00",
+      "connected_opposite_setup_id": "W33_XAUUSD+_5_1_SHORT_1672859700_7",
+      "connected_shared_time": "2023.01.04 18:45:00",
+      "connected_shared_price": "1860.4300000000"
+    },
+    {
+      "run": "v180_b_both",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1672938000_14",
+      "direction": "SHORT",
+      "event_at": "2023.01.05 18:10:00",
+      "connected_opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1672941900_15",
+      "connected_shared_time": "2023.01.05 17:35:00",
+      "connected_shared_price": "1825.0300000000"
+    },
+    {
+      "run": "v180_b_both",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1673024400_23",
+      "direction": "LONG",
+      "event_at": "2023.01.06 19:50:00",
+      "connected_opposite_setup_id": "W33_XAUUSD+_5_1_SHORT_1673034300_24",
+      "connected_shared_time": "2023.01.06 19:05:00",
+      "connected_shared_price": "1864.9200000000"
+    },
+    {
+      "run": "v180_b_cancel",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1672854300_6",
+      "direction": "LONG",
+      "event_at": "2023.01.04 19:20:00",
+      "connected_opposite_setup_id": "W33_XAUUSD+_5_1_SHORT_1672859700_7",
+      "connected_shared_time": "2023.01.04 18:45:00",
+      "connected_shared_price": "1860.4300000000"
+    },
+    {
+      "run": "v180_b_cancel",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1672938000_14",
+      "direction": "SHORT",
+      "event_at": "2023.01.05 18:10:00",
+      "connected_opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1672941900_15",
+      "connected_shared_time": "2023.01.05 17:35:00",
+      "connected_shared_price": "1825.0300000000"
+    },
+    {
+      "run": "v180_b_cancel",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1673024400_23",
+      "direction": "LONG",
+      "event_at": "2023.01.06 19:50:00",
+      "connected_opposite_setup_id": "W33_XAUUSD+_5_1_SHORT_1673034300_24",
+      "connected_shared_time": "2023.01.06 19:05:00",
+      "connected_shared_price": "1864.9200000000"
+    }
+  ],
+  "extensions": [
+    {
+      "run": "v180_b_both",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1673036700_25",
+      "direction": "LONG",
+      "event_at": "2023.01.06 22:59:00",
+      "wave1_peak_time": "2023.01.06 21:40:00",
+      "wave1_peak_known_at": "2023.01.06 21:55:00",
+      "entry_price": "1867.0600000000",
+      "sl_price": "1865.3700000000",
+      "tp_rr_price": "1868.7500000000",
+      "tp_price": "1869.7200000000",
+      "actual_rr": "1.5739644970",
+      "tp_wave1_buffer_points": "11.0000000000"
+    },
+    {
+      "run": "v180_b_both",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1673291100_28",
+      "direction": "SHORT",
+      "event_at": "2023.01.09 20:41:00",
+      "wave1_peak_time": "2023.01.09 19:35:00",
+      "wave1_peak_known_at": "2023.01.09 19:50:00",
+      "entry_price": "1872.3900000000",
+      "sl_price": "1875.1000000000",
+      "tp_rr_price": "1869.6800000000",
+      "tp_price": "1869.1500000000",
+      "actual_rr": "1.1955719557",
+      "tp_wave1_buffer_points": "11.0000000000"
+    },
+    {
+      "run": "v180_b_target",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1672938000_14",
+      "direction": "SHORT",
+      "event_at": "2023.01.05 18:25:00",
+      "wave1_peak_time": "2023.01.05 17:35:00",
+      "wave1_peak_known_at": "2023.01.05 17:50:00",
+      "entry_price": "1829.4700000000",
+      "sl_price": "1832.2400000000",
+      "tp_rr_price": "1826.7000000000",
+      "tp_price": "1825.1700000000",
+      "actual_rr": "1.5523465704",
+      "tp_wave1_buffer_points": "14.0000000000"
+    },
+    {
+      "run": "v180_b_target",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1673291100_28",
+      "direction": "SHORT",
+      "event_at": "2023.01.09 20:41:00",
+      "wave1_peak_time": "2023.01.09 19:35:00",
+      "wave1_peak_known_at": "2023.01.09 19:50:00",
+      "entry_price": "1872.3900000000",
+      "sl_price": "1875.1000000000",
+      "tp_rr_price": "1869.6800000000",
+      "tp_price": "1869.1500000000",
+      "actual_rr": "1.1955719557",
+      "tp_wave1_buffer_points": "11.0000000000"
+    }
+  ],
+  "limitations": [
+    "Fixed Jan1-Jan10 2023 engineering sample, not annual or profitability evidence.",
+    "Model4 requested but native journal reports no real ticks; generated every-tick fallback.",
+    "A had no applicable new-feature event; mirrored branches covered in native harnesses; native B supplied both directions.",
+    "B final position lacks an EA EXIT callback before test stop; exclude it from natural-exit outcome claims.",
+    "CAP_TP precedence reviewed in Plan; native eight-arm sample uses DISPLAY_ONLY."
+  ]
+}

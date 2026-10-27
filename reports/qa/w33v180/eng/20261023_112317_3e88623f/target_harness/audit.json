@@ -1,0 +1,10 @@
+{
+  "run_id": "target_harness",
+  "kind": "target_harness",
+  "assertions": 45,
+  "passed": 45,
+  "failed": 0,
+  "unavailable": 0,
+  "violations": [],
+  "audit_passed": true
+}

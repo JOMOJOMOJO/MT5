@@ -1,0 +1,2 @@
+setup_id;known_at;tick_time_msc;tick_order;knowledge_order;position_ticket;position_id;bid;ask;volume;quote_profit;booked_cash;remaining_swap;entry_cost_rate;estimated_exit_cost;net_estimate;request_pending;attempts;status;opposite_setup_id
+W33_ES35_15_5_SHORT_1602239400_1;2020.10.09 16:45:00;1602261900000;18344;418;2;2;6952.2600000000;6956.5100000000;1.50000000;19.0200000000;-4.5000000000;0.0000000000;3.0000000000;4.5000000000;10.0200000000;0;0;READY;W33_ES35_15_5_LONG_1602256500_2

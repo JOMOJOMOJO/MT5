@@ -1,0 +1,14 @@
+{
+  "source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_A_M15_M5_orders_1517443200_562518218_events.csv",
+  "sha256": "a7940703fd1a9d9abcf685de6066dd9ce87e2d7a17f5d108b552de4e650fc929",
+  "complete_lines_only": true,
+  "baseline_sources": {
+    "Display.mqh": "55a2d1c36e1eaac5b8f51ddbf343526b2083802c00ad900221bee3a7b8d18029",
+    "Engine.mqh": "a54035971cd6cea5e7cee3d17ec2afe2fb51a1fa902fe5e7e009fce2f81b8865",
+    "Ledger.mqh": "1de065715f5a50ed3c0a4fc054ed13c9b9fb75b4c499eda2355ea938b6ff9395",
+    "Room.mqh": "ecd3a1841a9f9dfe481ac43c35ca869a0d15492228ff553f7f0810133a0fc757",
+    "Types.mqh": "78cbb1517037c756fc47bf4f3d413845fe2038465bd148c140ec51fdc3d8998c",
+    "Wave33VisualVerifier.ex5": "6a3655668ec2b2e6c063759ae797597345fc71cb4fef88f9b7d52a420c77e947",
+    "Wave33VisualVerifier.mq5": "ef96e854a04589063a0c2551d916192610d0ee1765d528264a22797034191546"
+  }
+}

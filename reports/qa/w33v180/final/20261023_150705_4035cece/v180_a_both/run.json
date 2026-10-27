@@ -1,0 +1,33 @@
+{
+  "tag": "wave33_20261023_150705_4035cece_v180_a_both",
+  "run_id": "v180_a_both",
+  "model": 4,
+  "chart_period": "M5",
+  "inputs": {
+    "InpRunTag": "wave33_20261023_150705_4035cece_v180_a_both",
+    "InpDraw": "true",
+    "InpScreenshots": "true",
+    "InpRejectDeepFib": "false",
+    "InpExtendWave1BeforeFib": "true",
+    "InpLowerRecognition": 2,
+    "InpPattern": 0,
+    "InpRewardR": 1.0,
+    "InpExitOnOppositeWave1": "true",
+    "InpMagic": "3320261022",
+    "InpMinWave1RoomR": 0.25,
+    "InpRejectDeepFibClose": "true",
+    "InpCancelConnectedOpposite": "true",
+    "InpTriggerMode": 0,
+    "InpEnableTesterOrders": "true",
+    "InpExtendTPToWave1": "true",
+    "InpTPWave1BufferPoints": 10.0,
+    "InpRiskPercent": 1.0,
+    "InpAuditOppositeExitTicks": "true",
+    "InpStrictWaveLifecycle": "true"
+  },
+  "expert": "Wave33VisualVerifier",
+  "symbol": "XAUUSD+",
+  "date_to": "2023.01.10",
+  "visual_mode": false,
+  "date_from": "2023.01.01"
+}

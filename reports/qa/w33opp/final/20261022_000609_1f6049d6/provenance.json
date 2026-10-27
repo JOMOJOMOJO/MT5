@@ -1,0 +1,49 @@
+﻿{
+    "header_sha256":  {
+                          "Wave33Visual\\BarOrder.mqh":  "EC300C19F85750A4A7B4A8122579DBB522D2BDF4538BA2F70F2C98176FEA095F",
+                          "Wave33Visual\\Room.mqh":  "ECD3A1841A9F9DFE481AC43C35CA869A0D15492228FF553F7F0810133A0FC757",
+                          "Wave33Visual\\Engine.mqh":  "3149699F3F62215DF0C7923EF7049510BE928CC066C05B71310817821E66C822",
+                          "Wave33Visual\\Ledger.mqh":  "618E1A00E8EB20BA268976F9C38D7D7E36203D8AA4A9EF8D0140A17C6BE6E002",
+                          "Wave33Visual\\Types.mqh":  "F05A630F2553E3582B31AB20E5966D9620B99BCAE4EB352CB4B826FDF751B2A5",
+                          "Wave33Visual\\Display.mqh":  "D09CEEED9B107564232F5F7E3865A06D890FE205865B3600A0E68F28CCFEA1B0",
+                          "Wave33Visual\\OppositeExit.mqh":  "E36E4BF55441561498641AC6C556B5AE5042DA7AC7B90639BE3CDA04A2D639DA"
+                      },
+    "run_order":  [
+                      "engine_harness",
+                      "display_harness",
+                      "lifecycle_harness",
+                      "recognition_harness",
+                      "room_harness",
+                      "fib_close_harness",
+                      "opposite_exit_harness"
+                  ],
+    "runtime_root":  "C:/Users/windows/AppData/Local/CodexMT5Wave33/20261021_153302_0cb9ff9b",
+    "terminal_live_trading_enabled":  false,
+    "symbol":  "XAUUSD+",
+    "batch_id":  "20261022_000609_1f6049d6",
+    "copied_history":  [
+                           "2018.hcc",
+                           "2019.hcc"
+                       ],
+    "source_sha256":  {
+                          "Wave33OppositeExitHarness":  "125CC893CA0DDD1DC9430BD21ED26D7586512D5F518C382AA41B32528153DA9C",
+                          "Wave33RecognitionHarness":  "788D2B6C3CCACB37D440301916CCE3A8E221ACFA20EB2D7A21F32F635FC71546",
+                          "Wave33VisualVerifier":  "6C7E6E3227285EB0DCF1CB22DE41D55FF8938902DF91F9EEAE02F84EFD4343C0",
+                          "Wave33DisplayHarness":  "4205FD1870D971CE123B44F4FC073C5301A9B7E1A3C3ACD89532C36B7616CB9C",
+                          "Wave33LifecycleHarness":  "31CD9901A4FE93E7CE67EF7E671106D695935BF4CA348D5B710D70F289B1BE02",
+                          "Wave33FibCloseHarness":  "254ABDC2FA11C445F1181C3316F5A5C1684E1222BB6BBFD02D72C503C32C8B2D",
+                          "Wave33EngineHarness":  "B585F78E073C3698AA84DF502AABE87EED1BCE689C32BF1E9EAF568065575A24",
+                          "Wave33RoomHarness":  "A6577BA2D5F3B9287D0A74E194E43AA3DE61A8D8743EDFEC7A8A2AF73ADBB289"
+                      },
+    "model":  4,
+    "source_data_root":  "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675",
+    "server":  "Bybit-Live",
+    "date_from":  "2019.01.02",
+    "terminal_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261022_000609_1f6049d6",
+    "purpose":  "VISUAL_RECONSTRUCTION_QA_NOT_PROFITABILITY",
+    "copied_ticks":  [
+
+                     ],
+    "deposit":  10000,
+    "date_to":  "2019.01.03"
+}

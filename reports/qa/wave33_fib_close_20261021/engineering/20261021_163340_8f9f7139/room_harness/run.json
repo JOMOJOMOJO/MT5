@@ -1,0 +1,14 @@
+{
+  "tag": "wave33_20261021_163340_8f9f7139_room_harness",
+  "symbol": "XAUUSD",
+  "date_to": "2025.01.18",
+  "inputs": {
+    "InpRunTag": "wave33_20261021_163340_8f9f7139_room_harness"
+  },
+  "chart_period": "M1",
+  "date_from": "2025.01.06",
+  "model": 4,
+  "visual_mode": false,
+  "expert": "Wave33RoomHarness",
+  "run_id": "room_harness"
+}

@@ -1,0 +1,6 @@
+﻿{
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33ChopFilter\\run_0f4f7a22",
+    "status":  "FAIL",
+    "batch":  "run_0f4f7a22",
+    "reason":  "Could not find file \u0027C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33chop_filter_20261024\\native\\run_0f4f7a22\\off_diag_off\\cf_0f4f7a22_1_assertions.csv\u0027."
+}

@@ -1,0 +1,67 @@
+{
+  "deployed_at": "2026-10-22T14:12:23",
+  "rr_configurable": true,
+  "headers": [
+    {
+      "sha256": "EC300C19F85750A4A7B4A8122579DBB522D2BDF4538BA2F70F2C98176FEA095F",
+      "path": "Wave33Visual\\BarOrder.mqh"
+    },
+    {
+      "sha256": "ECD3A1841A9F9DFE481AC43C35CA869A0D15492228FF553F7F0810133A0FC757",
+      "path": "Wave33Visual\\Room.mqh"
+    },
+    {
+      "sha256": "41A454A2DA9A2FDFDE49B6E6A7E145B0B342CC7A9818FF41902FB40235D95F85",
+      "path": "Wave33Visual\\Engine.mqh"
+    },
+    {
+      "sha256": "C7A2B75222859B129FDFCC7ECB8F32B8D9697AC82040A4564E9A6E7D33D9003F",
+      "path": "Wave33Visual\\Ledger.mqh"
+    },
+    {
+      "sha256": "12DB6624DDFC8A631B5D16949C012BD61149C1F21F79A7CBEA9974499AF3F5BC",
+      "path": "Wave33Visual\\Types.mqh"
+    },
+    {
+      "sha256": "4787ABBF82582EE34DA18E9AB1E8E8904F3D8346BCDFDB6FD83372428B2BF7B3",
+      "path": "Wave33Visual\\Display.mqh"
+    },
+    {
+      "sha256": "E36E4BF55441561498641AC6C556B5AE5042DA7AC7B90639BE3CDA04A2D639DA",
+      "path": "Wave33Visual\\OppositeExit.mqh"
+    }
+  ],
+  "extension_default": true,
+  "normal_chart_orders": false,
+  "binary_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\Wave33VisualVerifier.ex5",
+  "source_sha256": "286EEFC2CAAEED29912AC4BF217CC55065BB14F4838513A6E288802838FDAE57",
+  "compile": "0 errors, 0 warnings",
+  "opposite_exit_enabled": true,
+  "version": "1.70",
+  "binary_sha256": "A0C56DD4EB535CED77984A168D35CCF0E2218C85C7111C44B5F5345B3501A972",
+  "user_terminal_interrupted": false,
+  "compiled_batch": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\final\\20261022_140527_f4364f5c",
+  "tester_presets": [
+    {
+      "sha256": "680C3D296FF58F48124A38FDE8E1C02B8CDB83D958DF697A363E5F9CC4DF8068",
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Profiles\\Tester\\wave33-v170-A-M15-M5-orders.set"
+    },
+    {
+      "sha256": "3F36BA24A2A026B608E0ADE974B1160F5D8B31CC1A2DF718CD72AF8484B6D8FE",
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Profiles\\Tester\\wave33-v170-B-M5-M1-orders.set"
+    }
+  ],
+  "compile_logs": 9,
+  "protected_eas": [
+    {
+      "path": "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5",
+      "sha256": "5B437B0F5CB0C82DE79B3422B12B0051B836093D75CBDDB627E20E9BBEFC6CD3",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Experts/usdjpy_20260402_round_continuation_long.mq5",
+      "sha256": "E10068574A921A71970C242AC5F70E0E71F1BE49FDEB02AA99098A5C6135D347",
+      "unchanged": true
+    }
+  ]
+}

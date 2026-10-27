@@ -1,0 +1,158 @@
+test,passed,detail
+initial_fixed_PERIOD_M15_PERIOD_M5_LONG,PASS,The known upper pivot fixes one initial endpoint while all closed pullbacks remain shallower than minimum Fib
+shallow_new_extreme_starts_PERIOD_M15_PERIOD_M5_LONG,PASS,A later closed upper directional extreme starts one extension at current availability
+identity_origin_age_preserved_PERIOD_M15_PERIOD_M5_LONG,PASS,Extending an endpoint does not invent a new setup, origin, candidate time or timeout budget
+old_anchor_evidence_PERIOD_M15_PERIOD_M5_LONG,PASS,The old full snapshot is emitted once and its endpoint remains separately identifiable
+pending_reset_PERIOD_M15_PERIOD_M5_LONG,PASS,A pending extension clears old fixed Fib, W2, lower-trigger and risk anchors rather than reusing them
+snapshot_before_revision_PERIOD_M15_PERIOD_M5_LONG,PASS,Old anchors precede the new revision in actual event order
+right_bars_not_yet_closed_PERIOD_M15_PERIOD_M5_LONG,PASS,One closed right candle cannot establish a two-right-candle endpoint
+extension_confirmed_causally_PERIOD_M15_PERIOD_M5_LONG,PASS,The new candle location and actual two-right-candle availability are distinct
+fib_recomputed_from_same_origin_PERIOD_M15_PERIOD_M5_LONG,PASS,A new Fib/W2 epoch begins after the new peak candle; old lower candles cannot populate it
+extension_not_new_opposite_wave_event_PERIOD_M15_PERIOD_M5_LONG,PASS,Reconfirmation has a distinct event type and cannot masquerade as a newly confirmed opposite first wave
+repeated_extension_PERIOD_M15_PERIOD_M5_LONG,PASS,A second shallow continuation can extend again without changing setup identity or origin
+off_control_setter0_PERIOD_M15_PERIOD_M5_LONG,PASS,Both an explicit OFF and the constructor default preserve the existing fixed-anchor behavior
+off_control_setter1_PERIOD_M15_PERIOD_M5_LONG,PASS,Both an explicit OFF and the constructor default preserve the existing fixed-anchor behavior
+forming_upper_rejected_PERIOD_M15_PERIOD_M5_LONG,PASS,A forming upper candle cannot start an extension
+delayed_extension_not_backdated_PERIOD_M15_PERIOD_M5_LONG,PASS,Late delivery of an already closed upper bar publishes the extension only at current knowledge time
+duplicate_upper_no_revision_PERIOD_M15_PERIOD_M5_LONG,PASS,Replayed upper input cannot increment or backdate a revision
+delayed_confirmation_current_known_PERIOD_M15_PERIOD_M5_LONG,PASS,A delayed pivot uses the actual last right-candle availability rather than its theoretical close time
+qualifying_fib_lock_source0_PERIOD_M15_PERIOD_M5_LONG,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source0_PERIOD_M15_PERIOD_M5_LONG,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source1_PERIOD_M15_PERIOD_M5_LONG,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source1_PERIOD_M15_PERIOD_M5_LONG,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source2_PERIOD_M15_PERIOD_M5_LONG,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source2_PERIOD_M15_PERIOD_M5_LONG,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source3_PERIOD_M15_PERIOD_M5_LONG,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+ambiguous_ohlc_no_assumed_order_PERIOD_M15_PERIOD_M5_LONG,PASS,A single upper candle containing both old minimum Fib and a new extreme never invents their intrabar order
+fib_lock_sticky_source3_PERIOD_M15_PERIOD_M5_LONG,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+old_history_lock_known_after_peak_source0_PERIOD_M15_PERIOD_M5_LONG,PASS,A source candle preceding endpoint confirmation is classified only when that anchor becomes knowable
+old_history_prevents_extension_source0_PERIOD_M15_PERIOD_M5_LONG,PASS,Pre-confirmation source history is not omitted from the first-touch lock
+old_history_lock_known_after_peak_source1_PERIOD_M15_PERIOD_M5_LONG,PASS,A source candle preceding endpoint confirmation is classified only when that anchor becomes knowable
+old_history_prevents_extension_source1_PERIOD_M15_PERIOD_M5_LONG,PASS,Pre-confirmation source history is not omitted from the first-touch lock
+new_epoch_history_classified_now_PERIOD_M15_PERIOD_M5_LONG,PASS,A pullback observed while the new peak was provisional is characterized against the new anchor only now, with no retroactive signal
+real_signal_precondition_mode0_PERIOD_M15_PERIOD_M5_LONG,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode0_PERIOD_M15_PERIOD_M5_LONG,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+real_signal_precondition_mode1_PERIOD_M15_PERIOD_M5_LONG,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode1_PERIOD_M15_PERIOD_M5_LONG,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+real_signal_precondition_mode2_PERIOD_M15_PERIOD_M5_LONG,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode2_PERIOD_M15_PERIOD_M5_LONG,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+invalidated_not_resurrected_PERIOD_M15_PERIOD_M5_LONG,PASS,A terminally broken origin cannot be resurrected through endpoint extension
+same_clock_shared_upper_first_PERIOD_M15_PERIOD_M5_LONG,PASS,The shared scheduler inspects the full upper OHLC before the simultaneous lower close can alter the epoch
+initial_fixed_PERIOD_M15_PERIOD_M5_SHORT,PASS,The known upper pivot fixes one initial endpoint while all closed pullbacks remain shallower than minimum Fib
+shallow_new_extreme_starts_PERIOD_M15_PERIOD_M5_SHORT,PASS,A later closed upper directional extreme starts one extension at current availability
+identity_origin_age_preserved_PERIOD_M15_PERIOD_M5_SHORT,PASS,Extending an endpoint does not invent a new setup, origin, candidate time or timeout budget
+old_anchor_evidence_PERIOD_M15_PERIOD_M5_SHORT,PASS,The old full snapshot is emitted once and its endpoint remains separately identifiable
+pending_reset_PERIOD_M15_PERIOD_M5_SHORT,PASS,A pending extension clears old fixed Fib, W2, lower-trigger and risk anchors rather than reusing them
+snapshot_before_revision_PERIOD_M15_PERIOD_M5_SHORT,PASS,Old anchors precede the new revision in actual event order
+right_bars_not_yet_closed_PERIOD_M15_PERIOD_M5_SHORT,PASS,One closed right candle cannot establish a two-right-candle endpoint
+extension_confirmed_causally_PERIOD_M15_PERIOD_M5_SHORT,PASS,The new candle location and actual two-right-candle availability are distinct
+fib_recomputed_from_same_origin_PERIOD_M15_PERIOD_M5_SHORT,PASS,A new Fib/W2 epoch begins after the new peak candle; old lower candles cannot populate it
+extension_not_new_opposite_wave_event_PERIOD_M15_PERIOD_M5_SHORT,PASS,Reconfirmation has a distinct event type and cannot masquerade as a newly confirmed opposite first wave
+repeated_extension_PERIOD_M15_PERIOD_M5_SHORT,PASS,A second shallow continuation can extend again without changing setup identity or origin
+off_control_setter0_PERIOD_M15_PERIOD_M5_SHORT,PASS,Both an explicit OFF and the constructor default preserve the existing fixed-anchor behavior
+off_control_setter1_PERIOD_M15_PERIOD_M5_SHORT,PASS,Both an explicit OFF and the constructor default preserve the existing fixed-anchor behavior
+forming_upper_rejected_PERIOD_M15_PERIOD_M5_SHORT,PASS,A forming upper candle cannot start an extension
+delayed_extension_not_backdated_PERIOD_M15_PERIOD_M5_SHORT,PASS,Late delivery of an already closed upper bar publishes the extension only at current knowledge time
+duplicate_upper_no_revision_PERIOD_M15_PERIOD_M5_SHORT,PASS,Replayed upper input cannot increment or backdate a revision
+delayed_confirmation_current_known_PERIOD_M15_PERIOD_M5_SHORT,PASS,A delayed pivot uses the actual last right-candle availability rather than its theoretical close time
+qualifying_fib_lock_source0_PERIOD_M15_PERIOD_M5_SHORT,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source0_PERIOD_M15_PERIOD_M5_SHORT,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source1_PERIOD_M15_PERIOD_M5_SHORT,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source1_PERIOD_M15_PERIOD_M5_SHORT,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source2_PERIOD_M15_PERIOD_M5_SHORT,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source2_PERIOD_M15_PERIOD_M5_SHORT,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source3_PERIOD_M15_PERIOD_M5_SHORT,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+ambiguous_ohlc_no_assumed_order_PERIOD_M15_PERIOD_M5_SHORT,PASS,A single upper candle containing both old minimum Fib and a new extreme never invents their intrabar order
+fib_lock_sticky_source3_PERIOD_M15_PERIOD_M5_SHORT,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+old_history_lock_known_after_peak_source0_PERIOD_M15_PERIOD_M5_SHORT,PASS,A source candle preceding endpoint confirmation is classified only when that anchor becomes knowable
+old_history_prevents_extension_source0_PERIOD_M15_PERIOD_M5_SHORT,PASS,Pre-confirmation source history is not omitted from the first-touch lock
+old_history_lock_known_after_peak_source1_PERIOD_M15_PERIOD_M5_SHORT,PASS,A source candle preceding endpoint confirmation is classified only when that anchor becomes knowable
+old_history_prevents_extension_source1_PERIOD_M15_PERIOD_M5_SHORT,PASS,Pre-confirmation source history is not omitted from the first-touch lock
+new_epoch_history_classified_now_PERIOD_M15_PERIOD_M5_SHORT,PASS,A pullback observed while the new peak was provisional is characterized against the new anchor only now, with no retroactive signal
+real_signal_precondition_mode0_PERIOD_M15_PERIOD_M5_SHORT,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode0_PERIOD_M15_PERIOD_M5_SHORT,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+real_signal_precondition_mode1_PERIOD_M15_PERIOD_M5_SHORT,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode1_PERIOD_M15_PERIOD_M5_SHORT,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+real_signal_precondition_mode2_PERIOD_M15_PERIOD_M5_SHORT,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode2_PERIOD_M15_PERIOD_M5_SHORT,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+invalidated_not_resurrected_PERIOD_M15_PERIOD_M5_SHORT,PASS,A terminally broken origin cannot be resurrected through endpoint extension
+same_clock_shared_upper_first_PERIOD_M15_PERIOD_M5_SHORT,PASS,The shared scheduler inspects the full upper OHLC before the simultaneous lower close can alter the epoch
+initial_fixed_PERIOD_M5_PERIOD_M1_LONG,PASS,The known upper pivot fixes one initial endpoint while all closed pullbacks remain shallower than minimum Fib
+shallow_new_extreme_starts_PERIOD_M5_PERIOD_M1_LONG,PASS,A later closed upper directional extreme starts one extension at current availability
+identity_origin_age_preserved_PERIOD_M5_PERIOD_M1_LONG,PASS,Extending an endpoint does not invent a new setup, origin, candidate time or timeout budget
+old_anchor_evidence_PERIOD_M5_PERIOD_M1_LONG,PASS,The old full snapshot is emitted once and its endpoint remains separately identifiable
+pending_reset_PERIOD_M5_PERIOD_M1_LONG,PASS,A pending extension clears old fixed Fib, W2, lower-trigger and risk anchors rather than reusing them
+snapshot_before_revision_PERIOD_M5_PERIOD_M1_LONG,PASS,Old anchors precede the new revision in actual event order
+right_bars_not_yet_closed_PERIOD_M5_PERIOD_M1_LONG,PASS,One closed right candle cannot establish a two-right-candle endpoint
+extension_confirmed_causally_PERIOD_M5_PERIOD_M1_LONG,PASS,The new candle location and actual two-right-candle availability are distinct
+fib_recomputed_from_same_origin_PERIOD_M5_PERIOD_M1_LONG,PASS,A new Fib/W2 epoch begins after the new peak candle; old lower candles cannot populate it
+extension_not_new_opposite_wave_event_PERIOD_M5_PERIOD_M1_LONG,PASS,Reconfirmation has a distinct event type and cannot masquerade as a newly confirmed opposite first wave
+repeated_extension_PERIOD_M5_PERIOD_M1_LONG,PASS,A second shallow continuation can extend again without changing setup identity or origin
+off_control_setter0_PERIOD_M5_PERIOD_M1_LONG,PASS,Both an explicit OFF and the constructor default preserve the existing fixed-anchor behavior
+off_control_setter1_PERIOD_M5_PERIOD_M1_LONG,PASS,Both an explicit OFF and the constructor default preserve the existing fixed-anchor behavior
+forming_upper_rejected_PERIOD_M5_PERIOD_M1_LONG,PASS,A forming upper candle cannot start an extension
+delayed_extension_not_backdated_PERIOD_M5_PERIOD_M1_LONG,PASS,Late delivery of an already closed upper bar publishes the extension only at current knowledge time
+duplicate_upper_no_revision_PERIOD_M5_PERIOD_M1_LONG,PASS,Replayed upper input cannot increment or backdate a revision
+delayed_confirmation_current_known_PERIOD_M5_PERIOD_M1_LONG,PASS,A delayed pivot uses the actual last right-candle availability rather than its theoretical close time
+qualifying_fib_lock_source0_PERIOD_M5_PERIOD_M1_LONG,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source0_PERIOD_M5_PERIOD_M1_LONG,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source1_PERIOD_M5_PERIOD_M1_LONG,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source1_PERIOD_M5_PERIOD_M1_LONG,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source2_PERIOD_M5_PERIOD_M1_LONG,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source2_PERIOD_M5_PERIOD_M1_LONG,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source3_PERIOD_M5_PERIOD_M1_LONG,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+ambiguous_ohlc_no_assumed_order_PERIOD_M5_PERIOD_M1_LONG,PASS,A single upper candle containing both old minimum Fib and a new extreme never invents their intrabar order
+fib_lock_sticky_source3_PERIOD_M5_PERIOD_M1_LONG,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+old_history_lock_known_after_peak_source0_PERIOD_M5_PERIOD_M1_LONG,PASS,A source candle preceding endpoint confirmation is classified only when that anchor becomes knowable
+old_history_prevents_extension_source0_PERIOD_M5_PERIOD_M1_LONG,PASS,Pre-confirmation source history is not omitted from the first-touch lock
+old_history_lock_known_after_peak_source1_PERIOD_M5_PERIOD_M1_LONG,PASS,A source candle preceding endpoint confirmation is classified only when that anchor becomes knowable
+old_history_prevents_extension_source1_PERIOD_M5_PERIOD_M1_LONG,PASS,Pre-confirmation source history is not omitted from the first-touch lock
+new_epoch_history_classified_now_PERIOD_M5_PERIOD_M1_LONG,PASS,A pullback observed while the new peak was provisional is characterized against the new anchor only now, with no retroactive signal
+real_signal_precondition_mode0_PERIOD_M5_PERIOD_M1_LONG,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode0_PERIOD_M5_PERIOD_M1_LONG,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+real_signal_precondition_mode1_PERIOD_M5_PERIOD_M1_LONG,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode1_PERIOD_M5_PERIOD_M1_LONG,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+real_signal_precondition_mode2_PERIOD_M5_PERIOD_M1_LONG,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode2_PERIOD_M5_PERIOD_M1_LONG,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+invalidated_not_resurrected_PERIOD_M5_PERIOD_M1_LONG,PASS,A terminally broken origin cannot be resurrected through endpoint extension
+same_clock_shared_upper_first_PERIOD_M5_PERIOD_M1_LONG,PASS,The shared scheduler inspects the full upper OHLC before the simultaneous lower close can alter the epoch
+initial_fixed_PERIOD_M5_PERIOD_M1_SHORT,PASS,The known upper pivot fixes one initial endpoint while all closed pullbacks remain shallower than minimum Fib
+shallow_new_extreme_starts_PERIOD_M5_PERIOD_M1_SHORT,PASS,A later closed upper directional extreme starts one extension at current availability
+identity_origin_age_preserved_PERIOD_M5_PERIOD_M1_SHORT,PASS,Extending an endpoint does not invent a new setup, origin, candidate time or timeout budget
+old_anchor_evidence_PERIOD_M5_PERIOD_M1_SHORT,PASS,The old full snapshot is emitted once and its endpoint remains separately identifiable
+pending_reset_PERIOD_M5_PERIOD_M1_SHORT,PASS,A pending extension clears old fixed Fib, W2, lower-trigger and risk anchors rather than reusing them
+snapshot_before_revision_PERIOD_M5_PERIOD_M1_SHORT,PASS,Old anchors precede the new revision in actual event order
+right_bars_not_yet_closed_PERIOD_M5_PERIOD_M1_SHORT,PASS,One closed right candle cannot establish a two-right-candle endpoint
+extension_confirmed_causally_PERIOD_M5_PERIOD_M1_SHORT,PASS,The new candle location and actual two-right-candle availability are distinct
+fib_recomputed_from_same_origin_PERIOD_M5_PERIOD_M1_SHORT,PASS,A new Fib/W2 epoch begins after the new peak candle; old lower candles cannot populate it
+extension_not_new_opposite_wave_event_PERIOD_M5_PERIOD_M1_SHORT,PASS,Reconfirmation has a distinct event type and cannot masquerade as a newly confirmed opposite first wave
+repeated_extension_PERIOD_M5_PERIOD_M1_SHORT,PASS,A second shallow continuation can extend again without changing setup identity or origin
+off_control_setter0_PERIOD_M5_PERIOD_M1_SHORT,PASS,Both an explicit OFF and the constructor default preserve the existing fixed-anchor behavior
+off_control_setter1_PERIOD_M5_PERIOD_M1_SHORT,PASS,Both an explicit OFF and the constructor default preserve the existing fixed-anchor behavior
+forming_upper_rejected_PERIOD_M5_PERIOD_M1_SHORT,PASS,A forming upper candle cannot start an extension
+delayed_extension_not_backdated_PERIOD_M5_PERIOD_M1_SHORT,PASS,Late delivery of an already closed upper bar publishes the extension only at current knowledge time
+duplicate_upper_no_revision_PERIOD_M5_PERIOD_M1_SHORT,PASS,Replayed upper input cannot increment or backdate a revision
+delayed_confirmation_current_known_PERIOD_M5_PERIOD_M1_SHORT,PASS,A delayed pivot uses the actual last right-candle availability rather than its theoretical close time
+qualifying_fib_lock_source0_PERIOD_M5_PERIOD_M1_SHORT,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source0_PERIOD_M5_PERIOD_M1_SHORT,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source1_PERIOD_M5_PERIOD_M1_SHORT,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source1_PERIOD_M5_PERIOD_M1_SHORT,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source2_PERIOD_M5_PERIOD_M1_SHORT,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+fib_lock_sticky_source2_PERIOD_M5_PERIOD_M1_SHORT,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+qualifying_fib_lock_source3_PERIOD_M5_PERIOD_M1_SHORT,PASS,Lower band touch, lower gap beyond band, upper touch and ambiguous upper extreme all stop future extension
+ambiguous_ohlc_no_assumed_order_PERIOD_M5_PERIOD_M1_SHORT,PASS,A single upper candle containing both old minimum Fib and a new extreme never invents their intrabar order
+fib_lock_sticky_source3_PERIOD_M5_PERIOD_M1_SHORT,PASS,Once a meaningful pullback was observable, later directional continuation cannot relabel the potential third wave as W1
+old_history_lock_known_after_peak_source0_PERIOD_M5_PERIOD_M1_SHORT,PASS,A source candle preceding endpoint confirmation is classified only when that anchor becomes knowable
+old_history_prevents_extension_source0_PERIOD_M5_PERIOD_M1_SHORT,PASS,Pre-confirmation source history is not omitted from the first-touch lock
+old_history_lock_known_after_peak_source1_PERIOD_M5_PERIOD_M1_SHORT,PASS,A source candle preceding endpoint confirmation is classified only when that anchor becomes knowable
+old_history_prevents_extension_source1_PERIOD_M5_PERIOD_M1_SHORT,PASS,Pre-confirmation source history is not omitted from the first-touch lock
+new_epoch_history_classified_now_PERIOD_M5_PERIOD_M1_SHORT,PASS,A pullback observed while the new peak was provisional is characterized against the new anchor only now, with no retroactive signal
+real_signal_precondition_mode0_PERIOD_M5_PERIOD_M1_SHORT,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode0_PERIOD_M5_PERIOD_M1_SHORT,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+real_signal_precondition_mode1_PERIOD_M5_PERIOD_M1_SHORT,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode1_PERIOD_M5_PERIOD_M1_SHORT,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+real_signal_precondition_mode2_PERIOD_M5_PERIOD_M1_SHORT,PASS,Signal/position tests use the actual lower reversal engine rather than fabricated snapshots
+postsignal_or_completed_anchor_frozen_mode2_PERIOD_M5_PERIOD_M1_SHORT,PASS,An emitted signal, an open position and a completed setup retain their original trading anchors
+invalidated_not_resurrected_PERIOD_M5_PERIOD_M1_SHORT,PASS,A terminally broken origin cannot be resurrected through endpoint extension
+same_clock_shared_upper_first_PERIOD_M5_PERIOD_M1_SHORT,PASS,The shared scheduler inspects the full upper OHLC before the simultaneous lower close can alter the epoch
+FINAL,PASS,passed=156 failed=0

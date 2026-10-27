@@ -1,0 +1,21 @@
+{
+  "compile": "0 errors, 0 warnings",
+  "source_hashes": {
+    "display": "7F6EBA269E7818AAB23165131F1FCAB6F3860741BDD3E8973D7544F46084F12B",
+    "replay": "AAA657BAD11C8D626F18345482128CC047D6D99978DAA15612F5EDC3D88A845C",
+    "types": "BC72C41867B6746A3192467320EE5EE998CF4EEF5E6705109B1C06BEFEAB48F4"
+  },
+  "trading_code_present": false,
+  "source_symbol": "XAUUSD+",
+  "shortfall": [],
+  "runner_sha256": "0A875A7B7ECA37DD3C817EA58354E6491F689A7BD6904AF0E1A005D09B524EE0",
+  "custom_symbol_prefix": "W33V18039fe5df5",
+  "runtime": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_112317_3e88623f",
+  "cases": 4,
+  "fixture_sha256": "C6653BB8982DB47A92B45496D9EF160A3406DDAC22793FB964A3AE45E1A24267",
+  "tag": "w33v180_8e0a53bb",
+  "kind": "NORMAL_CHART_RECORDED_NATIVE_EVENT_DRAWING_REPLAY",
+  "signal_recalculation": false,
+  "tester_screenshot": false,
+  "normal_chart_algo_trading_enabled": false
+}

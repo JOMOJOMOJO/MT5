@@ -1,0 +1,14 @@
+InpRunTag=pl_f1624584_1
+InpSkipBothConnectedWave1=true
+InpReadableLabels=false
+InpPriorContext=false
+InpSkipPriorLevelRetest=false
+InpChopDiagnostic=false
+InpSkipChoppyWave1=false
+InpEnableTesterOrders=false
+InpDraw=false
+InpKeepObjects=true
+InpScreenshots=false
+InpChopLabels=false
+InpQAVisual=false
+

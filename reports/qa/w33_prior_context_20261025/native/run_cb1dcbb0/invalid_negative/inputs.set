@@ -1,0 +1,12 @@
+InpRunTag=pc_cb1dcbb0_5
+InpSkipPriorLevelRetest=false
+InpPriorContext=true
+InpChopDiagnostic=false
+InpSkipChoppyWave1=false
+InpPriorContextBandFraction=-0.01
+InpEnableTesterOrders=false
+InpDraw=false
+InpKeepObjects=false
+InpScreenshots=false
+InpChopLabels=false
+

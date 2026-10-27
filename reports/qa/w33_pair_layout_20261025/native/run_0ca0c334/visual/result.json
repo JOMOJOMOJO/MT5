@@ -1,0 +1,11 @@
+﻿{
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_pair_layout_20261025\\native\\run_0ca0c334\\visual",
+    "checks":  309,
+    "failures":  5,
+    "case":  "visual",
+    "visual":  true,
+    "orders_input":  false,
+    "tag":  "pl_0ca0c334_0",
+    "status":  "FAIL",
+    "readable":  true
+}

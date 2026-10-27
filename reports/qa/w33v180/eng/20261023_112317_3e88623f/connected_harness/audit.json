@@ -1,0 +1,10 @@
+{
+  "run_id": "connected_harness",
+  "kind": "connected_harness",
+  "assertions": 120,
+  "passed": 120,
+  "failed": 0,
+  "unavailable": 0,
+  "violations": [],
+  "audit_passed": true
+}

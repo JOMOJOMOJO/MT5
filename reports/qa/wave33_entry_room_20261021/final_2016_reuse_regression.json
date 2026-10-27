@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "direction": "SHORT",
+      "wave1_start_time": "2016.05.11 15:15:00",
+      "old_bad_fill_at": "2016.05.12 01:55:00",
+      "old_bad_fill_repeated": false,
+      "passed": true,
+      "new_history": [
+        {
+          "event_type": "SIGNAL",
+          "event_at": "2016.05.11 19:00:00",
+          "reason": "",
+          "wave1_room_r": "0.2125603865",
+          "lower_recognition": "NORMALIZED_COUNTERTREND"
+        },
+        {
+          "event_type": "SKIP",
+          "event_at": "2016.05.11 19:00:00",
+          "reason": "WAVE1_ROOM_TOO_SMALL",
+          "wave1_room_r": "0.2125603865",
+          "lower_recognition": "NORMALIZED_COUNTERTREND"
+        },
+        {
+          "event_type": "COMPLETED",
+          "event_at": "2016.05.11 19:00:00",
+          "reason": "WAVE1_ROOM_TOO_SMALL",
+          "wave1_room_r": "0.2125603865",
+          "lower_recognition": "NORMALIZED_COUNTERTREND"
+        }
+      ]
+    },
+    {
+      "direction": "LONG",
+      "wave1_start_time": "2016.05.16 01:15:00",
+      "old_bad_fill_at": "2016.05.16 14:30:00",
+      "old_bad_fill_repeated": false,
+      "passed": true,
+      "new_history": [
+        {
+          "event_type": "SIGNAL",
+          "event_at": "2016.05.16 09:30:00",
+          "reason": "",
+          "wave1_room_r": "-0.0253807107",
+          "lower_recognition": "NORMALIZED_COUNTERTREND"
+        },
+        {
+          "event_type": "SKIP",
+          "event_at": "2016.05.16 09:30:00",
+          "reason": "WAVE1_ROOM_TOO_SMALL",
+          "wave1_room_r": "-0.0253807107",
+          "lower_recognition": "NORMALIZED_COUNTERTREND"
+        },
+        {
+          "event_type": "COMPLETED",
+          "event_at": "2016.05.16 09:30:00",
+          "reason": "WAVE1_ROOM_TOO_SMALL",
+          "wave1_room_r": "-0.0253807107",
+          "lower_recognition": "NORMALIZED_COUNTERTREND"
+        }
+      ]
+    },
+    {
+      "direction": "SHORT",
+      "wave1_start_time": "2016.05.23 08:00:00",
+      "old_bad_fill_at": "2016.05.23 16:50:00",
+      "old_bad_fill_repeated": false,
+      "passed": true,
+      "new_history": [
+        {
+          "event_type": "INVALIDATE",
+          "event_at": "2016.05.23 10:00:00",
+          "reason": "INITIAL_MOVE_MISSED",
+          "wave1_room_r": "0.0000000000",
+          "lower_recognition": "NORMALIZED_COUNTERTREND"
+        }
+      ]
+    }
+  ]
+}

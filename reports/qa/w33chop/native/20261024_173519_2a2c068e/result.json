@@ -1,0 +1,6 @@
+﻿{
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33Chop\\20261024_173519_2a2c068e",
+    "status":  "FAIL",
+    "reason":  "Native harness assertions failed: 2 failures, 60 parity cases",
+    "tag":  "w33chop_20261024_173519_2a2c068e"
+}

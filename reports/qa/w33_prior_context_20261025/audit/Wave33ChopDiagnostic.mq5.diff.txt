@@ -1,0 +1,181 @@
+--- before/Wave33ChopDiagnostic.mq5
++++ mql\Experts\Wave33ChopDiagnostic.mq5
+@@ -1,5 +1,5 @@
+ #property strict
+-#property version "1.82"
++#property version "1.83"
+ #property description "3-wave in 3-wave v1.0: causal visual observation, tester orders optional."
+ #include "../Include/Wave33Visual/Engine.mqh"
+ #include "../Include/Wave33Visual/ChopDisplay.mqh"
+@@ -10,6 +10,7 @@
+ #include "../Include/Wave33Visual/TesterRun.mqh"
+ #include "../Include/Wave33Visual/Wave1Target.mqh"
+ #include "../Include/Wave33Visual/Chop.mqh"
++#include "../Include/Wave33Visual/PriorContext.mqh"
+ 
+ enum W33Pattern {M15_M5=0,M5_M1=1};
+ enum W33ObstacleMode {DISPLAY_ONLY=0,SKIP_IF_BLOCKED=1,CAP_TP=2};
+@@ -47,14 +48,18 @@
+ input bool InpKeepObjects=true;
+ input bool InpScreenshots=false;
+ input int InpScreenshotLimit=12;
+-input string InpRunTag="wave33_chop_v182";
++input string InpRunTag="wave33_ctx_v183";
+ input bool InpChopDiagnostic=true; // 往復指標を記録。除外ON時はfalseでも必要な観測を継続する。
+ input bool InpSkipChoppyWave1=false; // true: ①内部の逆行合計/①値幅が0.5以上なら未発注シグナルを見送る。
+ input bool InpChopLabels=true; // Compact labels at knowledge availability, no panel.
++input bool InpPriorContext=true; // 以前のM15/H1高安帯との位置関係を記録・描画。除外ON時は必ず観測する。
++input bool InpSkipPriorLevelRetest=false; // true: ①終点が未突破の既知高安帯に重なり、最終TPが帯の先なら見送る。
++input double InpPriorContextBandFraction=0.05; // 高安帯の片幅/固定①値幅（0.05なら上下各5%、全幅10%）。
+ // Manual important zones intentionally remain outside the automatic signal engine.
+ input string InpManualLevels=""; // Semicolon-separated prices, display from attach time only.
+ 
+ CWave33ChopObserver g_chop;
++CWave33PriorContext g_prior;
+ CWave33Engine g_engine;
+ CWave33ChopDisplay g_display;
+ CWave33Ledger g_ledger;
+@@ -93,7 +98,7 @@
+   }
+ string RunInputHash()
+   {
+-   string value="1.82|"+EnumToString(InpPattern)+"|"+EnumToString(InpTriggerMode);
++   string value="1.83|"+EnumToString(InpPattern)+"|"+EnumToString(InpTriggerMode);
+    value+="|"+(string)InpSwingLeft+"|"+(string)InpSwingRight+"|"+DoubleToString(InpFibMin,16)+"|"+DoubleToString(InpFibMax,16);
+    value+="|"+(string)InpRequireFibTouch+"|"+(string)InpExtendWave1BeforeFib+"|"+(string)InpRejectDeepFib+"|"+(string)InpRejectDeepFibClose;
+    value+="|"+(string)InpStrictWaveLifecycle+"|"+EnumToString(InpLowerRecognition)+"|"+DoubleToString(InpMinWave1RoomR,16);
+@@ -104,6 +109,7 @@
+    value+="|"+(string)InpDraw+"|"+(string)InpShowInfoPanel+"|"+(string)InpDiagnosticLabels+"|"+(string)InpShowSwingPaths;
+    value+="|"+(string)InpKeepObjects+"|"+(string)InpScreenshots+"|"+(string)InpScreenshotLimit+"|"+InpManualLevels;
+    value+="|"+(string)InpChopDiagnostic+"|"+(string)InpSkipChoppyWave1+"|"+(string)InpChopLabels+"|"+W33_CHOP_VERSION+"|0.5|UNAVAILABLE_ALLOW";
++   value+="|"+(string)InpPriorContext+"|"+(string)InpSkipPriorLevelRetest+"|"+DoubleToString(InpPriorContextBandFraction,16)+"|"+W33_PRIOR_CONTEXT_VERSION+"|UNAVAILABLE_ALLOW";
+    return W33Hash(value);
+   }
+ 
+@@ -149,6 +155,7 @@
+ void Publish(W33Event &e)
+   {
+    g_chop.Event(e); // Observe exactly this published prefix; the entry policy runs separately.
++   g_prior.Event(e);
+    g_ledger.Write(e);g_display.Event(e);
+    if(e.setup.setup_id!="")g_last=e.setup;
+    if(e.reason_kind=="EXCLUSION")g_lastReason=e.reason;
+@@ -359,9 +366,13 @@
+       atr/=(count-1);s.candle_body_ratio=span>0?body/span:0;s.candle_body_atr=atr>0?body/atr:0;
+      }
+    string reason="";bool valid=Plan(s,reason);
++   // Use final TP and executable quote, but only already published pivots and
++   // accepted closed source-TF bars. Later events in this drain are unknown.
++   W33PriorContextResult context;g_prior.Evaluate(s,signal.at,context);
++   bool contextRejected=W33PriorContextShouldSkip(InpSkipPriorLevelRetest,context);
+    // Reuse the display's rejected-signal status so a filtered setup does not
+    // paint a green ENTRY arrow. The canonical SKIP reason below identifies chop.
+-   s.entry_status=chopRejected?"SIGNAL_RISK_REJECTED":(valid?"DIAGNOSTIC_SIGNAL":"SIGNAL_RISK_REJECTED");
++   s.entry_status=(chopRejected || contextRejected)?"SIGNAL_RISK_REJECTED":(valid?"DIAGNOSTIC_SIGNAL":"SIGNAL_RISK_REJECTED");
+    signal.setup=s;Publish(signal); // Preserve the decision snapshot; rejected signals never paint a filled ENTRY.
+    if(s.tp_extended_to_wave1)Emit(s,"TP_WAVE1_EXTENDED","OBSERVATION",s.tp_adjustment_reason);
+    int n=ArraySize(g_records);ArrayResize(g_records,n+1);ZeroMemory(g_records[n]);g_records[n].setup=s;
+@@ -377,6 +388,18 @@
+       measurement+=" filter="+(InpSkipChoppyWave1?"ON":"OFF")+" missing_policy=ALLOW reason="+chop.reason;
+       Emit(s,"CHOP_ENTRY_FILTER","OBSERVATION",measurement);
+      }
++   if(InpPriorContext || InpSkipPriorLevelRetest)
++     {
++      string measurement="status="+context.status+" reason="+context.reason;
++      measurement+=" filter="+(InpSkipPriorLevelRetest?"ON":"OFF")+" outcome="+(contextRejected?(chopRejected?"WOULD_SKIP_CHOP_PRECEDENCE":"SKIP"):(context.status=="UNAVAILABLE"?"ALLOW_UNAVAILABLE":"ALLOW"));
++      measurement+=" band_halfwidth_fraction="+DoubleToString(InpPriorContextBandFraction,16);
++      measurement+=" source_tf="+EnumToString(context.selected.tf)+" source_at="+W33Time(context.selected.time)+" source_known="+W33Time(context.selected.known_at);
++      measurement+=" source_price="+DoubleToString(context.selected.price,16)+" band_low="+DoubleToString(context.band_low,16)+" band_high="+DoubleToString(context.band_high,16);
++      measurement+=" entry="+DoubleToString(s.entry_price,16)+" final_tp="+DoubleToString(s.tp_price,16)+" room_r="+DoubleToString(context.room_r,16);
++      measurement+=" latest_close_at="+W33Time(context.latest_close_time)+" latest_close_known="+W33Time(context.latest_close_known_at)+" latest_close="+DoubleToString(context.latest_close,16);
++      measurement+=" candidates="+(string)context.candidate_count+" near="+(string)context.near_count+" missing_policy=ALLOW";
++      Emit(s,"PRIOR_CONTEXT_FILTER","OBSERVATION",measurement);
++     }
+    if(chopRejected)
+      {
+       s.skip_reason="CHOPPY_WAVE1";s.entry_status="SKIPPED";g_records[n].setup=s;
+@@ -385,6 +408,14 @@
+       // historical evidence and preventing a later retry of this setup ID.
+       if(!g_engine.FinishUnordered(s.setup_id,TimeCurrent(),s.skip_reason))
+          Emit(s,"CHOP_FINISH_REJECTED","OBSERVATION","unsubmitted setup could not be completed; no order attempted");
++      Screenshot(s,"SKIP");return;
++     }
++   if(contextRejected)
++     {
++      s.skip_reason="PRIOR_LEVEL_RETEST";s.entry_status="SKIPPED";g_records[n].setup=s;
++      Emit(s,"SKIP","EXCLUSION",s.skip_reason);
++      if(!g_engine.FinishUnordered(s.setup_id,TimeCurrent(),s.skip_reason))
++         Emit(s,"CONTEXT_FINISH_REJECTED","OBSERVATION","unsubmitted setup could not be completed; no order attempted");
+       Screenshot(s,"SKIP");return;
+      }
+    if(!valid)
+@@ -469,6 +500,7 @@
+    for(int i=0;i<n;i++)
+      {
+       bool accepted=g_engine.Feed(periods[i],pending[i],now);
++      if(accepted)g_prior.ClosedBar(periods[i],pending[i],now);
+       if(accepted && periods[i]==g_upper)g_ledger.WriteUpperBar(_Symbol,g_upper,pending[i],now);
+       if(accepted && periods[i]==g_lower)
+         {g_chop.AcceptedLowerBar(pending[i].time);g_ledger.WriteLowerBar(_Symbol,g_lower,pending[i],now);}
+@@ -493,7 +525,7 @@
+    int file=FileOpen(g_tag+"_config.csv",FILE_WRITE|FILE_CSV|FILE_ANSI|FILE_COMMON, ';',CP_UTF8);
+    if(file==INVALID_HANDLE){Print("Wave33 INIT_CONFIG_OPEN_FAILED symbol=",_Symbol," tag=",g_tag," error=",GetLastError());return false;}
+    FileWrite(file,"parameter","value");
+-   FileWrite(file,"version","1.0");FileWrite(file,"ea_version","1.82");FileWrite(file,"symbol",_Symbol);FileWrite(file,"upper_tf",EnumToString(g_upper));FileWrite(file,"lower_tf",EnumToString(g_lower));
++   FileWrite(file,"version","1.0");FileWrite(file,"ea_version","1.83");FileWrite(file,"symbol",_Symbol);FileWrite(file,"upper_tf",EnumToString(g_upper));FileWrite(file,"lower_tf",EnumToString(g_lower));
+    FileWrite(file,"resolved_run_tag",g_tag);
+    FileWrite(file,"chop_diagnostic",InpChopDiagnostic);FileWrite(file,"chop_labels",InpChopLabels);
+    FileWrite(file,"skip_choppy_wave1",InpSkipChoppyWave1);
+@@ -504,6 +536,14 @@
+    FileWrite(file,"chop_formula","sum(max(0,-direction*(path[i]-path[i-1]))) / (direction*(peak-start)); normalize same-side interior pivots to most extreme; fixed anchors");
+    FileWrite(file,"chop_exclusion_policy","enabled AND status CHOPPY only; ratio >= fixed 0.5; SIGNAL prefix before any submission or ORDER_DISABLED; canonical SKIP CHOPPY_WAVE1; release unsubmitted lane");
+    FileWrite(file,"chop_missing_policy","UNAVAILABLE allows entry with explicit measurement reason; numeric zero is never substituted for missing evidence");
++   FileWrite(file,"prior_context",InpPriorContext);FileWrite(file,"skip_prior_level_retest",InpSkipPriorLevelRetest);
++   FileWrite(file,"prior_context_band_fraction",InpPriorContextBandFraction);FileWrite(file,"prior_context_formula",W33_PRIOR_CONTEXT_VERSION);
++   FileWrite(file,"prior_context_effective_observation",InpPriorContext || InpSkipPriorLevelRetest);
++   FileWrite(file,"prior_context_source_policy","published M15/H1 HIGH for LONG or LOW for SHORT; source before W1 start; known by signal; all prospective observed history; no manual levels");
++   FileWrite(file,"prior_context_band_policy","halfwidth=fraction*fixed directional W1 span; peak inside inclusive; executable entry not beyond outer edge; final TP strictly beyond; latest accepted source-TF close not beyond");
++   FileWrite(file,"prior_context_selection_policy","evaluate all; blocking first, near next, closest peak next; ties H1 then newer source; same-move M15/H1 are not independent touches");
++   FileWrite(file,"prior_context_missing_policy","UNAVAILABLE allows with explicit reason; no level allows; filter ON forces observation even diagnostic OFF; invalid fraction rejects init");
++   FileWrite(file,"prior_context_exclusion_policy","optional entry-only PRIOR_LEVEL_RETEST; pre-submission skip and release; chop exclusion retains precedence; default OFF; not completed double-top prediction");
+    FileWrite(file,"allow_tester_batch_runs",InpAllowTesterBatchRuns);FileWrite(file,"optimization",MQLInfoInteger(MQL_OPTIMIZATION));
+    FileWrite(file,"effective_draw",g_effective_draw);FileWrite(file,"input_hash",g_input_hash);
+    FileWrite(file,"batch_namespace",MQLInfoInteger(MQL_OPTIMIZATION)?"symbol/context hash + exclusive persistent claim":"single-run tag");
+@@ -545,7 +585,7 @@
+   }
+ int OnInit()
+   {
+-   if(InpSwingLeft<1 || InpSwingRight<1 || InpFibMin<=0 || InpFibMax<=InpFibMin || InpFibMax>=1 || InpRewardR<=0 || InpRiskPercent<=0 || InpRiskPercent>100 || InpTimeoutUpperBars<1 || InpSLExtraPoints<0 || InpMinWave1RoomR<0 || !MathIsValidNumber(InpTPWave1BufferPoints) || InpTPWave1BufferPoints<0)
++   if(InpSwingLeft<1 || InpSwingRight<1 || InpFibMin<=0 || InpFibMax<=InpFibMin || InpFibMax>=1 || InpRewardR<=0 || InpRiskPercent<=0 || InpRiskPercent>100 || InpTimeoutUpperBars<1 || InpSLExtraPoints<0 || InpMinWave1RoomR<0 || !MathIsValidNumber(InpTPWave1BufferPoints) || InpTPWave1BufferPoints<0 || !MathIsValidNumber(InpPriorContextBandFraction) || InpPriorContextBandFraction<0 || InpPriorContextBandFraction>1)
+      {Print("Wave33 INIT_PARAMETERS_INCORRECT: check swings, Fib, RR, risk, timeout and SL/room inputs.");return INIT_PARAMETERS_INCORRECT;}
+    bool optimizing=(bool)MQLInfoInteger(MQL_OPTIMIZATION);
+    if(optimizing && !InpAllowTesterBatchRuns)
+@@ -591,6 +631,8 @@
+    g_display.Init(g_prefix,g_effective_draw);ZeroMemory(g_last);
+    if(!g_chop.Open(g_tag,g_prefix,g_lower,InpChopDiagnostic,g_effective_draw && InpChopLabels,InpSkipChoppyWave1))
+      {Print("Wave33 INIT_CHOP_CSV_OPEN_FAILED tag=",g_tag," error=",GetLastError());g_ledger.Close();return INIT_FAILED;}
++   if(!g_prior.Open(g_tag,g_prefix,InpPriorContext,g_effective_draw,InpSkipPriorLevelRetest,InpPriorContextBandFraction))
++     {Print("Wave33 INIT_CONTEXT_CSV_OPEN_FAILED tag=",g_tag," error=",GetLastError());g_chop.Close();g_ledger.Close();return INIT_FAILED;}
+    g_display.SetFrames(g_upper,g_lower);
+    g_display.ConfigureVisuals(InpShowInfoPanel,InpDiagnosticLabels,InpShowSwingPaths);g_display.SetTriggerMode(InpTriggerMode);
+    string levels[];int count=StringSplit(InpManualLevels,';',levels);
+@@ -683,7 +725,7 @@
+   {
+    if(!g_ready)
+      {
+-      g_chop.Close();g_ledger.Close();if(g_exit_tick_file!=INVALID_HANDLE){FileClose(g_exit_tick_file);g_exit_tick_file=INVALID_HANDLE;}
++      g_prior.Close();g_chop.Close();g_ledger.Close();if(g_exit_tick_file!=INVALID_HANDLE){FileClose(g_exit_tick_file);g_exit_tick_file=INVALID_HANDLE;}
+       W33ReleaseBatchRunTag(g_run_claim);return;
+      }
+    Drain();
+@@ -692,7 +734,7 @@
+       W33Setup s;g_engine.GetActive(d,s);if(s.setup_id=="" || !s.active)continue;
+       MergeExecution(s);Emit(s,"TEST_END","OBSERVATION","CENSORED_AT_STOP reason="+IntegerToString(reason));
+      }
+-   g_chop.Close();g_ledger.Close();if(g_exit_tick_file!=INVALID_HANDLE){FileClose(g_exit_tick_file);g_exit_tick_file=INVALID_HANDLE;}
++   g_prior.Close();g_chop.Close();g_ledger.Close();if(g_exit_tick_file!=INVALID_HANDLE){FileClose(g_exit_tick_file);g_exit_tick_file=INVALID_HANDLE;}
+    W33ReleaseBatchRunTag(g_run_claim);
+-   if(!InpKeepObjects){g_chop.Clear();g_display.Clear();}ChartRedraw();g_ready=false;
+-  }
++   if(!InpKeepObjects){g_prior.Clear();g_chop.Clear();g_display.Clear();}ChartRedraw();g_ready=false;
++  }

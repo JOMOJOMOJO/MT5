@@ -1,0 +1,10 @@
+{
+  "compared_v180_path": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\v180_a_base",
+  "arm": "a",
+  "expert": "Wave33Frozen171.ex5",
+  "live_trading": false,
+  "ea_sha256": "88E3BE610E74E2B15A320CCF0A7BAEC3BF70B0E297C43F3A5D0735D4822F29E8",
+  "status": "COMPLETED",
+  "new_strategy_inputs_removed": true,
+  "version": "1.71"
+}

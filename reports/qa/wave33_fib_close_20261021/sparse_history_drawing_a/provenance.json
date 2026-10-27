@@ -1,0 +1,22 @@
+{
+  "arms": [
+    "A"
+  ],
+  "custom_symbols": "Actual XAUUSD+ M1 bars, separately bounded at each case decision, no later bars",
+  "signal_recalculation": false,
+  "tester_screenshot": false,
+  "diagnostic_labels": false,
+  "swing_paths": true,
+  "kind": "NORMAL_CHART_RECORDED_EVENT_REPLAY",
+  "trading_code_present": false,
+  "selected_cases": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "source_batch": "reports/qa/wave33_fib_close_20261021/render_cases_a",
+  "cases_per_arm": 5,
+  "show_panel": false
+}

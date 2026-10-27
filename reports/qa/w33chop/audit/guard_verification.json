@@ -1,0 +1,632 @@
+{
+  "status": "PASS",
+  "scope": "engineering input validation only; no threshold or valid formula changes",
+  "outcomes_used": false,
+  "original_script_sha256": "518c6c7c35389ae60db192327a6b46af388c7ad8b14eaeed13921b5af380de3b",
+  "guarded_script_sha256": "bfb0f771dc2df2a60a65a08cfb67f73b05ee5a4dd58fd3e98bf724967e22e469",
+  "frozen_experiment_files_unchanged": {
+    "reports\\qa\\w33chop\\features.json": "6c6a91a849585709b2427ab50f3911f7dc9509f16ed7108052508867a4f5ef11",
+    "reports\\qa\\w33chop\\agreement.json": "892589f4c3cf60e847d144cfc00af852adc9adc91e422f42c172c70b8906ce33"
+  },
+  "annual_status_numeric_path_identical": 440,
+  "changed_unavailable_raw_counts": [
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1585585800_105",
+      "before": 6,
+      "after": 5
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1590016500_149",
+      "before": 40,
+      "after": 13
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1594099800_204",
+      "before": 5,
+      "after": 4
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1594677600_211",
+      "before": 21,
+      "after": 8
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1596139200_225",
+      "before": 55,
+      "after": 42
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1601496000_315",
+      "before": 6,
+      "after": 2
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1601897400_322",
+      "before": 18,
+      "after": 14
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1603836000_350",
+      "before": 21,
+      "after": 9
+    },
+    {
+      "arm": "A",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1607716800_407",
+      "before": 63,
+      "after": 25
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1578081900_7",
+      "before": 25,
+      "after": 5
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1578085200_8",
+      "before": 19,
+      "after": 15
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1579050600_45",
+      "before": 17,
+      "after": 14
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1579596900_69",
+      "before": 67,
+      "after": 27
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1579670700_72",
+      "before": 22,
+      "after": 8
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1581564000_151",
+      "before": 17,
+      "after": 4
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1582314300_194",
+      "before": 30,
+      "after": 15
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1582889700_215",
+      "before": 28,
+      "after": 18
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1583220600_227",
+      "before": 15,
+      "after": 13
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1584142200_275",
+      "before": 19,
+      "after": 15
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1585203300_309",
+      "before": 15,
+      "after": 10
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1585608000_315",
+      "before": 24,
+      "after": 10
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1585739700_319",
+      "before": 11,
+      "after": 5
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1585825500_325",
+      "before": 34,
+      "after": 8
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1585940400_333",
+      "before": 32,
+      "after": 17
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1586181300_337",
+      "before": 17,
+      "after": 5
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1586227200_339",
+      "before": 19,
+      "after": 6
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1586283300_345",
+      "before": 13,
+      "after": 6
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1586301900_346",
+      "before": 54,
+      "after": 13
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1586334900_348",
+      "before": 13,
+      "after": 7
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1587142800_368",
+      "before": 26,
+      "after": 2
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1587639600_383",
+      "before": 74,
+      "after": 31
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1587958500_389",
+      "before": 8,
+      "after": 6
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1589170800_436",
+      "before": 8,
+      "after": 2
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1589216700_438",
+      "before": 25,
+      "after": 13
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1589453400_448",
+      "before": 9,
+      "after": 4
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1589806500_457",
+      "before": 11,
+      "after": 9
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1591578000_540",
+      "before": 9,
+      "after": 7
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1591621200_543",
+      "before": 7,
+      "after": 6
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1592804100_595",
+      "before": 17,
+      "after": 6
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1592878200_600",
+      "before": 16,
+      "after": 15
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1593408600_623",
+      "before": 11,
+      "after": 6
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1593481200_627",
+      "before": 30,
+      "after": 28
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1594014000_647",
+      "before": 113,
+      "after": 22
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1594084800_649",
+      "before": 8,
+      "after": 4
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1594178100_655",
+      "before": 20,
+      "after": 7
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1594360200_671",
+      "before": 15,
+      "after": 2
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1595502000_716",
+      "before": 13,
+      "after": 10
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1595949900_729",
+      "before": 21,
+      "after": 15
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1596469200_751",
+      "before": 9,
+      "after": 5
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1596535800_755",
+      "before": 17,
+      "after": 13
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1597155000_783",
+      "before": 11,
+      "after": 7
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1597734000_808",
+      "before": 14,
+      "after": 10
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1597914600_819",
+      "before": 10,
+      "after": 4
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1597995300_825",
+      "before": 12,
+      "after": 4
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1598319900_832",
+      "before": 14,
+      "after": 13
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1598479500_838",
+      "before": 31,
+      "after": 26
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1598510400_841",
+      "before": 17,
+      "after": 15
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1598645100_851",
+      "before": 33,
+      "after": 26
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1598953800_863",
+      "before": 17,
+      "after": 13
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1598984700_866",
+      "before": 19,
+      "after": 13
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1599026700_867",
+      "before": 18,
+      "after": 15
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1599572700_889",
+      "before": 9,
+      "after": 7
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1599687900_894",
+      "before": 13,
+      "after": 6
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1600095000_916",
+      "before": 66,
+      "after": 29
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1600368900_933",
+      "before": 18,
+      "after": 4
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1600659900_944",
+      "before": 14,
+      "after": 13
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601442000_989",
+      "before": 37,
+      "after": 9
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602135900_1027",
+      "before": 13,
+      "after": 10
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602277500_1033",
+      "before": 17,
+      "after": 15
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603807200_1090",
+      "before": 31,
+      "after": 28
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604030700_1099",
+      "before": 34,
+      "after": 5
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_1118",
+      "before": 37,
+      "after": 5
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605688500_1175",
+      "before": 24,
+      "after": 12
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605791400_1181",
+      "before": 20,
+      "after": 19
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605830100_1184",
+      "before": 14,
+      "after": 3
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1606757100_1222",
+      "before": 9,
+      "after": 4
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1607366100_1248",
+      "before": 8,
+      "after": 3
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1607379900_1250",
+      "before": 17,
+      "after": 14
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1607505000_1259",
+      "before": 11,
+      "after": 3
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1607549400_1263",
+      "before": 31,
+      "after": 21
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1608114600_1283",
+      "before": 35,
+      "after": 34
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1608540600_1291",
+      "before": 6,
+      "after": 5
+    },
+    {
+      "arm": "B",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1608735600_1307",
+      "before": 44,
+      "after": 15
+    }
+  ],
+  "reason_rename": {
+    "AMBIGUOUS_SAME_BAR_HIGH_LOW": "SAME_TIME_HIGH_LOW_AMBIGUOUS"
+  },
+  "note": "UNAVAILABLE raw_count now counts processed prefix through first ambiguity, matching MQL. Frozen experiment files retain original full eligible count.",
+  "synthetic_guard_tests": [
+    {
+      "test": "exact_half_boundary",
+      "status": "PASS",
+      "actual": "CHOPPY",
+      "reason": ""
+    },
+    {
+      "test": "short_mirror",
+      "status": "PASS",
+      "actual": "CHOPPY",
+      "reason": ""
+    },
+    {
+      "test": "missing_anchor_known",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "FIXED_ANCHORS_MISSING"
+    },
+    {
+      "test": "future_start_anchor_known",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "ANCHOR_NOT_KNOWN"
+    },
+    {
+      "test": "future_peak_anchor_known",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "ANCHOR_NOT_KNOWN"
+    },
+    {
+      "test": "start_known_before_source",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "ANCHOR_KNOWN_BEFORE_SOURCE"
+    },
+    {
+      "test": "peak_known_before_source",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "ANCHOR_KNOWN_BEFORE_SOURCE"
+    },
+    {
+      "test": "invalid_direction",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "INVALID_ANCHORS"
+    },
+    {
+      "test": "infinite_anchor_price",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "INVALID_ANCHORS"
+    },
+    {
+      "test": "nonpositive_directional_span",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "NONPOSITIVE_DIRECTIONAL_SPAN"
+    },
+    {
+      "test": "missing_coverage",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "LOWER_HISTORY_INCOMPLETE"
+    },
+    {
+      "test": "late_coverage",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "LOWER_HISTORY_INCOMPLETE"
+    },
+    {
+      "test": "exact_coverage",
+      "status": "PASS",
+      "actual": "CHOPPY",
+      "reason": ""
+    },
+    {
+      "test": "pivot_known_before_source",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "PIVOT_KNOWN_BEFORE_SOURCE"
+    },
+    {
+      "test": "invalid_pivot_price",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "INVALID_PIVOT_PRICE"
+    },
+    {
+      "test": "zero_interior",
+      "status": "PASS",
+      "actual": "CLEAN",
+      "reason": ""
+    },
+    {
+      "test": "future_pivot_ignored",
+      "status": "PASS",
+      "actual": "CLEAN",
+      "reason": ""
+    },
+    {
+      "test": "source_order_invalid",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "PIVOT_CHRONOLOGY"
+    },
+    {
+      "test": "same_source_hl",
+      "status": "PASS",
+      "actual": "UNAVAILABLE",
+      "reason": "SAME_TIME_HIGH_LOW_AMBIGUOUS"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+﻿{
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33ChopFilter\\20261025_000008_b0676de1",
+    "status":  "FAIL",
+    "batch":  "20261025_000008_b0676de1",
+    "reason":  "Could not find a part of the path \u0027C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33chop_filter_20261024\\native\\20261025_000008_b0676de1\\off_diag_on\\w33cf_20261025_000008_b0676de1_off_diag_on_case_PERIOD_M15_PERIOD_M5_LONG_CHOPPY_chop.csv\u0027."
+}

@@ -1,0 +1,1377 @@
+{
+  "read_scope": "only Wave33 tester_public.ini metadata; no report outcomes, rawtrade labels or2026marketdata opened",
+  "configs": 146,
+  "date_ranges": [
+    {
+      "from": "2016.01.01",
+      "to": "2016.05.24",
+      "config_count": 4
+    },
+    {
+      "from": "2018.02.01",
+      "to": "2018.09.25",
+      "config_count": 8
+    },
+    {
+      "from": "2018.02.01",
+      "to": "2019.01.17",
+      "config_count": 6
+    },
+    {
+      "from": "2019.01.02",
+      "to": "2019.01.03",
+      "config_count": 15
+    },
+    {
+      "from": "2019.01.02",
+      "to": "2019.01.17",
+      "config_count": 5
+    },
+    {
+      "from": "2020.01.01",
+      "to": "2021.01.01",
+      "config_count": 4
+    },
+    {
+      "from": "2020.10.01",
+      "to": "2020.10.02",
+      "config_count": 8
+    },
+    {
+      "from": "2020.10.01",
+      "to": "2020.10.10",
+      "config_count": 4
+    },
+    {
+      "from": "2020.10.01",
+      "to": "2020.11.18",
+      "config_count": 9
+    },
+    {
+      "from": "2023.01.01",
+      "to": "2023.01.10",
+      "config_count": 29
+    },
+    {
+      "from": "2025.01.06",
+      "to": "2025.01.18",
+      "config_count": 54
+    }
+  ],
+  "records": [
+    {
+      "file": "reports\\qa\\w33batch\\eng\\20261022_235504_d57c3130\\a_extension_on\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.10"
+    },
+    {
+      "file": "reports\\qa\\w33batch\\eng\\20261022_235504_d57c3130\\tester_run_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33TesterRunHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.10"
+    },
+    {
+      "file": "reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.10"
+    },
+    {
+      "file": "reports\\qa\\w33batch\\mw_gen\\mw_20261023_093811_0a55ac82\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "1",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.10"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\eng\\20261022_135617_af176e8e\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.02"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\eng\\20261022_135617_af176e8e\\engine_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33EngineHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.02"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\eng\\20261022_135617_af176e8e\\extension_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33ExtensionHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.02"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\eng\\20261022_135617_af176e8e\\fib_close_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33FibCloseHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.02"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\eng\\20261022_135617_af176e8e\\lifecycle_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33LifecycleHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.02"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\eng\\20261022_135617_af176e8e\\opposite_exit_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33OppositeExitHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.02"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\eng\\20261022_135617_af176e8e\\recognition_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RecognitionHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.02"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\eng\\20261022_135617_af176e8e\\room_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RoomHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.10.02"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\final\\20261022_140527_f4364f5c\\a_extension_off\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.11.18"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\final\\20261022_140527_f4364f5c\\a_extension_on\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.11.18"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\final\\20261022_140527_f4364f5c\\b_extension_off\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.11.18"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\final\\20261022_140527_f4364f5c\\b_extension_on\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.11.18"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\final\\20261022_140527_f4364f5c\\extension_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33ExtensionHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.11.18"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\a_extension_off\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.11.18"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\a_extension_on\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.11.18"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_off\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.11.18"
+    },
+    {
+      "file": "reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_on\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.10.01",
+      "ToDate": "2020.11.18"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\a\\20261021_235245_00512912\\a_opposite_exit_off\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2019.01.17"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\a\\20261021_235245_00512912\\a_opposite_exit_on\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2019.01.17"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\a\\20261021_235245_00512912\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2019.01.17"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\a\\20261021_235245_00512912\\opposite_exit_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33OppositeExitHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2019.01.17"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\b\\20261021_235636_802a6036\\b_opposite_exit_off\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.17"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\b\\20261021_235636_802a6036\\b_opposite_exit_on\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.17"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\b\\20261021_235636_802a6036\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.17"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\eng\\20261021_234840_45ee5211\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\eng\\20261021_234840_45ee5211\\engine_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33EngineHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\eng\\20261021_234840_45ee5211\\fib_close_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33FibCloseHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\eng\\20261021_234840_45ee5211\\lifecycle_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33LifecycleHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\eng\\20261021_234840_45ee5211\\opposite_exit_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33OppositeExitHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\eng\\20261021_234840_45ee5211\\recognition_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RecognitionHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\eng\\20261021_234840_45ee5211\\room_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RoomHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\final\\20261022_000609_1f6049d6\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\final\\20261022_000609_1f6049d6\\engine_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33EngineHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\final\\20261022_000609_1f6049d6\\fib_close_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33FibCloseHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\final\\20261022_000609_1f6049d6\\lifecycle_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33LifecycleHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\final\\20261022_000609_1f6049d6\\opposite_exit_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33OppositeExitHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\final\\20261022_000609_1f6049d6\\recognition_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RecognitionHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33opp\\final\\20261022_000609_1f6049d6\\room_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RoomHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\baseline_native\\a\\tester_public.ini",
+      "Expert": "Wave33Frozen171.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\baseline_native\\b\\tester_public.ini",
+      "Expert": "Wave33Frozen171.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\connected_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33ConnectedHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\engine_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33EngineHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\extension_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33ExtensionHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\fib_close_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33FibCloseHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\lifecycle_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33LifecycleHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\opposite_exit_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33OppositeExitHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\recognition_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RecognitionHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\room_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RoomHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\target_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33TargetHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\tester_run_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33TesterRunHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\v180_a_base\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\v180_a_both\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\v180_a_cancel\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\v180_a_target\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\v180_b_base\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\v180_b_both\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\v180_b_cancel\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\eng\\20261023_112317_3e88623f\\v180_b_target\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\final\\20261023_150705_4035cece\\connected_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33ConnectedHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\final\\20261023_150705_4035cece\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\final\\20261023_150705_4035cece\\opposite_exit_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33OppositeExitHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\final\\20261023_150705_4035cece\\target_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33TargetHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\final\\20261023_150705_4035cece\\v180_a_base\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\final\\20261023_150705_4035cece\\v180_a_both\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\final\\20261023_150705_4035cece\\v180_b_base\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\w33v180\\final\\20261023_150705_4035cece\\v180_b_both\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2023.01.01",
+      "ToDate": "2023.01.10"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\display_probe\\20261021_105537_ab2eb157\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\display_retry\\20261021_105353_cdcb0f19\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\display_validation\\20261021_105715_97c87cb8\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\engineering\\20261021_105230_4c691468\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\engineering\\20261021_105230_4c691468\\engine_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33EngineHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_display_layout\\20261021_152834_769b02bc\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_display_layout\\20261021_153302_0cb9ff9b\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_engineering\\20261021_151408_14185e95\\a_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_engineering\\20261021_151408_14185e95\\b_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_engineering\\20261021_151408_14185e95\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_engineering\\20261021_151408_14185e95\\engine_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33EngineHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_engineering\\20261021_151408_14185e95\\lifecycle_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33LifecycleHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_engineering\\20261021_151408_14185e95\\recognition_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RecognitionHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_engineering\\20261021_151408_14185e95\\room_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RoomHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_usdjpy_2016\\20261021_151636_6fcee6dd\\a_v140_full\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2016.01.01",
+      "ToDate": "2016.05.24"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_usdjpy_2018\\20261021_151444_6628351f\\a_recognition_only\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2018.09.25"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_usdjpy_2018\\20261021_151444_6628351f\\a_room_only\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2018.09.25"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_usdjpy_2018\\20261021_151444_6628351f\\a_v130_control\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2018.09.25"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\final_usdjpy_2018\\20261021_151444_6628351f\\a_v140_full\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2018.09.25"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\logic_validation\\20261021_105423_c2bca693\\a_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\logic_validation\\20261021_105423_c2bca693\\b_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\logic_validation\\20261021_105423_c2bca693\\lifecycle_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33LifecycleHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\logic_validation\\20261021_105423_c2bca693\\recognition_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RecognitionHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\logic_validation\\20261021_105423_c2bca693\\room_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RoomHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\usdjpy_2016\\20261021_105847_a7016337\\a_v140_full\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2016.01.01",
+      "ToDate": "2016.05.24"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\usdjpy_2018\\20261021_105602_42ef38a9\\a_recognition_only\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2018.09.25"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\usdjpy_2018\\20261021_105602_42ef38a9\\a_room_only\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2018.09.25"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\usdjpy_2018\\20261021_105602_42ef38a9\\a_v130_control\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2018.09.25"
+    },
+    {
+      "file": "reports\\qa\\wave33_entry_room_20261021\\usdjpy_2018\\20261021_105602_42ef38a9\\a_v140_full\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2018.09.25"
+    },
+    {
+      "file": "reports\\qa\\wave33_fib_close_20261021\\a_comparison\\20261021_163350_c5b46e67\\a_fib_close_off\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2019.01.17"
+    },
+    {
+      "file": "reports\\qa\\wave33_fib_close_20261021\\a_comparison\\20261021_163350_c5b46e67\\a_fib_close_on\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2018.02.01",
+      "ToDate": "2019.01.17"
+    },
+    {
+      "file": "reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_off\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.17"
+    },
+    {
+      "file": "reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_on\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.17"
+    },
+    {
+      "file": "reports\\qa\\wave33_fib_close_20261021\\display_final\\20261021_201912_a6ec0261\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_fib_close_20261021\\engineering\\20261021_163340_8f9f7139\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_fib_close_20261021\\engineering\\20261021_163340_8f9f7139\\engine_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33EngineHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_fib_close_20261021\\engineering\\20261021_163340_8f9f7139\\fib_close_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33FibCloseHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_fib_close_20261021\\engineering\\20261021_163340_8f9f7139\\lifecycle_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33LifecycleHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_fib_close_20261021\\engineering\\20261021_163340_8f9f7139\\recognition_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RecognitionHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_fib_close_20261021\\engineering\\20261021_163340_8f9f7139\\room_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33RoomHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_lifecycle_20261021\\engineering\\20261021_092608_f901e83c\\a_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_lifecycle_20261021\\engineering\\20261021_092608_f901e83c\\b_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_lifecycle_20261021\\engineering\\20261021_092608_f901e83c\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_lifecycle_20261021\\engineering\\20261021_092608_f901e83c\\engine_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33EngineHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_lifecycle_20261021\\engineering\\20261021_092608_f901e83c\\lifecycle_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33LifecycleHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_lifecycle_20261021\\usdjpy_2016\\20261021_092751_77c88c38\\a_legacy_orders\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2016.01.01",
+      "ToDate": "2016.05.24"
+    },
+    {
+      "file": "reports\\qa\\wave33_lifecycle_20261021\\usdjpy_2016\\20261021_092751_77c88c38\\a_strict_orders\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "USDJPY",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2016.01.01",
+      "ToDate": "2016.05.24"
+    },
+    {
+      "file": "reports\\qa\\wave33_opposite_exit_20261021\\engineering\\20261021_234603_b2636d15\\engine_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33EngineHarness.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2019.01.02",
+      "ToDate": "2019.01.03"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_134635_b2cb2b0b\\a_obstacle_cap\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_134635_b2cb2b0b\\a_obstacle_skip\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_134635_b2cb2b0b\\a_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_134635_b2cb2b0b\\a_pivot_diagnostic\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_134635_b2cb2b0b\\b_first_diagnostic\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_134635_b2cb2b0b\\b_pivot_diagnostic\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_134635_b2cb2b0b\\b_trendline_diagnostic\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_134635_b2cb2b0b\\engine_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33EngineHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_135037_fd91f301\\a_visual\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_135037_fd91f301\\b_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_135037_fd91f301\\engine_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33EngineHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_173724_075de4c4\\b_visual\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_175301_2f33de37\\a_pivot_diagnostic\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_232544_34890982\\a_pivot_diagnostic\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_232831_482acab8\\a_pivot_diagnostic\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_235630_db5ce61b\\a_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_235630_db5ce61b\\a_pivot_diagnostic\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_235630_db5ce61b\\b_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_235630_db5ce61b\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_235907_9a0d8776\\a_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_235907_9a0d8776\\a_pivot_diagnostic\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_235907_9a0d8776\\b_orders_smoke\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\qa\\wave33_visual_20261020\\20261020_235907_9a0d8776\\display_harness\\tester_public.ini",
+      "Expert": "tests\\Wave33DisplayHarness.ex5",
+      "Symbol": "XAUUSD",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2025.01.06",
+      "ToDate": "2025.01.18"
+    },
+    {
+      "file": "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\a_extension_on\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2020.01.01",
+      "ToDate": "2021.01.01"
+    },
+    {
+      "file": "reports\\backtest\\runs\\wave33_v170_2020\\20261022_161002_0ef87d9b\\b_extension_on\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.01.01",
+      "ToDate": "2021.01.01"
+    },
+    {
+      "file": "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_a_both\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M5",
+      "Model": "4",
+      "FromDate": "2020.01.01",
+      "ToDate": "2021.01.01"
+    },
+    {
+      "file": "reports\\backtest\\runs\\wave33_v180_2020\\20261023_164915_831ff154\\v180_b_both\\tester_public.ini",
+      "Expert": "Wave33VisualVerifier.ex5",
+      "Symbol": "XAUUSD+",
+      "Period": "M1",
+      "Model": "4",
+      "FromDate": "2020.01.01",
+      "ToDate": "2021.01.01"
+    }
+  ]
+}

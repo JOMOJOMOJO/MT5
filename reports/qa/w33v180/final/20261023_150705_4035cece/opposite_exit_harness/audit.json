@@ -1,0 +1,10 @@
+{
+  "run_id": "opposite_exit_harness",
+  "kind": "opposite_exit_harness",
+  "assertions": 91,
+  "passed": 91,
+  "failed": 0,
+  "unavailable": 0,
+  "violations": [],
+  "audit_passed": true
+}

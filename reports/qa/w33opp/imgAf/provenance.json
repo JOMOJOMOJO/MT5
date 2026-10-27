@@ -1,0 +1,77 @@
+﻿{
+    "requested_cases":  5,
+    "trading_code_present":  false,
+    "selected_cases":  [
+                           0,
+                           1,
+                           2,
+                           3,
+                           4
+                       ],
+    "native_hashes":  {
+                          "opposite_ticks.csv":  "48A6A456F55352271BCC1183C77FDC7E5EB2DFD15BC86819A94182A4B92293C4",
+                          "upper_bars.csv":  "CA24048D85E5B5EFC66A830384D76D5E3D29567A00FBC5636959746767DAB124",
+                          "events.csv":  "4871B447308735623BD1ADA5F74F8052E8C2671DB9142CB152357EBD5F955C22",
+                          "run.json":  "3B049761A06C8D9311278C35375EA853ADA3ACCFD099343F8334827FA9E98F97",
+                          "report.htm":  "AA43BE316B50B2EA0D80BF6DDBCD577C443EB638B2A7206D180A76304FD6D100",
+                          "config.csv":  "7C5068277EE52D37301D0E4CDDD60A686D36D000948D94E9C63B9B219611E989"
+                      },
+    "artifact_hashes":  {
+                            "case2_render.csv":  "89B4171F2ABFD840C085821CEF46995ACCB231CD97721745D8927555D25DBF07",
+                            "case0_render.csv":  "3F8B2FDFC17CF5E25463A4A7538B1BC626BA9AEE81DEFEB895B4020FEE83E12E",
+                            "replay.ex5":  "26F5D1307DF541B3EAC31C2CDD302C1B71DE94C6810ACA4EE02650B349C3CEDC",
+                            "case2_objects.csv":  "85B325F9FD1F8D609BDB0E0235332CCD1A3FE9F9F28A734E275680BF4BF6D36B",
+                            "W33R_C64A6665F815B22D_0.png":  "A6B3CCF5F5DD6EC92FA830BCF66029DF8355AC73EBF0F807630726E6BBD5758B",
+                            "W33R_C34A61ACBA8B3FC2_3.png":  "0A1915D4BFE8B0E35807E625F24758090C451F2DAAE788F08CC7BF7379845807",
+                            "case0_objects.csv":  "86EA6813F3C4CDE2539F577A06D099ED3D003AE7455F8EEC9209DEAE2CBF28D1",
+                            "fixture.csv":  "D1A6667C1FBB984687C4B131FDA86696B1E09D09B675D37CF113DB54370C9B18",
+                            "case4_render.csv":  "11DF18198FC5771AF9540A5A2B0177A1A6172EA2B747EAF586953F9960D30E68",
+                            "prepare_summary.csv":  "5E567DA77E9CBB341148B08551F65B4E77659177B74E8F4793E8AC586246362D",
+                            "W33R_C24A60194E684B31_4.png":  "AFD8DEDB142955692623B94004A727584C037E81924FE5D86AFC8221369A7EE3",
+                            "case4_objects.csv":  "FC2D7F4B5C65A530D114B6CCA90CAF960876E9E1CDC05596CF9E3BB145EC2A0E",
+                            "fixture_cases.md":  "4E35838F1A322FC1E1A5F19F3D0DCC50343A6B953D0A9E7DD882BCE56DEB67B9",
+                            "case3_objects.csv":  "1B18341ED79719AC31F50D71802F8C34CF680B7B0447AE7D39768D986CFFCDEE",
+                            "fixture_cases.json":  "9E0D9F3AFF09ED4865A9219EA4EAB5147633BCB4873872371F300305BE9549EE",
+                            "W33R_C54A64D2F340BAA8_1.png":  "8A73DE0447D3D440336FF6BB63D7CAB1F90CCF1DE6C94058F4E387F338DFBA9B",
+                            "W33R_C44A633F2784F8E7_2.png":  "D8C2D72572038BC474D005195627655A1B9197EEFE494A972A50F295D2B10C56",
+                            "case1_objects.csv":  "5CBEB081E221164EE7E81E60C5032ED75A35D058240D622132319B2A8C0D59A2",
+                            "replay.compile.log":  "145B8EB36E9B7DB4B21F3DEE684F5868D7D2B97D8A64C07B77DDCC859D0DC1CD",
+                            "case3_render.csv":  "17A7B67C745BDF579496A9FD32DC4FC4A8A413CBC09FCEF6DFE8BBCB13162712",
+                            "fixture_manifest.json":  "9A8AE15A39563E24E1A98F61B397127B294445F4F82C508B8EFA312089C35D31",
+                            "case1_render.csv":  "81C80D5FB48C01464737D5B4B7279DF4E54CC360524D21C1365B9B83D81F0D2A",
+                            "render_summary.csv":  "85EF7631C27080AFE6645B4BE83A45A7E6C00BD49DA63099BD5DA16C12C35585"
+                        },
+    "custom_symbols":  "Actual source M1 bars bounded strictly before each recorded lifecycle cutoff",
+    "source_run":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33opp\\a\\20261021_235245_00512912\\a_opposite_exit_on",
+    "fixture_manifest":  "fixture_manifest.json",
+    "shortfall":  0,
+    "binary_sha256":  "26F5D1307DF541B3EAC31C2CDD302C1B71DE94C6810ACA4EE02650B349C3CEDC",
+    "tester_screenshot":  false,
+    "kind":  "NORMAL_CHART_RECORDED_POSITION_LIFECYCLE_REPLAY",
+    "show_panel":  false,
+    "source_symbol":  "XAUUSD+",
+    "observed_cases":  5,
+    "terminal_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261021_235245_00512912",
+    "runner_sha256":  "B3E52C27E4FB4DE31AD9E07DE8BD0980D89070744FACED9FA93C895E1C3BE6B6",
+    "custom_symbol_prefix":  "W33Xe4497958",
+    "signal_recalculation":  false,
+    "tag":  "w33x_8f917b1aA",
+    "arm":  "A",
+    "compile":  "0 errors, 0 warnings",
+    "normal_chart_algo_trading_enabled":  false,
+    "source_hashes":  {
+                          "types":  {
+                                        "sha256":  "F05A630F2553E3582B31AB20E5966D9620B99BCAE4EB352CB4B826FDF751B2A5",
+                                        "path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\Types.mqh"
+                                    },
+                          "replay":  {
+                                         "sha256":  "7FAF20C0FBD7EC36E10FCB8D93E368C108051B10247E50655AFC21BC7023B78C",
+                                         "path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\tests\\Wave33DrawingReplay.mq5"
+                                     },
+                          "display":  {
+                                          "sha256":  "D09CEEED9B107564232F5F7E3865A06D890FE205865B3600A0E68F28CCFEA1B0",
+                                          "path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\Display.mqh"
+                                      }
+                      },
+    "chart_tf":  "M5"
+}

@@ -1,0 +1,14 @@
+{
+  "date_from": "2025.01.06",
+  "run_id": "engine_harness",
+  "visual_mode": false,
+  "expert": "Wave33EngineHarness",
+  "model": 4,
+  "chart_period": "M1",
+  "date_to": "2025.01.18",
+  "inputs": {
+    "InpRunTag": "wave33_20261021_151408_14185e95_engine_harness"
+  },
+  "tag": "wave33_20261021_151408_14185e95_engine_harness",
+  "symbol": "XAUUSD"
+}

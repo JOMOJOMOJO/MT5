@@ -1,0 +1,48 @@
+﻿{
+    "reviewed_at":  "2026-10-25T23:39:15.5714756+09:00",
+    "reviewer":  "cancel_rule_review",
+    "kind":  "independent read-only label source review",
+    "result":  "PASS",
+    "findings":  [
+                     {
+                         "id":  "LABEL_RESTORE_STYLE",
+                         "severity":  "medium",
+                         "status":  "RESOLVED_SOURCE_REVIEW",
+                         "file":  "mql/Include/Wave33Visual/LabelLayout.mqh",
+                         "functions":  "Layout offscreen branches, Refresh, Restore",
+                         "description":  "Offscreen transition restores coordinates/anchor only, then placed=false. When it returns, Refresh saves current compact font7/8 as original size, so OFF cannot restore original font10. Restore does not restore original colour after layout gray-mutes old captions.",
+                         "requested_check":  "Visible font10/colour -\u003e layout -\u003e offscreen -\u003e visible -\u003e OFF retains font10 and logical colour. Extend native restoration assertions beyond time/price/text.",
+                         "resolution":  "Both cached and refreshed offscreen transitions call full Restore. Restore now writes logical font, colour, anchor, text and tooltip before placed=false. Refresh tracks last rendered font/colour, so own compact styles do not overwrite logical style during repeated reflow. Source path review resolves original issue; separate native lifecycle assertion remains required for runtime proof."
+                     }
+                 ],
+    "passed_checks":  [
+                          "Logical coordinates separate from screen placement; unchanged reflow/resize do not directly modify strategy state",
+                          "Only run-owned OBJ_TEXT under main/prior prefixes registered; price lines/arrows not relocated",
+                          "Sources retain frame, date and price in visible compact source captions plus tooltip provenance",
+                          "Skip captions remain present; no performance-based hiding",
+                          "Finite dotted leaders labeled visual-only; pair cancellation dots use causal event time and known rejection level",
+                          "Mutation Touch coverage includes current W2/ENTRY/SL/TP and old revision snapshot event",
+                          "Main Configure after Init, once-per-second Layout, chart change forced Layout, screenshots and trade callbacks integrated",
+                          "Visible -\u003e offscreen -\u003e visible -\u003e OFF style restoration paths preserve original font and colour by full Restore and last rendered style tracking",
+                          "Price scale right margin is used consistently for estimated caption width, normal x search and exhausted-space fallback clamp; top24px reserved; logical point visibility remains full viewport"
+                      ],
+    "limitations":  [
+                        "Source review only, independent native test result pending",
+                        "Viewport physical exhaustion intentionally allows overlap fallback instead of hiding labels",
+                        "Caption width is estimated; very narrow viewports may clip long source captions"
+                    ],
+    "source_hashes":  [
+                          {
+                              "path":  "mql/Include/Wave33Visual/LabelLayout.mqh",
+                              "sha256":  "e00a577f97cacd3f7ebac22ca1625edb6b0e12257b750325cbb47c1090b39d23"
+                          },
+                          {
+                              "path":  "mql/Include/Wave33Visual/ChopDisplay.mqh",
+                              "sha256":  "606b66194724557878758f864419e65ea8efb145e0202771496468c9829fe54f"
+                          },
+                          {
+                              "path":  "mql/Experts/Wave33ChopDiagnostic.mq5",
+                              "sha256":  "32ace7a650ee3304939376aa278c7da7e76ac6043824c79813c194c268f8d498"
+                          }
+                      ]
+}

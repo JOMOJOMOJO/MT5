@@ -1,0 +1,55 @@
+{
+  "selection_reason": "User two fixed cases + first qualifying December cases for readable source M1 coverage; no profit selection. Earlier sparse-history drawings retained separately.",
+  "cases": [
+    {
+      "index": 0,
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1546477200_200",
+      "direction": "LONG",
+      "decision_at": "2019.01.03 04:10:00",
+      "event": "FILL",
+      "reason": "position filled",
+      "wick_ratio": "0.4348206474",
+      "close_ratio": "0.0000000000"
+    },
+    {
+      "index": 1,
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1547622000_208",
+      "direction": "LONG",
+      "decision_at": "2019.01.16 10:00:00",
+      "event": "INVALIDATE",
+      "reason": "FIB_CLOSE_TOO_DEEP",
+      "wick_ratio": "0.5560640732",
+      "close_ratio": "0.6819221968"
+    },
+    {
+      "index": 2,
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1544028300_166",
+      "direction": "SHORT",
+      "decision_at": "2018.12.05 18:15:00",
+      "event": "INVALIDATE",
+      "reason": "FIB_CLOSE_TOO_DEEP",
+      "wick_ratio": "0.7156250000",
+      "close_ratio": "0.6750000000"
+    },
+    {
+      "index": 3,
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1544413500_171",
+      "direction": "LONG",
+      "decision_at": "2018.12.10 06:35:00",
+      "event": "FILL",
+      "reason": "position filled",
+      "wick_ratio": "0.6996047431",
+      "close_ratio": "0.0000000000"
+    },
+    {
+      "index": 4,
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1545820200_192",
+      "direction": "SHORT",
+      "decision_at": "2018.12.26 11:55:00",
+      "event": "FILL",
+      "reason": "position filled",
+      "wick_ratio": "0.4819672131",
+      "close_ratio": "0.0000000000"
+    }
+  ]
+}

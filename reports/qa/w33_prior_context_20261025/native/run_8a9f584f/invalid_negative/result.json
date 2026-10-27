@@ -1,0 +1,17 @@
+﻿{
+    "failures":  0,
+    "case":  "invalid_negative",
+    "signals":  0,
+    "filter":  false,
+    "diagnostic":  true,
+    "order_disabled":  0,
+    "invalid_input":  true,
+    "status":  "PASS",
+    "band_fraction":  -0.01,
+    "orders_input":  false,
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_prior_context_20261025\\native\\run_8a9f584f\\invalid_negative",
+    "order_events":  0,
+    "tag":  "pc_8a9f584f_5",
+    "context_skips":  0,
+    "checks":  1
+}

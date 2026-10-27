@@ -1,0 +1,540 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>ストラテジーテスターレポート</title>
+    <meta name="generator" content="strategy tester">
+    <style type="text/css">
+    <!--
+    @media screen {
+      td { font: 8pt  Tahoma,Arial; }
+      th { font: 10pt Tahoma,Arial; }
+    }
+    @media print {
+      td { font: 7pt Tahoma,Arial; }
+      th { font: 9pt Tahoma,Arial; }
+    }
+    .msdate { mso-number-format:"General Date"; }
+    .mspt   { mso-number-format:\#\,\#\#0\.00;  }
+    body {margin:1px;}
+    //-->
+    </style>
+  </head>
+<body>
+<div align="center">
+<table cellspacing="1" cellpadding="3" border="0">
+   <tr align="center">
+      <td colspan="13"><div style="font: 14pt Tahoma"><b>ストラテジーテスターレポート</b><br></div></td>
+   </tr>
+   <tr align="center">
+      <td colspan="13"><div style="font: 10pt Tahoma"><b>VantageTradingLtd-Live (Build 6230)</b><br></div></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr>
+      <td colspan="13" align="center"><div style="font: 10pt Tahoma"><b>設定</b></div></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">エキスパート:</td>
+      <td nowrap colspan="10" align="left"><b>Wave33VisualVerifier</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">銘柄:</td>
+      <td nowrap colspan="10" align="left"><b>XAUUSD</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">期間:</td>
+      <td nowrap colspan="10" align="left"><b>M1 (2025.01.06 - 2025.01.18)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">パラメータ:</td>
+      <td nowrap colspan="10" align="left"><b>InpPattern=1</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpTriggerMode=0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpSwingLeft=2</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpSwingRight=2</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpFibMin=0.382</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpFibMax=0.618</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRequireFibTouch=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRejectDeepFib=false</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpStrictWaveLifecycle=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpLowerRecognition=2</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpMinWave1RoomR=0.25</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpTimeoutUpperBars=96</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpObstacleMode=0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRewardR=1.0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRiskPercent=1.0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpSLExtraPoints=10.0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpEnableTesterOrders=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpMagic=3320261020</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpDeviationPoints=20</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpDraw=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpShowInfoPanel=false</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpDiagnosticLabels=false</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpShowSwingPaths=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpKeepObjects=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpScreenshots=true</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpScreenshotLimit=12</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpRunTag=wave33_20261021_151408_14185e95_b_orders_smoke</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="10" align="left"><b>InpManualLevels=</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >会社:</td>
+      <td nowrap colspan="10" align="left"><b>Vantage Trading Ltd</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >通貨:</td>
+      <td nowrap colspan="10" align="left"><b>USD</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >初期証拠金:</td>
+      <td nowrap colspan="10" align="left"><b>10 000.00</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3" >レバレッジ:</td>
+      <td nowrap colspan="10" align="left"><b>1:100</b></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr>
+      <td colspan="13" align="center"><div style="font: 10pt Tahoma"><b>結果</b></div></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">ヒストリー品質:</td>
+      <td nowrap><b>100% リアルティック</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">バー:</td>
+      <td nowrap><b>13778</b></td>
+      <td nowrap colspan="3">ティック:</td>
+      <td nowrap><b>1291229</b></td>
+      <td nowrap colspan="3">銘柄:</td>
+      <td nowrap colspan="2"><b>1</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">総損益:</td>
+      <td nowrap><b>-605.04</b></td>
+      <td nowrap colspan="3">残高絶対ドローダウン:</td>
+      <td nowrap><b>605.04</b></td>
+      <td nowrap colspan="3">証拠金絶対ドローダウン:</td>
+      <td nowrap colspan="2"><b>605.04</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">総利益:</td>
+      <td nowrap><b>1 164.30</b></td>
+      <td nowrap colspan="3">残高最大ドローダウン:</td>
+      <td nowrap><b>684.09 (6.79%)</b></td>
+      <td nowrap colspan="3">証拠金最大ドローダウン:</td>
+      <td nowrap colspan="2"><b>750.31 (7.40%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">総損失:</td>
+      <td nowrap><b>-1 769.34</b></td>
+      <td nowrap colspan="3">残高相対ドローダウン:</td>
+      <td nowrap><b>6.79% (684.09)</b></td>
+      <td nowrap colspan="3">証拠金相対ドローダウン:</td>
+      <td nowrap colspan="2"><b>7.40% (750.31)</b></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr align="right">
+      <td nowrap colspan="3">プロフィットファクター:</td>
+      <td nowrap><b>0.66</b></td>
+      <td nowrap colspan="3">期待利得:</td>
+      <td nowrap><b>-20.17</b></td>
+      <td nowrap colspan="3">証拠金維持率:</td>
+      <td nowrap colspan="2"><b>434.49%</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">リカバリファクター:</td>
+      <td nowrap><b>-0.81</b></td>
+      <td nowrap colspan="3">シャープレシオ:</td>
+      <td nowrap><b>-5.00</b></td>
+      <td nowrap colspan="3">Z-Score:</td>
+      <td nowrap colspan="2"><b>2.36 (98.17%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">AHPR:</td>
+      <td nowrap><b>0.9980 (-0.20%)</b></td>
+      <td nowrap colspan="3">LR Correlation:</td>
+      <td nowrap><b>-0.39</b></td>
+      <td nowrap colspan="3">OnTester 結果:</td>
+      <td nowrap colspan="2"><b>0</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">GHPR:</td>
+      <td nowrap><b>0.9979 (-0.21%)</b></td>
+      <td nowrap colspan="3">LR Standard Error:</td>
+      <td nowrap><b>154.82</b></td>
+      <td nowrap colspan="3"></td>
+      <td nowrap colspan="2"><b></b></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+    </tr>
+   <tr align="right">
+      <td nowrap colspan="3">取引数:</td>
+      <td nowrap><b>30</b></td>
+      <td nowrap colspan="3">ショート (勝率 %):</td>
+      <td nowrap><b>19 (26.32%)</b></td>
+      <td nowrap colspan="3">ロング (勝率 %):</td>
+      <td nowrap colspan="2"><b>11 (63.64%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">約定数:</td>
+      <td nowrap><b>60</b></td>
+      <td nowrap colspan="3">勝ちトレード (勝率 %):</td>
+      <td nowrap><b>12 (40.00%)</b></td>
+      <td nowrap colspan="3">負けトレード (負率 %):</td>
+      <td nowrap colspan="2"><b>18 (60.00%)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">最大 勝ちトレード:</td>
+      <td nowrap><b>114.60</b></td>
+      <td nowrap colspan="3">最大 負けトレード:</td>
+      <td nowrap colspan="2"><b>-102.48</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">平均 勝ちトレード:</td>
+      <td nowrap><b>97.03</b></td>
+      <td nowrap colspan="3">平均 負けトレード:</td>
+      <td nowrap colspan="2"><b>-98.30</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">最大 連勝数 (金額):</td>
+      <td nowrap><b>3 (311.33)</b></td>
+      <td nowrap colspan="3">最大 連敗数 (金額):</td>
+      <td nowrap colspan="2"><b>7 (-680.61)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">最大 連勝利益額 (数):</td>
+      <td nowrap><b>311.33 (3)</b></td>
+      <td nowrap colspan="3">最大 連敗損失額 (数):</td>
+      <td nowrap colspan="2"><b>-680.61 (7)</b></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="4"></td>
+      <td nowrap colspan="3">平均 連勝利益額 (数):</td>
+      <td nowrap><b>1</b></td>
+      <td nowrap colspan="3">平均 連敗数:</td>
+      <td nowrap colspan="2"><b>2</b></td>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261021_151408_14185e95_b_orders_smoke.png" title="現金残高グラフ" width=820 height=200 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261021_151408_14185e95_b_orders_smoke-hst.png" width=860 height=400 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">Correlation (Profits,MFE):</td>
+      <td nowrap><b>0.84</b></td>
+      <td nowrap colspan="3">Correlation (Profits,MAE):</td>
+      <td nowrap><b>0.82</b></td>
+      <td nowrap colspan="3">Correlation (MFE,MAE):</td>
+      <td nowrap colspan="2"><b>0.6776</b></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261021_151408_14185e95_b_orders_smoke-mfemae.png" width=860 height=400 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+   <tr align="right">
+      <td nowrap colspan="3">ポジション最短保持時間:</td>
+      <td nowrap><b>0:01:55</b></td>
+      <td nowrap colspan="3">ポジション最長保持時間:</td>
+      <td nowrap><b>6:50:07</b></td>
+      <td nowrap colspan="3">ポジション平均保持時間:</td>
+      <td nowrap colspan="2"><b>0:50:01</b></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13"><img src="wave33_20261021_151408_14185e95_b_orders_smoke-holding.png" width=860 height=200 border=0 alt="Graph"></th>
+   </tr>
+   <tr align="right">
+      <td colspan="13" style="height: 10px"></td>
+   </tr>
+</table>
+<table cellspacing="1" cellpadding="3" border="0">
+   <tr>
+      <td style="width: 90px;height: 10px"></td>
+      <td style="width: 40px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 70px;"></td>
+      <td style="width: 70px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 60px;"></td>
+      <td style="width: 100px;"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13" style="height: 25px"><div style="font: 10pt Tahoma"><b>注文</b></div></th>
+   </tr>
+   <tr align="center" bgcolor="#E5F0FC">
+      <td nowrap style="height: 30px"><b>約定時刻</b></td>
+      <td nowrap><b>注文</b></td>
+      <td nowrap><b>銘柄</b></td>
+      <td nowrap><b>タイプ</b></td>
+      <td nowrap colspan="2"><b>数量</b></td>
+      <td nowrap><b>価格</b></td>
+      <td nowrap><b>決済逆指値(S/L)</b></td>
+      <td nowrap><b>決済指値(T/P)</b></td>
+      <td nowrap colspan="2"><b>時間</b></td>
+      <td nowrap><b>状況</b></td>
+      <td nowrap><b>コメント</b></td>
+   </tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.06 04:06:00</td><td>2</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.3 / 0.3</td><td>0.00</td><td>2639.25</td><td>2645.71</td><td colspan="2">2025.01.06 04:06:00</td><td>filled</td><td>W33_XAUUSD_5_1_LONG_1736132100_</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.06 05:47:03</td><td>3</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.3 / 0.3</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.06 05:47:03</td><td>filled</td><td>sl 2639.25</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.06 10:48:00</td><td>4</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.36 / 0.36</td><td>0.00</td><td>2626.88</td><td>2632.34</td><td colspan="2">2025.01.06 10:48:00</td><td>filled</td><td>W33_XAUUSD_5_1_LONG_1736158800_</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.06 10:58:06</td><td>5</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.36 / 0.36</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.06 10:58:06</td><td>filled</td><td>tp 2632.34</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.06 17:12:00</td><td>6</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.19 / 0.19</td><td>0.00</td><td>2635.95</td><td>2625.67</td><td colspan="2">2025.01.06 17:12:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736177100</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.06 17:24:41</td><td>7</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.19 / 0.19</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.06 17:24:41</td><td>filled</td><td>sl 2635.95</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.08 01:15:00</td><td>8</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.47 / 0.47</td><td>0.00</td><td>2647.20</td><td>2651.40</td><td colspan="2">2025.01.08 01:15:00</td><td>filled</td><td>W33_XAUUSD_5_1_LONG_1736290200_</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.08 02:30:29</td><td>9</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.47 / 0.47</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.08 02:30:29</td><td>filled</td><td>tp 2651.40</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.08 06:36:00</td><td>10</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.39 / 0.39</td><td>0.00</td><td>2649.18</td><td>2644.08</td><td colspan="2">2025.01.08 06:36:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736314500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.08 07:24:34</td><td>11</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.39 / 0.39</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.08 07:24:34</td><td>filled</td><td>sl 2649.18</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.08 20:22:00</td><td>12</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.19 / 0.19</td><td>0.00</td><td>2659.59</td><td>2649.21</td><td colspan="2">2025.01.08 20:22:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736364000</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.08 21:19:26</td><td>13</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.19 / 0.19</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.08 21:19:26</td><td>filled</td><td>sl 2659.59</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.08 21:46:00</td><td>14</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.42 / 0.42</td><td>0.00</td><td>2655.73</td><td>2660.37</td><td colspan="2">2025.01.08 21:46:00</td><td>filled</td><td>W33_XAUUSD_5_1_LONG_1736370900_</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.08 22:20:59</td><td>15</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.42 / 0.42</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.08 22:20:59</td><td>filled</td><td>tp 2660.37</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.09 07:25:00</td><td>16</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.43 / 0.43</td><td>0.00</td><td>2661.42</td><td>2656.90</td><td colspan="2">2025.01.09 07:25:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736402100</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.09 08:31:56</td><td>17</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.43 / 0.43</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.09 08:31:56</td><td>filled</td><td>sl 2661.42</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.09 10:18:00</td><td>18</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.3 / 0.3</td><td>0.00</td><td>2659.93</td><td>2666.27</td><td colspan="2">2025.01.09 10:18:00</td><td>filled</td><td>W33_XAUUSD_5_1_LONG_1736411100_</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.09 10:34:50</td><td>19</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.3 / 0.3</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.09 10:34:50</td><td>filled</td><td>tp 2666.27</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.09 10:41:00</td><td>20</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.25 / 0.25</td><td>0.00</td><td>2667.28</td><td>2659.38</td><td colspan="2">2025.01.09 10:41:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736415900</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.09 12:37:27</td><td>21</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.25 / 0.25</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.09 12:37:27</td><td>filled</td><td>sl 2667.28</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.09 21:28:00</td><td>22</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.42 / 0.42</td><td>0.00</td><td>2668.14</td><td>2672.72</td><td colspan="2">2025.01.09 21:28:00</td><td>filled</td><td>W33_XAUUSD_5_1_LONG_1736453100_</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.10 04:18:07</td><td>23</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.42 / 0.42</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.10 04:18:07</td><td>filled</td><td>tp 2672.72</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.10 12:57:00</td><td>24</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.34 / 0.34</td><td>0.00</td><td>2678.13</td><td>2683.77</td><td colspan="2">2025.01.10 12:57:00</td><td>filled</td><td>W33_XAUUSD_5_1_LONG_1736511300_</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.10 14:11:59</td><td>25</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.34 / 0.34</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.10 14:11:59</td><td>filled</td><td>sl 2678.13</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.10 15:00:00</td><td>26</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.47 / 0.47</td><td>0.00</td><td>2680.30</td><td>2676.16</td><td colspan="2">2025.01.10 15:00:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736517600</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.10 15:04:05</td><td>27</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.47 / 0.47</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.10 15:04:05</td><td>filled</td><td>tp 2676.16</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.10 19:05:00</td><td>28</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.21 / 0.21</td><td>0.00</td><td>2697.63</td><td>2688.29</td><td colspan="2">2025.01.10 19:05:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736532000</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.10 19:35:41</td><td>29</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.21 / 0.21</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.10 19:35:41</td><td>filled</td><td>sl 2697.63</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.10 23:19:00</td><td>30</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.6 / 0.6</td><td>0.00</td><td>2693.81</td><td>2690.57</td><td colspan="2">2025.01.10 23:19:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736539800</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.10 23:28:46</td><td>31</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.6 / 0.6</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.10 23:28:46</td><td>filled</td><td>tp 2690.57</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.13 09:50:00</td><td>32</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.4 / 0.4</td><td>0.00</td><td>2683.98</td><td>2688.82</td><td colspan="2">2025.01.13 09:50:00</td><td>filled</td><td>W33_XAUUSD_5_1_LONG_1736754900_</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.13 10:07:13</td><td>33</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.4 / 0.4</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.13 10:07:13</td><td>filled</td><td>tp 2688.82</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.13 18:18:00</td><td>34</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.23 / 0.23</td><td>0.00</td><td>2668.15</td><td>2659.69</td><td colspan="2">2025.01.13 18:18:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736790600</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.13 19:38:54</td><td>35</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.23 / 0.23</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.13 19:38:54</td><td>filled</td><td>tp 2659.69</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.14 04:17:00</td><td>36</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.34 / 0.34</td><td>0.00</td><td>2671.94</td><td>2666.16</td><td colspan="2">2025.01.14 04:17:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736825100</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.14 04:38:47</td><td>37</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.34 / 0.34</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.14 04:38:47</td><td>filled</td><td>sl 2671.94</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.14 10:36:00</td><td>38</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.37 / 0.37</td><td>0.00</td><td>2675.01</td><td>2669.67</td><td colspan="2">2025.01.14 10:36:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736839500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.14 11:17:34</td><td>39</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.37 / 0.37</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.14 11:17:34</td><td>filled</td><td>tp 2669.67</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.14 12:15:00</td><td>40</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.38 / 0.38</td><td>0.00</td><td>2669.27</td><td>2664.07</td><td colspan="2">2025.01.14 12:15:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736854500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.14 13:53:54</td><td>41</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.38 / 0.38</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.14 13:53:54</td><td>filled</td><td>sl 2669.27</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.14 15:18:00</td><td>42</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.39 / 0.39</td><td>0.00</td><td>2671.20</td><td>2666.18</td><td colspan="2">2025.01.14 15:18:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736865300</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.14 15:20:17</td><td>43</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.39 / 0.39</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.14 15:20:17</td><td>filled</td><td>tp 2666.18</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.14 22:39:00</td><td>44</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.86 / 0.86</td><td>0.00</td><td>2675.05</td><td>2672.71</td><td colspan="2">2025.01.14 22:39:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736892600</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.14 22:53:12</td><td>45</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.86 / 0.86</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.14 22:53:12</td><td>filled</td><td>sl 2675.05</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.15 04:07:00</td><td>46</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.35 / 0.35</td><td>0.00</td><td>2668.74</td><td>2674.32</td><td colspan="2">2025.01.15 04:07:00</td><td>filled</td><td>W33_XAUUSD_5_1_LONG_1736887800_</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.15 04:46:34</td><td>47</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.35 / 0.35</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.15 04:46:34</td><td>filled</td><td>tp 2674.32</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.15 07:20:00</td><td>48</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.56 / 0.56</td><td>0.00</td><td>2676.67</td><td>2673.09</td><td colspan="2">2025.01.15 07:20:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1736923200</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.15 07:36:30</td><td>49</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.56 / 0.56</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.15 07:36:30</td><td>filled</td><td>sl 2676.67</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.15 13:27:00</td><td>50</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.51 / 0.51</td><td>0.00</td><td>2684.93</td><td>2688.79</td><td colspan="2">2025.01.15 13:27:00</td><td>filled</td><td>W33_XAUUSD_5_1_LONG_1736945100_</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.15 14:06:20</td><td>51</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.51 / 0.51</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.15 14:06:20</td><td>filled</td><td>sl 2684.93</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.16 15:05:00</td><td>52</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.25 / 0.25</td><td>0.00</td><td>2705.90</td><td>2698.26</td><td colspan="2">2025.01.16 15:05:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1737035700</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.16 15:11:53</td><td>53</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.25 / 0.25</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.16 15:11:53</td><td>filled</td><td>sl 2705.90</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.17 07:17:00</td><td>54</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.58 / 0.58</td><td>0.00</td><td>2713.54</td><td>2716.90</td><td colspan="2">2025.01.17 07:17:00</td><td>filled</td><td>W33_XAUUSD_5_1_LONG_1737085500_</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.17 07:29:45</td><td>55</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.58 / 0.58</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.17 07:29:45</td><td>filled</td><td>sl 2713.54</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.17 10:27:00</td><td>56</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.67 / 0.67</td><td>0.00</td><td>2711.55</td><td>2708.67</td><td colspan="2">2025.01.17 10:27:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1737106800</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.17 10:44:38</td><td>57</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.67 / 0.67</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.17 10:44:38</td><td>filled</td><td>sl 2711.55</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.17 14:15:00</td><td>58</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.29 / 0.29</td><td>0.00</td><td>2711.02</td><td>2704.54</td><td colspan="2">2025.01.17 14:15:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1737112500</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.17 14:34:03</td><td>59</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.29 / 0.29</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.17 14:34:03</td><td>filled</td><td>sl 2711.02</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.17 19:51:00</td><td>60</td><td>XAUUSD</td><td>sell</td><td colspan="2">0.53 / 0.53</td><td>0.00</td><td>2713.50</td><td>2709.98</td><td colspan="2">2025.01.17 19:51:00</td><td>filled</td><td>W33_XAUUSD_5_1_SHORT_1737140400</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.17 19:52:55</td><td>61</td><td>XAUUSD</td><td>buy</td><td colspan="2">0.53 / 0.53</td><td>0.00</td><td></td><td></td><td colspan="2">2025.01.17 19:52:55</td><td>filled</td><td>sl 2713.50</td></tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+   </tr>
+   <tr align="center">
+      <th colspan="13" style="height: 25px"><div style="font: 10pt Tahoma"><b>約定</b></div></th>
+   </tr>
+   <tr align="center" bgcolor="#E5F0FC">
+      <td nowrap style="height: 30px"><b>時間</b></td>
+      <td nowrap><b>約定</b></td>
+      <td nowrap><b>銘柄</b></td>
+      <td nowrap><b>タイプ</b></td>
+      <td nowrap><b>新規・決済</b></td>
+      <td nowrap><b>数量</b></td>
+      <td nowrap><b>価格</b></td>
+      <td nowrap><b>注文</b></td>
+      <td nowrap><b>手数料</b></td>
+      <td nowrap><b>スワップ</b></td>
+      <td nowrap><b>損益</b></td>
+      <td nowrap><b>残高</b></td>
+      <td nowrap><b>コメント</b></td>
+   </tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.06 00:00:00</td><td>1</td><td></td><td>balance</td><td></td><td></td><td></td><td></td><td>0.00</td><td>0.00</td><td>10 000.00</td><td>10 000.00</td><td></td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.06 04:06:00</td><td>2</td><td>XAUUSD</td><td>buy</td><td>in</td><td>0.3</td><td>2642.48</td><td>2</td><td>0.00</td><td>0.00</td><td>0.00</td><td>10 000.00</td><td>W33_XAUUSD_5_1_LONG_1736132100_</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.06 05:47:03</td><td>3</td><td>XAUUSD</td><td>sell</td><td>out</td><td>0.3</td><td>2639.18</td><td>3</td><td>0.00</td><td>0.00</td><td>-99.00</td><td>9 901.00</td><td>sl 2639.25</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.06 10:48:00</td><td>4</td><td>XAUUSD</td><td>buy</td><td>in</td><td>0.36</td><td>2629.61</td><td>4</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 901.00</td><td>W33_XAUUSD_5_1_LONG_1736158800_</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.06 10:58:06</td><td>5</td><td>XAUUSD</td><td>sell</td><td>out</td><td>0.36</td><td>2632.40</td><td>5</td><td>0.00</td><td>0.00</td><td>100.44</td><td>10 001.44</td><td>tp 2632.34</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.06 17:12:00</td><td>6</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.19</td><td>2630.81</td><td>6</td><td>0.00</td><td>0.00</td><td>0.00</td><td>10 001.44</td><td>W33_XAUUSD_5_1_SHORT_1736177100</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.06 17:24:41</td><td>7</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.19</td><td>2635.96</td><td>7</td><td>0.00</td><td>0.00</td><td>-97.85</td><td>9 903.59</td><td>sl 2635.95</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.08 01:15:00</td><td>8</td><td>XAUUSD</td><td>buy</td><td>in</td><td>0.47</td><td>2649.30</td><td>8</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 903.59</td><td>W33_XAUUSD_5_1_LONG_1736290200_</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.08 02:30:29</td><td>9</td><td>XAUUSD</td><td>sell</td><td>out</td><td>0.47</td><td>2651.42</td><td>9</td><td>0.00</td><td>0.00</td><td>99.64</td><td>10 003.23</td><td>tp 2651.40</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.08 06:36:00</td><td>10</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.39</td><td>2646.63</td><td>10</td><td>0.00</td><td>0.00</td><td>0.00</td><td>10 003.23</td><td>W33_XAUUSD_5_1_SHORT_1736314500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.08 07:24:34</td><td>11</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.39</td><td>2649.18</td><td>11</td><td>0.00</td><td>0.00</td><td>-99.45</td><td>9 903.78</td><td>sl 2649.18</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.08 20:22:00</td><td>12</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.19</td><td>2654.40</td><td>12</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 903.78</td><td>W33_XAUUSD_5_1_SHORT_1736364000</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.08 21:19:26</td><td>13</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.19</td><td>2659.59</td><td>13</td><td>0.00</td><td>0.00</td><td>-98.61</td><td>9 805.17</td><td>sl 2659.59</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.08 21:46:00</td><td>14</td><td>XAUUSD</td><td>buy</td><td>in</td><td>0.42</td><td>2658.05</td><td>14</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 805.17</td><td>W33_XAUUSD_5_1_LONG_1736370900_</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.08 22:20:59</td><td>15</td><td>XAUUSD</td><td>sell</td><td>out</td><td>0.42</td><td>2660.37</td><td>15</td><td>0.00</td><td>0.00</td><td>97.44</td><td>9 902.61</td><td>tp 2660.37</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.09 07:25:00</td><td>16</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.43</td><td>2659.16</td><td>16</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 902.61</td><td>W33_XAUUSD_5_1_SHORT_1736402100</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.09 08:31:56</td><td>17</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.43</td><td>2661.44</td><td>17</td><td>0.00</td><td>0.00</td><td>-98.04</td><td>9 804.57</td><td>sl 2661.42</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.09 10:18:00</td><td>18</td><td>XAUUSD</td><td>buy</td><td>in</td><td>0.3</td><td>2663.10</td><td>18</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 804.57</td><td>W33_XAUUSD_5_1_LONG_1736411100_</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.09 10:34:50</td><td>19</td><td>XAUUSD</td><td>sell</td><td>out</td><td>0.3</td><td>2666.29</td><td>19</td><td>0.00</td><td>0.00</td><td>95.70</td><td>9 900.27</td><td>tp 2666.27</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.09 10:41:00</td><td>20</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.25</td><td>2663.33</td><td>20</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 900.27</td><td>W33_XAUUSD_5_1_SHORT_1736415900</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.09 12:37:27</td><td>21</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.25</td><td>2667.36</td><td>21</td><td>0.00</td><td>0.00</td><td>-100.75</td><td>9 799.52</td><td>sl 2667.28</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.09 21:28:00</td><td>22</td><td>XAUUSD</td><td>buy</td><td>in</td><td>0.42</td><td>2670.43</td><td>22</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 799.52</td><td>W33_XAUUSD_5_1_LONG_1736453100_</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.10 04:18:07</td><td>23</td><td>XAUUSD</td><td>sell</td><td>out</td><td>0.42</td><td>2672.72</td><td>23</td><td>0.00</td><td>-32.57</td><td>96.18</td><td>9 863.13</td><td>tp 2672.72</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.10 12:57:00</td><td>24</td><td>XAUUSD</td><td>buy</td><td>in</td><td>0.34</td><td>2680.95</td><td>24</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 863.13</td><td>W33_XAUUSD_5_1_LONG_1736511300_</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.10 14:11:59</td><td>25</td><td>XAUUSD</td><td>sell</td><td>out</td><td>0.34</td><td>2678.10</td><td>25</td><td>0.00</td><td>0.00</td><td>-96.90</td><td>9 766.23</td><td>sl 2678.13</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.10 15:00:00</td><td>26</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.47</td><td>2678.23</td><td>26</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 766.23</td><td>W33_XAUUSD_5_1_SHORT_1736517600</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.10 15:04:05</td><td>27</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.47</td><td>2676.16</td><td>27</td><td>0.00</td><td>0.00</td><td>97.29</td><td>9 863.52</td><td>tp 2676.16</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.10 19:05:00</td><td>28</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.21</td><td>2692.96</td><td>28</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 863.52</td><td>W33_XAUUSD_5_1_SHORT_1736532000</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.10 19:35:41</td><td>29</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.21</td><td>2697.67</td><td>29</td><td>0.00</td><td>0.00</td><td>-98.91</td><td>9 764.61</td><td>sl 2697.63</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.10 23:19:00</td><td>30</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.6</td><td>2692.19</td><td>30</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 764.61</td><td>W33_XAUUSD_5_1_SHORT_1736539800</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.10 23:28:46</td><td>31</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.6</td><td>2690.28</td><td>31</td><td>0.00</td><td>0.00</td><td>114.60</td><td>9 879.21</td><td>tp 2690.57</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.13 09:50:00</td><td>32</td><td>XAUUSD</td><td>buy</td><td>in</td><td>0.4</td><td>2686.40</td><td>32</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 879.21</td><td>W33_XAUUSD_5_1_LONG_1736754900_</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.13 10:07:13</td><td>33</td><td>XAUUSD</td><td>sell</td><td>out</td><td>0.4</td><td>2688.84</td><td>33</td><td>0.00</td><td>0.00</td><td>97.60</td><td>9 976.81</td><td>tp 2688.82</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.13 18:18:00</td><td>34</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.23</td><td>2663.92</td><td>34</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 976.81</td><td>W33_XAUUSD_5_1_SHORT_1736790600</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.13 19:38:54</td><td>35</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.23</td><td>2659.61</td><td>35</td><td>0.00</td><td>0.00</td><td>99.13</td><td>10 075.94</td><td>tp 2659.69</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.14 04:17:00</td><td>36</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.34</td><td>2669.05</td><td>36</td><td>0.00</td><td>0.00</td><td>0.00</td><td>10 075.94</td><td>W33_XAUUSD_5_1_SHORT_1736825100</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.14 04:38:47</td><td>37</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.34</td><td>2671.96</td><td>37</td><td>0.00</td><td>0.00</td><td>-98.94</td><td>9 977.00</td><td>sl 2671.94</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.14 10:36:00</td><td>38</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.37</td><td>2672.34</td><td>38</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 977.00</td><td>W33_XAUUSD_5_1_SHORT_1736839500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.14 11:17:34</td><td>39</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.37</td><td>2669.61</td><td>39</td><td>0.00</td><td>0.00</td><td>101.01</td><td>10 078.01</td><td>tp 2669.67</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.14 12:15:00</td><td>40</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.38</td><td>2666.67</td><td>40</td><td>0.00</td><td>0.00</td><td>0.00</td><td>10 078.01</td><td>W33_XAUUSD_5_1_SHORT_1736854500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.14 13:53:54</td><td>41</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.38</td><td>2669.27</td><td>41</td><td>0.00</td><td>0.00</td><td>-98.80</td><td>9 979.21</td><td>sl 2669.27</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.14 15:18:00</td><td>42</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.39</td><td>2668.69</td><td>42</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 979.21</td><td>W33_XAUUSD_5_1_SHORT_1736865300</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.14 15:20:17</td><td>43</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.39</td><td>2666.13</td><td>43</td><td>0.00</td><td>0.00</td><td>99.84</td><td>10 079.05</td><td>tp 2666.18</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.14 22:39:00</td><td>44</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.86</td><td>2673.88</td><td>44</td><td>0.00</td><td>0.00</td><td>0.00</td><td>10 079.05</td><td>W33_XAUUSD_5_1_SHORT_1736892600</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.14 22:53:12</td><td>45</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.86</td><td>2675.06</td><td>45</td><td>0.00</td><td>0.00</td><td>-101.48</td><td>9 977.57</td><td>sl 2675.05</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.15 04:07:00</td><td>46</td><td>XAUUSD</td><td>buy</td><td>in</td><td>0.35</td><td>2671.53</td><td>46</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 977.57</td><td>W33_XAUUSD_5_1_LONG_1736887800_</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.15 04:46:34</td><td>47</td><td>XAUUSD</td><td>sell</td><td>out</td><td>0.35</td><td>2674.33</td><td>47</td><td>0.00</td><td>0.00</td><td>98.00</td><td>10 075.57</td><td>tp 2674.32</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.15 07:20:00</td><td>48</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.56</td><td>2674.88</td><td>48</td><td>0.00</td><td>0.00</td><td>0.00</td><td>10 075.57</td><td>W33_XAUUSD_5_1_SHORT_1736923200</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.15 07:36:30</td><td>49</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.56</td><td>2676.71</td><td>49</td><td>0.00</td><td>0.00</td><td>-102.48</td><td>9 973.09</td><td>sl 2676.67</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.15 13:27:00</td><td>50</td><td>XAUUSD</td><td>buy</td><td>in</td><td>0.51</td><td>2686.86</td><td>50</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 973.09</td><td>W33_XAUUSD_5_1_LONG_1736945100_</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.15 14:06:20</td><td>51</td><td>XAUUSD</td><td>sell</td><td>out</td><td>0.51</td><td>2684.93</td><td>51</td><td>0.00</td><td>0.00</td><td>-98.43</td><td>9 874.66</td><td>sl 2684.93</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.16 15:05:00</td><td>52</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.25</td><td>2702.08</td><td>52</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 874.66</td><td>W33_XAUUSD_5_1_SHORT_1737035700</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.16 15:11:53</td><td>53</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.25</td><td>2705.91</td><td>53</td><td>0.00</td><td>0.00</td><td>-95.75</td><td>9 778.91</td><td>sl 2705.90</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.17 07:17:00</td><td>54</td><td>XAUUSD</td><td>buy</td><td>in</td><td>0.58</td><td>2715.22</td><td>54</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 778.91</td><td>W33_XAUUSD_5_1_LONG_1737085500_</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.17 07:29:45</td><td>55</td><td>XAUUSD</td><td>sell</td><td>out</td><td>0.58</td><td>2713.53</td><td>55</td><td>0.00</td><td>0.00</td><td>-98.02</td><td>9 680.89</td><td>sl 2713.54</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.17 10:27:00</td><td>56</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.67</td><td>2710.11</td><td>56</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 680.89</td><td>W33_XAUUSD_5_1_SHORT_1737106800</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.17 10:44:38</td><td>57</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.67</td><td>2711.57</td><td>57</td><td>0.00</td><td>0.00</td><td>-97.82</td><td>9 583.07</td><td>sl 2711.55</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.17 14:15:00</td><td>58</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.29</td><td>2707.78</td><td>58</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 583.07</td><td>W33_XAUUSD_5_1_SHORT_1737112500</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.17 14:34:03</td><td>59</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.29</td><td>2711.05</td><td>59</td><td>0.00</td><td>0.00</td><td>-94.83</td><td>9 488.24</td><td>sl 2711.02</td></tr>
+   <tr bgcolor="#F7F7F7" align=right><td>2025.01.17 19:51:00</td><td>60</td><td>XAUUSD</td><td>sell</td><td>in</td><td>0.53</td><td>2711.74</td><td>60</td><td>0.00</td><td>0.00</td><td>0.00</td><td>9 488.24</td><td>W33_XAUUSD_5_1_SHORT_1737140400</td></tr>
+   <tr bgcolor="#FFFFFF" align=right><td>2025.01.17 19:52:55</td><td>61</td><td>XAUUSD</td><td>buy</td><td>out</td><td>0.53</td><td>2713.50</td><td>61</td><td>0.00</td><td>0.00</td><td>-93.28</td><td>9 394.96</td><td>sl 2713.50</td></tr>
+   <tr align="right">
+      <td nowrap colspan="8" style="height: 30px"></td>
+      <td nowrap><b>0.00</b></td>
+      <td nowrap><b>-32.57</b></td>
+      <td nowrap><b>-572.47</b></td>
+      <td nowrap><b>9 394.96</b></td>
+      <td nowrap></td>
+   </tr>
+   <tr>
+      <td nowrap style="height: 10px"></td>
+   </tr>
+</table>
+</div>
+</body>
+</html>

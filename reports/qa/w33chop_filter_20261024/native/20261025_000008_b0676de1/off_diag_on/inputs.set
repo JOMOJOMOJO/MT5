@@ -1,0 +1,9 @@
+InpRunTag=w33cf_20261025_000008_b0676de1_off_diag_on
+InpSkipChoppyWave1=false
+InpChopDiagnostic=true
+InpEnableTesterOrders=false
+InpDraw=false
+InpKeepObjects=false
+InpScreenshots=false
+InpChopLabels=false
+

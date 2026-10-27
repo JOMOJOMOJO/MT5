@@ -1,0 +1,115 @@
+{
+  "runs": [
+    {
+      "run_id": "a_v140_full",
+      "kind": "native_mt5_observation",
+      "event_rows": 15252,
+      "candidate_count": 179,
+      "events": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 10740,
+        "WAVE1_BREAK": 179,
+        "STATE": 940,
+        "WAVE1_PROVISIONAL": 471,
+        "WAVE1_PEAK_CONFIRMED": 156,
+        "WAVE2_EXTREME": 1068,
+        "FIB_TOUCH": 147,
+        "LOWER_STRUCTURE_CONFIRMED": 325,
+        "PIVOT_TRIGGER": 84,
+        "SIGNAL": 84,
+        "RISK_CHECK": 84,
+        "SKIP": 48,
+        "COMPLETED": 84,
+        "FIB_TOO_DEEP": 90,
+        "TRENDLINE_TRIGGER": 37,
+        "ORDER": 50,
+        "FILL": 50,
+        "POSITION_TRACKING": 50,
+        "EXIT": 50,
+        "INVALIDATE": 80,
+        "LOWER_STRUCTURE_LOST": 141,
+        "LOWER_STRUCTURE_REJECTED": 269,
+        "INITIAL_MOVE_PROGRESS": 23,
+        "TEST_END": 1
+      },
+      "event_reach_setups": {
+        "WAVE1_BREAK": 179,
+        "WAVE1_PEAK_CONFIRMED": 156,
+        "FIB_TOUCH": 147,
+        "LOWER_STRUCTURE_CONFIRMED": 132,
+        "WAVE2_EXTREME": 156,
+        "COMPLETED": 84,
+        "STATE": 179,
+        "PIVOT_TRIGGER": 84,
+        "RISK_CHECK": 84,
+        "WAVE1_PROVISIONAL": 179,
+        "SIGNAL": 84,
+        "SKIP": 48,
+        "EXIT": 50,
+        "FILL": 50,
+        "FIB_TOO_DEEP": 90,
+        "ORDER": 50,
+        "POSITION_TRACKING": 50,
+        "TRENDLINE_TRIGGER": 37,
+        "INVALIDATE": 80,
+        "LOWER_STRUCTURE_LOST": 86,
+        "LOWER_STRUCTURE_REJECTED": 53,
+        "INITIAL_MOVE_PROGRESS": 23,
+        "TEST_END": 1
+      },
+      "state_reach_setups": {
+        "WAVE2_RETRACEMENT": 156,
+        "RESISTANCE_AND_RISK_CHECK": 84,
+        "LOWER_REVERSAL_TRIGGER": 84,
+        "LOWER_COUNTERTREND": 132,
+        "WAVE1_BREAK_CANDIDATE": 179,
+        "WAVE1_TOP_TRACKING": 179,
+        "POSITION_TRACKING": 50
+      },
+      "directions": {
+        "LONG": 94,
+        "SHORT": 85
+      },
+      "entry_statuses": {
+        "SKIPPED": 48,
+        "CLOSED": 50,
+        "INVALIDATED": 80,
+        "CANDIDATE": 1
+      },
+      "case_count": 5,
+      "cases": [
+        "W33_USDJPY_15_5_LONG_1451919600_1",
+        "W33_USDJPY_15_5_SHORT_1451943900_2",
+        "W33_USDJPY_15_5_SHORT_1451961900_3",
+        "W33_USDJPY_15_5_LONG_1452026700_4",
+        "W33_USDJPY_15_5_LONG_1452158100_5"
+      ],
+      "images": [],
+      "drawing_images": [],
+      "tester_report_images": [
+        "images/wave33_20261021_151636_6fcee6dd_a_v140_full-holding.png",
+        "images/wave33_20261021_151636_6fcee6dd_a_v140_full-hst.png",
+        "images/wave33_20261021_151636_6fcee6dd_a_v140_full-mfemae.png",
+        "images/wave33_20261021_151636_6fcee6dd_a_v140_full.png",
+        "wave33_20261021_151636_6fcee6dd_a_v140_full-holding.png",
+        "wave33_20261021_151636_6fcee6dd_a_v140_full-hst.png",
+        "wave33_20261021_151636_6fcee6dd_a_v140_full-mfemae.png",
+        "wave33_20261021_151636_6fcee6dd_a_v140_full.png"
+      ],
+      "unverified_images": [],
+      "actual_visual_mode": false,
+      "required_columns_missing": [],
+      "violations": [],
+      "warnings": [
+        "No native ChartScreenShot image; visual rendering still requires MT5 visual mode inspection."
+      ],
+      "audit_passed": true,
+      "video_agreement": "UNASSESSED_SOURCE_CHARTS_NOT_PROVIDED",
+      "profitability_or_promotion": "NOT_ASSESSED"
+    }
+  ],
+  "run_count": 1,
+  "audit_passed": true,
+  "video_agreement": "UNASSESSED_SOURCE_CHARTS_NOT_PROVIDED",
+  "profitability_or_promotion": "NOT_ASSESSED"
+}

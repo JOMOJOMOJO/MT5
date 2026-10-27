@@ -1,0 +1,291 @@
+{
+  "status": "MODEL_DIFF_REQUIRES_SEPARATE_INTERPRETATION",
+  "exact_equal": false,
+  "checks": {
+    "all_nonrender_events": false,
+    "upper_bars": true,
+    "lower_bars": true,
+    "opposite_ticks": false
+  },
+  "single": "reports\\qa\\w33batch\\eng\\20261022_235504_d57c3130\\a_extension_on",
+  "batch": "reports\\qa\\w33batch\\mw_gen\\mw_20261023_093811_0a55ac82\\passes\\XAUUSD+_9",
+  "event_rows": [
+    1240,
+    1240
+  ],
+  "differences": [
+    {
+      "index": 182,
+      "event": "EXIT",
+      "fields": {
+        "realized_r": {
+          "single": "-1.0184426230",
+          "batch": "-1.0122950820"
+        },
+        "exit_at": {
+          "single": "2020.10.01 22:55:42",
+          "batch": "2020.10.01 22:55:40"
+        },
+        "execution_net_cash": {
+          "single": "-49.7000000000",
+          "batch": "-49.4000000000"
+        },
+        "event_at": {
+          "single": "2020.10.01 22:55:42",
+          "batch": "2020.10.01 22:55:40"
+        },
+        "exit_price": {
+          "single": "1904.5400000000",
+          "batch": "1904.5700000000"
+        }
+      }
+    },
+    {
+      "index": 183,
+      "event": "COMPLETED",
+      "fields": {
+        "realized_r": {
+          "single": "-1.0184426230",
+          "batch": "-1.0122950820"
+        },
+        "exit_at": {
+          "single": "2020.10.01 22:55:42",
+          "batch": "2020.10.01 22:55:40"
+        },
+        "execution_net_cash": {
+          "single": "-49.7000000000",
+          "batch": "-49.4000000000"
+        },
+        "event_at": {
+          "single": "2020.10.01 22:55:42",
+          "batch": "2020.10.01 22:55:40"
+        },
+        "exit_price": {
+          "single": "1904.5400000000",
+          "batch": "1904.5700000000"
+        }
+      }
+    },
+    {
+      "index": 608,
+      "event": "ORDER",
+      "fields": {
+        "reason": {
+          "single": "volume=0.08000000 risk_budget=49.50",
+          "batch": "volume=0.08000000 risk_budget=49.51"
+        }
+      }
+    },
+    {
+      "index": 626,
+      "event": "EXIT",
+      "fields": {
+        "realized_r": {
+          "single": "0.9933884298",
+          "batch": "0.9900826446"
+        },
+        "exit_at": {
+          "single": "2020.10.06 15:02:01",
+          "batch": "2020.10.06 15:02:20"
+        },
+        "execution_net_cash": {
+          "single": "48.0800000000",
+          "batch": "47.9200000000"
+        },
+        "event_at": {
+          "single": "2020.10.06 15:02:01",
+          "batch": "2020.10.06 15:02:20"
+        },
+        "exit_price": {
+          "single": "1918.4100000000",
+          "batch": "1918.3900000000"
+        }
+      }
+    },
+    {
+      "index": 627,
+      "event": "COMPLETED",
+      "fields": {
+        "realized_r": {
+          "single": "0.9933884298",
+          "batch": "0.9900826446"
+        },
+        "exit_at": {
+          "single": "2020.10.06 15:02:01",
+          "batch": "2020.10.06 15:02:20"
+        },
+        "execution_net_cash": {
+          "single": "48.0800000000",
+          "batch": "47.9200000000"
+        },
+        "event_at": {
+          "single": "2020.10.06 15:02:01",
+          "batch": "2020.10.06 15:02:20"
+        },
+        "exit_price": {
+          "single": "1918.4100000000",
+          "batch": "1918.3900000000"
+        }
+      }
+    },
+    {
+      "index": 779,
+      "event": "ORDER",
+      "fields": {
+        "reason": {
+          "single": "volume=0.06000000 risk_budget=49.98",
+          "batch": "volume=0.06000000 risk_budget=49.99"
+        }
+      }
+    },
+    {
+      "index": 796,
+      "event": "OPPOSITE_CLOSE_REQUEST",
+      "fields": {
+        "opposite_exit_requested_at": {
+          "single": "2020.10.07 16:37:16",
+          "batch": "2020.10.07 16:37:40"
+        },
+        "opposite_exit_net_estimate": {
+          "single": "0.1200000000",
+          "batch": "8.2800000000"
+        },
+        "event_at": {
+          "single": "2020.10.07 16:37:16",
+          "batch": "2020.10.07 16:37:40"
+        },
+        "reason": {
+          "single": "net_estimate=0.1200000000 | bid=1884.89 ask=1884.90",
+          "batch": "net_estimate=8.2800000000 | bid=1883.53 ask=1883.54"
+        }
+      }
+    },
+    {
+      "index": 797,
+      "event": "OPPOSITE_CLOSE_ACCEPTED",
+      "fields": {
+        "opposite_exit_requested_at": {
+          "single": "2020.10.07 16:37:16",
+          "batch": "2020.10.07 16:37:40"
+        },
+        "opposite_exit_net_estimate": {
+          "single": "0.1200000000",
+          "batch": "8.2800000000"
+        },
+        "event_at": {
+          "single": "2020.10.07 16:37:16",
+          "batch": "2020.10.07 16:37:40"
+        }
+      }
+    },
+    {
+      "index": 798,
+      "event": "EXIT",
+      "fields": {
+        "realized_r": {
+          "single": "0.0110497238",
+          "batch": "0.1988950276"
+        },
+        "opposite_exit_requested_at": {
+          "single": "2020.10.07 16:37:16",
+          "batch": "2020.10.07 16:37:40"
+        },
+        "exit_at": {
+          "single": "2020.10.07 16:37:16",
+          "batch": "2020.10.07 16:37:40"
+        },
+        "opposite_exit_net_estimate": {
+          "single": "0.1200000000",
+          "batch": "8.2800000000"
+        },
+        "execution_net_cash": {
+          "single": "0.4800000000",
+          "batch": "8.6400000000"
+        },
+        "event_at": {
+          "single": "2020.10.07 16:37:16",
+          "batch": "2020.10.07 16:37:40"
+        },
+        "exit_price": {
+          "single": "1884.9000000000",
+          "batch": "1883.5400000000"
+        }
+      }
+    },
+    {
+      "index": 799,
+      "event": "COMPLETED",
+      "fields": {
+        "realized_r": {
+          "single": "0.0110497238",
+          "batch": "0.1988950276"
+        },
+        "opposite_exit_requested_at": {
+          "single": "2020.10.07 16:37:16",
+          "batch": "2020.10.07 16:37:40"
+        },
+        "exit_at": {
+          "single": "2020.10.07 16:37:16",
+          "batch": "2020.10.07 16:37:40"
+        },
+        "opposite_exit_net_estimate": {
+          "single": "0.1200000000",
+          "batch": "8.2800000000"
+        },
+        "execution_net_cash": {
+          "single": "0.4800000000",
+          "batch": "8.6400000000"
+        },
+        "event_at": {
+          "single": "2020.10.07 16:37:16",
+          "batch": "2020.10.07 16:37:40"
+        },
+        "exit_price": {
+          "single": "1884.9000000000",
+          "batch": "1883.5400000000"
+        }
+      }
+    },
+    {
+      "index": 980,
+      "event": "ORDER",
+      "fields": {
+        "reason": {
+          "single": "volume=0.10000000 risk_budget=49.99",
+          "batch": "volume=0.10000000 risk_budget=50.07"
+        }
+      }
+    },
+    {
+      "index": 988,
+      "event": "EXIT",
+      "fields": {
+        "exit_at": {
+          "single": "2020.10.08 20:29:32",
+          "batch": "2020.10.08 20:29:40"
+        },
+        "event_at": {
+          "single": "2020.10.08 20:29:32",
+          "batch": "2020.10.08 20:29:40"
+        }
+      }
+    },
+    {
+      "index": 989,
+      "event": "COMPLETED",
+      "fields": {
+        "exit_at": {
+          "single": "2020.10.08 20:29:32",
+          "batch": "2020.10.08 20:29:40"
+        },
+        "event_at": {
+          "single": "2020.10.08 20:29:32",
+          "batch": "2020.10.08 20:29:40"
+        }
+      }
+    }
+  ],
+  "batch_model": 1,
+  "single_model": 4,
+  "scope": "All non-render/non-TEST_END event fields, raw bars, and inverse-W1 tick audit; no profitability assessment"
+}

@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "native_batch": "run_8a9f584f",
+  "total_assertions_recounted": 1470,
+  "cases": [
+    {
+      "case": "off_diag_on",
+      "assertions": 312,
+      "signals": 12,
+      "context_skips": 0,
+      "order_disabled": 12,
+      "failures": 0
+    },
+    {
+      "case": "off_diag_off",
+      "assertions": 300,
+      "signals": 12,
+      "context_skips": 0,
+      "order_disabled": 12,
+      "failures": 0
+    },
+    {
+      "case": "on_diag_on",
+      "assertions": 312,
+      "signals": 12,
+      "context_skips": 4,
+      "order_disabled": 8,
+      "failures": 0
+    },
+    {
+      "case": "on_diag_off",
+      "assertions": 312,
+      "signals": 12,
+      "context_skips": 4,
+      "order_disabled": 8,
+      "failures": 0
+    },
+    {
+      "case": "on_orders_on",
+      "assertions": 232,
+      "signals": 4,
+      "context_skips": 4,
+      "order_disabled": 0,
+      "failures": 0
+    },
+    {
+      "case": "invalid_negative",
+      "assertions": 1,
+      "signals": 0,
+      "context_skips": 0,
+      "order_disabled": 0,
+      "failures": 0
+    },
+    {
+      "case": "invalid_above_one",
+      "assertions": 1,
+      "signals": 0,
+      "context_skips": 0,
+      "order_disabled": 0,
+      "failures": 0
+    }
+  ],
+  "current_source_hashes_match_native_manifest": true,
+  "release_rejection_event_check": "Both actual CONTEXT_FINISH_REJECTED and old spelling PRIOR_CONTEXT_FINISH_REJECTED searched; none present",
+  "csv_note": "MQL FileWrite leaves semicolons in assertion detail unquoted; summary detail reconstructed from extra fields. Test/result and main event columns are intact.",
+  "scope": "Read-only independent native fixture CSV and source/harness hash audit. No new tester execution, screenshot QA or profitability inference."
+}

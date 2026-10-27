@@ -1,0 +1,13 @@
+{
+  "kind": "RECORDED_NATIVE_EVENTS_ONLY",
+  "signal_recalculation": false,
+  "requested_categories": 4,
+  "observed_cases": 0,
+  "shortfall": [
+    "CONNECTED_CANCEL_LONG",
+    "CONNECTED_CANCEL_SHORT",
+    "EXTENDED_TP_LONG",
+    "EXTENDED_TP_SHORT"
+  ],
+  "cases": []
+}

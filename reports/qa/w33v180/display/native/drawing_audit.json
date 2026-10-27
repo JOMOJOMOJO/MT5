@@ -1,0 +1,33 @@
+{
+  "kind": "NATIVE_RECORDED_DRAWING_INVENTORY_AUDIT",
+  "status": "FAIL",
+  "observed_cases": 4,
+  "shortfall": [],
+  "checks": 1775,
+  "failures": [
+    {
+      "case": 0,
+      "rule": "cancel_leader_not_backdated"
+    },
+    {
+      "case": 0,
+      "rule": "cancel_source_origin_tooltip"
+    },
+    {
+      "case": 0,
+      "rule": "compact_complete_cancel_tooltip"
+    },
+    {
+      "case": 1,
+      "rule": "cancel_leader_not_backdated"
+    },
+    {
+      "case": 1,
+      "rule": "cancel_source_origin_tooltip"
+    },
+    {
+      "case": 1,
+      "rule": "compact_complete_cancel_tooltip"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "version": "1.40",
+  "deployed_at_local": "2026-10-21T15:35:56",
+  "binary": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\Wave33VisualVerifier.ex5",
+  "binary_sha256": "6A3655668EC2B2E6C063759AE797597345FC71CB4FEF88F9B7D52A420C77E947",
+  "previous_binary_sha256": "075F0A4DB51D2F0E4E985AD515E1B75EBC3F0E6CA9F4F5EFD58F23953C408605",
+  "compiled_binary_source": "reports\\qa\\wave33_entry_room_20261021\\final_display_layout\\20261021_153302_0cb9ff9b\\Wave33VisualVerifier.ex5",
+  "latest_compile_provenance": "reports\\qa\\wave33_entry_room_20261021\\final_display_layout\\20261021_153302_0cb9ff9b\\provenance.json",
+  "strategy_test_provenance": "reports\\qa\\wave33_entry_room_20261021\\final_engineering\\20261021_151408_14185e95\\provenance.json",
+  "strategy_source_unchanged_after_native_runs": {
+    "main": true,
+    "Wave33Visual\\Engine.mqh": true,
+    "Wave33Visual\\Room.mqh": true,
+    "Wave33Visual\\Ledger.mqh": true,
+    "Wave33Visual\\Types.mqh": true
+  },
+  "display_header_sha256": "55A2D1C36E1EAAC5B8F51DDBF343526B2083802C00AD900221BEE3A7B8D18029",
+  "protected_other_eas_unchanged": {
+    "mql\\Experts\\USDJPY_M1_M5_3WaveIn3Wave_Long.mq5": true,
+    "mql\\Experts\\usdjpy_20260402_round_continuation_long.mq5": true
+  },
+  "installed_presets": [
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Profiles\\Tester\\wave33-v140-A-M15-M5-orders.set",
+      "sha256": "DDA6D244BD10DD0A1334CE937BCA124DB6684081AE5C2042F7C4881598AD3D1D"
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Profiles\\Tester\\wave33-v140-B-M5-M1-orders.set",
+      "sha256": "F1C5ED4E8A13B2CF8046F1135518C2899F20B323FE7AE38E85B2C15AE9914167"
+    }
+  ],
+  "user_terminal_interrupted": false,
+  "live_trading_enabled": false,
+  "orders_available_only_in_tester": true,
+  "publication": "LOCAL_ONLY"
+}

@@ -1,0 +1,6 @@
+﻿{
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33Chop\\20261024_173306_28dddefe",
+    "status":  "FAIL",
+    "reason":  "Cannot find path \u0027C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33chop_20261024_173306_28dddefe.csv w33chop_20261024_173306_28dddefe_parity.csv\u0027 because it does not exist.",
+    "tag":  "w33chop_20261024_173306_28dddefe"
+}

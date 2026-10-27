@@ -1,0 +1,215 @@
+{
+  "model": 4,
+  "runner_sha256": "46C602397FCAEAFBCEFB70DF38D99F500F25B811216EB4480B3B12E70029735B",
+  "normal_chart_trading": false,
+  "selected_symbols": [
+    "XAUUSD+",
+    "XAUAUD+",
+    "XAUEUR+",
+    "XAUJPY+",
+    "Nikkei225",
+    "CHINA50",
+    "HK50",
+    "BVSPX",
+    "ES35",
+    "USDJPY",
+    "GBPUSD",
+    "EURUSD",
+    "EURUSD+",
+    "AUDUSD"
+  ],
+  "remote_agents": false,
+  "official_optimization_reference": "https://www.metatrader5.com/en/terminal/help/start_advanced/start",
+  "history": [
+    {
+      "symbol": "XAUUSD+",
+      "history": [
+        {
+          "sha256": "8DB023C64DB46DCDD71D8DD3BD992FCEFB32A6C37736D6C75FD3DBF1C73A39DF",
+          "bytes": 21378075,
+          "file": "2020.hcc"
+        }
+      ],
+      "cached_history_available": true,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "XAUAUD+",
+      "history": [
+        {
+          "sha256": "52A24A90EC3518189ED65D84B03D519A1F31FE7A6EC441AD39743AEE1267744F",
+          "bytes": 21379215,
+          "file": "2020.hcc"
+        }
+      ],
+      "cached_history_available": true,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "XAUEUR+",
+      "history": [],
+      "cached_history_available": false,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "XAUJPY+",
+      "history": [],
+      "cached_history_available": false,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "Nikkei225",
+      "history": [
+        {
+          "sha256": "11EC398227AAFB2330EACDECEF7FBBC9182533C76A1AC0C5BFE8D7E6E97659F1",
+          "bytes": 20836215,
+          "file": "2020.hcc"
+        }
+      ],
+      "cached_history_available": true,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "CHINA50",
+      "history": [
+        {
+          "sha256": "9608C7EB99C37CD56D53B246CF89535C18FB082F4468235B46D2E3D342FC7A8B",
+          "bytes": 17786244,
+          "file": "2020.hcc"
+        }
+      ],
+      "cached_history_available": true,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "HK50",
+      "history": [
+        {
+          "sha256": "97A69028BA47B0684B4E826EF37F18EBD0F143D6613247AFCE77FE336FD374E9",
+          "bytes": 14152905,
+          "file": "2020.hcc"
+        }
+      ],
+      "cached_history_available": true,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "BVSPX",
+      "history": [],
+      "cached_history_available": false,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "ES35",
+      "history": [
+        {
+          "sha256": "9E3F1D784093B293BF534FDA53722732C3004C3827943CD60A1521EA4DECF580",
+          "bytes": 10925997,
+          "file": "2020.hcc"
+        }
+      ],
+      "cached_history_available": true,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "USDJPY",
+      "history": [
+        {
+          "sha256": "91B180B0AF4FC4B833D0B2999DA5CAF399C3A5C6AC3E619C6FBC9F3F0DEF5299",
+          "bytes": 22521624,
+          "file": "2020.hcc"
+        }
+      ],
+      "cached_history_available": true,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "GBPUSD",
+      "history": [
+        {
+          "sha256": "F3EEDD2DFD4E6D27E44EEE3C9698CFBC5364CA31669CC6AF4BC55974FEEAE977",
+          "bytes": 22511664,
+          "file": "2020.hcc"
+        }
+      ],
+      "cached_history_available": true,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "EURUSD",
+      "history": [
+        {
+          "sha256": "23E3C2E4838FBD15A8711665AFA48E9D038FC4B034A1B6B1C6609A26B7CA3143",
+          "bytes": 22522464,
+          "file": "2020.hcc"
+        }
+      ],
+      "cached_history_available": true,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "EURUSD+",
+      "history": [
+        {
+          "sha256": "980ADC1EC027C3B03B5F55EF41BD93E73380D180C7118778409C85CF54F39DC5",
+          "bytes": 22522464,
+          "file": "2020.hcc"
+        }
+      ],
+      "cached_history_available": true,
+      "real_tick_cache": []
+    },
+    {
+      "symbol": "AUDUSD",
+      "history": [
+        {
+          "sha256": "FFB379AD40F1EC04C9E9A0D8F49FC7441BC562036EE21CCB45FC8B3573FBA2F6",
+          "bytes": 22519944,
+          "file": "2020.hcc"
+        }
+      ],
+      "cached_history_available": true,
+      "real_tick_cache": []
+    }
+  ],
+  "source_snapshot_before": {
+    "market_watch_selected": "845110A91DA23B93674C6CE96F077802CFEA6FBF681284CC2FDA62DDC37CEF1E",
+    "server_cache": "6F942E6E7AF401D282BAE6ED2F7B3806ED0DC5431542F0BE99EC9AAF01D7D53B",
+    "account_cache": "65872CB0074A48020A481273AD796CBF97B6246F8EBE747013823A4CF98141BF",
+    "common_ini": "3C417D2764EEF8679D4BD795C4B06CEB1E4233EBFC66F22334210A7C336EA373"
+  },
+  "terminal_sha256": "8B13C3119F29A4DE564EF12D633B62DC54D652C538C10C232067EF01B8518D4D",
+  "deposit": 5000,
+  "date_from": "2020.10.01",
+  "currency": "USD",
+  "optimization": 3,
+  "compile_output": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\compile\\20261023_000013_b13f64c5",
+  "fixed_inputs": {
+    "InpRunTag": "w33mw_2614c1f3",
+    "InpAllowTesterBatchRuns": "true",
+    "InpPattern": 0,
+    "InpTriggerMode": 0,
+    "InpEnableTesterOrders": "true",
+    "InpExtendWave1BeforeFib": "true",
+    "InpExitOnOppositeWave1": "true",
+    "InpAuditOppositeExitTicks": "true",
+    "InpRejectDeepFib": "false",
+    "InpRejectDeepFibClose": "true",
+    "InpStrictWaveLifecycle": "true",
+    "InpLowerRecognition": 2,
+    "InpMinWave1RoomR": 0.25,
+    "InpRewardR": 1.0,
+    "InpRiskPercent": 1.0,
+    "InpMagic": "3320261022",
+    "InpDraw": "false",
+    "InpScreenshots": "false"
+  },
+  "purpose": "MARKETWATCH_BATCH_ENGINEERING_QA_NOT_PARAMETER_SEARCH",
+  "cloud_agents": false,
+  "source_selection_sha256": "845110A91DA23B93674C6CE96F077802CFEA6FBF681284CC2FDA62DDC37CEF1E",
+  "runtime": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_000013_b13f64c5",
+  "ea_sha256": "0B0402DCA712A9B06C9EDC425701A799D59129CD0E008AD22361E3DE478145E8",
+  "date_to_exclusive": "2020.10.10",
+  "real_ticks_verified": false,
+  "expected_selected_passes": 14
+}

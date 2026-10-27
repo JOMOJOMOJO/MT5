@@ -1,0 +1,13 @@
+InpRunTag=wave33_20261021_163401_1d44785f_b_fib_close_on
+InpDraw=true
+InpScreenshots=true
+InpRejectDeepFib=false
+InpTriggerMode=0
+InpLowerRecognition=2
+InpEnableTesterOrders=true
+InpPattern=1
+InpRewardR=1
+InpMagic=3320261021
+InpMinWave1RoomR=0.25
+InpRejectDeepFibClose=true
+InpStrictWaveLifecycle=true

@@ -1,0 +1,457 @@
+{
+  "status": "PASS",
+  "checks": 79474,
+  "violations": 0,
+  "failures": [],
+  "incomplete": [],
+  "config_differences": {
+    "exit_on_opposite_wave1": [
+      "false",
+      "true"
+    ],
+    "resolved_run_tag": [
+      "wave33_20261021_235636_802a6036_b_opposite_exit_off",
+      "wave33_20261021_235636_802a6036_b_opposite_exit_on"
+    ]
+  },
+  "comparison": {
+    "common_fills": 12,
+    "off_only": 0,
+    "on_only": 1,
+    "all_fills": {
+      "off": {
+        "ALL": {
+          "closed_fills": 12,
+          "total_r": 1.2807257928000004,
+          "mean_r": 0.10672714940000004,
+          "winners": 7,
+          "profit_factor_r": 1.239772667270901,
+          "custom_exits": 0
+        },
+        "LONG": {
+          "closed_fills": 5,
+          "total_r": -1.3257981170000002,
+          "mean_r": -0.26515962340000004,
+          "winners": 2,
+          "profit_factor_r": 0.590017464690481,
+          "custom_exits": 0
+        },
+        "SHORT": {
+          "closed_fills": 7,
+          "total_r": 2.606523909800001,
+          "mean_r": 0.37236055854285727,
+          "winners": 5,
+          "profit_factor_r": 2.236711261748899,
+          "custom_exits": 0
+        }
+      },
+      "on": {
+        "ALL": {
+          "closed_fills": 13,
+          "total_r": 2.6782271049,
+          "mean_r": 0.2060174696076923,
+          "winners": 10,
+          "profit_factor_r": 1.8282002550178422,
+          "custom_exits": 4
+        },
+        "LONG": {
+          "closed_fills": 6,
+          "total_r": -1.2404322633000002,
+          "mean_r": -0.20673871055000004,
+          "winners": 3,
+          "profit_factor_r": 0.616415532903145,
+          "custom_exits": 1
+        },
+        "SHORT": {
+          "closed_fills": 7,
+          "total_r": 3.9186593682,
+          "mean_r": 0.5598084811714286,
+          "winners": 7,
+          "profit_factor_r": null,
+          "custom_exits": 3
+        }
+      }
+    },
+    "common_fills_metrics": {
+      "off": {
+        "ALL": {
+          "closed_fills": 12,
+          "total_r": 1.2807257927999998,
+          "mean_r": 0.10672714939999998,
+          "winners": 7,
+          "profit_factor_r": 1.2397726672709009,
+          "custom_exits": 0
+        },
+        "LONG": {
+          "closed_fills": 5,
+          "total_r": -1.3257981170000002,
+          "mean_r": -0.26515962340000004,
+          "winners": 2,
+          "profit_factor_r": 0.590017464690481,
+          "custom_exits": 0
+        },
+        "SHORT": {
+          "closed_fills": 7,
+          "total_r": 2.6065239098,
+          "mean_r": 0.37236055854285716,
+          "winners": 5,
+          "profit_factor_r": 2.236711261748899,
+          "custom_exits": 0
+        }
+      },
+      "on": {
+        "ALL": {
+          "closed_fills": 12,
+          "total_r": 2.5928612512,
+          "mean_r": 0.21607177093333332,
+          "winners": 9,
+          "profit_factor_r": 1.8018021868051783,
+          "custom_exits": 3
+        },
+        "LONG": {
+          "closed_fills": 5,
+          "total_r": -1.3257981170000002,
+          "mean_r": -0.26515962340000004,
+          "winners": 2,
+          "profit_factor_r": 0.590017464690481,
+          "custom_exits": 0
+        },
+        "SHORT": {
+          "closed_fills": 7,
+          "total_r": 3.9186593682,
+          "mean_r": 0.5598084811714286,
+          "winners": 7,
+          "profit_factor_r": null,
+          "custom_exits": 3
+        }
+      }
+    },
+    "candidate_prefix_cutoff": "2019.01.04 20:59:26"
+  },
+  "armed_cases": [
+    {
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1546630800_9",
+      "opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1546632900_10",
+      "armed_at": "2019.01.04 20:35:00",
+      "ticks": 3199,
+      "ready_ticks": 1,
+      "first_ready_at": "2019.01.04 20:59:26",
+      "requests": 1,
+      "rejections": 0
+    },
+    {
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1546938300_17",
+      "opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1546945500_18",
+      "armed_at": "2019.01.08 11:30:00",
+      "ticks": 2627,
+      "ready_ticks": 1,
+      "first_ready_at": "2019.01.08 12:08:36",
+      "requests": 1,
+      "rejections": 0
+    },
+    {
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1546951800_19",
+      "opposite_setup_id": "W33_XAUUSD+_5_1_SHORT_1546953000_20",
+      "armed_at": "2019.01.08 13:30:00",
+      "ticks": 1,
+      "ready_ticks": 1,
+      "first_ready_at": "2019.01.08 13:30:00",
+      "requests": 1,
+      "rejections": 0
+    },
+    {
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1547636700_43",
+      "opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1547651100_44",
+      "armed_at": "2019.01.16 15:40:00",
+      "ticks": 241,
+      "ready_ticks": 1,
+      "first_ready_at": "2019.01.16 15:41:39",
+      "requests": 1,
+      "rejections": 0
+    }
+  ],
+  "native_cash_reconciliation": {
+    "off": [
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1546430100_2",
+        "direction": "SHORT",
+        "fill_at": "2019.01.02 12:54:00",
+        "exit_at": "2019.01.02 14:00:26",
+        "net_cash": 47.58,
+        "independent_r": 0.953125,
+        "recorded_r": 0.953125,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1546513500_6",
+        "direction": "SHORT",
+        "fill_at": "2019.01.03 11:44:00",
+        "exit_at": "2019.01.03 12:34:42",
+        "net_cash": 47.31,
+        "independent_r": 0.9431818181818182,
+        "recorded_r": 0.9431818182,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1546529700_8",
+        "direction": "LONG",
+        "fill_at": "2019.01.03 16:20:00",
+        "exit_at": "2019.01.03 17:00:38",
+        "net_cash": 48.25,
+        "independent_r": 0.9698492462311558,
+        "recorded_r": 0.9698492462,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1546630800_9",
+        "direction": "SHORT",
+        "fill_at": "2019.01.04 20:28:00",
+        "exit_at": "2019.01.04 22:27:05",
+        "net_cash": -52.08,
+        "independent_r": -1.037037037037037,
+        "recorded_r": -1.037037037,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1546901700_16",
+        "direction": "LONG",
+        "fill_at": "2019.01.08 02:25:00",
+        "exit_at": "2019.01.08 03:02:38",
+        "net_cash": 47.32,
+        "independent_r": 0.9381443298969072,
+        "recorded_r": 0.9381443299,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1546938300_17",
+        "direction": "SHORT",
+        "fill_at": "2019.01.08 10:19:00",
+        "exit_at": "2019.01.08 15:11:41",
+        "net_cash": 48.51,
+        "independent_r": 0.9671052631578947,
+        "recorded_r": 0.9671052632,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1547202300_30",
+        "direction": "SHORT",
+        "fill_at": "2019.01.11 10:56:00",
+        "exit_at": "2019.01.11 11:08:42",
+        "net_cash": 47.56,
+        "independent_r": 0.9318181818181818,
+        "recorded_r": 0.9318181818,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1547234400_31",
+        "direction": "LONG",
+        "fill_at": "2019.01.11 19:48:00",
+        "exit_at": "2019.01.11 20:12:36",
+        "net_cash": -55.68,
+        "independent_r": -1.0666666666666667,
+        "recorded_r": -1.0666666667,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1547526900_34",
+        "direction": "SHORT",
+        "fill_at": "2019.01.15 05:02:00",
+        "exit_at": "2019.01.15 05:27:38",
+        "net_cash": 46.92,
+        "independent_r": 0.918918918918919,
+        "recorded_r": 0.9189189189,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1547567100_38",
+        "direction": "LONG",
+        "fill_at": "2019.01.15 17:34:00",
+        "exit_at": "2019.01.15 18:01:41",
+        "net_cash": -57.28,
+        "independent_r": -1.098159509202454,
+        "recorded_r": -1.0981595092,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1547613300_42",
+        "direction": "LONG",
+        "fill_at": "2019.01.16 04:57:00",
+        "exit_at": "2019.01.16 05:08:40",
+        "net_cash": -54.87,
+        "independent_r": -1.0689655172413792,
+        "recorded_r": -1.0689655172,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1547636700_43",
+        "direction": "SHORT",
+        "fill_at": "2019.01.16 15:38:00",
+        "exit_at": "2019.01.16 16:02:17",
+        "net_cash": -54.6,
+        "independent_r": -1.0705882352941176,
+        "recorded_r": -1.0705882353,
+        "exit_reason": "DEAL_REASON_SL"
+      }
+    ],
+    "on": [
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1546430100_2",
+        "direction": "SHORT",
+        "fill_at": "2019.01.02 12:54:00",
+        "exit_at": "2019.01.02 14:00:26",
+        "net_cash": 47.58,
+        "independent_r": 0.953125,
+        "recorded_r": 0.953125,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1546513500_6",
+        "direction": "SHORT",
+        "fill_at": "2019.01.03 11:44:00",
+        "exit_at": "2019.01.03 12:34:42",
+        "net_cash": 47.31,
+        "independent_r": 0.9431818181818182,
+        "recorded_r": 0.9431818182,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1546529700_8",
+        "direction": "LONG",
+        "fill_at": "2019.01.03 16:20:00",
+        "exit_at": "2019.01.03 17:00:38",
+        "net_cash": 48.25,
+        "independent_r": 0.9698492462311558,
+        "recorded_r": 0.9698492462,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1546630800_9",
+        "direction": "SHORT",
+        "fill_at": "2019.01.04 20:28:00",
+        "exit_at": "2019.01.04 20:59:26",
+        "net_cash": 2.17,
+        "independent_r": 0.043209876543209874,
+        "recorded_r": 0.0432098765,
+        "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1546901700_16",
+        "direction": "LONG",
+        "fill_at": "2019.01.08 02:25:00",
+        "exit_at": "2019.01.08 03:02:38",
+        "net_cash": 48.23,
+        "independent_r": 0.9381443298969072,
+        "recorded_r": 0.9381443299,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1546938300_17",
+        "direction": "SHORT",
+        "fill_at": "2019.01.08 10:19:00",
+        "exit_at": "2019.01.08 12:08:36",
+        "net_cash": 2.38,
+        "independent_r": 0.046052631578947366,
+        "recorded_r": 0.0460526316,
+        "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1546951800_19",
+        "direction": "LONG",
+        "fill_at": "2019.01.08 13:21:00",
+        "exit_at": "2019.01.08 13:30:00",
+        "net_cash": 4.41,
+        "independent_r": 0.08536585365853659,
+        "recorded_r": 0.0853658537,
+        "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1547202300_30",
+        "direction": "SHORT",
+        "fill_at": "2019.01.11 10:56:00",
+        "exit_at": "2019.01.11 11:08:42",
+        "net_cash": 48.38,
+        "independent_r": 0.9318181818181818,
+        "recorded_r": 0.9318181818,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1547234400_31",
+        "direction": "LONG",
+        "fill_at": "2019.01.11 19:48:00",
+        "exit_at": "2019.01.11 20:12:36",
+        "net_cash": -55.68,
+        "independent_r": -1.0666666666666667,
+        "recorded_r": -1.0666666667,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1547526900_34",
+        "direction": "SHORT",
+        "fill_at": "2019.01.15 05:02:00",
+        "exit_at": "2019.01.15 05:27:38",
+        "net_cash": 47.6,
+        "independent_r": 0.918918918918919,
+        "recorded_r": 0.9189189189,
+        "exit_reason": "DEAL_REASON_TP"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1547567100_38",
+        "direction": "LONG",
+        "fill_at": "2019.01.15 17:34:00",
+        "exit_at": "2019.01.15 18:01:41",
+        "net_cash": -57.28,
+        "independent_r": -1.098159509202454,
+        "recorded_r": -1.0981595092,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_LONG_1547613300_42",
+        "direction": "LONG",
+        "fill_at": "2019.01.16 04:57:00",
+        "exit_at": "2019.01.16 05:08:40",
+        "net_cash": -54.87,
+        "independent_r": -1.0689655172413792,
+        "recorded_r": -1.0689655172,
+        "exit_reason": "DEAL_REASON_SL"
+      },
+      {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1547636700_43",
+        "direction": "SHORT",
+        "fill_at": "2019.01.16 15:38:00",
+        "exit_at": "2019.01.16 15:41:39",
+        "net_cash": 4.2,
+        "independent_r": 0.08235294117647059,
+        "recorded_r": 0.0823529412,
+        "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+      }
+    ]
+  },
+  "limitations": [
+    "Report deal tables expose commission/swap/profit; separate DEAL_FEE is not exposed and must be zero or separately reconciled.",
+    "Tick arithmetic is independently checked; completeness of every received tester tick is evidenced by caller logging, not external tick-feed certification.",
+    "Future commission and slippage are estimates; positive requested net does not guarantee positive actual exit cash.",
+    "Candidate and fill changes after first custom close can result from earlier release of holding/side restrictions; no profitability promotion is implied."
+  ],
+  "provenance": {
+    "off": {
+      "path": "reports\\qa\\w33opp\\b\\20261021_235636_802a6036\\b_opposite_exit_off",
+      "hashes": {
+        "events.csv": "e169b9367cab07b037944df671d53ac57e48e7d964beac7137ddb1daa12cc8ee",
+        "config.csv": "b66679ad655c8f26457e0da168507064561a83afb125547ebca7ff119e53b2b3",
+        "opposite_ticks.csv": "34a1a7d6899ad78ccbe84effdb717c92ac7c3eb657aeced1cd31ddae057015b2",
+        "upper_bars.csv": "be94da10cfa63642c735ef31636a964c14193d538c2e248a5c549b285993216b",
+        "report.htm": "13e12a012b88b398dcc2cd2fc67b6696eb0441c650ef1760395e2e2de58bc979"
+      }
+    },
+    "on": {
+      "path": "reports\\qa\\w33opp\\b\\20261021_235636_802a6036\\b_opposite_exit_on",
+      "hashes": {
+        "events.csv": "7fd1414df186568cc2a76b88da826073d6b7b30d25d8d39eb2405bc300e8c56d",
+        "config.csv": "9353b9b19497e55648ed662dccb502617ba5bc477eacdfd576c400867b735c9b",
+        "opposite_ticks.csv": "297bcb1a5c8c6d4c77d3bdf56c4b143f9e50221100b5ed4c5b5d8ec47e717e20",
+        "upper_bars.csv": "be94da10cfa63642c735ef31636a964c14193d538c2e248a5c549b285993216b",
+        "report.htm": "d19391dff77a5fe0d30c5a2ee742b374b53d8e85f2d37e7ec91648a8dffc95ae"
+      }
+    }
+  }
+}

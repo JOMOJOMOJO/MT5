@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "scope": "Final display-only rebuild reproduces all strategy/execution fields including the 10 new fields; first batch 8-arm audit remains applicable",
+  "runs": [
+    {
+      "run": "v180_a_base",
+      "original_rows": 785,
+      "final_rows": 785,
+      "all_131_columns_identical": true
+    },
+    {
+      "run": "v180_a_both",
+      "original_rows": 785,
+      "final_rows": 785,
+      "all_131_columns_identical": true
+    },
+    {
+      "run": "v180_b_base",
+      "original_rows": 3195,
+      "final_rows": 3195,
+      "all_131_columns_identical": true
+    },
+    {
+      "run": "v180_b_both",
+      "original_rows": 3127,
+      "final_rows": 3127,
+      "all_131_columns_identical": true
+    }
+  ]
+}

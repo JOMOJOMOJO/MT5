@@ -1,0 +1,14 @@
+{
+  "date_from": "2023.01.01",
+  "date_to": "2023.01.10",
+  "model": 4,
+  "chart_period": "M1",
+  "tag": "wave33_20261023_112317_3e88623f_extension_harness",
+  "expert": "Wave33ExtensionHarness",
+  "run_id": "extension_harness",
+  "inputs": {
+    "InpRunTag": "wave33_20261023_112317_3e88623f_extension_harness"
+  },
+  "symbol": "XAUUSD+",
+  "visual_mode": false
+}

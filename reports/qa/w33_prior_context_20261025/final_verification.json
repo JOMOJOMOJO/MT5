@@ -1,0 +1,90 @@
+{
+  "status": "PASS",
+  "version": "1.83",
+  "native_batch": "run_8a9f584f",
+  "native_assertions": 1470,
+  "native_event_audit_checks": 67,
+  "failures": 0,
+  "protected": [
+    {
+      "path": "mql/Experts/Wave33VisualVerifier.mq5",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Experts/Wave33VisualVerifier.ex5",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Engine.mqh",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Display.mqh",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Types.mqh",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Ledger.mqh",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Room.mqh",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/BarOrder.mqh",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/OppositeExit.mqh",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/TesterRun.mqh",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/Wave1Target.mqh",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Include/Wave33Visual/ConnectedWave.mqh",
+      "unchanged": true
+    }
+  ],
+  "chop_unchanged": true,
+  "presets": [
+    {
+      "file": "presets\\wave33\\Wave33Context_v183_A_FilterOn.set",
+      "inputs": 42,
+      "sha256": "2bfda0f8cb2e25b43ed1143c9a1466e89e6a68492243b45012109d9dba014937"
+    },
+    {
+      "file": "presets\\wave33\\Wave33Context_v183_A_FilterOff.set",
+      "inputs": 42,
+      "sha256": "6780c764fe8c8ccb6b43f32d14fa97fb282db53a77d62258d81931816c89d316"
+    },
+    {
+      "file": "presets\\wave33\\Wave33Context_v183_B_FilterOn.set",
+      "inputs": 42,
+      "sha256": "82428d4207f6e45348217aa05a808463747669d4d497c1242649abfc5282658d"
+    },
+    {
+      "file": "presets\\wave33\\Wave33Context_v183_B_FilterOff.set",
+      "inputs": 42,
+      "sha256": "e371c983b3cb5f6228afbb3222c423b8ea7a4cf0a01d494c8d07b55b9eb23efa"
+    }
+  ],
+  "artifact_sha256": {
+    "mql/Experts/Wave33ChopDiagnostic.mq5": "6ef9fd8dbef16f69a584e667cdc1a2ac94eb2409b433de0801595f77eb008548",
+    "mql/Experts/Wave33ChopDiagnostic.ex5": "cf54f2858d89fb0d23dbc5abfdba2edccbde081e600531c42558a015dc6bb336",
+    "mql/Include/Wave33Visual/PriorContext.mqh": "909f116ab7bedc0695c8ae8fb30c0e247fcc854d6297da9eb87e060a534aa51d",
+    "mql/Include/Wave33Visual/ChopDisplay.mqh": "562b6d559408995b364482469f9c062652188419dbd75d558f6b9a9cb5430424",
+    "mql/Experts/tests/Wave33PriorContextHarness.mq5": "b97ca2b2b3a601553e67a110793c991151cf7c93536c5b3f893008b5bce9c970",
+    "mql/Experts/tests/Wave33PriorContextHarness.ex5": "df7b710ed0f00037cd09c42047b3801ecaf212bda12adb4d10353c974dc54416"
+  },
+  "scope": "Engineering and causal classifier fixtures only; no annual, profitability, OOS or visual appearance gate"
+}

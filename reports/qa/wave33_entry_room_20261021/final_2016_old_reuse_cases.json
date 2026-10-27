@@ -1,0 +1,100 @@
+[
+  {
+    "direction": "SHORT",
+    "wave1_start_time": "2016.05.11 15:15:00",
+    "events": [
+      {
+        "event_type": "WAVE1_BREAK",
+        "event_at": "2016.05.11 16:45:00",
+        "reason": "",
+        "wave1_room_r": "0.0000000000",
+        "setup_id": "W33_USDJPY_15_5_SHORT_1462984200_166",
+        "lower_recognition": "NORMALIZED_COUNTERTREND"
+      },
+      {
+        "event_type": "SIGNAL",
+        "event_at": "2016.05.11 19:00:00",
+        "reason": "",
+        "wave1_room_r": "0.2125603865",
+        "setup_id": "W33_USDJPY_15_5_SHORT_1462984200_166",
+        "lower_recognition": "NORMALIZED_COUNTERTREND"
+      },
+      {
+        "event_type": "SKIP",
+        "event_at": "2016.05.11 19:00:00",
+        "reason": "WAVE1_ROOM_TOO_SMALL",
+        "wave1_room_r": "0.2125603865",
+        "setup_id": "W33_USDJPY_15_5_SHORT_1462984200_166",
+        "lower_recognition": "NORMALIZED_COUNTERTREND"
+      },
+      {
+        "event_type": "COMPLETED",
+        "event_at": "2016.05.11 19:00:00",
+        "reason": "WAVE1_ROOM_TOO_SMALL",
+        "wave1_room_r": "0.2125603865",
+        "setup_id": "W33_USDJPY_15_5_SHORT_1462984200_166",
+        "lower_recognition": "NORMALIZED_COUNTERTREND"
+      }
+    ]
+  },
+  {
+    "direction": "LONG",
+    "wave1_start_time": "2016.05.16 01:15:00",
+    "events": [
+      {
+        "event_type": "WAVE1_BREAK",
+        "event_at": "2016.05.16 03:15:00",
+        "reason": "",
+        "wave1_room_r": "0.0000000000",
+        "setup_id": "W33_USDJPY_15_5_LONG_1463367600_171",
+        "lower_recognition": "NORMALIZED_COUNTERTREND"
+      },
+      {
+        "event_type": "SIGNAL",
+        "event_at": "2016.05.16 09:30:00",
+        "reason": "",
+        "wave1_room_r": "-0.0253807107",
+        "setup_id": "W33_USDJPY_15_5_LONG_1463367600_171",
+        "lower_recognition": "NORMALIZED_COUNTERTREND"
+      },
+      {
+        "event_type": "SKIP",
+        "event_at": "2016.05.16 09:30:00",
+        "reason": "WAVE1_ROOM_TOO_SMALL",
+        "wave1_room_r": "-0.0253807107",
+        "setup_id": "W33_USDJPY_15_5_LONG_1463367600_171",
+        "lower_recognition": "NORMALIZED_COUNTERTREND"
+      },
+      {
+        "event_type": "COMPLETED",
+        "event_at": "2016.05.16 09:30:00",
+        "reason": "WAVE1_ROOM_TOO_SMALL",
+        "wave1_room_r": "-0.0253807107",
+        "setup_id": "W33_USDJPY_15_5_LONG_1463367600_171",
+        "lower_recognition": "NORMALIZED_COUNTERTREND"
+      }
+    ]
+  },
+  {
+    "direction": "SHORT",
+    "wave1_start_time": "2016.05.23 08:00:00",
+    "events": [
+      {
+        "event_type": "WAVE1_BREAK",
+        "event_at": "2016.05.23 09:00:00",
+        "reason": "",
+        "wave1_room_r": "0.0000000000",
+        "setup_id": "W33_USDJPY_15_5_SHORT_1463993100_178",
+        "lower_recognition": "NORMALIZED_COUNTERTREND"
+      },
+      {
+        "event_type": "INVALIDATE",
+        "event_at": "2016.05.23 10:00:00",
+        "reason": "INITIAL_MOVE_MISSED",
+        "wave1_room_r": "0.0000000000",
+        "setup_id": "W33_USDJPY_15_5_SHORT_1463993100_178",
+        "lower_recognition": "NORMALIZED_COUNTERTREND"
+      }
+    ]
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "run_id": "opposite_exit_harness",
+  "kind": "engine_harness",
+  "assertions": 91,
+  "passed": 87,
+  "failed": 4,
+  "violations": [
+    {
+      "check": "harness_assertion",
+      "test": "reset_LONG",
+      "passed": "FAIL",
+      "detail": "Fresh actual fill starts without an opposite-wave exit request"
+    },
+    {
+      "check": "harness_assertion",
+      "test": "flat_clears_all_LONG",
+      "passed": "FAIL",
+      "detail": "Flat resets the cause",
+      "null": [
+        " request state and counters for the next actual fill"
+      ]
+    },
+    {
+      "check": "harness_assertion",
+      "test": "reset_SHORT",
+      "passed": "FAIL",
+      "detail": "Fresh actual fill starts without an opposite-wave exit request"
+    },
+    {
+      "check": "harness_assertion",
+      "test": "flat_clears_all_SHORT",
+      "passed": "FAIL",
+      "detail": "Flat resets the cause",
+      "null": [
+        " request state and counters for the next actual fill"
+      ]
+    }
+  ],
+  "audit_passed": false
+}

@@ -1,0 +1,261 @@
+{
+  "runs": [
+    {
+      "run_id": "a_orders_smoke",
+      "kind": "native_mt5_observation",
+      "event_rows": 1442,
+      "candidate_count": 19,
+      "events": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 1060,
+        "WAVE1_BREAK": 19,
+        "STATE": 67,
+        "WAVE1_PROVISIONAL": 37,
+        "WAVE1_PEAK_CONFIRMED": 14,
+        "WAVE2_EXTREME": 101,
+        "FIB_TOUCH": 12,
+        "LOWER_STRUCTURE_REJECTED": 37,
+        "LOWER_STRUCTURE_CONFIRMED": 27,
+        "INITIAL_MOVE_PROGRESS": 3,
+        "PIVOT_TRIGGER": 5,
+        "SIGNAL": 5,
+        "RISK_CHECK": 5,
+        "SKIP": 4,
+        "COMPLETED": 5,
+        "FIB_TOO_DEEP": 7,
+        "TRENDLINE_TRIGGER": 2,
+        "LOWER_STRUCTURE_LOST": 7,
+        "ORDER": 3,
+        "FILL": 3,
+        "POSITION_TRACKING": 3,
+        "EXIT": 3,
+        "INVALIDATE": 12
+      },
+      "event_reach_setups": {
+        "WAVE1_PEAK_CONFIRMED": 14,
+        "SIGNAL": 5,
+        "WAVE1_BREAK": 19,
+        "INITIAL_MOVE_PROGRESS": 3,
+        "STATE": 19,
+        "PIVOT_TRIGGER": 5,
+        "COMPLETED": 5,
+        "FIB_TOUCH": 12,
+        "RISK_CHECK": 5,
+        "WAVE2_EXTREME": 14,
+        "LOWER_STRUCTURE_REJECTED": 5,
+        "LOWER_STRUCTURE_CONFIRMED": 7,
+        "WAVE1_PROVISIONAL": 19,
+        "SKIP": 4,
+        "EXIT": 3,
+        "POSITION_TRACKING": 3,
+        "ORDER": 3,
+        "LOWER_STRUCTURE_LOST": 4,
+        "FIB_TOO_DEEP": 7,
+        "TRENDLINE_TRIGGER": 2,
+        "FILL": 3,
+        "INVALIDATE": 12
+      },
+      "state_reach_setups": {
+        "WAVE1_TOP_TRACKING": 19,
+        "LOWER_REVERSAL_TRIGGER": 5,
+        "WAVE1_BREAK_CANDIDATE": 19,
+        "RESISTANCE_AND_RISK_CHECK": 5,
+        "LOWER_COUNTERTREND": 7,
+        "WAVE2_RETRACEMENT": 14,
+        "POSITION_TRACKING": 3
+      },
+      "directions": {
+        "LONG": 8,
+        "SHORT": 11
+      },
+      "entry_statuses": {
+        "SKIPPED": 4,
+        "CLOSED": 3,
+        "INVALIDATED": 12
+      },
+      "case_count": 5,
+      "cases": [
+        "W33_XAUUSD_15_5_LONG_1736161200_1",
+        "W33_XAUUSD_15_5_SHORT_1736177400_2",
+        "W33_XAUUSD_15_5_LONG_1736188200_3",
+        "W33_XAUUSD_15_5_LONG_1736204400_4",
+        "W33_XAUUSD_15_5_SHORT_1736216100_5"
+      ],
+      "images": [],
+      "drawing_images": [],
+      "tester_report_images": [
+        "images/wave33_20261021_151408_14185e95_a_orders_smoke-holding.png",
+        "images/wave33_20261021_151408_14185e95_a_orders_smoke-hst.png",
+        "images/wave33_20261021_151408_14185e95_a_orders_smoke-mfemae.png",
+        "images/wave33_20261021_151408_14185e95_a_orders_smoke.png",
+        "wave33_20261021_151408_14185e95_a_orders_smoke-holding.png",
+        "wave33_20261021_151408_14185e95_a_orders_smoke-hst.png",
+        "wave33_20261021_151408_14185e95_a_orders_smoke-mfemae.png",
+        "wave33_20261021_151408_14185e95_a_orders_smoke.png"
+      ],
+      "unverified_images": [],
+      "actual_visual_mode": false,
+      "required_columns_missing": [],
+      "violations": [],
+      "warnings": [
+        "No native ChartScreenShot image; visual rendering still requires MT5 visual mode inspection."
+      ],
+      "audit_passed": true,
+      "video_agreement": "UNASSESSED_SOURCE_CHARTS_NOT_PROVIDED",
+      "profitability_or_promotion": "NOT_ASSESSED"
+    },
+    {
+      "run_id": "b_orders_smoke",
+      "kind": "native_mt5_observation",
+      "event_rows": 6624,
+      "candidate_count": 59,
+      "events": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 4588,
+        "WAVE1_BREAK": 59,
+        "STATE": 405,
+        "WAVE1_PROVISIONAL": 205,
+        "WAVE1_PEAK_CONFIRMED": 49,
+        "WAVE2_EXTREME": 438,
+        "FIB_TOUCH": 46,
+        "LOWER_STRUCTURE_REJECTED": 245,
+        "LOWER_STRUCTURE_CONFIRMED": 161,
+        "LOWER_STRUCTURE_LOST": 70,
+        "FIB_TOO_DEEP": 25,
+        "PIVOT_TRIGGER": 41,
+        "TRENDLINE_TRIGGER": 16,
+        "SIGNAL": 41,
+        "RISK_CHECK": 41,
+        "ORDER": 30,
+        "FILL": 30,
+        "POSITION_TRACKING": 30,
+        "EXIT": 30,
+        "COMPLETED": 41,
+        "SKIP": 19,
+        "INVALIDATE": 10,
+        "INITIAL_MOVE_PROGRESS": 3
+      },
+      "event_reach_setups": {
+        "EXIT": 30,
+        "LOWER_STRUCTURE_CONFIRMED": 47,
+        "FIB_TOUCH": 46,
+        "LOWER_STRUCTURE_REJECTED": 26,
+        "FIB_TOO_DEEP": 25,
+        "TRENDLINE_TRIGGER": 16,
+        "WAVE1_PROVISIONAL": 59,
+        "WAVE1_PEAK_CONFIRMED": 49,
+        "ORDER": 30,
+        "POSITION_TRACKING": 30,
+        "FILL": 30,
+        "WAVE1_BREAK": 59,
+        "RISK_CHECK": 41,
+        "LOWER_STRUCTURE_LOST": 31,
+        "SIGNAL": 41,
+        "COMPLETED": 41,
+        "STATE": 59,
+        "WAVE2_EXTREME": 49,
+        "PIVOT_TRIGGER": 41,
+        "INVALIDATE": 10,
+        "SKIP": 19,
+        "INITIAL_MOVE_PROGRESS": 3
+      },
+      "state_reach_setups": {
+        "WAVE2_RETRACEMENT": 49,
+        "RESISTANCE_AND_RISK_CHECK": 41,
+        "WAVE1_TOP_TRACKING": 59,
+        "WAVE1_BREAK_CANDIDATE": 59,
+        "LOWER_REVERSAL_TRIGGER": 41,
+        "POSITION_TRACKING": 30,
+        "LOWER_COUNTERTREND": 47
+      },
+      "directions": {
+        "LONG": 33,
+        "SHORT": 26
+      },
+      "entry_statuses": {
+        "CLOSED": 30,
+        "INVALIDATED": 10,
+        "SKIPPED": 19
+      },
+      "case_count": 5,
+      "cases": [
+        "W33_XAUUSD_5_1_LONG_1736132100_1",
+        "W33_XAUUSD_5_1_SHORT_1736140500_2",
+        "W33_XAUUSD_5_1_LONG_1736158800_3",
+        "W33_XAUUSD_5_1_SHORT_1736177100_5",
+        "W33_XAUUSD_5_1_LONG_1736181900_6"
+      ],
+      "images": [],
+      "drawing_images": [],
+      "tester_report_images": [
+        "images/wave33_20261021_151408_14185e95_b_orders_smoke-holding.png",
+        "images/wave33_20261021_151408_14185e95_b_orders_smoke-hst.png",
+        "images/wave33_20261021_151408_14185e95_b_orders_smoke-mfemae.png",
+        "images/wave33_20261021_151408_14185e95_b_orders_smoke.png",
+        "wave33_20261021_151408_14185e95_b_orders_smoke-holding.png",
+        "wave33_20261021_151408_14185e95_b_orders_smoke-hst.png",
+        "wave33_20261021_151408_14185e95_b_orders_smoke-mfemae.png",
+        "wave33_20261021_151408_14185e95_b_orders_smoke.png"
+      ],
+      "unverified_images": [],
+      "actual_visual_mode": false,
+      "required_columns_missing": [],
+      "violations": [],
+      "warnings": [
+        "No native ChartScreenShot image; visual rendering still requires MT5 visual mode inspection."
+      ],
+      "audit_passed": true,
+      "video_agreement": "UNASSESSED_SOURCE_CHARTS_NOT_PROVIDED",
+      "profitability_or_promotion": "NOT_ASSESSED"
+    },
+    {
+      "run_id": "display_harness",
+      "kind": "display_harness",
+      "assertions": 28,
+      "passed": 28,
+      "failed": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    {
+      "run_id": "engine_harness",
+      "kind": "engine_harness",
+      "assertions": 100,
+      "passed": 100,
+      "failed": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    {
+      "run_id": "lifecycle_harness",
+      "kind": "lifecycle_harness",
+      "assertions": 96,
+      "passed": 96,
+      "failed": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    {
+      "run_id": "recognition_harness",
+      "kind": "recognition_harness",
+      "assertions": 156,
+      "passed": 156,
+      "failed": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    {
+      "run_id": "room_harness",
+      "kind": "room_harness",
+      "assertions": 19,
+      "passed": 19,
+      "failed": 0,
+      "violations": [],
+      "audit_passed": true
+    }
+  ],
+  "run_count": 7,
+  "audit_passed": true,
+  "video_agreement": "UNASSESSED_SOURCE_CHARTS_NOT_PROVIDED",
+  "profitability_or_promotion": "NOT_ASSESSED"
+}

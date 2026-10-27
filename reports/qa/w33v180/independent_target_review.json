@@ -1,0 +1,377 @@
+{
+  "status": "FAIL",
+  "scope": "Independent read-only audit of 8 native XAUUSD+ Jan 1-11 2023 fixed engineering runs. Decimal arithmetic recalculated from CSV, no EA helper invoked. No strategy profitability claim.",
+  "source_root": "reports/qa/w33v180/eng/20261023_112317_3e88623f",
+  "harness_target_assertions": 45,
+  "runs": [
+    {
+      "run": "v180_a_base",
+      "target_enabled": false,
+      "obstacle_mode": "DISPLAY_ONLY",
+      "signals": 4,
+      "target_extensions": 0,
+      "extensions_by_direction": {},
+      "orders": 3,
+      "fills": 3,
+      "ea_exit_events": 3,
+      "opposite_arms": 1,
+      "opposite_tick_rows": 1,
+      "ready_ticks": 1,
+      "opposite_close_requests": 1,
+      "opposite_profit_exits": 1,
+      "observed_profit_exit_net_cash": [
+        23.94
+      ],
+      "waiting_only": []
+    },
+    {
+      "run": "v180_a_both",
+      "target_enabled": true,
+      "obstacle_mode": "DISPLAY_ONLY",
+      "signals": 4,
+      "target_extensions": 0,
+      "extensions_by_direction": {},
+      "orders": 3,
+      "fills": 3,
+      "ea_exit_events": 3,
+      "opposite_arms": 1,
+      "opposite_tick_rows": 1,
+      "ready_ticks": 1,
+      "opposite_close_requests": 1,
+      "opposite_profit_exits": 1,
+      "observed_profit_exit_net_cash": [
+        23.94
+      ],
+      "waiting_only": []
+    },
+    {
+      "run": "v180_a_cancel",
+      "target_enabled": false,
+      "obstacle_mode": "DISPLAY_ONLY",
+      "signals": 4,
+      "target_extensions": 0,
+      "extensions_by_direction": {},
+      "orders": 3,
+      "fills": 3,
+      "ea_exit_events": 3,
+      "opposite_arms": 1,
+      "opposite_tick_rows": 1,
+      "ready_ticks": 1,
+      "opposite_close_requests": 1,
+      "opposite_profit_exits": 1,
+      "observed_profit_exit_net_cash": [
+        23.94
+      ],
+      "waiting_only": []
+    },
+    {
+      "run": "v180_a_target",
+      "target_enabled": true,
+      "obstacle_mode": "DISPLAY_ONLY",
+      "signals": 4,
+      "target_extensions": 0,
+      "extensions_by_direction": {},
+      "orders": 3,
+      "fills": 3,
+      "ea_exit_events": 3,
+      "opposite_arms": 1,
+      "opposite_tick_rows": 1,
+      "ready_ticks": 1,
+      "opposite_close_requests": 1,
+      "opposite_profit_exits": 1,
+      "observed_profit_exit_net_cash": [
+        23.94
+      ],
+      "waiting_only": []
+    },
+    {
+      "run": "v180_b_base",
+      "target_enabled": false,
+      "obstacle_mode": "DISPLAY_ONLY",
+      "signals": 10,
+      "target_extensions": 0,
+      "extensions_by_direction": {},
+      "orders": 7,
+      "fills": 7,
+      "ea_exit_events": 6,
+      "opposite_arms": 1,
+      "opposite_tick_rows": 5727,
+      "ready_ticks": 0,
+      "opposite_close_requests": 0,
+      "opposite_profit_exits": 0,
+      "observed_profit_exit_net_cash": [],
+      "waiting_only": [
+        {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1672938000_14",
+          "ticks": 5727,
+          "max_net_estimate": -7.74
+        }
+      ]
+    },
+    {
+      "run": "v180_b_both",
+      "target_enabled": true,
+      "obstacle_mode": "DISPLAY_ONLY",
+      "signals": 10,
+      "target_extensions": 2,
+      "extensions_by_direction": {
+        "LONG": 1,
+        "SHORT": 1
+      },
+      "orders": 7,
+      "fills": 7,
+      "ea_exit_events": 6,
+      "opposite_arms": 0,
+      "opposite_tick_rows": 0,
+      "ready_ticks": 0,
+      "opposite_close_requests": 0,
+      "opposite_profit_exits": 0,
+      "observed_profit_exit_net_cash": [],
+      "waiting_only": []
+    },
+    {
+      "run": "v180_b_cancel",
+      "target_enabled": false,
+      "obstacle_mode": "DISPLAY_ONLY",
+      "signals": 10,
+      "target_extensions": 0,
+      "extensions_by_direction": {},
+      "orders": 7,
+      "fills": 7,
+      "ea_exit_events": 6,
+      "opposite_arms": 0,
+      "opposite_tick_rows": 0,
+      "ready_ticks": 0,
+      "opposite_close_requests": 0,
+      "opposite_profit_exits": 0,
+      "observed_profit_exit_net_cash": [],
+      "waiting_only": []
+    },
+    {
+      "run": "v180_b_target",
+      "target_enabled": true,
+      "obstacle_mode": "DISPLAY_ONLY",
+      "signals": 10,
+      "target_extensions": 2,
+      "extensions_by_direction": {
+        "SHORT": 2
+      },
+      "orders": 7,
+      "fills": 7,
+      "ea_exit_events": 6,
+      "opposite_arms": 1,
+      "opposite_tick_rows": 5727,
+      "ready_ticks": 0,
+      "opposite_close_requests": 0,
+      "opposite_profit_exits": 0,
+      "observed_profit_exit_net_cash": [],
+      "waiting_only": [
+        {
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1672938000_14",
+          "ticks": 5727,
+          "max_net_estimate": -7.74
+        }
+      ]
+    }
+  ],
+  "cross_run_risk_comparisons": [
+    {
+      "baseline": "v180_a_base",
+      "target_enabled": "v180_a_target",
+      "common_signal_setups": 4,
+      "compared_fields": [
+        "event_at",
+        "entry_price",
+        "sl_price",
+        "risk_points",
+        "intended_rr",
+        "tp_rr_price",
+        "wave1_peak_price",
+        "wave1_peak_known_at"
+      ],
+      "mismatches": []
+    },
+    {
+      "baseline": "v180_a_cancel",
+      "target_enabled": "v180_a_both",
+      "common_signal_setups": 4,
+      "compared_fields": [
+        "event_at",
+        "entry_price",
+        "sl_price",
+        "risk_points",
+        "intended_rr",
+        "tp_rr_price",
+        "wave1_peak_price",
+        "wave1_peak_known_at"
+      ],
+      "mismatches": []
+    },
+    {
+      "baseline": "v180_b_base",
+      "target_enabled": "v180_b_target",
+      "common_signal_setups": 10,
+      "compared_fields": [
+        "event_at",
+        "entry_price",
+        "sl_price",
+        "risk_points",
+        "intended_rr",
+        "tp_rr_price",
+        "wave1_peak_price",
+        "wave1_peak_known_at"
+      ],
+      "mismatches": []
+    },
+    {
+      "baseline": "v180_b_cancel",
+      "target_enabled": "v180_b_both",
+      "common_signal_setups": 10,
+      "compared_fields": [
+        "event_at",
+        "entry_price",
+        "sl_price",
+        "risk_points",
+        "intended_rr",
+        "tp_rr_price",
+        "wave1_peak_price",
+        "wave1_peak_known_at"
+      ],
+      "mismatches": []
+    }
+  ],
+  "extension_examples": [
+    {
+      "run": "v180_b_both",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1673036700_25",
+      "direction": "LONG",
+      "event_at": "2023.01.06 22:59:00",
+      "wave1_peak_time": "2023.01.06 21:40:00",
+      "wave1_peak_known_at": "2023.01.06 21:55:00",
+      "entry_price": "1867.0600000000",
+      "sl_price": "1865.3700000000",
+      "risk_points": "169.0000000000",
+      "tp_rr_price": "1868.7500000000",
+      "tp_wave1_target_price": "1869.7200000000",
+      "tp_price": "1869.7200000000",
+      "spread_points": "11.0000000000",
+      "tp_wave1_buffer_points": "11.0000000000",
+      "actual_rr": "1.5739644970",
+      "tp_adjustment_reason": "TP_W1_EXTENDED"
+    },
+    {
+      "run": "v180_b_both",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1673291100_28",
+      "direction": "SHORT",
+      "event_at": "2023.01.09 20:41:00",
+      "wave1_peak_time": "2023.01.09 19:35:00",
+      "wave1_peak_known_at": "2023.01.09 19:50:00",
+      "entry_price": "1872.3900000000",
+      "sl_price": "1875.1000000000",
+      "risk_points": "271.0000000000",
+      "tp_rr_price": "1869.6800000000",
+      "tp_wave1_target_price": "1869.1500000000",
+      "tp_price": "1869.1500000000",
+      "spread_points": "11.0000000000",
+      "tp_wave1_buffer_points": "11.0000000000",
+      "actual_rr": "1.1955719557",
+      "tp_adjustment_reason": "TP_W1_EXTENDED"
+    },
+    {
+      "run": "v180_b_target",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1672938000_14",
+      "direction": "SHORT",
+      "event_at": "2023.01.05 18:25:00",
+      "wave1_peak_time": "2023.01.05 17:35:00",
+      "wave1_peak_known_at": "2023.01.05 17:50:00",
+      "entry_price": "1829.4700000000",
+      "sl_price": "1832.2400000000",
+      "risk_points": "277.0000000000",
+      "tp_rr_price": "1826.7000000000",
+      "tp_wave1_target_price": "1825.1700000000",
+      "tp_price": "1825.1700000000",
+      "spread_points": "14.0000000000",
+      "tp_wave1_buffer_points": "14.0000000000",
+      "actual_rr": "1.5523465704",
+      "tp_adjustment_reason": "TP_W1_EXTENDED"
+    },
+    {
+      "run": "v180_b_target",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1673291100_28",
+      "direction": "SHORT",
+      "event_at": "2023.01.09 20:41:00",
+      "wave1_peak_time": "2023.01.09 19:35:00",
+      "wave1_peak_known_at": "2023.01.09 19:50:00",
+      "entry_price": "1872.3900000000",
+      "sl_price": "1875.1000000000",
+      "risk_points": "271.0000000000",
+      "tp_rr_price": "1869.6800000000",
+      "tp_wave1_target_price": "1869.1500000000",
+      "tp_price": "1869.1500000000",
+      "spread_points": "11.0000000000",
+      "tp_wave1_buffer_points": "11.0000000000",
+      "actual_rr": "1.1955719557",
+      "tp_adjustment_reason": "TP_W1_EXTENDED"
+    }
+  ],
+  "totals": {
+    "run_count": 8,
+    "signals": 56,
+    "extension_events": 4,
+    "extension_long": 1,
+    "extension_short": 3,
+    "opposite_arms": 6,
+    "opposite_tick_rows": 11458,
+    "opposite_requests": 4,
+    "opposite_profit_exits": 4
+  },
+  "limitations": [
+    "All 8 native runs used DISPLAY_ONLY. CAP_TP priority reviewed in main Plan; native CAP fixture not present here.",
+    "Four A profit exits are repetitions of the same market episode across fixed variants, not four independent trades.",
+    "One B position per run remains open at tester stop; EA EXIT event counts exclude tester-forced closure.",
+    "Target risk invariance checks common SIGNAL snapshots; later position size may change from changed account equity. The sizing formula remains SL-risk based.",
+    "tp_wave1_buffer_points records the initial W1 target margin after inward rounding; CAP_TP can subsequently change the final TP."
+  ],
+  "issues": [
+    {
+      "run": "v180_a_both",
+      "check": "independent_inward_target",
+      "detail": "W33_XAUUSD+_15_5_SHORT_1672925400_5"
+    },
+    {
+      "run": "v180_a_both",
+      "check": "rounded_buffer_arithmetic",
+      "detail": "W33_XAUUSD+_15_5_SHORT_1672925400_5"
+    },
+    {
+      "run": "v180_a_target",
+      "check": "independent_inward_target",
+      "detail": "W33_XAUUSD+_15_5_SHORT_1672925400_5"
+    },
+    {
+      "run": "v180_a_target",
+      "check": "rounded_buffer_arithmetic",
+      "detail": "W33_XAUUSD+_15_5_SHORT_1672925400_5"
+    },
+    {
+      "run": "v180_b_both",
+      "check": "independent_inward_target",
+      "detail": "W33_XAUUSD+_5_1_LONG_1673272500_26"
+    },
+    {
+      "run": "v180_b_both",
+      "check": "rounded_buffer_arithmetic",
+      "detail": "W33_XAUUSD+_5_1_LONG_1673272500_26"
+    },
+    {
+      "run": "v180_b_target",
+      "check": "independent_inward_target",
+      "detail": "W33_XAUUSD+_5_1_LONG_1673272500_26"
+    },
+    {
+      "run": "v180_b_target",
+      "check": "rounded_buffer_arithmetic",
+      "detail": "W33_XAUUSD+_5_1_LONG_1673272500_26"
+    }
+  ]
+}

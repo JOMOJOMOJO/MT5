@@ -1,0 +1,35 @@
+{
+  "version": "1.50",
+  "deployed_at_local": "2026-10-21T20:24:47",
+  "binary": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\Wave33VisualVerifier.ex5",
+  "binary_sha256": "40A063DE4D9ABC63ED38D67F748B47FEBBD506D7B2C7159A9F37DC6EDBD740E0",
+  "previous_binary_sha256": "6A3655668EC2B2E6C063759AE797597345FC71CB4FEF88F9B7D52A420C77E947",
+  "compiled_binary_source": "reports\\qa\\wave33_fib_close_20261021\\display_final\\20261021_201912_a6ec0261\\Wave33VisualVerifier.ex5",
+  "compile_provenance": "reports\\qa\\wave33_fib_close_20261021\\display_final\\20261021_201912_a6ec0261\\provenance.json",
+  "strategy_test_provenance": "reports\\qa\\wave33_fib_close_20261021\\engineering\\20261021_163340_8f9f7139\\provenance.json",
+  "strategy_sources_unchanged_after_native_comparisons": {
+    "main": true,
+    "Wave33Visual\\Room.mqh": true,
+    "Wave33Visual\\BarOrder.mqh": true,
+    "Wave33Visual\\Ledger.mqh": true,
+    "Wave33Visual\\Engine.mqh": true,
+    "Wave33Visual\\Types.mqh": true
+  },
+  "protected_other_eas_unchanged": {
+    "mql\\Experts\\USDJPY_M1_M5_3WaveIn3Wave_Long.mq5": true,
+    "mql\\Experts\\usdjpy_20260402_round_continuation_long.mq5": true
+  },
+  "installed_presets": [
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Profiles\\Tester\\wave33-v150-A-M15-M5-orders.set",
+      "sha256": "530A1438B48AB81749B6BF71D1E9DB5EF6BFFF98969FA6257D2A7F3954FEF30C"
+    },
+    {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Profiles\\Tester\\wave33-v150-B-M5-M1-orders.set",
+      "sha256": "ED8B3E3F9EF9D1225D93EF40982D5AB98227072D6C36AE3AC8EFD0A4E259B33A"
+    }
+  ],
+  "live_trading_enabled": false,
+  "user_terminal_interrupted": false,
+  "release_scope": "LOCAL_TESTER_VERIFICATION_NOT_PROFIT_PROMOTION"
+}

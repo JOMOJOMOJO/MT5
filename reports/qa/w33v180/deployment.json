@@ -1,0 +1,62 @@
+{
+  "header_sha256": {
+    "Wave33Visual\\Room.mqh": "ECD3A1841A9F9DFE481AC43C35CA869A0D15492228FF553F7F0810133A0FC757",
+    "Wave33Visual\\Wave1Target.mqh": "2CECD65D839A3328F9DD06FB86A252199121ADB3634C141C8B51641E8A71AF3F",
+    "Wave33Visual\\TesterRun.mqh": "2E6B183C2CC398F8394DF65C7A42AB4150C432AAD9EB1891FEC5669D587E3048",
+    "Wave33Visual\\ConnectedWave.mqh": "386FFFC767345722D3E887FA2ACBB7ABB05CCDF82FAB71429F9EABBB1EBB4A93",
+    "Wave33Visual\\Display.mqh": "7F6EBA269E7818AAB23165131F1FCAB6F3860741BDD3E8973D7544F46084F12B",
+    "Wave33Visual\\Engine.mqh": "F13F93AEEE1FD7F4A08C85EDA16E5A617BF2984D6152238ED337AF27F396C8EC",
+    "Wave33Visual\\BarOrder.mqh": "EC300C19F85750A4A7B4A8122579DBB522D2BDF4538BA2F70F2C98176FEA095F",
+    "Wave33Visual\\OppositeExit.mqh": "E36E4BF55441561498641AC6C556B5AE5042DA7AC7B90639BE3CDA04A2D639DA",
+    "Wave33Visual\\Ledger.mqh": "03B97B230BD6124867E135C51F20B65DEB16C28960CDAD8A73072B700961305A",
+    "Wave33Visual\\Types.mqh": "BC72C41867B6746A3192467320EE5EE998CF4EEF5E6705109B1C06BEFEAB48F4"
+  },
+  "source_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\Wave33VisualVerifier.mq5",
+  "protected_eas": [
+    {
+      "path": "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5",
+      "sha256": "5B437B0F5CB0C82DE79B3422B12B0051B836093D75CBDDB627E20E9BBEFC6CD3",
+      "unchanged": true
+    },
+    {
+      "path": "mql/Experts/usdjpy_20260402_round_continuation_long.mq5",
+      "sha256": "E10068574A921A71970C242AC5F70E0E71F1BE49FDEB02AA99098A5C6135D347",
+      "unchanged": true
+    }
+  ],
+  "source_sha256": "A0BF2812B81BFDB52F1C9FC9E5008A1DDB5B003F507861FB570ED820A00B1A88",
+  "deployed_at": "2026-10-23T15:12:58.0228864+09:00",
+  "normal_chart_orders": false,
+  "new_feature_native_audit_checks": 425,
+  "binary_sha256": "13B6B35D3EAD8DA0A6771A38276A52EEC0E50560F2DFCB87A775EDB81C9FBE27",
+  "frozen_v171_original_fields_match": true,
+  "parameter_search_performed": false,
+  "compiled_batch": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33v180\\final\\20261023_150705_4035cece",
+  "limitations": [
+    "Requested real ticks, but native tester used generated every ticks because no real ticks existed in the fixed interval.",
+    "A new-feature natural examples absent in this short interval; native harness mirrored branches and B native examples cover both directions.",
+    "B final position lacks an EA EXIT callback before stop.",
+    "Native CAP_TP fixture absent; precedence reviewed in Plan.",
+    "Normal chart drawing replay is not a direct visual tester screenshot."
+  ],
+  "final_repeated_harness_pass": 357,
+  "version": "1.80",
+  "user_terminal_interrupted": false,
+  "compile_result": "0 errors / 0 warnings",
+  "binary_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\Wave33VisualVerifier.ex5",
+  "final_native_runs": 8,
+  "tester_presets": [
+    {
+      "sha256": "AED29B04B11882E3CF98A108A378DB5D5936DF29954DB4EE8E18EF894DF952D5",
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Profiles\\Tester\\wave33-v180-A-M15-M5-orders.set"
+    },
+    {
+      "sha256": "B92964758CB9AD38C2A04E9A7B19BBA75FB647618AC923E71AB5B4169AC7A20B",
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Profiles\\Tester\\wave33-v180-B-M5-M1-orders.set"
+    }
+  ],
+  "annual_run_performed": false,
+  "drawing_checks": 1775,
+  "initial_native_harness_pass": 1074,
+  "main_final_vs_initial_all_131_columns_match": true
+}

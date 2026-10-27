@@ -1,0 +1,17 @@
+InpRunTag=w33v180_frozen171_b_2c2180d5
+InpDraw=true
+InpScreenshots=true
+InpStrictWaveLifecycle=true
+InpTriggerMode=0
+InpMinWave1RoomR=0.25
+InpRiskPercent=1
+InpRewardR=1
+InpPattern=1
+InpRejectDeepFib=false
+InpAuditOppositeExitTicks=true
+InpLowerRecognition=2
+InpMagic=3320261022
+InpExitOnOppositeWave1=true
+InpEnableTesterOrders=true
+InpExtendWave1BeforeFib=true
+InpRejectDeepFibClose=true

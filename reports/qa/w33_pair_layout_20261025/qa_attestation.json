@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "native_batch": "run_f1624584",
+  "normal_chart_output": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_pair_layout_20261025\\display\\run_b562a513",
+  "checks": {
+    "native_harness_source_current": true,
+    "native_harness_ex5_current": true,
+    "native_EA_source_current": true,
+    "modules_older_than_harness_build": true,
+    "normal_chart_sources_current": true
+  },
+  "source_hashes": {
+    "mql/Experts/tests/Wave33PairLayoutHarness.mq5": "37eef3da3c52336d0a78517e12e2c1a953f7033b712f83a4e2ce2eb62429b395",
+    "mql/Experts/tests/Wave33PairLayoutHarness.ex5": "d9d83c60c2edc6848f351cb3244d0c3a65c4cd3f4af91714a05130f52058cb9b",
+    "mql/Experts/Wave33ChopDiagnostic.mq5": "32ace7a650ee3304939376aa278c7da7e76ac6043824c79813c194c268f8d498",
+    "mql/Experts/Wave33ChopDiagnostic.ex5": "c36eb5fc4ae832dbc2647885b06554a5e4653ad277e5c112f2f9f31263c267de",
+    "mql/Include/Wave33Visual/Engine.mqh": "3fb6956a2253f071eb455d60ac90ce152dab8f46c35955a5f36e5b22018a0fc8",
+    "mql/Include/Wave33Visual/ConnectedPair.mqh": "d6306f6f99344eb69497251ace838899a98f65c19c2e9e2794abe302e3fa9306",
+    "mql/Include/Wave33Visual/ChopDisplay.mqh": "606b66194724557878758f864419e65ea8efb145e0202771496468c9829fe54f",
+    "mql/Include/Wave33Visual/LabelLayout.mqh": "e00a577f97cacd3f7ebac22ca1625edb6b0e12257b750325cbb47c1090b39d23"
+  },
+  "native_assertions": 846,
+  "normal_chart_assertions": 27,
+  "scope": "Final current harness EX5/source and frozen production modules. Normal chart synthetic fixture separately identified; no unsupported tester screenshot assertion."
+}

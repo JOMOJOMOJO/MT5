@@ -1,0 +1,1093 @@
+{
+  "status": "PASS",
+  "checks": 202,
+  "native_assertions": 846,
+  "visual_assertions": 27,
+  "all_column_parity_event_rows": 912,
+  "failures": 0,
+  "details": [
+    {
+      "check": "readable_on: real EA no ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: no order or fill timestamp",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: no paired SIGNAL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: four pairs eight explicit exclusions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: sixteen pair fixtures",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: eight complete before/current parity fixtures",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_on: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_LONG_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_on: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_LONG_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_on: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_SHORT_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_on: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_SHORT_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_on: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_LONG_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_on: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_LONG_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_on: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_SHORT_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_on: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_SHORT_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_off: real EA no ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: no order or fill timestamp",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: no paired SIGNAL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: four pairs eight explicit exclusions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: sixteen pair fixtures",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: eight complete before/current parity fixtures",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "readable_off: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_LONG_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_off: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_LONG_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_off: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_SHORT_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_off: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_SHORT_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_off: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_LONG_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_off: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_LONG_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_off: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_SHORT_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable_off: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_SHORT_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "orders_on: real EA no ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: no order or fill timestamp",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: no paired SIGNAL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: four pairs eight explicit exclusions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: sixteen pair fixtures",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M15_PERIOD_M5_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_LONG_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldfalse_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigfalse_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: atomic two-sided pair _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: pair never ordered _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: newer never resumes tracking _pair_PERIOD_M5_PERIOD_M1_SHORT_oldtrue_sigtrue_events",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: eight complete before/current parity fixtures",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "orders_on: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_LONG_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "orders_on: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_LONG_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "orders_on: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_SHORT_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "orders_on: exact all-column legacy parity _parity_current_PERIOD_M15_PERIOD_M5_SHORT_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "orders_on: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_LONG_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "orders_on: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_LONG_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "orders_on: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_SHORT_false_events",
+      "passed": true,
+      "detail": {
+        "rows": 44,
+        "fields": 131
+      }
+    },
+    {
+      "check": "orders_on: exact all-column legacy parity _parity_current_PERIOD_M5_PERIOD_M1_SHORT_true_events",
+      "passed": true,
+      "detail": {
+        "rows": 32,
+        "fields": 131
+      }
+    },
+    {
+      "check": "readable ON/OFF leaves complete real-EA event ledger identical",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "draw-only normal-chart batch passes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: after_screenshot_saved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: before_screenshot_saved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: label_all_visible_initial",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: label_boxes_clamped_initial",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: label_boxes_no_overlap_initial",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: label_finite_leaders",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: label_leader_true_source_anchors",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: label_logical_anchors_stable_repeat",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: label_off_restores_originals",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: offscreen_restores_original_font_colour",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: offscreen_viewport_applied",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: visual_geometry_available",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: actual dense before PNG hash",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "normal chart: actual dense after PNG hash",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "scope": "Closed synthetic actual-EA and pre-cancellation snapshot fixtures; no annual performance, MT5 real-tick or future profitability claim."
+}

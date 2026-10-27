@@ -1,0 +1,79 @@
+﻿{
+    "reviewed_at":  "2026-10-25T23:16:22.9462101+09:00",
+    "reviewer":  "cancel_rule_review",
+    "kind":  "independent read-only source review",
+    "scope":  "Connected pair exclusion and actual main integration; display review pending",
+    "result":  "PASS",
+    "blocking_findings":  [
+
+                          ],
+    "checks":  [
+                   {
+                       "name":  "Original connection predicate unchanged",
+                       "status":  "PASS",
+                       "evidence":  "ConnectedPair includes ConnectedWave; uses fixed old endpoint/new origin equality, causal times, same TF/symbol and strictly later candidate"
+                   },
+                   {
+                       "name":  "Atomic dual invalidation only unordered",
+                       "status":  "PASS",
+                       "evidence":  "Original predicate guards older submit/open/fill; helper guards newer submit/open/fill before either mutation"
+                   },
+                   {
+                       "name":  "Both lane release and no candidate resumption",
+                       "status":  "PASS",
+                       "evidence":  "Both active=false; Create returns before ChangeState/PROVISIONAL if canceled; all subsequent update/trigger paths check active"
+                   },
+                   {
+                       "name":  "Opt-in shared engine preserves original EA defaults",
+                       "status":  "PASS",
+                       "evidence":  "Constructor default m_skip_connected_pair=false; new setter default false; old-only branch unchanged"
+                   },
+                   {
+                       "name":  "Both ON and old-only OFF order guard",
+                       "status":  "PASS",
+                       "evidence":  "Main guards failed MarkOrderSubmitted with oldFlag || bothFlag; no OrderSend continuation for stale canceled setup"
+                   },
+                   {
+                       "name":  "Pending/open older position protected",
+                       "status":  "PASS",
+                       "evidence":  "Original predicate rejects submitted/open/filled older; new reverse candidate remains active"
+                   },
+                   {
+                       "name":  "Legacy post-fill opposite profit exit preserved",
+                       "status":  "PASS",
+                       "evidence":  "ArmOppositeExit unchanged apart from line movement; only fresh WAVE1_PEAK_CONFIRMED; actual-fill ordering remains strict; no W1 extension exit arming"
+                   },
+                   {
+                       "name":  "Input identity and config persistence",
+                       "status":  "PASS",
+                       "evidence":  "Both flag logged and hashed; version1.84 and unique tag; OnInit setter invoked"
+                   }
+               ],
+    "limitations":  [
+                        "No tests run by this reviewer; native QA owned by separate agent",
+                        "Display adapter/label layout under concurrent development and excluded from this review",
+                        "No annual backtest or performance conclusion"
+                    ],
+    "source_hashes":  [
+                          {
+                              "path":  "mql/Include/Wave33Visual/Engine.mqh",
+                              "sha256":  "3fb6956a2253f071eb455d60ac90ce152dab8f46c35955a5f36e5b22018a0fc8"
+                          },
+                          {
+                              "path":  "mql/Include/Wave33Visual/ConnectedPair.mqh",
+                              "sha256":  "d6306f6f99344eb69497251ace838899a98f65c19c2e9e2794abe302e3fa9306"
+                          },
+                          {
+                              "path":  "mql/Include/Wave33Visual/ConnectedWave.mqh",
+                              "sha256":  "386fffc767345722d3e887fa2acbb7abb05ccdf82fab71429f9eabbb1ebb4a93"
+                          },
+                          {
+                              "path":  "mql/Include/Wave33Visual/OppositeExit.mqh",
+                              "sha256":  "e36e4bf55441561498641ac6c556b5ae5042da7ac7b90639be3cda04a2d639da"
+                          },
+                          {
+                              "path":  "mql/Experts/Wave33ChopDiagnostic.mq5",
+                              "sha256":  "4848117ea1bc5dca7d575e28abe35075e23543fdd3c6ab202f339f0379e8c0cf"
+                          }
+                      ]
+}

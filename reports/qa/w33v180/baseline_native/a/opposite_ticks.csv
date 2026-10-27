@@ -1,0 +1,2 @@
+setup_id;known_at;tick_time_msc;tick_order;knowledge_order;position_ticket;position_id;bid;ask;volume;quote_profit;booked_cash;remaining_swap;entry_cost_rate;estimated_exit_cost;net_estimate;request_pending;attempts;status;opposite_setup_id
+W33_XAUUSD+_15_5_SHORT_1673285400_8;2023.01.09 22:30:00;1673303400000;804457;762;6;6;1870.9500000000;1871.1000000000;0.09000000;24.4800000000;-0.5400000000;0.0000000000;6.0000000000;0.5400000000;23.4000000000;0;0;READY;W33_XAUUSD+_15_5_LONG_1673300700_9

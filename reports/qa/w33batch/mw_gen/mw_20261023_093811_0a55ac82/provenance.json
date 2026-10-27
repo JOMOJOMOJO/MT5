@@ -1,0 +1,215 @@
+{
+  "real_ticks_verified": false,
+  "deposit": 5000,
+  "remote_agents": false,
+  "date_to_exclusive": "2020.10.10",
+  "model": 1,
+  "expected_selected_passes": 14,
+  "source_snapshot_before": {
+    "server_cache": "A9042EB15563BEE3D6762CD6EBFB3DF23C20EEF9DBC2AC157E6554D041707921",
+    "account_cache": "E6B2DAECEC799E1F628282F2F372338DDD3BE77C124C1E96FB732018761DA988",
+    "common_ini": "3C417D2764EEF8679D4BD795C4B06CEB1E4233EBFC66F22334210A7C336EA373",
+    "market_watch_selected": "704B809E2FEC2DF537CEF027F6401751C9E48A4415E617FCDFA00BEF3CF26FA4"
+  },
+  "date_from": "2020.10.01",
+  "optimization": 3,
+  "runner_sha256": "BDDB98B8E05FD314B27274FBA9D3DDE51C98F3A9977FFBA78180EFA8BEE03FDA",
+  "fixed_inputs": {
+    "InpRunTag": "w33mw_5e712a56",
+    "InpAllowTesterBatchRuns": "true",
+    "InpPattern": 0,
+    "InpTriggerMode": 0,
+    "InpEnableTesterOrders": "true",
+    "InpExtendWave1BeforeFib": "true",
+    "InpExitOnOppositeWave1": "true",
+    "InpAuditOppositeExitTicks": "true",
+    "InpRejectDeepFib": "false",
+    "InpRejectDeepFibClose": "true",
+    "InpStrictWaveLifecycle": "true",
+    "InpLowerRecognition": 2,
+    "InpMinWave1RoomR": 0.25,
+    "InpRewardR": 1.0,
+    "InpRiskPercent": 1.0,
+    "InpMagic": "3320261022",
+    "InpDraw": "false",
+    "InpScreenshots": "false"
+  },
+  "cloud_agents": false,
+  "selected_symbols": [
+    "XAUUSD+",
+    "XAUAUD+",
+    "XAUEUR+",
+    "XAUJPY+",
+    "Nikkei225",
+    "CHINA50",
+    "HK50",
+    "BVSPX",
+    "ES35",
+    "USDJPY",
+    "GBPUSD",
+    "EURUSD",
+    "EURUSD+",
+    "AUDUSD"
+  ],
+  "compile_output": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33batch\\mw_gen\\mw_20261023_093811_0a55ac82\\compile\\20261023_093812_ea2cd495",
+  "source_selection_sha256": "704B809E2FEC2DF537CEF027F6401751C9E48A4415E617FCDFA00BEF3CF26FA4",
+  "normal_chart_trading": false,
+  "history": [
+    {
+      "symbol": "XAUUSD+",
+      "real_tick_cache": [],
+      "history": [
+        {
+          "file": "2020.hcc",
+          "sha256": "8DB023C64DB46DCDD71D8DD3BD992FCEFB32A6C37736D6C75FD3DBF1C73A39DF",
+          "bytes": 21378075
+        }
+      ],
+      "cached_history_available": true
+    },
+    {
+      "symbol": "XAUAUD+",
+      "real_tick_cache": [],
+      "history": [
+        {
+          "file": "2020.hcc",
+          "sha256": "52A24A90EC3518189ED65D84B03D519A1F31FE7A6EC441AD39743AEE1267744F",
+          "bytes": 21379215
+        }
+      ],
+      "cached_history_available": true
+    },
+    {
+      "symbol": "XAUEUR+",
+      "real_tick_cache": [],
+      "history": [],
+      "cached_history_available": false
+    },
+    {
+      "symbol": "XAUJPY+",
+      "real_tick_cache": [],
+      "history": [],
+      "cached_history_available": false
+    },
+    {
+      "symbol": "Nikkei225",
+      "real_tick_cache": [],
+      "history": [
+        {
+          "file": "2020.hcc",
+          "sha256": "11EC398227AAFB2330EACDECEF7FBBC9182533C76A1AC0C5BFE8D7E6E97659F1",
+          "bytes": 20836215
+        }
+      ],
+      "cached_history_available": true
+    },
+    {
+      "symbol": "CHINA50",
+      "real_tick_cache": [],
+      "history": [
+        {
+          "file": "2020.hcc",
+          "sha256": "9608C7EB99C37CD56D53B246CF89535C18FB082F4468235B46D2E3D342FC7A8B",
+          "bytes": 17786244
+        }
+      ],
+      "cached_history_available": true
+    },
+    {
+      "symbol": "HK50",
+      "real_tick_cache": [],
+      "history": [
+        {
+          "file": "2020.hcc",
+          "sha256": "97A69028BA47B0684B4E826EF37F18EBD0F143D6613247AFCE77FE336FD374E9",
+          "bytes": 14152905
+        }
+      ],
+      "cached_history_available": true
+    },
+    {
+      "symbol": "BVSPX",
+      "real_tick_cache": [],
+      "history": [],
+      "cached_history_available": false
+    },
+    {
+      "symbol": "ES35",
+      "real_tick_cache": [],
+      "history": [
+        {
+          "file": "2020.hcc",
+          "sha256": "9E3F1D784093B293BF534FDA53722732C3004C3827943CD60A1521EA4DECF580",
+          "bytes": 10925997
+        }
+      ],
+      "cached_history_available": true
+    },
+    {
+      "symbol": "USDJPY",
+      "real_tick_cache": [],
+      "history": [
+        {
+          "file": "2020.hcc",
+          "sha256": "91B180B0AF4FC4B833D0B2999DA5CAF399C3A5C6AC3E619C6FBC9F3F0DEF5299",
+          "bytes": 22521624
+        }
+      ],
+      "cached_history_available": true
+    },
+    {
+      "symbol": "GBPUSD",
+      "real_tick_cache": [],
+      "history": [
+        {
+          "file": "2020.hcc",
+          "sha256": "F3EEDD2DFD4E6D27E44EEE3C9698CFBC5364CA31669CC6AF4BC55974FEEAE977",
+          "bytes": 22511664
+        }
+      ],
+      "cached_history_available": true
+    },
+    {
+      "symbol": "EURUSD",
+      "real_tick_cache": [],
+      "history": [
+        {
+          "file": "2020.hcc",
+          "sha256": "23E3C2E4838FBD15A8711665AFA48E9D038FC4B034A1B6B1C6609A26B7CA3143",
+          "bytes": 22522464
+        }
+      ],
+      "cached_history_available": true
+    },
+    {
+      "symbol": "EURUSD+",
+      "real_tick_cache": [],
+      "history": [
+        {
+          "file": "2020.hcc",
+          "sha256": "980ADC1EC027C3B03B5F55EF41BD93E73380D180C7118778409C85CF54F39DC5",
+          "bytes": 22522464
+        }
+      ],
+      "cached_history_available": true
+    },
+    {
+      "symbol": "AUDUSD",
+      "real_tick_cache": [],
+      "history": [
+        {
+          "file": "2020.hcc",
+          "sha256": "FFB379AD40F1EC04C9E9A0D8F49FC7441BC562036EE21CCB45FC8B3573FBA2F6",
+          "bytes": 22519944
+        }
+      ],
+      "cached_history_available": true
+    }
+  ],
+  "currency": "USD",
+  "ea_sha256": "92613E5C4BF933ADA9F0821D1402EC6CC3CCE6D795B72B6A7283B4C09577DCFD",
+  "purpose": "MARKETWATCH_BATCH_ENGINEERING_QA_NOT_PARAMETER_SEARCH",
+  "terminal_sha256": "8B13C3119F29A4DE564EF12D633B62DC54D652C538C10C232067EF01B8518D4D",
+  "runtime": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_093812_ea2cd495",
+  "official_optimization_reference": "https://www.metatrader5.com/en/terminal/help/start_advanced/start"
+}

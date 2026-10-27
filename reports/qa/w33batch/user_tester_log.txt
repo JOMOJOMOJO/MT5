@@ -1,0 +1,77 @@
+2026.10.22 23:44:50.228	Tester	"dev\mql\Experts\Wave33VisualVerifier.ex5" X64
+2026.10.22 23:44:50.518	Tester	Experts\dev\mql\Experts\Wave33VisualVerifier.ex5 on XAUUSD+,M5 from 2020.10.01 00:00 to 2020.12.31 00:00
+2026.10.22 23:44:50.518	Tester	optimization on all Market Watch symbols started
+2026.10.22 23:44:50.518	Core 2	connecting to 127.0.0.1:3001
+2026.10.22 23:44:50.526	Core 2	connected
+2026.10.22 23:44:50.526	Tester	history synchronization of 14 Market Watch symbols started on 5 threads
+2026.10.22 23:44:50.527	Tester	USDJPY: history data begins from 2010.01.04 00:00
+2026.10.22 23:44:50.527	Tester	USDJPY: ticks data begins from 2024.06.06 00:00
+2026.10.22 23:44:50.527	Tester	GBPUSD: history data begins from 2015.10.26 00:00
+2026.10.22 23:44:50.527	Tester	GBPUSD: ticks data begins from 2024.06.06 00:00
+2026.10.22 23:44:50.527	Tester	EURUSD+: history data begins from 2015.09.16 00:00
+2026.10.22 23:44:50.527	Tester	EURUSD+: ticks data begins from 2024.06.24 00:00
+2026.10.22 23:44:50.527	Tester	XAUAUD+: history data begins from 2015.09.10 00:00
+2026.10.22 23:44:50.527	Tester	AUDUSD: history data begins from 2016.04.07 00:00
+2026.10.22 23:44:50.527	Tester	XAUAUD+: ticks data begins from 2024.06.24 00:00
+2026.10.22 23:44:50.527	Tester	AUDUSD: ticks data begins from 2024.06.06 00:00
+2026.10.22 23:44:50.527	Tester	XAUEUR+: history data begins from 2021.04.05 00:00
+2026.10.22 23:44:50.527	Tester	XAUEUR+: ticks data begins from 2024.06.24 00:00
+2026.10.22 23:44:50.527	Tester	XAUJPY+: history data begins from 2023.11.20 00:00
+2026.10.22 23:44:50.527	Tester	Nikkei225: history data begins from 2015.09.09 00:00
+2026.10.22 23:44:50.527	Tester	XAUJPY+: ticks data begins from 2024.06.24 00:00
+2026.10.22 23:44:50.527	Tester	Nikkei225: ticks data begins from 2024.06.24 00:00
+2026.10.22 23:44:50.527	Tester	HK50: history data begins from 2015.05.28 00:00
+2026.10.22 23:44:50.527	Tester	BVSPX: history data begins from 2022.08.04 00:00
+2026.10.22 23:44:50.527	Tester	HK50: ticks data begins from 2024.06.24 00:00
+2026.10.22 23:44:50.527	Tester	BVSPX: ticks data begins from 2024.06.24 00:00
+2026.10.22 23:44:50.527	Tester	CHINA50: history data begins from 2015.07.16 00:00
+2026.10.22 23:44:50.527	Tester	ES35: history data begins from 2018.11.26 00:00
+2026.10.22 23:44:50.527	Tester	CHINA50: ticks data begins from 2024.06.24 00:00
+2026.10.22 23:44:50.527	Tester	ES35: ticks data begins from 2024.06.24 00:00
+2026.10.22 23:44:50.527	Tester	EURUSD: history data begins from 2015.10.21 00:00
+2026.10.22 23:44:50.527	Tester	EURUSD: ticks data begins from 2024.06.06 00:00
+2026.10.22 23:44:50.527	Core 3	connecting to 127.0.0.1:3002
+2026.10.22 23:44:50.527	Tester	XAUUSD+: history data begins from 2017.06.19 00:00
+2026.10.22 23:44:50.527	Tester	XAUUSD+: ticks data begins from 2024.06.24 00:00
+2026.10.22 23:44:50.527	Tester	Market Watch symbols history synchronized
+2026.10.22 23:44:50.530	Core 2	authorized (agent build 6230)
+2026.10.22 23:44:50.536	Core 3	connected
+2026.10.22 23:44:50.540	Core 3	authorized (agent build 6230)
+2026.10.22 23:44:50.543	Core 2	common synchronization completed
+2026.10.22 23:44:50.547	Core 3	common synchronization completed
+2026.10.22 23:44:50.553	Core 2	XAUUSD+: ticks synchronized already [45 bytes]
+2026.10.22 23:44:50.555	Core 4	connecting to 127.0.0.1:3003
+2026.10.22 23:44:50.557	Core 3	USDJPY: ticks synchronized already [43 bytes]
+2026.10.22 23:44:50.565	Core 4	connected
+2026.10.22 23:44:50.568	Core 4	authorized (agent build 6230)
+2026.10.22 23:44:50.569	Core 4	common synchronization completed
+2026.10.22 23:44:50.574	Core 4	GBPUSD: ticks synchronized already [43 bytes]
+2026.10.22 23:44:50.586	Core 5	connecting to 127.0.0.1:3004
+2026.10.22 23:44:50.594	Core 5	connected
+2026.10.22 23:44:50.598	Core 5	authorized (agent build 6230)
+2026.10.22 23:44:50.600	Core 5	common synchronization completed
+2026.10.22 23:44:50.604	Core 5	EURUSD: ticks synchronized already [43 bytes]
+2026.10.22 23:44:50.624	Core 6	agent process started on 127.0.0.1:3005
+2026.10.22 23:44:50.896	Core 6	connecting to 127.0.0.1:3005
+2026.10.22 23:44:50.904	Core 6	connected
+2026.10.22 23:44:50.910	Core 6	authorized (agent build 6230)
+2026.10.22 23:44:50.910	Core 2	pass 0 on XAUUSD+ tested with error "OnInit returned non-zero code 1" (0:00:00.087)
+2026.10.22 23:44:50.910	Core 3	pass 1 on USDJPY tested with error "OnInit returned non-zero code 1" (0:00:00.074)
+2026.10.22 23:44:50.910	Core 4	pass 2 on GBPUSD tested with error "OnInit returned non-zero code 1" (0:00:00.072)
+2026.10.22 23:44:50.910	Core 5	pass 3 on EURUSD tested with error "OnInit returned non-zero code 1" (0:00:00.069)
+2026.10.22 23:44:50.913	Core 2	EURUSD+: ticks synchronized already [45 bytes]
+2026.10.22 23:44:50.914	Core 3	XAUAUD+: ticks synchronized already [45 bytes]
+2026.10.22 23:44:50.917	Core 6	common synchronization completed
+2026.10.22 23:44:50.925	Core 6	Nikkei225: ticks synchronized already [49 bytes]
+2026.10.22 23:44:50.935	Core 4	CHINA50: ticks synchronized already [45 bytes]
+2026.10.22 23:44:50.937	Core 5	HK50: ticks synchronized already [39 bytes]
+2026.10.22 23:44:50.974	Core 2	pass 4 on EURUSD+ tested with error "OnInit returned non-zero code 1" (0:00:00.061)
+2026.10.22 23:44:50.983	Core 5	pass 11 on HK50 tested with error "OnInit returned non-zero code 1" (0:00:00.050)
+2026.10.22 23:44:50.985	Core 2	ES35: ticks synchronized already [39 bytes]
+2026.10.22 23:44:51.100	Core 2	pass 13 on ES35 tested with error "OnInit returned non-zero code 1" (0:00:00.035)
+2026.10.22 23:44:51.100	Core 3	pass 6 on XAUAUD+ tested with error "OnInit returned non-zero code 1" (0:00:00.098)
+2026.10.22 23:44:51.100	Core 4	pass 10 on CHINA50 tested with error "OnInit returned non-zero code 1" (0:00:00.051)
+2026.10.22 23:44:51.100	Core 6	pass 9 on Nikkei225 tested with error "OnInit returned non-zero code 1" (0:00:00.074)
+2026.10.22 23:44:51.315	Tester	testing on Market Watch symbols finished, total passes 10
+2026.10.22 23:44:51.331	Statistics	optimization done in 0 minutes 01 seconds
+2026.10.22 23:44:51.331	Statistics	local 10 tasks (100%), remote 0 tasks (0%)

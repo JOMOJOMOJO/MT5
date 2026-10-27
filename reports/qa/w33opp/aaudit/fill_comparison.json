@@ -1,0 +1,806 @@
+[
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.06.05 11:00:00",
+      "2018.06.05 04:00:00",
+      "1292.68",
+      "2018.06.05 08:00:00",
+      "1289.8"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1528196400_32",
+      "direction": "LONG",
+      "fill_at": "2018.06.06 09:00:00",
+      "entry_price": "1298.7400000000",
+      "sl_price": "1295.8000000000",
+      "tp_price": "1301.6800000000",
+      "exit_at": "2018.06.06 12:00:07",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0204081633
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1528196400_32",
+      "direction": "LONG",
+      "fill_at": "2018.06.06 09:00:00",
+      "entry_price": "1298.7400000000",
+      "sl_price": "1295.8000000000",
+      "tp_price": "1301.6800000000",
+      "exit_at": "2018.06.06 12:00:07",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0204081633
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.06.18 02:00:00",
+      "2018.06.15 22:00:00",
+      "1280.65",
+      "2018.06.15 20:00:00",
+      "1275.46"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1529287200_37",
+      "direction": "LONG",
+      "fill_at": "2018.06.19 03:00:00",
+      "entry_price": "1281.2700000000",
+      "sl_price": "1276.7400000000",
+      "tp_price": "1285.8000000000",
+      "exit_at": "2018.06.19 14:00:06",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0132450331
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1529287200_37",
+      "direction": "LONG",
+      "fill_at": "2018.06.19 03:00:00",
+      "entry_price": "1281.2700000000",
+      "sl_price": "1276.7400000000",
+      "tp_price": "1285.8000000000",
+      "exit_at": "2018.06.19 14:00:06",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0132450331
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.10.30 15:15:00",
+      "2018.10.30 14:15:00",
+      "1222.56",
+      "2018.10.30 13:30:00",
+      "1219.91"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1540912500_120",
+      "direction": "LONG",
+      "fill_at": "2018.10.30 20:35:00",
+      "entry_price": "1224.2700000000",
+      "sl_price": "1221.9800000000",
+      "tp_price": "1226.5600000000",
+      "exit_at": "2018.10.31 03:06:28",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.3647327927
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1540912500_120",
+      "direction": "LONG",
+      "fill_at": "2018.10.30 20:35:00",
+      "entry_price": "1224.2700000000",
+      "sl_price": "1221.9800000000",
+      "tp_price": "1226.5600000000",
+      "exit_at": "2018.10.31 03:06:28",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.3647327927
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.10.31 22:30:00",
+      "2018.10.31 21:30:00",
+      "1214.57",
+      "2018.10.31 20:45:00",
+      "1212.55"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1541025000_122",
+      "direction": "LONG",
+      "fill_at": "2018.11.01 02:10:00",
+      "entry_price": "1215.9100000000",
+      "sl_price": "1214.1100000000",
+      "tp_price": "1217.7100000000",
+      "exit_at": "2018.11.01 04:49:20",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9666666667
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1541025000_122",
+      "direction": "LONG",
+      "fill_at": "2018.11.01 02:10:00",
+      "entry_price": "1215.9100000000",
+      "sl_price": "1214.1100000000",
+      "tp_price": "1217.7100000000",
+      "exit_at": "2018.11.01 04:49:20",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9666666667
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.11.13 01:45:00",
+      "2018.11.12 22:00:00",
+      "1202.09",
+      "2018.11.12 21:30:00",
+      "1200.97"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1542073500_133",
+      "direction": "LONG",
+      "fill_at": "2018.11.13 09:10:00",
+      "entry_price": "1203.8200000000",
+      "sl_price": "1201.8500000000",
+      "tp_price": "1205.7900000000",
+      "exit_at": "2018.11.13 10:07:42",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0609137056
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1542073500_133",
+      "direction": "LONG",
+      "fill_at": "2018.11.13 09:10:00",
+      "entry_price": "1203.8200000000",
+      "sl_price": "1201.8500000000",
+      "tp_price": "1205.7900000000",
+      "exit_at": "2018.11.13 10:07:42",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0609137056
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.11.13 14:15:00",
+      "2018.11.13 13:15:00",
+      "1199.23",
+      "2018.11.13 12:15:00",
+      "1196.3"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1542118500_135",
+      "direction": "LONG",
+      "fill_at": "2018.11.13 17:50:00",
+      "entry_price": "1202.0600000000",
+      "sl_price": "1198.6400000000",
+      "tp_price": "1205.4800000000",
+      "exit_at": "2018.11.14 11:50:39",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.2443609023
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1542118500_135",
+      "direction": "LONG",
+      "fill_at": "2018.11.13 17:50:00",
+      "entry_price": "1202.0600000000",
+      "sl_price": "1198.6400000000",
+      "tp_price": "1205.4800000000",
+      "exit_at": "2018.11.13 23:09:52",
+      "exit_reason": "OPPOSITE_WAVE1_PROFIT",
+      "recorded_r": 0.0204678363
+    },
+    "delta_r": 1.2648287386
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.11.16 03:00:00",
+      "2018.11.15 22:30:00",
+      "1214.58",
+      "2018.11.15 23:45:00",
+      "1212.71"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1542337200_142",
+      "direction": "LONG",
+      "fill_at": "2018.11.16 06:25:00",
+      "entry_price": "1215.2500000000",
+      "sl_price": "1213.5700000000",
+      "tp_price": "1216.9300000000",
+      "exit_at": "2018.11.16 10:07:38",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9642857143
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1542337200_142",
+      "direction": "LONG",
+      "fill_at": "2018.11.16 06:25:00",
+      "entry_price": "1215.2500000000",
+      "sl_price": "1213.5700000000",
+      "tp_price": "1216.9300000000",
+      "exit_at": "2018.11.16 10:07:38",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9642857143
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.11.22 04:00:00",
+      "2018.11.22 02:30:00",
+      "1226.13",
+      "2018.11.22 03:00:00",
+      "1224.87"
+    ],
+    "status": "ON_ONLY",
+    "off": null,
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1542859200_152",
+      "direction": "LONG",
+      "fill_at": "2018.11.22 07:25:00",
+      "entry_price": "1227.1800000000",
+      "sl_price": "1226.1200000000",
+      "tp_price": "1228.2400000000",
+      "exit_at": "2018.11.22 07:34:32",
+      "exit_reason": "OPPOSITE_WAVE1_PROFIT",
+      "recorded_r": 0.0849056604
+    },
+    "delta_r": null
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.11.29 22:30:00",
+      "2018.11.29 21:45:00",
+      "1224.49",
+      "2018.11.29 21:15:00",
+      "1222.29"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1543530600_160",
+      "direction": "LONG",
+      "fill_at": "2018.11.29 23:55:00",
+      "entry_price": "1224.3100000000",
+      "sl_price": "1222.8300000000",
+      "tp_price": "1225.7900000000",
+      "exit_at": "2018.11.30 11:50:15",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.5644963145
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1543530600_160",
+      "direction": "LONG",
+      "fill_at": "2018.11.29 23:55:00",
+      "entry_price": "1224.3100000000",
+      "sl_price": "1222.8300000000",
+      "tp_price": "1225.7900000000",
+      "exit_at": "2018.11.30 11:50:15",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.5643879173
+    },
+    "delta_r": 0.00010839719999999886
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.12.10 03:45:00",
+      "2018.12.10 02:30:00",
+      "1249.39",
+      "2018.12.10 03:00:00",
+      "1247.67"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1544413500_171",
+      "direction": "LONG",
+      "fill_at": "2018.12.10 06:35:00",
+      "entry_price": "1249.3100000000",
+      "sl_price": "1248.0700000000",
+      "tp_price": "1250.5500000000",
+      "exit_at": "2018.12.10 09:00:28",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0483870968
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1544413500_171",
+      "direction": "LONG",
+      "fill_at": "2018.12.10 06:35:00",
+      "entry_price": "1249.3100000000",
+      "sl_price": "1248.0700000000",
+      "tp_price": "1250.5500000000",
+      "exit_at": "2018.12.10 09:00:28",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0483870968
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.12.14 18:00:00",
+      "2018.12.14 17:15:00",
+      "1236.63",
+      "2018.12.14 16:30:00",
+      "1232.93"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1544810400_179",
+      "direction": "LONG",
+      "fill_at": "2018.12.14 21:45:00",
+      "entry_price": "1239.1900000000",
+      "sl_price": "1236.4600000000",
+      "tp_price": "1241.9200000000",
+      "exit_at": "2018.12.17 01:01:00",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.4671407024
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1544810400_179",
+      "direction": "LONG",
+      "fill_at": "2018.12.14 21:45:00",
+      "entry_price": "1239.1900000000",
+      "sl_price": "1236.4600000000",
+      "tp_price": "1241.9200000000",
+      "exit_at": "2018.12.17 01:01:00",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.4672364672
+    },
+    "delta_r": -9.576479999995335e-05
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2018.12.31 07:15:00",
+      "2018.12.31 06:15:00",
+      "1278.4",
+      "2018.12.31 05:45:00",
+      "1277.45"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1546240500_197",
+      "direction": "LONG",
+      "fill_at": "2018.12.31 12:00:00",
+      "entry_price": "1282.1800000000",
+      "sl_price": "1280.1700000000",
+      "tp_price": "1284.1900000000",
+      "exit_at": "2018.12.31 15:35:40",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0348258706
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1546240500_197",
+      "direction": "LONG",
+      "fill_at": "2018.12.31 12:00:00",
+      "entry_price": "1282.1800000000",
+      "sl_price": "1280.1700000000",
+      "tp_price": "1284.1900000000",
+      "exit_at": "2018.12.31 15:35:40",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0348258706
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "long",
+      "2019.01.03 01:00:00",
+      "2019.01.02 19:15:00",
+      "1286.56",
+      "2019.01.02 20:45:00",
+      "1278.72"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1546477200_200",
+      "direction": "LONG",
+      "fill_at": "2019.01.03 04:10:00",
+      "entry_price": "1288.7200000000",
+      "sl_price": "1284.8000000000",
+      "tp_price": "1292.6400000000",
+      "exit_at": "2019.01.03 15:18:41",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0663265306
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1546477200_200",
+      "direction": "LONG",
+      "fill_at": "2019.01.03 04:10:00",
+      "entry_price": "1288.7200000000",
+      "sl_price": "1284.8000000000",
+      "tp_price": "1292.6400000000",
+      "exit_at": "2019.01.03 15:18:41",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0663265306
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "short",
+      "2018.05.11 21:00:00",
+      "2018.05.11 18:00:00",
+      "1320.41",
+      "2018.05.11 15:00:00",
+      "1325.96"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1526072400_24",
+      "direction": "SHORT",
+      "fill_at": "2018.05.14 15:00:00",
+      "entry_price": "1318.8900000000",
+      "sl_price": "1322.6500000000",
+      "tp_price": "1315.1300000000",
+      "exit_at": "2018.05.14 21:00:05",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9840425532
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1526072400_24",
+      "direction": "SHORT",
+      "fill_at": "2018.05.14 15:00:00",
+      "entry_price": "1318.8900000000",
+      "sl_price": "1322.6500000000",
+      "tp_price": "1315.1300000000",
+      "exit_at": "2018.05.14 21:00:05",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9840425532
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "short",
+      "2018.06.19 14:00:00",
+      "2018.06.19 09:00:00",
+      "1279.11",
+      "2018.06.19 07:00:00",
+      "1284.08"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1529416800_40",
+      "direction": "SHORT",
+      "fill_at": "2018.06.20 04:00:00",
+      "entry_price": "1274.0200000000",
+      "sl_price": "1277.8100000000",
+      "tp_price": "1270.2300000000",
+      "exit_at": "2018.06.20 21:00:09",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9841688654
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1529416800_40",
+      "direction": "SHORT",
+      "fill_at": "2018.06.20 04:00:00",
+      "entry_price": "1274.0200000000",
+      "sl_price": "1277.8100000000",
+      "tp_price": "1270.2300000000",
+      "exit_at": "2018.06.20 21:00:09",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9841688654
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "short",
+      "2018.07.04 14:00:00",
+      "2018.07.04 07:00:00",
+      "1256.15",
+      "2018.07.04 09:00:00",
+      "1261.1"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1530712800_42",
+      "direction": "SHORT",
+      "fill_at": "2018.07.05 08:00:00",
+      "entry_price": "1255.1700000000",
+      "sl_price": "1258.8000000000",
+      "tp_price": "1251.5400000000",
+      "exit_at": "2018.07.05 13:00:02",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 1.0027548209
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1530712800_42",
+      "direction": "SHORT",
+      "fill_at": "2018.07.05 08:00:00",
+      "entry_price": "1255.1700000000",
+      "sl_price": "1258.8000000000",
+      "tp_price": "1251.5400000000",
+      "exit_at": "2018.07.05 13:00:02",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 1.0027548209
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "short",
+      "2018.09.21 05:30:00",
+      "2018.09.21 04:00:00",
+      "1208.1",
+      "2018.09.21 03:15:00",
+      "1210.06"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1537507800_73",
+      "direction": "SHORT",
+      "fill_at": "2018.09.21 07:35:00",
+      "entry_price": "1208.7700000000",
+      "sl_price": "1209.7100000000",
+      "tp_price": "1207.8300000000",
+      "exit_at": "2018.09.21 09:45:27",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0638297872
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1537507800_73",
+      "direction": "SHORT",
+      "fill_at": "2018.09.21 07:35:00",
+      "entry_price": "1208.7700000000",
+      "sl_price": "1209.7100000000",
+      "tp_price": "1207.8300000000",
+      "exit_at": "2018.09.21 09:45:27",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0638297872
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "short",
+      "2018.10.30 03:45:00",
+      "2018.10.30 02:15:00",
+      "1229.15",
+      "2018.10.30 03:00:00",
+      "1230.61"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1540871100_119",
+      "direction": "SHORT",
+      "fill_at": "2018.10.30 07:10:00",
+      "entry_price": "1227.3900000000",
+      "sl_price": "1229.2000000000",
+      "tp_price": "1225.5800000000",
+      "exit_at": "2018.10.30 10:16:41",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9668508287
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1540871100_119",
+      "direction": "SHORT",
+      "fill_at": "2018.10.30 07:10:00",
+      "entry_price": "1227.3900000000",
+      "sl_price": "1229.2000000000",
+      "tp_price": "1225.5800000000",
+      "exit_at": "2018.10.30 10:16:41",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9668508287
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "short",
+      "2018.11.20 16:45:00",
+      "2018.11.20 15:00:00",
+      "1225.03",
+      "2018.11.20 15:30:00",
+      "1228.76"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1542732300_149",
+      "direction": "SHORT",
+      "fill_at": "2018.11.20 19:10:00",
+      "entry_price": "1223.0100000000",
+      "sl_price": "1224.6900000000",
+      "tp_price": "1221.3300000000",
+      "exit_at": "2018.11.20 20:01:41",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9642857143
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1542732300_149",
+      "direction": "SHORT",
+      "fill_at": "2018.11.20 19:10:00",
+      "entry_price": "1223.0100000000",
+      "sl_price": "1224.6900000000",
+      "tp_price": "1221.3300000000",
+      "exit_at": "2018.11.20 20:01:41",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9642857143
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "short",
+      "2018.11.21 18:45:00",
+      "2018.11.21 18:00:00",
+      "1226.38",
+      "2018.11.21 17:15:00",
+      "1230.09"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1542825900_151",
+      "direction": "SHORT",
+      "fill_at": "2018.11.21 22:35:00",
+      "entry_price": "1226.1700000000",
+      "sl_price": "1228.2400000000",
+      "tp_price": "1224.1000000000",
+      "exit_at": "2018.11.22 08:25:38",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -0.58715781
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1542825900_151",
+      "direction": "SHORT",
+      "fill_at": "2018.11.21 22:35:00",
+      "entry_price": "1226.1700000000",
+      "sl_price": "1228.2400000000",
+      "tp_price": "1224.1000000000",
+      "exit_at": "2018.11.22 06:30:00",
+      "exit_reason": "OPPOSITE_WAVE1_PROFIT",
+      "recorded_r": 0.0360305958
+    },
+    "delta_r": 0.6231884058
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "short",
+      "2018.12.26 10:30:00",
+      "2018.12.26 09:30:00",
+      "1272.09",
+      "2018.12.26 08:15:00",
+      "1274.72"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1545820200_192",
+      "direction": "SHORT",
+      "fill_at": "2018.12.26 11:55:00",
+      "entry_price": "1272.3200000000",
+      "sl_price": "1273.5000000000",
+      "tp_price": "1271.1400000000",
+      "exit_at": "2018.12.26 12:53:39",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0847457627
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1545820200_192",
+      "direction": "SHORT",
+      "fill_at": "2018.12.26 11:55:00",
+      "entry_price": "1272.3200000000",
+      "sl_price": "1273.5000000000",
+      "tp_price": "1271.1400000000",
+      "exit_at": "2018.12.26 12:53:39",
+      "exit_reason": "DEAL_REASON_SL",
+      "recorded_r": -1.0847457627
+    },
+    "delta_r": 0.0
+  },
+  {
+    "identity": [
+      "xauusd+",
+      "period_m15",
+      "period_m5",
+      "short",
+      "2018.12.26 19:00:00",
+      "2018.12.26 16:30:00",
+      "1273.38",
+      "2018.12.26 18:00:00",
+      "1279.11"
+    ],
+    "status": "COMMON",
+    "off": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1545850800_195",
+      "direction": "SHORT",
+      "fill_at": "2018.12.27 04:00:00",
+      "entry_price": "1270.5500000000",
+      "sl_price": "1272.7200000000",
+      "tp_price": "1268.3800000000",
+      "exit_at": "2018.12.27 07:11:59",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9953917051
+    },
+    "on": {
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1545850800_195",
+      "direction": "SHORT",
+      "fill_at": "2018.12.27 04:00:00",
+      "entry_price": "1270.5500000000",
+      "sl_price": "1272.7200000000",
+      "tp_price": "1268.3800000000",
+      "exit_at": "2018.12.27 07:11:59",
+      "exit_reason": "DEAL_REASON_TP",
+      "recorded_r": 0.9953917051
+    },
+    "delta_r": 0.0
+  }
+]

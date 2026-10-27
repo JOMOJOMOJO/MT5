@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "scope": "unchanged complete W33ChopEvaluate function, source review; not an MT5 run",
+  "formula_before_sha256": "3b3bc22752cddff872a4049e8e04d81924ff245166c0d8e4e92b01ad89797787",
+  "formula_after_sha256": "3b3bc22752cddff872a4049e8e04d81924ff245166c0d8e4e92b01ad89797787",
+  "gate_findings": [],
+  "checked": [
+    "evaluation uses observer published prefix before signal publication",
+    "formula source interior excludes anchors; known_at cutoff retained",
+    "filter explicit CHOPPY only; UNAVAILABLE passes",
+    "filter ON activates observer even diagnostic OFF",
+    "CSV entry_filter_enabled reflects optional setting; FileFlush after header/event",
+    "gate occurs before order disabled and before order checking/submission/send",
+    "SKIPPED record stored before FinishUnordered; lane state inactive",
+    "existing RecordIndex guard prevents repeated same ID handling",
+    "no accepted position close/cancel introduced by filter",
+    "SIGNAL_RISK_REJECTED prevents shared display green ENTRY for blocked signal",
+    "EA-local Japanese CHOPPY SKIP adapter serial/name matches shared display and changes caption only",
+    "new EA compiled 0 errors / 0 warnings (native compile log)"
+  ],
+  "pending": [
+    "MT5 native harness and runtime smoke QA agent-owned"
+  ],
+  "evidence": {
+    "ea_sha256": "d384c5472a5c4a038898feb1edb2e83823bfc434a8d5a19b78e4f2078d31873a",
+    "chop_sha256": "f2d72b5c9c99ae21e47d90bdf6077a3aea93b422dd2831748b3695edcb124b49",
+    "chop_display_sha256": "b29052efec4498d330d963704819a87b64659b878bac3d38d3669436fa7421cc",
+    "compile_log": "compile/Wave33ChopDiagnostic.log"
+  }
+}

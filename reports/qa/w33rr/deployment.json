@@ -1,0 +1,12 @@
+{
+  "binary_sha256": "48B095424F8890807BB881A0FAE237ED02FD52C55BD2CED81F51CA2C67B01F75",
+  "user_terminal_interrupted": false,
+  "deployed_at": "2026-10-22T00:46:47",
+  "source_sha256": "83E8424E00038D5624872EC4768AD6A940E259C67EC952D4F90F421CCF3533EF",
+  "tester_presets": [
+    "wave33-v161-A-M15-M5-orders.set",
+    "wave33-v161-B-M5-M1-orders.set"
+  ],
+  "opposite_exit_unchanged": true,
+  "version": "1.61"
+}

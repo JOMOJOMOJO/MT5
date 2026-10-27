@@ -1,0 +1,12 @@
+InpRunTag=pc_8a9f584f_3
+InpSkipPriorLevelRetest=true
+InpPriorContext=false
+InpChopDiagnostic=false
+InpSkipChoppyWave1=false
+InpPriorContextBandFraction=0.05
+InpEnableTesterOrders=false
+InpDraw=false
+InpKeepObjects=false
+InpScreenshots=false
+InpChopLabels=false
+

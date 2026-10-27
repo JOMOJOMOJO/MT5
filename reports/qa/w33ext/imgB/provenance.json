@@ -1,0 +1,78 @@
+﻿{
+    "observed_cases":  5,
+    "trading_code_present":  false,
+    "selected_cases":  [
+                           0,
+                           1,
+                           2,
+                           3,
+                           4
+                       ],
+    "runner_sha256":  "49F31005C3A4E5295BA18BA31B2A784999D6B7C44B16FD38A2795F3E356345DC",
+    "native_hashes":  {
+                          "opposite_ticks.csv":  "291782DD40D1C45A25F8EF11ABDBA0BCF9D54154C9345A8BC61E815C510A27E5",
+                          "upper_bars.csv":  "9CBD1B0F9618274630D6D697B2E7DE50672749AFF1C79983376A8B6C2163A66D",
+                          "events.csv":  "F292C284D3498549C9345DE051284B52B45A98468F2FA0ABE0CB47BCA1CB5281",
+                          "run.json":  "908E08CB315DB85799F4C03ADA725785125C920CA5E08BA527C3A50ED2072169",
+                          "report.htm":  "44AE91411FFB4C0A7B2E53FBC0B3DFCA23A526116487802AABCE9B09D3D7AA39",
+                          "config.csv":  "F7FE700784E1A461E495CAD6459144CA9A64630CEDF849FA4AF6CDC85E940F90"
+                      },
+    "artifact_hashes":  {
+                            "case2_render.csv":  "B5106620ABD43C180B1C145EBF5377FACE255174BBEE3C237A5603F44A23C292",
+                            "case0_render.csv":  "FFEE203A23FF9C8D34BAA4AAECEDA3DC58913084C444F4BA8F2197D03A979DC7",
+                            "replay.ex5":  "613E22DB8EF08683B234CA95027830DAF4D763E571353FAC89BABE7007654FCD",
+                            "W33R_D15CEF88411B3BC8_1.png":  "1CF8C7A2B7B0AE259BC9CE996EBDEB9D0403AD4838055ED3BDA0CE1BBB3E2BC8",
+                            "case2_objects.csv":  "6C29B68CA2B9149BBFF44CFF355D0415AC08327DFB6A12BA42D3D263182C9F7F",
+                            "case0_objects.csv":  "F81635EB48CB7906B17358977EE69CDD85C51834003C855D9215E302C5F08982",
+                            "fixture.csv":  "02EBE795E93EC70A7FA924F67080140AE21AD2A44D469156E716D534C31802F7",
+                            "case4_render.csv":  "F4A055F2A27E88EFD48DB9B2F29F93F4D7E69A10FA2ACDCBA233611F064130DD",
+                            "prepare_summary.csv":  "D0DDA0EF93547EB8D745CC283FD74686C496A4BF6AAFCCCEBC622887BEE4AE1C",
+                            "case4_objects.csv":  "1F80C966F9629F9BBFE1F3817F58908A12B8E79515096A9B4EF6A078BB25A693",
+                            "fixture_cases.md":  "7B48696952B732238401FF8C8A10AC03960295CD706AC73EFAC8962DBD201986",
+                            "case3_objects.csv":  "0A60704DD5AF04EFA9F1EBD21D805159676F54CD413DDFCC17B03E84BB94E03C",
+                            "fixture_cases.json":  "07CB6F1D9FB09BA8CAD67C99417D79FFCD30209AEDD89696E9E3CA18C4FDB103",
+                            "W33R_D65CF767073215E9_4.png":  "8D7CA10C082520A7B8D7B81A7B34A3A3D37FE3C10B59FA79EBBECEDAA23715EA",
+                            "W33R_D35CF2AEBFB3A912_3.png":  "309A2E186BA1333A624CA46EB7CC243AA489EC756B1733C345B91632F365B361",
+                            "W33R_D25CF11BBBB03F7D_0.png":  "75D838B9B601900224FF28D06AE67BE5A65B975A7367B3C67330644054C7D371",
+                            "case1_objects.csv":  "CDB3E8654D4B7B9AABC160762E6577B77EE84B42A31D5DCB29410736CD51F98B",
+                            "replay.compile.log":  "4304E15D15C8E2C8ACE8E73C7A8D29AE626C32128438A17713F223EED710DE99",
+                            "case3_render.csv":  "E3F0B13008DAA23D81DC05A632E4BEF7AB6825090D20189B17F73576CF7F4CF5",
+                            "fixture_manifest.json":  "AECC9E7738CCF42BA32BD8308141267F50324536AFD3E307DF9BABDBE0B500B9",
+                            "W33R_D45CF4410820E747_2.png":  "C0E72B2C2659E78D9916A972274AFBFDE0D749D564B6924B23FA395DBD22064A",
+                            "case1_render.csv":  "027E88423E65B4D17C0AECB4308C1B732861A4F1FB4DC461ACB6E6D89A6588F0",
+                            "render_summary.csv":  "E1288970C180F842C42F46DD33E532AFFF7E236FD2BBDC627C87D486C2F28116"
+                        },
+    "custom_symbols":  "Actual source M1 bars bounded strictly before each recorded lifecycle cutoff",
+    "source_run":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\final\\20261022_140527_f4364f5c\\b_extension_on",
+    "fixture_manifest":  "fixture_manifest.json",
+    "shortfall":  0,
+    "binary_sha256":  "613E22DB8EF08683B234CA95027830DAF4D763E571353FAC89BABE7007654FCD",
+    "tester_screenshot":  false,
+    "kind":  "NORMAL_CHART_RECORDED_W1_REVISION_LIFECYCLE_REPLAY",
+    "show_panel":  false,
+    "review_mode":  "Extension",
+    "source_symbol":  "XAUUSD+",
+    "terminal_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261022_140527_f4364f5c",
+    "requested_cases":  5,
+    "custom_symbol_prefix":  "W33Xbc5bc345",
+    "signal_recalculation":  false,
+    "tag":  "w33x_03d88751B",
+    "arm":  "B",
+    "compile":  "0 errors, 0 warnings",
+    "normal_chart_algo_trading_enabled":  false,
+    "source_hashes":  {
+                          "types":  {
+                                        "sha256":  "12DB6624DDFC8A631B5D16949C012BD61149C1F21F79A7CBEA9974499AF3F5BC",
+                                        "path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\Types.mqh"
+                                    },
+                          "replay":  {
+                                         "sha256":  "A6E6467105718BEB9AD156B830A864F8DA79466B61B9D4EFFA631E89E4E6EB9B",
+                                         "path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\tests\\Wave33DrawingReplay.mq5"
+                                     },
+                          "display":  {
+                                          "sha256":  "4787ABBF82582EE34DA18E9AB1E8E8904F3D8346BCDFDB6FD83372428B2BF7B3",
+                                          "path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Include\\Wave33Visual\\Display.mqh"
+                                      }
+                      },
+    "chart_tf":  "M1"
+}

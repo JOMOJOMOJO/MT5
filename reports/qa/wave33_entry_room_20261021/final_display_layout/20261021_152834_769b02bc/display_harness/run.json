@@ -1,0 +1,14 @@
+{
+  "run_id": "display_harness",
+  "inputs": {
+    "InpRunTag": "wave33_20261021_152834_769b02bc_display_harness"
+  },
+  "symbol": "XAUUSD",
+  "expert": "Wave33DisplayHarness",
+  "model": 4,
+  "visual_mode": false,
+  "tag": "wave33_20261021_152834_769b02bc_display_harness",
+  "date_from": "2025.01.06",
+  "chart_period": "M1",
+  "date_to": "2025.01.18"
+}

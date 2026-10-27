@@ -1,0 +1,6 @@
+﻿{
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33PairLayout\\run_865b4d7f",
+    "status":  "FAIL",
+    "batch":  "run_865b4d7f",
+    "reason":  "Could not find a part of the path \u0027C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_pair_layout_20261025\\native\\run_865b4d7f\\orders_on_pair_suppressed\\pl_865b4d7f_2_pair_PERIOD_M15_PERIOD_M5_LONG_oldfalse_sigfalse_lower_bars.csv\u0027."
+}

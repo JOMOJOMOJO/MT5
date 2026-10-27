@@ -1,0 +1,88 @@
+{
+  "runs": [
+    {
+      "run_id": "display_harness",
+      "kind": "display_harness",
+      "assertions": 73,
+      "passed": 73,
+      "failed": 0,
+      "unavailable": 6,
+      "violations": [],
+      "audit_passed": true
+    },
+    {
+      "run_id": "engine_harness",
+      "kind": "engine_harness",
+      "assertions": 100,
+      "passed": 100,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    {
+      "run_id": "extension_harness",
+      "kind": "extension_harness",
+      "assertions": 156,
+      "passed": 156,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    {
+      "run_id": "fib_close_harness",
+      "kind": "fib_close_harness",
+      "assertions": 128,
+      "passed": 128,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    {
+      "run_id": "lifecycle_harness",
+      "kind": "lifecycle_harness",
+      "assertions": 96,
+      "passed": 96,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    {
+      "run_id": "opposite_exit_harness",
+      "kind": "opposite_exit_harness",
+      "assertions": 91,
+      "passed": 91,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    {
+      "run_id": "recognition_harness",
+      "kind": "recognition_harness",
+      "assertions": 156,
+      "passed": 156,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    },
+    {
+      "run_id": "room_harness",
+      "kind": "room_harness",
+      "assertions": 19,
+      "passed": 19,
+      "failed": 0,
+      "unavailable": 0,
+      "violations": [],
+      "audit_passed": true
+    }
+  ],
+  "run_count": 8,
+  "audit_passed": true,
+  "video_agreement": "UNASSESSED_SOURCE_CHARTS_NOT_PROVIDED",
+  "profitability_or_promotion": "NOT_ASSESSED"
+}

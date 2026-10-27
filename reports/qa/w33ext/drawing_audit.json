@@ -1,0 +1,130 @@
+{
+  "status": "PASS",
+  "checks": 8761,
+  "violation_count": 0,
+  "violations": [],
+  "rendered": [
+    {
+      "directory": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\imgAf",
+      "cases": [
+        {
+          "index": 0,
+          "setup_id": "W33_XAUUSD+_15_5_LONG_1601897400_7",
+          "selection": "EXTENDED_LONG_SIGNAL",
+          "image": "W33R_9C74EA6B9B90B1CD_0.png",
+          "object_count": 294,
+          "confirmed_revisions_including_related": 3,
+          "checks": 1229,
+          "failures": 0
+        },
+        {
+          "index": 1,
+          "setup_id": "W33_XAUUSD+_15_5_SHORT_1602070200_8",
+          "selection": "EXTENDED_SHORT_SIGNAL",
+          "image": "W33R_9B74E8D85B058D50_1.png",
+          "object_count": 122,
+          "confirmed_revisions_including_related": 3,
+          "checks": 534,
+          "failures": 0
+        },
+        {
+          "index": 2,
+          "setup_id": "W33_XAUUSD+_15_5_LONG_1602188100_12",
+          "selection": "EXTENDED_TERMINAL_NO_SIGNAL",
+          "image": "W33R_9E74ED91E9BA8D87_2.png",
+          "object_count": 354,
+          "confirmed_revisions_including_related": 9,
+          "checks": 1567,
+          "failures": 0
+        },
+        {
+          "index": 3,
+          "setup_id": "W33_XAUUSD+_15_5_SHORT_1602701100_16",
+          "selection": "MULTIPLE_REVISIONS",
+          "image": "W33R_9D74EBFEFC3C43AA_3.png",
+          "object_count": 216,
+          "confirmed_revisions_including_related": 5,
+          "checks": 969,
+          "failures": 0
+        },
+        {
+          "index": 4,
+          "setup_id": "W33_XAUUSD+_15_5_SHORT_1601551800_1",
+          "selection": "UNEXTENDED_FIB_LOCKED_CONTROL",
+          "image": "W33R_A074F0B7E6B32609_4.png",
+          "object_count": 59,
+          "confirmed_revisions_including_related": 1,
+          "checks": 254,
+          "failures": 0
+        }
+      ],
+      "case_count": 5,
+      "coverage_shortfall": [],
+      "manifest_sha256": "e2aae6a1b35bb8ea78bb702536dd42c79fd8b37e08b3a82d153df2aa04e16259",
+      "fixture_sha256": "2f0cee95682244eb0979de84d8e4ef2d143943c0996df709a2b033ad93543a60"
+    },
+    {
+      "directory": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\imgB",
+      "cases": [
+        {
+          "index": 0,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602682200_55",
+          "selection": "EXTENDED_LONG_SIGNAL",
+          "image": "W33R_D25CF11BBBB03F7D_0.png",
+          "object_count": 132,
+          "confirmed_revisions_including_related": 2,
+          "checks": 552,
+          "failures": 0
+        },
+        {
+          "index": 1,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18",
+          "selection": "EXTENDED_SHORT_SIGNAL",
+          "image": "W33R_D15CEF88411B3BC8_1.png",
+          "object_count": 164,
+          "confirmed_revisions_including_related": 2,
+          "checks": 673,
+          "failures": 0
+        },
+        {
+          "index": 2,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601604000_7",
+          "selection": "EXTENDED_TERMINAL_NO_SIGNAL",
+          "image": "W33R_D45CF4410820E747_2.png",
+          "object_count": 118,
+          "confirmed_revisions_including_related": 2,
+          "checks": 498,
+          "failures": 0
+        },
+        {
+          "index": 3,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601897700_13",
+          "selection": "MULTIPLE_REVISIONS",
+          "image": "W33R_D35CF2AEBFB3A912_3.png",
+          "object_count": 484,
+          "confirmed_revisions_including_related": 8,
+          "checks": 2097,
+          "failures": 0
+        },
+        {
+          "index": 4,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601543400_1",
+          "selection": "UNEXTENDED_FIB_LOCKED_CONTROL",
+          "image": "W33R_D65CF767073215E9_4.png",
+          "object_count": 95,
+          "confirmed_revisions_including_related": 1,
+          "checks": 384,
+          "failures": 0
+        }
+      ],
+      "case_count": 5,
+      "coverage_shortfall": [],
+      "manifest_sha256": "aecc9e7738ccf42ba32bd8308141267f50324536afd3e307df9babdbe0b500b9",
+      "fixture_sha256": "02ebe795e93ec70a7fa924f67080140ae21ad2a44d469156e716d534c31802f7"
+    }
+  ],
+  "kind": "NORMAL_CHART_RECORDED_W1_REVISION_OBJECT_AUDIT",
+  "pixel_overlap_automatically_tested": false,
+  "actual_visual_tester_capture": false,
+  "auditor_sha256": "d04760e5c590f153d5bcb4e990c645dc94653e5515e823fd22eee54c16f2d92c"
+}

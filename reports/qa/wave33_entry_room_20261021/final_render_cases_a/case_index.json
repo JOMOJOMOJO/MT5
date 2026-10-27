@@ -1,0 +1,52 @@
+[
+  {
+    "index": 0,
+    "case": "good_apr26_long",
+    "setup_id": "W33_USDJPY_15_5_LONG_1524763800_112"
+  },
+  {
+    "index": 1,
+    "case": "good_sep05_long",
+    "setup_id": "W33_USDJPY_15_5_LONG_1536149700_251"
+  },
+  {
+    "index": 2,
+    "case": "good_sep05_short",
+    "setup_id": "W33_USDJPY_15_5_SHORT_1536172200_253"
+  },
+  {
+    "index": 3,
+    "case": "late_sep06_long",
+    "setup_id": "W33_USDJPY_15_5_LONG_1536215400_254"
+  },
+  {
+    "index": 4,
+    "case": "late_sep17_long",
+    "setup_id": "W33_USDJPY_15_5_LONG_1537188300_265"
+  },
+  {
+    "index": 5,
+    "case": "late_sep24_long",
+    "setup_id": "W33_USDJPY_15_5_LONG_1537788600_270"
+  },
+  {
+    "index": 6,
+    "case": "missed_jun07_short",
+    "setup_id": "W33_USDJPY_15_5_SHORT_1528327800_163"
+  },
+  {
+    "index": 7,
+    "case": "missed_jun27_short",
+    "setup_id": "W33_USDJPY_15_5_SHORT_1530071100_181"
+  },
+  {
+    "index": 8,
+    "case": "missed_aug27_long",
+    "setup_id": "W33_USDJPY_15_5_LONG_1535354100_243"
+  },
+  {
+    "index": 9,
+    "case": "missed_sep05_early_long",
+    "setup_id": "W33_USDJPY_15_5_LONG_1536110100_250"
+  }
+]

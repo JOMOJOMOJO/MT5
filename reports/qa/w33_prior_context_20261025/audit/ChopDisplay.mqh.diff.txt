@@ -1,0 +1,14 @@
+--- before/ChopDisplay.mqh
++++ mql\Include\Wave33Visual\ChopDisplay.mqh
+@@ -21,9 +21,9 @@
+       CWave33Display::Event(e);
+       if(!m_chop_enabled || e.setup.setup_id=="")return;
+       m_chop_serial++;
+-      if(e.event_type!="SKIP" || e.reason!="CHOPPY_WAVE1")return;
++      if(e.event_type!="SKIP" || (e.reason!="CHOPPY_WAVE1" && e.reason!="PRIOR_LEVEL_RETEST"))return;
+       string name=m_chop_prefix+W33Hash(e.setup.setup_id)+"_skip_"+IntegerToString(m_chop_serial);
+-      ObjectSetString(0,name,OBJPROP_TEXT,"見送り: ①内部の往復が多い");
++      ObjectSetString(0,name,OBJPROP_TEXT,e.reason=="CHOPPY_WAVE1"?"見送り: ①内部の往復が多い":"見送り: 上位足の高安帯に再接近");
+      }
+   };
+ #endif

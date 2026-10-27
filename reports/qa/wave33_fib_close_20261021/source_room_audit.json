@@ -1,0 +1,34 @@
+{
+  "scope": "CAUSAL_EXECUTION_AND_SOURCE_NOT_PROFITABILITY",
+  "runs": [
+    {
+      "run": "reports\\qa\\wave33_fib_close_20261021\\a_comparison\\20261021_163350_c5b46e67\\a_fib_close_off",
+      "checks": 972,
+      "minimum": 0.25,
+      "violations": [],
+      "passed": true
+    },
+    {
+      "run": "reports\\qa\\wave33_fib_close_20261021\\a_comparison\\20261021_163350_c5b46e67\\a_fib_close_on",
+      "checks": 533,
+      "minimum": 0.25,
+      "violations": [],
+      "passed": true
+    },
+    {
+      "run": "reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_off",
+      "checks": 359,
+      "minimum": 0.25,
+      "violations": [],
+      "passed": true
+    },
+    {
+      "run": "reports\\qa\\wave33_fib_close_20261021\\b_comparison\\20261021_163401_1d44785f\\b_fib_close_on",
+      "checks": 263,
+      "minimum": 0.25,
+      "violations": [],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

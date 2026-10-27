@@ -1,0 +1,59 @@
+# display_harness: MQL5決定論テスト
+
+実際のMT5内で描画を呼び出し、線の終端と候補別の保持を確認する合成イベント 47項目。PASS 47 / FAIL 0 / UNAVAILABLE 4。未取得をPASSへ算入しない。市場の売買事例とは区別する。
+
+原本: [harness.csv](harness.csv)。
+
+| テスト | 判定 | 詳細 |
+|---|---|---|
+| known_time_start | PASS | Decision line starts when first observed |
+| live_line_finite | PASS | Candidate extends only through known event time |
+| invalidated_candidate_stops | PASS | Past decision evidence remains finite |
+| other_candidate_independent | PASS | Closing A leaves B tracking normally |
+| signal_stops_structure | PASS | Signal closes upper and lower decision lines |
+| signal_stops_fib | PASS | Fib band stops at entry decision |
+| diagnostic_sltp_short | PASS | Unordered SL stays one chart bar wide |
+| diagnostic_obstacle_short | PASS | Unordered resistance stays a short marker |
+| ordered_sltp_track | PASS | Actual position risk lines follow known market time |
+| monitor_end_keeps_position | PASS | Setup monitor ending cannot truncate an open position |
+| exit_stops_sltp | PASS | SL and TP end at the observed exit |
+| exit_stops_obstacle | PASS | Position resistance ends together with risk lines |
+| risk_color_retained | PASS | Historical stop and target keep their meaning |
+| late_terminal_cannot_reextend | PASS | Repeated terminal observations preserve the original exit end |
+| deferred_tracking_cannot_reopen | PASS | Delayed engine position acknowledgement after EXIT cannot reopen closed risk lines |
+| trendline_finite | PASS | Projected diagonal is finite |
+| lost_trend_stops | PASS | Replaced or lost trigger stops at its last valid time |
+| test_end_stops_all | PASS | Tester stop closes remaining live drawings |
+| all_lines_no_infinite_rays | PASS | No candidate |
+| rejected_signal_no_green_entry | PASS | Room rejection is not drawn as an executed entry |
+| source_trace_marker_exists | PASS | Selected native source is marked separately |
+| ancient_source_line_adoption_start | PASS | Old source does not extend through the entire history |
+| past_low_labeled_reference | PASS | An old low above price is not asserted to be important resistance |
+| wave1_room_separate | PASS | Fixed W1 boundary has its own room display |
+| rejected_references_finite | PASS | Unordered references stay finite |
+| future_obstacle_not_drawn | PASS | Unknown future source is not drawn |
+| wave1_not_duplicated | PASS | W1 is not repeated as unrelated purple resistance |
+| wave1_reference_stops_at_exit | PASS | W1 reference follows and ends with the real position |
+| no_opposite_cause_before_observation_LONG | PASS | An ordinary fill alone does not claim an opposite-wave decision existed |
+| opposite_wait_at_known_time_LONG | PASS | The warning is placed when the opposite first wave became known |
+| opposite_observation_point_at_known_time_LONG | PASS | The knowledge-time marker identifies the existing position's entry level without backdating |
+| opposite_wait_caption_explains_pending_profit_LONG | PASS | Gold identifies a pending positive-net exit and is distinct from a new green entry |
+| opposite_wait_source_and_known_tooltip_LONG | UNAVAILABLE | This tester cannot read even a short TOOLTIP probe; verify source and full known time in normal-chart replay inventory |
+| opposite_wait_keeps_original_protection_LONG | PASS | Arming leaves original stop/target prices active and creates no premature exit marker |
+| partial_exit_does_not_claim_flat_LONG | PASS | A partial close does not draw the completed-position exit or end residual risk lines |
+| opposite_exit_at_actual_fill_LONG | PASS | The exit point uses the actual close fill time and price rather than request time |
+| opposite_exit_caption_causal_reason_LONG | PASS | The close caption explicitly gives the opposite-first-wave profit reason at the fill location |
+| opposite_exit_tooltip_execution_trace_LONG | UNAVAILABLE | This tester cannot read TOOLTIP; verify source |
+| opposite_exit_stops_risk_at_actual_fill_LONG | PASS | All position risk/reference lines stop at the actual close and remain finite after later observations |
+| no_opposite_cause_before_observation_SHORT | PASS | An ordinary fill alone does not claim an opposite-wave decision existed |
+| opposite_wait_at_known_time_SHORT | PASS | The warning is placed when the opposite first wave became known |
+| opposite_observation_point_at_known_time_SHORT | PASS | The knowledge-time marker identifies the existing position's entry level without backdating |
+| opposite_wait_caption_explains_pending_profit_SHORT | PASS | Gold identifies a pending positive-net exit and is distinct from a new green entry |
+| opposite_wait_source_and_known_tooltip_SHORT | UNAVAILABLE | This tester cannot read even a short TOOLTIP probe; verify source and full known time in normal-chart replay inventory |
+| opposite_wait_keeps_original_protection_SHORT | PASS | Arming leaves original stop/target prices active and creates no premature exit marker |
+| partial_exit_does_not_claim_flat_SHORT | PASS | A partial close does not draw the completed-position exit or end residual risk lines |
+| opposite_exit_at_actual_fill_SHORT | PASS | The exit point uses the actual close fill time and price rather than request time |
+| opposite_exit_caption_causal_reason_SHORT | PASS | The close caption explicitly gives the opposite-first-wave profit reason at the fill location |
+| opposite_exit_tooltip_execution_trace_SHORT | UNAVAILABLE | This tester cannot read TOOLTIP; verify source |
+| opposite_exit_stops_risk_at_actual_fill_SHORT | PASS | All position risk/reference lines stop at the actual close and remain finite after later observations |
+| ordinary_tp_not_labeled_opposite_exit | PASS | A broker target close is not mislabeled as the new opposite-wave policy |

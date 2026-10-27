@@ -1,0 +1,345 @@
+{
+  "status": "PASS",
+  "checks": 67,
+  "native_batch": "run_8a9f584f",
+  "assertions": 1470,
+  "failures": 0,
+  "checks_detail": [
+    {
+      "check": "off_diag_on: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_on: no order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_on: only canonical exclusion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_on: release calls accepted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_on: context captures each SIGNAL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_on: context planned prices agree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_on: four known barriers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_on: prior source time strictly before W1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_on: source and close known by decision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_off: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_off: no order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_off: only canonical exclusion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_off: release calls accepted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: no order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: only canonical exclusion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: release calls accepted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: four rejected signals suppress green ENTRY",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: four measured skips",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: missing evidence explicitly allowed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: context captures each SIGNAL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: context planned prices agree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: four known barriers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: prior source time strictly before W1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: source and close known by decision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: no order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: only canonical exclusion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: release calls accepted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: four rejected signals suppress green ENTRY",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: four measured skips",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: missing evidence explicitly allowed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: context captures each SIGNAL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: context planned prices agree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: four known barriers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: prior source time strictly before W1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: source and close known by decision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: no order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: only canonical exclusion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: release calls accepted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: four rejected signals suppress green ENTRY",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: four measured skips",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: context captures each SIGNAL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: context planned prices agree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: four known barriers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: prior source time strictly before W1",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: source and close known by decision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "invalid_negative: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "invalid_negative: no order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "invalid_negative: init rejected before event ledger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "invalid_above_one: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "invalid_above_one: no order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "invalid_above_one: init rejected before event ledger",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "filter OFF diagnostic ON/OFF economic identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "filter ON diagnostic ON/OFF economic identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "filter toggle preserves planned entry_price",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "filter toggle preserves planned sl_price",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "filter toggle preserves planned tp_price",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "filter toggle preserves planned risk_points",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "filter toggle preserves planned intended_rr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "filter toggle preserves planned actual_rr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "finite horizontal/connector rays",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "finite band starts at decision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "finite band horizon",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no terminal-history lookup in context evaluator",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source identity retained in context CSV",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "scope": "Synthetic actual-EA wrapper and recorded classifier fixture; no market-period profitability inference, screenshot or tooltip-readback claim."
+}

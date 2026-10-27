@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "ea_version": "1.82",
+  "protected_original_files": 12,
+  "unchanged_metric_function": true,
+  "native_assertions": 694,
+  "native_event_audit_checks": 36,
+  "preset_count": 4,
+  "preset_comparison_diff": "only filter flag and run tag",
+  "default_filter": "OFF",
+  "threshold": 0.5,
+  "profitability_test": false,
+  "artifact_sha256": {
+    "mql\\Experts\\Wave33ChopDiagnostic.mq5": "d384c5472a5c4a038898feb1edb2e83823bfc434a8d5a19b78e4f2078d31873a",
+    "mql\\Experts\\Wave33ChopDiagnostic.ex5": "a6a8bf3ce23f89539bf6ac0248a00ad7112468d0e9739c670d30376642673307",
+    "mql\\Include\\Wave33Visual\\Chop.mqh": "f2d72b5c9c99ae21e47d90bdf6077a3aea93b422dd2831748b3695edcb124b49",
+    "mql\\Include\\Wave33Visual\\ChopDisplay.mqh": "b29052efec4498d330d963704819a87b64659b878bac3d38d3669436fa7421cc",
+    "mql\\Experts\\tests\\Wave33ChopFilterHarness.mq5": "543a3510612bb4c3c56bc08009caa216d52259e19c6bd90bd05b068edaf8b9c4",
+    "mql\\Experts\\tests\\Wave33ChopFilterHarness.ex5": "80b45cc9732fd0c3580cae7185f00304c58c7d81b4ceae9586fe9fcf24cb4ded",
+    "reports\\qa\\w33chop_filter_20261024\\README.md": "90370151cfb6b920d643fab4dacc5bb10c727523eb8f4c6491c064c820a8573f",
+    "reports\\qa\\w33chop_filter_20261024\\native_latest.json": "876566dd76369ec56741c0334a32b1c4bace422116602ae00f1d6c573a8d73b7",
+    "reports\\qa\\w33chop_filter_20261024\\native_event_audit.json": "586bad098c43fd4c581667e4d3e92fab14f97697d1b7401dca3757ea3eea77e0",
+    "presets\\wave33\\Wave33Chop_v182_A_FilterOff.set": "b6a9bea416a687cf7aa27d555586f770b2d43f6e2c3e7891dfdd6e33a4412f0b",
+    "presets\\wave33\\Wave33Chop_v182_A_FilterOn.set": "382864d30e218710a3681496a42a558a1dfe2c65f40b18531f6770ef4a0035d5",
+    "presets\\wave33\\Wave33Chop_v182_B_FilterOff.set": "bb27790e858106cb1e8784907a706322834911b8941866eb748b7d48ada12d2b",
+    "presets\\wave33\\Wave33Chop_v182_B_FilterOn.set": "ebefd57f792047ce667b5cea15c23c8ee6370027b8e2e8e1e01f293b906a03b2"
+  }
+}

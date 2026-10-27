@@ -1,0 +1,15 @@
+InpRunTag=wave33_20261021_235245_00512912_a_opposite_exit_on
+InpDraw=true
+InpScreenshots=true
+InpRewardR=1
+InpStrictWaveLifecycle=true
+InpAuditOppositeExitTicks=true
+InpLowerRecognition=2
+InpMagic=3320261021
+InpTriggerMode=0
+InpEnableTesterOrders=true
+InpMinWave1RoomR=0.25
+InpRejectDeepFib=false
+InpExitOnOppositeWave1=true
+InpPattern=0
+InpRejectDeepFibClose=true

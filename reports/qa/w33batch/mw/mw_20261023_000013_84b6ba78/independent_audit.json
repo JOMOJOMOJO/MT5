@@ -1,0 +1,426 @@
+{
+  "status": "PARTIAL_NATIVE_RUN",
+  "original_runner_status": {
+    "runtime": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33\\20261023_000013_b13f64c5",
+    "error": "Owned Market Watch batch exceeded bounded timeout",
+    "status": "FAILED",
+    "output": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78",
+    "tag": "w33mw_2614c1f3"
+  },
+  "selected_symbols": [
+    "XAUUSD+",
+    "XAUAUD+",
+    "XAUEUR+",
+    "XAUJPY+",
+    "Nikkei225",
+    "CHINA50",
+    "HK50",
+    "BVSPX",
+    "ES35",
+    "USDJPY",
+    "GBPUSD",
+    "EURUSD",
+    "EURUSD+",
+    "AUDUSD"
+  ],
+  "observed_passes": 9,
+  "csv_integrity_violations": [],
+  "passes": [
+    {
+      "symbol": "CHINA50",
+      "path": "reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\passes\\CHINA50",
+      "tag": "w33mw_2614c1f3_CHINA50_220BBC5B02F99831_0",
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 486,
+        "WAVE1_BREAK": 4,
+        "STATE": 6,
+        "WAVE1_PROVISIONAL": 9,
+        "INVALIDATE": 3,
+        "WAVE1_PEAK_CONFIRMED": 2,
+        "WAVE1_EXTENSION_LOCKED": 1,
+        "FIB_CLOSE_TOO_DEEP": 1,
+        "WAVE2_EXTREME": 4,
+        "TEST_END": 1
+      },
+      "last_event_at": "2020.10.09 23:44:30",
+      "sha256": {
+        "config.csv": "22F71D344FD1DBAA15E16EA7458A54A61D1EC5B9882A9660842F29FD3D1F3D1D",
+        "events.csv": "3C81FD920218F2ECE3667B29E09BC0644D4A0B965B491E43A2B247DB8914C758",
+        "lower_bars.csv": "FF1108A599F8DDFD5125ACBFAAFCFB5531032FDF9DB9530CDED6A4E7BD7FFB04",
+        "opposite_ticks.csv": "34A1A7D6899AD78CCBE84EFFDB717C92AC7C3EB657AECED1CD31DDAE057015B2",
+        "upper_bars.csv": "8C8635204771BC5531D7E4256B00C9A62431D6FAF3EBC58323813F69FA78BE05"
+      }
+    },
+    {
+      "symbol": "EURUSD",
+      "path": "reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\passes\\EURUSD",
+      "tag": "w33mw_2614c1f3_EURUSD_455F7BC25B4FA35C_0",
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 729,
+        "WAVE1_BREAK": 17,
+        "STATE": 51,
+        "WAVE1_PROVISIONAL": 60,
+        "WAVE1_PEAK_CONFIRMED": 13,
+        "WAVE1_EXTENSION_LOCKED": 13,
+        "FIB_CLOSE_TOO_DEEP": 7,
+        "INVALIDATE": 17,
+        "WAVE2_EXTREME": 79,
+        "FIB_TOUCH": 12,
+        "FIB_TOO_DEEP": 7,
+        "LOWER_STRUCTURE_CONFIRMED": 11,
+        "LOWER_STRUCTURE_LOST": 6,
+        "INITIAL_MOVE_PROGRESS": 6,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 5,
+        "WAVE1_EXTENSION_STARTED": 5,
+        "WAVE1_EXTENDED_CONFIRMED": 5,
+        "LOWER_STRUCTURE_REJECTED": 4
+      },
+      "last_event_at": "2020.10.09 23:45:00",
+      "sha256": {
+        "config.csv": "3EC09AC80EF83A5D0E3D34A4775E2E32A1FA9AAE7377289BCEA4BBA70CF7E193",
+        "events.csv": "CAEECB5EC7AA9F4AF1390F4AE69E77BB0B28ED0B7AEC97AD546A3401E397AE1B",
+        "lower_bars.csv": "BE3CBE09DD740D0D0C4D12CFAA2C0A8959C83D371AE5BCC679D93F29E47BD679",
+        "opposite_ticks.csv": "34A1A7D6899AD78CCBE84EFFDB717C92AC7C3EB657AECED1CD31DDAE057015B2",
+        "upper_bars.csv": "32B088FEDC29EE00F1EA49C6E8C86ABB5B7B017196AC12C53711F32C87812BBD"
+      }
+    },
+    {
+      "symbol": "EURUSD+",
+      "path": "reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\passes\\EURUSD+",
+      "tag": "w33mw_2614c1f3_EURUSD+_3748ACB131BA337B_0",
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 729,
+        "WAVE1_BREAK": 17,
+        "STATE": 51,
+        "WAVE1_PROVISIONAL": 60,
+        "WAVE1_PEAK_CONFIRMED": 13,
+        "WAVE1_EXTENSION_LOCKED": 13,
+        "FIB_CLOSE_TOO_DEEP": 7,
+        "INVALIDATE": 17,
+        "WAVE2_EXTREME": 79,
+        "FIB_TOUCH": 12,
+        "FIB_TOO_DEEP": 7,
+        "LOWER_STRUCTURE_CONFIRMED": 11,
+        "LOWER_STRUCTURE_LOST": 6,
+        "INITIAL_MOVE_PROGRESS": 6,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 5,
+        "WAVE1_EXTENSION_STARTED": 5,
+        "WAVE1_EXTENDED_CONFIRMED": 5,
+        "LOWER_STRUCTURE_REJECTED": 4
+      },
+      "last_event_at": "2020.10.09 23:45:00",
+      "sha256": {
+        "config.csv": "3AF316D6339173A44312AE91CDF8ED9B7A0AEFFEAC39BCC2B80D14481E7A5D87",
+        "events.csv": "BAACC2A763D25B89B9CB4F91685203D92D326278642505B771B2731BE21BC1E5",
+        "lower_bars.csv": "2D04D36BF9CD49C34BDBDA3E9EB2258CE887A0C60A60C087F9B5515FAB08FA92",
+        "opposite_ticks.csv": "34A1A7D6899AD78CCBE84EFFDB717C92AC7C3EB657AECED1CD31DDAE057015B2",
+        "upper_bars.csv": "7E05C040A6AC21E505705F8497C3F245F2CCD5A7E0ADF1AD02E05F714C69FB48"
+      }
+    },
+    {
+      "symbol": "GBPUSD",
+      "path": "reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\passes\\GBPUSD",
+      "tag": "w33mw_2614c1f3_GBPUSD_3748ACB131BA337B_0",
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 763,
+        "WAVE1_BREAK": 6,
+        "STATE": 32,
+        "WAVE1_PROVISIONAL": 15,
+        "WAVE1_PEAK_CONFIRMED": 5,
+        "WAVE2_EXTREME": 33,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 2,
+        "WAVE1_EXTENSION_STARTED": 2,
+        "WAVE1_EXTENSION_TRACKING": 2,
+        "WAVE1_EXTENDED_CONFIRMED": 2,
+        "LOWER_STRUCTURE_CONFIRMED": 10,
+        "LOWER_STRUCTURE_LOST": 5,
+        "WAVE1_EXTENSION_LOCKED": 5,
+        "FIB_TOUCH": 5,
+        "FIB_TOO_DEEP": 3,
+        "FIB_CLOSE_TOO_DEEP": 2,
+        "INVALIDATE": 4,
+        "PIVOT_TRIGGER": 2,
+        "SIGNAL": 2,
+        "RISK_CHECK": 2,
+        "ORDER": 2,
+        "FILL": 2,
+        "POSITION_TRACKING": 2,
+        "EXIT": 2,
+        "COMPLETED": 2
+      },
+      "last_event_at": "2020.10.09 23:45:00",
+      "sha256": {
+        "config.csv": "5054DC3F41FB00B06964727656847EE311F125CF9ECB33E3AD4498C06540A51D",
+        "events.csv": "058659E9C06178A0E6ADFACFC96D37DEADD791EA0E9541124680F47C96D28F23",
+        "lower_bars.csv": "8388B6EE0E221D947E513E66B3FF07E79B4CFEDDA1A3F8E0293D471DE1DFC58C",
+        "opposite_ticks.csv": "34A1A7D6899AD78CCBE84EFFDB717C92AC7C3EB657AECED1CD31DDAE057015B2",
+        "upper_bars.csv": "E48B2684EC103D231CA3095437F77CF3DE4F2DEE1AA9868D174C2BE59F153AB4"
+      }
+    },
+    {
+      "symbol": "HK50",
+      "path": "reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\passes\\HK50",
+      "tag": "w33mw_2614c1f3_HK50_3748ACB131BA337B_0",
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 71,
+        "WAVE1_BREAK": 3,
+        "STATE": 11,
+        "WAVE1_PROVISIONAL": 3,
+        "WAVE1_PEAK_CONFIRMED": 2,
+        "WAVE2_EXTREME": 36,
+        "WAVE1_EXTENSION_LOCKED": 2,
+        "FIB_TOUCH": 2,
+        "FIB_TOO_DEEP": 1,
+        "FIB_CLOSE_TOO_DEEP": 1,
+        "INVALIDATE": 1,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 3,
+        "WAVE1_EXTENSION_STARTED": 3,
+        "WAVE1_EXTENSION_TRACKING": 11,
+        "WAVE1_EXTENDED_CONFIRMED": 3,
+        "LOWER_STRUCTURE_REJECTED": 2,
+        "LOWER_STRUCTURE_CONFIRMED": 2,
+        "SKIP": 1,
+        "PIVOT_TRIGGER": 1,
+        "SIGNAL": 1,
+        "RISK_CHECK": 1
+      },
+      "last_event_at": "2020.10.06 08:55:00",
+      "sha256": {
+        "config.csv": "30FF5AC2102FBEBBEAFC40083A59B8491D310E18202A7B59CC20D048A430A161",
+        "events.csv": "1BE2E5586D2F464B104C4AF0668AD56EAE1354B36C4C0DA0AF994B380DF171ED",
+        "lower_bars.csv": "8C57619C38DB4C324CDAD4014D6C0A01B1B0FEF4845FB6E4377318719E545CA9",
+        "opposite_ticks.csv": "34A1A7D6899AD78CCBE84EFFDB717C92AC7C3EB657AECED1CD31DDAE057015B2",
+        "upper_bars.csv": "5E3FF207C7FAD4FF6CF827C3E73585BEFA92FA962A4638D62034DFB63031BF12"
+      }
+    },
+    {
+      "symbol": "Nikkei225",
+      "path": "reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\passes\\Nikkei225",
+      "tag": "w33mw_2614c1f3_Nikkei225_455F7BC25B4FA35C_0",
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 445,
+        "WAVE1_BREAK": 5,
+        "STATE": 11,
+        "WAVE1_PROVISIONAL": 9,
+        "INVALIDATE": 4,
+        "WAVE1_PEAK_CONFIRMED": 4,
+        "WAVE1_EXTENSION_LOCKED": 4,
+        "WAVE2_EXTREME": 14,
+        "FIB_TOUCH": 4,
+        "LOWER_STRUCTURE_CONFIRMED": 1,
+        "FIB_TOO_DEEP": 2,
+        "LOWER_STRUCTURE_LOST": 1,
+        "FIB_CLOSE_TOO_DEEP": 1,
+        "INITIAL_MOVE_PROGRESS": 2,
+        "TEST_END": 1
+      },
+      "last_event_at": "2020.10.09 23:59:59",
+      "sha256": {
+        "config.csv": "1B159602B48D60FEC3F5C4D30C77988D53B6832717FA397833DF7D808B01D9E6",
+        "events.csv": "AD90EC211D1D9A81833E70E3A2EE01258DC200C04FF4EA0C1D0D079F547D60DD",
+        "lower_bars.csv": "67618672027A9F033B297CA85141C296B55A4019AC8C36C06C7F7ABA6D28553A",
+        "opposite_ticks.csv": "34A1A7D6899AD78CCBE84EFFDB717C92AC7C3EB657AECED1CD31DDAE057015B2",
+        "upper_bars.csv": "3F2550BF44C5B1C1095E3F8CAF0DE59D2CBA0B4DE8D68A70432212E04B6F468F"
+      }
+    },
+    {
+      "symbol": "USDJPY",
+      "path": "reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\passes\\USDJPY",
+      "tag": "w33mw_2614c1f3_USDJPY_3748ACB131BA337B_0",
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 727,
+        "WAVE1_BREAK": 10,
+        "STATE": 41,
+        "WAVE1_PROVISIONAL": 23,
+        "WAVE1_PEAK_CONFIRMED": 9,
+        "WAVE2_EXTREME": 32,
+        "LOWER_STRUCTURE_CONFIRMED": 10,
+        "LOWER_STRUCTURE_LOST": 4,
+        "WAVE1_EXTENSION_LOCKED": 9,
+        "FIB_TOUCH": 8,
+        "LOWER_STRUCTURE_REJECTED": 2,
+        "INITIAL_MOVE_PROGRESS": 4,
+        "INVALIDATE": 5,
+        "PIVOT_TRIGGER": 4,
+        "SIGNAL": 4,
+        "RISK_CHECK": 4,
+        "ORDER": 2,
+        "FILL": 2,
+        "POSITION_TRACKING": 2,
+        "SKIP": 3,
+        "EXIT": 2,
+        "COMPLETED": 4,
+        "FIB_TOO_DEEP": 5,
+        "FIB_CLOSE_TOO_DEEP": 1,
+        "TRENDLINE_TRIGGER": 2
+      },
+      "last_event_at": "2020.10.09 23:25:00",
+      "sha256": {
+        "config.csv": "538C8D9F6728D920552F6ADE248033F665B274D4FB89EE83A5A9B0C25C522FE6",
+        "events.csv": "65BE074B855F6D79CF7B8BFB41BA07EE8E9CC06F978579F88405DF40A2358573",
+        "lower_bars.csv": "8C169615450D6DBF1A5BD5FB52DAC94001B114F37992B276E6B38DAEAAA334CC",
+        "opposite_ticks.csv": "34A1A7D6899AD78CCBE84EFFDB717C92AC7C3EB657AECED1CD31DDAE057015B2",
+        "upper_bars.csv": "AF35DFE38C13C480AB084459A0B8AF2B0076CF55F238AA36BEC10E654C52AF58"
+      }
+    },
+    {
+      "symbol": "XAUAUD+",
+      "path": "reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\passes\\XAUAUD+",
+      "tag": "w33mw_2614c1f3_XAUAUD+_455F7BC25B4FA35C_0",
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 721,
+        "WAVE1_BREAK": 13,
+        "STATE": 73,
+        "WAVE1_PROVISIONAL": 40,
+        "WAVE1_PEAK_CONFIRMED": 12,
+        "WAVE1_EXTENSION_LOCKED": 12,
+        "WAVE2_EXTREME": 103,
+        "FIB_TOUCH": 11,
+        "FIB_TOO_DEEP": 5,
+        "INVALIDATE": 7,
+        "FIB_CLOSE_TOO_DEEP": 3,
+        "LOWER_STRUCTURE_CONFIRMED": 25,
+        "PIVOT_TRIGGER": 5,
+        "SIGNAL": 5,
+        "RISK_CHECK": 5,
+        "ORDER": 4,
+        "FILL": 4,
+        "POSITION_TRACKING": 4,
+        "EXIT": 4,
+        "COMPLETED": 5,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 3,
+        "WAVE1_EXTENSION_STARTED": 3,
+        "WAVE1_EXTENSION_TRACKING": 7,
+        "WAVE1_EXTENDED_CONFIRMED": 3,
+        "LOWER_STRUCTURE_LOST": 11,
+        "LOWER_STRUCTURE_REJECTED": 10,
+        "INITIAL_MOVE_PROGRESS": 2,
+        "SKIP": 2,
+        "TRENDLINE_TRIGGER": 2
+      },
+      "last_event_at": "2020.10.09 23:45:00",
+      "sha256": {
+        "config.csv": "5FDC43C68EC509916C8BC060BBF8087DDBA78EE5BF2DFB310D52C1B823BC133A",
+        "events.csv": "EBA9616CC5409BF514D2DB1C2A3722726E756D6E110ED0843A97D7CE80984142",
+        "lower_bars.csv": "019F2445535570070A7D9B7CA940DE09B7CE92BD90E124BC4EC7D9E8BB737046",
+        "opposite_ticks.csv": "34A1A7D6899AD78CCBE84EFFDB717C92AC7C3EB657AECED1CD31DDAE057015B2",
+        "upper_bars.csv": "701FFDD39E238C013B13A721A4BCEC5ACAEB581CAF64BB8F6084B547D21CEF39"
+      }
+    },
+    {
+      "symbol": "XAUUSD+",
+      "path": "reports\\qa\\w33batch\\mw\\mw_20261023_000013_84b6ba78\\passes\\XAUUSD+",
+      "tag": "w33mw_2614c1f3_XAUUSD+_455F7BC25B4FA35C_0",
+      "event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 720,
+        "WAVE1_BREAK": 12,
+        "STATE": 96,
+        "WAVE1_PROVISIONAL": 27,
+        "WAVE1_PEAK_CONFIRMED": 12,
+        "WAVE1_EXTENSION_LOCKED": 11,
+        "WAVE2_EXTREME": 149,
+        "FIB_TOUCH": 10,
+        "LOWER_STRUCTURE_CONFIRMED": 38,
+        "FIB_TOO_DEEP": 5,
+        "LOWER_STRUCTURE_LOST": 17,
+        "FIB_CLOSE_TOO_DEEP": 6,
+        "INVALIDATE": 7,
+        "PIVOT_TRIGGER": 5,
+        "TRENDLINE_TRIGGER": 3,
+        "SIGNAL": 5,
+        "RISK_CHECK": 5,
+        "ORDER": 4,
+        "FILL": 4,
+        "POSITION_TRACKING": 4,
+        "EXIT": 4,
+        "COMPLETED": 5,
+        "SKIP": 1,
+        "LOWER_STRUCTURE_REJECTED": 18,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 11,
+        "WAVE1_EXTENSION_STARTED": 11,
+        "WAVE1_EXTENDED_CONFIRMED": 11,
+        "WAVE1_EXTENSION_TRACKING": 35,
+        "OPPOSITE_WAVE1_ARMED": 1,
+        "OPPOSITE_CLOSE_REQUEST": 1,
+        "OPPOSITE_CLOSE_ACCEPTED": 1
+      },
+      "last_event_at": "2020.10.09 23:45:00",
+      "sha256": {
+        "config.csv": "8AE59DBB897702E3421749671BB32CB6A37E792BBC70D15FB6F587B784428EEE",
+        "events.csv": "8E4421A7436CCBF380872A0BC76146F6DCA71B740EC3BB781F9789C8DA853856",
+        "lower_bars.csv": "E057D7C83C73420581F11277C38CD9894D84B46C0718F58690A009796F8FB889",
+        "opposite_ticks.csv": "E393A73CDEA2915A865256C882CC868EA5D9AD7FF9457F29A53DB29320842770",
+        "upper_bars.csv": "3192F3A4B42F324F006C7A078D9C0F493D1E5704E42EB5AE83871BA8D4B8F221"
+      }
+    }
+  ],
+  "native_passes": [
+    {
+      "pass": 1,
+      "symbol": "USDJPY",
+      "native_completed": true
+    },
+    {
+      "pass": 2,
+      "symbol": "GBPUSD",
+      "native_completed": true
+    },
+    {
+      "pass": 4,
+      "symbol": "EURUSD+",
+      "native_completed": true
+    },
+    {
+      "pass": 11,
+      "symbol": "HK50",
+      "native_completed": false
+    },
+    {
+      "pass": 0,
+      "symbol": "XAUUSD+",
+      "native_completed": true
+    },
+    {
+      "pass": 3,
+      "symbol": "EURUSD",
+      "native_completed": true
+    },
+    {
+      "pass": 6,
+      "symbol": "XAUAUD+",
+      "native_completed": true
+    },
+    {
+      "pass": 9,
+      "symbol": "Nikkei225",
+      "native_completed": true
+    },
+    {
+      "pass": 10,
+      "symbol": "CHINA50",
+      "native_completed": true
+    },
+    {
+      "pass": 13,
+      "symbol": null,
+      "native_completed": false
+    }
+  ],
+  "native_completed_passes": 8,
+  "native_finished_total": 0,
+  "initialization_error_lines": [],
+  "model": 4,
+  "orders": 12,
+  "fills": 12,
+  "exits": 12,
+  "profitability_assessed": false
+}

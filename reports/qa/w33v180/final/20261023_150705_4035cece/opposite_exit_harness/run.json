@@ -1,0 +1,14 @@
+{
+  "tag": "wave33_20261023_150705_4035cece_opposite_exit_harness",
+  "run_id": "opposite_exit_harness",
+  "model": 4,
+  "chart_period": "M1",
+  "inputs": {
+    "InpRunTag": "wave33_20261023_150705_4035cece_opposite_exit_harness"
+  },
+  "expert": "Wave33OppositeExitHarness",
+  "symbol": "XAUUSD+",
+  "date_to": "2023.01.10",
+  "visual_mode": false,
+  "date_from": "2023.01.01"
+}

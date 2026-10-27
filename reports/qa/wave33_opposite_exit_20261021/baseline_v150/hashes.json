@@ -1,0 +1,34 @@
+[
+  {
+    "path": "mql/Experts/Wave33VisualVerifier.mq5",
+    "sha256": "A32FF3208C9C3CE86C30EC6D073085D11920D67EA387310DEC68AE9FFB730785"
+  },
+  {
+    "path": "mql/Experts/Wave33VisualVerifier.ex5",
+    "sha256": "40A063DE4D9ABC63ED38D67F748B47FEBBD506D7B2C7159A9F37DC6EDBD740E0"
+  },
+  {
+    "path": "mql/Include/Wave33Visual/Types.mqh",
+    "sha256": "0D0C9B1BD89A0D7A92CB040A0F0AF4E598B5BADCF6583D89E680DE3EF56D0893"
+  },
+  {
+    "path": "mql/Include/Wave33Visual/Ledger.mqh",
+    "sha256": "15ABF49217301B4E4D364949DD796AD1F3E03AE1094B9AA6749F00F634DBEE0C"
+  },
+  {
+    "path": "mql/Include/Wave33Visual/Engine.mqh",
+    "sha256": "3149699F3F62215DF0C7923EF7049510BE928CC066C05B71310817821E66C822"
+  },
+  {
+    "path": "mql/Include/Wave33Visual/Display.mqh",
+    "sha256": "F63B02ABD4075619F7BFBD839E7FE56204FD0D0D5C1F4258415CAA5EB2F2DB0A"
+  },
+  {
+    "path": "mql/Experts/tests/Wave33DrawingReplay.mq5",
+    "sha256": "D87BB7DA6D51636423C38BE0E25BFA5D1BC698D523447C233557FA72D93CC072"
+  },
+  {
+    "path": "scripts/run-wave33-visual-qa.ps1",
+    "sha256": "F486BEEF7A4057FBA8807798EF88CD34E77E6FCCDD39604D47BDCDD5FF8A9917"
+  }
+]

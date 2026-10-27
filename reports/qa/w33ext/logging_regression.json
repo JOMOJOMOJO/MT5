@@ -1,0 +1,1958 @@
+{
+  "status": "PASS",
+  "checks": 272,
+  "violations": [],
+  "checks_detail": [
+    {
+      "passed": true,
+      "check": "all_ordered_executable_actions_unchanged",
+      "arm": "a_extension_off",
+      "old_count": 70,
+      "new_count": 70,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1601575200_3"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602176400_11"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602630000_15"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1602779400_17"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1602877500_21"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1603836000_35"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1604340000_42"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1604618100_45"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1605211200_52"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1605563100_54"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1601575200_3"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602176400_11"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602630000_15"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1602779400_17"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1602877500_21"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1603836000_35"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1604340000_42"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1604618100_45"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1605211200_52"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1605563100_54"
+    },
+    {
+      "passed": true,
+      "check": "filled_candidate_identity_coverage_unchanged",
+      "arm": "a_extension_off",
+      "old_count": 10,
+      "new_count": 10
+    },
+    {
+      "passed": true,
+      "check": "all_filled_entry_sl_tp_exit_cash_r_and_test_end_unchanged",
+      "arm": "a_extension_off",
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "all_native_deals_including_forced_end_unchanged",
+      "arm": "a_extension_off",
+      "old_count": 20,
+      "new_count": 20,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "accepted_source_bars_exactly_identical",
+      "arm": "a_extension_off",
+      "kind": "upper"
+    },
+    {
+      "passed": true,
+      "check": "accepted_source_bars_exactly_identical",
+      "arm": "a_extension_off",
+      "kind": "lower"
+    },
+    {
+      "passed": true,
+      "check": "all_received_tick_quotes_costs_gates_attempts_unchanged",
+      "arm": "a_extension_off",
+      "rows": 0,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "fixed_event_knowledge_rows_chronological",
+      "arm": "a_extension_off",
+      "violations": []
+    },
+    {
+      "passed": true,
+      "check": "all_ordered_executable_actions_unchanged",
+      "arm": "a_extension_on",
+      "old_count": 89,
+      "new_count": 89,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1601575200_3"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1601897400_7"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602070200_8"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602176400_11"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602630000_15"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602701100_16"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1602779400_17"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1602877500_21"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1603836000_35"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1604340000_42"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1604583900_44"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1604618100_45"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1605211200_52"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1605563100_54"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1601575200_3"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1601897400_7"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602070200_8"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602176400_11"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602630000_15"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1602701100_16"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1602779400_17"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1602877500_21"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1603836000_35"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1604340000_42"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1604583900_44"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1604618100_45"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1605211200_52"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_15_5_SHORT_1605563100_54"
+    },
+    {
+      "passed": true,
+      "check": "filled_candidate_identity_coverage_unchanged",
+      "arm": "a_extension_on",
+      "old_count": 14,
+      "new_count": 14
+    },
+    {
+      "passed": true,
+      "check": "all_filled_entry_sl_tp_exit_cash_r_and_test_end_unchanged",
+      "arm": "a_extension_on",
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "all_native_deals_including_forced_end_unchanged",
+      "arm": "a_extension_on",
+      "old_count": 28,
+      "new_count": 28,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "accepted_source_bars_exactly_identical",
+      "arm": "a_extension_on",
+      "kind": "upper"
+    },
+    {
+      "passed": true,
+      "check": "accepted_source_bars_exactly_identical",
+      "arm": "a_extension_on",
+      "kind": "lower"
+    },
+    {
+      "passed": true,
+      "check": "all_received_tick_quotes_costs_gates_attempts_unchanged",
+      "arm": "a_extension_on",
+      "rows": 2491,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "fixed_event_knowledge_rows_chronological",
+      "arm": "a_extension_on",
+      "violations": []
+    },
+    {
+      "passed": true,
+      "check": "all_ordered_executable_actions_unchanged",
+      "arm": "b_extension_off",
+      "old_count": 276,
+      "new_count": 276,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1601543400_1"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601547900_2"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601639100_9"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601980500_21"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602041700_24"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602104100_29"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602126000_30"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602135900_33"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602237600_37"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602277500_39"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602478800_43"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602793200_62"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602829500_64"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602869400_65"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603138800_72"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603224900_75"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603310400_79"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603482000_86"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603686600_87"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603822500_97"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604050500_106"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604080800_109"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604339400_116"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604379000_118"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604489100_123"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604541000_126"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604916300_137"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604951100_138"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604972700_140"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604995500_141"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605021600_143"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605042300_146"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605060600_148"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605072600_149"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605119700_152"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605144600_154"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605159000_156"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605537300_172"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605555000_174"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605651600_177"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1601543400_1"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601547900_2"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601639100_9"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601980500_21"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602041700_24"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602104100_29"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602126000_30"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602135900_33"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602237600_37"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602277500_39"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602478800_43"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602793200_62"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602829500_64"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602869400_65"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603138800_72"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603224900_75"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603310400_79"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603482000_86"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603686600_87"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603822500_97"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604050500_106"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604080800_109"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604339400_116"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604379000_118"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604489100_123"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604541000_126"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604916300_137"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604951100_138"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604972700_140"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604995500_141"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605021600_143"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605042300_146"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605060600_148"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605072600_149"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605119700_152"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605144600_154"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605159000_156"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605537300_172"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605555000_174"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605651600_177"
+    },
+    {
+      "passed": true,
+      "check": "filled_candidate_identity_coverage_unchanged",
+      "arm": "b_extension_off",
+      "old_count": 43,
+      "new_count": 43
+    },
+    {
+      "passed": true,
+      "check": "all_filled_entry_sl_tp_exit_cash_r_and_test_end_unchanged",
+      "arm": "b_extension_off",
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "all_native_deals_including_forced_end_unchanged",
+      "arm": "b_extension_off",
+      "old_count": 86,
+      "new_count": 86,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "accepted_source_bars_exactly_identical",
+      "arm": "b_extension_off",
+      "kind": "upper"
+    },
+    {
+      "passed": true,
+      "check": "accepted_source_bars_exactly_identical",
+      "arm": "b_extension_off",
+      "kind": "lower"
+    },
+    {
+      "passed": true,
+      "check": "all_received_tick_quotes_costs_gates_attempts_unchanged",
+      "arm": "b_extension_off",
+      "rows": 9847,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "fixed_event_knowledge_rows_chronological",
+      "arm": "b_extension_off",
+      "violations": []
+    },
+    {
+      "passed": true,
+      "check": "all_ordered_executable_actions_unchanged",
+      "arm": "b_extension_on",
+      "old_count": 316,
+      "new_count": 316,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1601543400_1"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601547900_2"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601639100_9"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601980500_21"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602041700_24"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602104100_29"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602126000_30"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602135900_33"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602237600_37"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602277500_39"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602478800_43"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602502200_46"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602682200_55"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602760800_61"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602793200_62"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602829500_64"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602869400_65"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603138800_72"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603224900_75"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603310400_79"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603482000_86"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603686600_87"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603807200_96"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603822500_97"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603994700_104"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604030700_105"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604050500_106"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604076300_108"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604080800_109"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604339400_116"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604379000_118"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604489100_123"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604541000_126"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604916300_137"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604951100_138"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604972700_140"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604995500_141"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605021600_143"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605024600_144"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605042300_146"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605060600_148"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605072600_149"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605119700_152"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605144600_154"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605159000_156"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605276300_165"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605537300_172"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605555000_174"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605651600_177"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1601543400_1"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601547900_2"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601639100_9"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1601980500_21"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602041700_24"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602104100_29"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602126000_30"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602135900_33"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602237600_37"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602277500_39"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602478800_43"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602502200_46"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602682200_55"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602760800_61"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1602793200_62"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602829500_64"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602869400_65"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603138800_72"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603224900_75"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603310400_79"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603482000_86"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603686600_87"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603807200_96"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1603822500_97"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1603994700_104"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604030700_105"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604050500_106"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604076300_108"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604080800_109"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604339400_116"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604379000_118"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604489100_123"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604541000_126"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604916300_137"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1604951100_138"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604972700_140"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1604995500_141"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605021600_143"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605024600_144"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605042300_146"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605060600_148"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605072600_149"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605119700_152"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605144600_154"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605159000_156"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605276300_165"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1605537300_172"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605555000_174"
+    },
+    {
+      "passed": true,
+      "check": "unique_fill_identity",
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1605651600_177"
+    },
+    {
+      "passed": true,
+      "check": "filled_candidate_identity_coverage_unchanged",
+      "arm": "b_extension_on",
+      "old_count": 52,
+      "new_count": 52
+    },
+    {
+      "passed": true,
+      "check": "all_filled_entry_sl_tp_exit_cash_r_and_test_end_unchanged",
+      "arm": "b_extension_on",
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "all_native_deals_including_forced_end_unchanged",
+      "arm": "b_extension_on",
+      "old_count": 104,
+      "new_count": 104,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "accepted_source_bars_exactly_identical",
+      "arm": "b_extension_on",
+      "kind": "upper"
+    },
+    {
+      "passed": true,
+      "check": "accepted_source_bars_exactly_identical",
+      "arm": "b_extension_on",
+      "kind": "lower"
+    },
+    {
+      "passed": true,
+      "check": "all_received_tick_quotes_costs_gates_attempts_unchanged",
+      "arm": "b_extension_on",
+      "rows": 9769,
+      "differences": []
+    },
+    {
+      "passed": true,
+      "check": "fixed_event_knowledge_rows_chronological",
+      "arm": "b_extension_on",
+      "violations": []
+    },
+    {
+      "passed": true,
+      "check": "29_second_trade_ack_drained_before_exit"
+    },
+    {
+      "passed": true,
+      "check": "29_second_trade_original_times_preserved"
+    }
+  ],
+  "runs": {
+    "a_extension_off": {
+      "old_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\a_extension_off",
+      "fixed_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\final\\20261022_140527_f4364f5c\\a_extension_off",
+      "filled": 10,
+      "executable_actions": 70,
+      "old_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 3517,
+        "WAVE1_BREAK": 56,
+        "STATE": 245,
+        "WAVE1_PROVISIONAL": 163,
+        "WAVE1_PEAK_CONFIRMED": 52,
+        "WAVE2_EXTREME": 270,
+        "FIB_TOUCH": 41,
+        "LOWER_STRUCTURE_CONFIRMED": 68,
+        "FIB_TOO_DEEP": 21,
+        "LOWER_STRUCTURE_LOST": 30,
+        "FIB_CLOSE_TOO_DEEP": 23,
+        "INVALIDATE": 35,
+        "PIVOT_TRIGGER": 20,
+        "TRENDLINE_TRIGGER": 5,
+        "SIGNAL": 20,
+        "RISK_CHECK": 20,
+        "ORDER": 10,
+        "FILL": 10,
+        "POSITION_TRACKING": 10,
+        "EXIT": 10,
+        "COMPLETED": 20,
+        "SKIP": 11,
+        "LOWER_STRUCTURE_REJECTED": 76,
+        "INITIAL_MOVE_PROGRESS": 9
+      },
+      "fixed_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 3517,
+        "WAVE1_BREAK": 56,
+        "STATE": 245,
+        "WAVE1_PROVISIONAL": 163,
+        "WAVE1_PEAK_CONFIRMED": 52,
+        "WAVE2_EXTREME": 270,
+        "FIB_TOUCH": 41,
+        "LOWER_STRUCTURE_CONFIRMED": 68,
+        "FIB_TOO_DEEP": 21,
+        "LOWER_STRUCTURE_LOST": 30,
+        "FIB_CLOSE_TOO_DEEP": 23,
+        "INVALIDATE": 35,
+        "PIVOT_TRIGGER": 20,
+        "TRENDLINE_TRIGGER": 5,
+        "SIGNAL": 20,
+        "RISK_CHECK": 20,
+        "ORDER": 10,
+        "FILL": 10,
+        "POSITION_TRACKING": 10,
+        "EXIT": 10,
+        "COMPLETED": 20,
+        "SKIP": 11,
+        "LOWER_STRUCTURE_REJECTED": 76,
+        "INITIAL_MOVE_PROGRESS": 9
+      },
+      "old_chronology_violations": [],
+      "fixed_chronology_violations": [],
+      "source_sha256": {
+        "upper_bars.csv": {
+          "old": "bf2220c209ae616759327d838f4906f41433499fb1630f3ff6d5784b481919af",
+          "new": "bf2220c209ae616759327d838f4906f41433499fb1630f3ff6d5784b481919af"
+        },
+        "lower_bars.csv": {
+          "old": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d",
+          "new": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d"
+        }
+      },
+      "old_events_sha256": "95dbd59e169550f9014c861366c5deee1b38d5b62376e3f76ba536ee12bd497a",
+      "fixed_events_sha256": "95dbd59e169550f9014c861366c5deee1b38d5b62376e3f76ba536ee12bd497a",
+      "old_report_sha256": "bd6052b3f51a4c3cace46c8f2617ac14d08154f780626b694272b6166792030f",
+      "fixed_report_sha256": "540c0f1bbcfd6f0d391a715ace4d18b27be5e1e568703ba9b341a497805c3975"
+    },
+    "a_extension_on": {
+      "old_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\a_extension_on",
+      "fixed_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\final\\20261022_140527_f4364f5c\\a_extension_on",
+      "filled": 14,
+      "executable_actions": 89,
+      "old_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 3517,
+        "WAVE1_BREAK": 56,
+        "STATE": 295,
+        "WAVE1_PROVISIONAL": 163,
+        "WAVE1_PEAK_CONFIRMED": 52,
+        "WAVE1_EXTENSION_LOCKED": 51,
+        "WAVE2_EXTREME": 377,
+        "FIB_TOUCH": 42,
+        "LOWER_STRUCTURE_CONFIRMED": 91,
+        "FIB_TOO_DEEP": 21,
+        "LOWER_STRUCTURE_LOST": 38,
+        "FIB_CLOSE_TOO_DEEP": 24,
+        "INVALIDATE": 33,
+        "PIVOT_TRIGGER": 22,
+        "TRENDLINE_TRIGGER": 5,
+        "SIGNAL": 22,
+        "RISK_CHECK": 22,
+        "ORDER": 14,
+        "FILL": 14,
+        "POSITION_TRACKING": 14,
+        "EXIT": 14,
+        "COMPLETED": 22,
+        "SKIP": 9,
+        "LOWER_STRUCTURE_REJECTED": 38,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 20,
+        "WAVE1_EXTENSION_STARTED": 20,
+        "WAVE1_EXTENDED_CONFIRMED": 20,
+        "WAVE1_EXTENSION_TRACKING": 44,
+        "OPPOSITE_WAVE1_ARMED": 1,
+        "OPPOSITE_CLOSE_REQUEST": 1,
+        "OPPOSITE_CLOSE_ACCEPTED": 1,
+        "INITIAL_MOVE_PROGRESS": 7
+      },
+      "fixed_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 3517,
+        "WAVE1_BREAK": 56,
+        "STATE": 295,
+        "WAVE1_PROVISIONAL": 163,
+        "WAVE1_PEAK_CONFIRMED": 52,
+        "WAVE1_EXTENSION_LOCKED": 51,
+        "WAVE2_EXTREME": 377,
+        "FIB_TOUCH": 42,
+        "LOWER_STRUCTURE_CONFIRMED": 91,
+        "FIB_TOO_DEEP": 21,
+        "LOWER_STRUCTURE_LOST": 38,
+        "FIB_CLOSE_TOO_DEEP": 24,
+        "INVALIDATE": 33,
+        "PIVOT_TRIGGER": 22,
+        "TRENDLINE_TRIGGER": 5,
+        "SIGNAL": 22,
+        "RISK_CHECK": 22,
+        "ORDER": 14,
+        "FILL": 14,
+        "POSITION_TRACKING": 14,
+        "EXIT": 14,
+        "COMPLETED": 22,
+        "SKIP": 9,
+        "LOWER_STRUCTURE_REJECTED": 38,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 20,
+        "WAVE1_EXTENSION_STARTED": 20,
+        "WAVE1_EXTENDED_CONFIRMED": 20,
+        "WAVE1_EXTENSION_TRACKING": 44,
+        "OPPOSITE_WAVE1_ARMED": 1,
+        "OPPOSITE_CLOSE_REQUEST": 1,
+        "OPPOSITE_CLOSE_ACCEPTED": 1,
+        "INITIAL_MOVE_PROGRESS": 7
+      },
+      "old_chronology_violations": [],
+      "fixed_chronology_violations": [],
+      "source_sha256": {
+        "upper_bars.csv": {
+          "old": "bf2220c209ae616759327d838f4906f41433499fb1630f3ff6d5784b481919af",
+          "new": "bf2220c209ae616759327d838f4906f41433499fb1630f3ff6d5784b481919af"
+        },
+        "lower_bars.csv": {
+          "old": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d",
+          "new": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d"
+        }
+      },
+      "old_events_sha256": "a4223cf878bdb9ee4303ee4c470023c807ed8080e10ee7ff7be3209bd29c7e7c",
+      "fixed_events_sha256": "a4223cf878bdb9ee4303ee4c470023c807ed8080e10ee7ff7be3209bd29c7e7c",
+      "old_report_sha256": "c9e6a3d278ffe94f1c9ee46d54f17038f129ab307f0cdc10dc18e2f8e72139a1",
+      "fixed_report_sha256": "6306a5f47a0288e86863266a44d2241454bbd35edb4d91995ca4e881f1989938"
+    },
+    "b_extension_off": {
+      "old_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_off",
+      "fixed_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\final\\20261022_140527_f4364f5c\\b_extension_off",
+      "filled": 43,
+      "executable_actions": 276,
+      "old_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 15331,
+        "WAVE1_BREAK": 177,
+        "STATE": 830,
+        "WAVE1_PROVISIONAL": 537,
+        "WAVE1_PEAK_CONFIRMED": 151,
+        "WAVE2_EXTREME": 1087,
+        "FIB_TOUCH": 131,
+        "LOWER_STRUCTURE_CONFIRMED": 272,
+        "TRENDLINE_TRIGGER": 26,
+        "PIVOT_TRIGGER": 67,
+        "SIGNAL": 67,
+        "RISK_CHECK": 67,
+        "ORDER": 43,
+        "FILL": 43,
+        "POSITION_TRACKING": 43,
+        "EXIT": 42,
+        "COMPLETED": 66,
+        "LOWER_STRUCTURE_LOST": 118,
+        "INVALIDATE": 100,
+        "FIB_TOO_DEEP": 58,
+        "INITIAL_MOVE_PROGRESS": 26,
+        "LOWER_STRUCTURE_REJECTED": 339,
+        "FIB_CLOSE_TOO_DEEP": 49,
+        "SKIP": 34,
+        "OPPOSITE_WAVE1_ARMED": 5,
+        "OPPOSITE_CLOSE_REQUEST": 4,
+        "OPPOSITE_CLOSE_ACCEPTED": 4,
+        "TEST_END": 1
+      },
+      "fixed_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 15331,
+        "WAVE1_BREAK": 177,
+        "STATE": 830,
+        "WAVE1_PROVISIONAL": 537,
+        "WAVE1_PEAK_CONFIRMED": 151,
+        "WAVE2_EXTREME": 1087,
+        "FIB_TOUCH": 131,
+        "LOWER_STRUCTURE_CONFIRMED": 272,
+        "TRENDLINE_TRIGGER": 26,
+        "PIVOT_TRIGGER": 67,
+        "SIGNAL": 67,
+        "RISK_CHECK": 67,
+        "ORDER": 43,
+        "FILL": 43,
+        "POSITION_TRACKING": 43,
+        "EXIT": 42,
+        "COMPLETED": 66,
+        "LOWER_STRUCTURE_LOST": 118,
+        "INVALIDATE": 100,
+        "FIB_TOO_DEEP": 58,
+        "INITIAL_MOVE_PROGRESS": 26,
+        "LOWER_STRUCTURE_REJECTED": 339,
+        "FIB_CLOSE_TOO_DEEP": 49,
+        "SKIP": 34,
+        "OPPOSITE_WAVE1_ARMED": 5,
+        "OPPOSITE_CLOSE_REQUEST": 4,
+        "OPPOSITE_CLOSE_ACCEPTED": 4,
+        "TEST_END": 1
+      },
+      "old_chronology_violations": [],
+      "fixed_chronology_violations": [],
+      "source_sha256": {
+        "upper_bars.csv": {
+          "old": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d",
+          "new": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d"
+        },
+        "lower_bars.csv": {
+          "old": "bbf8c5a339565ef4af8cb54ed235e27f4663f2d02946f86af61bc1bf8cd1cd27",
+          "new": "bbf8c5a339565ef4af8cb54ed235e27f4663f2d02946f86af61bc1bf8cd1cd27"
+        }
+      },
+      "old_events_sha256": "758e2827b46f889bb79799b1ba1308ec72eac37bbc83df21501c3957c4055da3",
+      "fixed_events_sha256": "758e2827b46f889bb79799b1ba1308ec72eac37bbc83df21501c3957c4055da3",
+      "old_report_sha256": "32bab805a6e8268be6d38a206b02fa11a0a2f7e16c265c6fc024bcf237f26e01",
+      "fixed_report_sha256": "2365bb2dade0a0607dd1aa5c24a2d9c6169e311891d27e858a3f90940aff9fea"
+    },
+    "b_extension_on": {
+      "old_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_on",
+      "fixed_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\final\\20261022_140527_f4364f5c\\b_extension_on",
+      "filled": 52,
+      "executable_actions": 316,
+      "old_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 15331,
+        "WAVE1_BREAK": 177,
+        "STATE": 982,
+        "WAVE1_PROVISIONAL": 547,
+        "WAVE1_PEAK_CONFIRMED": 154,
+        "WAVE1_EXTENSION_LOCKED": 152,
+        "WAVE2_EXTREME": 1517,
+        "FIB_TOUCH": 137,
+        "LOWER_STRUCTURE_CONFIRMED": 347,
+        "TRENDLINE_TRIGGER": 26,
+        "PIVOT_TRIGGER": 75,
+        "SIGNAL": 75,
+        "RISK_CHECK": 75,
+        "ORDER": 52,
+        "FILL": 52,
+        "POSITION_TRACKING": 52,
+        "EXIT": 51,
+        "COMPLETED": 74,
+        "LOWER_STRUCTURE_LOST": 130,
+        "INVALIDATE": 95,
+        "FIB_TOO_DEEP": 55,
+        "INITIAL_MOVE_PROGRESS": 25,
+        "LOWER_STRUCTURE_REJECTED": 109,
+        "FIB_CLOSE_TOO_DEEP": 48,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 57,
+        "WAVE1_EXTENSION_STARTED": 57,
+        "WAVE1_EXTENSION_TRACKING": 83,
+        "WAVE1_EXTENDED_CONFIRMED": 57,
+        "SKIP": 30,
+        "OPPOSITE_WAVE1_ARMED": 4,
+        "OPPOSITE_CLOSE_REQUEST": 3,
+        "OPPOSITE_CLOSE_ACCEPTED": 3,
+        "TEST_END": 1
+      },
+      "fixed_event_counts": {
+        "INIT": 1,
+        "PIVOT_CONFIRMED": 15331,
+        "WAVE1_BREAK": 177,
+        "STATE": 982,
+        "WAVE1_PROVISIONAL": 547,
+        "WAVE1_PEAK_CONFIRMED": 154,
+        "WAVE1_EXTENSION_LOCKED": 152,
+        "WAVE2_EXTREME": 1517,
+        "FIB_TOUCH": 137,
+        "LOWER_STRUCTURE_CONFIRMED": 347,
+        "TRENDLINE_TRIGGER": 26,
+        "PIVOT_TRIGGER": 75,
+        "SIGNAL": 75,
+        "RISK_CHECK": 75,
+        "ORDER": 52,
+        "FILL": 52,
+        "POSITION_TRACKING": 52,
+        "EXIT": 51,
+        "COMPLETED": 74,
+        "LOWER_STRUCTURE_LOST": 130,
+        "INVALIDATE": 95,
+        "FIB_TOO_DEEP": 55,
+        "INITIAL_MOVE_PROGRESS": 25,
+        "LOWER_STRUCTURE_REJECTED": 109,
+        "FIB_CLOSE_TOO_DEEP": 48,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 57,
+        "WAVE1_EXTENSION_STARTED": 57,
+        "WAVE1_EXTENSION_TRACKING": 83,
+        "WAVE1_EXTENDED_CONFIRMED": 57,
+        "SKIP": 30,
+        "OPPOSITE_WAVE1_ARMED": 4,
+        "OPPOSITE_CLOSE_REQUEST": 3,
+        "OPPOSITE_CLOSE_ACCEPTED": 3,
+        "TEST_END": 1
+      },
+      "old_chronology_violations": [
+        {
+          "row": 2049,
+          "previous": "2020.10.06 06:30:29",
+          "at": "2020.10.06 06:30:00",
+          "event_type": "STATE",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18"
+        }
+      ],
+      "fixed_chronology_violations": [],
+      "source_sha256": {
+        "upper_bars.csv": {
+          "old": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d",
+          "new": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d"
+        },
+        "lower_bars.csv": {
+          "old": "bbf8c5a339565ef4af8cb54ed235e27f4663f2d02946f86af61bc1bf8cd1cd27",
+          "new": "bbf8c5a339565ef4af8cb54ed235e27f4663f2d02946f86af61bc1bf8cd1cd27"
+        }
+      },
+      "old_events_sha256": "7cee4a4b536d4fec6743df2e470837c221730ee5338913a0f07cd7a2e6e2b765",
+      "fixed_events_sha256": "f292c284d3498549c9345de051284b52b45a98468f2fa0abe0cb47bca1cb5281",
+      "old_report_sha256": "9a5d2f84a1a860f4a0e2160baee431a6a29c3d52ed349664736d21e39dc456c4",
+      "fixed_report_sha256": "44ae91411ffb4c0a7b2e53fbc0b3dfca23a526116487802aabce9b09d3d7aa39"
+    }
+  },
+  "fast_trade": {
+    "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18",
+    "old_trace": [
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 04:25:00",
+        "state": "WAVE1_TOP_TRACKING",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 04:50:00",
+        "state": "WAVE2_RETRACEMENT",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 04:56:00",
+        "state": "LOWER_COUNTERTREND",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 05:55:00",
+        "state": "WAVE2_RETRACEMENT",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 05:56:00",
+        "state": "LOWER_COUNTERTREND",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 05:58:00",
+        "state": "WAVE2_RETRACEMENT",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 06:29:00",
+        "state": "LOWER_COUNTERTREND",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 06:30:00",
+        "state": "LOWER_REVERSAL_TRIGGER",
+        "entry_status": "SIGNAL"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 06:30:00",
+        "state": "RESISTANCE_AND_RISK_CHECK",
+        "entry_status": "ORDER_SENT"
+      },
+      {
+        "event_type": "FILL",
+        "event_at": "2020.10.06 06:30:00",
+        "state": "POSITION_TRACKING",
+        "entry_status": "FILLED"
+      },
+      {
+        "event_type": "EXIT",
+        "event_at": "2020.10.06 06:30:29",
+        "state": "POSITION_TRACKING",
+        "entry_status": "CLOSED"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 06:30:00",
+        "state": "POSITION_TRACKING",
+        "entry_status": "CLOSED"
+      },
+      {
+        "event_type": "POSITION_TRACKING",
+        "event_at": "2020.10.06 06:30:00",
+        "state": "POSITION_TRACKING",
+        "entry_status": "CLOSED"
+      },
+      {
+        "event_type": "COMPLETED",
+        "event_at": "2020.10.06 06:30:29",
+        "state": "POSITION_TRACKING",
+        "entry_status": "CLOSED"
+      }
+    ],
+    "fixed_trace": [
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 04:25:00",
+        "state": "WAVE1_TOP_TRACKING",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 04:50:00",
+        "state": "WAVE2_RETRACEMENT",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 04:56:00",
+        "state": "LOWER_COUNTERTREND",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 05:55:00",
+        "state": "WAVE2_RETRACEMENT",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 05:56:00",
+        "state": "LOWER_COUNTERTREND",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 05:58:00",
+        "state": "WAVE2_RETRACEMENT",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 06:29:00",
+        "state": "LOWER_COUNTERTREND",
+        "entry_status": "CANDIDATE"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 06:30:00",
+        "state": "LOWER_REVERSAL_TRIGGER",
+        "entry_status": "SIGNAL"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 06:30:00",
+        "state": "RESISTANCE_AND_RISK_CHECK",
+        "entry_status": "ORDER_SENT"
+      },
+      {
+        "event_type": "FILL",
+        "event_at": "2020.10.06 06:30:00",
+        "state": "POSITION_TRACKING",
+        "entry_status": "FILLED"
+      },
+      {
+        "event_type": "STATE",
+        "event_at": "2020.10.06 06:30:00",
+        "state": "POSITION_TRACKING",
+        "entry_status": "FILLED"
+      },
+      {
+        "event_type": "POSITION_TRACKING",
+        "event_at": "2020.10.06 06:30:00",
+        "state": "POSITION_TRACKING",
+        "entry_status": "FILLED"
+      },
+      {
+        "event_type": "EXIT",
+        "event_at": "2020.10.06 06:30:29",
+        "state": "POSITION_TRACKING",
+        "entry_status": "CLOSED"
+      },
+      {
+        "event_type": "COMPLETED",
+        "event_at": "2020.10.06 06:30:29",
+        "state": "POSITION_TRACKING",
+        "entry_status": "CLOSED"
+      }
+    ]
+  },
+  "limitations": [
+    "Only acknowledgement log draining changed; all four requested periods, decisions, native fills, fees, exits and censored TEST_END exposures are compared.",
+    "Internal monotone tick_order may change when acknowledgement events drain sooner; received quotes, times, profit/cost arithmetic, gate status and attempts must remain exactly equal.",
+    "Native forced 'end of test' closes remain distinct from EA EXIT; their presence and cash are unchanged, and separate extension audit retains censoring as INCOMPLETE.",
+    "Native report formatting/images and binary hashes are not expected to match after a source build; parsed native deal rows must match exactly."
+  ]
+}

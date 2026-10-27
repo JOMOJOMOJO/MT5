@@ -1,0 +1,3 @@
+test;result;detail
+actual_oninit_invalid_context_fraction_rejected;PASS;32767
+SUMMARY;PASS;1 checks; 0 failures; invalid init verified

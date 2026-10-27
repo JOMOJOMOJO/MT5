@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "cases": 60,
+  "unavailable_status_matches": 9,
+  "fully_compared_valid_paths": 51,
+  "path_coordinates": 591,
+  "source": "reports\\qa\\w33chop\\native\\20261024_174150_e33026ba\\w33chop_20261024_174150_e33026ba_parity.csv",
+  "source_sha256": "6409135c8e03738c5ff262525f888763a560447f3ab54a8edafb2871553df3aa",
+  "ui_separate": "tooltip readback unresolved; no appearance claim",
+  "outcomes_used": false
+}

@@ -1,0 +1,134 @@
+{
+  "status": "PASS",
+  "scope": "Frozen v1.71 EX5 versus v1.80 both flags OFF; same broker/model/fixed inputs",
+  "arms": {
+    "A": {
+      "events": {
+        "v171_rows": 785,
+        "v180_rows": 785,
+        "compared_original_columns": 121,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "upper_bars": {
+        "v171_rows": 460,
+        "v180_rows": 460,
+        "compared_original_columns": 9,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "lower_bars": {
+        "v171_rows": 1380,
+        "v180_rows": 1380,
+        "compared_original_columns": 9,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "opposite_ticks": {
+        "v171_rows": 1,
+        "v180_rows": 1,
+        "compared_original_columns": 20,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "config_differences": {
+        "connected_opposite_policy": {
+          "v171": null,
+          "v180": "new accepted opposite W1_BREAK shares the old fixed endpoint"
+        },
+        "tp_wave1_buffer_points": {
+          "v171": null,
+          "v180": "10.0"
+        },
+        "resolved_run_tag": {
+          "v171": "w33v180_frozen171_a_6f24f636",
+          "v180": "wave33_20261023_112317_3e88623f_v180_a_base"
+        },
+        "tp_wave1_policy": {
+          "v171": null,
+          "v180": "only extend RR TP toward the known fixed W1 endpoint"
+        },
+        "input_hash": {
+          "v171": "E4C1AB9DC378B753",
+          "v180": "C6A14C68608DC39E"
+        },
+        "cancel_connected_opposite": {
+          "v171": null,
+          "v180": "false"
+        },
+        "extend_tp_to_wave1": {
+          "v171": null,
+          "v180": "false"
+        },
+        "ea_version": {
+          "v171": "1.71",
+          "v180": "1.80"
+        }
+      }
+    },
+    "B": {
+      "events": {
+        "v171_rows": 3195,
+        "v180_rows": 3195,
+        "compared_original_columns": 121,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "upper_bars": {
+        "v171_rows": 1380,
+        "v180_rows": 1380,
+        "compared_original_columns": 9,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "lower_bars": {
+        "v171_rows": 6889,
+        "v180_rows": 6889,
+        "compared_original_columns": 9,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "opposite_ticks": {
+        "v171_rows": 5727,
+        "v180_rows": 5727,
+        "compared_original_columns": 20,
+        "equal": true,
+        "first_mismatches": []
+      },
+      "config_differences": {
+        "connected_opposite_policy": {
+          "v171": null,
+          "v180": "new accepted opposite W1_BREAK shares the old fixed endpoint"
+        },
+        "tp_wave1_buffer_points": {
+          "v171": null,
+          "v180": "10.0"
+        },
+        "resolved_run_tag": {
+          "v171": "w33v180_frozen171_b_2c2180d5",
+          "v180": "wave33_20261023_112317_3e88623f_v180_b_base"
+        },
+        "tp_wave1_policy": {
+          "v171": null,
+          "v180": "only extend RR TP toward the known fixed W1 endpoint"
+        },
+        "input_hash": {
+          "v171": "9E5A3F30C4B6A7D2",
+          "v180": "51F8BCBD796031FB"
+        },
+        "cancel_connected_opposite": {
+          "v171": null,
+          "v180": "false"
+        },
+        "extend_tp_to_wave1": {
+          "v171": null,
+          "v180": "false"
+        },
+        "ea_version": {
+          "v171": "1.71",
+          "v180": "1.80"
+        }
+      }
+    }
+  }
+}

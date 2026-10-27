@@ -1,0 +1,41 @@
+{
+  "scope": "CAUSAL_EXECUTION_AND_SOURCE_NOT_PROFITABILITY",
+  "runs": [
+    {
+      "run": "reports\\qa\\wave33_entry_room_20261021\\final_usdjpy_2018\\20261021_151444_6628351f\\a_v130_control",
+      "checks": 474,
+      "minimum": 0.0,
+      "violations": [],
+      "passed": true
+    },
+    {
+      "run": "reports\\qa\\wave33_entry_room_20261021\\final_usdjpy_2018\\20261021_151444_6628351f\\a_recognition_only",
+      "checks": 1921,
+      "minimum": 0.0,
+      "violations": [],
+      "passed": true
+    },
+    {
+      "run": "reports\\qa\\wave33_entry_room_20261021\\final_usdjpy_2018\\20261021_151444_6628351f\\a_room_only",
+      "checks": 461,
+      "minimum": 0.25,
+      "violations": [],
+      "passed": true
+    },
+    {
+      "run": "reports\\qa\\wave33_entry_room_20261021\\final_usdjpy_2018\\20261021_151444_6628351f\\a_v140_full",
+      "checks": 1785,
+      "minimum": 0.25,
+      "violations": [],
+      "passed": true
+    },
+    {
+      "run": "reports\\qa\\wave33_entry_room_20261021\\final_usdjpy_2016\\20261021_151636_6fcee6dd\\a_v140_full",
+      "checks": 1113,
+      "minimum": 0.25,
+      "violations": [],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

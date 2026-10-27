@@ -1,0 +1,49 @@
+parameter;value
+version;1.0
+ea_version;1.40
+symbol;USDJPY
+upper_tf;PERIOD_M15
+lower_tf;PERIOD_M5
+resolved_run_tag;wave33_20261021_151444_6628351f_a_v140_full
+swing_left;2
+swing_right;2
+fib_min;0.382
+fib_max;0.618
+require_fib_touch;true
+reject_deep_fib;false
+timeout_upper_bars;96
+strict_wave_lifecycle;true
+initial_move_boundary;strict lower close beyond fixed W1 after prior qualifying pullback; same-bar valid signal allowed
+lower_wave2_binding;countertrend extreme price matches current deepest W2 within half a point; equal-price retest allowed
+lower_recognition_mode;W33_NORMALIZED_OR_SIMPLE
+simple_reaction_assumption;confirmed deepest W2 then first confirmed opposite reaction pivot; fresh close break, no invented lower wave count
+minimum_wave1_room_r;0.25
+wave1_room_assumption;signed executable quote to fixed W1 endpoint divided by rounded structural stop risk; zero disables
+obstacle_source_policy;all known swing highs and lows; source trace and W1 room separate; no claim of current importance
+trigger_mode;W33_PIVOT_BREAK
+obstacle_mode;DISPLAY_ONLY
+reward_r;1.0
+risk_percent;1.0
+sl_extra_points;10.0
+tester_orders;true
+magic;3320261021
+deviation_points;20
+manual_levels_display_only;
+draw;true
+keep_objects;true
+screenshots;true
+screenshot_limit;12
+show_info_panel;false
+diagnostic_labels;false
+show_swing_paths;true
+tester;1
+visual;0
+terminal_build;6230
+chart_tf;PERIOD_M5
+point;0.001
+tick_size;0.001
+volume_min;0.01
+volume_step;0.01
+contract_size;100000.0
+stops_level;0
+freeze_level;0

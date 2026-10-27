@@ -1,0 +1,190 @@
+{
+  "status": "PASS",
+  "checks": 36,
+  "native_batch": "run_1be3fa95",
+  "assertions": 694,
+  "failures": 0,
+  "checks_detail": [
+    {
+      "check": "off_diag_on: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_on: no requested-order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_on: no other exclusion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_on: zero rejected release calls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_off: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_off: no requested-order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_off: no other exclusion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "off_diag_off: zero rejected release calls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: no requested-order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: no other exclusion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: zero rejected release calls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: filtered SIGNAL suppresses ENTRY",
+      "passed": true,
+      "detail": 4
+    },
+    {
+      "check": "on_diag_on: four measured skips",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_on: four unavailable explicitly allowed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: no requested-order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: no other exclusion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: zero rejected release calls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: filtered SIGNAL suppresses ENTRY",
+      "passed": true,
+      "detail": 4
+    },
+    {
+      "check": "on_diag_off: four measured skips",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_diag_off: four unavailable explicitly allowed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: no native ORDER/FILL",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: no requested-order timestamps",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: no other exclusion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: zero rejected release calls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "on_orders_on: filtered SIGNAL suppresses ENTRY",
+      "passed": true,
+      "detail": 4
+    },
+    {
+      "check": "on_orders_on: four measured skips",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "filter OFF diagnostics ON/OFF economic event identity",
+      "passed": true,
+      "detail": 48
+    },
+    {
+      "check": "filter ON diagnostics ON/OFF economic event identity",
+      "passed": true,
+      "detail": 44
+    },
+    {
+      "check": "toggle preserves planned entry_price",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "toggle preserves planned sl_price",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "toggle preserves planned tp_price",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "toggle preserves planned risk_points",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "toggle preserves planned intended_rr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "toggle preserves planned actual_rr",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "scope": "Synthetic real-EA wrapper; genuine current tester quote used by actual Plan/HandleSignal; no market-period performance inference, screenshot or tooltip-readback claim."
+}

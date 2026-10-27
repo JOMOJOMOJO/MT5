@@ -1,0 +1,86 @@
+{
+  "completed_batch_model1_native_passes": 10,
+  "new_tester_helper_sha256": "2E6B183C2CC398F8394DF65C7A42AB4150C432AAD9EB1891FEC5669D587E3048",
+  "compiled_batch": "reports/qa/w33batch/eng/20261022_235504_d57c3130",
+  "binary_path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\mql\\Experts\\Wave33VisualVerifier.ex5",
+  "tester_run_assertions": 38,
+  "binary_sha256": "88E3BE610E74E2B15A320CCF0A7BAEC3BF70B0E297C43F3A5D0735D4822F29E8",
+  "protected_eas": [
+    {
+      "unchanged": true,
+      "path": "mql/Experts/USDJPY_M1_M5_3WaveIn3Wave_Long.mq5",
+      "sha256": "5B437B0F5CB0C82DE79B3422B12B0051B836093D75CBDDB627E20E9BBEFC6CD3"
+    },
+    {
+      "unchanged": true,
+      "path": "mql/Experts/usdjpy_20260402_round_continuation_long.mq5",
+      "sha256": "E10068574A921A71970C242AC5F70E0E71F1BE49FDEB02AA99098A5C6135D347"
+    }
+  ],
+  "tester_presets": [
+    {
+      "sha256": "635DA91C049B3887B9395D5AA9C31BA13085094F6495AD37650C6949DF5F35FC",
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Profiles\\Tester\\wave33-v171-A-M15-M5-orders.set"
+    },
+    {
+      "sha256": "FCF0C3B5A6AB71A917AC25C02BE9FB62DCADAFCA85FFA95574E552C53DAE6CFC",
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Profiles\\Tester\\wave33-v171-B-M5-M1-orders.set"
+    }
+  ],
+  "single_regression_checks": 28,
+  "normal_chart_orders": false,
+  "deployed_at": "2026-10-23T09:44:38",
+  "limitations": [
+    "Model4 batch timed out on data synchronization; individual completed XAU pass exactly matches single mode.",
+    "Model1 batch completed 10 native passes. Different execution models have different intrabar fills/exits.",
+    "Native symbols XML has header only; pass counts and trade counts verified from native journals plus EA CSV, not the empty report.",
+    "Selection cache contains conversion symbol records; decoded names are not asserted as all actual optimization targets."
+  ],
+  "parameter_search_performed": false,
+  "single_regression_differences": 0,
+  "version": "1.71",
+  "prior_strategy_headers": [
+    {
+      "unchanged": true,
+      "path": "Wave33Visual\\BarOrder.mqh",
+      "sha256": "EC300C19F85750A4A7B4A8122579DBB522D2BDF4538BA2F70F2C98176FEA095F"
+    },
+    {
+      "unchanged": true,
+      "path": "Wave33Visual\\Room.mqh",
+      "sha256": "ECD3A1841A9F9DFE481AC43C35CA869A0D15492228FF553F7F0810133A0FC757"
+    },
+    {
+      "unchanged": true,
+      "path": "Wave33Visual\\Engine.mqh",
+      "sha256": "41A454A2DA9A2FDFDE49B6E6A7E145B0B342CC7A9818FF41902FB40235D95F85"
+    },
+    {
+      "unchanged": true,
+      "path": "Wave33Visual\\Ledger.mqh",
+      "sha256": "C7A2B75222859B129FDFCC7ECB8F32B8D9697AC82040A4564E9A6E7D33D9003F"
+    },
+    {
+      "unchanged": true,
+      "path": "Wave33Visual\\Types.mqh",
+      "sha256": "12DB6624DDFC8A631B5D16949C012BD61149C1F21F79A7CBEA9974499AF3F5BC"
+    },
+    {
+      "unchanged": true,
+      "path": "Wave33Visual\\Display.mqh",
+      "sha256": "4787ABBF82582EE34DA18E9AB1E8E8904F3D8346BCDFDB6FD83372428B2BF7B3"
+    },
+    {
+      "unchanged": true,
+      "path": "Wave33Visual\\OppositeExit.mqh",
+      "sha256": "E36E4BF55441561498641AC6C556B5AE5042DA7AC7B90639BE3CDA04A2D639DA"
+    }
+  ],
+  "user_terminal_interrupted": false,
+  "completed_batch_exits": 14,
+  "completed_batch_orders": 14,
+  "compile": "10 targets, each 0 errors / 0 warnings",
+  "completed_batch_fills": 14,
+  "source_sha256": "D2F4CBDB7C552F0EC15ECC547E56884F7D9562E03D2739692B7BC8805EE769A9",
+  "batch_model4_xau_exact_event_rows": 1240
+}

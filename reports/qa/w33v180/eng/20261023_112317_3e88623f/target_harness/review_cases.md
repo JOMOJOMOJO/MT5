@@ -1,0 +1,53 @@
+# target_harness: MQL5決定論テスト
+
+実際のMT5内でエンジンを呼び出し、因果順序とLONG/SHORT分岐を確認する合成入力 45項目。PASS 45 / FAIL 0 / UNAVAILABLE 0。未取得をPASSへ算入しない。市場の売買事例とは区別する。
+
+原本: [harness.csv](harness.csv)。
+
+| テスト | 判定 | 詳細 |
+|---|---|---|
+| long_rr_target_extended | PASS | A long target below fixed W1 extends to ten points before its high |
+| long_endpoint_buffer_logged | PASS | The requested executable target and actual margin are explicit |
+| short_rr_target_extended | PASS | The short target uses the symmetric low plus buffer |
+| short_endpoint_buffer_logged | PASS | Short margin remains positive and points toward the inside of W1 |
+| long_beyond_endpoint_never_shortened | PASS | A pre-existing larger RR target is retained |
+| short_beyond_endpoint_never_shortened | PASS | A pre-existing lower short RR target is retained |
+| long_exact_endpoint_retained | PASS | A target exactly at W1 is unchanged |
+| short_exact_endpoint_retained | PASS | A target exactly at short W1 is unchanged |
+| long_target_within_buffer_not_shortened | PASS | A base TP already closer to W1 than the buffer is never pulled back |
+| short_target_within_buffer_not_shortened | PASS | The no-shortening guarantee is symmetric |
+| same_target_not_reported_as_extension | PASS | An unchanged exact target does not emit an applied flag |
+| three_digit_point_buffer | PASS | Ten 0.001 points means a 0.010 price margin |
+| three_digit_short_point_buffer | PASS | Short JPY-style prices retain their three-digit grid |
+| long_non_tick_peak_rounds_down | PASS | A non-tick endpoint rounds the long target farther inside the endpoint |
+| short_non_tick_peak_rounds_up | PASS | A non-tick endpoint rounds the short target upward |
+| long_exact_tick_boundary | PASS | Floating arithmetic does not lose a tick at an exact boundary |
+| short_exact_tick_boundary | PASS | Floating arithmetic does not add a tick at an exact boundary |
+| spread_overrides_extra_long | PASS | A thirty-point spread dominates the ten-point extra input |
+| spread_overrides_extra_short | PASS | The executable margin is symmetric with wide spreads |
+| one_tick_minimum_even_zero_inputs | PASS | Zero extra and spread still leave at least one executable tick before W1 |
+| one_tick_short_minimum | PASS | Minimum-tick margin applies to short targets too |
+| five_digit_forex_grid | PASS | Spread points retain five-digit FX precision |
+| zero_digit_grid | PASS | Whole-number symbols remain supported |
+| eight_digit_grid | PASS | Eight decimal places use an executable target |
+| off_preserves_exact_old_target | PASS | OFF returns the exact base TP even when unused new inputs are invalid |
+| unfixed_peak_cannot_extend | PASS | A provisional future endpoint cannot alter the target |
+| zero_direction_rejected | PASS | Direction must be exactly +1 or -1 |
+| other_direction_rejected | PASS | An arbitrary positive integer is not treated as LONG |
+| zero_entry_rejected | PASS | No order target is invented without a positive entry |
+| zero_base_tp_rejected | PASS | A missing original target is not repaired silently |
+| zero_peak_rejected | PASS | A zero fixed endpoint cannot be used |
+| zero_point_rejected | PASS | Point conversion never divides by zero |
+| zero_tick_rejected | PASS | No unverified substitute tick grid is introduced |
+| invalid_digits_rejected | PASS | NormalizeDouble supports zero through eight digits |
+| unrepresentable_tick_precision_rejected | PASS | Digits cannot represent a half-cent tick |
+| negative_spread_rejected | PASS | A bad spread is recorded instead of reducing the buffer |
+| negative_extra_rejected | PASS | A negative configured buffer does not alter the target |
+| long_nonprofit_base_rejected | PASS | The helper cannot turn an invalid base into a valid order |
+| short_nonprofit_base_rejected | PASS | Short base TP must already be below entry |
+| long_large_margin_crossing_entry_rejected | PASS | A large spread cannot drag a profit target across entry |
+| short_large_margin_crossing_entry_rejected | PASS | Short crossing-entry margins preserve the original target |
+| nonfinite_price_rejected | PASS | NaN input cannot reach tick rounding |
+| nonfinite_buffer_rejected | PASS | NaN spread cannot produce a desired target |
+| nonfinite_point_rejected | PASS | A nonfinite point is rejected before conversion |
+| nonfinite_tick_rejected | PASS | A nonfinite tick is rejected before division |

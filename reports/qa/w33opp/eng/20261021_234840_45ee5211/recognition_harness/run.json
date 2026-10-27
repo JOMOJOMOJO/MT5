@@ -1,0 +1,14 @@
+﻿{
+    "symbol":  "XAUUSD+",
+    "inputs":  {
+                   "InpRunTag":  "wave33_20261021_234840_45ee5211_recognition_harness"
+               },
+    "date_from":  "2019.01.02",
+    "model":  4,
+    "chart_period":  "M1",
+    "visual_mode":  false,
+    "tag":  "wave33_20261021_234840_45ee5211_recognition_harness",
+    "run_id":  "recognition_harness",
+    "expert":  "Wave33RecognitionHarness",
+    "date_to":  "2019.01.03"
+}

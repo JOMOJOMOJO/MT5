@@ -1,0 +1,22 @@
+{
+  "reports": [
+    "w33mw_5e712a56.symbols.xml"
+  ],
+  "rows": [
+    [
+      "Symbol",
+      "Pass",
+      "Result",
+      "Profit",
+      "Expected Payoff",
+      "Profit Factor",
+      "Recovery Factor",
+      "Sharpe Ratio",
+      "Custom",
+      "Equity DD %",
+      "Trades"
+    ]
+  ],
+  "kind": "NATIVE_OPTIMIZATION_SPREADSHEET_ROWS",
+  "symbol_values": []
+}

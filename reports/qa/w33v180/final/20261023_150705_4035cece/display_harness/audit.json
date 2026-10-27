@@ -1,0 +1,10 @@
+{
+  "run_id": "display_harness",
+  "kind": "display_harness",
+  "assertions": 101,
+  "passed": 101,
+  "failed": 0,
+  "unavailable": 10,
+  "violations": [],
+  "audit_passed": true
+}

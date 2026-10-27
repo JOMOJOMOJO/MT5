@@ -1,0 +1,17 @@
+{
+  "review_type": "independent source review",
+  "formula_sha256_before": "3b3bc22752cddff872a4049e8e04d81924ff245166c0d8e4e92b01ad89797787",
+  "formula_bytes_before": 3517,
+  "existing_engine_finish_unordered_lines": [
+    996,
+    1013
+  ],
+  "checks": [
+    "ChopEvaluate closed published lower pivots; evaluation_at guard; strict source interior; fixed upper anchors",
+    "same timestamp high+low marked UNAVAILABLE; no invented intrabar order",
+    "adverse = sum max(0,-direction*adjacent path delta), ratio = adverse/positive signed W1 span",
+    "FinishUnordered refuses submitted/open trades and releases active signal lane",
+    "shared Display draws ENTRY for SIGNAL unless status SIGNAL_RISK_REJECTED",
+    "observer currently disabled means pivot collection disabled; filter-only must keep collection active"
+  ]
+}

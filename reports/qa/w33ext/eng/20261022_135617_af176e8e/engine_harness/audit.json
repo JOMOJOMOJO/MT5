@@ -1,0 +1,10 @@
+{
+  "run_id": "engine_harness",
+  "kind": "engine_harness",
+  "assertions": 100,
+  "passed": 100,
+  "failed": 0,
+  "unavailable": 0,
+  "violations": [],
+  "audit_passed": true
+}

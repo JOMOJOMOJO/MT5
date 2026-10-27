@@ -1,0 +1,78 @@
+{
+  "status": "PASS_WITH_LAYOUT_LIMITATIONS",
+  "drawing_audit_checks": 8761,
+  "drawing_audit_violations": 0,
+  "actual_visual_tester_capture": false,
+  "cases": [
+    {
+      "arm": "A M15×M5",
+      "case": 0,
+      "image": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/qa/w33ext/imgAf/W33R_9C74EA6B9B90B1CD_0.png",
+      "observation": "青①はr2、旧r0/r1は灰色破線・旧終点、現行②とFibはオレンジ。ENTRY/SL/TPと①高値まで1.07Rを確認。旧ラベルが左下で一部近接し、ENTRY付近の紫の抵抗候補文字にも重なりがある。",
+      "observer": "drawing subagent"
+    },
+    {
+      "arm": "A M15×M5",
+      "case": 1,
+      "image": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/qa/w33ext/imgAf/W33R_9B74E8D85B058D50_1.png",
+      "observation": "売り側の旧r0と新r1を区別できる。関連する上昇①も履歴に含み、逆①の黄色い待機・利益決済が見える。ENTRY・EXIT・抵抗候補の文字は約定付近で一部重なる。",
+      "observer": "drawing subagent"
+    },
+    {
+      "arm": "A M15×M5",
+      "case": 2,
+      "image": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/qa/w33ext/imgAf/W33R_9E74ED91E9BA8D87_2.png",
+      "observation": "8回延長した全旧①・旧②・旧Fibが灰色で残り、現行r8の青①を識別できる。初期の旧ラベル群が密集し、最終②と時間切れSKIPの文字が重なる。未成立例の履歴と終了は追跡可能。",
+      "observer": "drawing subagent"
+    },
+    {
+      "arm": "A M15×M5",
+      "case": 3,
+      "image": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/qa/w33ext/imgAf/W33R_9D74EBFEFC3C43AA_3.png",
+      "observation": "売り側4回延長の旧終点r0〜r3、現行青r4、現行オレンジ②とENTRY/SL/TPを確認。旧②r2/r3の文字が一部近接するが、現行波は区別できる。通常SL/TP終了に専用の大きなEXIT文字は出ない既存仕様。",
+      "observer": "drawing subagent"
+    },
+    {
+      "arm": "A M15×M5",
+      "case": 4,
+      "image": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/qa/w33ext/imgAf/W33R_A074F0B7E6B32609_4.png",
+      "observation": "非延長r0の対照。青①・オレンジ②/Fib、M15終値62.9%での見送りの赤い観測点・有限リーダーが明瞭。旧延長の不要な線・固定パネルなし。",
+      "observer": "drawing subagent"
+    },
+    {
+      "arm": "B M5×M1",
+      "case": 0,
+      "image": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/qa/w33ext/imgB/W33R_D25CF11BBBB03F7D_0.png",
+      "observation": "主担当が目視確認。旧r0は灰色、新r1は青、現行②/Fibはオレンジで区別できる。ENTRY/SL/TPを確認。",
+      "observer": "root agent"
+    },
+    {
+      "arm": "B M5×M1",
+      "case": 1,
+      "image": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/qa/w33ext/imgB/W33R_D15CEF88411B3BC8_1.png",
+      "observation": "主担当が目視確認。約定後29秒でSLへ到達したためSL/TPは右端の短い有限マーカー。通常SLには専用の大きなEXIT表示がない既存仕様で、終了理由・実時刻はCSVで確認する。",
+      "observer": "root agent"
+    },
+    {
+      "arm": "B M5×M1",
+      "case": 2,
+      "image": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/qa/w33ext/imgB/W33R_D45CF4410820E747_2.png",
+      "observation": "主担当が目視確認。旧①と延長①、未成立SKIPを区別できる。オレンジ②と赤いSKIPの文字に軽微な重なり。",
+      "observer": "root agent"
+    },
+    {
+      "arm": "B M5×M1",
+      "case": 3,
+      "image": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/qa/w33ext/imgB/W33R_D35CF2AEBFB3A912_3.png",
+      "observation": "主担当が目視確認。7回延長した旧ラベルが密集するが、現行青r7とオレンジ②を識別できる。旧終点の細部はオブジェクトのTOOLTIP/CSVを併用する。",
+      "observer": "root agent"
+    },
+    {
+      "arm": "B M5×M1",
+      "case": 4,
+      "image": "C:/Users/windows/AppData/Roaming/MetaQuotes/Terminal/2FA8A7E69CED7DC259B1AD86A247F675/MQL5/Experts/dev/reports/qa/w33ext/imgB/W33R_D65CF767073215E9_4.png",
+      "observation": "主担当が目視確認。非延長対照の通常描画。青①、オレンジ②、ENTRY/SL/TPに異常なし。",
+      "observer": "root agent"
+    }
+  ]
+}

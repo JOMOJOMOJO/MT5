@@ -1,0 +1,9 @@
+{
+  "run_id": "fib_close_harness",
+  "kind": "engine_harness",
+  "assertions": 128,
+  "passed": 128,
+  "failed": 0,
+  "violations": [],
+  "audit_passed": true
+}

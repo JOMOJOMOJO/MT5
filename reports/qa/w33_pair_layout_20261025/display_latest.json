@@ -1,0 +1,28 @@
+﻿{
+    "mode":  "NORMAL_CHART_LAYOUT_FIXTURE",
+    "checks":  27,
+    "failures":  0,
+    "screenshots":  [
+                        {
+                            "sha256":  "871f2220d4c55d3eb91399960ab3ad7f186761bb4e11891b188ac726166a00a9",
+                            "path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_pair_layout_20261025\\display\\run_b562a513\\ld_b562a513_dense_after.png"
+                        },
+                        {
+                            "sha256":  "f1f5c0440670e2e3364888df0388171752eccfce750323a81477c7dd003ce28f",
+                            "path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_pair_layout_20261025\\display\\run_b562a513\\ld_b562a513_dense_before.png"
+                        }
+                    ],
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_pair_layout_20261025\\display\\run_b562a513",
+    "scope":  "Synthetic 2025 custom-symbol bars; draw only, no order functions/account queries; not a tester screenshot or strategy performance test",
+    "tag":  "ld_b562a513",
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33LabelReplay\\run_b562a513",
+    "status":  "PASS",
+    "source_hashes":  {
+                          "mql/Include/Wave33Visual/Types.mqh":  "bc72c41867b6746a3192467320ee5ee998cf4eef5e6705109b1c06befeab48f4",
+                          "mql/Include/Wave33Visual/Display.mqh":  "7f6eba269e7818aab23165131f1fcab6f3860741bdd3e8973d7544f46084f12b",
+                          "mql/Include/Wave33Visual/LabelLayout.mqh":  "e00a577f97cacd3f7ebac22ca1625edb6b0e12257b750325cbb47c1090b39d23",
+                          "mql/Experts/tests/Wave33LabelReplay.mq5":  "6beb6fe49907de17fb16595cab37e113561aba56897dc10045a3533f664a8174",
+                          "mql/Include/Wave33Visual/ChopDisplay.mqh":  "606b66194724557878758f864419e65ea8efb145e0202771496468c9829fe54f",
+                          "mql/Experts/tests/Wave33LabelReplay.ex5":  "b9adde747cd533d31132a3d6db089c4fc059ff2e19afa7229603c817f12f41c1"
+                      }
+}

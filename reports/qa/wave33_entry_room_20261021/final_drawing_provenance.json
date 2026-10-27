@@ -1,0 +1,28 @@
+{
+  "kind": "DRAW_ONLY_NORMAL_CHART_REPLAY",
+  "signals_recomputed": false,
+  "orders_sent": false,
+  "native_tester_direct_png": false,
+  "arms": {
+    "A": {
+      "source_sha256": {
+        "mql\\Experts\\tests\\Wave33DrawingReplay.mq5": "177708866B1AC37486E66505B48C5DC5A8D5DFC538012588F0B800375155009A",
+        "mql\\Include\\Wave33Visual\\Display.mqh": "55A2D1C36E1EAAC5B8F51DDBF343526B2083802C00AD900221BEE3A7B8D18029",
+        "mql\\Include\\Wave33Visual\\Types.mqh": "78CBB1517037C756FC47BF4F3D413845FE2038465BD148C140EC51FDC3D8998C"
+      },
+      "compiled_replay_ex5_sha256": "78D25523DD0F3FBEC77FE6F5EF1CE802AE78649B1C55CCFF4E9E4EDF74D8CD32",
+      "fixture_sha256": "234193B0C909981A33BE7C337F8250880BD321645FF8B5A313E5B9069B01886C",
+      "normal_chart_objects_and_pngs": "reports\\qa\\wave33_entry_room_20261021\\final_drawing_a\\A"
+    },
+    "B": {
+      "source_sha256": {
+        "mql\\Experts\\tests\\Wave33DrawingReplay.mq5": "177708866B1AC37486E66505B48C5DC5A8D5DFC538012588F0B800375155009A",
+        "mql\\Include\\Wave33Visual\\Display.mqh": "55A2D1C36E1EAAC5B8F51DDBF343526B2083802C00AD900221BEE3A7B8D18029",
+        "mql\\Include\\Wave33Visual\\Types.mqh": "78CBB1517037C756FC47BF4F3D413845FE2038465BD148C140EC51FDC3D8998C"
+      },
+      "compiled_replay_ex5_sha256": "9FEA97AD366F089E04D4C912E87BF722B2C604ABB2B684E4A16AF43BB84662B1",
+      "fixture_sha256": "5261671B2812149129CA26ED872EE719C1724D733CECD209623CCC4BC1DA82E1",
+      "normal_chart_objects_and_pngs": "reports\\qa\\wave33_entry_room_20261021\\final_drawing_b\\B"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+﻿{
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33Chop\\20261024_174001_2f437ae4",
+    "status":  "FAIL",
+    "reason":  "Exception calling \"ReadAllText\" with \"1\" argument(s): \"The process cannot access the file \u0027C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33Chop\\20261024_174001_2f437ae4\\Tester\\Agent-127.0.0.1-39204\\logs\\20261024.log\u0027 because it is being used by another process.\"",
+    "tag":  "w33chop_20261024_174001_2f437ae4"
+}

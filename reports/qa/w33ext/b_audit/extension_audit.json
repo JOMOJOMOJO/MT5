@@ -1,0 +1,5452 @@
+{
+  "status": "INCOMPLETE",
+  "passed": false,
+  "check_count": 633507,
+  "checks_by_rule": {
+    "all_revision_snapshot_fields_present": 2,
+    "ambiguous_lock_has_both_extremes_in_upper_ohlc": 1,
+    "config_names_unique": 2,
+    "confirmed_endpoint_source_window_present": 362,
+    "confirmed_endpoint_waits_actual_right_bars": 362,
+    "every_fixed_revision_fib_math_and_epoch": 362,
+    "extension_confirmation_retains_revision_provenance": 57,
+    "extension_has_independent_upper_source": 57,
+    "extension_is_current_closed_directional_extreme": 57,
+    "extension_provisional_matches_independent_source": 57,
+    "fixed_off_on_extension_flag": 1,
+    "independent_source_is_closed_and_available": 112534,
+    "independent_source_monotone_unique": 112530,
+    "independent_source_ohlc_consistent": 112534,
+    "initial_and_extension_confirmation_distinct": 362,
+    "lock_has_independent_min_fib_source": 152,
+    "lock_is_first_qualifying_source_at_current_known_time": 152,
+    "lock_records_current_knowledge": 152,
+    "minimum_fib_locks_one_time_per_fixed_revision": 152,
+    "new_signal_uses_known_new_anchor_and_trigger": 142,
+    "new_w2_observation_belongs_to_current_revision": 3365,
+    "no_known_old_min_fib_before_extension": 57,
+    "off_retains_fixed_anchor_and_emits_no_extension_events": 4210,
+    "old_snapshot_matches_current_fixed_revision": 57,
+    "old_snapshot_precedes_eligible_extension": 57,
+    "one_original_opposite_wave_source_per_setup": 354,
+    "only_extension_changes_trading_config": 2,
+    "opposite_exit_arms_only_on_original_wave_confirmation": 9,
+    "pending_endpoint_cannot_emit_or_execute_signal": 9335,
+    "previous_anchor_provenance_preserved": 57,
+    "retained_exit_policy_checks": 257045,
+    "revision_monotone_by_one": 9335,
+    "same_native_requested_period_model": 5,
+    "setup_origin_and_candidate_identity_immutable": 9335,
+    "start_clears_prior_fib_w2_lower_risk_and_obstacles": 57,
+    "start_has_immediate_old_anchor_snapshot": 57,
+    "start_pending_has_current_availability": 57,
+    "tracking_never_claims_unconfirmed_endpoint": 83
+  },
+  "violations": [],
+  "config_comparison": {
+    "differences": {
+      "extend_wave1_before_fib": {
+        "off": "false",
+        "on": "true"
+      },
+      "resolved_run_tag": {
+        "off": "wave33_20261022_135934_bf743e61_b_extension_off",
+        "on": "wave33_20261022_135934_bf743e61_b_extension_on"
+      }
+    },
+    "available_requested_run_metadata": {
+      "date_from": {
+        "off": "2020.10.01",
+        "on": "2020.10.01"
+      },
+      "date_to": {
+        "off": "2020.11.18",
+        "on": "2020.11.18"
+      },
+      "model": {
+        "off": 4,
+        "on": 4
+      },
+      "symbol": {
+        "off": "XAUUSD+",
+        "on": "XAUUSD+"
+      },
+      "chart_period": {
+        "off": "M1",
+        "on": "M1"
+      }
+    },
+    "period_metadata_complete": true
+  },
+  "runs": {
+    "off": {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_off",
+      "sources": [
+        {
+          "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_off\\events.csv",
+          "sha256": "758e2827b46f889bb79799b1ba1308ec72eac37bbc83df21501c3957c4055da3"
+        },
+        {
+          "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_off\\config.csv",
+          "sha256": "c0d295cd30718be25644a54cbbd35b772a0f631695a0d84a10479f78d8fa02e2"
+        },
+        {
+          "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_off\\upper_bars.csv",
+          "sha256": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d"
+        },
+        {
+          "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_off\\lower_bars.csv",
+          "sha256": "bbf8c5a339565ef4af8cb54ed235e27f4663f2d02946f86af61bc1bf8cd1cd27"
+        }
+      ],
+      "event_counts": {
+        "COMPLETED": 66,
+        "EXIT": 42,
+        "FIB_CLOSE_TOO_DEEP": 49,
+        "FIB_TOO_DEEP": 58,
+        "FIB_TOUCH": 131,
+        "FILL": 43,
+        "INIT": 1,
+        "INITIAL_MOVE_PROGRESS": 26,
+        "INVALIDATE": 100,
+        "LOWER_STRUCTURE_CONFIRMED": 272,
+        "LOWER_STRUCTURE_LOST": 118,
+        "LOWER_STRUCTURE_REJECTED": 339,
+        "OPPOSITE_CLOSE_ACCEPTED": 4,
+        "OPPOSITE_CLOSE_REQUEST": 4,
+        "OPPOSITE_WAVE1_ARMED": 5,
+        "ORDER": 43,
+        "PIVOT_CONFIRMED": 15331,
+        "PIVOT_TRIGGER": 67,
+        "POSITION_TRACKING": 43,
+        "RISK_CHECK": 67,
+        "SIGNAL": 67,
+        "SKIP": 34,
+        "STATE": 830,
+        "TEST_END": 1,
+        "TRENDLINE_TRIGGER": 26,
+        "WAVE1_BREAK": 177,
+        "WAVE1_PEAK_CONFIRMED": 151,
+        "WAVE1_PROVISIONAL": 537,
+        "WAVE2_EXTREME": 1087
+      },
+      "candidates": 177,
+      "source_ohlc": {
+        "upper": {
+          "status": "AVAILABLE",
+          "accepted_bars": 9384,
+          "source_interval_gaps": [
+            {
+              "after": "2020.09.30 23:55:00",
+              "before": "2020.10.01 01:00:00"
+            },
+            {
+              "after": "2020.10.01 23:55:00",
+              "before": "2020.10.02 01:00:00"
+            },
+            {
+              "after": "2020.10.02 23:55:00",
+              "before": "2020.10.05 01:00:00"
+            },
+            {
+              "after": "2020.10.05 23:55:00",
+              "before": "2020.10.06 01:00:00"
+            },
+            {
+              "after": "2020.10.06 23:55:00",
+              "before": "2020.10.07 01:00:00"
+            },
+            {
+              "after": "2020.10.07 23:55:00",
+              "before": "2020.10.08 01:00:00"
+            },
+            {
+              "after": "2020.10.08 23:55:00",
+              "before": "2020.10.09 01:00:00"
+            },
+            {
+              "after": "2020.10.09 23:55:00",
+              "before": "2020.10.12 01:00:00"
+            },
+            {
+              "after": "2020.10.12 23:55:00",
+              "before": "2020.10.13 01:00:00"
+            },
+            {
+              "after": "2020.10.13 23:55:00",
+              "before": "2020.10.14 01:00:00"
+            },
+            {
+              "after": "2020.10.14 23:55:00",
+              "before": "2020.10.15 01:00:00"
+            },
+            {
+              "after": "2020.10.15 23:55:00",
+              "before": "2020.10.16 01:00:00"
+            },
+            {
+              "after": "2020.10.16 23:55:00",
+              "before": "2020.10.19 01:00:00"
+            },
+            {
+              "after": "2020.10.19 23:55:00",
+              "before": "2020.10.20 01:00:00"
+            },
+            {
+              "after": "2020.10.20 23:55:00",
+              "before": "2020.10.21 01:00:00"
+            },
+            {
+              "after": "2020.10.21 23:55:00",
+              "before": "2020.10.22 01:00:00"
+            },
+            {
+              "after": "2020.10.22 23:55:00",
+              "before": "2020.10.23 01:00:00"
+            },
+            {
+              "after": "2020.10.23 23:55:00",
+              "before": "2020.10.26 01:00:00"
+            },
+            {
+              "after": "2020.10.26 23:55:00",
+              "before": "2020.10.27 01:00:00"
+            },
+            {
+              "after": "2020.10.27 23:55:00",
+              "before": "2020.10.28 01:00:00"
+            },
+            {
+              "after": "2020.10.28 23:55:00",
+              "before": "2020.10.29 01:00:00"
+            },
+            {
+              "after": "2020.10.29 23:55:00",
+              "before": "2020.10.30 01:00:00"
+            },
+            {
+              "after": "2020.10.30 23:55:00",
+              "before": "2020.11.02 01:00:00"
+            },
+            {
+              "after": "2020.11.02 23:55:00",
+              "before": "2020.11.03 01:00:00"
+            },
+            {
+              "after": "2020.11.03 23:55:00",
+              "before": "2020.11.04 01:00:00"
+            },
+            {
+              "after": "2020.11.04 23:55:00",
+              "before": "2020.11.05 01:00:00"
+            },
+            {
+              "after": "2020.11.05 23:55:00",
+              "before": "2020.11.06 01:00:00"
+            },
+            {
+              "after": "2020.11.06 23:55:00",
+              "before": "2020.11.09 01:00:00"
+            },
+            {
+              "after": "2020.11.09 23:55:00",
+              "before": "2020.11.10 01:00:00"
+            },
+            {
+              "after": "2020.11.10 23:55:00",
+              "before": "2020.11.11 01:00:00"
+            },
+            {
+              "after": "2020.11.11 23:55:00",
+              "before": "2020.11.12 01:00:00"
+            },
+            {
+              "after": "2020.11.12 23:55:00",
+              "before": "2020.11.13 01:00:00"
+            },
+            {
+              "after": "2020.11.13 23:55:00",
+              "before": "2020.11.16 01:00:00"
+            },
+            {
+              "after": "2020.11.16 23:55:00",
+              "before": "2020.11.17 01:00:00"
+            }
+          ]
+        },
+        "lower": {
+          "status": "AVAILABLE",
+          "accepted_bars": 46883,
+          "source_interval_gaps": [
+            {
+              "after": "2020.09.30 23:58:00",
+              "before": "2020.10.01 01:00:00"
+            },
+            {
+              "after": "2020.10.01 23:58:00",
+              "before": "2020.10.02 01:00:00"
+            },
+            {
+              "after": "2020.10.02 23:58:00",
+              "before": "2020.10.05 01:00:00"
+            },
+            {
+              "after": "2020.10.05 23:58:00",
+              "before": "2020.10.06 01:00:00"
+            },
+            {
+              "after": "2020.10.06 23:58:00",
+              "before": "2020.10.07 01:00:00"
+            },
+            {
+              "after": "2020.10.07 23:58:00",
+              "before": "2020.10.08 01:00:00"
+            },
+            {
+              "after": "2020.10.08 23:58:00",
+              "before": "2020.10.09 01:00:00"
+            },
+            {
+              "after": "2020.10.09 23:58:00",
+              "before": "2020.10.12 01:00:00"
+            },
+            {
+              "after": "2020.10.12 23:58:00",
+              "before": "2020.10.13 01:00:00"
+            },
+            {
+              "after": "2020.10.13 23:58:00",
+              "before": "2020.10.14 01:00:00"
+            },
+            {
+              "after": "2020.10.14 23:58:00",
+              "before": "2020.10.15 01:00:00"
+            },
+            {
+              "after": "2020.10.15 23:58:00",
+              "before": "2020.10.16 01:00:00"
+            },
+            {
+              "after": "2020.10.16 23:58:00",
+              "before": "2020.10.19 01:00:00"
+            },
+            {
+              "after": "2020.10.19 23:58:00",
+              "before": "2020.10.20 01:00:00"
+            },
+            {
+              "after": "2020.10.20 23:58:00",
+              "before": "2020.10.21 01:00:00"
+            },
+            {
+              "after": "2020.10.21 23:58:00",
+              "before": "2020.10.22 01:00:00"
+            },
+            {
+              "after": "2020.10.22 23:58:00",
+              "before": "2020.10.23 01:00:00"
+            },
+            {
+              "after": "2020.10.23 23:58:00",
+              "before": "2020.10.26 01:00:00"
+            },
+            {
+              "after": "2020.10.26 23:58:00",
+              "before": "2020.10.27 01:00:00"
+            },
+            {
+              "after": "2020.10.27 23:58:00",
+              "before": "2020.10.28 01:00:00"
+            },
+            {
+              "after": "2020.10.28 23:58:00",
+              "before": "2020.10.29 01:00:00"
+            },
+            {
+              "after": "2020.10.29 19:34:00",
+              "before": "2020.10.29 19:38:00"
+            },
+            {
+              "after": "2020.10.29 23:58:00",
+              "before": "2020.10.30 01:00:00"
+            },
+            {
+              "after": "2020.10.30 23:58:00",
+              "before": "2020.11.02 01:00:00"
+            },
+            {
+              "after": "2020.11.02 23:58:00",
+              "before": "2020.11.03 01:00:00"
+            },
+            {
+              "after": "2020.11.03 23:58:00",
+              "before": "2020.11.04 01:00:00"
+            },
+            {
+              "after": "2020.11.04 23:58:00",
+              "before": "2020.11.05 01:00:00"
+            },
+            {
+              "after": "2020.11.05 23:58:00",
+              "before": "2020.11.06 01:00:00"
+            },
+            {
+              "after": "2020.11.06 23:58:00",
+              "before": "2020.11.09 01:00:00"
+            },
+            {
+              "after": "2020.11.09 23:58:00",
+              "before": "2020.11.10 01:00:00"
+            },
+            {
+              "after": "2020.11.10 23:58:00",
+              "before": "2020.11.11 01:00:00"
+            },
+            {
+              "after": "2020.11.11 23:58:00",
+              "before": "2020.11.12 01:00:00"
+            },
+            {
+              "after": "2020.11.12 23:58:00",
+              "before": "2020.11.13 01:00:00"
+            },
+            {
+              "after": "2020.11.13 23:58:00",
+              "before": "2020.11.16 01:00:00"
+            },
+            {
+              "after": "2020.11.16 23:58:00",
+              "before": "2020.11.17 01:00:00"
+            }
+          ]
+        }
+      },
+      "extension_source_checks": [],
+      "minimum_fib_locks": [],
+      "opposite_exit_arms": [
+        {
+          "_csv_row": 1896,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18",
+          "event_type": "OPPOSITE_WAVE1_ARMED",
+          "event_at": "2020.10.06 08:10:00",
+          "wave1_revision": "0",
+          "reason": "source=W33_XAUUSD+_5_1_LONG_1601970600_20 | first profitable executable quote after blue W1 confirmation"
+        },
+        {
+          "_csv_row": 4056,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41",
+          "event_type": "OPPOSITE_WAVE1_ARMED",
+          "event_at": "2020.10.12 04:45:00",
+          "wave1_revision": "0",
+          "reason": "source=W33_XAUUSD+_5_1_LONG_1602476400_42 | first profitable executable quote after blue W1 confirmation"
+        },
+        {
+          "_csv_row": 4149,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602478800_43",
+          "event_type": "OPPOSITE_WAVE1_ARMED",
+          "event_at": "2020.10.12 06:10:00",
+          "wave1_revision": "0",
+          "reason": "source=W33_XAUUSD+_5_1_LONG_1602482100_44 | first profitable executable quote after blue W1 confirmation"
+        },
+        {
+          "_csv_row": 14183,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124",
+          "event_type": "OPPOSITE_WAVE1_ARMED",
+          "event_at": "2020.11.04 18:25:00",
+          "wave1_revision": "0",
+          "reason": "source=W33_XAUUSD+_5_1_SHORT_1604513100_125 | first profitable executable quote after blue W1 confirmation"
+        },
+        {
+          "_csv_row": 16335,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604995500_141",
+          "event_type": "OPPOSITE_WAVE1_ARMED",
+          "event_at": "2020.11.10 09:55:00",
+          "wave1_revision": "0",
+          "reason": "source=W33_XAUUSD+_5_1_SHORT_1605000900_142 | first profitable executable quote after blue W1 confirmation"
+        }
+      ],
+      "ancillary_realized_r": {
+        "closed_count": 42,
+        "total": 4.6378696432,
+        "mean": 0.11042546769523809
+      },
+      "independent_sources_complete": true
+    },
+    "on": {
+      "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_on",
+      "sources": [
+        {
+          "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_on\\events.csv",
+          "sha256": "7cee4a4b536d4fec6743df2e470837c221730ee5338913a0f07cd7a2e6e2b765"
+        },
+        {
+          "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_on\\config.csv",
+          "sha256": "55e8398d033a87ed1d0020bca49401e932a5e6bdd8597d6c37a88eb5d9d0a757"
+        },
+        {
+          "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_on\\upper_bars.csv",
+          "sha256": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d"
+        },
+        {
+          "path": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33ext\\native\\20261022_135934_bf743e61\\b_extension_on\\lower_bars.csv",
+          "sha256": "bbf8c5a339565ef4af8cb54ed235e27f4663f2d02946f86af61bc1bf8cd1cd27"
+        }
+      ],
+      "event_counts": {
+        "COMPLETED": 74,
+        "EXIT": 51,
+        "FIB_CLOSE_TOO_DEEP": 48,
+        "FIB_TOO_DEEP": 55,
+        "FIB_TOUCH": 137,
+        "FILL": 52,
+        "INIT": 1,
+        "INITIAL_MOVE_PROGRESS": 25,
+        "INVALIDATE": 95,
+        "LOWER_STRUCTURE_CONFIRMED": 347,
+        "LOWER_STRUCTURE_LOST": 130,
+        "LOWER_STRUCTURE_REJECTED": 109,
+        "OPPOSITE_CLOSE_ACCEPTED": 3,
+        "OPPOSITE_CLOSE_REQUEST": 3,
+        "OPPOSITE_WAVE1_ARMED": 4,
+        "ORDER": 52,
+        "PIVOT_CONFIRMED": 15331,
+        "PIVOT_TRIGGER": 75,
+        "POSITION_TRACKING": 52,
+        "RISK_CHECK": 75,
+        "SIGNAL": 75,
+        "SKIP": 30,
+        "STATE": 982,
+        "TEST_END": 1,
+        "TRENDLINE_TRIGGER": 26,
+        "WAVE1_BREAK": 177,
+        "WAVE1_EXTENDED_CONFIRMED": 57,
+        "WAVE1_EXTENSION_LOCKED": 152,
+        "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 57,
+        "WAVE1_EXTENSION_STARTED": 57,
+        "WAVE1_EXTENSION_TRACKING": 83,
+        "WAVE1_PEAK_CONFIRMED": 154,
+        "WAVE1_PROVISIONAL": 547,
+        "WAVE2_EXTREME": 1517
+      },
+      "candidates": 177,
+      "source_ohlc": {
+        "upper": {
+          "status": "AVAILABLE",
+          "accepted_bars": 9384,
+          "source_interval_gaps": [
+            {
+              "after": "2020.09.30 23:55:00",
+              "before": "2020.10.01 01:00:00"
+            },
+            {
+              "after": "2020.10.01 23:55:00",
+              "before": "2020.10.02 01:00:00"
+            },
+            {
+              "after": "2020.10.02 23:55:00",
+              "before": "2020.10.05 01:00:00"
+            },
+            {
+              "after": "2020.10.05 23:55:00",
+              "before": "2020.10.06 01:00:00"
+            },
+            {
+              "after": "2020.10.06 23:55:00",
+              "before": "2020.10.07 01:00:00"
+            },
+            {
+              "after": "2020.10.07 23:55:00",
+              "before": "2020.10.08 01:00:00"
+            },
+            {
+              "after": "2020.10.08 23:55:00",
+              "before": "2020.10.09 01:00:00"
+            },
+            {
+              "after": "2020.10.09 23:55:00",
+              "before": "2020.10.12 01:00:00"
+            },
+            {
+              "after": "2020.10.12 23:55:00",
+              "before": "2020.10.13 01:00:00"
+            },
+            {
+              "after": "2020.10.13 23:55:00",
+              "before": "2020.10.14 01:00:00"
+            },
+            {
+              "after": "2020.10.14 23:55:00",
+              "before": "2020.10.15 01:00:00"
+            },
+            {
+              "after": "2020.10.15 23:55:00",
+              "before": "2020.10.16 01:00:00"
+            },
+            {
+              "after": "2020.10.16 23:55:00",
+              "before": "2020.10.19 01:00:00"
+            },
+            {
+              "after": "2020.10.19 23:55:00",
+              "before": "2020.10.20 01:00:00"
+            },
+            {
+              "after": "2020.10.20 23:55:00",
+              "before": "2020.10.21 01:00:00"
+            },
+            {
+              "after": "2020.10.21 23:55:00",
+              "before": "2020.10.22 01:00:00"
+            },
+            {
+              "after": "2020.10.22 23:55:00",
+              "before": "2020.10.23 01:00:00"
+            },
+            {
+              "after": "2020.10.23 23:55:00",
+              "before": "2020.10.26 01:00:00"
+            },
+            {
+              "after": "2020.10.26 23:55:00",
+              "before": "2020.10.27 01:00:00"
+            },
+            {
+              "after": "2020.10.27 23:55:00",
+              "before": "2020.10.28 01:00:00"
+            },
+            {
+              "after": "2020.10.28 23:55:00",
+              "before": "2020.10.29 01:00:00"
+            },
+            {
+              "after": "2020.10.29 23:55:00",
+              "before": "2020.10.30 01:00:00"
+            },
+            {
+              "after": "2020.10.30 23:55:00",
+              "before": "2020.11.02 01:00:00"
+            },
+            {
+              "after": "2020.11.02 23:55:00",
+              "before": "2020.11.03 01:00:00"
+            },
+            {
+              "after": "2020.11.03 23:55:00",
+              "before": "2020.11.04 01:00:00"
+            },
+            {
+              "after": "2020.11.04 23:55:00",
+              "before": "2020.11.05 01:00:00"
+            },
+            {
+              "after": "2020.11.05 23:55:00",
+              "before": "2020.11.06 01:00:00"
+            },
+            {
+              "after": "2020.11.06 23:55:00",
+              "before": "2020.11.09 01:00:00"
+            },
+            {
+              "after": "2020.11.09 23:55:00",
+              "before": "2020.11.10 01:00:00"
+            },
+            {
+              "after": "2020.11.10 23:55:00",
+              "before": "2020.11.11 01:00:00"
+            },
+            {
+              "after": "2020.11.11 23:55:00",
+              "before": "2020.11.12 01:00:00"
+            },
+            {
+              "after": "2020.11.12 23:55:00",
+              "before": "2020.11.13 01:00:00"
+            },
+            {
+              "after": "2020.11.13 23:55:00",
+              "before": "2020.11.16 01:00:00"
+            },
+            {
+              "after": "2020.11.16 23:55:00",
+              "before": "2020.11.17 01:00:00"
+            }
+          ]
+        },
+        "lower": {
+          "status": "AVAILABLE",
+          "accepted_bars": 46883,
+          "source_interval_gaps": [
+            {
+              "after": "2020.09.30 23:58:00",
+              "before": "2020.10.01 01:00:00"
+            },
+            {
+              "after": "2020.10.01 23:58:00",
+              "before": "2020.10.02 01:00:00"
+            },
+            {
+              "after": "2020.10.02 23:58:00",
+              "before": "2020.10.05 01:00:00"
+            },
+            {
+              "after": "2020.10.05 23:58:00",
+              "before": "2020.10.06 01:00:00"
+            },
+            {
+              "after": "2020.10.06 23:58:00",
+              "before": "2020.10.07 01:00:00"
+            },
+            {
+              "after": "2020.10.07 23:58:00",
+              "before": "2020.10.08 01:00:00"
+            },
+            {
+              "after": "2020.10.08 23:58:00",
+              "before": "2020.10.09 01:00:00"
+            },
+            {
+              "after": "2020.10.09 23:58:00",
+              "before": "2020.10.12 01:00:00"
+            },
+            {
+              "after": "2020.10.12 23:58:00",
+              "before": "2020.10.13 01:00:00"
+            },
+            {
+              "after": "2020.10.13 23:58:00",
+              "before": "2020.10.14 01:00:00"
+            },
+            {
+              "after": "2020.10.14 23:58:00",
+              "before": "2020.10.15 01:00:00"
+            },
+            {
+              "after": "2020.10.15 23:58:00",
+              "before": "2020.10.16 01:00:00"
+            },
+            {
+              "after": "2020.10.16 23:58:00",
+              "before": "2020.10.19 01:00:00"
+            },
+            {
+              "after": "2020.10.19 23:58:00",
+              "before": "2020.10.20 01:00:00"
+            },
+            {
+              "after": "2020.10.20 23:58:00",
+              "before": "2020.10.21 01:00:00"
+            },
+            {
+              "after": "2020.10.21 23:58:00",
+              "before": "2020.10.22 01:00:00"
+            },
+            {
+              "after": "2020.10.22 23:58:00",
+              "before": "2020.10.23 01:00:00"
+            },
+            {
+              "after": "2020.10.23 23:58:00",
+              "before": "2020.10.26 01:00:00"
+            },
+            {
+              "after": "2020.10.26 23:58:00",
+              "before": "2020.10.27 01:00:00"
+            },
+            {
+              "after": "2020.10.27 23:58:00",
+              "before": "2020.10.28 01:00:00"
+            },
+            {
+              "after": "2020.10.28 23:58:00",
+              "before": "2020.10.29 01:00:00"
+            },
+            {
+              "after": "2020.10.29 19:34:00",
+              "before": "2020.10.29 19:38:00"
+            },
+            {
+              "after": "2020.10.29 23:58:00",
+              "before": "2020.10.30 01:00:00"
+            },
+            {
+              "after": "2020.10.30 23:58:00",
+              "before": "2020.11.02 01:00:00"
+            },
+            {
+              "after": "2020.11.02 23:58:00",
+              "before": "2020.11.03 01:00:00"
+            },
+            {
+              "after": "2020.11.03 23:58:00",
+              "before": "2020.11.04 01:00:00"
+            },
+            {
+              "after": "2020.11.04 23:58:00",
+              "before": "2020.11.05 01:00:00"
+            },
+            {
+              "after": "2020.11.05 23:58:00",
+              "before": "2020.11.06 01:00:00"
+            },
+            {
+              "after": "2020.11.06 23:58:00",
+              "before": "2020.11.09 01:00:00"
+            },
+            {
+              "after": "2020.11.09 23:58:00",
+              "before": "2020.11.10 01:00:00"
+            },
+            {
+              "after": "2020.11.10 23:58:00",
+              "before": "2020.11.11 01:00:00"
+            },
+            {
+              "after": "2020.11.11 23:58:00",
+              "before": "2020.11.12 01:00:00"
+            },
+            {
+              "after": "2020.11.12 23:58:00",
+              "before": "2020.11.13 01:00:00"
+            },
+            {
+              "after": "2020.11.13 23:58:00",
+              "before": "2020.11.16 01:00:00"
+            },
+            {
+              "after": "2020.11.16 23:58:00",
+              "before": "2020.11.17 01:00:00"
+            }
+          ]
+        }
+      },
+      "extension_source_checks": [
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601604000_7",
+          "revision": 1,
+          "at": "2020.10.02 02:35:00",
+          "source_bar": "2020.10.02 02:30:00",
+          "old_peak": "1905.0200000000",
+          "new_provisional": "1904.8300000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601672400_11",
+          "revision": 1,
+          "at": "2020.10.02 21:25:00",
+          "source_bar": "2020.10.02 21:20:00",
+          "old_peak": "1903.1500000000",
+          "new_provisional": "1903.2100000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601679300_12",
+          "revision": 1,
+          "at": "2020.10.02 23:45:00",
+          "source_bar": "2020.10.02 23:40:00",
+          "old_peak": "1900.0200000000",
+          "new_provisional": "1899.5200000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601897700_13",
+          "revision": 1,
+          "at": "2020.10.05 12:05:00",
+          "source_bar": "2020.10.05 12:00:00",
+          "old_peak": "1898.4300000000",
+          "new_provisional": "1899.5000000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601897700_13",
+          "revision": 2,
+          "at": "2020.10.05 12:50:00",
+          "source_bar": "2020.10.05 12:45:00",
+          "old_peak": "1901.0600000000",
+          "new_provisional": "1901.5200000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601897700_13",
+          "revision": 3,
+          "at": "2020.10.05 14:50:00",
+          "source_bar": "2020.10.05 14:45:00",
+          "old_peak": "1901.5200000000",
+          "new_provisional": "1902.1800000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601897700_13",
+          "revision": 4,
+          "at": "2020.10.05 16:05:00",
+          "source_bar": "2020.10.05 16:00:00",
+          "old_peak": "1908.3600000000",
+          "new_provisional": "1908.3900000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601897700_13",
+          "revision": 5,
+          "at": "2020.10.05 16:35:00",
+          "source_bar": "2020.10.05 16:30:00",
+          "old_peak": "1909.3000000000",
+          "new_provisional": "1910.6000000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601897700_13",
+          "revision": 6,
+          "at": "2020.10.05 17:10:00",
+          "source_bar": "2020.10.05 17:05:00",
+          "old_peak": "1910.6000000000",
+          "new_provisional": "1914.3200000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601897700_13",
+          "revision": 7,
+          "at": "2020.10.05 18:00:00",
+          "source_bar": "2020.10.05 17:55:00",
+          "old_peak": "1918.4400000000",
+          "new_provisional": "1918.8400000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601939400_17",
+          "revision": 1,
+          "at": "2020.10.05 23:35:00",
+          "source_bar": "2020.10.05 23:30:00",
+          "old_peak": "1913.7500000000",
+          "new_provisional": "1913.8800000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18",
+          "revision": 1,
+          "at": "2020.10.06 05:40:00",
+          "source_bar": "2020.10.06 05:35:00",
+          "old_peak": "1909.5200000000",
+          "new_provisional": "1908.6600000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41",
+          "revision": 1,
+          "at": "2020.10.12 03:55:00",
+          "source_bar": "2020.10.12 03:50:00",
+          "old_peak": "1925.0300000000",
+          "new_provisional": "1922.3300000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602502200_46",
+          "revision": 1,
+          "at": "2020.10.12 12:05:00",
+          "source_bar": "2020.10.12 12:00:00",
+          "old_peak": "1922.4600000000",
+          "new_provisional": "1922.3600000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602652200_53",
+          "revision": 1,
+          "at": "2020.10.14 05:55:00",
+          "source_bar": "2020.10.14 05:50:00",
+          "old_peak": "1894.2800000000",
+          "new_provisional": "1895.3600000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602652200_53",
+          "revision": 2,
+          "at": "2020.10.14 06:40:00",
+          "source_bar": "2020.10.14 06:35:00",
+          "old_peak": "1896.4200000000",
+          "new_provisional": "1896.7600000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602652200_53",
+          "revision": 3,
+          "at": "2020.10.14 09:50:00",
+          "source_bar": "2020.10.14 09:45:00",
+          "old_peak": "1897.8600000000",
+          "new_provisional": "1897.9200000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602652200_53",
+          "revision": 4,
+          "at": "2020.10.14 11:35:00",
+          "source_bar": "2020.10.14 11:30:00",
+          "old_peak": "1897.9200000000",
+          "new_provisional": "1899.8100000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602652200_53",
+          "revision": 5,
+          "at": "2020.10.14 12:05:00",
+          "source_bar": "2020.10.14 12:00:00",
+          "old_peak": "1899.9600000000",
+          "new_provisional": "1900.4700000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602682200_55",
+          "revision": 1,
+          "at": "2020.10.14 13:55:00",
+          "source_bar": "2020.10.14 13:50:00",
+          "old_peak": "1899.4900000000",
+          "new_provisional": "1899.7900000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602760800_61",
+          "revision": 1,
+          "at": "2020.10.15 11:50:00",
+          "source_bar": "2020.10.15 11:45:00",
+          "old_peak": "1894.7500000000",
+          "new_provisional": "1894.0300000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602760800_61",
+          "revision": 2,
+          "at": "2020.10.15 12:35:00",
+          "source_bar": "2020.10.15 12:30:00",
+          "old_peak": "1890.2600000000",
+          "new_provisional": "1890.2000000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603332900_81",
+          "revision": 1,
+          "at": "2020.10.22 02:40:00",
+          "source_bar": "2020.10.22 02:35:00",
+          "old_peak": "1921.3300000000",
+          "new_provisional": "1921.0300000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603332900_81",
+          "revision": 2,
+          "at": "2020.10.22 03:05:00",
+          "source_bar": "2020.10.22 03:00:00",
+          "old_peak": "1920.3100000000",
+          "new_provisional": "1919.8100000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603332900_81",
+          "revision": 3,
+          "at": "2020.10.22 03:30:00",
+          "source_bar": "2020.10.22 03:25:00",
+          "old_peak": "1919.8100000000",
+          "new_provisional": "1919.6200000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603807200_96",
+          "revision": 1,
+          "at": "2020.10.27 14:40:00",
+          "source_bar": "2020.10.27 14:35:00",
+          "old_peak": "1902.8800000000",
+          "new_provisional": "1902.9200000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603807200_96",
+          "revision": 2,
+          "at": "2020.10.27 15:05:00",
+          "source_bar": "2020.10.27 15:00:00",
+          "old_peak": "1903.1300000000",
+          "new_provisional": "1903.5900000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603807200_96",
+          "revision": 3,
+          "at": "2020.10.27 15:20:00",
+          "source_bar": "2020.10.27 15:15:00",
+          "old_peak": "1903.5900000000",
+          "new_provisional": "1904.5400000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603994700_104",
+          "revision": 1,
+          "at": "2020.10.29 18:30:00",
+          "source_bar": "2020.10.29 18:25:00",
+          "old_peak": "1870.4000000000",
+          "new_provisional": "1868.6800000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604030700_105",
+          "revision": 1,
+          "at": "2020.10.30 05:20:00",
+          "source_bar": "2020.10.30 05:15:00",
+          "old_peak": "1875.3500000000",
+          "new_provisional": "1875.4500000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604030700_105",
+          "revision": 2,
+          "at": "2020.10.30 05:35:00",
+          "source_bar": "2020.10.30 05:30:00",
+          "old_peak": "1875.4500000000",
+          "new_provisional": "1875.5600000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604030700_105",
+          "revision": 3,
+          "at": "2020.10.30 06:15:00",
+          "source_bar": "2020.10.30 06:10:00",
+          "old_peak": "1876.3600000000",
+          "new_provisional": "1876.5300000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604076300_108",
+          "revision": 1,
+          "at": "2020.10.30 17:35:00",
+          "source_bar": "2020.10.30 17:30:00",
+          "old_peak": "1880.7100000000",
+          "new_provisional": "1879.9200000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604416800_119",
+          "revision": 1,
+          "at": "2020.11.03 16:20:00",
+          "source_bar": "2020.11.03 16:15:00",
+          "old_peak": "1908.0200000000",
+          "new_provisional": "1908.0600000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124",
+          "revision": 1,
+          "at": "2020.11.04 15:20:00",
+          "source_bar": "2020.11.04 15:15:00",
+          "old_peak": "1910.9400000000",
+          "new_provisional": "1912.2000000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604513100_125",
+          "revision": 1,
+          "at": "2020.11.04 18:50:00",
+          "source_bar": "2020.11.04 18:45:00",
+          "old_peak": "1898.5200000000",
+          "new_provisional": "1898.4300000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604652000_132",
+          "revision": 1,
+          "at": "2020.11.06 09:05:00",
+          "source_bar": "2020.11.06 09:00:00",
+          "old_peak": "1941.4700000000",
+          "new_provisional": "1941.9800000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604685000_133",
+          "revision": 1,
+          "at": "2020.11.06 18:40:00",
+          "source_bar": "2020.11.06 18:35:00",
+          "old_peak": "1953.8400000000",
+          "new_provisional": "1953.8900000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604685000_133",
+          "revision": 2,
+          "at": "2020.11.06 19:15:00",
+          "source_bar": "2020.11.06 19:10:00",
+          "old_peak": "1953.8900000000",
+          "new_provisional": "1954.4200000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604685000_133",
+          "revision": 3,
+          "at": "2020.11.06 21:10:00",
+          "source_bar": "2020.11.06 21:05:00",
+          "old_peak": "1954.4200000000",
+          "new_provisional": "1955.0300000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604685000_133",
+          "revision": 4,
+          "at": "2020.11.09 01:05:00",
+          "source_bar": "2020.11.09 01:00:00",
+          "old_peak": "1955.2300000000",
+          "new_provisional": "1957.6900000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604685000_133",
+          "revision": 5,
+          "at": "2020.11.09 01:50:00",
+          "source_bar": "2020.11.09 01:45:00",
+          "old_peak": "1959.6000000000",
+          "new_provisional": "1959.8300000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604909400_136",
+          "revision": 1,
+          "at": "2020.11.09 08:35:00",
+          "source_bar": "2020.11.09 08:30:00",
+          "old_peak": "1960.4500000000",
+          "new_provisional": "1957.9800000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604909400_136",
+          "revision": 2,
+          "at": "2020.11.09 08:55:00",
+          "source_bar": "2020.11.09 08:50:00",
+          "old_peak": "1957.4200000000",
+          "new_provisional": "1956.7200000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604909400_136",
+          "revision": 3,
+          "at": "2020.11.09 09:25:00",
+          "source_bar": "2020.11.09 09:20:00",
+          "old_peak": "1955.6100000000",
+          "new_provisional": "1955.4500000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605024600_144",
+          "revision": 1,
+          "at": "2020.11.10 16:30:00",
+          "source_bar": "2020.11.10 16:25:00",
+          "old_peak": "1881.6700000000",
+          "new_provisional": "1883.8400000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605114000_151",
+          "revision": 1,
+          "at": "2020.11.11 17:20:00",
+          "source_bar": "2020.11.11 17:15:00",
+          "old_peak": "1859.2100000000",
+          "new_provisional": "1858.8900000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605207600_160",
+          "revision": 1,
+          "at": "2020.11.12 19:25:00",
+          "source_bar": "2020.11.12 19:20:00",
+          "old_peak": "1882.2400000000",
+          "new_provisional": "1882.5600000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605207600_160",
+          "revision": 2,
+          "at": "2020.11.12 19:40:00",
+          "source_bar": "2020.11.12 19:35:00",
+          "old_peak": "1882.5600000000",
+          "new_provisional": "1883.0900000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605276300_165",
+          "revision": 1,
+          "at": "2020.11.13 15:05:00",
+          "source_bar": "2020.11.13 15:00:00",
+          "old_peak": "1887.0500000000",
+          "new_provisional": "1888.7200000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605276300_165",
+          "revision": 2,
+          "at": "2020.11.13 15:25:00",
+          "source_bar": "2020.11.13 15:20:00",
+          "old_peak": "1888.8700000000",
+          "new_provisional": "1889.6700000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605304500_167",
+          "revision": 1,
+          "at": "2020.11.13 23:00:00",
+          "source_bar": "2020.11.13 22:55:00",
+          "old_peak": "1887.5600000000",
+          "new_provisional": "1888.3200000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605537300_172",
+          "revision": 1,
+          "at": "2020.11.16 15:05:00",
+          "source_bar": "2020.11.16 15:00:00",
+          "old_peak": "1878.6900000000",
+          "new_provisional": "1879.6800000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605555000_174",
+          "revision": 1,
+          "at": "2020.11.16 20:40:00",
+          "source_bar": "2020.11.16 20:35:00",
+          "old_peak": "1888.2500000000",
+          "new_provisional": "1887.7900000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605555000_174",
+          "revision": 2,
+          "at": "2020.11.16 21:30:00",
+          "source_bar": "2020.11.16 21:25:00",
+          "old_peak": "1886.5000000000",
+          "new_provisional": "1886.4800000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605555000_174",
+          "revision": 3,
+          "at": "2020.11.16 21:50:00",
+          "source_bar": "2020.11.16 21:45:00",
+          "old_peak": "1886.4800000000",
+          "new_provisional": "1886.0400000000",
+          "qualifying_old_sources": []
+        },
+        {
+          "status": "VERIFIED",
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605555000_174",
+          "revision": 4,
+          "at": "2020.11.16 22:15:00",
+          "source_bar": "2020.11.16 22:10:00",
+          "old_peak": "1886.0400000000",
+          "new_provisional": "1885.2300000000",
+          "qualifying_old_sources": []
+        }
+      ],
+      "minimum_fib_locks": [
+        {
+          "_csv_row": 184,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601543400_1",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.01 09:50:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.01 09:40:00",
+            "known_at": "2020.10.01 09:50:00",
+            "source_known_at": "2020.10.01 09:45:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 232,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601547900_2",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.01 10:55:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.01 10:45:00",
+            "known_at": "2020.10.01 10:55:00",
+            "source_known_at": "2020.10.01 10:50:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 340,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601559000_4",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.01 14:00:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.01 13:55:00",
+            "known_at": "2020.10.01 14:00:00",
+            "source_known_at": "2020.10.01 14:00:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 363,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601561400_5",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.01 14:30:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.01 14:20:00",
+            "known_at": "2020.10.01 14:30:00",
+            "source_known_at": "2020.10.01 14:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 506,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601582700_6",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.01 20:35:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.01 20:30:00",
+            "known_at": "2020.10.01 20:35:00",
+            "source_known_at": "2020.10.01 20:35:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 678,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601604000_7",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.02 03:28:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.02 03:27:00",
+            "known_at": "2020.10.02 03:28:00",
+            "source_known_at": "2020.10.02 03:28:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 879,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601639100_9",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.02 12:13:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.02 12:12:00",
+            "known_at": "2020.10.02 12:13:00",
+            "source_known_at": "2020.10.02 12:13:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 1126,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601672400_11",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.02 21:45:00",
+          "wave1_revision": "1",
+          "reason": "AMBIGUOUS_EXTREME_AND_FIB_TOUCH",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.02 21:40:00",
+            "known_at": "2020.10.02 21:45:00",
+            "source_known_at": "2020.10.02 21:45:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 1211,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601679300_12",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.05 01:10:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.05 01:00:00",
+            "known_at": "2020.10.05 01:10:00",
+            "source_known_at": "2020.10.05 01:05:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 1875,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601939400_17",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.06 01:00:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.05 23:55:00",
+            "known_at": "2020.10.06 01:00:00",
+            "source_known_at": "2020.10.06 01:00:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 2031,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.06 06:16:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.06 06:15:00",
+            "known_at": "2020.10.06 06:16:00",
+            "source_known_at": "2020.10.06 06:16:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 2082,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601968200_19",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.06 07:35:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.06 07:25:00",
+            "known_at": "2020.10.06 07:35:00",
+            "source_known_at": "2020.10.06 07:30:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 2108,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1601970600_20",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.06 08:10:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.06 08:05:00",
+            "known_at": "2020.10.06 08:10:00",
+            "source_known_at": "2020.10.06 08:10:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 2195,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1601980500_21",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.06 11:03:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.06 11:02:00",
+            "known_at": "2020.10.06 11:03:00",
+            "source_known_at": "2020.10.06 11:03:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 2444,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602019200_23",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.06 21:50:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.06 21:45:00",
+            "known_at": "2020.10.06 21:50:00",
+            "source_known_at": "2020.10.06 21:50:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 2564,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602041700_24",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.07 03:57:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.07 03:56:00",
+            "known_at": "2020.10.07 03:57:00",
+            "source_known_at": "2020.10.07 03:57:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 2693,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602058200_26",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.07 08:30:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.07 08:20:00",
+            "known_at": "2020.10.07 08:30:00",
+            "source_known_at": "2020.10.07 08:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 2825,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602078900_27",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.07 14:25:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.07 14:20:00",
+            "known_at": "2020.10.07 14:25:00",
+            "source_known_at": "2020.10.07 14:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 2892,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602087600_28",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.07 16:35:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.07 16:30:00",
+            "known_at": "2020.10.07 16:35:00",
+            "source_known_at": "2020.10.07 16:35:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 3010,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602104100_29",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.07 21:10:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.07 21:00:00",
+            "known_at": "2020.10.07 21:10:00",
+            "source_known_at": "2020.10.07 21:05:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 3136,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602126000_30",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.08 03:20:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.08 03:10:00",
+            "known_at": "2020.10.08 03:20:00",
+            "source_known_at": "2020.10.08 03:15:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 3189,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602128700_31",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.08 04:15:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.08 04:10:00",
+            "known_at": "2020.10.08 04:15:00",
+            "source_known_at": "2020.10.08 04:15:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 3218,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602131100_32",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.08 04:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.08 04:35:00",
+            "known_at": "2020.10.08 04:45:00",
+            "source_known_at": "2020.10.08 04:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 3251,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602135900_33",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.08 06:00:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.08 05:50:00",
+            "known_at": "2020.10.08 06:00:00",
+            "source_known_at": "2020.10.08 05:55:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 3463,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602168900_34",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.08 15:43:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.08 15:42:00",
+            "known_at": "2020.10.08 15:43:00",
+            "source_known_at": "2020.10.08 15:43:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 3581,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602186000_35",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.08 20:25:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.08 20:20:00",
+            "known_at": "2020.10.08 20:25:00",
+            "source_known_at": "2020.10.08 20:25:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 3680,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602206100_36",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.09 01:40:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.09 01:35:00",
+            "known_at": "2020.10.09 01:40:00",
+            "source_known_at": "2020.10.09 01:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 3845,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602237600_37",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.09 10:25:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.09 10:15:00",
+            "known_at": "2020.10.09 10:25:00",
+            "source_known_at": "2020.10.09 10:20:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 4104,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602277500_39",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.09 22:07:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.09 22:06:00",
+            "known_at": "2020.10.09 22:07:00",
+            "source_known_at": "2020.10.09 22:07:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 4255,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.12 04:22:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.12 04:21:00",
+            "known_at": "2020.10.12 04:22:00",
+            "source_known_at": "2020.10.12 04:22:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 4297,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602476400_42",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.12 04:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.12 04:35:00",
+            "known_at": "2020.10.12 04:45:00",
+            "source_known_at": "2020.10.12 04:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 4352,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602478800_43",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.12 05:28:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.12 05:27:00",
+            "known_at": "2020.10.12 05:28:00",
+            "source_known_at": "2020.10.12 05:28:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 4402,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602482100_44",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.12 06:11:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.12 06:10:00",
+            "known_at": "2020.10.12 06:11:00",
+            "source_known_at": "2020.10.12 06:11:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 4575,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602502200_46",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.12 12:45:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.12 12:40:00",
+            "known_at": "2020.10.12 12:45:00",
+            "source_known_at": "2020.10.12 12:45:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 4702,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602518700_47",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.12 16:27:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.12 16:26:00",
+            "known_at": "2020.10.12 16:27:00",
+            "source_known_at": "2020.10.12 16:27:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 4749,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602522000_48",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.12 17:18:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.12 17:17:00",
+            "known_at": "2020.10.12 17:18:00",
+            "source_known_at": "2020.10.12 17:18:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 4958,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602558000_49",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.13 03:30:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.13 03:20:00",
+            "known_at": "2020.10.13 03:30:00",
+            "source_known_at": "2020.10.13 03:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 5070,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602574800_51",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.13 08:05:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.13 08:00:00",
+            "known_at": "2020.10.13 08:05:00",
+            "source_known_at": "2020.10.13 08:05:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 5151,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602584700_52",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.13 11:01:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.13 11:00:00",
+            "known_at": "2020.10.13 11:01:00",
+            "source_known_at": "2020.10.13 11:01:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 5674,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602670500_54",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.14 10:30:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.14 10:20:00",
+            "known_at": "2020.10.14 10:30:00",
+            "source_known_at": "2020.10.14 10:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 5832,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602682200_55",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.14 14:47:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.14 14:46:00",
+            "known_at": "2020.10.14 14:47:00",
+            "source_known_at": "2020.10.14 14:47:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 5897,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602693000_56",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.14 16:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.14 16:40:00",
+            "known_at": "2020.10.14 16:45:00",
+            "source_known_at": "2020.10.14 16:45:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 5949,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602699300_57",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.14 18:40:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.14 18:30:00",
+            "known_at": "2020.10.14 18:40:00",
+            "source_known_at": "2020.10.14 18:35:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 6039,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602710100_58",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.14 21:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.14 21:40:00",
+            "known_at": "2020.10.14 21:45:00",
+            "source_known_at": "2020.10.14 21:45:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 6094,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602712800_59",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.14 22:57:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.14 22:56:00",
+            "known_at": "2020.10.14 22:57:00",
+            "source_known_at": "2020.10.14 22:57:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 6135,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602723600_60",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.15 01:27:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.15 01:26:00",
+            "known_at": "2020.10.15 01:27:00",
+            "source_known_at": "2020.10.15 01:27:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 6401,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602760800_61",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.15 12:55:00",
+          "wave1_revision": "2",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.15 12:45:00",
+            "known_at": "2020.10.15 12:55:00",
+            "source_known_at": "2020.10.15 12:50:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 6617,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1602793200_62",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.15 20:58:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.15 20:57:00",
+            "known_at": "2020.10.15 20:58:00",
+            "source_known_at": "2020.10.15 20:58:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 6739,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602816300_63",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.16 03:15:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.16 03:05:00",
+            "known_at": "2020.10.16 03:15:00",
+            "source_known_at": "2020.10.16 03:10:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 6834,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602829500_64",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.16 06:40:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.16 06:35:00",
+            "known_at": "2020.10.16 06:40:00",
+            "source_known_at": "2020.10.16 06:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 7106,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602869400_65",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.16 18:15:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.16 18:10:00",
+            "known_at": "2020.10.16 18:15:00",
+            "source_known_at": "2020.10.16 18:15:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 7267,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603069200_66",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.19 01:50:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.19 01:45:00",
+            "known_at": "2020.10.19 01:50:00",
+            "source_known_at": "2020.10.19 01:50:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 7324,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603076400_67",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.19 03:15:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.19 03:05:00",
+            "known_at": "2020.10.19 03:15:00",
+            "source_known_at": "2020.10.19 03:10:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 7529,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603109700_68",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.19 12:30:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.19 12:20:00",
+            "known_at": "2020.10.19 12:30:00",
+            "source_known_at": "2020.10.19 12:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 7555,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603111500_69",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.19 13:00:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.19 12:50:00",
+            "known_at": "2020.10.19 13:00:00",
+            "source_known_at": "2020.10.19 12:55:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 7615,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603118700_70",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.19 15:05:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.19 14:55:00",
+            "known_at": "2020.10.19 15:05:00",
+            "source_known_at": "2020.10.19 15:00:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 7642,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603119900_71",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.19 15:30:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.19 15:25:00",
+            "known_at": "2020.10.19 15:30:00",
+            "source_known_at": "2020.10.19 15:30:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 7811,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603138800_72",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.19 21:23:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.19 21:22:00",
+            "known_at": "2020.10.19 21:23:00",
+            "source_known_at": "2020.10.19 21:23:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 8022,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603182600_73",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.20 08:50:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.20 08:40:00",
+            "known_at": "2020.10.20 08:50:00",
+            "source_known_at": "2020.10.20 08:45:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 8183,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603208400_74",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.20 16:10:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.20 16:00:00",
+            "known_at": "2020.10.20 16:10:00",
+            "source_known_at": "2020.10.20 16:05:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 8302,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603224900_75",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.20 21:30:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.20 21:20:00",
+            "known_at": "2020.10.20 21:30:00",
+            "source_known_at": "2020.10.20 21:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 8578,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603272300_76",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.21 09:40:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.21 09:30:00",
+            "known_at": "2020.10.21 09:40:00",
+            "source_known_at": "2020.10.21 09:35:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 8767,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603299300_77",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.21 17:20:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.21 17:10:00",
+            "known_at": "2020.10.21 17:20:00",
+            "source_known_at": "2020.10.21 17:15:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 8805,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603303200_78",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.21 18:31:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.21 18:30:00",
+            "known_at": "2020.10.21 18:31:00",
+            "source_known_at": "2020.10.21 18:31:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 8880,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603310400_79",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.21 20:29:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.21 20:28:00",
+            "known_at": "2020.10.21 20:29:00",
+            "source_known_at": "2020.10.21 20:29:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 9092,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603332900_81",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.22 04:02:00",
+          "wave1_revision": "3",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.22 04:01:00",
+            "known_at": "2020.10.22 04:02:00",
+            "source_known_at": "2020.10.22 04:02:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 9134,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603340700_82",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.22 04:52:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.22 04:51:00",
+            "known_at": "2020.10.22 04:52:00",
+            "source_known_at": "2020.10.22 04:52:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 9510,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603404600_83",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.22 22:30:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.22 22:25:00",
+            "known_at": "2020.10.22 22:30:00",
+            "source_known_at": "2020.10.22 22:30:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 9691,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603437900_84",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.23 07:55:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.23 07:45:00",
+            "known_at": "2020.10.23 07:55:00",
+            "source_known_at": "2020.10.23 07:50:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 9745,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603443000_85",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.23 09:25:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.23 09:20:00",
+            "known_at": "2020.10.23 09:25:00",
+            "source_known_at": "2020.10.23 09:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 10047,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603482000_86",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.23 22:02:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.23 22:01:00",
+            "known_at": "2020.10.23 22:02:00",
+            "source_known_at": "2020.10.23 22:02:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 10198,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603686600_87",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.26 05:04:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.26 05:03:00",
+            "known_at": "2020.10.26 05:04:00",
+            "source_known_at": "2020.10.26 05:04:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 10345,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603704300_88",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.26 10:01:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.26 10:00:00",
+            "known_at": "2020.10.26 10:01:00",
+            "source_known_at": "2020.10.26 10:01:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 10415,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603711200_89",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.26 11:55:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.26 11:45:00",
+            "known_at": "2020.10.26 11:55:00",
+            "source_known_at": "2020.10.26 11:50:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 10502,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603726200_90",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.26 15:50:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.26 15:40:00",
+            "known_at": "2020.10.26 15:50:00",
+            "source_known_at": "2020.10.26 15:45:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 10533,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603729500_91",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.26 16:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.26 16:35:00",
+            "known_at": "2020.10.26 16:45:00",
+            "source_known_at": "2020.10.26 16:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 10653,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603747500_92",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.26 21:40:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.26 21:35:00",
+            "known_at": "2020.10.26 21:40:00",
+            "source_known_at": "2020.10.26 21:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 10728,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603761900_93",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.27 01:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.27 01:35:00",
+            "known_at": "2020.10.27 01:45:00",
+            "source_known_at": "2020.10.27 01:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 10879,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603785600_94",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.27 08:25:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.27 08:15:00",
+            "known_at": "2020.10.27 08:25:00",
+            "source_known_at": "2020.10.27 08:20:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 10937,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603791600_95",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.27 10:00:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.27 09:50:00",
+            "known_at": "2020.10.27 10:00:00",
+            "source_known_at": "2020.10.27 09:55:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 11098,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603807200_96",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.27 15:30:00",
+          "wave1_revision": "3",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.27 15:25:00",
+            "known_at": "2020.10.27 15:30:00",
+            "source_known_at": "2020.10.27 15:30:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 11201,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603822500_97",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.27 18:50:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.27 18:45:00",
+            "known_at": "2020.10.27 18:50:00",
+            "source_known_at": "2020.10.27 18:50:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 11276,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603829700_98",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.27 21:00:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.27 20:50:00",
+            "known_at": "2020.10.27 21:00:00",
+            "source_known_at": "2020.10.27 20:55:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 11525,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603878300_99",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.28 10:10:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.28 10:05:00",
+            "known_at": "2020.10.28 10:10:00",
+            "source_known_at": "2020.10.28 10:10:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 11596,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603883700_100",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.28 11:57:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.28 11:56:00",
+            "known_at": "2020.10.28 11:57:00",
+            "source_known_at": "2020.10.28 11:57:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 11777,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603914900_101",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.28 20:35:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.28 20:30:00",
+            "known_at": "2020.10.28 20:35:00",
+            "source_known_at": "2020.10.28 20:35:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 11892,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603936800_102",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.29 02:30:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.29 02:20:00",
+            "known_at": "2020.10.29 02:30:00",
+            "source_known_at": "2020.10.29 02:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 11930,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1603938600_103",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.29 03:03:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.29 03:02:00",
+            "known_at": "2020.10.29 03:03:00",
+            "source_known_at": "2020.10.29 03:03:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 12269,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1603994700_104",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.29 19:00:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.29 18:55:00",
+            "known_at": "2020.10.29 19:00:00",
+            "source_known_at": "2020.10.29 19:00:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 12635,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604030700_105",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.30 08:17:00",
+          "wave1_revision": "3",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.30 08:16:00",
+            "known_at": "2020.10.30 08:17:00",
+            "source_known_at": "2020.10.30 08:17:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 12707,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604050500_106",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.30 10:01:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.30 10:00:00",
+            "known_at": "2020.10.30 10:01:00",
+            "source_known_at": "2020.10.30 10:01:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 12810,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604063700_107",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.30 13:40:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.30 13:30:00",
+            "known_at": "2020.10.30 13:40:00",
+            "source_known_at": "2020.10.30 13:35:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 12935,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604076300_108",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.30 18:01:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.10.30 18:00:00",
+            "known_at": "2020.10.30 18:01:00",
+            "source_known_at": "2020.10.30 18:01:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 12955,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604080800_109",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.10.30 18:15:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.10.30 18:05:00",
+            "known_at": "2020.10.30 18:15:00",
+            "source_known_at": "2020.10.30 18:10:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 13175,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604286600_113",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.02 03:35:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.02 03:30:00",
+            "known_at": "2020.11.02 03:35:00",
+            "source_known_at": "2020.11.02 03:35:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 13353,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604312400_114",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.02 10:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.02 10:35:00",
+            "known_at": "2020.11.02 10:45:00",
+            "source_known_at": "2020.11.02 10:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 13508,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604332800_115",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.02 16:20:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.02 16:10:00",
+            "known_at": "2020.11.02 16:20:00",
+            "source_known_at": "2020.11.02 16:15:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 13574,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604339400_116",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.02 18:25:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.02 18:15:00",
+            "known_at": "2020.11.02 18:25:00",
+            "source_known_at": "2020.11.02 18:20:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 13743,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604368800_117",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.03 02:30:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.03 02:20:00",
+            "known_at": "2020.11.03 02:30:00",
+            "source_known_at": "2020.11.03 02:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 13825,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604379000_118",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.03 05:32:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.03 05:31:00",
+            "known_at": "2020.11.03 05:32:00",
+            "source_known_at": "2020.11.03 05:32:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 14097,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604416800_119",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.03 16:33:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.03 16:32:00",
+            "known_at": "2020.11.03 16:33:00",
+            "source_known_at": "2020.11.03 16:33:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 14330,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604456700_121",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.04 03:15:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.04 03:05:00",
+            "known_at": "2020.11.04 03:15:00",
+            "source_known_at": "2020.11.04 03:10:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 14504,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604485500_122",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.04 10:53:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.04 10:52:00",
+            "known_at": "2020.11.04 10:53:00",
+            "source_known_at": "2020.11.04 10:53:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 14537,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604489100_123",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.04 11:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.04 11:35:00",
+            "known_at": "2020.11.04 11:45:00",
+            "source_known_at": "2020.11.04 11:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 14716,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.04 16:39:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.04 16:38:00",
+            "known_at": "2020.11.04 16:39:00",
+            "source_known_at": "2020.11.04 16:39:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 14810,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604513100_125",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.04 19:00:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.04 18:55:00",
+            "known_at": "2020.11.04 19:00:00",
+            "source_known_at": "2020.11.04 19:00:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 14972,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604541000_126",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.05 02:41:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.05 02:40:00",
+            "known_at": "2020.11.05 02:41:00",
+            "source_known_at": "2020.11.05 02:41:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 15085,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604558400_127",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.05 07:01:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.05 07:00:00",
+            "known_at": "2020.11.05 07:01:00",
+            "source_known_at": "2020.11.05 07:01:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 15233,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604581500_128",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.05 13:20:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.05 13:10:00",
+            "known_at": "2020.11.05 13:20:00",
+            "source_known_at": "2020.11.05 13:15:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 15389,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604610000_129",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.05 21:15:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.05 21:05:00",
+            "known_at": "2020.11.05 21:15:00",
+            "source_known_at": "2020.11.05 21:10:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 15456,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604618100_130",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.05 23:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.05 23:35:00",
+            "known_at": "2020.11.05 23:45:00",
+            "source_known_at": "2020.11.05 23:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 15542,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604634900_131",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.06 04:10:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.06 04:00:00",
+            "known_at": "2020.11.06 04:10:00",
+            "source_known_at": "2020.11.06 04:05:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 15674,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604652000_132",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.06 09:20:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.06 09:10:00",
+            "known_at": "2020.11.06 09:20:00",
+            "source_known_at": "2020.11.06 09:15:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 16177,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604685000_133",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.09 02:52:00",
+          "wave1_revision": "5",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.09 02:51:00",
+            "known_at": "2020.11.09 02:52:00",
+            "source_known_at": "2020.11.09 02:52:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 16054,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604702700_134",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.06 23:05:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.06 22:55:00",
+            "known_at": "2020.11.06 23:05:00",
+            "source_known_at": "2020.11.06 23:00:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 16211,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604891700_135",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.09 03:40:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.09 03:30:00",
+            "known_at": "2020.11.09 03:40:00",
+            "source_known_at": "2020.11.09 03:35:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 16427,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604909400_136",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.09 10:02:00",
+          "wave1_revision": "3",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.09 10:01:00",
+            "known_at": "2020.11.09 10:02:00",
+            "source_known_at": "2020.11.09 10:02:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 16474,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604916300_137",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.09 10:36:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.09 10:35:00",
+            "known_at": "2020.11.09 10:36:00",
+            "source_known_at": "2020.11.09 10:36:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 16692,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604951100_138",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.09 20:00:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.09 19:50:00",
+            "known_at": "2020.11.09 20:00:00",
+            "source_known_at": "2020.11.09 19:55:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 16771,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1604961600_139",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.09 23:05:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.09 22:55:00",
+            "known_at": "2020.11.09 23:05:00",
+            "source_known_at": "2020.11.09 23:00:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 16861,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604972700_140",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.10 02:41:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.10 02:40:00",
+            "known_at": "2020.11.10 02:41:00",
+            "source_known_at": "2020.11.10 02:41:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 17026,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604995500_141",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.10 09:15:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.10 09:05:00",
+            "known_at": "2020.11.10 09:15:00",
+            "source_known_at": "2020.11.10 09:10:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 17086,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605000900_142",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.10 09:55:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.10 09:50:00",
+            "known_at": "2020.11.10 09:55:00",
+            "source_known_at": "2020.11.10 09:55:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 17258,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605021600_143",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.10 15:54:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.10 15:53:00",
+            "known_at": "2020.11.10 15:54:00",
+            "source_known_at": "2020.11.10 15:54:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 17318,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605024600_144",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.10 16:45:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.10 16:35:00",
+            "known_at": "2020.11.10 16:45:00",
+            "source_known_at": "2020.11.10 16:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 17441,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605042300_146",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.10 21:30:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.10 21:20:00",
+            "known_at": "2020.11.10 21:30:00",
+            "source_known_at": "2020.11.10 21:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 17538,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605059400_147",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.11 02:10:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.11 02:00:00",
+            "known_at": "2020.11.11 02:10:00",
+            "source_known_at": "2020.11.11 02:05:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 17573,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605060600_148",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.11 02:55:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.11 02:50:00",
+            "known_at": "2020.11.11 02:55:00",
+            "source_known_at": "2020.11.11 02:55:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 17661,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605072600_149",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.11 05:50:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.11 05:40:00",
+            "known_at": "2020.11.11 05:50:00",
+            "source_known_at": "2020.11.11 05:45:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 17798,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605091500_150",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.11 11:00:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.11 10:50:00",
+            "known_at": "2020.11.11 11:00:00",
+            "source_known_at": "2020.11.11 10:55:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 17946,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605114000_151",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.11 17:30:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.11 17:20:00",
+            "known_at": "2020.11.11 17:30:00",
+            "source_known_at": "2020.11.11 17:25:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 17987,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605119700_152",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.11 19:00:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.11 18:50:00",
+            "known_at": "2020.11.11 19:00:00",
+            "source_known_at": "2020.11.11 18:55:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 18048,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605124800_153",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.11 20:25:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.11 20:20:00",
+            "known_at": "2020.11.11 20:25:00",
+            "source_known_at": "2020.11.11 20:25:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 18139,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605144600_154",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.12 01:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.12 01:35:00",
+            "known_at": "2020.11.12 01:45:00",
+            "source_known_at": "2020.11.12 01:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 18260,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605159000_156",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.12 05:50:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.12 05:40:00",
+            "known_at": "2020.11.12 05:50:00",
+            "source_known_at": "2020.11.12 05:45:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 18358,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605170700_157",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.12 09:05:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.12 08:55:00",
+            "known_at": "2020.11.12 09:05:00",
+            "source_known_at": "2020.11.12 09:00:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 18422,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605174900_158",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.12 10:40:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.12 10:35:00",
+            "known_at": "2020.11.12 10:40:00",
+            "source_known_at": "2020.11.12 10:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 18500,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605183900_159",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.12 13:07:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.12 13:06:00",
+            "known_at": "2020.11.12 13:07:00",
+            "source_known_at": "2020.11.12 13:07:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 18678,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605207600_160",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.12 19:50:00",
+          "wave1_revision": "2",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.12 19:45:00",
+            "known_at": "2020.11.12 19:50:00",
+            "source_known_at": "2020.11.12 19:50:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 18729,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605215400_161",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.12 21:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.12 21:35:00",
+            "known_at": "2020.11.12 21:45:00",
+            "source_known_at": "2020.11.12 21:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 18770,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605222000_162",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.12 23:15:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.12 23:05:00",
+            "known_at": "2020.11.12 23:15:00",
+            "source_known_at": "2020.11.12 23:10:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 19060,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605273600_164",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.13 13:45:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.13 13:35:00",
+            "known_at": "2020.11.13 13:45:00",
+            "source_known_at": "2020.11.13 13:40:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 19200,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605276300_165",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.13 17:13:00",
+          "wave1_revision": "2",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.13 17:12:00",
+            "known_at": "2020.11.13 17:13:00",
+            "source_known_at": "2020.11.13 17:13:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 19368,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605304500_167",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.13 23:38:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.13 23:37:00",
+            "known_at": "2020.11.13 23:38:00",
+            "source_known_at": "2020.11.13 23:38:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 19478,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605502500_168",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.16 05:10:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.16 05:00:00",
+            "known_at": "2020.11.16 05:10:00",
+            "source_known_at": "2020.11.16 05:05:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 19521,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605504900_169",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.16 06:15:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.16 06:10:00",
+            "known_at": "2020.11.16 06:15:00",
+            "source_known_at": "2020.11.16 06:15:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 19621,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605520200_170",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.16 10:20:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.16 10:15:00",
+            "known_at": "2020.11.16 10:20:00",
+            "source_known_at": "2020.11.16 10:20:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 19772,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605537300_172",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.16 15:21:00",
+          "wave1_revision": "1",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.16 15:20:00",
+            "known_at": "2020.11.16 15:21:00",
+            "source_known_at": "2020.11.16 15:21:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 20076,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605555000_174",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.16 23:22:00",
+          "wave1_revision": "4",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "lower"
+          ],
+          "first_source": {
+            "kind": "lower",
+            "bar_time": "2020.11.16 23:21:00",
+            "known_at": "2020.11.16 23:22:00",
+            "source_known_at": "2020.11.16 23:22:00",
+            "historical_classification": false
+          }
+        },
+        {
+          "_csv_row": 20050,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605566100_175",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.16 23:05:30",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.16 22:55:00",
+            "known_at": "2020.11.16 23:05:30",
+            "source_known_at": "2020.11.16 23:00:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 20450,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1605631500_176",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.17 17:00:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.17 16:55:00",
+            "known_at": "2020.11.17 17:00:00",
+            "source_known_at": "2020.11.17 17:00:00",
+            "historical_classification": true
+          }
+        },
+        {
+          "_csv_row": 20601,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1605651600_177",
+          "event_type": "WAVE1_EXTENSION_LOCKED",
+          "event_at": "2020.11.17 23:00:00",
+          "wave1_revision": "0",
+          "reason": "MIN_FIB_RETRACEMENT_OBSERVED",
+          "source_candidates": [
+            "upper",
+            "lower"
+          ],
+          "first_source": {
+            "kind": "upper",
+            "bar_time": "2020.11.17 22:50:00",
+            "known_at": "2020.11.17 23:00:00",
+            "source_known_at": "2020.11.17 22:55:00",
+            "historical_classification": true
+          }
+        }
+      ],
+      "opposite_exit_arms": [
+        {
+          "_csv_row": 4295,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41",
+          "event_type": "OPPOSITE_WAVE1_ARMED",
+          "event_at": "2020.10.12 04:45:00",
+          "wave1_revision": "1",
+          "reason": "source=W33_XAUUSD+_5_1_LONG_1602476400_42 | first profitable executable quote after blue W1 confirmation"
+        },
+        {
+          "_csv_row": 4390,
+          "setup_id": "W33_XAUUSD+_5_1_SHORT_1602478800_43",
+          "event_type": "OPPOSITE_WAVE1_ARMED",
+          "event_at": "2020.10.12 06:10:00",
+          "wave1_revision": "0",
+          "reason": "source=W33_XAUUSD+_5_1_LONG_1602482100_44 | first profitable executable quote after blue W1 confirmation"
+        },
+        {
+          "_csv_row": 14777,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124",
+          "event_type": "OPPOSITE_WAVE1_ARMED",
+          "event_at": "2020.11.04 18:25:00",
+          "wave1_revision": "1",
+          "reason": "source=W33_XAUUSD+_5_1_SHORT_1604513100_125 | first profitable executable quote after blue W1 confirmation"
+        },
+        {
+          "_csv_row": 17084,
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1604995500_141",
+          "event_type": "OPPOSITE_WAVE1_ARMED",
+          "event_at": "2020.11.10 09:55:00",
+          "wave1_revision": "0",
+          "reason": "source=W33_XAUUSD+_5_1_SHORT_1605000900_142 | first profitable executable quote after blue W1 confirmation"
+        }
+      ],
+      "ancillary_realized_r": {
+        "closed_count": 51,
+        "total": 8.6464381185,
+        "mean": 0.16953800232352942
+      },
+      "independent_sources_complete": true
+    }
+  },
+  "extension_integrity": {
+    "status": "PASS",
+    "check_count": 376462,
+    "violations": 0
+  },
+  "retained_exit_policy": {
+    "status": "INCOMPLETE",
+    "runs": {
+      "off": {
+        "status": "INCOMPLETE",
+        "check_count": 128959,
+        "failures": [],
+        "incomplete": [
+          {
+            "code": "censored_test_end_native_forced_close_has_no_ea_exit",
+            "run": "off",
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605651600_177",
+            "at": "2020.11.17 23:58:59",
+            "native_out_deal": "87"
+          }
+        ],
+        "armed_cases": [
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18",
+            "opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1601970600_20",
+            "armed_at": "2020.10.06 08:10:00",
+            "ticks": 78,
+            "ready_ticks": 1,
+            "first_ready_at": "2020.10.06 08:11:38",
+            "requests": 1,
+            "rejections": 0
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41",
+            "opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1602476400_42",
+            "armed_at": "2020.10.12 04:45:00",
+            "ticks": 203,
+            "ready_ticks": 1,
+            "first_ready_at": "2020.10.12 04:46:35",
+            "requests": 1,
+            "rejections": 0
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602478800_43",
+            "opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1602482100_44",
+            "armed_at": "2020.10.12 06:10:00",
+            "ticks": 66,
+            "ready_ticks": 1,
+            "first_ready_at": "2020.10.12 06:10:30",
+            "requests": 1,
+            "rejections": 0
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124",
+            "opposite_setup_id": "W33_XAUUSD+_5_1_SHORT_1604513100_125",
+            "armed_at": "2020.11.04 18:25:00",
+            "ticks": 8819,
+            "ready_ticks": 0,
+            "first_ready_at": null,
+            "requests": 0,
+            "rejections": 0
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604995500_141",
+            "opposite_setup_id": "W33_XAUUSD+_5_1_SHORT_1605000900_142",
+            "armed_at": "2020.11.10 09:55:00",
+            "ticks": 681,
+            "ready_ticks": 1,
+            "first_ready_at": "2020.11.10 10:00:40",
+            "requests": 1,
+            "rejections": 0
+          }
+        ],
+        "native_cash_reconciliation": [
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1601543400_1",
+            "direction": "LONG",
+            "fill_at": "2020.10.01 09:57:00",
+            "exit_at": "2020.10.01 10:00:40",
+            "net_cash": 48.43,
+            "independent_r": 0.9709302325581395,
+            "recorded_r": 0.9709302326,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1601547900_2",
+            "direction": "SHORT",
+            "fill_at": "2020.10.01 11:09:00",
+            "exit_at": "2020.10.01 12:55:30",
+            "net_cash": -50.8,
+            "independent_r": -1.0241935483870968,
+            "recorded_r": -1.0241935484,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1601639100_9",
+            "direction": "SHORT",
+            "fill_at": "2020.10.02 12:25:00",
+            "exit_at": "2020.10.02 12:52:36",
+            "net_cash": -50.16,
+            "independent_r": -1.0232558139534884,
+            "recorded_r": -1.023255814,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18",
+            "direction": "SHORT",
+            "fill_at": "2020.10.06 07:13:00",
+            "exit_at": "2020.10.06 08:11:38",
+            "net_cash": 2.48,
+            "independent_r": 0.05063291139240506,
+            "recorded_r": 0.0506329114,
+            "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1601980500_21",
+            "direction": "SHORT",
+            "fill_at": "2020.10.06 11:10:00",
+            "exit_at": "2020.10.06 11:25:29",
+            "net_cash": 46.58,
+            "independent_r": 0.958041958041958,
+            "recorded_r": 0.958041958,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602041700_24",
+            "direction": "SHORT",
+            "fill_at": "2020.10.07 04:21:00",
+            "exit_at": "2020.10.07 04:28:04",
+            "net_cash": 48.0,
+            "independent_r": 0.967741935483871,
+            "recorded_r": 0.9677419355,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602104100_29",
+            "direction": "SHORT",
+            "fill_at": "2020.10.07 21:16:00",
+            "exit_at": "2020.10.07 21:19:35",
+            "net_cash": -51.91,
+            "independent_r": -1.0529411764705883,
+            "recorded_r": -1.0529411765,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602126000_30",
+            "direction": "SHORT",
+            "fill_at": "2020.10.08 03:37:00",
+            "exit_at": "2020.10.08 03:48:06",
+            "net_cash": -50.17,
+            "independent_r": -1.035928143712575,
+            "recorded_r": -1.0359281437,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602135900_33",
+            "direction": "SHORT",
+            "fill_at": "2020.10.08 06:06:00",
+            "exit_at": "2020.10.08 06:28:01",
+            "net_cash": 45.98,
+            "independent_r": 0.952755905511811,
+            "recorded_r": 0.9527559055,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1602237600_37",
+            "direction": "LONG",
+            "fill_at": "2020.10.09 10:33:00",
+            "exit_at": "2020.10.09 10:52:26",
+            "net_cash": 48.0,
+            "independent_r": 0.9795918367346939,
+            "recorded_r": 0.9795918367,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1602277500_39",
+            "direction": "LONG",
+            "fill_at": "2020.10.09 22:18:00",
+            "exit_at": "2020.10.09 22:56:37",
+            "net_cash": 48.47,
+            "independent_r": 0.9703703703703703,
+            "recorded_r": 0.9703703704,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41",
+            "direction": "SHORT",
+            "fill_at": "2020.10.12 04:40:00",
+            "exit_at": "2020.10.12 04:46:35",
+            "net_cash": 1.3,
+            "independent_r": 0.02617801047120419,
+            "recorded_r": 0.0261780105,
+            "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602478800_43",
+            "direction": "SHORT",
+            "fill_at": "2020.10.12 05:42:00",
+            "exit_at": "2020.10.12 06:10:30",
+            "net_cash": 3.24,
+            "independent_r": 0.06382978723404255,
+            "recorded_r": 0.0638297872,
+            "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1602793200_62",
+            "direction": "LONG",
+            "fill_at": "2020.10.15 21:16:00",
+            "exit_at": "2020.10.15 22:36:15",
+            "net_cash": 49.14,
+            "independent_r": 0.9692307692307692,
+            "recorded_r": 0.9692307692,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602829500_64",
+            "direction": "SHORT",
+            "fill_at": "2020.10.16 06:56:00",
+            "exit_at": "2020.10.16 07:06:29",
+            "net_cash": 48.0,
+            "independent_r": 0.9411764705882353,
+            "recorded_r": 0.9411764706,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602869400_65",
+            "direction": "SHORT",
+            "fill_at": "2020.10.16 18:21:00",
+            "exit_at": "2020.10.16 18:23:05",
+            "net_cash": 51.6,
+            "independent_r": 1.0038910505836576,
+            "recorded_r": 1.0038910506,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1603138800_72",
+            "direction": "SHORT",
+            "fill_at": "2020.10.19 21:35:00",
+            "exit_at": "2020.10.19 21:48:25",
+            "net_cash": 49.14,
+            "independent_r": 0.9680851063829787,
+            "recorded_r": 0.9680851064,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1603224900_75",
+            "direction": "LONG",
+            "fill_at": "2020.10.20 22:22:00",
+            "exit_at": "2020.10.20 22:48:38",
+            "net_cash": -54.78,
+            "independent_r": -1.0375,
+            "recorded_r": -1.0375,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1603310400_79",
+            "direction": "SHORT",
+            "fill_at": "2020.10.21 20:43:00",
+            "exit_at": "2020.10.21 21:57:38",
+            "net_cash": 49.14,
+            "independent_r": 0.9732620320855615,
+            "recorded_r": 0.9732620321,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1603482000_86",
+            "direction": "LONG",
+            "fill_at": "2020.10.23 22:26:00",
+            "exit_at": "2020.10.26 01:08:00",
+            "net_cash": -74.67,
+            "independent_r": -1.432930339666091,
+            "recorded_r": -1.4329303397,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1603686600_87",
+            "direction": "SHORT",
+            "fill_at": "2020.10.26 05:12:00",
+            "exit_at": "2020.10.26 05:24:40",
+            "net_cash": -53.58,
+            "independent_r": -1.0522388059701493,
+            "recorded_r": -1.052238806,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1603822500_97",
+            "direction": "LONG",
+            "fill_at": "2020.10.27 19:16:00",
+            "exit_at": "2020.10.27 19:36:59",
+            "net_cash": -52.44,
+            "independent_r": -1.027027027027027,
+            "recorded_r": -1.027027027,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604050500_106",
+            "direction": "LONG",
+            "fill_at": "2020.10.30 10:34:00",
+            "exit_at": "2020.10.30 11:01:59",
+            "net_cash": 47.43,
+            "independent_r": 0.9823943661971831,
+            "recorded_r": 0.9823943662,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604080800_109",
+            "direction": "LONG",
+            "fill_at": "2020.10.30 18:16:00",
+            "exit_at": "2020.10.30 18:22:46",
+            "net_cash": -51.84,
+            "independent_r": -1.0285714285714285,
+            "recorded_r": -1.0285714286,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604339400_116",
+            "direction": "LONG",
+            "fill_at": "2020.11.02 18:45:00",
+            "exit_at": "2020.11.02 22:50:38",
+            "net_cash": 47.6,
+            "independent_r": 0.9824561403508771,
+            "recorded_r": 0.9824561404,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1604379000_118",
+            "direction": "SHORT",
+            "fill_at": "2020.11.03 05:42:00",
+            "exit_at": "2020.11.03 09:11:37",
+            "net_cash": -51.92,
+            "independent_r": -1.0260869565217392,
+            "recorded_r": -1.0260869565,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1604489100_123",
+            "direction": "SHORT",
+            "fill_at": "2020.11.04 11:54:00",
+            "exit_at": "2020.11.04 12:30:38",
+            "net_cash": 48.48,
+            "independent_r": 0.9837662337662337,
+            "recorded_r": 0.9837662338,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124",
+            "direction": "LONG",
+            "fill_at": "2020.11.04 17:13:00",
+            "exit_at": "2020.11.04 19:14:30",
+            "net_cash": -45.54,
+            "independent_r": -1.0079681274900398,
+            "recorded_r": -1.0079681275,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604541000_126",
+            "direction": "LONG",
+            "fill_at": "2020.11.05 02:49:00",
+            "exit_at": "2020.11.05 02:51:57",
+            "net_cash": -52.2,
+            "independent_r": -1.0431654676258992,
+            "recorded_r": -1.0431654676,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604916300_137",
+            "direction": "LONG",
+            "fill_at": "2020.11.09 10:56:00",
+            "exit_at": "2020.11.09 11:02:39",
+            "net_cash": 47.32,
+            "independent_r": 0.9732620320855615,
+            "recorded_r": 0.9732620321,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1604951100_138",
+            "direction": "SHORT",
+            "fill_at": "2020.11.09 20:02:00",
+            "exit_at": "2020.11.09 20:22:14",
+            "net_cash": 48.16,
+            "independent_r": 0.9804560260586319,
+            "recorded_r": 0.9804560261,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604972700_140",
+            "direction": "LONG",
+            "fill_at": "2020.11.10 03:26:00",
+            "exit_at": "2020.11.10 03:59:29",
+            "net_cash": 48.16,
+            "independent_r": 0.9828571428571429,
+            "recorded_r": 0.9828571429,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604995500_141",
+            "direction": "LONG",
+            "fill_at": "2020.11.10 09:52:00",
+            "exit_at": "2020.11.10 10:00:40",
+            "net_cash": 1.19,
+            "independent_r": 0.023890784982935155,
+            "recorded_r": 0.023890785,
+            "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605021600_143",
+            "direction": "SHORT",
+            "fill_at": "2020.11.10 16:07:00",
+            "exit_at": "2020.11.10 16:08:59",
+            "net_cash": -52.06,
+            "independent_r": -1.0339622641509434,
+            "recorded_r": -1.0339622642,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1605042300_146",
+            "direction": "LONG",
+            "fill_at": "2020.11.10 21:41:00",
+            "exit_at": "2020.11.10 22:03:26",
+            "net_cash": -51.25,
+            "independent_r": -1.0301507537688441,
+            "recorded_r": -1.0301507538,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1605060600_148",
+            "direction": "LONG",
+            "fill_at": "2020.11.11 03:25:00",
+            "exit_at": "2020.11.11 03:32:39",
+            "net_cash": 48.44,
+            "independent_r": 0.9719101123595506,
+            "recorded_r": 0.9719101124,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605072600_149",
+            "direction": "SHORT",
+            "fill_at": "2020.11.11 06:02:00",
+            "exit_at": "2020.11.11 06:09:31",
+            "net_cash": 49.5,
+            "independent_r": 0.967741935483871,
+            "recorded_r": 0.9677419355,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605119700_152",
+            "direction": "SHORT",
+            "fill_at": "2020.11.11 19:05:00",
+            "exit_at": "2020.11.11 19:22:03",
+            "net_cash": 50.44,
+            "independent_r": 0.9748743718592965,
+            "recorded_r": 0.9748743719,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605144600_154",
+            "direction": "SHORT",
+            "fill_at": "2020.11.12 02:06:00",
+            "exit_at": "2020.11.12 03:06:16",
+            "net_cash": -53.28,
+            "independent_r": -1.0277777777777777,
+            "recorded_r": -1.0277777778,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605159000_156",
+            "direction": "SHORT",
+            "fill_at": "2020.11.12 06:05:00",
+            "exit_at": "2020.11.12 07:16:35",
+            "net_cash": -53.76,
+            "independent_r": -1.0578512396694215,
+            "recorded_r": -1.0578512397,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1605537300_172",
+            "direction": "LONG",
+            "fill_at": "2020.11.16 15:31:00",
+            "exit_at": "2020.11.16 15:37:15",
+            "net_cash": 49.5,
+            "independent_r": 0.9880239520958084,
+            "recorded_r": 0.9880239521,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605555000_174",
+            "direction": "SHORT",
+            "fill_at": "2020.11.17 02:33:00",
+            "exit_at": "2020.11.17 02:50:12",
+            "net_cash": 48.72,
+            "independent_r": 0.9720670391061452,
+            "recorded_r": 0.9720670391,
+            "exit_reason": "DEAL_REASON_TP"
+          }
+        ],
+        "censored_test_end_positions": [
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605651600_177",
+            "direction": "SHORT",
+            "fill_at": "2020.11.17 23:35:00",
+            "test_end_at": "2020.11.17 23:58:59",
+            "ledger_exit": null,
+            "native_forced_close_deal": "87",
+            "native_forced_close_order": "87",
+            "native_comment": "end of test",
+            "native_price": "1880.36",
+            "native_net_cash": 3.38,
+            "original_money_risk": 51.74,
+            "native_forced_r_auxiliary": 0.06532663316582915,
+            "included_in_normal_closed_strategy_r": false,
+            "native_deals": [
+              {
+                "time": "2020.11.17 23:35:00",
+                "deal": "86",
+                "symbol": "XAUUSD+",
+                "type": "sell",
+                "entry": "in",
+                "volume": "0.26",
+                "price": "1880.55",
+                "order": "86",
+                "commission": "-1.56",
+                "swap": "0.00",
+                "profit": "0.00",
+                "comment": "W33_XAUUSD+_5_1_SHORT_160565160"
+              },
+              {
+                "time": "2020.11.17 23:58:59",
+                "deal": "87",
+                "symbol": "XAUUSD+",
+                "type": "buy",
+                "entry": "out",
+                "volume": "0.26",
+                "price": "1880.36",
+                "order": "87",
+                "commission": "0.00",
+                "swap": "0.00",
+                "profit": "4.94",
+                "comment": "end of test"
+              }
+            ]
+          }
+        ],
+        "native_metrics": {
+          "ALL": {
+            "closed_fills": 42,
+            "total_r": 4.637869643200001,
+            "mean_r": 0.11042546769523812,
+            "winners": 26,
+            "profit_factor_r": 1.273757120940633,
+            "custom_exits": 4
+          },
+          "LONG": {
+            "closed_fills": 18,
+            "total_r": 2.1876045958,
+            "mean_r": 0.12153358865555555,
+            "winners": 11,
+            "profit_factor_r": 1.287565997919763,
+            "custom_exits": 1
+          },
+          "SHORT": {
+            "closed_fills": 24,
+            "total_r": 2.4502650474,
+            "mean_r": 0.102094376975,
+            "winners": 15,
+            "profit_factor_r": 1.2625030178276857,
+            "custom_exits": 3
+          }
+        },
+        "source_hashes": {
+          "events.csv": "758e2827b46f889bb79799b1ba1308ec72eac37bbc83df21501c3957c4055da3",
+          "config.csv": "c0d295cd30718be25644a54cbbd35b772a0f631695a0d84a10479f78d8fa02e2",
+          "opposite_ticks.csv": "a943734c0cba63bf63d3a556b49a5561ec87bc0681e0c894ee8480eb431abb7f",
+          "upper_bars.csv": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d",
+          "report.htm": "32bab805a6e8268be6d38a206b02fa11a0a2f7e16c265c6fc024bcf237f26e01"
+        }
+      },
+      "on": {
+        "status": "INCOMPLETE",
+        "check_count": 128086,
+        "failures": [],
+        "incomplete": [
+          {
+            "code": "censored_test_end_native_forced_close_has_no_ea_exit",
+            "run": "on",
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605651600_177",
+            "at": "2020.11.17 23:58:59",
+            "native_out_deal": "105"
+          }
+        ],
+        "armed_cases": [
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41",
+            "opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1602476400_42",
+            "armed_at": "2020.10.12 04:45:00",
+            "ticks": 203,
+            "ready_ticks": 1,
+            "first_ready_at": "2020.10.12 04:46:35",
+            "requests": 1,
+            "rejections": 0
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602478800_43",
+            "opposite_setup_id": "W33_XAUUSD+_5_1_LONG_1602482100_44",
+            "armed_at": "2020.10.12 06:10:00",
+            "ticks": 66,
+            "ready_ticks": 1,
+            "first_ready_at": "2020.10.12 06:10:30",
+            "requests": 1,
+            "rejections": 0
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124",
+            "opposite_setup_id": "W33_XAUUSD+_5_1_SHORT_1604513100_125",
+            "armed_at": "2020.11.04 18:25:00",
+            "ticks": 8819,
+            "ready_ticks": 0,
+            "first_ready_at": null,
+            "requests": 0,
+            "rejections": 0
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604995500_141",
+            "opposite_setup_id": "W33_XAUUSD+_5_1_SHORT_1605000900_142",
+            "armed_at": "2020.11.10 09:55:00",
+            "ticks": 681,
+            "ready_ticks": 1,
+            "first_ready_at": "2020.11.10 10:00:40",
+            "requests": 1,
+            "rejections": 0
+          }
+        ],
+        "native_cash_reconciliation": [
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1601543400_1",
+            "direction": "LONG",
+            "fill_at": "2020.10.01 09:57:00",
+            "exit_at": "2020.10.01 10:00:40",
+            "net_cash": 48.43,
+            "independent_r": 0.9709302325581395,
+            "recorded_r": 0.9709302326,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1601547900_2",
+            "direction": "SHORT",
+            "fill_at": "2020.10.01 11:09:00",
+            "exit_at": "2020.10.01 12:55:30",
+            "net_cash": -50.8,
+            "independent_r": -1.0241935483870968,
+            "recorded_r": -1.0241935484,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1601639100_9",
+            "direction": "SHORT",
+            "fill_at": "2020.10.02 12:25:00",
+            "exit_at": "2020.10.02 12:52:36",
+            "net_cash": -50.16,
+            "independent_r": -1.0232558139534884,
+            "recorded_r": -1.023255814,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_18",
+            "direction": "SHORT",
+            "fill_at": "2020.10.06 06:30:00",
+            "exit_at": "2020.10.06 06:30:29",
+            "net_cash": -52.9,
+            "independent_r": -1.0849056603773586,
+            "recorded_r": -1.0849056604,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1601980500_21",
+            "direction": "SHORT",
+            "fill_at": "2020.10.06 11:10:00",
+            "exit_at": "2020.10.06 11:25:29",
+            "net_cash": 46.58,
+            "independent_r": 0.958041958041958,
+            "recorded_r": 0.958041958,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602041700_24",
+            "direction": "SHORT",
+            "fill_at": "2020.10.07 04:21:00",
+            "exit_at": "2020.10.07 04:28:04",
+            "net_cash": 46.8,
+            "independent_r": 0.967741935483871,
+            "recorded_r": 0.9677419355,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602104100_29",
+            "direction": "SHORT",
+            "fill_at": "2020.10.07 21:16:00",
+            "exit_at": "2020.10.07 21:19:35",
+            "net_cash": -51.91,
+            "independent_r": -1.0529411764705883,
+            "recorded_r": -1.0529411765,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602126000_30",
+            "direction": "SHORT",
+            "fill_at": "2020.10.08 03:37:00",
+            "exit_at": "2020.10.08 03:48:06",
+            "net_cash": -50.17,
+            "independent_r": -1.035928143712575,
+            "recorded_r": -1.0359281437,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602135900_33",
+            "direction": "SHORT",
+            "fill_at": "2020.10.08 06:06:00",
+            "exit_at": "2020.10.08 06:28:01",
+            "net_cash": 45.98,
+            "independent_r": 0.952755905511811,
+            "recorded_r": 0.9527559055,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1602237600_37",
+            "direction": "LONG",
+            "fill_at": "2020.10.09 10:33:00",
+            "exit_at": "2020.10.09 10:52:26",
+            "net_cash": 48.0,
+            "independent_r": 0.9795918367346939,
+            "recorded_r": 0.9795918367,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1602277500_39",
+            "direction": "LONG",
+            "fill_at": "2020.10.09 22:18:00",
+            "exit_at": "2020.10.09 22:56:37",
+            "net_cash": 47.16,
+            "independent_r": 0.9703703703703703,
+            "recorded_r": 0.9703703704,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_41",
+            "direction": "SHORT",
+            "fill_at": "2020.10.12 04:40:00",
+            "exit_at": "2020.10.12 04:46:35",
+            "net_cash": 1.3,
+            "independent_r": 0.02617801047120419,
+            "recorded_r": 0.0261780105,
+            "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602478800_43",
+            "direction": "SHORT",
+            "fill_at": "2020.10.12 05:42:00",
+            "exit_at": "2020.10.12 06:10:30",
+            "net_cash": 3.15,
+            "independent_r": 0.06382978723404255,
+            "recorded_r": 0.0638297872,
+            "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602502200_46",
+            "direction": "SHORT",
+            "fill_at": "2020.10.12 13:32:00",
+            "exit_at": "2020.10.12 13:33:33",
+            "net_cash": 47.0,
+            "independent_r": 0.9433962264150944,
+            "recorded_r": 0.9433962264,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1602682200_55",
+            "direction": "LONG",
+            "fill_at": "2020.10.14 14:57:00",
+            "exit_at": "2020.10.14 15:16:40",
+            "net_cash": 47.52,
+            "independent_r": 0.9814126394052045,
+            "recorded_r": 0.9814126394,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602760800_61",
+            "direction": "SHORT",
+            "fill_at": "2020.10.15 13:08:00",
+            "exit_at": "2020.10.15 13:16:20",
+            "net_cash": 48.72,
+            "independent_r": 0.9759615384615384,
+            "recorded_r": 0.9759615385,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1602793200_62",
+            "direction": "LONG",
+            "fill_at": "2020.10.15 21:16:00",
+            "exit_at": "2020.10.15 22:36:15",
+            "net_cash": 49.14,
+            "independent_r": 0.9692307692307692,
+            "recorded_r": 0.9692307692,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602829500_64",
+            "direction": "SHORT",
+            "fill_at": "2020.10.16 06:56:00",
+            "exit_at": "2020.10.16 07:06:29",
+            "net_cash": 48.8,
+            "independent_r": 0.9411764705882353,
+            "recorded_r": 0.9411764706,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1602869400_65",
+            "direction": "SHORT",
+            "fill_at": "2020.10.16 18:21:00",
+            "exit_at": "2020.10.16 18:23:05",
+            "net_cash": 51.6,
+            "independent_r": 1.0038910505836576,
+            "recorded_r": 1.0038910506,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1603138800_72",
+            "direction": "SHORT",
+            "fill_at": "2020.10.19 21:35:00",
+            "exit_at": "2020.10.19 21:48:25",
+            "net_cash": 50.96,
+            "independent_r": 0.9680851063829787,
+            "recorded_r": 0.9680851064,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1603224900_75",
+            "direction": "LONG",
+            "fill_at": "2020.10.20 22:22:00",
+            "exit_at": "2020.10.20 22:48:38",
+            "net_cash": -54.78,
+            "independent_r": -1.0375,
+            "recorded_r": -1.0375,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1603310400_79",
+            "direction": "SHORT",
+            "fill_at": "2020.10.21 20:43:00",
+            "exit_at": "2020.10.21 21:57:38",
+            "net_cash": 50.96,
+            "independent_r": 0.9732620320855615,
+            "recorded_r": 0.9732620321,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1603482000_86",
+            "direction": "LONG",
+            "fill_at": "2020.10.23 22:26:00",
+            "exit_at": "2020.10.26 01:08:00",
+            "net_cash": -74.67,
+            "independent_r": -1.432930339666091,
+            "recorded_r": -1.4329303397,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1603686600_87",
+            "direction": "SHORT",
+            "fill_at": "2020.10.26 05:12:00",
+            "exit_at": "2020.10.26 05:24:40",
+            "net_cash": -54.99,
+            "independent_r": -1.0522388059701493,
+            "recorded_r": -1.052238806,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1603807200_96",
+            "direction": "LONG",
+            "fill_at": "2020.10.27 15:41:00",
+            "exit_at": "2020.10.27 16:09:27",
+            "net_cash": 50.4,
+            "independent_r": 0.984375,
+            "recorded_r": 0.984375,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1603822500_97",
+            "direction": "LONG",
+            "fill_at": "2020.10.27 19:16:00",
+            "exit_at": "2020.10.27 19:36:59",
+            "net_cash": -52.44,
+            "independent_r": -1.027027027027027,
+            "recorded_r": -1.027027027,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1603994700_104",
+            "direction": "SHORT",
+            "fill_at": "2020.10.29 19:20:00",
+            "exit_at": "2020.10.29 20:03:15",
+            "net_cash": 49.4,
+            "independent_r": 0.9801587301587301,
+            "recorded_r": 0.9801587302,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604030700_105",
+            "direction": "LONG",
+            "fill_at": "2020.10.30 08:31:00",
+            "exit_at": "2020.10.30 08:33:03",
+            "net_cash": -52.6,
+            "independent_r": -1.02734375,
+            "recorded_r": -1.02734375,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604050500_106",
+            "direction": "LONG",
+            "fill_at": "2020.10.30 10:34:00",
+            "exit_at": "2020.10.30 11:01:59",
+            "net_cash": 50.22,
+            "independent_r": 0.9823943661971831,
+            "recorded_r": 0.9823943662,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604080800_109",
+            "direction": "LONG",
+            "fill_at": "2020.10.30 18:16:00",
+            "exit_at": "2020.10.30 18:22:46",
+            "net_cash": -51.84,
+            "independent_r": -1.0285714285714285,
+            "recorded_r": -1.0285714286,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1604076300_108",
+            "direction": "SHORT",
+            "fill_at": "2020.10.30 18:23:00",
+            "exit_at": "2020.11.02 02:42:03",
+            "net_cash": 51.31,
+            "independent_r": 1.0538098172109263,
+            "recorded_r": 1.0538098172,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604339400_116",
+            "direction": "LONG",
+            "fill_at": "2020.11.02 18:45:00",
+            "exit_at": "2020.11.02 22:50:38",
+            "net_cash": 50.4,
+            "independent_r": 0.9824561403508771,
+            "recorded_r": 0.9824561404,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1604379000_118",
+            "direction": "SHORT",
+            "fill_at": "2020.11.03 05:42:00",
+            "exit_at": "2020.11.03 09:11:37",
+            "net_cash": -54.28,
+            "independent_r": -1.0260869565217392,
+            "recorded_r": -1.0260869565,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1604489100_123",
+            "direction": "SHORT",
+            "fill_at": "2020.11.04 11:54:00",
+            "exit_at": "2020.11.04 12:30:38",
+            "net_cash": 51.51,
+            "independent_r": 0.9837662337662337,
+            "recorded_r": 0.9837662338,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_124",
+            "direction": "LONG",
+            "fill_at": "2020.11.04 17:13:00",
+            "exit_at": "2020.11.04 19:14:30",
+            "net_cash": -53.13,
+            "independent_r": -1.0079681274900398,
+            "recorded_r": -1.0079681275,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604541000_126",
+            "direction": "LONG",
+            "fill_at": "2020.11.05 02:49:00",
+            "exit_at": "2020.11.05 02:51:57",
+            "net_cash": -53.65,
+            "independent_r": -1.0431654676258992,
+            "recorded_r": -1.0431654676,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604916300_137",
+            "direction": "LONG",
+            "fill_at": "2020.11.09 10:56:00",
+            "exit_at": "2020.11.09 11:02:39",
+            "net_cash": 49.14,
+            "independent_r": 0.9732620320855615,
+            "recorded_r": 0.9732620321,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1604951100_138",
+            "direction": "SHORT",
+            "fill_at": "2020.11.09 20:02:00",
+            "exit_at": "2020.11.09 20:22:14",
+            "net_cash": 51.17,
+            "independent_r": 0.9804560260586319,
+            "recorded_r": 0.9804560261,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604972700_140",
+            "direction": "LONG",
+            "fill_at": "2020.11.10 03:26:00",
+            "exit_at": "2020.11.10 03:59:29",
+            "net_cash": 51.6,
+            "independent_r": 0.9828571428571429,
+            "recorded_r": 0.9828571429,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1604995500_141",
+            "direction": "LONG",
+            "fill_at": "2020.11.10 09:52:00",
+            "exit_at": "2020.11.10 10:00:40",
+            "net_cash": 1.26,
+            "independent_r": 0.023890784982935155,
+            "recorded_r": 0.023890785,
+            "exit_reason": "OPPOSITE_WAVE1_PROFIT"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605021600_143",
+            "direction": "SHORT",
+            "fill_at": "2020.11.10 16:07:00",
+            "exit_at": "2020.11.10 16:08:59",
+            "net_cash": -54.8,
+            "independent_r": -1.0339622641509434,
+            "recorded_r": -1.0339622642,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1605024600_144",
+            "direction": "LONG",
+            "fill_at": "2020.11.10 17:00:00",
+            "exit_at": "2020.11.10 20:28:36",
+            "net_cash": -50.52,
+            "independent_r": -1.0144578313253012,
+            "recorded_r": -1.0144578313,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1605042300_146",
+            "direction": "LONG",
+            "fill_at": "2020.11.10 21:41:00",
+            "exit_at": "2020.11.10 22:03:26",
+            "net_cash": -53.3,
+            "independent_r": -1.0301507537688441,
+            "recorded_r": -1.0301507538,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1605060600_148",
+            "direction": "LONG",
+            "fill_at": "2020.11.11 03:25:00",
+            "exit_at": "2020.11.11 03:32:39",
+            "net_cash": 50.17,
+            "independent_r": 0.9719101123595506,
+            "recorded_r": 0.9719101124,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605072600_149",
+            "direction": "SHORT",
+            "fill_at": "2020.11.11 06:02:00",
+            "exit_at": "2020.11.11 06:09:31",
+            "net_cash": 51.0,
+            "independent_r": 0.967741935483871,
+            "recorded_r": 0.9677419355,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605119700_152",
+            "direction": "SHORT",
+            "fill_at": "2020.11.11 19:05:00",
+            "exit_at": "2020.11.11 19:22:03",
+            "net_cash": 50.44,
+            "independent_r": 0.9748743718592965,
+            "recorded_r": 0.9748743719,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605144600_154",
+            "direction": "SHORT",
+            "fill_at": "2020.11.12 02:06:00",
+            "exit_at": "2020.11.12 03:06:16",
+            "net_cash": -53.28,
+            "independent_r": -1.0277777777777777,
+            "recorded_r": -1.0277777778,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605159000_156",
+            "direction": "SHORT",
+            "fill_at": "2020.11.12 06:05:00",
+            "exit_at": "2020.11.12 07:16:35",
+            "net_cash": -55.04,
+            "independent_r": -1.0578512396694215,
+            "recorded_r": -1.0578512397,
+            "exit_reason": "DEAL_REASON_SL"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1605276300_165",
+            "direction": "LONG",
+            "fill_at": "2020.11.13 17:27:00",
+            "exit_at": "2020.11.13 18:05:30",
+            "net_cash": 49.35,
+            "independent_r": 0.9850299401197605,
+            "recorded_r": 0.9850299401,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_LONG_1605537300_172",
+            "direction": "LONG",
+            "fill_at": "2020.11.16 15:31:00",
+            "exit_at": "2020.11.16 15:37:15",
+            "net_cash": 49.5,
+            "independent_r": 0.9880239520958084,
+            "recorded_r": 0.9880239521,
+            "exit_reason": "DEAL_REASON_TP"
+          },
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605555000_174",
+            "direction": "SHORT",
+            "fill_at": "2020.11.16 23:42:00",
+            "exit_at": "2020.11.17 01:10:55",
+            "net_cash": 67.08,
+            "independent_r": 1.2538317757009345,
+            "recorded_r": 1.2538317757,
+            "exit_reason": "DEAL_REASON_TP"
+          }
+        ],
+        "censored_test_end_positions": [
+          {
+            "setup_id": "W33_XAUUSD+_5_1_SHORT_1605651600_177",
+            "direction": "SHORT",
+            "fill_at": "2020.11.17 23:35:00",
+            "test_end_at": "2020.11.17 23:58:59",
+            "ledger_exit": null,
+            "native_forced_close_deal": "105",
+            "native_forced_close_order": "105",
+            "native_comment": "end of test",
+            "native_price": "1880.36",
+            "native_net_cash": 3.51,
+            "original_money_risk": 53.73,
+            "native_forced_r_auxiliary": 0.06532663316582915,
+            "included_in_normal_closed_strategy_r": false,
+            "native_deals": [
+              {
+                "time": "2020.11.17 23:35:00",
+                "deal": "104",
+                "symbol": "XAUUSD+",
+                "type": "sell",
+                "entry": "in",
+                "volume": "0.27",
+                "price": "1880.55",
+                "order": "104",
+                "commission": "-1.62",
+                "swap": "0.00",
+                "profit": "0.00",
+                "comment": "W33_XAUUSD+_5_1_SHORT_160565160"
+              },
+              {
+                "time": "2020.11.17 23:58:59",
+                "deal": "105",
+                "symbol": "XAUUSD+",
+                "type": "buy",
+                "entry": "out",
+                "volume": "0.27",
+                "price": "1880.36",
+                "order": "105",
+                "commission": "0.00",
+                "swap": "0.00",
+                "profit": "5.13",
+                "comment": "end of test"
+              }
+            ]
+          }
+        ],
+        "native_metrics": {
+          "ALL": {
+            "closed_fills": 51,
+            "total_r": 8.646438118500003,
+            "mean_r": 0.16953800232352947,
+            "winners": 32,
+            "profit_factor_r": 1.4308514935200667,
+            "custom_exits": 3
+          },
+          "LONG": {
+            "closed_fills": 23,
+            "total_r": 3.096620594,
+            "mean_r": 0.134635678,
+            "winners": 14,
+            "profit_factor_r": 1.320922766708999,
+            "custom_exits": 1
+          },
+          "SHORT": {
+            "closed_fills": 28,
+            "total_r": 5.5498175245,
+            "mean_r": 0.19820776873214285,
+            "winners": 18,
+            "profit_factor_r": 1.5326559375917477,
+            "custom_exits": 2
+          }
+        },
+        "source_hashes": {
+          "events.csv": "7cee4a4b536d4fec6743df2e470837c221730ee5338913a0f07cd7a2e6e2b765",
+          "config.csv": "55e8398d033a87ed1d0020bca49401e932a5e6bdd8597d6c37a88eb5d9d0a757",
+          "opposite_ticks.csv": "291782dd40d1c45a25f8ef11abdba0bcf9d54154c9345a8bc61e815c510a27e5",
+          "upper_bars.csv": "9cbd1b0f9618274630d6d697b2e7de50672749aff1c79983376a8b6c2163a66d",
+          "report.htm": "9a5d2f84a1a860f4a0e2160baee431a6a29c3d52ed349664736d21e39dc456c4"
+        }
+      }
+    },
+    "limitations": [
+      "The retained exit feature stays ON in both extension arms; its different-target OFF/ON configuration comparator is intentionally not called.",
+      "Native reports expose commission/swap/profit; any separate DEAL_FEE requires separate reconciliation.",
+      "Received-tick arithmetic is checked; external feed completeness and positive actual cash after estimated-cost requests are not guaranteed.",
+      "A native final 'end of test' close matched to FILL plus TEST_END but no EA EXIT is preserved separately and makes this exit section INCOMPLETE; it is never relabeled as normal strategy EXIT."
+    ]
+  },
+  "candidate_coverage": {
+    "BOTH": 177
+  },
+  "limitations": [
+    "Accepted upper/lower sidecars are independently logged OHLC observations, not a broker-history completeness proof.",
+    "Missing raw source sidecars or requested-period metadata produces INCOMPLETE rather than an inferred PASS.",
+    "A source interval gap is listed without classifying market closure versus missing data.",
+    "Equal-availability upper bars are evaluated before lower bars; ambiguous upper OHLC freezes extension without guessing intrabar order.",
+    "Candidate accounting includes OFF_ONLY and ON_ONLY because longer setup lifetimes can change later discovery opportunities.",
+    "Original setup identity and per-revision anchors are audited; no profit-based example selection or parameter search occurs.",
+    "Realized R is auxiliary native ledger data; this audit does not independently reconstruct fees, fills or broker execution."
+  ]
+}
