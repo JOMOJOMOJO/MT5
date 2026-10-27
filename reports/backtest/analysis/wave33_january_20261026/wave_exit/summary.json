@@ -1,0 +1,431 @@
+{
+  "monthly": [
+    {
+      "run": "gold_v180",
+      "month": "2025-01",
+      "n": 28,
+      "wins": 8,
+      "losses": 20,
+      "breakeven": 0,
+      "win_rate": 0.2857142857142857,
+      "net_r": -9.707434495378893,
+      "mean_r": -0.34669408912067473,
+      "net_cash": -469.77,
+      "pf_r": 0.5187094426378452,
+      "pf_cash": 0.5055052631578947
+    },
+    {
+      "run": "gold_v190",
+      "month": "2025-01",
+      "n": 23,
+      "wins": 4,
+      "losses": 18,
+      "breakeven": 1,
+      "win_rate": 0.17391304347826086,
+      "net_r": -9.498811948874712,
+      "mean_r": -0.4129918238641179,
+      "net_cash": -451.27,
+      "pf_r": 0.44664133210294127,
+      "pf_cash": 0.4454507471490366
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-01",
+      "n": 32,
+      "wins": 11,
+      "losses": 21,
+      "breakeven": 0,
+      "win_rate": 0.34375,
+      "net_r": -9.794131235803096,
+      "mean_r": -0.30606660111884676,
+      "net_cash": -451.31000000000006,
+      "pf_r": 0.5783371423273983,
+      "pf_cash": 0.5815740921017254
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-02",
+      "n": 18,
+      "wins": 7,
+      "losses": 11,
+      "breakeven": 0,
+      "win_rate": 0.3888888888888889,
+      "net_r": -0.732503566697372,
+      "mean_r": -0.04069464259429845,
+      "net_cash": -39.55999999999999,
+      "pf_r": 0.9353291908039125,
+      "pf_cash": 0.9240370213909903
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-03",
+      "n": 30,
+      "wins": 14,
+      "losses": 16,
+      "breakeven": 0,
+      "win_rate": 0.4666666666666667,
+      "net_r": -1.973249326613591,
+      "mean_r": -0.06577497755378638,
+      "net_cash": -102.82000000000005,
+      "pf_r": 0.8782909733610469,
+      "pf_cash": 0.8582242874674241
+    }
+  ],
+  "loss_paths": [
+    {
+      "run": "gold_v180",
+      "month": "2025-01",
+      "loss_path_class": "LOSS_WITHOUT_1R",
+      "n": 19,
+      "wins": 0,
+      "losses": 19,
+      "breakeven": 0,
+      "win_rate": 0.0,
+      "net_r": -19.169592664736992,
+      "mean_r": -1.0089259297229995,
+      "net_cash": -889.75,
+      "pf_r": 0.0,
+      "pf_cash": 0.0
+    },
+    {
+      "run": "gold_v180",
+      "month": "2025-01",
+      "loss_path_class": "REACHED_1R_THEN_LOSS",
+      "n": 1,
+      "wins": 0,
+      "losses": 1,
+      "breakeven": 0,
+      "win_rate": 0.0,
+      "net_r": -1.0,
+      "mean_r": -1.0,
+      "net_cash": -60.25,
+      "pf_r": 0.0,
+      "pf_cash": 0.0
+    },
+    {
+      "run": "gold_v190",
+      "month": "2025-01",
+      "loss_path_class": "LOSS_WITHOUT_1R",
+      "n": 16,
+      "wins": 0,
+      "losses": 16,
+      "breakeven": 0,
+      "win_rate": 0.0,
+      "net_r": -16.134913283946204,
+      "mean_r": -1.0084320802466378,
+      "net_cash": -763.76,
+      "pf_r": 0.0,
+      "pf_cash": 0.0
+    },
+    {
+      "run": "gold_v190",
+      "month": "2025-01",
+      "loss_path_class": "REACHED_1R_THEN_LOSS",
+      "n": 2,
+      "wins": 0,
+      "losses": 2,
+      "breakeven": 0,
+      "win_rate": 0.0,
+      "net_r": -1.0308283949060648,
+      "mean_r": -0.5154141974530324,
+      "net_cash": -50.0,
+      "pf_r": 0.0,
+      "pf_cash": 0.0
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-01",
+      "loss_path_class": "LOSS_WITHOUT_1R",
+      "n": 18,
+      "wins": 0,
+      "losses": 18,
+      "breakeven": 0,
+      "win_rate": 0.0,
+      "net_r": -18.34463336744026,
+      "mean_r": -1.0191462981911255,
+      "net_cash": -848.78,
+      "pf_r": 0.0,
+      "pf_cash": 0.0
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-01",
+      "loss_path_class": "REACHED_1R_THEN_LOSS",
+      "n": 3,
+      "wins": 0,
+      "losses": 3,
+      "breakeven": 0,
+      "win_rate": 0.0,
+      "net_r": -4.882765151515152,
+      "mean_r": -1.6275883838383838,
+      "net_cash": -229.81,
+      "pf_r": 0.0,
+      "pf_cash": 0.0
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-02",
+      "loss_path_class": "LOSS_WITHOUT_1R",
+      "n": 11,
+      "wins": 0,
+      "losses": 11,
+      "breakeven": 0,
+      "win_rate": 0.0,
+      "net_r": -11.32664916061834,
+      "mean_r": -1.029695378238031,
+      "net_cash": -520.78,
+      "pf_r": 0.0,
+      "pf_cash": 0.0
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-03",
+      "loss_path_class": "LOSS_WITHOUT_1R",
+      "n": 16,
+      "wins": 0,
+      "losses": 16,
+      "breakeven": 0,
+      "win_rate": 0.0,
+      "net_r": -16.21284288524619,
+      "mean_r": -1.0133026803278868,
+      "net_cash": -725.23,
+      "pf_r": 0.0,
+      "pf_cash": 0.0
+    }
+  ],
+  "streaks": [
+    {
+      "run": "gold_v180",
+      "month": "2025-01",
+      "ordering": "fill_at",
+      "max_loss_streak": 9,
+      "start": "2025-01-14 12:15:06",
+      "end": "2025-01-20 17:13:03",
+      "net_r": -9.072338475542299,
+      "ids": [
+        "W33_XAUUSD+_5_1_SHORT_1736854500_49",
+        "W33_XAUUSD+_5_1_SHORT_1736892600_52",
+        "W33_XAUUSD+_5_1_SHORT_1736923200_53",
+        "W33_XAUUSD+_5_1_SHORT_1737035700_56",
+        "W33_XAUUSD+_5_1_LONG_1737040200_57",
+        "W33_XAUUSD+_5_1_LONG_1737085800_60",
+        "W33_XAUUSD+_5_1_SHORT_1737106800_61",
+        "W33_XAUUSD+_5_1_SHORT_1737140400_66",
+        "W33_XAUUSD+_5_1_LONG_1737389100_71"
+      ]
+    },
+    {
+      "run": "gold_v180",
+      "month": "2025-01",
+      "ordering": "exit_at",
+      "max_loss_streak": 9,
+      "start": "2025-01-14 13:54:12",
+      "end": "2025-01-20 18:24:12",
+      "net_r": -9.072338475542299,
+      "ids": [
+        "W33_XAUUSD+_5_1_SHORT_1736854500_49",
+        "W33_XAUUSD+_5_1_SHORT_1736892600_52",
+        "W33_XAUUSD+_5_1_SHORT_1736923200_53",
+        "W33_XAUUSD+_5_1_SHORT_1737035700_56",
+        "W33_XAUUSD+_5_1_LONG_1737040200_57",
+        "W33_XAUUSD+_5_1_LONG_1737085800_60",
+        "W33_XAUUSD+_5_1_SHORT_1737106800_61",
+        "W33_XAUUSD+_5_1_SHORT_1737140400_66",
+        "W33_XAUUSD+_5_1_LONG_1737389100_71"
+      ]
+    },
+    {
+      "run": "gold_v190",
+      "month": "2025-01",
+      "ordering": "fill_at",
+      "max_loss_streak": 8,
+      "start": "2025-01-14 12:15:02.085000",
+      "end": "2025-01-20 17:13:08.066000",
+      "net_r": -8.062706446880897,
+      "ids": [
+        "W33_XAUUSD+_5_1_SHORT_1736854500_49",
+        "W33_XAUUSD+_5_1_SHORT_1736923200_53",
+        "W33_XAUUSD+_5_1_SHORT_1737035700_56",
+        "W33_XAUUSD+_5_1_LONG_1737040200_57",
+        "W33_XAUUSD+_5_1_LONG_1737085800_60",
+        "W33_XAUUSD+_5_1_SHORT_1737106800_61",
+        "W33_XAUUSD+_5_1_SHORT_1737140400_66",
+        "W33_XAUUSD+_5_1_LONG_1737389100_71"
+      ]
+    },
+    {
+      "run": "gold_v190",
+      "month": "2025-01",
+      "ordering": "exit_at",
+      "max_loss_streak": 8,
+      "start": "2025-01-14 13:54:12.781000",
+      "end": "2025-01-20 18:24:12.879000",
+      "net_r": -8.062706446880897,
+      "ids": [
+        "W33_XAUUSD+_5_1_SHORT_1736854500_49",
+        "W33_XAUUSD+_5_1_SHORT_1736923200_53",
+        "W33_XAUUSD+_5_1_SHORT_1737035700_56",
+        "W33_XAUUSD+_5_1_LONG_1737040200_57",
+        "W33_XAUUSD+_5_1_LONG_1737085800_60",
+        "W33_XAUUSD+_5_1_SHORT_1737106800_61",
+        "W33_XAUUSD+_5_1_SHORT_1737140400_66",
+        "W33_XAUUSD+_5_1_LONG_1737389100_71"
+      ]
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-01",
+      "ordering": "fill_at",
+      "max_loss_streak": 5,
+      "start": "2025-01-28 16:24:08",
+      "end": "2025-01-31 09:33:08",
+      "net_r": -5.117647058823529,
+      "ids": [
+        "W33_USDJPY_5_1_LONG_1738079100_109",
+        "W33_USDJPY_5_1_SHORT_1738192200_116",
+        "W33_USDJPY_5_1_SHORT_1738222200_118",
+        "W33_USDJPY_5_1_SHORT_1738235100_120",
+        "W33_USDJPY_5_1_SHORT_1738314000_128"
+      ]
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-01",
+      "ordering": "exit_at",
+      "max_loss_streak": 5,
+      "start": "2025-01-28 16:32:01",
+      "end": "2025-01-31 10:07:18",
+      "net_r": -5.117647058823529,
+      "ids": [
+        "W33_USDJPY_5_1_LONG_1738079100_109",
+        "W33_USDJPY_5_1_SHORT_1738192200_116",
+        "W33_USDJPY_5_1_SHORT_1738222200_118",
+        "W33_USDJPY_5_1_SHORT_1738235100_120",
+        "W33_USDJPY_5_1_SHORT_1738314000_128"
+      ]
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-02",
+      "ordering": "fill_at",
+      "max_loss_streak": 4,
+      "start": "2025-02-26 09:46:07",
+      "end": "2025-02-28 17:45:00",
+      "net_r": -4.237965394671643,
+      "ids": [
+        "W33_USDJPY_5_1_SHORT_1740560700_227",
+        "W33_USDJPY_5_1_SHORT_1740681600_238",
+        "W33_USDJPY_5_1_SHORT_1740709200_239",
+        "W33_USDJPY_5_1_LONG_1740762600_242"
+      ]
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-02",
+      "ordering": "exit_at",
+      "max_loss_streak": 4,
+      "start": "2025-02-26 09:47:20",
+      "end": "2025-02-28 17:59:07",
+      "net_r": -4.237965394671643,
+      "ids": [
+        "W33_USDJPY_5_1_SHORT_1740560700_227",
+        "W33_USDJPY_5_1_SHORT_1740681600_238",
+        "W33_USDJPY_5_1_SHORT_1740709200_239",
+        "W33_USDJPY_5_1_LONG_1740762600_242"
+      ]
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-03",
+      "ordering": "fill_at",
+      "max_loss_streak": 3,
+      "start": "2025-03-06 22:00:03",
+      "end": "2025-03-10 09:27:04",
+      "net_r": -3.0,
+      "ids": [
+        "W33_USDJPY_5_1_SHORT_1741294800_268",
+        "W33_USDJPY_5_1_LONG_1741375800_272",
+        "W33_USDJPY_5_1_SHORT_1741596900_276"
+      ]
+    },
+    {
+      "run": "usd_v180",
+      "month": "2025-03",
+      "ordering": "exit_at",
+      "max_loss_streak": 3,
+      "start": "2025-03-06 22:36:28",
+      "end": "2025-03-10 09:45:51",
+      "net_r": -3.0,
+      "ids": [
+        "W33_USDJPY_5_1_SHORT_1741294800_268",
+        "W33_USDJPY_5_1_LONG_1741375800_272",
+        "W33_USDJPY_5_1_SHORT_1741596900_276"
+      ]
+    }
+  ],
+  "audits": [
+    {
+      "run": "gold_v180",
+      "fills": 28,
+      "exits": 28,
+      "unique_setup_ids": true,
+      "f0": "2025-01-02 08:50:15",
+      "f1": "2025-01-29 20:20:12",
+      "immutable_sl_source": "FILL, checked against DAYTRADE_RISK_FROZEN when available",
+      "timestamp_source": "FILL.fill_at / EXIT.exit_at (second precision)",
+      "order_snapshot_source": "ORDER event before FILL, never EXIT wave fields",
+      "path_full_bar_rule": "bar_time >= actual_fill AND closed_at <= actual_exit",
+      "path_upper_rule": "overlapping boundary bars included; extrema may predate fill/postdate exit",
+      "price_proxy": "M1 BID OHLC; SHORT ask/cost and boundary intrabar ordering unknown",
+      "source_clock": "broker/tester source clock; UTC mapping not verified",
+      "postexit_bars_used_for_lower": 0,
+      "daytrade_delimiter_repair_rows": 0,
+      "issues": []
+    },
+    {
+      "run": "gold_v190",
+      "fills": 23,
+      "exits": 23,
+      "unique_setup_ids": true,
+      "f0": "2025-01-02 08:50:03.017000",
+      "f1": "2025-01-28 06:51:07.054000",
+      "immutable_sl_source": "FILL, checked against DAYTRADE_RISK_FROZEN when available",
+      "timestamp_source": "raw_deals.time_msc",
+      "order_snapshot_source": "ORDER event before FILL, never EXIT wave fields",
+      "path_full_bar_rule": "bar_time >= actual_fill AND closed_at <= actual_exit",
+      "path_upper_rule": "overlapping boundary bars included; extrema may predate fill/postdate exit",
+      "price_proxy": "M1 BID OHLC; SHORT ask/cost and boundary intrabar ordering unknown",
+      "source_clock": "broker/tester source clock; UTC mapping not verified",
+      "postexit_bars_used_for_lower": 0,
+      "daytrade_delimiter_repair_rows": 33,
+      "issues": []
+    },
+    {
+      "run": "usd_v180",
+      "fills": 80,
+      "exits": 80,
+      "unique_setup_ids": true,
+      "f0": "2025-01-02 20:17:03",
+      "f1": "2025-03-26 22:07:02",
+      "immutable_sl_source": "FILL, checked against DAYTRADE_RISK_FROZEN when available",
+      "timestamp_source": "FILL.fill_at / EXIT.exit_at (second precision)",
+      "order_snapshot_source": "ORDER event before FILL, never EXIT wave fields",
+      "path_full_bar_rule": "bar_time >= actual_fill AND closed_at <= actual_exit",
+      "path_upper_rule": "overlapping boundary bars included; extrema may predate fill/postdate exit",
+      "price_proxy": "M1 BID OHLC; SHORT ask/cost and boundary intrabar ordering unknown",
+      "source_clock": "broker/tester source clock; UTC mapping not verified",
+      "postexit_bars_used_for_lower": 0,
+      "daytrade_delimiter_repair_rows": 0,
+      "issues": []
+    }
+  ],
+  "scope": "Descriptive fixed-entry analysis; no strategy changes, threshold search, or native backtests.",
+  "nulls": [
+    "Gold January versions differ in timing/exits; do not pool trades as independent observations.",
+    "Only USD has February/March in frozen inputs; Gold has no out-of-month validation here.",
+    "Small January n (especially winners) prevents reliable feature selection.",
+    "M1 BID extrema in boundary minutes are uncertain; do not claim fill/exit tick path from OHLC.",
+    "Recorded current H1 classification is not a new H1/H4 market-context reconstruction.",
+    "Native v190 MFE is observed while held, not hypothetical post-exit upside."
+  ]
+}

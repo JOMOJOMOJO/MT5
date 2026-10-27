@@ -1,0 +1,669 @@
+{
+  "status": "PASS",
+  "checks": 163,
+  "all_features_columns": 256,
+  "records": 131,
+  "january_distinct_setups_ignoring_version": 60,
+  "gallery": {
+    "losses": 30,
+    "wins": 8
+  },
+  "tests": [
+    {
+      "name": "frozen:gold_v180:config",
+      "pass": true
+    },
+    {
+      "name": "frozen:gold_v180:events",
+      "pass": true
+    },
+    {
+      "name": "frozen:gold_v180:lower_bars",
+      "pass": true
+    },
+    {
+      "name": "frozen:gold_v180:upper_bars",
+      "pass": true
+    },
+    {
+      "name": "frozen:gold_v190:config",
+      "pass": true
+    },
+    {
+      "name": "frozen:gold_v190:events",
+      "pass": true
+    },
+    {
+      "name": "frozen:gold_v190:lower_bars",
+      "pass": true
+    },
+    {
+      "name": "frozen:gold_v190:upper_bars",
+      "pass": true
+    },
+    {
+      "name": "frozen:gold_v190:daytrade",
+      "pass": true
+    },
+    {
+      "name": "frozen:gold_v190:raw_deals",
+      "pass": true
+    },
+    {
+      "name": "frozen:gold_v190:context",
+      "pass": true
+    },
+    {
+      "name": "frozen:gold_v190:chop",
+      "pass": true
+    },
+    {
+      "name": "frozen:usd_v180:config",
+      "pass": true
+    },
+    {
+      "name": "frozen:usd_v180:events",
+      "pass": true
+    },
+    {
+      "name": "frozen:usd_v180:lower_bars",
+      "pass": true
+    },
+    {
+      "name": "frozen:usd_v180:upper_bars",
+      "pass": true
+    },
+    {
+      "name": "trades:131_records",
+      "pass": true
+    },
+    {
+      "name": "trades:unique_run_setup",
+      "pass": true
+    },
+    {
+      "name": "htf:131_records",
+      "pass": true
+    },
+    {
+      "name": "htf:unique_run_setup",
+      "pass": true
+    },
+    {
+      "name": "wave:131_records",
+      "pass": true
+    },
+    {
+      "name": "wave:unique_run_setup",
+      "pass": true
+    },
+    {
+      "name": "merged:131_records",
+      "pass": true
+    },
+    {
+      "name": "merged:unique_run_setup",
+      "pass": true
+    },
+    {
+      "name": "joined_keys_match",
+      "pass": true
+    },
+    {
+      "name": "htf:independent_net_r",
+      "pass": true
+    },
+    {
+      "name": "wave:independent_net_r",
+      "pass": true
+    },
+    {
+      "name": "h1:last_closed_at:causal",
+      "pass": true
+    },
+    {
+      "name": "h1:last_known_at:causal",
+      "pass": true
+    },
+    {
+      "name": "h1:history_max_known_at:causal",
+      "pass": true
+    },
+    {
+      "name": "h4:last_closed_at:causal",
+      "pass": true
+    },
+    {
+      "name": "h4:last_known_at:causal",
+      "pass": true
+    },
+    {
+      "name": "h4:history_max_known_at:causal",
+      "pass": true
+    },
+    {
+      "name": "gallery_38",
+      "pass": true
+    },
+    {
+      "name": "gallery_30_loss",
+      "pass": true
+    },
+    {
+      "name": "gallery_8_win",
+      "pass": true
+    },
+    {
+      "name": "gallery_files",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/BarOrder.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/Chop.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/ChopDisplay.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/ConnectedPair.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/ConnectedWave.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/DayTrade.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/DayTradeExecution.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/DayTradePartial.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/DayTradePartialExecution.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/DayTradePartialPolicyTests.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/DayTradePartialStops.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/DayTradePolicyTests.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/Display.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/Engine.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/LabelLayout.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/Ledger.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/OppositeExit.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/PriorContext.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/Room.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/ScaleOut.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/ScaleOutExecution.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/TesterRun.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/Types.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Include/Wave33Visual/Wave1Target.mqh",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Experts/Wave33DayTradePartialVerifier.mq5",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Experts/Wave33DayTradePartialVerifier.ex5",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Experts/tests/Wave33DayTradePartialHarness.mq5",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Experts/tests/Wave33DayTradePartialHarness.ex5",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Scripts/tests/Wave33DayTradePartialPolicyTests.mq5",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:mql/Scripts/tests/Wave33DayTradePartialPolicyTests.ex5",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:presets/wave33/Wave33DayTradePartial_v191_A_Visual.set",
+      "pass": true
+    },
+    {
+      "name": "ea_unchanged:presets/wave33/Wave33DayTradePartial_v191_B_Visual.set",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:cases/index.html",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:figures/h1_overview.png",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:all_features.csv",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:source_manifest.json",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:integrity/summary.md",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:wave_exit/loss_paths.csv",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:wave_exit/findings.md",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:figures/january_outcomes.png",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:htf/README.md",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:htf/er12_month_direction.csv",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:macro_sources.json",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:cases/index.html",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:cases/case_05.png",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:cases/case_12.png",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:cases/case_21.png",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:htf/availability.json",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:wave_exit/feature_definitions.md",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:../README.md",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_01.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_01.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_02.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_02.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_03.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_03.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_04.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_04.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_05.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_05.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_06.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_06.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_07.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_07.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_08.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_08.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_09.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_09.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_10.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_10.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_11.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_11.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_12.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_12.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_13.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_13.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_14.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_14.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_15.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_15.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_16.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_16.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_17.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_17.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_18.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_18.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_19.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_19.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_20.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_20.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_21.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_21.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_22.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_22.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_23.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_23.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_24.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_24.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_25.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_25.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_26.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_26.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_27.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_27.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_28.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_28.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_29.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_29.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_30.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_30.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_31.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_31.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_32.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_32.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_33.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_33.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_34.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_34.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_35.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_35.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_36.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_36.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_37.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_37.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_38.png",
+      "pass": true
+    },
+    {
+      "name": "link:cases/index.html:case_38.png",
+      "pass": true
+    }
+  ],
+  "native_test_started": false,
+  "strategy_code_changed": false,
+  "scope": "exploratory; not filtered EA profitability",
+  "completed_local_date": "2026-10-27"
+}

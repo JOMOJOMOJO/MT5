@@ -1,0 +1,129 @@
+{
+  "gold_v180": {
+    "tag": "wave33_v161_B_M5_M1_orders_1735689600_243226671",
+    "files": {
+      "config": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_v161_B_M5_M1_orders_1735689600_243226671_config.csv",
+        "size": 3356,
+        "sha256": "112f8f35dfb6e7032d99bb894078de789fb36225a995e6a8985aced58c3e2b44",
+        "source_size_before": 3356,
+        "source_size_after": 3356
+      },
+      "events": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_v161_B_M5_M1_orders_1735689600_243226671_events.csv",
+        "size": 15244836,
+        "sha256": "27ed086ca1214c0e623de3e75517a69012256373dc59f44f46a8d695dbcb3bee",
+        "source_size_before": 15244836,
+        "source_size_after": 15244836
+      },
+      "lower_bars": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_v161_B_M5_M1_orders_1735689600_243226671_lower_bars.csv",
+        "size": 3936849,
+        "sha256": "06d986bc0701c7d0ac877d45df773b9eafee9b124bbce4ff4c7abbaade59e54b",
+        "source_size_before": 3936849,
+        "source_size_after": 3936849
+      },
+      "upper_bars": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_v161_B_M5_M1_orders_1735689600_243226671_upper_bars.csv",
+        "size": 788704,
+        "sha256": "55be7d657822bbf540e78b3c3f7f9e04ea359ee0654835bb432580523cdfc581",
+        "source_size_before": 788704,
+        "source_size_after": 788704
+      }
+    }
+  },
+  "gold_v190": {
+    "tag": "wave33_day_v190_1735689600_240885750",
+    "files": {
+      "config": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_day_v190_1735689600_240885750_config.csv",
+        "size": 6678,
+        "sha256": "52dc103fff2d0797277ba0ac3dacbb13d359bd0b5c46f94355fa7fc31e3e50b9",
+        "source_size_before": 6678,
+        "source_size_after": 6678
+      },
+      "events": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_day_v190_1735689600_240885750_events.csv",
+        "size": 14064400,
+        "sha256": "fe26feb2187a1883cda965553a36be3466e983fd73e5f867580ce3ae06e59362",
+        "source_size_before": 14064400,
+        "source_size_after": 14064400
+      },
+      "lower_bars": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_day_v190_1735689600_240885750_lower_bars.csv",
+        "size": 3618960,
+        "sha256": "0682c2818b355112dcfe88d4eb62dad2432f253cabb661d07d65a768b5bd7c3f",
+        "source_size_before": 3618960,
+        "source_size_after": 3618960
+      },
+      "upper_bars": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_day_v190_1735689600_240885750_upper_bars.csv",
+        "size": 724926,
+        "sha256": "203947f961605b7c878c4f1f3005457ed2f243f75b4b5815d781a933ea91f84f",
+        "source_size_before": 724926,
+        "source_size_after": 724926
+      },
+      "daytrade": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_day_v190_1735689600_240885750_daytrade.csv",
+        "size": 29358,
+        "sha256": "34dbdd8460205e45b8ae43a627551e502cf4f8fcc7e5f6ea3352eeb2082351a7",
+        "source_size_before": 29358,
+        "source_size_after": 29358
+      },
+      "raw_deals": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_day_v190_1735689600_240885750_raw_deals.csv",
+        "size": 10099,
+        "sha256": "a97bf95474a90274a0733687df544f3f765758b759061969be248e3168133360",
+        "source_size_before": 10099,
+        "source_size_after": 10099
+      },
+      "context": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_day_v190_1735689600_240885750_context.csv",
+        "size": 131077,
+        "sha256": "5a9c679149b273581ff070ff526feb9649e7b561b44dd92e5a597e6a01121130",
+        "source_size_before": 131077,
+        "source_size_after": 131077
+      },
+      "chop": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_day_v190_1735689600_240885750_chop.csv",
+        "size": 350430,
+        "sha256": "e3b45056e1432398a1d28f63b154cc7f610c0127514d37b280f4c515f3fb1f49",
+        "source_size_before": 350430,
+        "source_size_after": 350430
+      }
+    }
+  },
+  "usd_v180": {
+    "tag": "wave33_v161_B_M5_M1_orders_1735689600_243618031",
+    "files": {
+      "config": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_v161_B_M5_M1_orders_1735689600_243618031_config.csv",
+        "size": 3359,
+        "sha256": "7a4d590eccc216c459b5afa20ea5fd75eb4b4bd7d40d8a37e5e044f76b43b855",
+        "source_size_before": 3359,
+        "source_size_after": 3359
+      },
+      "events": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_v161_B_M5_M1_orders_1735689600_243618031_events.csv",
+        "size": 45423921,
+        "sha256": "3d05323c69623529685b38287a4a094b5f9e186cc59554d19a7fcd7113e55a57",
+        "source_size_before": 45423921,
+        "source_size_after": 45423921
+      },
+      "lower_bars": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_v161_B_M5_M1_orders_1735689600_243618031_lower_bars.csv",
+        "size": 12102935,
+        "sha256": "0824778f38c79408e6b764e094285d0c9db02e3ba0d03d8ab5dd6cee9f2cf1d3",
+        "source_size_before": 12102935,
+        "source_size_after": 12102935
+      },
+      "upper_bars": {
+        "original": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\wave33_v161_B_M5_M1_orders_1735689600_243618031_upper_bars.csv",
+        "size": 2424443,
+        "sha256": "52fc395dcf7c2b2529130b24a915707b103a2141109362b23b1d929f270ac06f",
+        "source_size_before": 2424443,
+        "source_size_after": 2424443
+      }
+    }
+  }
+}

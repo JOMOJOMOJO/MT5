@@ -1,0 +1,3 @@
+﻿bar_time,present_m5,expected_m5,reason
+2024.12.31 20:00:00,1,48,INCOMPLETE_GRID
+2025.03.27 20:00:00,47,48,INCOMPLETE_GRID

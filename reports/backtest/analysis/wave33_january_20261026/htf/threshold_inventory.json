@@ -1,0 +1,74 @@
+{
+  "h1_ema_against": {
+    "source_feature": "h1_ema20_alignment",
+    "definition": "EMA20<EMA50 for LONG; inverse SHORT; 50 closed H1 warmup"
+  },
+  "h1_slope_against": {
+    "source_feature": "h1_ema20_slope3_atr",
+    "definition": "entry-direction EMA20 change over 3 closed H1 bars <0"
+  },
+  "h1_momentum_against": {
+    "source_feature": "h1_close_momentum3_atr",
+    "definition": "entry-direction H1 close change over 3 completed bars <0"
+  },
+  "h1_range_er12": {
+    "source_feature": "h1_er12",
+    "definition": "ER12<=0.25; abs net close change /sum 12 abs close changes"
+  },
+  "h1_previous_body_against": {
+    "source_feature": "h1_body_signed",
+    "definition": "latest CLOSED H1 body points opposite entry"
+  },
+  "h1_large_rejection_wick": {
+    "source_feature": "h1_entry_facing_wick_ratio",
+    "definition": "LONG upper wick/whole range>=0.5; SHORT lower wick inverse"
+  },
+  "h1_vol_expansion": {
+    "source_feature": "h1_atr14_to_atr50",
+    "definition": "ATR14/ATR50>=1.5; both SMA true range"
+  },
+  "h1_stretched_from_ema20": {
+    "source_feature": "h1_close_to_ema20_atr",
+    "definition": "entry >=1 H1 ATR14 beyond EMA20 in trade direction"
+  },
+  "h1_directional_outer_quartile24": {
+    "source_feature": "h1_directional_position24",
+    "definition": "LONG last24 completed H1 position>=.75; SHORT<=.25"
+  },
+  "h1_directional_outer_quartile48": {
+    "source_feature": "h1_directional_position48",
+    "definition": "LONG last48 completed H1 position>=.75; SHORT<=.25"
+  },
+  "h1_obstacle_inside1r": {
+    "source_feature": "h1_nearest_known_obstacle_r",
+    "definition": "nearest past known H1 swing high/low ahead lies within original 1R"
+  },
+  "h1_prior_level_retest5pct": {
+    "source_feature": "h1_prior_level_retest5pct",
+    "definition": "H1 prior high/low source before W1 origin is within .05*W1span of W1peak"
+  },
+  "h1_prior_retest_1r_target_conflict": {
+    "source_feature": "h1_prior_retest_1r_target_conflict",
+    "definition": "prior retest flag AND prior directional level distance from entry is (0,1R); v190 hypothetical"
+  },
+  "h1_log_structure_against": {
+    "source_feature": "h1_log_direction_cold_aware",
+    "definition": "existing log H1 structure AGAINST, only >=2 known H1 highs AND lows"
+  },
+  "h1_log_structure_range": {
+    "source_feature": "h1_log_direction_cold_aware",
+    "definition": "existing log H1_RANGE, only >=2 known H1 highs AND lows"
+  },
+  "h4_ema_against": {
+    "source_feature": "h4_ema20_alignment",
+    "definition": "H4 EMA20/50 opposite entry; 50 full H4 warmup"
+  },
+  "h4_slope_against": {
+    "source_feature": "h4_ema20_slope3_atr",
+    "definition": "entry-direction H4 EMA20 change over3 full bars <0"
+  },
+  "prior_day_directional_outer_quartile": {
+    "source_feature": "prior_day_directional_position",
+    "definition": "entry directional position >=.75 in prior observed trade-day range"
+  }
+}

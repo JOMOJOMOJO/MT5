@@ -1,0 +1,30 @@
+{
+  "events": [
+    {
+      "date": "2025-01-10",
+      "name": "US employment report",
+      "url": "https://www.bls.gov/news.release/archives/empsit_01102025.htm",
+      "published_utc": "2025-01-10 13:30"
+    },
+    {
+      "date": "2025-01-15",
+      "name": "US CPI",
+      "url": "https://www.bls.gov/news.release/archives/cpi_01152025.htm",
+      "published_utc": "2025-01-15 13:30"
+    },
+    {
+      "date": "2025-01-24",
+      "name": "BOJ guideline decision",
+      "url": "https://www.boj.or.jp/mopo/mpmdeci/state_2025/k250124a.htm",
+      "published_utc": "2025-01-24 03:23"
+    },
+    {
+      "date": "2025-01-29",
+      "name": "FOMC statement",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20250129a.htm",
+      "published_utc": "2025-01-29 19:00"
+    }
+  ],
+  "alignment": "SOURCE_OFFSET_UNVERIFIED; no intraday news-window classification",
+  "calendar_day_only": true
+}

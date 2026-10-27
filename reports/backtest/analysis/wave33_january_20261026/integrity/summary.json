@@ -1,0 +1,794 @@
+{
+  "analysis_scope": "Frozen existing logs only; no EA launch or changes. Month by actual fill_at; closed positions only. Not independent native tester report verification.",
+  "clock": "All event/bar timestamps are unconverted MT5 broker/source time; UTC/JST mapping not verified. time_msc used for deal ordering, not external timezone attribution.",
+  "runs": {
+    "gold_v180": {
+      "symbol": "XAUUSD+",
+      "ea_version": "1.80",
+      "upper_tf": "PERIOD_M5",
+      "lower_tf": "PERIOD_M1",
+      "events": 12722,
+      "last_event_at": "2025.01.30 03:01:00",
+      "last_event_type": "FIB_TOUCH",
+      "last_reason": "",
+      "first_fill_at": "2025.01.02 08:50:15",
+      "last_fill_at": "2025.01.29 20:20:12",
+      "fills": 28,
+      "unique_fills": 28,
+      "closed": 28,
+      "unique_closed": 28,
+      "open_at_snapshot": 0,
+      "malformed_event_rows": 0,
+      "max_cash_r_identity_error": 2.310002855665516e-09,
+      "h1_signal_exit_label_changes": 0,
+      "months": {
+        "2025.01": {
+          "n": 28,
+          "wins": 8,
+          "losses": 20,
+          "zero": 0,
+          "net_cash": -469.77,
+          "gross_profit": 480.23,
+          "gross_loss": 950.0,
+          "pf": 0.5055052631578947,
+          "sum_r": -9.707434495399998,
+          "mean_r": -0.3466940891214286,
+          "max_loss_streak_exit_order": 9,
+          "exit_reasons": {
+            "DEAL_REASON_SL": 20,
+            "DEAL_REASON_TP": 8
+          }
+        }
+      },
+      "january_groups": {
+        "direction": {
+          "LONG": {
+            "n": 11,
+            "wins": 5,
+            "losses": 6,
+            "zero": 0,
+            "net_cash": -17.05,
+            "gross_profit": 269.5,
+            "gross_loss": 286.55,
+            "pf": 0.9404990403071019,
+            "sum_r": -0.31981549079999994,
+            "mean_r": -0.029074135527272723,
+            "max_loss_streak_exit_order": 3,
+            "exit_reasons": {
+              "DEAL_REASON_TP": 5,
+              "DEAL_REASON_SL": 6
+            }
+          },
+          "SHORT": {
+            "n": 17,
+            "wins": 3,
+            "losses": 14,
+            "zero": 0,
+            "net_cash": -452.72,
+            "gross_profit": 210.73,
+            "gross_loss": 663.45,
+            "pf": 0.31762755294294975,
+            "sum_r": -9.3876190046,
+            "mean_r": -0.5522128826235294,
+            "max_loss_streak_exit_order": 7,
+            "exit_reasons": {
+              "DEAL_REASON_SL": 14,
+              "DEAL_REASON_TP": 3
+            }
+          }
+        },
+        "h1_direction": {
+          "AGAINST_H1": {
+            "n": 6,
+            "wins": 2,
+            "losses": 4,
+            "zero": 0,
+            "net_cash": -29.22,
+            "gross_profit": 160.55,
+            "gross_loss": 189.77,
+            "pf": 0.8460241344785795,
+            "sum_r": -0.5354113161999998,
+            "mean_r": -0.08923521936666663,
+            "max_loss_streak_exit_order": 3,
+            "exit_reasons": {
+              "DEAL_REASON_SL": 4,
+              "DEAL_REASON_TP": 2
+            }
+          },
+          "H1_RANGE": {
+            "n": 13,
+            "wins": 4,
+            "losses": 9,
+            "zero": 0,
+            "net_cash": -225.85,
+            "gross_profit": 211.89,
+            "gross_loss": 437.74,
+            "pf": 0.48405446155251974,
+            "sum_r": -4.3616533687,
+            "mean_r": -0.3355117975923077,
+            "max_loss_streak_exit_order": 4,
+            "exit_reasons": {
+              "DEAL_REASON_SL": 9,
+              "DEAL_REASON_TP": 4
+            }
+          },
+          "WITH_H1": {
+            "n": 9,
+            "wins": 2,
+            "losses": 7,
+            "zero": 0,
+            "net_cash": -214.7,
+            "gross_profit": 107.79,
+            "gross_loss": 322.49,
+            "pf": 0.3342429222611554,
+            "sum_r": -4.8103698105,
+            "mean_r": -0.5344855345,
+            "max_loss_streak_exit_order": 7,
+            "exit_reasons": {
+              "DEAL_REASON_TP": 2,
+              "DEAL_REASON_SL": 7
+            }
+          }
+        }
+      },
+      "partial_exit_events": 0,
+      "known_limitations": [
+        "No raw_deals/native tester HTML frozen for this run; event cash cannot independently split commission/swap/fee or certify tick model.",
+        "January is partial: snapshot ends before Jan31 month close; no TEST_END. All observed fills closed, but future January candidates absent."
+      ],
+      "max_jan_price_r_vs_cash_r_difference": 4.870126524281204e-11,
+      "worst_jan_trade": {
+        "setup_id": "W33_XAUUSD+_5_1_SHORT_1737669300_85",
+        "direction": "SHORT",
+        "fill_at": "2025.01.23 22:20:01",
+        "exit_at": "2025.01.24 01:01:00",
+        "entry_price": "2753.3100000000",
+        "sl_price": "2754.9900000000",
+        "tp_price": "2751.5600000000",
+        "exit_price": "2755.0500000000",
+        "realized_r": "-1.0357142857",
+        "execution_net_cash": "-48.7200000000",
+        "execution_initial_risk_money": "47.0400000000",
+        "h1_direction": "H1_RANGE"
+      }
+    },
+    "gold_v190": {
+      "symbol": "XAUUSD+",
+      "ea_version": "1.90",
+      "upper_tf": "PERIOD_M5",
+      "lower_tf": "PERIOD_M1",
+      "events": 11673,
+      "last_event_at": "2025.01.28 11:54:00",
+      "last_event_type": "PIVOT_CONFIRMED",
+      "last_reason": "HL",
+      "first_fill_at": "2025.01.02 08:50:03",
+      "last_fill_at": "2025.01.28 06:51:07",
+      "fills": 23,
+      "unique_fills": 23,
+      "closed": 23,
+      "unique_closed": 23,
+      "open_at_snapshot": 0,
+      "malformed_event_rows": 0,
+      "max_cash_r_identity_error": 2.423995226763509e-09,
+      "h1_signal_exit_label_changes": 0,
+      "months": {
+        "2025.01": {
+          "n": 23,
+          "wins": 4,
+          "losses": 18,
+          "zero": 1,
+          "net_cash": -451.27,
+          "gross_profit": 362.49,
+          "gross_loss": 813.76,
+          "pf": 0.4454507471490366,
+          "sum_r": -9.4988119489,
+          "mean_r": -0.4129918238652174,
+          "max_loss_streak_exit_order": 8,
+          "exit_reasons": {
+            "DEAL_REASON_SL": 21,
+            "OPPOSITE_WAVE1_PROFIT": 1,
+            "WEEKEND_SESSION_CLOSE": 1
+          }
+        }
+      },
+      "january_groups": {
+        "direction": {
+          "LONG": {
+            "n": 9,
+            "wins": 3,
+            "losses": 6,
+            "zero": 0,
+            "net_cash": 101.06,
+            "gross_profit": 319.17,
+            "gross_loss": 218.11,
+            "pf": 1.4633441841272756,
+            "sum_r": 1.6994485249,
+            "mean_r": 0.18882761387777774,
+            "max_loss_streak_exit_order": 5,
+            "exit_reasons": {
+              "OPPOSITE_WAVE1_PROFIT": 1,
+              "DEAL_REASON_SL": 8
+            }
+          },
+          "SHORT": {
+            "n": 14,
+            "wins": 1,
+            "losses": 12,
+            "zero": 1,
+            "net_cash": -552.33,
+            "gross_profit": 43.32,
+            "gross_loss": 595.65,
+            "pf": 0.07272727272727272,
+            "sum_r": -11.1982604738,
+            "mean_r": -0.7998757481285714,
+            "max_loss_streak_exit_order": 6,
+            "exit_reasons": {
+              "DEAL_REASON_SL": 13,
+              "WEEKEND_SESSION_CLOSE": 1
+            }
+          }
+        },
+        "h1_direction": {
+          "AGAINST_H1": {
+            "n": 5,
+            "wins": 2,
+            "losses": 3,
+            "zero": 0,
+            "net_cash": -53.96,
+            "gross_profit": 86.26,
+            "gross_loss": 140.22,
+            "pf": 0.6151761517615175,
+            "sum_r": -1.1345211453000004,
+            "mean_r": -0.22690422906000002,
+            "max_loss_streak_exit_order": 3,
+            "exit_reasons": {
+              "DEAL_REASON_SL": 4,
+              "WEEKEND_SESSION_CLOSE": 1
+            }
+          },
+          "H1_RANGE": {
+            "n": 11,
+            "wins": 2,
+            "losses": 8,
+            "zero": 1,
+            "net_cash": -120.11,
+            "gross_profit": 276.23,
+            "gross_loss": 396.34,
+            "pf": 0.6969521118231821,
+            "sum_r": -2.3207960627000004,
+            "mean_r": -0.21098146024545453,
+            "max_loss_streak_exit_order": 3,
+            "exit_reasons": {
+              "DEAL_REASON_SL": 10,
+              "OPPOSITE_WAVE1_PROFIT": 1
+            }
+          },
+          "WITH_H1": {
+            "n": 7,
+            "wins": 0,
+            "losses": 7,
+            "zero": 0,
+            "net_cash": -277.2,
+            "gross_profit": 0,
+            "gross_loss": 277.2,
+            "pf": 0.0,
+            "sum_r": -6.0434947409,
+            "mean_r": -0.8633563915571428,
+            "max_loss_streak_exit_order": 7,
+            "exit_reasons": {
+              "DEAL_REASON_SL": 7
+            }
+          }
+        }
+      },
+      "partial_exit_events": 0,
+      "known_limitations": [
+        "January is partial: snapshot ends before Jan31 month close; no TEST_END. All observed fills closed, but future January candidates absent."
+      ]
+    },
+    "usd_v180": {
+      "symbol": "USDJPY",
+      "ea_version": "1.80",
+      "upper_tf": "PERIOD_M5",
+      "lower_tf": "PERIOD_M1",
+      "events": 38054,
+      "last_event_at": "2025.03.27 23:57:59",
+      "last_event_type": "TEST_END",
+      "last_reason": "CENSORED_AT_STOP reason=1",
+      "first_fill_at": "2025.01.02 20:17:03",
+      "last_fill_at": "2025.03.26 22:07:02",
+      "fills": 80,
+      "unique_fills": 80,
+      "closed": 80,
+      "unique_closed": 80,
+      "open_at_snapshot": 0,
+      "malformed_event_rows": 0,
+      "max_cash_r_identity_error": 2.793001385725802e-09,
+      "h1_signal_exit_label_changes": 0,
+      "months": {
+        "2025.01": {
+          "n": 32,
+          "wins": 11,
+          "losses": 21,
+          "zero": 0,
+          "net_cash": -451.31,
+          "gross_profit": 627.28,
+          "gross_loss": 1078.59,
+          "pf": 0.5815740921017254,
+          "sum_r": -9.794131235799998,
+          "mean_r": -0.30606660111875,
+          "max_loss_streak_exit_order": 5,
+          "exit_reasons": {
+            "DEAL_REASON_SL": 21,
+            "DEAL_REASON_TP": 11
+          }
+        },
+        "2025.02": {
+          "n": 18,
+          "wins": 7,
+          "losses": 11,
+          "zero": 0,
+          "net_cash": -39.56,
+          "gross_profit": 481.22,
+          "gross_loss": 520.78,
+          "pf": 0.9240370213909903,
+          "sum_r": -0.7325035666000002,
+          "mean_r": -0.04069464258888888,
+          "max_loss_streak_exit_order": 4,
+          "exit_reasons": {
+            "DEAL_REASON_TP": 7,
+            "DEAL_REASON_SL": 11
+          }
+        },
+        "2025.03": {
+          "n": 30,
+          "wins": 14,
+          "losses": 16,
+          "zero": 0,
+          "net_cash": -102.82,
+          "gross_profit": 622.41,
+          "gross_loss": 725.23,
+          "pf": 0.8582242874674241,
+          "sum_r": -1.9732493264999997,
+          "mean_r": -0.06577497755,
+          "max_loss_streak_exit_order": 3,
+          "exit_reasons": {
+            "DEAL_REASON_TP": 13,
+            "DEAL_REASON_SL": 16,
+            "OPPOSITE_WAVE1_PROFIT": 1
+          }
+        }
+      },
+      "january_groups": {
+        "direction": {
+          "LONG": {
+            "n": 16,
+            "wins": 8,
+            "losses": 8,
+            "zero": 0,
+            "net_cash": -7.44,
+            "gross_profit": 456.88,
+            "gross_loss": 464.32,
+            "pf": 0.9839765678842178,
+            "sum_r": -0.17355428650000038,
+            "mean_r": -0.010847142906250017,
+            "max_loss_streak_exit_order": 2,
+            "exit_reasons": {
+              "DEAL_REASON_SL": 8,
+              "DEAL_REASON_TP": 8
+            }
+          },
+          "SHORT": {
+            "n": 16,
+            "wins": 3,
+            "losses": 13,
+            "zero": 0,
+            "net_cash": -443.87,
+            "gross_profit": 170.4,
+            "gross_loss": 614.27,
+            "pf": 0.27740244517883017,
+            "sum_r": -9.620576949300002,
+            "mean_r": -0.60128605933125,
+            "max_loss_streak_exit_order": 6,
+            "exit_reasons": {
+              "DEAL_REASON_SL": 13,
+              "DEAL_REASON_TP": 3
+            }
+          }
+        },
+        "h1_direction": {
+          "AGAINST_H1": {
+            "n": 13,
+            "wins": 5,
+            "losses": 8,
+            "zero": 0,
+            "net_cash": -142.89,
+            "gross_profit": 232.9,
+            "gross_loss": 375.79,
+            "pf": 0.6197610367492484,
+            "sum_r": -3.3478604197000004,
+            "mean_r": -0.2575277245923077,
+            "max_loss_streak_exit_order": 3,
+            "exit_reasons": {
+              "DEAL_REASON_SL": 8,
+              "DEAL_REASON_TP": 5
+            }
+          },
+          "H1_RANGE": {
+            "n": 11,
+            "wins": 4,
+            "losses": 7,
+            "zero": 0,
+            "net_cash": -85.13,
+            "gross_profit": 248.19,
+            "gross_loss": 333.32,
+            "pf": 0.7445997839913594,
+            "sum_r": -1.7489377549999998,
+            "mean_r": -0.15899434136363635,
+            "max_loss_streak_exit_order": 5,
+            "exit_reasons": {
+              "DEAL_REASON_TP": 4,
+              "DEAL_REASON_SL": 7
+            }
+          },
+          "WITH_H1": {
+            "n": 8,
+            "wins": 2,
+            "losses": 6,
+            "zero": 0,
+            "net_cash": -223.29,
+            "gross_profit": 146.19,
+            "gross_loss": 369.48,
+            "pf": 0.3956641766807405,
+            "sum_r": -4.697333061100001,
+            "mean_r": -0.5871666326375,
+            "max_loss_streak_exit_order": 5,
+            "exit_reasons": {
+              "DEAL_REASON_SL": 6,
+              "DEAL_REASON_TP": 2
+            }
+          }
+        }
+      },
+      "partial_exit_events": 0,
+      "known_limitations": [
+        "No raw_deals/native tester HTML frozen for this run; event cash cannot independently split commission/swap/fee or certify tick model.",
+        "January and February calendar complete in event log; March incomplete. TEST_END CENSORED_AT_STOP reason=1 at Mar27; not an annual result."
+      ],
+      "max_jan_price_r_vs_cash_r_difference": 4.921485441400364e-11,
+      "worst_jan_trade": {
+        "setup_id": "W33_USDJPY_5_1_LONG_1737747900_101",
+        "direction": "LONG",
+        "fill_at": "2025.01.24 22:02:12",
+        "exit_at": "2025.01.27 00:01:00",
+        "entry_price": "155.8590000000",
+        "sl_price": "155.7630000000",
+        "tp_price": "156.0130000000",
+        "exit_price": "155.5900000000",
+        "realized_r": "-2.8020833333",
+        "execution_net_cash": "-131.8100000000",
+        "execution_initial_risk_money": "47.0400000000",
+        "h1_direction": "WITH_H1"
+      },
+      "symbol_valuation_caveat": {
+        "config_account_currency": "USD",
+        "config_profit_currency": "JPY",
+        "config_contract_size": 100000,
+        "config_calc_mode": 5,
+        "fills_checked": 80,
+        "implied_profit_currency_units_per_reported_account_unit_min": 99.99999999999997,
+        "max": 100.00000000000003,
+        "median": 100.0,
+        "interpretation": "Order volume * contract size * price risk / reported account-currency initial risk is flat 100, although USDJPY quoted near 150-160. This could reflect symbol/tester valuation settings; not enough frozen native metadata to diagnose. Do not claim this is standard Forex USD valuation or an EA arithmetic bug. Pattern comparisons in R remain internally valid.",
+        "official_formula_reference": "https://www.mql5.com/en/docs/constants/environment_state/marketinfoconstants"
+      }
+    }
+  },
+  "gold_v190_native_audit": {
+    "raw_deals": 46,
+    "unique_deals": 46,
+    "positions": 23,
+    "cash_sum": -451.27,
+    "cost_components": {
+      "profit": -451.27,
+      "commission": 0.0,
+      "swap": 0.0,
+      "fee": 0.0
+    },
+    "checks": 207,
+    "failed_checks": [],
+    "per_position": [
+      {
+        "position_id": "2",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "4",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "6",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "8",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "10",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "12",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "14",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "16",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "18",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "20",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "22",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "24",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "26",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "28",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "30",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "32",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "34",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "36",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "38",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "40",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "42",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "44",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      },
+      {
+        "position_id": "46",
+        "one_entry": true,
+        "one_exit": true,
+        "volume_balanced": true,
+        "event_fill_exists": true,
+        "event_exit_exists": true,
+        "cash_matches_event": true,
+        "fill_price_matches": true,
+        "exit_price_matches": true,
+        "setup_matches": true
+      }
+    ],
+    "limitation": "EA-exported native deal ledger matches events; not independent HTML/tester report audit. Commission/swap/fee are zero in this logged run; friction present via bid/ask entry and SL execution cannot be decomposed from this fact."
+  },
+  "gold_overlap": {
+    "shared_setup_ids": 23,
+    "v180_only_ids": [
+      "W33_XAUUSD+_5_1_LONG_1736158800_13",
+      "W33_XAUUSD+_5_1_LONG_1738165800_103",
+      "W33_XAUUSD+_5_1_SHORT_1736892600_52",
+      "W33_XAUUSD+_5_1_SHORT_1738152900_102",
+      "W33_XAUUSD+_5_1_SHORT_1738180800_104"
+    ],
+    "v190_only_ids": [],
+    "shared_exact_fill_timestamp_and_price": 0,
+    "shared_exact_entry_price": 3,
+    "warning": "23 overlapping entry setups are repeated evidence, not independent samples. Different exit/connected-opposite rules and actual fills; not fixed-entry controlled exit A/B."
+  }
+}
