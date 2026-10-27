@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "checks": 5655,
+  "failures": [],
+  "threshold_epsilon_r": 1e-09,
+  "note": "Independent CSV reaggregation only; no imported producer and no tick-execution claim.",
+  "cases": [
+    {
+      "rank": 1,
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1592571300_591",
+      "figure": "tail_case_01.png",
+      "entry": "2020.06.19 14:10:00.000",
+      "direction": "LONG",
+      "lower_mfe_r": 163.85238095237017,
+      "upper_mfe_r": 163.85238095237017,
+      "original_tp_r": 0.9999999999998918,
+      "actual_exit": "2020.06.19 14:48:05.056",
+      "first_opposite_known_at": "2020.06.19 16:40:00",
+      "first_opposite_within_path": true,
+      "source_bar_count": 189755
+    },
+    {
+      "rank": 2,
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1591635900_544",
+      "figure": "tail_case_02.png",
+      "entry": "2020.06.08 18:23:00.000",
+      "direction": "LONG",
+      "lower_mfe_r": 125.58032786885425,
+      "upper_mfe_r": 125.58032786885425,
+      "original_tp_r": 1.1147540983606277,
+      "actual_exit": "2020.06.08 19:41:39.020",
+      "first_opposite_known_at": "2020.06.09 18:40:00",
+      "first_opposite_within_path": true,
+      "source_bar_count": 201913
+    },
+    {
+      "rank": 3,
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1598984700_866",
+      "figure": "tail_case_03.png",
+      "entry": "2020.09.01 19:31:00.000",
+      "direction": "SHORT",
+      "lower_mfe_r": 102.36407766990568,
+      "upper_mfe_r": 102.36407766990568,
+      "original_tp_r": 1.9854368932040067,
+      "actual_exit": "2020.09.01 20:09:38.267",
+      "first_opposite_known_at": "2020.09.02 11:20:00",
+      "first_opposite_within_path": true,
+      "source_bar_count": 117965
+    }
+  ],
+  "source_hashes": {
+    "reports\\backtest\\analysis\\wave33_uncapped_20261026\\data\\positions_excursion.csv": "733359c9898327337bca28fe3b07dfcea9f283d5c79832b7ea88a069fc8aaf91",
+    "reports\\backtest\\analysis\\wave33_uncapped_20261026\\data\\summary.json": "876488347df46311679293dc2f82ea920507a7647dbafe7d330de9f5b85181bb",
+    "reports\\backtest\\runs\\wave33_v185_2020\\20261026_100045_50909ab6\\v185_b_scale_off\\lower_bars.csv": "9478f6c4511de29ed75af74fc4f160cf1bd2b3fb38b17d9a9ceb065390de2b4d",
+    "reports\\backtest\\runs\\wave33_v185_2020\\20261026_100045_50909ab6\\analysis\\positions.csv": "7b657596f6c0252ddf746ebfc2ec49cad792849bf7fb7c3feeb1daa0a3824bc1",
+    "reports\\backtest\\analysis\\wave33_uncapped_20261026\\opposite_sources.json": "4e79db3d820fe91cb019704e1f46e5ad336c8f1e098e25a3529870605d6a2617",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\wave33_visual\\plot_uncapped_excursion.py": "76fae2ed063fc528a8fe8e39e0c004664b004e8bc243e0ee15dd4cc87f230342"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "status": "PASS_NATIVE_FIXTURE_ONLY",
+  "results": {
+    "native_tests": {
+      "summary": [
+        "SUMMARY",
+        "PASS",
+        "41",
+        "0"
+      ],
+      "fail_rows": 0,
+      "source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33dtpqa_20261026_140018_UTC_5f514c4a_native_tests.csv",
+      "sha256": "47e63b36367eb14dd4e467dc7f7faaf76c1c2dd0d4c1db5ac39b1c6f73376dcb"
+    },
+    "half_policy_tests": {
+      "summary": [
+        "SUMMARY",
+        "PASS",
+        "98",
+        "0"
+      ],
+      "fail_rows": 0,
+      "source": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\Common\\Files\\w33dtpqa_20261026_140018_UTC_5f514c4a_half_policy_tests.csv",
+      "sha256": "e6d184d51c2194da178ad810963d18b55c6ddd6a57a8cfa714fcb1d28dccb03c"
+    }
+  },
+  "strategy_profitability": "NOT_TESTED"
+}

@@ -1,0 +1,32 @@
+{
+  "scope": "Parser compatibility on real-order harness exports only; separate from annual QA",
+  "checks": 5,
+  "failures": [],
+  "raw_deals": 3,
+  "native_deals": 3,
+  "raw_cash": "2.4000000000",
+  "native_cash": "2.40",
+  "scale_positions": [
+    {
+      "run": "native-harness-parser-compat",
+      "setup_id": "W33_SCALEOUT_NATIVE_15_5_LONG_1577850300_1",
+      "first_kind": "BASE_RR",
+      "final_kind": "WAVE1_INSIDE",
+      "first_tp": 2641.4,
+      "final_tp": 2644.0,
+      "tp1_touch": true,
+      "tp1_deals": 1,
+      "tp1_volume": 0.04,
+      "tp1_average_fill": 2641.49,
+      "tp1_signed_fill_drift": 0.09,
+      "half_confirmed": true,
+      "be_confirmed": true,
+      "be_deferred": false,
+      "be_rejected": true,
+      "close_rejected": true,
+      "single_fallback": false,
+      "fallback_reason": "",
+      "broker_final_before_half": false
+    }
+  ]
+}

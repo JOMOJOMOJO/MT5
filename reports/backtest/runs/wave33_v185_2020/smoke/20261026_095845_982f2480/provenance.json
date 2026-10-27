@@ -1,0 +1,44 @@
+﻿{
+    "terminal_live_trading_enabled":  false,
+    "deployment_sha256":  "d538816366cb7c3910ad283ad1a42def1c55c2b28b710d6b9cfb2691bf506f0b",
+    "source_data_root":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675",
+    "date_from":  "2020.01.01",
+    "deposit":  5000,
+    "date_to":  "2020.01.11",
+    "method_sha256":  {
+                          "launch.ps1":  "fe22417b5f1f422735e4e830a80ee9515a9b009851c9179170f71f054e0ca697",
+                          "analyze.py":  "4ac1349b1042d63c442cc669051145ab92707d57df458747815bfbc985decfef",
+                          "PLAN.md":  "55043c1c942f784119175ed19e0f778dc0c7cecff8e6562a33458c25761d2a8b",
+                          "audit_opposite_exit.py":  "0261c918a63d8dcda764404706141a13d026be2046608e571cc98868dc7d49cd"
+                      },
+    "runtime_seed":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5WickRebreakR3\\20261014_094513_6f6042e2",
+    "model":  4,
+    "server":  "Bybit-Live",
+    "copied_ticks":  [
+
+                     ],
+    "batch_id":  "20261026_095845_982f2480",
+    "purpose":  "SHORT_EXECUTION_SMOKE_NOT_ANNUAL",
+    "terminal_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33ScaleOut\\20261026_095845_982f2480",
+    "symbol":  "XAUUSD+",
+    "run_order":  [
+                      "v185_a_scale_off",
+                      "v185_a_scale_on",
+                      "v185_b_scale_off",
+                      "v185_b_scale_on"
+                  ],
+    "runtime_sha256":  {
+                           "terminal64.exe":  "8b13c3119f29a4de564ef12d633b62dc54d652c538c10c232067ef01b8518d4d",
+                           "metatester64.exe":  "5033d9d45d669cebd735e8a6be20b54d74b75274f885c9a0e48e52d872104efb"
+                       },
+    "cache_sha256":  {
+                         "2019.hcc":  "1d6f5e119153efc6385e61303005f7542697721836a90905b2599a1400828b8d",
+                         "2020.hcc":  "8db023c64db46dcdd71d8dd3bd992fcefb32a6c37736d6c75fd3dbf1c73a39df",
+                         "2021.hcc":  "72d736d36c34181209110eab79c20241e99bf6f5545b4ab86ea3e46fa52e2a83"
+                     },
+    "copied_history":  [
+                           "2019.hcc",
+                           "2020.hcc",
+                           "2021.hcc"
+                       ]
+}

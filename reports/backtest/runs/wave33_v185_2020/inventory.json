@@ -1,0 +1,44 @@
+﻿{
+    "client_date":  "2026-10-26",
+    "scope":  "READ_ONLY_PRE_LAUNCH_INVENTORY",
+    "source_data_root":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675",
+    "server":  "Bybit-Live",
+    "symbol":  "XAUUSD+",
+    "history":  [
+                    {
+                        "name":  "2019.hcc",
+                        "length":  21302046,
+                        "sha256":  "1d6f5e119153efc6385e61303005f7542697721836a90905b2599a1400828b8d"
+                    },
+                    {
+                        "name":  "2020.hcc",
+                        "length":  21378075,
+                        "sha256":  "8db023c64db46dcdd71d8dd3bd992fcefb32a6c37736d6c75fd3dbf1c73a39df"
+                    },
+                    {
+                        "name":  "2021.hcc",
+                        "length":  21284886,
+                        "sha256":  "72d736d36c34181209110eab79c20241e99bf6f5545b4ab86ea3e46fa52e2a83"
+                    }
+                ],
+    "realtick_2020_files":  0,
+    "runtime_seed":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5WickRebreakR3\\20261014_094513_6f6042e2",
+    "runtime_version":  "5.0.0.6230",
+    "free_disk_bytes":  19639681024,
+    "logical_cpus":  6,
+    "old_annual_runtime_exists":  false,
+    "existing_user_processes":  [
+                                    {
+                                        "Id":  9788,
+                                        "ProcessName":  "metatester64",
+                                        "exe":  "C:\\Program Files\\XMTrading MT5\\metatester64.exe"
+                                    },
+                                    {
+                                        "Id":  14004,
+                                        "ProcessName":  "terminal64",
+                                        "exe":  "C:\\Program Files\\XMTrading MT5\\terminal64.exe"
+                                    }
+                                ],
+    "execution":  "NOT_STARTED",
+    "required_final_qa":  "deployment.json PASS and source/binary/header hashes"
+}

@@ -1,0 +1,12 @@
+﻿{
+    "scaleout":  true,
+    "checks":  487,
+    "single_fallback":  false,
+    "failures":  0,
+    "case":  "short",
+    "direction":  -1,
+    "w1_first":  false,
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\native\\rb8a43a7\\short",
+    "tag":  "so_rb8a43a7_short",
+    "status":  "PASS"
+}

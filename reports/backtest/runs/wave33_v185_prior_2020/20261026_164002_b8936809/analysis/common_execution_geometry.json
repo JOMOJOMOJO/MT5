@@ -1,0 +1,112 @@
+{
+  "status": "DESCRIPTIVE_OBSERVATION",
+  "method_sha256": "4726b675282f932cc6e401cf36242f296948f4d0dbcbb1b5ba3d10abf1fffe29",
+  "common_positions": 215,
+  "same_fields_counts": {
+    "entry_times_prices": 215,
+    "entry_exit_times_prices": 214,
+    "entry_exit_types": 215,
+    "entry_sl_tp": 215,
+    "exit_second_and_reason": 215
+  },
+  "changed_initial_volume_positions": 189,
+  "total_common_delta_r": "-0.00339497836534658543236506942",
+  "maximum_absolute_common_delta_r": "0.00323624595469255663430420712",
+  "nonzero_common_delta_r_count": 6,
+  "native_fill_difference_cases": [
+    {
+      "pair": {
+        "wave_identity": "LONG|2020.12.23 15:00:00|2020.12.23 14:30:00|2020.12.23 14:10:00|1857.06|2020.12.23 16:50:00|1878.54",
+        "direction": "LONG",
+        "off_setup": "W33_XAUUSD+_5_1_LONG_1608735600_1307",
+        "on_setup": "W33_XAUUSD+_5_1_LONG_1608735600_1307",
+        "off_entry": "2020.12.23 18:22:00",
+        "on_entry": "2020.12.23 18:22:00",
+        "off_net_r": "0.02265372168284789644012944984",
+        "on_net_r": "0.01941747572815533980582524272",
+        "off_net_cash": "0.7700000000",
+        "on_net_cash": "0.8400000000",
+        "class": "MATCHED_SAME_ENTRY_TIME",
+        "delta_r": "-0.00323624595469255663430420712",
+        "same_entry_price_sl_tp": "True",
+        "same_exit_time_reason": "True",
+        "on_candidate_skips": "",
+        "off_signal_context": ""
+      },
+      "off_deals": [
+        {
+          "deal_ticket": "660",
+          "order_ticket": "660",
+          "position_id": "660",
+          "time_msc": "1608747720000",
+          "entry": "DEAL_ENTRY_IN",
+          "type": "DEAL_TYPE_BUY",
+          "volume": "0.11000000",
+          "price": "1872.5500000000",
+          "profit": "0.0000000000",
+          "commission": "-0.6600000000",
+          "swap": "0.0000000000",
+          "fee": "0.0000000000",
+          "comment": "W33_XAUUSD+_5_1_LONG_1608735600",
+          "reason": "DEAL_REASON_EXPERT",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1608735600_1307"
+        },
+        {
+          "deal_ticket": "661",
+          "order_ticket": "661",
+          "position_id": "660",
+          "time_msc": "1608764341408",
+          "entry": "DEAL_ENTRY_OUT",
+          "type": "DEAL_TYPE_SELL",
+          "volume": "0.11000000",
+          "price": "1872.6800000000",
+          "profit": "1.4300000000",
+          "commission": "0.0000000000",
+          "swap": "0.0000000000",
+          "fee": "0.0000000000",
+          "comment": "W33_OPPOSITE_W1_PROFIT",
+          "reason": "DEAL_REASON_EXPERT",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1608735600_1307"
+        }
+      ],
+      "on_deals": [
+        {
+          "deal_ticket": "426",
+          "order_ticket": "426",
+          "position_id": "426",
+          "time_msc": "1608747720000",
+          "entry": "DEAL_ENTRY_IN",
+          "type": "DEAL_TYPE_BUY",
+          "volume": "0.14000000",
+          "price": "1872.5500000000",
+          "profit": "0.0000000000",
+          "commission": "-0.8400000000",
+          "swap": "0.0000000000",
+          "fee": "0.0000000000",
+          "comment": "W33_XAUUSD+_5_1_LONG_1608735600",
+          "reason": "DEAL_REASON_EXPERT",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1608735600_1307"
+        },
+        {
+          "deal_ticket": "427",
+          "order_ticket": "427",
+          "position_id": "426",
+          "time_msc": "1608764341126",
+          "entry": "DEAL_ENTRY_OUT",
+          "type": "DEAL_TYPE_SELL",
+          "volume": "0.14000000",
+          "price": "1872.6700000000",
+          "profit": "1.6800000000",
+          "commission": "0.0000000000",
+          "swap": "0.0000000000",
+          "fee": "0.0000000000",
+          "comment": "W33_OPPOSITE_W1_PROFIT",
+          "reason": "DEAL_REASON_EXPERT",
+          "setup_id": "W33_XAUUSD+_5_1_LONG_1608735600_1307"
+        }
+      ]
+    }
+  ],
+  "interpretation": "No common entry geometry changed. Changed lot sizes can change rounded booked cash and the existing strict-positive opposite exit cost gate. One must inspect native millisecond fills; equal second-level exit logs do not prove equal prices.",
+  "scope": "Supplement to frozen annual audit. Fill identity is an observation, not a new pass criterion or an excuse to alter the strategy."
+}

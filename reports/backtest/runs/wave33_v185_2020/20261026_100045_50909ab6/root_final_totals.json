@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "reviewer": "root independent stdlib totals",
+  "reviewed_at_utc": "2026-10-26T05:42:57.947970+00:00",
+  "method": "All unique deals grouped by position; Decimal cash includes entry commission and all profit/commission/swap/fee. Native total net independently parsed. Streaks use final exit order; zero resets streak.",
+  "runs": [
+    {
+      "run_id": "v185_a_scale_off",
+      "status": "PASS",
+      "position_count": 82,
+      "raw_deal_count": 164,
+      "wins": 36,
+      "losses": 46,
+      "net": "-575.2400000000",
+      "native_net": "-575.24",
+      "raw_minus_native_net": "0E-10",
+      "position_pf": 0.729693153517222,
+      "maximum_consecutive_losing_positions": 6,
+      "raw_sha256": "3837702bfcd69547b5186a6821c8423c94184af0e807319f2940d2435403bc2b"
+    },
+    {
+      "run_id": "v185_a_scale_on",
+      "status": "PASS",
+      "position_count": 82,
+      "raw_deal_count": 207,
+      "wins": 47,
+      "losses": 35,
+      "net": "-477.2200000000",
+      "native_net": "-477.22",
+      "raw_minus_native_net": "0E-10",
+      "position_pf": 0.6997974409622183,
+      "maximum_consecutive_losing_positions": 4,
+      "raw_sha256": "5e44130012a22ddcb75f016342df1b07d07b0ca54a6a6de2d82f7baff9a9ff02"
+    },
+    {
+      "run_id": "v185_b_scale_off",
+      "status": "PASS",
+      "position_count": 334,
+      "raw_deal_count": 668,
+      "wins": 144,
+      "losses": 190,
+      "net": "-1440.9200000000",
+      "native_net": "-1440.92",
+      "raw_minus_native_net": "0E-10",
+      "position_pf": 0.8222970948093319,
+      "maximum_consecutive_losing_positions": 8,
+      "raw_sha256": "a5e364689292370a78ad453169d6b38a35ee78553f76351f1066389646e903c5"
+    },
+    {
+      "run_id": "v185_b_scale_on",
+      "status": "PASS",
+      "position_count": 335,
+      "raw_deal_count": 843,
+      "wins": 181,
+      "losses": 154,
+      "net": "-1685.9100000000",
+      "native_net": "-1685.91",
+      "raw_minus_native_net": "0E-10",
+      "position_pf": 0.7325378845568078,
+      "maximum_consecutive_losing_positions": 7,
+      "raw_sha256": "b3f71663d2ee0a275f611d9004073369a76ba7ce92344fa8bef93d0bb30eff5c"
+    }
+  ]
+}

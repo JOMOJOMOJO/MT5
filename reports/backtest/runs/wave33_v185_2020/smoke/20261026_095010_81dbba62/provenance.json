@@ -1,0 +1,38 @@
+﻿{
+    "terminal_live_trading_enabled":  false,
+    "deployment_sha256":  "80e199489ae681d5ee1d225ea12ee26044aaa9309e5a02d092514b6e216ce39b",
+    "source_data_root":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675",
+    "date_from":  "2020.01.01",
+    "deposit":  5000,
+    "date_to":  "2020.01.11",
+    "runtime_seed":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5WickRebreakR3\\20261014_094513_6f6042e2",
+    "model":  4,
+    "server":  "Bybit-Live",
+    "copied_ticks":  [
+
+                     ],
+    "batch_id":  "20261026_095010_81dbba62",
+    "purpose":  "SHORT_EXECUTION_SMOKE_NOT_ANNUAL",
+    "terminal_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33ScaleOut\\20261026_095010_81dbba62",
+    "symbol":  "XAUUSD+",
+    "run_order":  [
+                      "v185_a_scale_off",
+                      "v185_a_scale_on",
+                      "v185_b_scale_off",
+                      "v185_b_scale_on"
+                  ],
+    "runtime_sha256":  {
+                           "terminal64.exe":  "8b13c3119f29a4de564ef12d633b62dc54d652c538c10c232067ef01b8518d4d",
+                           "metatester64.exe":  "5033d9d45d669cebd735e8a6be20b54d74b75274f885c9a0e48e52d872104efb"
+                       },
+    "cache_sha256":  {
+                         "2019.hcc":  "1d6f5e119153efc6385e61303005f7542697721836a90905b2599a1400828b8d",
+                         "2020.hcc":  "8db023c64db46dcdd71d8dd3bd992fcefb32a6c37736d6c75fd3dbf1c73a39df",
+                         "2021.hcc":  "72d736d36c34181209110eab79c20241e99bf6f5545b4ab86ea3e46fa52e2a83"
+                     },
+    "copied_history":  [
+                           "2019.hcc",
+                           "2020.hcc",
+                           "2021.hcc"
+                       ]
+}

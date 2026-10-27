@@ -1,0 +1,18 @@
+{
+  "run": "v185_b_prior_off",
+  "status": "PASS",
+  "positions": 334,
+  "deals": 668,
+  "net": "-1440.9200000000",
+  "native_net": "-1440.92",
+  "pf": "0.8222970948093318320447821384",
+  "wins": 144,
+  "losses": 190,
+  "max_loss_streak": 8,
+  "raw_sha256": "a5e364689292370a78ad453169d6b38a35ee78553f76351f1066389646e903c5",
+  "old_exact_files": {
+    "raw_deals.csv": true,
+    "upper_bars.csv": true,
+    "lower_bars.csv": true
+  }
+}

@@ -1,0 +1,34 @@
+﻿[
+    {
+        "source_relative":  "so_r4e79ab8_long.htm",
+        "saved_relative":  "artifacts/00_so_r4e79ab8_long.htm"
+    },
+    {
+        "source_relative":  "so_r4e79ab8_short.htm",
+        "saved_relative":  "artifacts/01_so_r4e79ab8_short.htm"
+    },
+    {
+        "source_relative":  "so_r4e79ab8_w1long.htm",
+        "saved_relative":  "artifacts/02_so_r4e79ab8_w1long.htm"
+    },
+    {
+        "source_relative":  "so_r4e79ab8_w1short.htm",
+        "saved_relative":  "artifacts/03_so_r4e79ab8_w1short.htm"
+    },
+    {
+        "source_relative":  "logs\\20261026.log",
+        "saved_relative":  "artifacts/04_20261026.log"
+    },
+    {
+        "source_relative":  "logs\\metaeditor.log",
+        "saved_relative":  "artifacts/05_metaeditor.log"
+    },
+    {
+        "source_relative":  "Tester\\Agent-127.0.0.1-39228\\logs\\20261026.log",
+        "saved_relative":  "artifacts/06_20261026.log"
+    },
+    {
+        "source_relative":  "Tester\\logs\\20261026.log",
+        "saved_relative":  "artifacts/07_20261026.log"
+    }
+]

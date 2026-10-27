@@ -1,0 +1,13 @@
+﻿run,setup_id,first_kind,final_kind,has_native_position,first_tp,final_tp,tp1_touch,tp1_deals,tp1_volume,tp1_average_fill,tp1_signed_fill_drift,half_confirmed,be_confirmed,be_deferred,be_rejected,close_rejected,single_fallback,fallback_reason,broker_final_before_half
+v185_b_scale_on,W33_XAUUSD+_5_1_SHORT_1577942100_1,WAVE1_INSIDE,BASE_RR,False,1520.1600000000,1519.5100000000,False,0,0,,,False,False,False,False,False,False,,False
+v185_b_scale_on,W33_XAUUSD+_5_1_LONG_1578081900_7,BASE_RR,WAVE1_INSIDE,True,1552.5300000000,1553.4700000000,False,0,0,,,False,False,False,False,False,False,,False
+v185_b_scale_on,W33_XAUUSD+_5_1_SHORT_1578085200_8,BASE_RR,WAVE1_INSIDE,True,1547.7200000000,1546.4100000000,False,0,0,,,False,False,False,False,False,False,,False
+v185_b_scale_on,W33_XAUUSD+_5_1_SHORT_1578291600_9,BASE_RR,WAVE1_INSIDE,True,1575.7300000000,1575.0200000000,True,1,0.24000000,1575.7000000000,0.0300000000,True,True,False,False,False,False,,False
+v185_b_scale_on,W33_XAUUSD+_5_1_LONG_1578379500_12,WAVE1_INSIDE,BASE_RR,True,1559.7600000000,1560.5000000000,True,1,0.27000000,1559.7700000000,0.0100000000,True,True,True,False,False,False,,False
+v185_b_scale_on,W33_XAUUSD+_5_1_SHORT_1578391500_15,WAVE1_INSIDE,BASE_RR,False,1566.6000000000,1564.5400000000,False,0,0,,,False,False,False,False,False,False,,False
+v185_b_scale_on,W33_XAUUSD+_5_1_SHORT_1578431100_18,WAVE1_INSIDE,BASE_RR,True,1569.7200000000,1569.7100000000,False,0,0,,,False,False,False,False,False,False,,False
+v185_b_scale_on,W33_XAUUSD+_5_1_LONG_1578437400_19,WAVE1_INSIDE,BASE_RR,True,1577.2200000000,1578.2500000000,True,1,0.08000000,1577.2200000000,0E-10,True,True,False,False,False,False,,False
+v185_b_scale_on,W33_XAUUSD+_5_1_SHORT_1578454800_20,BASE_RR,WAVE1_INSIDE,True,1590.2900000000,1583.7800000000,True,1,0.09000000,1590.2900000000,-0E-10,True,True,False,False,False,False,,False
+v185_b_scale_on,W33_XAUUSD+_5_1_SHORT_1578501300_21,WAVE1_INSIDE,BASE_RR,False,1571.1500000000,1566.9800000000,False,0,0,,,False,False,False,False,False,False,,False
+v185_b_scale_on,W33_XAUUSD+_5_1_LONG_1578538500_22,WAVE1_INSIDE,BASE_RR,True,1561.2400000000,1561.4500000000,False,0,0,,,False,False,False,False,False,False,,False
+v185_b_scale_on,W33_XAUUSD+_5_1_SHORT_1578590400_30,BASE_RR,WAVE1_INSIDE,True,1545.2300000000,1544.8900000000,False,0,0,,,False,False,False,False,False,False,,False

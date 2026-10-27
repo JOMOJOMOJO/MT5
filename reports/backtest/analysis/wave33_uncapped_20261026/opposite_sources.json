@@ -1,0 +1,3352 @@
+{
+  "scope": "BASELINE_EVENT_BARRIER_NOT_EXECUTABLE_OPPOSITE_PROFIT_EXIT",
+  "n": 334,
+  "original_arms_matched": 13,
+  "sha256": {
+    "reports\\backtest\\runs\\wave33_v185_2020\\20261026_100045_50909ab6\\analysis\\positions.csv": "7b657596f6c0252ddf746ebfc2ec49cad792849bf7fb7c3feeb1daa0a3824bc1",
+    "reports\\backtest\\runs\\wave33_v185_2020\\20261026_100045_50909ab6\\v185_b_scale_off\\events.csv": "7d26bb4623a0753db213b3d3529e0c7df5aac2119c99f67b9b148c6e9311b3cb",
+    "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\tools\\wave33_visual\\uncapped_opposite_sources.py": "67270cd7925e34583392584cc0f7e67b2f38f7353a0d107d2104b9c029602ac3"
+  },
+  "by_setup": {
+    "W33_XAUUSD+_5_1_LONG_1578081900_7": {
+      "known_at": "2020.01.03 21:15:00",
+      "sequence": 1066,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1578085200_8",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.03 21:00:00",
+      "pivot_price": 1548.3,
+      "original_arm_known_at": "",
+      "fill_sequence": 1050
+    },
+    "W33_XAUUSD+_5_1_SHORT_1578085200_8": {
+      "known_at": "2020.01.07 02:40:00",
+      "sequence": 1754,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1578363600_11",
+      "direction": "LONG",
+      "pivot_time": "2020.01.07 02:25:00",
+      "pivot_price": 1565.62,
+      "original_arm_known_at": "",
+      "fill_sequence": 1170
+    },
+    "W33_XAUUSD+_5_1_SHORT_1578291600_9": {
+      "known_at": "2020.01.07 02:40:00",
+      "sequence": 1754,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1578363600_11",
+      "direction": "LONG",
+      "pivot_time": "2020.01.07 02:25:00",
+      "pivot_price": 1565.62,
+      "original_arm_known_at": "",
+      "fill_sequence": 1356
+    },
+    "W33_XAUUSD+_5_1_LONG_1578379500_12": {
+      "known_at": "2020.01.07 09:05:00",
+      "sequence": 1923,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1578387000_13",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.07 08:50:00",
+      "pivot_price": 1564.51,
+      "original_arm_known_at": "",
+      "fill_sequence": 1878
+    },
+    "W33_XAUUSD+_5_1_SHORT_1578431100_18": {
+      "known_at": "2020.01.07 23:05:00",
+      "sequence": 2293,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1578437400_19",
+      "direction": "LONG",
+      "pivot_time": "2020.01.07 22:50:00",
+      "pivot_price": 1572.02,
+      "original_arm_known_at": "",
+      "fill_sequence": 2269
+    },
+    "W33_XAUUSD+_5_1_LONG_1578437400_19": {
+      "known_at": "2020.01.08 04:00:00",
+      "sequence": 2409,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1578454800_20",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.08 03:45:00",
+      "pivot_price": 1590.58,
+      "original_arm_known_at": "",
+      "fill_sequence": 2352
+    },
+    "W33_XAUUSD+_5_1_SHORT_1578454800_20": {
+      "known_at": "2020.01.09 03:15:00",
+      "sequence": 2974,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1578538500_22",
+      "direction": "LONG",
+      "pivot_time": "2020.01.09 03:00:00",
+      "pivot_price": 1558.87,
+      "original_arm_known_at": "",
+      "fill_sequence": 2598
+    },
+    "W33_XAUUSD+_5_1_LONG_1578538500_22": {
+      "known_at": "2020.01.09 12:15:00",
+      "sequence": 3326,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1578571200_28",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.09 12:00:00",
+      "pivot_price": 1545.6,
+      "original_arm_known_at": "",
+      "fill_sequence": 3105
+    },
+    "W33_XAUUSD+_5_1_SHORT_1578590400_30": {
+      "known_at": "2020.01.10 07:10:00",
+      "sequence": 3734,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1578639300_31",
+      "direction": "LONG",
+      "pivot_time": "2020.01.10 06:55:00",
+      "pivot_price": 1547.4,
+      "original_arm_known_at": "",
+      "fill_sequence": 3514
+    },
+    "W33_XAUUSD+_5_1_LONG_1579140000_48": {
+      "known_at": "2020.01.16 04:15:00",
+      "sequence": 6022,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1579147200_49",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.16 04:00:00",
+      "pivot_price": 1555.43,
+      "original_arm_known_at": "",
+      "fill_sequence": 5976
+    },
+    "W33_XAUUSD+_5_1_LONG_1579231800_57": {
+      "known_at": "2020.01.17 08:45:00",
+      "sequence": 6710,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1579247700_58",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.17 08:30:00",
+      "pivot_price": 1554.29,
+      "original_arm_known_at": "",
+      "fill_sequence": 6624
+    },
+    "W33_XAUUSD+_5_1_SHORT_1579298100_61": {
+      "known_at": "2020.01.20 08:05:00",
+      "sequence": 7194,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1579504800_62",
+      "direction": "LONG",
+      "pivot_time": "2020.01.20 07:50:00",
+      "pivot_price": 1562.27,
+      "original_arm_known_at": "",
+      "fill_sequence": 7047
+    },
+    "W33_XAUUSD+_5_1_LONG_1579504800_62": {
+      "known_at": "2020.01.20 19:35:00",
+      "sequence": 7460,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1579548000_64",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.20 19:20:00",
+      "pivot_price": 1560.56,
+      "original_arm_known_at": "",
+      "fill_sequence": 7270
+    },
+    "W33_XAUUSD+_5_1_SHORT_1579596900_69": {
+      "known_at": "2020.01.21 23:20:00",
+      "sequence": 8071,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1579646700_70",
+      "direction": "LONG",
+      "pivot_time": "2020.01.21 23:05:00",
+      "pivot_price": 1559.68,
+      "original_arm_known_at": "",
+      "fill_sequence": 7914
+    },
+    "W33_XAUUSD+_5_1_LONG_1579670700_72": {
+      "known_at": "2020.01.22 08:10:00",
+      "sequence": 8334,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1579679100_73",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.22 07:55:00",
+      "pivot_price": 1550.59,
+      "original_arm_known_at": "",
+      "fill_sequence": 8294
+    },
+    "W33_XAUUSD+_5_1_SHORT_1579699500_74": {
+      "known_at": "2020.01.23 05:30:00",
+      "sequence": 8829,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1579756500_78",
+      "direction": "LONG",
+      "pivot_time": "2020.01.23 05:15:00",
+      "pivot_price": 1558.05,
+      "original_arm_known_at": "",
+      "fill_sequence": 8533
+    },
+    "W33_XAUUSD+_5_1_LONG_1579796700_80": {
+      "known_at": "2020.01.23 22:50:00",
+      "sequence": 9218,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1579818600_81",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.23 22:35:00",
+      "pivot_price": 1561.68,
+      "original_arm_known_at": "",
+      "fill_sequence": 9109
+    },
+    "W33_XAUUSD+_5_1_LONG_1579837200_82": {
+      "known_at": "2020.01.24 13:20:00",
+      "sequence": 9531,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1579870200_84",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.24 13:05:00",
+      "pivot_price": 1558.66,
+      "original_arm_known_at": "",
+      "fill_sequence": 9362
+    },
+    "W33_XAUUSD+_5_1_LONG_1579879800_85": {
+      "known_at": "2020.01.24 22:15:00",
+      "sequence": 9784,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1579902600_86",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.24 22:00:00",
+      "pivot_price": 1569.59,
+      "original_arm_known_at": "",
+      "fill_sequence": 9667
+    },
+    "W33_XAUUSD+_5_1_SHORT_1580101500_87": {
+      "known_at": "2020.01.28 07:40:00",
+      "sequence": 10489,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1580194800_89",
+      "direction": "LONG",
+      "pivot_time": "2020.01.28 07:25:00",
+      "pivot_price": 1580.63,
+      "original_arm_known_at": "",
+      "fill_sequence": 10040
+    },
+    "W33_XAUUSD+_5_1_SHORT_1580230800_91": {
+      "known_at": "2020.01.28 19:50:00",
+      "sequence": 10804,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1580239800_92",
+      "direction": "LONG",
+      "pivot_time": "2020.01.28 19:35:00",
+      "pivot_price": 1570.57,
+      "original_arm_known_at": "",
+      "fill_sequence": 10764
+    },
+    "W33_XAUUSD+_5_1_LONG_1580404500_98": {
+      "known_at": "2020.01.31 13:15:00",
+      "sequence": 12294,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1580475600_104",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.31 13:00:00",
+      "pivot_price": 1577.93,
+      "original_arm_known_at": "",
+      "fill_sequence": 11893
+    },
+    "W33_XAUUSD+_5_1_LONG_1580412900_99": {
+      "known_at": "2020.01.31 13:15:00",
+      "sequence": 12294,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1580475600_104",
+      "direction": "SHORT",
+      "pivot_time": "2020.01.31 13:00:00",
+      "pivot_price": 1577.93,
+      "original_arm_known_at": "",
+      "fill_sequence": 11967
+    },
+    "W33_XAUUSD+_5_1_LONG_1580760600_111": {
+      "known_at": "2020.02.03 22:50:00",
+      "sequence": 13156,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1580767500_112",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.03 22:35:00",
+      "pivot_price": 1575.59,
+      "original_arm_known_at": "",
+      "fill_sequence": 13110
+    },
+    "W33_XAUUSD+_5_1_SHORT_1580767500_112": {
+      "known_at": "2020.02.05 09:30:00",
+      "sequence": 13845,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1580893500_116",
+      "direction": "LONG",
+      "pivot_time": "2020.02.05 09:15:00",
+      "pivot_price": 1562.42,
+      "original_arm_known_at": "",
+      "fill_sequence": 13186
+    },
+    "W33_XAUUSD+_5_1_LONG_1580893500_116": {
+      "known_at": "2020.02.05 10:50:00",
+      "sequence": 13923,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1580898300_117",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.05 10:35:00",
+      "pivot_price": 1552.79,
+      "original_arm_known_at": "",
+      "fill_sequence": 13899
+    },
+    "W33_XAUUSD+_5_1_SHORT_1580898300_117": {
+      "known_at": "2020.02.06 02:00:00",
+      "sequence": 14284,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1580952900_120",
+      "direction": "LONG",
+      "pivot_time": "2020.02.06 01:45:00",
+      "pivot_price": 1556.58,
+      "original_arm_known_at": "",
+      "fill_sequence": 13949
+    },
+    "W33_XAUUSD+_5_1_LONG_1580952900_120": {
+      "known_at": "2020.02.06 06:30:00",
+      "sequence": 14405,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1580968800_121",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.06 06:15:00",
+      "pivot_price": 1552.93,
+      "original_arm_known_at": "",
+      "fill_sequence": 14311
+    },
+    "W33_XAUUSD+_5_1_SHORT_1581054300_127": {
+      "known_at": "2020.02.07 09:55:00",
+      "sequence": 15059,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1581067200_129",
+      "direction": "LONG",
+      "pivot_time": "2020.02.07 09:40:00",
+      "pivot_price": 1567.3,
+      "original_arm_known_at": "",
+      "fill_sequence": 14998
+    },
+    "W33_XAUUSD+_5_1_LONG_1581067200_129": {
+      "known_at": "2020.02.07 18:10:00",
+      "sequence": 15332,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1581095100_131",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.07 17:55:00",
+      "pivot_price": 1565.55,
+      "original_arm_known_at": "",
+      "fill_sequence": 15111
+    },
+    "W33_XAUUSD+_5_1_LONG_1581075000_130": {
+      "known_at": "2020.02.07 18:10:00",
+      "sequence": 15332,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1581095100_131",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.07 17:55:00",
+      "pivot_price": 1565.55,
+      "original_arm_known_at": "",
+      "fill_sequence": 15236
+    },
+    "W33_XAUUSD+_5_1_SHORT_1581365400_139": {
+      "known_at": "2020.02.11 08:30:00",
+      "sequence": 16244,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1581408900_141",
+      "direction": "LONG",
+      "pivot_time": "2020.02.11 08:15:00",
+      "pivot_price": 1568.71,
+      "original_arm_known_at": "",
+      "fill_sequence": 16026
+    },
+    "W33_XAUUSD+_5_1_SHORT_1581440700_146": {
+      "known_at": "2020.02.12 08:40:00",
+      "sequence": 16933,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1581495600_149",
+      "direction": "LONG",
+      "pivot_time": "2020.02.12 08:25:00",
+      "pivot_price": 1565.98,
+      "original_arm_known_at": "",
+      "fill_sequence": 16640
+    },
+    "W33_XAUUSD+_5_1_SHORT_1581489900_148": {
+      "known_at": "2020.02.12 18:10:00",
+      "sequence": 17157,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1581528600_150",
+      "direction": "LONG",
+      "pivot_time": "2020.02.12 17:55:00",
+      "pivot_price": 1567.69,
+      "original_arm_known_at": "",
+      "fill_sequence": 16986
+    },
+    "W33_XAUUSD+_5_1_LONG_1581528600_150": {
+      "known_at": "2020.02.13 03:40:00",
+      "sequence": 17385,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1581564000_151",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.13 03:25:00",
+      "pivot_price": 1569.38,
+      "original_arm_known_at": "",
+      "fill_sequence": 17251
+    },
+    "W33_XAUUSD+_5_1_SHORT_1581564000_151": {
+      "known_at": "2020.02.13 15:00:00",
+      "sequence": 17707,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1581605100_156",
+      "direction": "LONG",
+      "pivot_time": "2020.02.13 14:45:00",
+      "pivot_price": 1574.82,
+      "original_arm_known_at": "",
+      "fill_sequence": 17447
+    },
+    "W33_XAUUSD+_5_1_SHORT_1581682200_160": {
+      "known_at": "2020.02.14 19:45:00",
+      "sequence": 18384,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1581707100_162",
+      "direction": "LONG",
+      "pivot_time": "2020.02.14 19:30:00",
+      "pivot_price": 1583.53,
+      "original_arm_known_at": "",
+      "fill_sequence": 18212
+    },
+    "W33_XAUUSD+_5_1_LONG_1581903900_163": {
+      "known_at": "2020.02.17 19:35:00",
+      "sequence": 18920,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1581965700_168",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.17 19:20:00",
+      "pivot_price": 1581.34,
+      "original_arm_known_at": "",
+      "fill_sequence": 18542
+    },
+    "W33_XAUUSD+_5_1_LONG_1582000500_170": {
+      "known_at": "2020.02.18 14:25:00",
+      "sequence": 19256,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1582035000_171",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.18 14:10:00",
+      "pivot_price": 1586.91,
+      "original_arm_known_at": "",
+      "fill_sequence": 19094
+    },
+    "W33_XAUUSD+_5_1_LONG_1582096200_176": {
+      "known_at": "2020.02.19 18:20:00",
+      "sequence": 19909,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1582135200_177",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.19 18:05:00",
+      "pivot_price": 1605.15,
+      "original_arm_known_at": "",
+      "fill_sequence": 19736
+    },
+    "W33_XAUUSD+_5_1_LONG_1582137900_178": {
+      "known_at": "2020.02.20 05:15:00",
+      "sequence": 20167,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1582174500_180",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.20 05:00:00",
+      "pivot_price": 1608.81,
+      "original_arm_known_at": "",
+      "fill_sequence": 19966
+    },
+    "W33_XAUUSD+_5_1_SHORT_1582282200_188": {
+      "known_at": "2020.02.21 12:05:00",
+      "sequence": 20925,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1582284900_189",
+      "direction": "LONG",
+      "pivot_time": "2020.02.21 11:50:00",
+      "pivot_price": 1635.55,
+      "original_arm_known_at": "",
+      "fill_sequence": 20902
+    },
+    "W33_XAUUSD+_5_1_LONG_1582284900_189": {
+      "known_at": "2020.02.21 14:45:00",
+      "sequence": 21029,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1582294800_192",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.21 14:30:00",
+      "pivot_price": 1633.55,
+      "original_arm_known_at": "2020.02.21 14:45:00",
+      "fill_sequence": 20970
+    },
+    "W33_XAUUSD+_5_1_LONG_1582314300_194": {
+      "known_at": "2020.02.24 12:35:00",
+      "sequence": 21551,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1582545600_196",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.24 12:20:00",
+      "pivot_price": 1679.27,
+      "original_arm_known_at": "",
+      "fill_sequence": 21225
+    },
+    "W33_XAUUSD+_5_1_SHORT_1582579200_199": {
+      "known_at": "2020.02.25 03:30:00",
+      "sequence": 21913,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1582600500_200",
+      "direction": "LONG",
+      "pivot_time": "2020.02.25 03:15:00",
+      "pivot_price": 1650.48,
+      "original_arm_known_at": "",
+      "fill_sequence": 21817
+    },
+    "W33_XAUUSD+_5_1_SHORT_1582654500_201": {
+      "known_at": "2020.02.26 05:20:00",
+      "sequence": 22505,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1582693500_203",
+      "direction": "LONG",
+      "pivot_time": "2020.02.26 05:05:00",
+      "pivot_price": 1641.02,
+      "original_arm_known_at": "",
+      "fill_sequence": 22318
+    },
+    "W33_XAUUSD+_5_1_LONG_1582693500_203": {
+      "known_at": "2020.02.26 13:55:00",
+      "sequence": 22694,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1582724400_204",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.26 13:40:00",
+      "pivot_price": 1645.87,
+      "original_arm_known_at": "",
+      "fill_sequence": 22526
+    },
+    "W33_XAUUSD+_5_1_LONG_1582782300_208": {
+      "known_at": "2020.02.27 18:20:00",
+      "sequence": 23391,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1582826100_209",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.27 18:05:00",
+      "pivot_price": 1642.13,
+      "original_arm_known_at": "",
+      "fill_sequence": 23153
+    },
+    "W33_XAUUSD+_5_1_LONG_1582835700_210": {
+      "known_at": "2020.02.27 22:05:00",
+      "sequence": 23536,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1582838700_211",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.27 21:50:00",
+      "pivot_price": 1639.45,
+      "original_arm_known_at": "",
+      "fill_sequence": 23506
+    },
+    "W33_XAUUSD+_5_1_LONG_1582883700_214": {
+      "known_at": "2020.02.28 12:40:00",
+      "sequence": 23917,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1582889700_215",
+      "direction": "SHORT",
+      "pivot_time": "2020.02.28 12:25:00",
+      "pivot_price": 1623.91,
+      "original_arm_known_at": "",
+      "fill_sequence": 23861
+    },
+    "W33_XAUUSD+_5_1_SHORT_1582889700_215": {
+      "known_at": "2020.02.28 22:05:00",
+      "sequence": 24170,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1582926000_217",
+      "direction": "LONG",
+      "pivot_time": "2020.02.28 21:50:00",
+      "pivot_price": 1592.83,
+      "original_arm_known_at": "",
+      "fill_sequence": 23977
+    },
+    "W33_XAUUSD+_5_1_LONG_1582926000_217": {
+      "known_at": "2020.03.02 12:45:00",
+      "sequence": 24591,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1583151900_220",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.02 12:30:00",
+      "pivot_price": 1608.21,
+      "original_arm_known_at": "",
+      "fill_sequence": 24199
+    },
+    "W33_XAUUSD+_5_1_LONG_1583126100_218": {
+      "known_at": "2020.03.02 12:45:00",
+      "sequence": 24591,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1583151900_220",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.02 12:30:00",
+      "pivot_price": 1608.21,
+      "original_arm_known_at": "",
+      "fill_sequence": 24496
+    },
+    "W33_XAUUSD+_5_1_SHORT_1583155800_221": {
+      "known_at": "2020.03.02 16:50:00",
+      "sequence": 24714,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1583166600_222",
+      "direction": "LONG",
+      "pivot_time": "2020.03.02 16:35:00",
+      "pivot_price": 1601.79,
+      "original_arm_known_at": "",
+      "fill_sequence": 24654
+    },
+    "W33_XAUUSD+_5_1_LONG_1583166600_222": {
+      "known_at": "2020.03.02 20:25:00",
+      "sequence": 24822,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1583179200_223",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.02 20:10:00",
+      "pivot_price": 1594.43,
+      "original_arm_known_at": "",
+      "fill_sequence": 24749
+    },
+    "W33_XAUUSD+_5_1_LONG_1583191200_224": {
+      "known_at": "2020.03.03 05:20:00",
+      "sequence": 25121,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1583211900_226",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.03 05:05:00",
+      "pivot_price": 1596.76,
+      "original_arm_known_at": "",
+      "fill_sequence": 24963
+    },
+    "W33_XAUUSD+_5_1_LONG_1583204400_225": {
+      "known_at": "2020.03.03 05:20:00",
+      "sequence": 25121,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1583211900_226",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.03 05:05:00",
+      "pivot_price": 1596.76,
+      "original_arm_known_at": "2020.03.03 05:20:00",
+      "fill_sequence": 25092
+    },
+    "W33_XAUUSD+_5_1_SHORT_1583220600_227": {
+      "known_at": "2020.03.04 17:10:00",
+      "sequence": 25934,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1583340000_231",
+      "direction": "LONG",
+      "pivot_time": "2020.03.04 16:55:00",
+      "pivot_price": 1646.56,
+      "original_arm_known_at": "",
+      "fill_sequence": 25207
+    },
+    "W33_XAUUSD+_5_1_SHORT_1583287200_230": {
+      "known_at": "2020.03.04 17:10:00",
+      "sequence": 25934,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1583340000_231",
+      "direction": "LONG",
+      "pivot_time": "2020.03.04 16:55:00",
+      "pivot_price": 1646.56,
+      "original_arm_known_at": "",
+      "fill_sequence": 25633
+    },
+    "W33_XAUUSD+_5_1_SHORT_1583379300_235": {
+      "known_at": "2020.03.05 05:35:00",
+      "sequence": 26275,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1583384700_236",
+      "direction": "LONG",
+      "pivot_time": "2020.03.05 05:20:00",
+      "pivot_price": 1639.96,
+      "original_arm_known_at": "",
+      "fill_sequence": 26241
+    },
+    "W33_XAUUSD+_5_1_LONG_1583384700_236": {
+      "known_at": "2020.03.05 10:10:00",
+      "sequence": 26421,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1583401200_238",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.05 09:55:00",
+      "pivot_price": 1637.16,
+      "original_arm_known_at": "",
+      "fill_sequence": 26331
+    },
+    "W33_XAUUSD+_5_1_SHORT_1583401200_238": {
+      "known_at": "2020.03.06 10:50:00",
+      "sequence": 26986,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1583489400_242",
+      "direction": "LONG",
+      "pivot_time": "2020.03.06 10:35:00",
+      "pivot_price": 1679.33,
+      "original_arm_known_at": "",
+      "fill_sequence": 26471
+    },
+    "W33_XAUUSD+_5_1_SHORT_1583465700_241": {
+      "known_at": "2020.03.06 10:50:00",
+      "sequence": 26986,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1583489400_242",
+      "direction": "LONG",
+      "pivot_time": "2020.03.06 10:35:00",
+      "pivot_price": 1679.33,
+      "original_arm_known_at": "",
+      "fill_sequence": 26859
+    },
+    "W33_XAUUSD+_5_1_LONG_1583725500_245": {
+      "known_at": "2020.03.09 15:00:00",
+      "sequence": 27620,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1583765100_246",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.09 14:45:00",
+      "pivot_price": 1674.46,
+      "original_arm_known_at": "",
+      "fill_sequence": 27381
+    },
+    "W33_XAUUSD+_5_1_LONG_1583783100_248": {
+      "known_at": "2020.03.09 22:50:00",
+      "sequence": 27871,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1583793000_249",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.09 22:35:00",
+      "pivot_price": 1671.14,
+      "original_arm_known_at": "",
+      "fill_sequence": 27822
+    },
+    "W33_XAUUSD+_5_1_SHORT_1583793000_249": {
+      "known_at": "2020.03.10 15:20:00",
+      "sequence": 28294,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1583852700_255",
+      "direction": "LONG",
+      "pivot_time": "2020.03.10 15:05:00",
+      "pivot_price": 1667.57,
+      "original_arm_known_at": "",
+      "fill_sequence": 27914
+    },
+    "W33_XAUUSD+_5_1_SHORT_1583820900_253": {
+      "known_at": "2020.03.10 15:20:00",
+      "sequence": 28294,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1583852700_255",
+      "direction": "LONG",
+      "pivot_time": "2020.03.10 15:05:00",
+      "pivot_price": 1667.57,
+      "original_arm_known_at": "",
+      "fill_sequence": 28105
+    },
+    "W33_XAUUSD+_5_1_LONG_1583965200_262": {
+      "known_at": "2020.03.12 04:40:00",
+      "sequence": 29158,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1583987100_264",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.12 04:25:00",
+      "pivot_price": 1641.58,
+      "original_arm_known_at": "",
+      "fill_sequence": 29045
+    },
+    "W33_XAUUSD+_5_1_SHORT_1584024900_267": {
+      "known_at": "2020.03.12 20:15:00",
+      "sequence": 29581,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1584041100_269",
+      "direction": "LONG",
+      "pivot_time": "2020.03.12 20:00:00",
+      "pivot_price": 1609.89,
+      "original_arm_known_at": "",
+      "fill_sequence": 29472
+    },
+    "W33_XAUUSD+_5_1_SHORT_1584117300_272": {
+      "known_at": "2020.03.13 21:25:00",
+      "sequence": 30169,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1584133200_273",
+      "direction": "LONG",
+      "pivot_time": "2020.03.13 21:10:00",
+      "pivot_price": 1537.29,
+      "original_arm_known_at": "",
+      "fill_sequence": 30093
+    },
+    "W33_XAUUSD+_5_1_LONG_1584142200_275": {
+      "known_at": "2020.03.16 10:25:00",
+      "sequence": 30499,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1584353100_276",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.16 10:10:00",
+      "pivot_price": 1532.14,
+      "original_arm_known_at": "",
+      "fill_sequence": 30319
+    },
+    "W33_XAUUSD+_5_1_SHORT_1584353100_276": {
+      "known_at": "2020.03.16 17:10:00",
+      "sequence": 30691,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1584377400_277",
+      "direction": "LONG",
+      "pivot_time": "2020.03.16 16:55:00",
+      "pivot_price": 1475.96,
+      "original_arm_known_at": "",
+      "fill_sequence": 30582
+    },
+    "W33_XAUUSD+_5_1_LONG_1584377400_277": {
+      "known_at": "2020.03.17 04:20:00",
+      "sequence": 30945,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1584417900_279",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.17 04:05:00",
+      "pivot_price": 1494.44,
+      "original_arm_known_at": "",
+      "fill_sequence": 30710
+    },
+    "W33_XAUUSD+_5_1_LONG_1584399300_278": {
+      "known_at": "2020.03.17 04:20:00",
+      "sequence": 30945,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1584417900_279",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.17 04:05:00",
+      "pivot_price": 1494.44,
+      "original_arm_known_at": "",
+      "fill_sequence": 30863
+    },
+    "W33_XAUUSD+_5_1_SHORT_1584500400_283": {
+      "known_at": "2020.03.18 21:05:00",
+      "sequence": 31886,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1584564300_285",
+      "direction": "LONG",
+      "pivot_time": "2020.03.18 20:50:00",
+      "pivot_price": 1495.13,
+      "original_arm_known_at": "",
+      "fill_sequence": 31502
+    },
+    "W33_XAUUSD+_5_1_LONG_1584564300_285": {
+      "known_at": "2020.03.19 03:50:00",
+      "sequence": 32043,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1584588600_286",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.19 03:35:00",
+      "pivot_price": 1489.52,
+      "original_arm_known_at": "",
+      "fill_sequence": 31929
+    },
+    "W33_XAUUSD+_5_1_SHORT_1584658500_292": {
+      "known_at": "2020.03.20 17:30:00",
+      "sequence": 32989,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1584724500_294",
+      "direction": "LONG",
+      "pivot_time": "2020.03.20 17:15:00",
+      "pivot_price": 1500.4,
+      "original_arm_known_at": "",
+      "fill_sequence": 32601
+    },
+    "W33_XAUUSD+_5_1_SHORT_1584714000_293": {
+      "known_at": "2020.03.20 17:30:00",
+      "sequence": 32989,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1584724500_294",
+      "direction": "LONG",
+      "pivot_time": "2020.03.20 17:15:00",
+      "pivot_price": 1500.4,
+      "original_arm_known_at": "",
+      "fill_sequence": 32931
+    },
+    "W33_XAUUSD+_5_1_LONG_1584724500_294": {
+      "known_at": "2020.03.20 21:55:00",
+      "sequence": 33104,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1584739800_295",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.20 21:40:00",
+      "pivot_price": 1479.38,
+      "original_arm_known_at": "",
+      "fill_sequence": 33008
+    },
+    "W33_XAUUSD+_5_1_SHORT_1584927300_296": {
+      "known_at": "2020.03.23 08:50:00",
+      "sequence": 33379,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1584951900_298",
+      "direction": "LONG",
+      "pivot_time": "2020.03.23 08:35:00",
+      "pivot_price": 1495.41,
+      "original_arm_known_at": "",
+      "fill_sequence": 33218
+    },
+    "W33_XAUUSD+_5_1_LONG_1584951900_298": {
+      "known_at": "2020.03.23 13:05:00",
+      "sequence": 33515,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1584967200_299",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.23 12:50:00",
+      "pivot_price": 1489.37,
+      "original_arm_known_at": "",
+      "fill_sequence": 33425
+    },
+    "W33_XAUUSD+_5_1_LONG_1585203300_309": {
+      "known_at": "2020.03.27 01:45:00",
+      "sequence": 35471,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1585272300_313",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.27 01:30:00",
+      "pivot_price": 1624.66,
+      "original_arm_known_at": "",
+      "fill_sequence": 35089
+    },
+    "W33_XAUUSD+_5_1_LONG_1585608000_315": {
+      "known_at": "2020.03.31 07:45:00",
+      "sequence": 36666,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1585639500_316",
+      "direction": "SHORT",
+      "pivot_time": "2020.03.31 07:30:00",
+      "pivot_price": 1613.14,
+      "original_arm_known_at": "",
+      "fill_sequence": 36531
+    },
+    "W33_XAUUSD+_5_1_SHORT_1585739700_319": {
+      "known_at": "2020.04.01 21:20:00",
+      "sequence": 37520,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1585774800_322",
+      "direction": "LONG",
+      "pivot_time": "2020.04.01 21:05:00",
+      "pivot_price": 1584.98,
+      "original_arm_known_at": "",
+      "fill_sequence": 37291
+    },
+    "W33_XAUUSD+_5_1_SHORT_1585825500_325": {
+      "known_at": "2020.04.03 22:30:00",
+      "sequence": 38776,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1585950300_334",
+      "direction": "LONG",
+      "pivot_time": "2020.04.03 22:15:00",
+      "pivot_price": 1625.59,
+      "original_arm_known_at": "",
+      "fill_sequence": 37927
+    },
+    "W33_XAUUSD+_5_1_SHORT_1585898700_330": {
+      "known_at": "2020.04.03 22:30:00",
+      "sequence": 38776,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1585950300_334",
+      "direction": "LONG",
+      "pivot_time": "2020.04.03 22:15:00",
+      "pivot_price": 1625.59,
+      "original_arm_known_at": "",
+      "fill_sequence": 38417
+    },
+    "W33_XAUUSD+_5_1_LONG_1586181300_337": {
+      "known_at": "2020.04.07 03:10:00",
+      "sequence": 39440,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1586227200_339",
+      "direction": "SHORT",
+      "pivot_time": "2020.04.07 02:55:00",
+      "pivot_price": 1658.71,
+      "original_arm_known_at": "",
+      "fill_sequence": 39174
+    },
+    "W33_XAUUSD+_5_1_SHORT_1586227200_339": {
+      "known_at": "2020.04.07 06:35:30",
+      "sequence": 39558,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1586239800_340",
+      "direction": "LONG",
+      "pivot_time": "2020.04.07 06:20:00",
+      "pivot_price": 1662.86,
+      "original_arm_known_at": "2020.04.07 06:35:30",
+      "fill_sequence": 39492
+    },
+    "W33_XAUUSD+_5_1_LONG_1586283300_345": {
+      "known_at": "2020.04.08 01:15:00",
+      "sequence": 40078,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1586301900_346",
+      "direction": "SHORT",
+      "pivot_time": "2020.04.08 01:00:00",
+      "pivot_price": 1645.03,
+      "original_arm_known_at": "",
+      "fill_sequence": 39959
+    },
+    "W33_XAUUSD+_5_1_SHORT_1586301900_346": {
+      "known_at": "2020.04.08 21:30:00",
+      "sequence": 40655,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1586378700_351",
+      "direction": "LONG",
+      "pivot_time": "2020.04.08 21:15:00",
+      "pivot_price": 1651.58,
+      "original_arm_known_at": "",
+      "fill_sequence": 40240
+    },
+    "W33_XAUUSD+_5_1_SHORT_1586334900_348": {
+      "known_at": "2020.04.08 21:30:00",
+      "sequence": 40655,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1586378700_351",
+      "direction": "LONG",
+      "pivot_time": "2020.04.08 21:15:00",
+      "pivot_price": 1651.58,
+      "original_arm_known_at": "",
+      "fill_sequence": 40374
+    },
+    "W33_XAUUSD+_5_1_SHORT_1587142800_368": {
+      "known_at": "2020.04.17 23:25:00",
+      "sequence": 44017,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1587164400_369",
+      "direction": "LONG",
+      "pivot_time": "2020.04.17 23:10:00",
+      "pivot_price": 1684.79,
+      "original_arm_known_at": "",
+      "fill_sequence": 43895
+    },
+    "W33_XAUUSD+_5_1_LONG_1587486300_373": {
+      "known_at": "2020.04.22 03:45:00",
+      "sequence": 45288,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1587525900_378",
+      "direction": "SHORT",
+      "pivot_time": "2020.04.22 03:30:00",
+      "pivot_price": 1683.63,
+      "original_arm_known_at": "",
+      "fill_sequence": 45036
+    },
+    "W33_XAUUSD+_5_1_LONG_1587523200_377": {
+      "known_at": "2020.04.22 03:45:00",
+      "sequence": 45288,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1587525900_378",
+      "direction": "SHORT",
+      "pivot_time": "2020.04.22 03:30:00",
+      "pivot_price": 1683.63,
+      "original_arm_known_at": "",
+      "fill_sequence": 45268
+    },
+    "W33_XAUUSD+_5_1_LONG_1587639600_383": {
+      "known_at": "2020.04.24 14:50:00",
+      "sequence": 46744,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1587738600_386",
+      "direction": "SHORT",
+      "pivot_time": "2020.04.24 14:35:00",
+      "pivot_price": 1731.34,
+      "original_arm_known_at": "",
+      "fill_sequence": 46201
+    },
+    "W33_XAUUSD+_5_1_SHORT_1587958500_389": {
+      "known_at": "2020.04.27 15:35:00",
+      "sequence": 47478,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1588000500_393",
+      "direction": "LONG",
+      "pivot_time": "2020.04.27 15:20:00",
+      "pivot_price": 1720.88,
+      "original_arm_known_at": "",
+      "fill_sequence": 47148
+    },
+    "W33_XAUUSD+_5_1_LONG_1588075200_396": {
+      "known_at": "2020.04.28 16:30:00",
+      "sequence": 48053,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1588090200_398",
+      "direction": "SHORT",
+      "pivot_time": "2020.04.28 16:15:00",
+      "pivot_price": 1708.16,
+      "original_arm_known_at": "2020.04.28 16:30:00",
+      "fill_sequence": 47977
+    },
+    "W33_XAUUSD+_5_1_SHORT_1588138200_401": {
+      "known_at": "2020.04.29 07:05:00",
+      "sequence": 48438,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1588142700_402",
+      "direction": "LONG",
+      "pivot_time": "2020.04.29 06:50:00",
+      "pivot_price": 1711.19,
+      "original_arm_known_at": "2020.04.29 07:05:00",
+      "fill_sequence": 48417
+    },
+    "W33_XAUUSD+_5_1_LONG_1588179300_405": {
+      "known_at": "2020.04.30 15:55:00",
+      "sequence": 49338,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1588260300_409",
+      "direction": "SHORT",
+      "pivot_time": "2020.04.30 15:40:00",
+      "pivot_price": 1693.83,
+      "original_arm_known_at": "",
+      "fill_sequence": 48779
+    },
+    "W33_XAUUSD+_5_1_SHORT_1588260300_409": {
+      "known_at": "2020.05.01 06:05:00",
+      "sequence": 49683,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1588311300_411",
+      "direction": "LONG",
+      "pivot_time": "2020.05.01 05:50:00",
+      "pivot_price": 1690.42,
+      "original_arm_known_at": "",
+      "fill_sequence": 49366
+    },
+    "W33_XAUUSD+_5_1_LONG_1588311300_411": {
+      "known_at": "2020.05.01 15:35:00",
+      "sequence": 49952,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1588345800_413",
+      "direction": "SHORT",
+      "pivot_time": "2020.05.01 15:20:00",
+      "pivot_price": 1675.63,
+      "original_arm_known_at": "",
+      "fill_sequence": 49728
+    },
+    "W33_XAUUSD+_5_1_SHORT_1588345800_413": {
+      "known_at": "2020.05.01 21:20:00",
+      "sequence": 50102,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1588366800_415",
+      "direction": "LONG",
+      "pivot_time": "2020.05.01 21:05:00",
+      "pivot_price": 1699.96,
+      "original_arm_known_at": "",
+      "fill_sequence": 49980
+    },
+    "W33_XAUUSD+_5_1_SHORT_1588741200_427": {
+      "known_at": "2020.05.06 21:55:00",
+      "sequence": 51924,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1588797600_428",
+      "direction": "LONG",
+      "pivot_time": "2020.05.06 21:40:00",
+      "pivot_price": 1690.66,
+      "original_arm_known_at": "",
+      "fill_sequence": 51617
+    },
+    "W33_XAUUSD+_5_1_SHORT_1588960200_435": {
+      "known_at": "2020.05.11 04:55:00",
+      "sequence": 53276,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1589170800_436",
+      "direction": "LONG",
+      "pivot_time": "2020.05.11 04:40:00",
+      "pivot_price": 1712.14,
+      "original_arm_known_at": "",
+      "fill_sequence": 53063
+    },
+    "W33_XAUUSD+_5_1_LONG_1589170800_436": {
+      "known_at": "2020.05.11 17:35:00",
+      "sequence": 53630,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1589216700_438",
+      "direction": "SHORT",
+      "pivot_time": "2020.05.11 17:20:00",
+      "pivot_price": 1696.8,
+      "original_arm_known_at": "",
+      "fill_sequence": 53340
+    },
+    "W33_XAUUSD+_5_1_SHORT_1589216700_438": {
+      "known_at": "2020.05.11 23:35:00",
+      "sequence": 53821,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1589239200_439",
+      "direction": "LONG",
+      "pivot_time": "2020.05.11 23:20:00",
+      "pivot_price": 1698.58,
+      "original_arm_known_at": "",
+      "fill_sequence": 53706
+    },
+    "W33_XAUUSD+_5_1_SHORT_1589386800_445": {
+      "known_at": "2020.05.14 21:45:00",
+      "sequence": 55479,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1589491500_450",
+      "direction": "LONG",
+      "pivot_time": "2020.05.14 21:30:00",
+      "pivot_price": 1733.02,
+      "original_arm_known_at": "",
+      "fill_sequence": 54810
+    },
+    "W33_XAUUSD+_5_1_SHORT_1589396700_446": {
+      "known_at": "2020.05.14 21:45:00",
+      "sequence": 55479,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1589491500_450",
+      "direction": "LONG",
+      "pivot_time": "2020.05.14 21:30:00",
+      "pivot_price": 1733.02,
+      "original_arm_known_at": "",
+      "fill_sequence": 54908
+    },
+    "W33_XAUUSD+_5_1_SHORT_1589453400_448": {
+      "known_at": "2020.05.14 21:45:00",
+      "sequence": 55479,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1589491500_450",
+      "direction": "LONG",
+      "pivot_time": "2020.05.14 21:30:00",
+      "pivot_price": 1733.02,
+      "original_arm_known_at": "",
+      "fill_sequence": 55249
+    },
+    "W33_XAUUSD+_5_1_LONG_1589515500_451": {
+      "known_at": "2020.05.15 13:15:00",
+      "sequence": 55850,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1589547300_453",
+      "direction": "SHORT",
+      "pivot_time": "2020.05.15 13:00:00",
+      "pivot_price": 1733.85,
+      "original_arm_known_at": "",
+      "fill_sequence": 55640
+    },
+    "W33_XAUUSD+_5_1_SHORT_1589801400_456": {
+      "known_at": "2020.05.18 13:25:00",
+      "sequence": 56418,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1589806500_457",
+      "direction": "LONG",
+      "pivot_time": "2020.05.18 13:10:00",
+      "pivot_price": 1764.79,
+      "original_arm_known_at": "",
+      "fill_sequence": 56379
+    },
+    "W33_XAUUSD+_5_1_LONG_1589806500_457": {
+      "known_at": "2020.05.18 22:10:00",
+      "sequence": 56639,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1589838900_458",
+      "direction": "SHORT",
+      "pivot_time": "2020.05.18 21:55:00",
+      "pivot_price": 1731.8,
+      "original_arm_known_at": "",
+      "fill_sequence": 56460
+    },
+    "W33_XAUUSD+_5_1_SHORT_1589953200_464": {
+      "known_at": "2020.05.20 10:00:00",
+      "sequence": 57447,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1589967300_465",
+      "direction": "LONG",
+      "pivot_time": "2020.05.20 09:45:00",
+      "pivot_price": 1750.74,
+      "original_arm_known_at": "",
+      "fill_sequence": 57358
+    },
+    "W33_XAUUSD+_5_1_LONG_1589998800_467": {
+      "known_at": "2020.05.20 19:15:00",
+      "sequence": 57720,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1590001200_468",
+      "direction": "SHORT",
+      "pivot_time": "2020.05.20 19:00:00",
+      "pivot_price": 1746.24,
+      "original_arm_known_at": "",
+      "fill_sequence": 57704
+    },
+    "W33_XAUUSD+_5_1_SHORT_1590390900_482": {
+      "known_at": "2020.05.25 15:25:00",
+      "sequence": 59456,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1590418200_484",
+      "direction": "LONG",
+      "pivot_time": "2020.05.25 15:10:00",
+      "pivot_price": 1729.97,
+      "original_arm_known_at": "",
+      "fill_sequence": 59301
+    },
+    "W33_XAUUSD+_5_1_LONG_1590483300_490": {
+      "known_at": "2020.05.26 16:10:00",
+      "sequence": 60056,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1590507900_494",
+      "direction": "SHORT",
+      "pivot_time": "2020.05.26 15:55:00",
+      "pivot_price": 1723.5,
+      "original_arm_known_at": "",
+      "fill_sequence": 59856
+    },
+    "W33_XAUUSD+_5_1_LONG_1590500100_492": {
+      "known_at": "2020.05.26 16:10:00",
+      "sequence": 60056,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1590507900_494",
+      "direction": "SHORT",
+      "pivot_time": "2020.05.26 15:55:00",
+      "pivot_price": 1723.5,
+      "original_arm_known_at": "",
+      "fill_sequence": 60011
+    },
+    "W33_XAUUSD+_5_1_LONG_1590517800_496": {
+      "known_at": "2020.05.26 22:25:00",
+      "sequence": 60281,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1590529200_497",
+      "direction": "SHORT",
+      "pivot_time": "2020.05.26 22:10:00",
+      "pivot_price": 1708.72,
+      "original_arm_known_at": "",
+      "fill_sequence": 60215
+    },
+    "W33_XAUUSD+_5_1_SHORT_1590615000_503": {
+      "known_at": "2020.05.28 22:15:00",
+      "sequence": 61333,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1590702600_504",
+      "direction": "LONG",
+      "pivot_time": "2020.05.28 22:00:00",
+      "pivot_price": 1717.72,
+      "original_arm_known_at": "",
+      "fill_sequence": 60908
+    },
+    "W33_XAUUSD+_5_1_LONG_1591105800_519": {
+      "known_at": "2020.06.03 02:40:00",
+      "sequence": 63129,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1591149900_523",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.03 02:25:00",
+      "pivot_price": 1725.65,
+      "original_arm_known_at": "",
+      "fill_sequence": 62852
+    },
+    "W33_XAUUSD+_5_1_SHORT_1591181400_526": {
+      "known_at": "2020.06.03 20:20:00",
+      "sequence": 63539,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1591214700_528",
+      "direction": "LONG",
+      "pivot_time": "2020.06.03 20:05:00",
+      "pivot_price": 1700.38,
+      "original_arm_known_at": "",
+      "fill_sequence": 63370
+    },
+    "W33_XAUUSD+_5_1_SHORT_1591255800_531": {
+      "known_at": "2020.06.04 16:05:00",
+      "sequence": 64018,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1591284600_532",
+      "direction": "LONG",
+      "pivot_time": "2020.06.04 15:50:00",
+      "pivot_price": 1718.1,
+      "original_arm_known_at": "",
+      "fill_sequence": 63854
+    },
+    "W33_XAUUSD+_5_1_LONG_1591284600_532": {
+      "known_at": "2020.06.05 03:10:00",
+      "sequence": 64262,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1591324800_534",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.05 02:55:00",
+      "pivot_price": 1712.04,
+      "original_arm_known_at": "",
+      "fill_sequence": 64053
+    },
+    "W33_XAUUSD+_5_1_SHORT_1591332600_536": {
+      "known_at": "2020.06.05 10:50:00",
+      "sequence": 64507,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1591353000_537",
+      "direction": "LONG",
+      "pivot_time": "2020.06.05 10:35:00",
+      "pivot_price": 1710.71,
+      "original_arm_known_at": "",
+      "fill_sequence": 64390
+    },
+    "W33_XAUUSD+_5_1_SHORT_1591388100_539": {
+      "known_at": "2020.06.08 09:45:00",
+      "sequence": 65066,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1591608300_541",
+      "direction": "LONG",
+      "pivot_time": "2020.06.08 09:30:00",
+      "pivot_price": 1694.93,
+      "original_arm_known_at": "",
+      "fill_sequence": 64783
+    },
+    "W33_XAUUSD+_5_1_SHORT_1591578000_540": {
+      "known_at": "2020.06.08 09:45:00",
+      "sequence": 65066,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1591608300_541",
+      "direction": "LONG",
+      "pivot_time": "2020.06.08 09:30:00",
+      "pivot_price": 1694.93,
+      "original_arm_known_at": "",
+      "fill_sequence": 64900
+    },
+    "W33_XAUUSD+_5_1_LONG_1591608300_541": {
+      "known_at": "2020.06.08 12:30:00",
+      "sequence": 65157,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1591618500_542",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.08 12:15:00",
+      "pivot_price": 1692.93,
+      "original_arm_known_at": "",
+      "fill_sequence": 65093
+    },
+    "W33_XAUUSD+_5_1_LONG_1591621200_543": {
+      "known_at": "2020.06.09 18:40:00",
+      "sequence": 65906,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1591725600_550",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.09 18:25:00",
+      "pivot_price": 1716.3,
+      "original_arm_known_at": "",
+      "fill_sequence": 65235
+    },
+    "W33_XAUUSD+_5_1_LONG_1591635900_544": {
+      "known_at": "2020.06.09 18:40:00",
+      "sequence": 65906,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1591725600_550",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.09 18:25:00",
+      "pivot_price": 1716.3,
+      "original_arm_known_at": "",
+      "fill_sequence": 65375
+    },
+    "W33_XAUUSD+_5_1_SHORT_1591725600_550": {
+      "known_at": "2020.06.10 04:25:00",
+      "sequence": 66137,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1591760100_552",
+      "direction": "LONG",
+      "pivot_time": "2020.06.10 04:10:00",
+      "pivot_price": 1718.29,
+      "original_arm_known_at": "",
+      "fill_sequence": 65926
+    },
+    "W33_XAUUSD+_5_1_LONG_1591889400_558": {
+      "known_at": "2020.06.12 12:55:00",
+      "sequence": 67540,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1591965300_562",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.12 12:40:00",
+      "pivot_price": 1732.16,
+      "original_arm_known_at": "",
+      "fill_sequence": 67115
+    },
+    "W33_XAUUSD+_5_1_LONG_1591932900_560": {
+      "known_at": "2020.06.12 12:55:00",
+      "sequence": 67540,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1591965300_562",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.12 12:40:00",
+      "pivot_price": 1732.16,
+      "original_arm_known_at": "",
+      "fill_sequence": 67318
+    },
+    "W33_XAUUSD+_5_1_SHORT_1592001600_564": {
+      "known_at": "2020.06.15 11:40:00",
+      "sequence": 68086,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1592220000_567",
+      "direction": "LONG",
+      "pivot_time": "2020.06.15 11:25:00",
+      "pivot_price": 1724.17,
+      "original_arm_known_at": "",
+      "fill_sequence": 67824
+    },
+    "W33_XAUUSD+_5_1_SHORT_1592366100_581": {
+      "known_at": "2020.06.17 08:45:00",
+      "sequence": 69309,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1592382300_583",
+      "direction": "LONG",
+      "pivot_time": "2020.06.17 08:30:00",
+      "pivot_price": 1728.51,
+      "original_arm_known_at": "",
+      "fill_sequence": 69206
+    },
+    "W33_XAUUSD+_5_1_LONG_1592571300_591": {
+      "known_at": "2020.06.19 16:40:00",
+      "sequence": 70605,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1592583600_592",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.19 16:25:00",
+      "pivot_price": 1731.89,
+      "original_arm_known_at": "",
+      "fill_sequence": 70549
+    },
+    "W33_XAUUSD+_5_1_LONG_1592586600_593": {
+      "known_at": "2020.06.22 06:25:00",
+      "sequence": 70945,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1592804100_595",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.22 06:10:00",
+      "pivot_price": 1749.12,
+      "original_arm_known_at": "",
+      "fill_sequence": 70712
+    },
+    "W33_XAUUSD+_5_1_SHORT_1592804100_595": {
+      "known_at": "2020.06.22 23:30:00",
+      "sequence": 71359,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1592867700_599",
+      "direction": "LONG",
+      "pivot_time": "2020.06.22 23:15:00",
+      "pivot_price": 1756.86,
+      "original_arm_known_at": "",
+      "fill_sequence": 70977
+    },
+    "W33_XAUUSD+_5_1_LONG_1592867700_599": {
+      "known_at": "2020.06.23 09:05:00",
+      "sequence": 71608,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1592901900_602",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.23 08:50:00",
+      "pivot_price": 1750.59,
+      "original_arm_known_at": "",
+      "fill_sequence": 71387
+    },
+    "W33_XAUUSD+_5_1_LONG_1592878200_600": {
+      "known_at": "2020.06.23 09:05:00",
+      "sequence": 71608,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1592901900_602",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.23 08:50:00",
+      "pivot_price": 1750.59,
+      "original_arm_known_at": "",
+      "fill_sequence": 71476
+    },
+    "W33_XAUUSD+_5_1_SHORT_1592941800_605": {
+      "known_at": "2020.06.24 05:55:00",
+      "sequence": 72118,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1592976600_606",
+      "direction": "LONG",
+      "pivot_time": "2020.06.24 05:40:00",
+      "pivot_price": 1770.43,
+      "original_arm_known_at": "",
+      "fill_sequence": 71926
+    },
+    "W33_XAUUSD+_5_1_LONG_1593016800_610": {
+      "known_at": "2020.06.24 18:55:00",
+      "sequence": 72470,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1593023400_611",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.24 18:40:00",
+      "pivot_price": 1763.26,
+      "original_arm_known_at": "",
+      "fill_sequence": 72424
+    },
+    "W33_XAUUSD+_5_1_SHORT_1593023400_611": {
+      "known_at": "2020.06.24 20:20:00",
+      "sequence": 72555,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1593028500_612",
+      "direction": "LONG",
+      "pivot_time": "2020.06.24 20:05:00",
+      "pivot_price": 1768.31,
+      "original_arm_known_at": "",
+      "fill_sequence": 72537
+    },
+    "W33_XAUUSD+_5_1_LONG_1593075900_617": {
+      "known_at": "2020.06.25 20:45:00",
+      "sequence": 73134,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1593116100_618",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.25 20:30:00",
+      "pivot_price": 1760.96,
+      "original_arm_known_at": "",
+      "fill_sequence": 72908
+    },
+    "W33_XAUUSD+_5_1_SHORT_1593116100_618": {
+      "known_at": "2020.06.25 21:45:00",
+      "sequence": 73185,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1593120300_619",
+      "direction": "LONG",
+      "pivot_time": "2020.06.25 21:30:00",
+      "pivot_price": 1762.91,
+      "original_arm_known_at": "2020.06.25 21:45:00",
+      "fill_sequence": 73165
+    },
+    "W33_XAUUSD+_5_1_LONG_1593408600_623": {
+      "known_at": "2020.06.29 12:25:00",
+      "sequence": 74019,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1593432600_624",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.29 12:10:00",
+      "pivot_price": 1768.0,
+      "original_arm_known_at": "",
+      "fill_sequence": 73887
+    },
+    "W33_XAUUSD+_5_1_LONG_1593481200_627": {
+      "known_at": "2020.06.30 06:40:00",
+      "sequence": 74497,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1593497700_628",
+      "direction": "SHORT",
+      "pivot_time": "2020.06.30 06:25:00",
+      "pivot_price": 1770.08,
+      "original_arm_known_at": "",
+      "fill_sequence": 74419
+    },
+    "W33_XAUUSD+_5_1_SHORT_1593547800_630": {
+      "known_at": "2020.06.30 21:55:00",
+      "sequence": 74890,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1593552600_631",
+      "direction": "LONG",
+      "pivot_time": "2020.06.30 21:40:00",
+      "pivot_price": 1783.18,
+      "original_arm_known_at": "",
+      "fill_sequence": 74853
+    },
+    "W33_XAUUSD+_5_1_SHORT_1593578400_633": {
+      "known_at": "2020.07.01 06:10:00",
+      "sequence": 75091,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1593582600_634",
+      "direction": "LONG",
+      "pivot_time": "2020.07.01 05:55:00",
+      "pivot_price": 1783.11,
+      "original_arm_known_at": "",
+      "fill_sequence": 75059
+    },
+    "W33_XAUUSD+_5_1_LONG_1593582600_634": {
+      "known_at": "2020.07.01 09:15:00",
+      "sequence": 75187,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1593593700_635",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.01 09:00:00",
+      "pivot_price": 1783.45,
+      "original_arm_known_at": "",
+      "fill_sequence": 75129
+    },
+    "W33_XAUUSD+_5_1_LONG_1593629700_636": {
+      "known_at": "2020.07.01 23:25:00",
+      "sequence": 75576,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1593644700_638",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.01 23:10:00",
+      "pivot_price": 1770.25,
+      "original_arm_known_at": "",
+      "fill_sequence": 75529
+    },
+    "W33_XAUUSD+_5_1_SHORT_1593644700_638": {
+      "known_at": "2020.07.02 09:30:00",
+      "sequence": 75883,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1593680400_641",
+      "direction": "LONG",
+      "pivot_time": "2020.07.02 09:15:00",
+      "pivot_price": 1768.03,
+      "original_arm_known_at": "",
+      "fill_sequence": 75611
+    },
+    "W33_XAUUSD+_5_1_SHORT_1593668700_640": {
+      "known_at": "2020.07.02 09:30:00",
+      "sequence": 75883,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1593680400_641",
+      "direction": "LONG",
+      "pivot_time": "2020.07.02 09:15:00",
+      "pivot_price": 1768.03,
+      "original_arm_known_at": "",
+      "fill_sequence": 75843
+    },
+    "W33_XAUUSD+_5_1_LONG_1593680400_641": {
+      "known_at": "2020.07.02 14:00:00",
+      "sequence": 76003,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1593697200_642",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.02 13:45:00",
+      "pivot_price": 1772.04,
+      "original_arm_known_at": "",
+      "fill_sequence": 75909
+    },
+    "W33_XAUUSD+_5_1_SHORT_1593997200_645": {
+      "known_at": "2020.07.06 06:00:00",
+      "sequence": 76819,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1594014000_647",
+      "direction": "LONG",
+      "pivot_time": "2020.07.06 05:45:00",
+      "pivot_price": 1774.32,
+      "original_arm_known_at": "",
+      "fill_sequence": 76706
+    },
+    "W33_XAUUSD+_5_1_LONG_1594014000_647": {
+      "known_at": "2020.07.07 05:05:00",
+      "sequence": 77442,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1594096500_650",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.07 04:50:00",
+      "pivot_price": 1783.52,
+      "original_arm_known_at": "",
+      "fill_sequence": 77047
+    },
+    "W33_XAUUSD+_5_1_LONG_1594084800_649": {
+      "known_at": "2020.07.07 05:05:00",
+      "sequence": 77442,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1594096500_650",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.07 04:50:00",
+      "pivot_price": 1783.52,
+      "original_arm_known_at": "",
+      "fill_sequence": 77403
+    },
+    "W33_XAUUSD+_5_1_SHORT_1594096500_650": {
+      "known_at": "2020.07.07 06:45:00",
+      "sequence": 77510,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1594102800_651",
+      "direction": "LONG",
+      "pivot_time": "2020.07.07 06:30:00",
+      "pivot_price": 1784.92,
+      "original_arm_known_at": "2020.07.07 06:45:00",
+      "fill_sequence": 77469
+    },
+    "W33_XAUUSD+_5_1_SHORT_1594178100_655": {
+      "known_at": "2020.07.08 04:55:00",
+      "sequence": 78071,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1594182600_656",
+      "direction": "LONG",
+      "pivot_time": "2020.07.08 04:40:00",
+      "pivot_price": 1795.12,
+      "original_arm_known_at": "",
+      "fill_sequence": 78050
+    },
+    "W33_XAUUSD+_5_1_SHORT_1594184400_657": {
+      "known_at": "2020.07.08 08:20:00",
+      "sequence": 78197,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1594194300_659",
+      "direction": "LONG",
+      "pivot_time": "2020.07.08 08:05:00",
+      "pivot_price": 1795.4,
+      "original_arm_known_at": "",
+      "fill_sequence": 78126
+    },
+    "W33_XAUUSD+_5_1_LONG_1594293900_666": {
+      "known_at": "2020.07.09 14:10:00",
+      "sequence": 78982,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1594301400_668",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.09 13:55:00",
+      "pivot_price": 1805.72,
+      "original_arm_known_at": "",
+      "fill_sequence": 78907
+    },
+    "W33_XAUUSD+_5_1_SHORT_1594351200_670": {
+      "known_at": "2020.07.10 15:45:00",
+      "sequence": 79616,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1594395000_672",
+      "direction": "LONG",
+      "pivot_time": "2020.07.10 15:30:00",
+      "pivot_price": 1810.55,
+      "original_arm_known_at": "",
+      "fill_sequence": 79344
+    },
+    "W33_XAUUSD+_5_1_SHORT_1594360200_671": {
+      "known_at": "2020.07.10 15:45:00",
+      "sequence": 79616,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1594395000_672",
+      "direction": "LONG",
+      "pivot_time": "2020.07.10 15:30:00",
+      "pivot_price": 1810.55,
+      "original_arm_known_at": "",
+      "fill_sequence": 79452
+    },
+    "W33_XAUUSD+_5_1_SHORT_1594623300_674": {
+      "known_at": "2020.07.14 06:25:00",
+      "sequence": 80453,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1594707000_680",
+      "direction": "LONG",
+      "pivot_time": "2020.07.14 06:10:00",
+      "pivot_price": 1799.04,
+      "original_arm_known_at": "",
+      "fill_sequence": 79963
+    },
+    "W33_XAUUSD+_5_1_LONG_1594707000_680": {
+      "known_at": "2020.07.14 20:20:00",
+      "sequence": 80805,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1594756800_682",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.14 20:05:00",
+      "pivot_price": 1807.43,
+      "original_arm_known_at": "",
+      "fill_sequence": 80526
+    },
+    "W33_XAUUSD+_5_1_SHORT_1594784100_685": {
+      "known_at": "2020.07.16 17:15:00",
+      "sequence": 81869,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1594918200_695",
+      "direction": "LONG",
+      "pivot_time": "2020.07.16 17:00:00",
+      "pivot_price": 1808.09,
+      "original_arm_known_at": "",
+      "fill_sequence": 81018
+    },
+    "W33_XAUUSD+_5_1_SHORT_1594843500_687": {
+      "known_at": "2020.07.16 17:15:00",
+      "sequence": 81869,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1594918200_695",
+      "direction": "LONG",
+      "pivot_time": "2020.07.16 17:00:00",
+      "pivot_price": 1808.09,
+      "original_arm_known_at": "",
+      "fill_sequence": 81371
+    },
+    "W33_XAUUSD+_5_1_LONG_1594918200_695": {
+      "known_at": "2020.07.16 18:20:00",
+      "sequence": 81920,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1594922700_696",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.16 18:05:00",
+      "pivot_price": 1804.29,
+      "original_arm_known_at": "",
+      "fill_sequence": 81895
+    },
+    "W33_XAUUSD+_5_1_SHORT_1594922700_696": {
+      "known_at": "2020.07.17 03:45:00",
+      "sequence": 82155,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1594956000_698",
+      "direction": "LONG",
+      "pivot_time": "2020.07.17 03:30:00",
+      "pivot_price": 1799.3,
+      "original_arm_known_at": "",
+      "fill_sequence": 81949
+    },
+    "W33_XAUUSD+_5_1_SHORT_1594939500_697": {
+      "known_at": "2020.07.17 03:45:00",
+      "sequence": 82155,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1594956000_698",
+      "direction": "LONG",
+      "pivot_time": "2020.07.17 03:30:00",
+      "pivot_price": 1799.3,
+      "original_arm_known_at": "",
+      "fill_sequence": 82073
+    },
+    "W33_XAUUSD+_5_1_LONG_1595253600_702": {
+      "known_at": "2020.07.21 03:35:00",
+      "sequence": 83214,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1595301000_703",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.21 03:20:00",
+      "pivot_price": 1816.52,
+      "original_arm_known_at": "",
+      "fill_sequence": 82992
+    },
+    "W33_XAUUSD+_5_1_SHORT_1595365800_707": {
+      "known_at": "2020.07.22 01:05:00",
+      "sequence": 83704,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1595373000_708",
+      "direction": "LONG",
+      "pivot_time": "2020.07.21 23:50:00",
+      "pivot_price": 1842.12,
+      "original_arm_known_at": "",
+      "fill_sequence": 83654
+    },
+    "W33_XAUUSD+_5_1_LONG_1595442000_713": {
+      "known_at": "2020.07.23 02:05:00",
+      "sequence": 84380,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1595467800_714",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.23 01:50:00",
+      "pivot_price": 1867.58,
+      "original_arm_known_at": "",
+      "fill_sequence": 84274
+    },
+    "W33_XAUUSD+_5_1_LONG_1595502000_716": {
+      "known_at": "2020.07.27 11:00:00",
+      "sequence": 85681,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1595846700_722",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.27 10:45:00",
+      "pivot_price": 1931.93,
+      "original_arm_known_at": "",
+      "fill_sequence": 84646
+    },
+    "W33_XAUUSD+_5_1_LONG_1595541000_717": {
+      "known_at": "2020.07.27 11:00:00",
+      "sequence": 85681,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1595846700_722",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.27 10:45:00",
+      "pivot_price": 1931.93,
+      "original_arm_known_at": "",
+      "fill_sequence": 84873
+    },
+    "W33_XAUUSD+_5_1_LONG_1595568600_718": {
+      "known_at": "2020.07.27 11:00:00",
+      "sequence": 85681,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1595846700_722",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.27 10:45:00",
+      "pivot_price": 1931.93,
+      "original_arm_known_at": "",
+      "fill_sequence": 85062
+    },
+    "W33_XAUUSD+_5_1_LONG_1595599500_721": {
+      "known_at": "2020.07.27 11:00:00",
+      "sequence": 85681,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1595846700_722",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.27 10:45:00",
+      "pivot_price": 1931.93,
+      "original_arm_known_at": "",
+      "fill_sequence": 85284
+    },
+    "W33_XAUUSD+_5_1_SHORT_1595860500_723": {
+      "known_at": "2020.07.27 16:25:00",
+      "sequence": 85845,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1595865900_724",
+      "direction": "LONG",
+      "pivot_time": "2020.07.27 16:10:00",
+      "pivot_price": 1937.85,
+      "original_arm_known_at": "",
+      "fill_sequence": 85818
+    },
+    "W33_XAUUSD+_5_1_LONG_1595865900_724": {
+      "known_at": "2020.07.27 22:05:00",
+      "sequence": 85997,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1595886600_725",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.27 21:50:00",
+      "pivot_price": 1933.7,
+      "original_arm_known_at": "",
+      "fill_sequence": 85884
+    },
+    "W33_XAUUSD+_5_1_SHORT_1595915400_727": {
+      "known_at": "2020.07.28 14:45:00",
+      "sequence": 86475,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1595946000_728",
+      "direction": "LONG",
+      "pivot_time": "2020.07.28 14:30:00",
+      "pivot_price": 1933.4,
+      "original_arm_known_at": "",
+      "fill_sequence": 86299
+    },
+    "W33_XAUUSD+_5_1_LONG_1595949900_729": {
+      "known_at": "2020.07.29 02:10:00",
+      "sequence": 86780,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1595987400_731",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.29 01:55:00",
+      "pivot_price": 1949.15,
+      "original_arm_known_at": "",
+      "fill_sequence": 86575
+    },
+    "W33_XAUUSD+_5_1_LONG_1595984400_730": {
+      "known_at": "2020.07.29 02:10:00",
+      "sequence": 86780,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1595987400_731",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.29 01:55:00",
+      "pivot_price": 1949.15,
+      "original_arm_known_at": "",
+      "fill_sequence": 86761
+    },
+    "W33_XAUUSD+_5_1_SHORT_1595987400_731": {
+      "known_at": "2020.07.29 07:10:00",
+      "sequence": 86918,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1596005400_732",
+      "direction": "LONG",
+      "pivot_time": "2020.07.29 06:55:00",
+      "pivot_price": 1956.78,
+      "original_arm_known_at": "",
+      "fill_sequence": 86812
+    },
+    "W33_XAUUSD+_5_1_LONG_1596005400_732": {
+      "known_at": "2020.07.29 16:55:00",
+      "sequence": 87188,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1596040800_734",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.29 16:40:00",
+      "pivot_price": 1949.64,
+      "original_arm_known_at": "",
+      "fill_sequence": 86937
+    },
+    "W33_XAUUSD+_5_1_SHORT_1596093000_739": {
+      "known_at": "2020.07.30 16:25:00",
+      "sequence": 87862,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1596124800_740",
+      "direction": "LONG",
+      "pivot_time": "2020.07.30 16:10:00",
+      "pivot_price": 1957.48,
+      "original_arm_known_at": "",
+      "fill_sequence": 87681
+    },
+    "W33_XAUUSD+_5_1_SHORT_1596160500_745": {
+      "known_at": "2020.07.31 08:25:00",
+      "sequence": 88283,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1596183000_746",
+      "direction": "LONG",
+      "pivot_time": "2020.07.31 08:10:00",
+      "pivot_price": 1970.04,
+      "original_arm_known_at": "",
+      "fill_sequence": 88165
+    },
+    "W33_XAUUSD+_5_1_SHORT_1596201900_747": {
+      "known_at": "2020.07.31 15:25:00",
+      "sequence": 88466,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1596207900_748",
+      "direction": "LONG",
+      "pivot_time": "2020.07.31 15:10:00",
+      "pivot_price": 1978.32,
+      "original_arm_known_at": "",
+      "fill_sequence": 88436
+    },
+    "W33_XAUUSD+_5_1_LONG_1596207900_748": {
+      "known_at": "2020.07.31 22:10:00",
+      "sequence": 88647,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1596231900_749",
+      "direction": "SHORT",
+      "pivot_time": "2020.07.31 21:55:00",
+      "pivot_price": 1970.2,
+      "original_arm_known_at": "",
+      "fill_sequence": 88507
+    },
+    "W33_XAUUSD+_5_1_SHORT_1596469200_751": {
+      "known_at": "2020.08.03 18:20:00",
+      "sequence": 89120,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1596475800_752",
+      "direction": "LONG",
+      "pivot_time": "2020.08.03 18:05:00",
+      "pivot_price": 1976.55,
+      "original_arm_known_at": "",
+      "fill_sequence": 89066
+    },
+    "W33_XAUUSD+_5_1_LONG_1596475800_752": {
+      "known_at": "2020.08.04 14:00:00",
+      "sequence": 89608,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1596548700_756",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.04 13:45:00",
+      "pivot_price": 1973.5,
+      "original_arm_known_at": "",
+      "fill_sequence": 89172
+    },
+    "W33_XAUUSD+_5_1_LONG_1596535800_755": {
+      "known_at": "2020.08.04 14:00:00",
+      "sequence": 89608,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1596548700_756",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.04 13:45:00",
+      "pivot_price": 1973.5,
+      "original_arm_known_at": "",
+      "fill_sequence": 89546
+    },
+    "W33_XAUUSD+_5_1_SHORT_1596598200_760": {
+      "known_at": "2020.08.05 08:15:00",
+      "sequence": 90138,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1596606300_761",
+      "direction": "LONG",
+      "pivot_time": "2020.08.05 08:00:00",
+      "pivot_price": 2024.97,
+      "original_arm_known_at": "",
+      "fill_sequence": 90038
+    },
+    "W33_XAUUSD+_5_1_LONG_1596740400_768": {
+      "known_at": "2020.08.07 17:00:00",
+      "sequence": 91431,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1596818100_770",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.07 16:45:00",
+      "pivot_price": 2043.44,
+      "original_arm_known_at": "",
+      "fill_sequence": 90970
+    },
+    "W33_XAUUSD+_5_1_LONG_1596785400_769": {
+      "known_at": "2020.08.07 17:00:00",
+      "sequence": 91431,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1596818100_770",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.07 16:45:00",
+      "pivot_price": 2043.44,
+      "original_arm_known_at": "",
+      "fill_sequence": 91256
+    },
+    "W33_XAUUSD+_5_1_SHORT_1596818100_770": {
+      "known_at": "2020.08.10 14:50:00",
+      "sequence": 91993,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1597070100_775",
+      "direction": "LONG",
+      "pivot_time": "2020.08.10 14:35:00",
+      "pivot_price": 2031.73,
+      "original_arm_known_at": "",
+      "fill_sequence": 91460
+    },
+    "W33_XAUUSD+_5_1_SHORT_1597033200_773": {
+      "known_at": "2020.08.10 14:50:00",
+      "sequence": 91993,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1597070100_775",
+      "direction": "LONG",
+      "pivot_time": "2020.08.10 14:35:00",
+      "pivot_price": 2031.73,
+      "original_arm_known_at": "",
+      "fill_sequence": 91759
+    },
+    "W33_XAUUSD+_5_1_SHORT_1597142400_782": {
+      "known_at": "2020.08.11 19:20:00",
+      "sequence": 92859,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1597172700_784",
+      "direction": "LONG",
+      "pivot_time": "2020.08.11 19:05:00",
+      "pivot_price": 1948.13,
+      "original_arm_known_at": "",
+      "fill_sequence": 92651
+    },
+    "W33_XAUUSD+_5_1_SHORT_1597155000_783": {
+      "known_at": "2020.08.11 19:20:00",
+      "sequence": 92859,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1597172700_784",
+      "direction": "LONG",
+      "pivot_time": "2020.08.11 19:05:00",
+      "pivot_price": 1948.13,
+      "original_arm_known_at": "",
+      "fill_sequence": 92762
+    },
+    "W33_XAUUSD+_5_1_LONG_1597385700_794": {
+      "known_at": "2020.08.14 09:00:00",
+      "sequence": 94280,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1597394700_796",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.14 08:45:00",
+      "pivot_price": 1950.05,
+      "original_arm_known_at": "",
+      "fill_sequence": 94228
+    },
+    "W33_XAUUSD+_5_1_SHORT_1597662600_802": {
+      "known_at": "2020.08.17 13:30:00",
+      "sequence": 94991,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1597669800_803",
+      "direction": "LONG",
+      "pivot_time": "2020.08.17 13:15:00",
+      "pivot_price": 1953.03,
+      "original_arm_known_at": "2020.08.17 13:30:00",
+      "fill_sequence": 94947
+    },
+    "W33_XAUUSD+_5_1_LONG_1597734000_808": {
+      "known_at": "2020.08.18 10:15:00",
+      "sequence": 95556,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1597744800_809",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.18 10:00:00",
+      "pivot_price": 1997.23,
+      "original_arm_known_at": "",
+      "fill_sequence": 95495
+    },
+    "W33_XAUUSD+_5_1_SHORT_1597855200_816": {
+      "known_at": "2020.08.20 04:15:00",
+      "sequence": 96594,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1597893900_817",
+      "direction": "LONG",
+      "pivot_time": "2020.08.20 04:00:00",
+      "pivot_price": 1946.41,
+      "original_arm_known_at": "",
+      "fill_sequence": 96392
+    },
+    "W33_XAUUSD+_5_1_LONG_1597893900_817": {
+      "known_at": "2020.08.20 08:20:00",
+      "sequence": 96722,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1597909500_818",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.20 08:05:00",
+      "pivot_price": 1944.35,
+      "original_arm_known_at": "",
+      "fill_sequence": 96633
+    },
+    "W33_XAUUSD+_5_1_LONG_1597914600_819": {
+      "known_at": "2020.08.20 11:05:00",
+      "sequence": 96846,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1597920300_820",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.20 10:50:00",
+      "pivot_price": 1932.68,
+      "original_arm_known_at": "",
+      "fill_sequence": 96807
+    },
+    "W33_XAUUSD+_5_1_SHORT_1597920300_820": {
+      "known_at": "2020.08.20 15:55:00",
+      "sequence": 97011,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1597937400_821",
+      "direction": "LONG",
+      "pivot_time": "2020.08.20 15:40:00",
+      "pivot_price": 1947.61,
+      "original_arm_known_at": "",
+      "fill_sequence": 96923
+    },
+    "W33_XAUUSD+_5_1_SHORT_1597965000_823": {
+      "known_at": "2020.08.21 11:05:00",
+      "sequence": 97545,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1598007000_826",
+      "direction": "LONG",
+      "pivot_time": "2020.08.21 10:50:00",
+      "pivot_price": 1943.18,
+      "original_arm_known_at": "",
+      "fill_sequence": 97258
+    },
+    "W33_XAUUSD+_5_1_SHORT_1597995300_825": {
+      "known_at": "2020.08.21 11:05:00",
+      "sequence": 97545,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1598007000_826",
+      "direction": "LONG",
+      "pivot_time": "2020.08.21 10:50:00",
+      "pivot_price": 1943.18,
+      "original_arm_known_at": "",
+      "fill_sequence": 97485
+    },
+    "W33_XAUUSD+_5_1_SHORT_1598008800_827": {
+      "known_at": "2020.08.21 20:35:00",
+      "sequence": 97861,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1598040600_830",
+      "direction": "LONG",
+      "pivot_time": "2020.08.21 20:20:00",
+      "pivot_price": 1942.1,
+      "original_arm_known_at": "",
+      "fill_sequence": 97629
+    },
+    "W33_XAUUSD+_5_1_LONG_1598040600_830": {
+      "known_at": "2020.08.25 02:20:00",
+      "sequence": 98521,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1598319900_832",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.25 02:05:00",
+      "pivot_price": 1926.98,
+      "original_arm_known_at": "",
+      "fill_sequence": 97911
+    },
+    "W33_XAUUSD+_5_1_SHORT_1598319900_832": {
+      "known_at": "2020.08.25 02:30:00",
+      "sequence": 98553,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1598321700_833",
+      "direction": "LONG",
+      "pivot_time": "2020.08.25 02:15:00",
+      "pivot_price": 1929.53,
+      "original_arm_known_at": "2020.08.25 02:30:00",
+      "fill_sequence": 98548
+    },
+    "W33_XAUUSD+_5_1_SHORT_1598368200_836": {
+      "known_at": "2020.08.26 22:40:00",
+      "sequence": 99530,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1598479500_838",
+      "direction": "LONG",
+      "pivot_time": "2020.08.26 22:25:00",
+      "pivot_price": 1952.71,
+      "original_arm_known_at": "",
+      "fill_sequence": 98886
+    },
+    "W33_XAUUSD+_5_1_SHORT_1598411100_837": {
+      "known_at": "2020.08.26 22:40:00",
+      "sequence": 99530,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1598479500_838",
+      "direction": "LONG",
+      "pivot_time": "2020.08.26 22:25:00",
+      "pivot_price": 1952.71,
+      "original_arm_known_at": "",
+      "fill_sequence": 99137
+    },
+    "W33_XAUUSD+_5_1_LONG_1598479500_838": {
+      "known_at": "2020.08.27 08:50:00",
+      "sequence": 99887,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1598517000_843",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.27 08:35:00",
+      "pivot_price": 1941.08,
+      "original_arm_known_at": "",
+      "fill_sequence": 99632
+    },
+    "W33_XAUUSD+_5_1_LONG_1598510400_841": {
+      "known_at": "2020.08.27 08:50:00",
+      "sequence": 99887,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1598517000_843",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.27 08:35:00",
+      "pivot_price": 1941.08,
+      "original_arm_known_at": "",
+      "fill_sequence": 99824
+    },
+    "W33_XAUUSD+_5_1_LONG_1598624400_848": {
+      "known_at": "2020.08.28 17:20:00",
+      "sequence": 100687,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1598634300_850",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.28 17:05:00",
+      "pivot_price": 1952.71,
+      "original_arm_known_at": "",
+      "fill_sequence": 100619
+    },
+    "W33_XAUUSD+_5_1_SHORT_1598645100_851": {
+      "known_at": "2020.08.31 01:25:00",
+      "sequence": 100939,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1598835600_852",
+      "direction": "LONG",
+      "pivot_time": "2020.08.31 01:10:00",
+      "pivot_price": 1974.49,
+      "original_arm_known_at": "",
+      "fill_sequence": 100869
+    },
+    "W33_XAUUSD+_5_1_LONG_1598835600_852": {
+      "known_at": "2020.08.31 02:30:00",
+      "sequence": 100996,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1598839500_853",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.31 02:15:00",
+      "pivot_price": 1970.37,
+      "original_arm_known_at": "",
+      "fill_sequence": 100967
+    },
+    "W33_XAUUSD+_5_1_SHORT_1598895300_857": {
+      "known_at": "2020.08.31 18:30:00",
+      "sequence": 101399,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1598897700_858",
+      "direction": "LONG",
+      "pivot_time": "2020.08.31 18:15:00",
+      "pivot_price": 1970.2,
+      "original_arm_known_at": "2020.08.31 18:30:00",
+      "fill_sequence": 101395
+    },
+    "W33_XAUUSD+_5_1_LONG_1598897700_858": {
+      "known_at": "2020.08.31 20:05:00",
+      "sequence": 101473,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1598903100_859",
+      "direction": "SHORT",
+      "pivot_time": "2020.08.31 19:50:00",
+      "pivot_price": 1969.53,
+      "original_arm_known_at": "",
+      "fill_sequence": 101429
+    },
+    "W33_XAUUSD+_5_1_LONG_1598953800_863": {
+      "known_at": "2020.09.01 14:25:00",
+      "sequence": 101967,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1598969400_864",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.01 14:10:00",
+      "pivot_price": 1987.87,
+      "original_arm_known_at": "",
+      "fill_sequence": 101896
+    },
+    "W33_XAUUSD+_5_1_LONG_1598982900_865": {
+      "known_at": "2020.09.01 19:15:00",
+      "sequence": 102123,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1598984700_866",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.01 19:00:00",
+      "pivot_price": 1970.95,
+      "original_arm_known_at": "",
+      "fill_sequence": 102090
+    },
+    "W33_XAUUSD+_5_1_SHORT_1598984700_866": {
+      "known_at": "2020.09.02 11:20:00",
+      "sequence": 102523,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1599044700_869",
+      "direction": "LONG",
+      "pivot_time": "2020.09.02 11:05:00",
+      "pivot_price": 1964.85,
+      "original_arm_known_at": "",
+      "fill_sequence": 102161
+    },
+    "W33_XAUUSD+_5_1_SHORT_1599026700_867": {
+      "known_at": "2020.09.02 11:20:00",
+      "sequence": 102523,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1599044700_869",
+      "direction": "LONG",
+      "pivot_time": "2020.09.02 11:05:00",
+      "pivot_price": 1964.85,
+      "original_arm_known_at": "",
+      "fill_sequence": 102413
+    },
+    "W33_XAUUSD+_5_1_LONG_1599044700_869": {
+      "known_at": "2020.09.02 16:50:00",
+      "sequence": 102753,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1599062400_870",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.02 16:35:00",
+      "pivot_price": 1948.57,
+      "original_arm_known_at": "",
+      "fill_sequence": 102690
+    },
+    "W33_XAUUSD+_5_1_SHORT_1599094800_871": {
+      "known_at": "2020.09.03 15:10:00",
+      "sequence": 103460,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1599143700_875",
+      "direction": "LONG",
+      "pivot_time": "2020.09.03 14:55:00",
+      "pivot_price": 1935.11,
+      "original_arm_known_at": "",
+      "fill_sequence": 103057
+    },
+    "W33_XAUUSD+_5_1_SHORT_1599171600_877": {
+      "known_at": "2020.09.04 12:20:00",
+      "sequence": 103991,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1599219900_880",
+      "direction": "LONG",
+      "pivot_time": "2020.09.04 12:05:00",
+      "pivot_price": 1941.76,
+      "original_arm_known_at": "",
+      "fill_sequence": 103738
+    },
+    "W33_XAUUSD+_5_1_LONG_1599247500_882": {
+      "known_at": "2020.09.07 10:20:00",
+      "sequence": 104499,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1599473100_885",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.07 10:05:00",
+      "pivot_price": 1928.22,
+      "original_arm_known_at": "",
+      "fill_sequence": 104223
+    },
+    "W33_XAUUSD+_5_1_LONG_1599572700_889": {
+      "known_at": "2020.09.08 16:05:00",
+      "sequence": 105157,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1599579900_890",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.08 15:50:00",
+      "pivot_price": 1911.56,
+      "original_arm_known_at": "",
+      "fill_sequence": 105118
+    },
+    "W33_XAUUSD+_5_1_LONG_1599687900_894": {
+      "known_at": "2020.09.10 03:20:00",
+      "sequence": 105998,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1599706800_895",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.10 03:05:00",
+      "pivot_price": 1946.02,
+      "original_arm_known_at": "",
+      "fill_sequence": 105941
+    },
+    "W33_XAUUSD+_5_1_LONG_1599742200_899": {
+      "known_at": "2020.09.10 15:15:00",
+      "sequence": 106353,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1599748500_900",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.10 15:00:00",
+      "pivot_price": 1945.12,
+      "original_arm_known_at": "",
+      "fill_sequence": 106324
+    },
+    "W33_XAUUSD+_5_1_SHORT_1599759900_902": {
+      "known_at": "2020.09.11 01:30:00",
+      "sequence": 106630,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1599780600_903",
+      "direction": "LONG",
+      "pivot_time": "2020.09.11 01:15:00",
+      "pivot_price": 1947.12,
+      "original_arm_known_at": "",
+      "fill_sequence": 106515
+    },
+    "W33_XAUUSD+_5_1_SHORT_1599819600_907": {
+      "known_at": "2020.09.11 16:30:00",
+      "sequence": 107027,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1599840300_908",
+      "direction": "LONG",
+      "pivot_time": "2020.09.11 16:15:00",
+      "pivot_price": 1951.02,
+      "original_arm_known_at": "",
+      "fill_sequence": 106899
+    },
+    "W33_XAUUSD+_5_1_LONG_1600095000_916": {
+      "known_at": "2020.09.15 11:00:00",
+      "sequence": 108215,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1600166400_919",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.15 10:45:00",
+      "pivot_price": 1960.3,
+      "original_arm_known_at": "",
+      "fill_sequence": 107895
+    },
+    "W33_XAUUSD+_5_1_SHORT_1600166400_919": {
+      "known_at": "2020.09.16 10:50:00",
+      "sequence": 108798,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1600249500_922",
+      "direction": "LONG",
+      "pivot_time": "2020.09.16 10:35:00",
+      "pivot_price": 1966.21,
+      "original_arm_known_at": "",
+      "fill_sequence": 108259
+    },
+    "W33_XAUUSD+_5_1_SHORT_1600202400_920": {
+      "known_at": "2020.09.16 10:50:00",
+      "sequence": 108798,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1600249500_922",
+      "direction": "LONG",
+      "pivot_time": "2020.09.16 10:35:00",
+      "pivot_price": 1966.21,
+      "original_arm_known_at": "",
+      "fill_sequence": 108588
+    },
+    "W33_XAUUSD+_5_1_LONG_1600268400_924": {
+      "known_at": "2020.09.16 17:15:00",
+      "sequence": 109011,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1600274400_925",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.16 17:00:00",
+      "pivot_price": 1961.46,
+      "original_arm_known_at": "",
+      "fill_sequence": 108979
+    },
+    "W33_XAUUSD+_5_1_LONG_1600279200_926": {
+      "known_at": "2020.09.17 02:20:00",
+      "sequence": 109252,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1600306800_928",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.17 02:05:00",
+      "pivot_price": 1958.31,
+      "original_arm_known_at": "",
+      "fill_sequence": 109136
+    },
+    "W33_XAUUSD+_5_1_SHORT_1600312200_929": {
+      "known_at": "2020.09.17 17:35:00",
+      "sequence": 109683,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1600361400_932",
+      "direction": "LONG",
+      "pivot_time": "2020.09.17 17:20:00",
+      "pivot_price": 1945.44,
+      "original_arm_known_at": "",
+      "fill_sequence": 109480
+    },
+    "W33_XAUUSD+_5_1_SHORT_1600386000_936": {
+      "known_at": "2020.09.18 16:15:00",
+      "sequence": 110290,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1600444500_939",
+      "direction": "LONG",
+      "pivot_time": "2020.09.18 16:00:00",
+      "pivot_price": 1952.86,
+      "original_arm_known_at": "",
+      "fill_sequence": 109981
+    },
+    "W33_XAUUSD+_5_1_LONG_1600470600_942": {
+      "known_at": "2020.09.21 03:20:00",
+      "sequence": 110558,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1600656900_943",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.21 03:05:00",
+      "pivot_price": 1947.06,
+      "original_arm_known_at": "",
+      "fill_sequence": 110494
+    },
+    "W33_XAUUSD+_5_1_LONG_1600659900_944": {
+      "known_at": "2020.09.21 05:10:00",
+      "sequence": 110639,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1600664100_945",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.21 04:55:00",
+      "pivot_price": 1950.79,
+      "original_arm_known_at": "",
+      "fill_sequence": 110621
+    },
+    "W33_XAUUSD+_5_1_LONG_1600695300_948": {
+      "known_at": "2020.09.22 03:45:00",
+      "sequence": 111132,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1600745400_950",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.22 03:30:00",
+      "pivot_price": 1914.4,
+      "original_arm_known_at": "",
+      "fill_sequence": 110866
+    },
+    "W33_XAUUSD+_5_1_LONG_1600781700_952": {
+      "known_at": "2020.09.22 22:30:00",
+      "sequence": 111600,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1600812600_955",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.22 22:15:00",
+      "pivot_price": 1901.42,
+      "original_arm_known_at": "",
+      "fill_sequence": 111386
+    },
+    "W33_XAUUSD+_5_1_SHORT_1600981500_967": {
+      "known_at": "2020.09.24 23:30:00",
+      "sequence": 112928,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1600987800_968",
+      "direction": "LONG",
+      "pivot_time": "2020.09.24 23:15:00",
+      "pivot_price": 1871.36,
+      "original_arm_known_at": "",
+      "fill_sequence": 112881
+    },
+    "W33_XAUUSD+_5_1_LONG_1601026500_971": {
+      "known_at": "2020.09.28 02:50:00",
+      "sequence": 113730,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1601259600_977",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.28 02:35:00",
+      "pivot_price": 1862.97,
+      "original_arm_known_at": "",
+      "fill_sequence": 113257
+    },
+    "W33_XAUUSD+_5_1_LONG_1601055600_972": {
+      "known_at": "2020.09.28 02:50:00",
+      "sequence": 113730,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1601259600_977",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.28 02:35:00",
+      "pivot_price": 1862.97,
+      "original_arm_known_at": "",
+      "fill_sequence": 113486
+    },
+    "W33_XAUUSD+_5_1_LONG_1601254800_976": {
+      "known_at": "2020.09.28 02:50:00",
+      "sequence": 113730,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1601259600_977",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.28 02:35:00",
+      "pivot_price": 1862.97,
+      "original_arm_known_at": "",
+      "fill_sequence": 113695
+    },
+    "W33_XAUUSD+_5_1_LONG_1601273700_979": {
+      "known_at": "2020.09.28 08:25:00",
+      "sequence": 113898,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1601279700_980",
+      "direction": "SHORT",
+      "pivot_time": "2020.09.28 08:10:00",
+      "pivot_price": 1860.01,
+      "original_arm_known_at": "",
+      "fill_sequence": 113867
+    },
+    "W33_XAUUSD+_5_1_SHORT_1601433600_987": {
+      "known_at": "2020.09.30 04:55:00",
+      "sequence": 114893,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1601440500_988",
+      "direction": "LONG",
+      "pivot_time": "2020.09.30 04:40:00",
+      "pivot_price": 1897.49,
+      "original_arm_known_at": "",
+      "fill_sequence": 114855
+    },
+    "W33_XAUUSD+_5_1_SHORT_1601442000_989": {
+      "known_at": "2020.09.30 11:15:00",
+      "sequence": 115138,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1601463600_991",
+      "direction": "LONG",
+      "pivot_time": "2020.09.30 11:00:00",
+      "pivot_price": 1888.82,
+      "original_arm_known_at": "",
+      "fill_sequence": 115042
+    },
+    "W33_XAUUSD+_5_1_SHORT_1601461200_990": {
+      "known_at": "2020.09.30 11:15:00",
+      "sequence": 115138,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1601463600_991",
+      "direction": "LONG",
+      "pivot_time": "2020.09.30 11:00:00",
+      "pivot_price": 1888.82,
+      "original_arm_known_at": "",
+      "fill_sequence": 115122
+    },
+    "W33_XAUUSD+_5_1_SHORT_1601482800_993": {
+      "known_at": "2020.10.01 09:50:00",
+      "sequence": 115667,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1601543400_995",
+      "direction": "LONG",
+      "pivot_time": "2020.10.01 09:35:00",
+      "pivot_price": 1900.02,
+      "original_arm_known_at": "",
+      "fill_sequence": 115316
+    },
+    "W33_XAUUSD+_5_1_SHORT_1601496000_994": {
+      "known_at": "2020.10.01 09:50:00",
+      "sequence": 115667,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1601543400_995",
+      "direction": "LONG",
+      "pivot_time": "2020.10.01 09:35:00",
+      "pivot_price": 1900.02,
+      "original_arm_known_at": "",
+      "fill_sequence": 115424
+    },
+    "W33_XAUUSD+_5_1_LONG_1601543400_995": {
+      "known_at": "2020.10.01 10:55:00",
+      "sequence": 115718,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1601547900_996",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.01 10:40:00",
+      "pivot_price": 1894.63,
+      "original_arm_known_at": "",
+      "fill_sequence": 115690
+    },
+    "W33_XAUUSD+_5_1_SHORT_1601547900_996": {
+      "known_at": "2020.10.01 14:30:00",
+      "sequence": 115851,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1601561400_999",
+      "direction": "LONG",
+      "pivot_time": "2020.10.01 14:15:00",
+      "pivot_price": 1899.87,
+      "original_arm_known_at": "",
+      "fill_sequence": 115745
+    },
+    "W33_XAUUSD+_5_1_SHORT_1601639100_1003": {
+      "known_at": "2020.10.02 21:20:00",
+      "sequence": 116594,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1601672400_1005",
+      "direction": "LONG",
+      "pivot_time": "2020.10.02 21:05:00",
+      "pivot_price": 1903.15,
+      "original_arm_known_at": "",
+      "fill_sequence": 116386
+    },
+    "W33_XAUUSD+_5_1_LONG_1601909100_1009": {
+      "known_at": "2020.10.06 04:50:00",
+      "sequence": 117401,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_1012",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.06 04:35:00",
+      "pivot_price": 1909.52,
+      "original_arm_known_at": "",
+      "fill_sequence": 117090
+    },
+    "W33_XAUUSD+_5_1_LONG_1601926200_1010": {
+      "known_at": "2020.10.06 04:50:00",
+      "sequence": 117401,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1601958000_1012",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.06 04:35:00",
+      "pivot_price": 1909.52,
+      "original_arm_known_at": "",
+      "fill_sequence": 117215
+    },
+    "W33_XAUUSD+_5_1_SHORT_1601958000_1012": {
+      "known_at": "2020.10.06 08:10:00",
+      "sequence": 117538,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1601970600_1014",
+      "direction": "LONG",
+      "pivot_time": "2020.10.06 07:55:00",
+      "pivot_price": 1912.52,
+      "original_arm_known_at": "",
+      "fill_sequence": 117479
+    },
+    "W33_XAUUSD+_5_1_SHORT_1601980500_1015": {
+      "known_at": "2020.10.06 21:45:00",
+      "sequence": 117864,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1602019200_1017",
+      "direction": "LONG",
+      "pivot_time": "2020.10.06 21:30:00",
+      "pivot_price": 1906.42,
+      "original_arm_known_at": "",
+      "fill_sequence": 117643
+    },
+    "W33_XAUUSD+_5_1_SHORT_1602041700_1018": {
+      "known_at": "2020.10.07 08:30:00",
+      "sequence": 118128,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1602058200_1020",
+      "direction": "LONG",
+      "pivot_time": "2020.10.07 08:15:00",
+      "pivot_price": 1884.87,
+      "original_arm_known_at": "",
+      "fill_sequence": 118032
+    },
+    "W33_XAUUSD+_5_1_SHORT_1602104100_1023": {
+      "known_at": "2020.10.08 04:15:00",
+      "sequence": 118628,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1602128700_1025",
+      "direction": "LONG",
+      "pivot_time": "2020.10.08 04:00:00",
+      "pivot_price": 1887.16,
+      "original_arm_known_at": "",
+      "fill_sequence": 118467
+    },
+    "W33_XAUUSD+_5_1_SHORT_1602126000_1024": {
+      "known_at": "2020.10.08 04:15:00",
+      "sequence": 118628,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1602128700_1025",
+      "direction": "LONG",
+      "pivot_time": "2020.10.08 04:00:00",
+      "pivot_price": 1887.16,
+      "original_arm_known_at": "",
+      "fill_sequence": 118603
+    },
+    "W33_XAUUSD+_5_1_SHORT_1602135900_1027": {
+      "known_at": "2020.10.08 15:40:00",
+      "sequence": 118895,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1602168900_1028",
+      "direction": "LONG",
+      "pivot_time": "2020.10.08 15:25:00",
+      "pivot_price": 1899.43,
+      "original_arm_known_at": "",
+      "fill_sequence": 118716
+    },
+    "W33_XAUUSD+_5_1_LONG_1602237600_1031": {
+      "known_at": "2020.10.12 03:30:00",
+      "sequence": 119662,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_1035",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.12 03:15:00",
+      "pivot_price": 1925.03,
+      "original_arm_known_at": "",
+      "fill_sequence": 119307
+    },
+    "W33_XAUUSD+_5_1_LONG_1602277500_1033": {
+      "known_at": "2020.10.12 03:30:00",
+      "sequence": 119662,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1602471300_1035",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.12 03:15:00",
+      "pivot_price": 1925.03,
+      "original_arm_known_at": "",
+      "fill_sequence": 119571
+    },
+    "W33_XAUUSD+_5_1_SHORT_1602478800_1037": {
+      "known_at": "2020.10.12 06:10:00",
+      "sequence": 119785,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1602482100_1038",
+      "direction": "LONG",
+      "pivot_time": "2020.10.12 05:55:00",
+      "pivot_price": 1927.65,
+      "original_arm_known_at": "2020.10.12 06:10:00",
+      "fill_sequence": 119769
+    },
+    "W33_XAUUSD+_5_1_SHORT_1602502200_1040": {
+      "known_at": "2020.10.12 17:15:00",
+      "sequence": 120142,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1602522000_1042",
+      "direction": "LONG",
+      "pivot_time": "2020.10.12 17:00:00",
+      "pivot_price": 1925.82,
+      "original_arm_known_at": "",
+      "fill_sequence": 120034
+    },
+    "W33_XAUUSD+_5_1_LONG_1602682200_1049": {
+      "known_at": "2020.10.14 16:45:00",
+      "sequence": 121239,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1602693000_1050",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.14 16:30:00",
+      "pivot_price": 1904.89,
+      "original_arm_known_at": "",
+      "fill_sequence": 121194
+    },
+    "W33_XAUUSD+_5_1_SHORT_1602760800_1055": {
+      "known_at": "2020.10.15 20:50:00",
+      "sequence": 121951,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1602793200_1056",
+      "direction": "LONG",
+      "pivot_time": "2020.10.15 20:35:00",
+      "pivot_price": 1907.65,
+      "original_arm_known_at": "",
+      "fill_sequence": 121773
+    },
+    "W33_XAUUSD+_5_1_LONG_1602793200_1056": {
+      "known_at": "2020.10.16 03:15:00",
+      "sequence": 122086,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1602816300_1057",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.16 03:00:00",
+      "pivot_price": 1904.88,
+      "original_arm_known_at": "",
+      "fill_sequence": 121991
+    },
+    "W33_XAUUSD+_5_1_SHORT_1602829500_1058": {
+      "known_at": "2020.10.19 01:50:00",
+      "sequence": 122619,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1603069200_1060",
+      "direction": "LONG",
+      "pivot_time": "2020.10.19 01:35:00",
+      "pivot_price": 1903.03,
+      "original_arm_known_at": "",
+      "fill_sequence": 122216
+    },
+    "W33_XAUUSD+_5_1_SHORT_1602869400_1059": {
+      "known_at": "2020.10.19 01:50:00",
+      "sequence": 122619,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1603069200_1060",
+      "direction": "LONG",
+      "pivot_time": "2020.10.19 01:35:00",
+      "pivot_price": 1903.03,
+      "original_arm_known_at": "",
+      "fill_sequence": 122477
+    },
+    "W33_XAUUSD+_5_1_SHORT_1603138800_1066": {
+      "known_at": "2020.10.20 16:10:00",
+      "sequence": 123539,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1603208400_1068",
+      "direction": "LONG",
+      "pivot_time": "2020.10.20 15:55:00",
+      "pivot_price": 1907.42,
+      "original_arm_known_at": "",
+      "fill_sequence": 123187
+    },
+    "W33_XAUUSD+_5_1_LONG_1603224900_1069": {
+      "known_at": "2020.10.21 18:30:00",
+      "sequence": 124161,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1603303200_1072",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.21 18:15:00",
+      "pivot_price": 1920.12,
+      "original_arm_known_at": "",
+      "fill_sequence": 123730
+    },
+    "W33_XAUUSD+_5_1_SHORT_1603310400_1073": {
+      "known_at": "2020.10.23 20:35:00",
+      "sequence": 125361,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1603482000_1080",
+      "direction": "LONG",
+      "pivot_time": "2020.10.23 20:20:00",
+      "pivot_price": 1905.54,
+      "original_arm_known_at": "",
+      "fill_sequence": 124267
+    },
+    "W33_XAUUSD+_5_1_LONG_1603482000_1080": {
+      "known_at": "2020.10.26 05:00:00",
+      "sequence": 125562,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1603686600_1081",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.26 04:45:00",
+      "pivot_price": 1896.37,
+      "original_arm_known_at": "",
+      "fill_sequence": 125449
+    },
+    "W33_XAUUSD+_5_1_SHORT_1603686600_1081": {
+      "known_at": "2020.10.26 09:50:00",
+      "sequence": 125709,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1603704300_1082",
+      "direction": "LONG",
+      "pivot_time": "2020.10.26 09:35:00",
+      "pivot_price": 1898.81,
+      "original_arm_known_at": "",
+      "fill_sequence": 125594
+    },
+    "W33_XAUUSD+_5_1_LONG_1603807200_1090": {
+      "known_at": "2020.10.28 10:10:00",
+      "sequence": 126914,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1603878300_1093",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.28 09:55:00",
+      "pivot_price": 1905.28,
+      "original_arm_known_at": "",
+      "fill_sequence": 126512
+    },
+    "W33_XAUUSD+_5_1_LONG_1603822500_1091": {
+      "known_at": "2020.10.28 10:10:00",
+      "sequence": 126914,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1603878300_1093",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.28 09:55:00",
+      "pivot_price": 1905.28,
+      "original_arm_known_at": "",
+      "fill_sequence": 126623
+    },
+    "W33_XAUUSD+_5_1_SHORT_1603994700_1098": {
+      "known_at": "2020.10.30 05:10:00",
+      "sequence": 127881,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1604030700_1099",
+      "direction": "LONG",
+      "pivot_time": "2020.10.30 04:55:00",
+      "pivot_price": 1875.35,
+      "original_arm_known_at": "",
+      "fill_sequence": 127699
+    },
+    "W33_XAUUSD+_5_1_LONG_1604030700_1099": {
+      "known_at": "2020.10.30 13:40:00",
+      "sequence": 128209,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1604063700_1101",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.30 13:25:00",
+      "pivot_price": 1871.94,
+      "original_arm_known_at": "",
+      "fill_sequence": 128058
+    },
+    "W33_XAUUSD+_5_1_LONG_1604050500_1100": {
+      "known_at": "2020.10.30 13:40:00",
+      "sequence": 128209,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1604063700_1101",
+      "direction": "SHORT",
+      "pivot_time": "2020.10.30 13:25:00",
+      "pivot_price": 1871.94,
+      "original_arm_known_at": "",
+      "fill_sequence": 128139
+    },
+    "W33_XAUUSD+_5_1_LONG_1604339400_1110": {
+      "known_at": "2020.11.03 02:30:00",
+      "sequence": 129125,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1604368800_1111",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.03 02:15:00",
+      "pivot_price": 1894.0,
+      "original_arm_known_at": "",
+      "fill_sequence": 128984
+    },
+    "W33_XAUUSD+_5_1_SHORT_1604379000_1112": {
+      "known_at": "2020.11.03 15:50:00",
+      "sequence": 129448,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1604416800_1113",
+      "direction": "LONG",
+      "pivot_time": "2020.11.03 15:35:00",
+      "pivot_price": 1908.02,
+      "original_arm_known_at": "",
+      "fill_sequence": 129229
+    },
+    "W33_XAUUSD+_5_1_SHORT_1604489100_1117": {
+      "known_at": "2020.11.04 14:45:00",
+      "sequence": 130006,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1604495400_1118",
+      "direction": "LONG",
+      "pivot_time": "2020.11.04 14:30:00",
+      "pivot_price": 1910.94,
+      "original_arm_known_at": "",
+      "fill_sequence": 129932
+    },
+    "W33_XAUUSD+_5_1_LONG_1604495400_1118": {
+      "known_at": "2020.11.04 18:25:00",
+      "sequence": 130153,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1604513100_1119",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.04 18:10:00",
+      "pivot_price": 1898.52,
+      "original_arm_known_at": "2020.11.04 18:25:00",
+      "fill_sequence": 130126
+    },
+    "W33_XAUUSD+_5_1_LONG_1604541000_1120": {
+      "known_at": "2020.11.05 07:00:00",
+      "sequence": 130459,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1604558400_1121",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.05 06:45:00",
+      "pivot_price": 1905.66,
+      "original_arm_known_at": "",
+      "fill_sequence": 130371
+    },
+    "W33_XAUUSD+_5_1_SHORT_1604951100_1132": {
+      "known_at": "2020.11.10 02:25:00",
+      "sequence": 132177,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1604972700_1134",
+      "direction": "LONG",
+      "pivot_time": "2020.11.10 02:10:00",
+      "pivot_price": 1875.12,
+      "original_arm_known_at": "",
+      "fill_sequence": 132046
+    },
+    "W33_XAUUSD+_5_1_LONG_1604972700_1134": {
+      "known_at": "2020.11.10 15:50:00",
+      "sequence": 132542,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1605021600_1137",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.10 15:35:00",
+      "pivot_price": 1873.55,
+      "original_arm_known_at": "",
+      "fill_sequence": 132243
+    },
+    "W33_XAUUSD+_5_1_SHORT_1605021600_1137": {
+      "known_at": "2020.11.10 16:25:00",
+      "sequence": 132592,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1605024600_1138",
+      "direction": "LONG",
+      "pivot_time": "2020.11.10 16:10:00",
+      "pivot_price": 1881.67,
+      "original_arm_known_at": "",
+      "fill_sequence": 132576
+    },
+    "W33_XAUUSD+_5_1_LONG_1605024600_1138": {
+      "known_at": "2020.11.11 02:10:00",
+      "sequence": 132840,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1605059400_1141",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.11 01:55:00",
+      "pivot_price": 1875.95,
+      "original_arm_known_at": "",
+      "fill_sequence": 132648
+    },
+    "W33_XAUUSD+_5_1_LONG_1605042300_1140": {
+      "known_at": "2020.11.11 02:10:00",
+      "sequence": 132840,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1605059400_1141",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.11 01:55:00",
+      "pivot_price": 1875.95,
+      "original_arm_known_at": "",
+      "fill_sequence": 132767
+    },
+    "W33_XAUUSD+_5_1_LONG_1605060600_1142": {
+      "known_at": "2020.11.11 05:50:00",
+      "sequence": 132966,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1605072600_1143",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.11 05:35:00",
+      "pivot_price": 1878.3,
+      "original_arm_known_at": "",
+      "fill_sequence": 132916
+    },
+    "W33_XAUUSD+_5_1_SHORT_1605072600_1143": {
+      "known_at": "2020.11.11 11:00:00",
+      "sequence": 133106,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1605091500_1144",
+      "direction": "LONG",
+      "pivot_time": "2020.11.11 10:45:00",
+      "pivot_price": 1879.56,
+      "original_arm_known_at": "",
+      "fill_sequence": 132996
+    },
+    "W33_XAUUSD+_5_1_SHORT_1605119700_1146": {
+      "known_at": "2020.11.11 20:20:00",
+      "sequence": 133352,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1605124800_1147",
+      "direction": "LONG",
+      "pivot_time": "2020.11.11 20:05:00",
+      "pivot_price": 1864.5,
+      "original_arm_known_at": "",
+      "fill_sequence": 133319
+    },
+    "W33_XAUUSD+_5_1_SHORT_1605144600_1148": {
+      "known_at": "2020.11.12 09:05:00",
+      "sequence": 133672,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1605170700_1151",
+      "direction": "LONG",
+      "pivot_time": "2020.11.12 08:50:00",
+      "pivot_price": 1871.42,
+      "original_arm_known_at": "",
+      "fill_sequence": 133481
+    },
+    "W33_XAUUSD+_5_1_SHORT_1605159000_1150": {
+      "known_at": "2020.11.12 09:05:00",
+      "sequence": 133672,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1605170700_1151",
+      "direction": "LONG",
+      "pivot_time": "2020.11.12 08:50:00",
+      "pivot_price": 1871.42,
+      "original_arm_known_at": "",
+      "fill_sequence": 133603
+    },
+    "W33_XAUUSD+_5_1_LONG_1605276300_1159": {
+      "known_at": "2020.11.16 05:10:00",
+      "sequence": 134799,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1605502500_1162",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.16 04:55:00",
+      "pivot_price": 1894.85,
+      "original_arm_known_at": "",
+      "fill_sequence": 134539
+    },
+    "W33_XAUUSD+_5_1_SHORT_1605651600_1171": {
+      "known_at": "2020.11.18 06:40:00",
+      "sequence": 135995,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1605680100_1172",
+      "direction": "LONG",
+      "pivot_time": "2020.11.18 06:25:00",
+      "pivot_price": 1879.74,
+      "original_arm_known_at": "",
+      "fill_sequence": 135869
+    },
+    "W33_XAUUSD+_5_1_LONG_1605783900_1180": {
+      "known_at": "2020.11.19 15:50:00",
+      "sequence": 136875,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1605799500_1182",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.19 15:35:00",
+      "pivot_price": 1852.73,
+      "original_arm_known_at": "",
+      "fill_sequence": 136730
+    },
+    "W33_XAUUSD+_5_1_LONG_1605791400_1181": {
+      "known_at": "2020.11.19 15:50:00",
+      "sequence": 136875,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1605799500_1182",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.19 15:35:00",
+      "pivot_price": 1852.73,
+      "original_arm_known_at": "",
+      "fill_sequence": 136855
+    },
+    "W33_XAUUSD+_5_1_LONG_1605812700_1183": {
+      "known_at": "2020.11.20 01:15:00",
+      "sequence": 137125,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1605830100_1184",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.20 01:00:00",
+      "pivot_price": 1861.06,
+      "original_arm_known_at": "",
+      "fill_sequence": 137060
+    },
+    "W33_XAUUSD+_5_1_SHORT_1605830100_1184": {
+      "known_at": "2020.11.20 02:20:00",
+      "sequence": 137183,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1605837600_1185",
+      "direction": "LONG",
+      "pivot_time": "2020.11.20 02:05:00",
+      "pivot_price": 1865.0,
+      "original_arm_known_at": "",
+      "fill_sequence": 137158
+    },
+    "W33_XAUUSD+_5_1_LONG_1605900900_1189": {
+      "known_at": "2020.11.23 06:20:00",
+      "sequence": 137834,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1606111200_1191",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.23 06:05:00",
+      "pivot_price": 1872.47,
+      "original_arm_known_at": "",
+      "fill_sequence": 137614
+    },
+    "W33_XAUUSD+_5_1_LONG_1606348200_1212": {
+      "known_at": "2020.11.26 19:10:00",
+      "sequence": 139976,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1606416900_1216",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.26 18:55:00",
+      "pivot_price": 1808.55,
+      "original_arm_known_at": "",
+      "fill_sequence": 139549
+    },
+    "W33_XAUUSD+_5_1_LONG_1606412100_1215": {
+      "known_at": "2020.11.26 19:10:00",
+      "sequence": 139976,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1606416900_1216",
+      "direction": "SHORT",
+      "pivot_time": "2020.11.26 18:55:00",
+      "pivot_price": 1808.55,
+      "original_arm_known_at": "",
+      "fill_sequence": 139939
+    },
+    "W33_XAUUSD+_5_1_SHORT_1606416900_1216": {
+      "known_at": "2020.11.27 12:30:00",
+      "sequence": 140289,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1606479000_1218",
+      "direction": "LONG",
+      "pivot_time": "2020.11.27 12:15:00",
+      "pivot_price": 1809.8,
+      "original_arm_known_at": "",
+      "fill_sequence": 140017
+    },
+    "W33_XAUUSD+_5_1_SHORT_1606477200_1217": {
+      "known_at": "2020.11.27 12:30:00",
+      "sequence": 140289,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1606479000_1218",
+      "direction": "LONG",
+      "pivot_time": "2020.11.27 12:15:00",
+      "pivot_price": 1809.8,
+      "original_arm_known_at": "",
+      "fill_sequence": 140268
+    },
+    "W33_XAUUSD+_5_1_SHORT_1606757100_1222": {
+      "known_at": "2020.11.30 18:55:00",
+      "sequence": 140931,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1606759800_1223",
+      "direction": "LONG",
+      "pivot_time": "2020.11.30 18:40:00",
+      "pivot_price": 1782.63,
+      "original_arm_known_at": "",
+      "fill_sequence": 140899
+    },
+    "W33_XAUUSD+_5_1_LONG_1606940100_1234": {
+      "known_at": "2020.12.07 01:30:00",
+      "sequence": 143406,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1607302800_1244",
+      "direction": "SHORT",
+      "pivot_time": "2020.12.07 01:15:00",
+      "pivot_price": 1833.67,
+      "original_arm_known_at": "",
+      "fill_sequence": 142358
+    },
+    "W33_XAUUSD+_5_1_LONG_1606986600_1238": {
+      "known_at": "2020.12.07 01:30:00",
+      "sequence": 143406,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1607302800_1244",
+      "direction": "SHORT",
+      "pivot_time": "2020.12.07 01:15:00",
+      "pivot_price": 1833.67,
+      "original_arm_known_at": "",
+      "fill_sequence": 142618
+    },
+    "W33_XAUUSD+_5_1_LONG_1606999500_1239": {
+      "known_at": "2020.12.07 01:30:00",
+      "sequence": 143406,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1607302800_1244",
+      "direction": "SHORT",
+      "pivot_time": "2020.12.07 01:15:00",
+      "pivot_price": 1833.67,
+      "original_arm_known_at": "",
+      "fill_sequence": 142705
+    },
+    "W33_XAUUSD+_5_1_SHORT_1607346000_1247": {
+      "known_at": "2020.12.08 04:30:00",
+      "sequence": 144130,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1607400300_1251",
+      "direction": "LONG",
+      "pivot_time": "2020.12.08 04:15:00",
+      "pivot_price": 1866.91,
+      "original_arm_known_at": "",
+      "fill_sequence": 143753
+    },
+    "W33_XAUUSD+_5_1_SHORT_1607366100_1248": {
+      "known_at": "2020.12.08 04:30:00",
+      "sequence": 144130,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1607400300_1251",
+      "direction": "LONG",
+      "pivot_time": "2020.12.08 04:15:00",
+      "pivot_price": 1866.91,
+      "original_arm_known_at": "",
+      "fill_sequence": 143898
+    },
+    "W33_XAUUSD+_5_1_LONG_1607400300_1251": {
+      "known_at": "2020.12.08 09:30:00",
+      "sequence": 144315,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1607417700_1252",
+      "direction": "SHORT",
+      "pivot_time": "2020.12.08 09:15:00",
+      "pivot_price": 1864.72,
+      "original_arm_known_at": "",
+      "fill_sequence": 144251
+    },
+    "W33_XAUUSD+_5_1_SHORT_1607417700_1252": {
+      "known_at": "2020.12.08 21:35:00",
+      "sequence": 144632,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1607461500_1256",
+      "direction": "LONG",
+      "pivot_time": "2020.12.08 21:20:00",
+      "pivot_price": 1873.19,
+      "original_arm_known_at": "",
+      "fill_sequence": 144345
+    },
+    "W33_XAUUSD+_5_1_SHORT_1607432400_1253": {
+      "known_at": "2020.12.08 21:35:00",
+      "sequence": 144632,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1607461500_1256",
+      "direction": "LONG",
+      "pivot_time": "2020.12.08 21:20:00",
+      "pivot_price": 1873.19,
+      "original_arm_known_at": "",
+      "fill_sequence": 144450
+    },
+    "W33_XAUUSD+_5_1_SHORT_1607505000_1259": {
+      "known_at": "2020.12.09 10:55:00",
+      "sequence": 144991,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1607510100_1260",
+      "direction": "LONG",
+      "pivot_time": "2020.12.09 10:40:00",
+      "pivot_price": 1864.71,
+      "original_arm_known_at": "",
+      "fill_sequence": 144957
+    },
+    "W33_XAUUSD+_5_1_SHORT_1607620500_1265": {
+      "known_at": "2020.12.11 17:35:00",
+      "sequence": 146336,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1607705400_1270",
+      "direction": "LONG",
+      "pivot_time": "2020.12.11 17:20:00",
+      "pivot_price": 1847.71,
+      "original_arm_known_at": "",
+      "fill_sequence": 146006
+    },
+    "W33_XAUUSD+_5_1_LONG_1607705400_1270": {
+      "known_at": "2020.12.11 22:30:00",
+      "sequence": 146518,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1607722800_1272",
+      "direction": "SHORT",
+      "pivot_time": "2020.12.11 22:15:00",
+      "pivot_price": 1837.86,
+      "original_arm_known_at": "",
+      "fill_sequence": 146425
+    },
+    "W33_XAUUSD+_5_1_SHORT_1607907600_1273": {
+      "known_at": "2020.12.14 20:35:00",
+      "sequence": 147071,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1607977200_1278",
+      "direction": "LONG",
+      "pivot_time": "2020.12.14 20:20:00",
+      "pivot_price": 1830.27,
+      "original_arm_known_at": "",
+      "fill_sequence": 146622
+    },
+    "W33_XAUUSD+_5_1_SHORT_1607948700_1275": {
+      "known_at": "2020.12.14 20:35:00",
+      "sequence": 147071,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1607977200_1278",
+      "direction": "LONG",
+      "pivot_time": "2020.12.14 20:20:00",
+      "pivot_price": 1830.27,
+      "original_arm_known_at": "",
+      "fill_sequence": 146895
+    },
+    "W33_XAUUSD+_5_1_LONG_1608114600_1283": {
+      "known_at": "2020.12.16 21:30:00",
+      "sequence": 148131,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1608152400_1284",
+      "direction": "SHORT",
+      "pivot_time": "2020.12.16 21:15:00",
+      "pivot_price": 1844.73,
+      "original_arm_known_at": "",
+      "fill_sequence": 147943
+    },
+    "W33_XAUUSD+_5_1_SHORT_1608236400_1288": {
+      "known_at": "2020.12.21 09:40:00",
+      "sequence": 149539,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1608542700_1292",
+      "direction": "LONG",
+      "pivot_time": "2020.12.21 09:25:00",
+      "pivot_price": 1902.75,
+      "original_arm_known_at": "",
+      "fill_sequence": 148688
+    },
+    "W33_XAUUSD+_5_1_SHORT_1608324000_1289": {
+      "known_at": "2020.12.21 09:40:00",
+      "sequence": 149539,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1608542700_1292",
+      "direction": "LONG",
+      "pivot_time": "2020.12.21 09:25:00",
+      "pivot_price": 1902.75,
+      "original_arm_known_at": "",
+      "fill_sequence": 149280
+    },
+    "W33_XAUUSD+_5_1_SHORT_1608540600_1291": {
+      "known_at": "2020.12.21 09:40:00",
+      "sequence": 149539,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1608542700_1292",
+      "direction": "LONG",
+      "pivot_time": "2020.12.21 09:25:00",
+      "pivot_price": 1902.75,
+      "original_arm_known_at": "",
+      "fill_sequence": 149523
+    },
+    "W33_XAUUSD+_5_1_LONG_1608646800_1299": {
+      "known_at": "2020.12.22 17:00:00",
+      "sequence": 150353,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1608654900_1301",
+      "direction": "SHORT",
+      "pivot_time": "2020.12.22 16:45:00",
+      "pivot_price": 1872.91,
+      "original_arm_known_at": "",
+      "fill_sequence": 150301
+    },
+    "W33_XAUUSD+_5_1_LONG_1608699300_1304": {
+      "known_at": "2020.12.23 07:45:00",
+      "sequence": 150716,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1608708600_1305",
+      "direction": "SHORT",
+      "pivot_time": "2020.12.23 07:30:00",
+      "pivot_price": 1865.14,
+      "original_arm_known_at": "",
+      "fill_sequence": 150657
+    },
+    "W33_XAUUSD+_5_1_SHORT_1608708600_1305": {
+      "known_at": "2020.12.23 16:00:00",
+      "sequence": 150940,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1608735600_1307",
+      "direction": "LONG",
+      "pivot_time": "2020.12.23 15:45:00",
+      "pivot_price": 1870.55,
+      "original_arm_known_at": "",
+      "fill_sequence": 150737
+    },
+    "W33_XAUUSD+_5_1_LONG_1608735600_1307": {
+      "known_at": "2020.12.23 21:40:00",
+      "sequence": 151158,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1608757800_1309",
+      "direction": "SHORT",
+      "pivot_time": "2020.12.23 21:25:00",
+      "pivot_price": 1870.33,
+      "original_arm_known_at": "2020.12.23 21:40:00",
+      "fill_sequence": 151069
+    },
+    "W33_XAUUSD+_5_1_SHORT_1608786600_1312": {
+      "known_at": "2020.12.24 17:25:00",
+      "sequence": 151675,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1608828300_1316",
+      "direction": "LONG",
+      "pivot_time": "2020.12.24 17:10:00",
+      "pivot_price": 1879.44,
+      "original_arm_known_at": "",
+      "fill_sequence": 151403
+    },
+    "W33_XAUUSD+_5_1_SHORT_1609212000_1320": {
+      "known_at": "2020.12.29 05:30:00",
+      "sequence": 152457,
+      "source_setup_id": "W33_XAUUSD+_5_1_LONG_1609218900_1321",
+      "direction": "LONG",
+      "pivot_time": "2020.12.29 05:15:00",
+      "pivot_price": 1881.99,
+      "original_arm_known_at": "",
+      "fill_sequence": 152440
+    },
+    "W33_XAUUSD+_5_1_LONG_1609218900_1321": {
+      "known_at": "2020.12.29 06:40:00",
+      "sequence": 152514,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1609222800_1322",
+      "direction": "SHORT",
+      "pivot_time": "2020.12.29 06:25:00",
+      "pivot_price": 1878.27,
+      "original_arm_known_at": "",
+      "fill_sequence": 152479
+    },
+    "W33_XAUUSD+_5_1_LONG_1609265100_1326": {
+      "known_at": "2020.12.30 09:30:00",
+      "sequence": 153246,
+      "source_setup_id": "W33_XAUUSD+_5_1_SHORT_1609319400_1332",
+      "direction": "SHORT",
+      "pivot_time": "2020.12.30 09:15:00",
+      "pivot_price": 1880.44,
+      "original_arm_known_at": "",
+      "fill_sequence": 152890
+    }
+  }
+}

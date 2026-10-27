@@ -1,0 +1,204 @@
+{
+  "native": {
+    "period": "M5 (2020.01.01 - 2021.01.01)",
+    "quality": "0% リアルティック",
+    "bars": 71111,
+    "ticks": 40971991,
+    "deposit": 5000.0,
+    "net": -477.22,
+    "pf": 0.71,
+    "gross_profit": 1161.38,
+    "gross_loss": -1638.6,
+    "trades": 125,
+    "deals": 207,
+    "balance_dd": "497.68 (9.95%)",
+    "equity_dd": "528.52 (10.54%)"
+  },
+  "closed_positions": 82,
+  "position_net_profit": 1112.44,
+  "position_net_loss": -1589.66,
+  "position_net_pf": 0.6997974409622183,
+  "position_net_wins": 47,
+  "position_net_losses": 35,
+  "position_net_zero": 0,
+  "sum_r": -9.993362840847439,
+  "mean_r": -0.12187027854692,
+  "max_win_streak": 6,
+  "max_loss_streak": 4,
+  "price_profit": -376.19,
+  "commission": -61.62,
+  "swap": -39.41,
+  "fee": 0.0,
+  "independently_recomputed_balance_dd": 497.68,
+  "partial_exit_positions": 43,
+  "forced_test_end_positions": 0,
+  "event_counts": {
+    "INIT": 1,
+    "PIVOT_CONFIRMED": 27282,
+    "WAVE1_BREAK": 429,
+    "STATE": 1834,
+    "WAVE1_PROVISIONAL": 1108,
+    "WAVE1_PEAK_CONFIRMED": 351,
+    "WAVE1_EXTENSION_LOCKED": 339,
+    "WAVE2_EXTREME": 2313,
+    "FIB_TOUCH": 291,
+    "LOWER_STRUCTURE_CONFIRMED": 535,
+    "FIB_TOO_DEEP": 148,
+    "LOWER_STRUCTURE_LOST": 219,
+    "FIB_CLOSE_TOO_DEEP": 148,
+    "INVALIDATE": 290,
+    "PIVOT_TRIGGER": 122,
+    "SIGNAL": 122,
+    "SCALEOUT_PLAN": 122,
+    "RISK_CHECK": 122,
+    "CHOP_ENTRY_FILTER": 122,
+    "PRIOR_CONTEXT_FILTER": 122,
+    "SKIP": 56,
+    "COMPLETED": 122,
+    "LOWER_STRUCTURE_REJECTED": 190,
+    "INITIAL_MOVE_PROGRESS": 56,
+    "TRENDLINE_TRIGGER": 43,
+    "TP_WAVE1_EXTENDED": 21,
+    "ORDER": 82,
+    "FILL": 82,
+    "POSITION_TRACKING": 82,
+    "SCALEOUT_VOLUME_FROZEN": 82,
+    "EXIT": 82,
+    "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 114,
+    "WAVE1_EXTENSION_STARTED": 114,
+    "WAVE1_EXTENDED_CONFIRMED": 114,
+    "SCALEOUT_TP1_TOUCH": 44,
+    "SCALEOUT_CLOSE_REQUEST": 89,
+    "SCALEOUT_CLOSE_ACCEPTED": 43,
+    "PARTIAL_EXIT": 43,
+    "SCALEOUT_TP1_FILLED": 43,
+    "SCALEOUT_BE_REQUEST": 43,
+    "SCALEOUT_BE_CONFIRMED": 43,
+    "SCALEOUT_REQUEST_SETTLED": 43,
+    "WAVE1_EXTENSION_TRACKING": 172,
+    "OPPOSITE_WAVE1_ARMED": 4,
+    "OPPOSITE_CLOSE_REQUEST": 4,
+    "OPPOSITE_CLOSE_ACCEPTED": 4,
+    "SCALEOUT_CLOSE_REJECTED": 46,
+    "SCALEOUT_FINAL_BEFORE_TP1": 1,
+    "TEST_END": 1
+  },
+  "scaleout_stage_counts": {
+    "SCALEOUT_PLAN": 122,
+    "SCALEOUT_VOLUME_FROZEN": 82,
+    "SCALEOUT_TP1_TOUCH": 44,
+    "SCALEOUT_CLOSE_REQUEST": 89,
+    "SCALEOUT_CLOSE_ACCEPTED": 43,
+    "SCALEOUT_TP1_FILLED": 43,
+    "SCALEOUT_BE_REQUEST": 43,
+    "SCALEOUT_BE_CONFIRMED": 43,
+    "SCALEOUT_REQUEST_SETTLED": 43,
+    "SCALEOUT_CLOSE_REJECTED": 46,
+    "SCALEOUT_FINAL_BEFORE_TP1": 1
+  },
+  "scaleout_position_metrics": {
+    "tp1_touch": 44,
+    "half_confirmed": 43,
+    "be_confirmed": 43,
+    "be_deferred": 0,
+    "be_rejected": 0,
+    "close_rejected": 1,
+    "single_fallback": 0,
+    "broker_final_before_half": 1,
+    "plans": 122,
+    "plans_scope": "All SIGNAL records, including later skipped/unfilled candidates; action counts below use native-filled positions.",
+    "filled_plans": 82,
+    "first_kind_counts": {
+      "WAVE1_INSIDE": 80,
+      "BASE_RR": 42
+    },
+    "half_confirmed_kind_counts": {
+      "WAVE1_INSIDE": 34,
+      "BASE_RR": 9
+    },
+    "tp1_nonzero_fill_drift": 26
+  },
+  "generated_tick_evidence": [
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t3\t10:01:28.303\tTicks\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t0\t10:04:19.826\tTester\tXAUUSD+,M5: 40971991 ticks, 71111 bars generated. Environment synchronized in 0:00:00.383. Test passed in 0:02:53.102 (including ticks preprocessing 0:00:01.421)."
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t3\t10:04:33.107\tTicks\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t0\t10:07:48.553\tTester\tXAUUSD+,M5: 40971991 ticks, 71111 bars generated. Environment synchronized in 0:00:00.023. Test passed in 0:03:16.944 (including ticks preprocessing 0:00:01.343)."
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "EQ\t3\t10:01:32.837\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "IE\t0\t10:04:19.827\tCore 1\tXAUUSD+,M5: 40971991 ticks, 71111 bars generated. Environment synchronized in 0:00:00.383. Test passed in 0:02:53.102 (including ticks preprocessing 0:00:01.421)."
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "NL\t3\t10:04:37.720\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2021.01.01 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "CJ\t0\t10:07:48.554\tCore 1\tXAUUSD+,M5: 40971991 ticks, 71111 bars generated. Environment synchronized in 0:00:00.023. Test passed in 0:03:16.944 (including ticks preprocessing 0:00:01.343)."
+    }
+  ],
+  "coverage": {
+    "upper_bars.csv": {
+      "count": 23705,
+      "first": "2019.12.31 23:45:00",
+      "last": "2020.12.31 23:30:00",
+      "monthly": {
+        "2020.01": 2010,
+        "2020.02": 1824,
+        "2020.03": 2020,
+        "2020.04": 1932,
+        "2020.05": 1916,
+        "2020.06": 2024,
+        "2020.07": 2100,
+        "2020.08": 1932,
+        "2020.09": 2009,
+        "2020.10": 2024,
+        "2020.11": 1903,
+        "2020.12": 2010
+      },
+      "sha256": "e81eaac408503981e67d05d57e5dbc644b7944008a4fc6882c46776060c13db0"
+    },
+    "lower_bars.csv": {
+      "count": 71111,
+      "first": "2019.12.31 23:55:00",
+      "last": "2020.12.31 23:50:00",
+      "monthly": {
+        "2020.01": 6029,
+        "2020.02": 5472,
+        "2020.03": 6059,
+        "2020.04": 5796,
+        "2020.05": 5748,
+        "2020.06": 6072,
+        "2020.07": 6300,
+        "2020.08": 5796,
+        "2020.09": 6025,
+        "2020.10": 6072,
+        "2020.11": 5709,
+        "2020.12": 6032
+      },
+      "sha256": "80ffebc010aa1f9fbe3194454106034bbd0fba7e7b898e3740985abbb9058418"
+    }
+  },
+  "input_hashes": {
+    "events.csv": "2f4058ec1a8e85651aae367e8d5d018c650fb4385752e198a70885030728c8ed",
+    "raw_deals.csv": "5e44130012a22ddcb75f016342df1b07d07b0ca54a6a6de2d82f7baff9a9ff02",
+    "config.csv": "94785b3e83319be23c82bfc40f95b7dfbe92c72de3db6bef68cb1f0e269c4796",
+    "inputs.set": "6df030db792e416756a0f867ce42749acbf9bb65981d8ec894af600bfd902a55",
+    "report.htm": "25f47e55746f401d0eb3c2434a6d0fb47ceabc2ec82f5914e66e805bf519a902"
+  }
+}

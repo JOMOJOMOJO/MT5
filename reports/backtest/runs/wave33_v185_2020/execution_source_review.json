@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "scope": "READ_ONLY_SOURCE_REVIEW_STATIC_CHECKS; not a replacement for native functional QA",
+  "reviewer": "scaleout_annual",
+  "checks": {
+    "confirmed_half_branch_before_pending_be_guard": true,
+    "pending_be_expiry_before_quote_defer": true,
+    "short_missing_sl_cannot_false_confirm": true,
+    "volume_specific_fallback_all_three_failure_stages": true,
+    "raw_cash_includes_fee": true,
+    "initial_risk_recalculation_uses_initial_sl": true,
+    "deal_dedup_before_accounting": true,
+    "half_close_uses_owned_ticket": true,
+    "normal_account_no_managed_trades": true,
+    "frozen_ScaleOut.mqh": true,
+    "frozen_ScaleOutExecution.mqh": true
+  },
+  "hashes": {
+    "ScaleOut.mqh": "0b9e362b5d1fb4a53531e31803a8ffe69f004f9aa82d785df125b46555bf2128",
+    "ScaleOutExecution.mqh": "1362030d76e84842164776971545f4c585cf92ed867f32d43f4b80e8d96bc911"
+  },
+  "resolved_findings": [
+    {
+      "finding": "Pending accepted SLTP could prevent later per-tick BE retry and block opposite exit indefinitely.",
+      "resolution": "Confirmed-half calls BE reconciliation before the pending guard; pending expiry is handled before quote defer."
+    },
+    {
+      "finding": "Unsupported partial volume could loop on OrderCheck or request-callback failures without fallback.",
+      "resolution": "Volume-specific fallback now exists at check, send, and callback stages; other reject reasons remain explicit."
+    }
+  ],
+  "native_qa_evidence": "reports/qa/w33_scaleout_20261026/final_verification.json",
+  "annual_launch_status": "Final frozen smoke running; annual gated on its integrity PASS."
+}

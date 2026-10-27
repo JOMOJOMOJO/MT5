@@ -1,0 +1,15 @@
+InpRunTag=so_rb8cec8a_long
+InpQADirection=1
+InpQAInjectErrors=true
+InpScaleOut=true
+InpEnableTesterOrders=true
+InpDraw=false
+InpKeepObjects=true
+InpPriorContext=false
+InpSkipPriorLevelRetest=false
+InpChopDiagnostic=false
+InpChopLabels=false
+InpSkipChoppyWave1=false
+InpScreenshots=false
+InpAuditOppositeExitTicks=true
+

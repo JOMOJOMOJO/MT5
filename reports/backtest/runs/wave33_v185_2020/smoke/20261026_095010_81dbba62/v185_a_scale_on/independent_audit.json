@@ -1,0 +1,153 @@
+{
+  "native": {
+    "period": "M5 (2020.01.01 - 2020.01.11)",
+    "quality": "0% リアルティック",
+    "bars": 1932,
+    "ticks": 1159233,
+    "deposit": 5000.0,
+    "net": -65.26,
+    "pf": 0.0,
+    "gross_profit": 0.0,
+    "gross_loss": -65.26,
+    "trades": 1,
+    "deals": 2,
+    "balance_dd": "65.26 (1.31%)",
+    "equity_dd": "80.46 (1.60%)"
+  },
+  "closed_positions": 1,
+  "position_net_profit": 0.0,
+  "position_net_loss": -65.26,
+  "position_net_pf": 0.0,
+  "position_net_wins": 0,
+  "position_net_losses": 1,
+  "position_net_zero": 0,
+  "sum_r": -1.3280423280423281,
+  "mean_r": -1.3280423280423281,
+  "max_win_streak": 0,
+  "max_loss_streak": 1,
+  "price_profit": -50.22,
+  "commission": -1.08,
+  "swap": -13.96,
+  "fee": 0.0,
+  "independently_recomputed_balance_dd": 65.26,
+  "partial_exit_positions": 0,
+  "forced_test_end_positions": 0,
+  "event_counts": {
+    "INIT": 1,
+    "PIVOT_CONFIRMED": 707,
+    "WAVE1_BREAK": 15,
+    "STATE": 54,
+    "WAVE1_PROVISIONAL": 41,
+    "WAVE1_PEAK_CONFIRMED": 13,
+    "WAVE1_EXTENSION_LOCKED": 13,
+    "WAVE2_EXTREME": 73,
+    "FIB_TOUCH": 11,
+    "LOWER_STRUCTURE_CONFIRMED": 17,
+    "FIB_TOO_DEEP": 5,
+    "LOWER_STRUCTURE_LOST": 5,
+    "FIB_CLOSE_TOO_DEEP": 6,
+    "INVALIDATE": 10,
+    "PIVOT_TRIGGER": 4,
+    "SIGNAL": 4,
+    "SCALEOUT_PLAN": 4,
+    "RISK_CHECK": 4,
+    "CHOP_ENTRY_FILTER": 4,
+    "PRIOR_CONTEXT_FILTER": 4,
+    "SKIP": 3,
+    "COMPLETED": 4,
+    "LOWER_STRUCTURE_REJECTED": 6,
+    "INITIAL_MOVE_PROGRESS": 2,
+    "TRENDLINE_TRIGGER": 1,
+    "TP_WAVE1_EXTENDED": 1,
+    "ORDER": 1,
+    "FILL": 1,
+    "POSITION_TRACKING": 1,
+    "SCALEOUT_VOLUME_FROZEN": 1,
+    "EXIT": 1,
+    "TEST_END": 1
+  },
+  "scaleout_stage_counts": {
+    "SCALEOUT_PLAN": 4,
+    "SCALEOUT_VOLUME_FROZEN": 1
+  },
+  "scaleout_position_metrics": {
+    "tp1_touch": 0,
+    "half_confirmed": 0,
+    "be_confirmed": 0,
+    "be_deferred": 0,
+    "be_rejected": 0,
+    "close_rejected": 0,
+    "single_fallback": 0,
+    "broker_final_before_half": 0,
+    "plans": 4,
+    "plans_scope": "All SIGNAL records, including later skipped/unfilled candidates; action counts below use native-filled positions.",
+    "filled_plans": 1,
+    "first_kind_counts": {
+      "WAVE1_INSIDE": 1,
+      "BASE_RR": 3
+    },
+    "half_confirmed_kind_counts": {},
+    "tp1_nonzero_fill_drift": 0
+  },
+  "generated_tick_evidence": [
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t3\t09:50:56.941\tTicks\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t0\t09:50:59.077\tTester\tXAUUSD+,M5: 1159233 ticks, 1932 bars generated. Environment synchronized in 0:00:00.870. Test passed in 0:00:02.332 (including ticks preprocessing 0:00:00.031)."
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t3\t09:51:11.478\tTicks\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t0\t09:51:13.762\tTester\tXAUUSD+,M5: 1159233 ticks, 1932 bars generated. Environment synchronized in 0:00:00.023. Test passed in 0:00:02.473 (including ticks preprocessing 0:00:00.047)."
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "OQ\t3\t09:50:59.078\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "DS\t0\t09:50:59.078\tCore 1\tXAUUSD+,M5: 1159233 ticks, 1932 bars generated. Environment synchronized in 0:00:00.870. Test passed in 0:00:02.332 (including ticks preprocessing 0:00:00.031)."
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "PN\t3\t09:51:13.764\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "LI\t0\t09:51:13.764\tCore 1\tXAUUSD+,M5: 1159233 ticks, 1932 bars generated. Environment synchronized in 0:00:00.023. Test passed in 0:00:02.473 (including ticks preprocessing 0:00:00.047)."
+    }
+  ],
+  "coverage": {
+    "upper_bars.csv": {
+      "count": 644,
+      "first": "2019.12.31 23:45:00",
+      "last": "2020.01.10 23:30:00",
+      "monthly": {
+        "2020.01": 643
+      },
+      "sha256": "00e7d656fb1e4ece13f773a8bd6d5fc6f54d7953ec21d45a31a150bfcd66fcfe"
+    },
+    "lower_bars.csv": {
+      "count": 1932,
+      "first": "2019.12.31 23:55:00",
+      "last": "2020.01.10 23:50:00",
+      "monthly": {
+        "2020.01": 1931
+      },
+      "sha256": "e8e5f7d5f1876b079fb065da8aebad2e735220b17723b6462d548c9c7919fca9"
+    }
+  },
+  "input_hashes": {
+    "events.csv": "5992334d0cdf140f0f2208cbeaf55accf012fd51dbd2dbf38731d2ae601f753a",
+    "raw_deals.csv": "fdc5a423a587c142f82953a785bcf1c29731475d2010c993561b8b5564aad535",
+    "config.csv": "aa3084332f512c7f83783fc4c5cc5fb3e8d9e77c2b808eaa07afaaa8f9c5f168",
+    "inputs.set": "32ac112e13b50c16fe1c21939efe0bbdd7e033c3a7922f49c61b60615ff7726d",
+    "report.htm": "d8db67ca57a551aab9aa344f718b5f5df27e9ac0dc0f291fd642922369de3620"
+  }
+}

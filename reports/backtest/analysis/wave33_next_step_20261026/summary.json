@@ -1,0 +1,45 @@
+{
+  "scope": "POSTHOC_DIAGNOSTIC_NOT_FILTER_BACKTEST_OR_CAUSAL_EXIT_ATTRIBUTION",
+  "source_batch": "reports\\backtest\\runs\\wave33_v185_2020\\20261026_100045_50909ab6",
+  "paired_B_entries": 334,
+  "entry_time_differences": 0,
+  "paired_exit_transition": {
+    "LOSS_TO_LOSS": {
+      "n": 153,
+      "delta_r": "-0.0005414505513501102674021427"
+    },
+    "WIN_TO_WIN": {
+      "n": 144,
+      "delta_r": "-54.45865912097837438216189325"
+    },
+    "LOSS_TO_WIN": {
+      "n": 37,
+      "delta_r": "46.65457396706263581992816379"
+    }
+  },
+  "prior_context_signal_groups": {
+    "CLEAR": {
+      "n": 215,
+      "wins": 93,
+      "sum_r": "-10.14334764852004028988872301",
+      "mean_r": "-0.04717836115590716413901731633"
+    },
+    "BLOCKED": {
+      "n": 119,
+      "wins": 51,
+      "sum_r": "-22.40958119210551637260230931",
+      "mean_r": "-0.1883158083370211459882547001"
+    }
+  },
+  "policy": "Existing 0.05 band only. No threshold search. Costs included. No new EA or MT5 run.",
+  "limitations": [
+    "Scale-out and BE were changed together; their separate causal effects are not identified.",
+    "Same known 2020 generated-tick sample was used repeatedly.",
+    "Grouped exclusions do not simulate the new entries, equity sizing, and fills that an actual filtered EA would produce."
+  ],
+  "source_sha256": {
+    "analysis\\positions.csv": "7b657596f6c0252ddf746ebfc2ec49cad792849bf7fb7c3feeb1daa0a3824bc1",
+    "analysis\\paired_positions.csv": "f99844bc26fa9cd71192b5266d762a6560d2e3e26df4951e91c1f8c2624dab4c",
+    "v185_b_scale_off\\context.csv": "0f972f5e821f4a84c779c416b92bf141a2a3f179ab6d4b1e433873fdfe575d2c"
+  }
+}

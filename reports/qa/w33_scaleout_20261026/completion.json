@@ -1,0 +1,350 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "source_still_frozen",
+      "pass": true
+    },
+    {
+      "name": "binary_still_frozen",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/BarOrder.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/Chop.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/ChopDisplay.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/ConnectedPair.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/ConnectedWave.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/Display.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/Engine.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/LabelLayout.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/Ledger.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/OppositeExit.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/PriorContext.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/Room.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/ScaleOut.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/ScaleOutExecution.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/TesterRun.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/Types.mqh",
+      "pass": true
+    },
+    {
+      "name": "header:Wave33Visual/Wave1Target.mqh",
+      "pass": true
+    },
+    {
+      "name": "frozen_method:launch.ps1",
+      "pass": true
+    },
+    {
+      "name": "frozen_method:analyze.py",
+      "pass": true
+    },
+    {
+      "name": "frozen_method:PLAN.md",
+      "pass": true
+    },
+    {
+      "name": "frozen_method:audit_opposite_exit.py",
+      "pass": true
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/Engine.mqh",
+      "pass": true
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/ChopDisplay.mqh",
+      "pass": true
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/Types.mqh",
+      "pass": true
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/Ledger.mqh",
+      "pass": true
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/Wave1Target.mqh",
+      "pass": true
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/OppositeExit.mqh",
+      "pass": true
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/Chop.mqh",
+      "pass": true
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/PriorContext.mqh",
+      "pass": true
+    },
+    {
+      "name": "preserved:mql/Experts/Wave33VisualVerifier.mq5",
+      "pass": true
+    },
+    {
+      "name": "preserved:mql/Experts/Wave33VisualVerifier.ex5",
+      "pass": true
+    },
+    {
+      "name": "annual_full_audit",
+      "pass": true
+    },
+    {
+      "name": "four_runs_complete",
+      "pass": true
+    },
+    {
+      "name": "independent_totals_match",
+      "pass": true
+    },
+    {
+      "name": "plot_matches_audit",
+      "pass": true
+    },
+    {
+      "name": "compile_native_display_QA_pass",
+      "pass": true
+    },
+    {
+      "name": "preset_inputs:Wave33ScaleOut_v185_A_On.set",
+      "pass": true
+    },
+    {
+      "name": "preset_inputs:Wave33ScaleOut_v185_A_Off.set",
+      "pass": true
+    },
+    {
+      "name": "preset_single_policy_difference:A",
+      "pass": true
+    },
+    {
+      "name": "preset_inputs:Wave33ScaleOut_v185_B_On.set",
+      "pass": true
+    },
+    {
+      "name": "preset_inputs:Wave33ScaleOut_v185_B_Off.set",
+      "pass": true
+    },
+    {
+      "name": "preset_single_policy_difference:B",
+      "pass": true
+    },
+    {
+      "name": "five_cases_per_pattern",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:20261026_100045_50909ab6/analysis/summary.json",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:20261026_100045_50909ab6/root_final_totals.json",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:20261026_100045_50909ab6/status.json",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:20261026_100045_50909ab6/analysis/booked_balance_comparison.png",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:20261026_100045_50909ab6/analysis/balance_plot_manifest.json",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:20261026_100045_50909ab6/analysis/execution_exceptions.json",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:20261026_100045_50909ab6/analysis/review_cases.md",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:20261026_100045_50909ab6/analysis/positions.csv",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:20261026_100045_50909ab6/analysis/paired_positions.csv",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:PLAN.md",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:20261026_100045_50909ab6/provenance.json",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:20261026_100045_50909ab6/method/",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:smoke/20261026_095845_982f2480/analysis/README.md",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:../../../qa/w33_scaleout_20261026/README.md",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:../../../../presets/wave33/Wave33ScaleOut_v185_A_On.set",
+      "pass": true
+    },
+    {
+      "name": "link:FINAL_REVIEW.md:../../../../presets/wave33/Wave33ScaleOut_v185_B_On.set",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:../../../knowledge/experiments/2026-10-26-wave33-scaleout-plan.md",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:NATIVE_QA.md",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:native_latest.json",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:native_event_audit.json",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:display_latest.json",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:compile/Wave33ChopDiagnostic.log",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:final_verification.json",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:../../backtest/runs/wave33_v185_2020/PLAN.md",
+      "pass": true
+    },
+    {
+      "name": "link:README.md:../../backtest/runs/wave33_v185_2020/README.md",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../knowledge/experiments/2026-10-26-wave33-scaleout-plan.md",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../reports/qa/w33_scaleout_20261026/README.md",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../reports/qa/w33_scaleout_20261026/final_verification.json",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../reports/backtest/runs/wave33_v185_2020/PLAN.md",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../reports/backtest/runs/wave33_v185_2020/README.md",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../presets/wave33/Wave33ScaleOut_v185_A_On.set",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../presets/wave33/Wave33ScaleOut_v185_B_On.set",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../knowledge/patterns/2026-10-26-partial-exits-and-trade-counts.md",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../content/seeds/2026-10-26-partial-exits-and-trade-counts.md",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../reports/backtest/runs/wave33_v185_2020/20261026_100045_50909ab6/root_final_totals.json",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../reports/backtest/runs/wave33_v185_2020/FINAL_REVIEW.md",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-wave33-scaleout-and-break-even.md:../../reports/backtest/runs/wave33_v185_2020/20261026_100045_50909ab6/analysis/booked_balance_comparison.png",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-partial-exits-and-trade-counts.md:../../reports/backtest/runs/wave33_v185_2020/20261026_100045_50909ab6/root_final_totals.json",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-partial-exits-and-trade-counts.md:../../reports/backtest/runs/wave33_v185_2020/FINAL_REVIEW.md",
+      "pass": true
+    },
+    {
+      "name": "link:2026-10-26-partial-exits-and-trade-counts.md:../../reports/qa/w33_scaleout_20261026/README.md",
+      "pass": true
+    }
+  ],
+  "annual_checks": 23112,
+  "native_assertions": 2904,
+  "independent_native_csv_checks": 102,
+  "display_checks": 26,
+  "annual_batch": "20261026_100045_50909ab6"
+}

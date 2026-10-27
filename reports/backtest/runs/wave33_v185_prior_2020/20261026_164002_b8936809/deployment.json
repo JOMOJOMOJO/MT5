@@ -1,0 +1,26 @@
+{
+  "qa_status": "PASS",
+  "ea_version": "1.85",
+  "source_sha256": "c779a2e8cbc1a1921a26f6103bb8d22c20cda5c6283bdb3f6695683eb4368462",
+  "binary_sha256": "db5482bc91349fc3511bc3e269d2d932c1a77e8ddb74e5979bd933494c024c73",
+  "header_sha256": {
+    "Wave33Visual/BarOrder.mqh": "ec300c19f85750a4a7b4a8122579dbb522d2bdf4538ba2f70f2c98176fea095f",
+    "Wave33Visual/Chop.mqh": "f2d72b5c9c99ae21e47d90bdf6077a3aea93b422dd2831748b3695edcb124b49",
+    "Wave33Visual/ChopDisplay.mqh": "606b66194724557878758f864419e65ea8efb145e0202771496468c9829fe54f",
+    "Wave33Visual/ConnectedPair.mqh": "d6306f6f99344eb69497251ace838899a98f65c19c2e9e2794abe302e3fa9306",
+    "Wave33Visual/ConnectedWave.mqh": "386fffc767345722d3e887fa2acbb7abb05ccdf82fab71429f9eabbb1ebb4a93",
+    "Wave33Visual/Display.mqh": "7f6eba269e7818aab23165131f1fcab6f3860741bdd3e8973d7544f46084f12b",
+    "Wave33Visual/Engine.mqh": "3fb6956a2253f071eb455d60ac90ce152dab8f46c35955a5f36e5b22018a0fc8",
+    "Wave33Visual/LabelLayout.mqh": "e29ca96b74a2bebaa292aa191c297e57c9482856ebd215f4d52999662b10083d",
+    "Wave33Visual/Ledger.mqh": "03b97b230bd6124867e135c51f20b65deb16c28960cdad8a73072b700961305a",
+    "Wave33Visual/OppositeExit.mqh": "e36e4bf55441561498641ac6c556b5ae5042da7ac7b90639be3cda04a2d639da",
+    "Wave33Visual/PriorContext.mqh": "909f116ab7bedc0695c8ae8fb30c0e247fcc854d6297da9eb87e060a534aa51d",
+    "Wave33Visual/Room.mqh": "ecd3a1841a9f9dfe481ac43c35ca869a0d15492228ff553f7f0810133a0fc757",
+    "Wave33Visual/ScaleOut.mqh": "0b9e362b5d1fb4a53531e31803a8ffe69f004f9aa82d785df125b46555bf2128",
+    "Wave33Visual/ScaleOutExecution.mqh": "1362030d76e84842164776971545f4c585cf92ed867f32d43f4b80e8d96bc911",
+    "Wave33Visual/TesterRun.mqh": "2e6b183c2cc398f8394df65c7a42ab4150c432aad9eb1891fec5669d587e3048",
+    "Wave33Visual/Types.mqh": "bc72c41867b6746a3192467320ee5ee998cf4eef5e6705109b1c06befeab48f4",
+    "Wave33Visual/Wave1Target.mqh": "2cecd65d839a3328f9dd06fb86a252199121adb3634c141c8b51641e8a71af3f"
+  },
+  "qa_evidence": "reports/qa/w33_scaleout_20261026/final_verification.json"
+}

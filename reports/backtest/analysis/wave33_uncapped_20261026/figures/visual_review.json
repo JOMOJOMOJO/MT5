@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "visual_review": "All four images inspected: labels, margins, lower/upper definitions, early exit/opposite markers and uncapped tail. Full-path and first24h panels use separate R scales. MFE annotation placement adjusted away from y tick labels.",
+  "independent_checks": 5655,
+  "sha256": {
+    "reach_distribution.png": "43cca987e3289ba3b99eaedbcf7a3b89d61f7694a2a28100e55f2cf35ffb75b9",
+    "tail_case_01.png": "e51da7af2dd1921bf1d0e3a8b9d2b29d11c0a36a1845bea91cb32dab71a84021",
+    "tail_case_02.png": "e207ad10d66293883749f43e958466b67438fd426c4ee48acb18937bc8f531bd",
+    "tail_case_03.png": "4c7469492978143b1c0719ba71a67f95e7442dcac56fa50a592c3171c689bef2"
+  }
+}

@@ -1,0 +1,10 @@
+﻿{
+    "failures":  7,
+    "case":  "long",
+    "direction":  1,
+    "status":  "FAIL",
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\native\\rd8602a7\\long",
+    "scaleout":  true,
+    "tag":  "so_rd8602a7_long",
+    "checks":  480
+}

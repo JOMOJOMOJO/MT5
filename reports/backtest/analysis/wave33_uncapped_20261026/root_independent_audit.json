@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "positions": 334,
+  "independent_uncapped_extrema": 668,
+  "native_sl_barriers": 190,
+  "differences": [],
+  "unchanged_ea_and_headers": 19,
+  "scope": "REFERENCE_OHLC_EXTREMA_NOT_EXECUTABLE_PNL",
+  "method_sha256": "70201e4774041489bc67d2a71f4d3026e04d670bfe9b8f3c64690c5f911abc2a",
+  "plan_sha256": "579fbaa413b35febf7c90fd9bc7a54d898cd2fa786869f68f6ac093e713bef20",
+  "data_sha256": "733359c9898327337bca28fe3b07dfcea9f283d5c79832b7ea88a069fc8aaf91"
+}

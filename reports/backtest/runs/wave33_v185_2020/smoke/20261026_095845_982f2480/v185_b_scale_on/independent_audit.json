@@ -1,0 +1,208 @@
+{
+  "native": {
+    "period": "M1 (2020.01.01 - 2020.01.11)",
+    "quality": "0% リアルティック",
+    "bars": 9653,
+    "ticks": 1159233,
+    "deposit": 5000.0,
+    "net": -48.55,
+    "pf": 0.82,
+    "gross_profit": 219.1,
+    "gross_loss": -267.65,
+    "trades": 13,
+    "deals": 22,
+    "balance_dd": "111.46 (2.23%)",
+    "equity_dd": "155.97 (3.11%)"
+  },
+  "closed_positions": 9,
+  "position_net_profit": 210.82,
+  "position_net_loss": -259.37,
+  "position_net_pf": 0.8128156687357828,
+  "position_net_wins": 4,
+  "position_net_losses": 5,
+  "position_net_zero": 0,
+  "sum_r": -0.9452214790003687,
+  "mean_r": -0.10502460877781875,
+  "max_win_streak": 2,
+  "max_loss_streak": 2,
+  "price_profit": -30.31,
+  "commission": -18.24,
+  "swap": 0.0,
+  "fee": 0.0,
+  "independently_recomputed_balance_dd": 111.46,
+  "partial_exit_positions": 4,
+  "forced_test_end_positions": 0,
+  "event_counts": {
+    "INIT": 1,
+    "PIVOT_CONFIRMED": 3035,
+    "WAVE1_BREAK": 34,
+    "STATE": 216,
+    "WAVE1_PROVISIONAL": 70,
+    "WAVE1_PEAK_CONFIRMED": 28,
+    "WAVE1_EXTENSION_LOCKED": 26,
+    "WAVE2_EXTREME": 321,
+    "FIB_TOUCH": 22,
+    "LOWER_STRUCTURE_CONFIRMED": 89,
+    "PIVOT_TRIGGER": 12,
+    "SIGNAL": 12,
+    "SCALEOUT_PLAN": 12,
+    "RISK_CHECK": 12,
+    "CHOP_ENTRY_FILTER": 12,
+    "PRIOR_CONTEXT_FILTER": 12,
+    "SKIP": 6,
+    "COMPLETED": 12,
+    "INVALIDATE": 19,
+    "LOWER_STRUCTURE_LOST": 36,
+    "WAVE1_EXTENSION_PREVIOUS_ANCHORS": 20,
+    "WAVE1_EXTENSION_STARTED": 20,
+    "WAVE1_EXTENSION_TRACKING": 42,
+    "WAVE1_EXTENDED_CONFIRMED": 20,
+    "LOWER_STRUCTURE_REJECTED": 43,
+    "FIB_CLOSE_TOO_DEEP": 9,
+    "FIB_TOO_DEEP": 8,
+    "TP_WAVE1_EXTENDED": 5,
+    "ORDER": 9,
+    "FILL": 9,
+    "POSITION_TRACKING": 9,
+    "SCALEOUT_VOLUME_FROZEN": 9,
+    "EXIT": 9,
+    "SCALEOUT_TP1_TOUCH": 4,
+    "SCALEOUT_CLOSE_REQUEST": 4,
+    "SCALEOUT_CLOSE_ACCEPTED": 4,
+    "PARTIAL_EXIT": 4,
+    "SCALEOUT_TP1_FILLED": 4,
+    "SCALEOUT_BE_REQUEST": 4,
+    "SCALEOUT_BE_CONFIRMED": 4,
+    "SCALEOUT_REQUEST_SETTLED": 4,
+    "SCALEOUT_BE_DEFERRED": 1,
+    "TRENDLINE_TRIGGER": 2,
+    "INITIAL_MOVE_PROGRESS": 3
+  },
+  "scaleout_stage_counts": {
+    "SCALEOUT_PLAN": 12,
+    "SCALEOUT_VOLUME_FROZEN": 9,
+    "SCALEOUT_TP1_TOUCH": 4,
+    "SCALEOUT_CLOSE_REQUEST": 4,
+    "SCALEOUT_CLOSE_ACCEPTED": 4,
+    "SCALEOUT_TP1_FILLED": 4,
+    "SCALEOUT_BE_REQUEST": 4,
+    "SCALEOUT_BE_CONFIRMED": 4,
+    "SCALEOUT_REQUEST_SETTLED": 4,
+    "SCALEOUT_BE_DEFERRED": 1
+  },
+  "scaleout_position_metrics": {
+    "tp1_touch": 4,
+    "half_confirmed": 4,
+    "be_confirmed": 4,
+    "be_deferred": 1,
+    "be_rejected": 0,
+    "close_rejected": 0,
+    "single_fallback": 0,
+    "broker_final_before_half": 0,
+    "plans": 12,
+    "plans_scope": "All SIGNAL records, including later skipped/unfilled candidates; action counts below use native-filled positions.",
+    "filled_plans": 9,
+    "first_kind_counts": {
+      "WAVE1_INSIDE": 7,
+      "BASE_RR": 5
+    },
+    "half_confirmed_kind_counts": {
+      "BASE_RR": 2,
+      "WAVE1_INSIDE": 2
+    },
+    "tp1_nonzero_fill_drift": 2
+  },
+  "generated_tick_evidence": [
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t3\t09:59:25.943\tTicks\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t0\t09:59:28.060\tTester\tXAUUSD+,M5: 1159233 ticks, 1932 bars generated. Environment synchronized in 0:00:00.213. Test passed in 0:00:02.318 (including ticks preprocessing 0:00:00.031)."
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t3\t09:59:40.811\tTicks\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t0\t09:59:42.990\tTester\tXAUUSD+,M5: 1159233 ticks, 1932 bars generated. Environment synchronized in 0:00:00.024. Test passed in 0:00:02.383 (including ticks preprocessing 0:00:00.047)."
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t3\t09:59:54.357\tTicks\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t0\t09:59:56.773\tTester\tXAUUSD+,M1: 1159233 ticks, 9653 bars generated. Environment synchronized in 0:00:00.045. Test passed in 0:00:02.624 (including ticks preprocessing 0:00:00.047)."
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t3\t10:00:08.163\tTicks\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\Agent-127.0.0.1-39285\\logs\\20261026.log",
+      "text": "CS\t0\t10:00:10.811\tTester\tXAUUSD+,M1: 1159233 ticks, 9653 bars generated. Environment synchronized in 0:00:00.023. Test passed in 0:00:02.841 (including ticks preprocessing 0:00:00.031)."
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "PN\t3\t09:59:28.063\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "RF\t0\t09:59:28.063\tCore 1\tXAUUSD+,M5: 1159233 ticks, 1932 bars generated. Environment synchronized in 0:00:00.213. Test passed in 0:00:02.318 (including ticks preprocessing 0:00:00.031)."
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "QL\t3\t09:59:42.996\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "HL\t0\t09:59:42.996\tCore 1\tXAUUSD+,M5: 1159233 ticks, 1932 bars generated. Environment synchronized in 0:00:00.024. Test passed in 0:00:02.383 (including ticks preprocessing 0:00:00.047)."
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "EE\t3\t09:59:56.775\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "MM\t0\t09:59:56.775\tCore 1\tXAUUSD+,M1: 1159233 ticks, 9653 bars generated. Environment synchronized in 0:00:00.045. Test passed in 0:00:02.624 (including ticks preprocessing 0:00:00.047)."
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "CE\t3\t10:00:10.832\tCore 1\tXAUUSD+ : 2020.01.01 00:00 - 2020.01.11 00:00  no real ticks, every tick generation used"
+    },
+    {
+      "file": "journals\\Tester\\logs\\20261026.log",
+      "text": "CQ\t0\t10:00:10.832\tCore 1\tXAUUSD+,M1: 1159233 ticks, 9653 bars generated. Environment synchronized in 0:00:00.023. Test passed in 0:00:02.841 (including ticks preprocessing 0:00:00.031)."
+    }
+  ],
+  "coverage": {
+    "upper_bars.csv": {
+      "count": 1932,
+      "first": "2019.12.31 23:55:00",
+      "last": "2020.01.10 23:50:00",
+      "monthly": {
+        "2020.01": 1931
+      },
+      "sha256": "e8e5f7d5f1876b079fb065da8aebad2e735220b17723b6462d548c9c7919fca9"
+    },
+    "lower_bars.csv": {
+      "count": 9653,
+      "first": "2019.12.31 23:58:00",
+      "last": "2020.01.10 23:57:00",
+      "monthly": {
+        "2020.01": 9652
+      },
+      "sha256": "29abd1f34e4e86d89e78ae3654125f5522a2fe37d7b83bf3a0f3ec0ad91b3166"
+    }
+  },
+  "input_hashes": {
+    "events.csv": "10a9afbdf18cf4b2eeefd3918ba395dc386f87e0df7f2c400a60df6601a27da2",
+    "raw_deals.csv": "0a65befc72a448e6fde411c1880aa67ac115e31f6219c87ed1706c9e9c98a028",
+    "config.csv": "0ae75be2c5ac24a41db5c0653cfdb894f18f1f57363926e024f782088be008a8",
+    "inputs.set": "b9800b2cd33074fa05a97a53e4daadab915e93df989b172f06e2d7d5df69d146",
+    "report.htm": "61cc5f2a2e1140d8c624e8c4184eaefe174e722a18132cd4609d35898e3c70fd"
+  }
+}

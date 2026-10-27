@@ -1,0 +1,125 @@
+{
+  "a": [
+    {
+      "setup_id": "W33_XAUUSD+_15_5_LONG_1596139200_225",
+      "first_at": "2020.08.03 01:00:14",
+      "last_at": "2020.08.03 01:01:00",
+      "events": {
+        "SCALEOUT_CLOSE_REJECTED": 46,
+        "SCALEOUT_FINAL_BEFORE_TP1": 1
+      },
+      "reasons": [
+        "ORDER_SEND 10018 Market closed",
+        "broker TP filled before half-close confirmation; no invented intermediate execution"
+      ],
+      "half_filled": false,
+      "be_confirmed": false
+    }
+  ],
+  "b": [
+    {
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1578379500_12",
+      "first_at": "2020.01.07 07:07:25",
+      "last_at": "2020.01.07 07:07:25",
+      "events": {
+        "SCALEOUT_BE_DEFERRED": 1
+      },
+      "reasons": [
+        "SCALEOUT_BE_STOPS_LEVEL"
+      ],
+      "half_filled": true,
+      "be_confirmed": true
+    },
+    {
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1579699500_74",
+      "first_at": "2020.01.22 15:33:34",
+      "last_at": "2020.01.22 15:33:34",
+      "events": {
+        "SCALEOUT_FINAL_BEFORE_TP1": 1
+      },
+      "reasons": [
+        "broker TP filled before half-close confirmation; no invented intermediate execution"
+      ],
+      "half_filled": false,
+      "be_confirmed": false
+    },
+    {
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1582000500_170",
+      "first_at": "2020.02.18 05:52:30",
+      "last_at": "2020.02.18 05:52:30",
+      "events": {
+        "SCALEOUT_BE_DEFERRED": 1
+      },
+      "reasons": [
+        "SCALEOUT_BE_STOPS_LEVEL"
+      ],
+      "half_filled": true,
+      "be_confirmed": true
+    },
+    {
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1582137900_178",
+      "first_at": "2020.02.19 19:49:26",
+      "last_at": "2020.02.19 19:49:26",
+      "events": {
+        "SCALEOUT_FINAL_BEFORE_TP1": 1
+      },
+      "reasons": [
+        "broker TP filled before half-close confirmation; no invented intermediate execution"
+      ],
+      "half_filled": false,
+      "be_confirmed": false
+    },
+    {
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1592586600_593",
+      "first_at": "2020.06.22 01:00:00",
+      "last_at": "2020.06.22 01:00:59",
+      "events": {
+        "SCALEOUT_CLOSE_REJECTED": 58
+      },
+      "reasons": [
+        "ORDER_SEND 10018 Market closed"
+      ],
+      "half_filled": true,
+      "be_confirmed": true
+    },
+    {
+      "setup_id": "W33_XAUUSD+_5_1_LONG_1593582600_634",
+      "first_at": "2020.07.01 06:35:38",
+      "last_at": "2020.07.01 06:35:38",
+      "events": {
+        "SCALEOUT_BE_DEFERRED": 1
+      },
+      "reasons": [
+        "SCALEOUT_BE_STOPS_LEVEL"
+      ],
+      "half_filled": true,
+      "be_confirmed": true
+    },
+    {
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1593644700_638",
+      "first_at": "2020.07.01 23:47:26",
+      "last_at": "2020.07.01 23:47:26",
+      "events": {
+        "SCALEOUT_BE_DEFERRED": 1
+      },
+      "reasons": [
+        "SCALEOUT_BE_STOPS_LEVEL"
+      ],
+      "half_filled": true,
+      "be_confirmed": true
+    },
+    {
+      "setup_id": "W33_XAUUSD+_5_1_SHORT_1602869400_1059",
+      "first_at": "2020.10.16 18:23:05",
+      "last_at": "2020.10.16 18:23:05",
+      "events": {
+        "SCALEOUT_FINAL_BEFORE_TP1": 1
+      },
+      "reasons": [
+        "broker TP filled before half-close confirmation; no invented intermediate execution"
+      ],
+      "half_filled": false,
+      "be_confirmed": false
+    }
+  ]
+}

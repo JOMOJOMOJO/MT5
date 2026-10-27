@@ -1,0 +1,25 @@
+{
+  "terminal_sha256": "8b13c3119f29a4de564ef12d633b62dc54d652c538c10c232067ef01b8518d4d",
+  "history_sha256": {
+    "2019.hcc": "1d6f5e119153efc6385e61303005f7542697721836a90905b2599a1400828b8d",
+    "2020.hcc": "8db023c64db46dcdd71d8dd3bd992fcefb32a6c37736d6c75fd3dbf1c73a39df"
+  },
+  "batch": "20261026_130233_UTC_2e84f0b8",
+  "runtime_artifact_sha256": {
+    "MQL5/Experts/Wave33DayTradeHarness.ex5": "bf743b3fde7ca22bcc0fe36648a54130a47fb58e4de0f5ce85b12fb02c5c464e",
+    "metatester64.exe": "5033d9d45d669cebd735e8a6be20b54d74b75274f885c9a0e48e52d872104efb",
+    "MQL5/Experts/Wave33DayTradeVerifier.ex5": "92f9be62e34b3619c5930db8dd9e262039923171900c5f28efbc8d3176d634bc",
+    "MQL5/Profiles/Tester/w33dtqa_20261026_130233_UTC_2e84f0b8.set": "bd9555febb68f137fb33e207d80bf1ae9338d0a4f2ad29398eba0aeca671c498"
+  },
+  "runtime": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33DayTrade\\20261026_130233_UTC_2e84f0b8",
+  "purpose": "BOUNDED_NATIVE_FIXTURES_NOT_STRATEGY_PERFORMANCE",
+  "tester_sha256": "5033d9d45d669cebd735e8a6be20b54d74b75274f885c9a0e48e52d872104efb",
+  "status": "SUPERSEDED_BEFORE_LAUNCH",
+  "auto_analysis": false,
+  "ini_sha256": "3445ca6157d471c615c9f36ee531adfc0a66d8dd653993d94d85f18f00b5cae2",
+  "output": "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_daytrade_20261026\\20261026_130233_UTC_2e84f0b8",
+  "real_ticks": "2020 tick cache absent; generated-tick native plumbing QA",
+  "tag": "w33dtqa_20261026_130233_UTC_2e84f0b8",
+  "ini": "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33DayTrade\\20261026_130233_UTC_2e84f0b8\\w33dtqa_20261026_130233_UTC_2e84f0b8.ini",
+  "user_resume_required": true
+}

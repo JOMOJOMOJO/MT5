@@ -1,0 +1,92 @@
+﻿{
+    "policy_sha256":  "0b9e362b5d1fb4a53531e31803a8ffe69f004f9aa82d785df125b46555bf2128",
+    "batch":  "r4e79ab8",
+    "purpose":  "NATIVE_REAL_ORDER_SCALEOUT_CALLBACK_ACCOUNTING",
+    "harness_source_sha256":  "21973199e2fecc7c019f5a8cb24433dee8f367a35918d8a61e193fe6f99ba4fa",
+    "ea_source_sha256":  "c779a2e8cbc1a1921a26f6103bb8d22c20cda5c6283bdb3f6695683eb4368462",
+    "execution_source_sha256":  "1022b7970546b07dd389882052a1bda3ba7d7a813d3b293492d34931f529f41d",
+    "harness_ex5_sha256":  "a3e56fa86e35dbb6f664ca66bf7ea3fb44965389adfaf567e980d4347e5dd36e",
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\W33SO\\r4e79ab8",
+    "status":  "PASS",
+    "source_hashes":  {
+                          "mql/Include/Wave33Visual/ScaleOutExecution.mqh":  "1022b7970546b07dd389882052a1bda3ba7d7a813d3b293492d34931f529f41d",
+                          "mql/Experts/tests/Wave33ScaleOutHarness.mq5":  "21973199e2fecc7c019f5a8cb24433dee8f367a35918d8a61e193fe6f99ba4fa",
+                          "mql/Include/Wave33Visual/ScaleOut.mqh":  "0b9e362b5d1fb4a53531e31803a8ffe69f004f9aa82d785df125b46555bf2128",
+                          "mql/Experts/Wave33ChopDiagnostic.mq5":  "c779a2e8cbc1a1921a26f6103bb8d22c20cda5c6283bdb3f6695683eb4368462",
+                          "mql/Experts/tests/Wave33ScaleOutHarness.ex5":  "a3e56fa86e35dbb6f664ca66bf7ea3fb44965389adfaf567e980d4347e5dd36e"
+                      },
+    "cases":  [
+                  {
+                      "scaleout":  true,
+                      "checks":  492,
+                      "single_fallback":  false,
+                      "failures":  0,
+                      "case":  "long",
+                      "direction":  1,
+                      "w1_first":  false,
+                      "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\native\\r4e79ab8\\long",
+                      "tag":  "so_r4e79ab8_long",
+                      "status":  "PASS"
+                  },
+                  {
+                      "scaleout":  true,
+                      "checks":  487,
+                      "single_fallback":  false,
+                      "failures":  0,
+                      "case":  "short",
+                      "direction":  -1,
+                      "w1_first":  false,
+                      "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\native\\r4e79ab8\\short",
+                      "tag":  "so_r4e79ab8_short",
+                      "status":  "PASS"
+                  },
+                  {
+                      "scaleout":  true,
+                      "checks":  487,
+                      "single_fallback":  false,
+                      "failures":  0,
+                      "case":  "w1long",
+                      "direction":  1,
+                      "w1_first":  true,
+                      "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\native\\r4e79ab8\\w1long",
+                      "tag":  "so_r4e79ab8_w1long",
+                      "status":  "PASS"
+                  },
+                  {
+                      "scaleout":  true,
+                      "checks":  487,
+                      "single_fallback":  false,
+                      "failures":  0,
+                      "case":  "w1short",
+                      "direction":  -1,
+                      "w1_first":  true,
+                      "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\native\\r4e79ab8\\w1short",
+                      "tag":  "so_r4e79ab8_w1short",
+                      "status":  "PASS"
+                  },
+                  {
+                      "scaleout":  true,
+                      "checks":  477,
+                      "single_fallback":  true,
+                      "failures":  0,
+                      "case":  "minlot",
+                      "direction":  1,
+                      "w1_first":  false,
+                      "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\native\\r4e79ab8\\minlot",
+                      "tag":  "so_r4e79ab8_minlot",
+                      "status":  "PASS"
+                  },
+                  {
+                      "scaleout":  false,
+                      "checks":  474,
+                      "single_fallback":  false,
+                      "failures":  0,
+                      "case":  "off",
+                      "direction":  1,
+                      "w1_first":  false,
+                      "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\native\\r4e79ab8\\off",
+                      "tag":  "so_r4e79ab8_off",
+                      "status":  "PASS"
+                  }
+              ]
+}

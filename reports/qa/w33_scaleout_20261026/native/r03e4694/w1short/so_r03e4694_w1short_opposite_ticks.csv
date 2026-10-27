@@ -1,0 +1,2 @@
+setup_id;known_at;tick_time_msc;tick_order;knowledge_order;position_ticket;position_id;bid;ask;volume;quote_profit;booked_cash;remaining_swap;entry_cost_rate;estimated_exit_cost;net_estimate;request_pending;attempts;status;opposite_setup_id
+W33_SCALEOUT_NATIVE_15_5_SHORT_1577850300_1;2025.01.06 02:08:28;1736129308000;2507;4;2;2;2640.6200000000;2640.8000000000;0.05000000;1.0000000000;0.8000000000;0.0000000000;0.0000000000;0.0000000000;1.8000000000;0;0;READY;QA_OPPOSITE_AFTER_SCALEOUT

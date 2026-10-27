@@ -1,0 +1,82 @@
+﻿{
+    "baseline_net_profit":  -1440.92,
+    "purpose":  "FIXED_PRIOR_CONTEXT_RETEST_NOT_PROMOTION",
+    "runtime_seed":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5WickRebreakR3\\20261014_094513_6f6042e2",
+    "run_order":  [
+                      "v185_b_prior_off",
+                      "v185_b_prior_on"
+                  ],
+    "copied_ticks":  [
+
+                     ],
+    "terminal_live_trading_enabled":  false,
+    "clock":  "BROKER_SOURCE_TIME_UNMAPPED_TO_UTC",
+    "symbol":  "XAUUSD+",
+    "batch_id":  "20261026_164002_b8936809",
+    "server":  "Bybit-Live",
+    "symbol_metadata_sha256":  [
+                                   {
+                                       "name_sha256":  "50e7e6a508772c0ff1a04a92b464ca724c37db2f943eeef684aae00a27183e65",
+                                       "bytes":  14026,
+                                       "sha256":  "7a546735614053cf86ea8f10e9f6b2d2249ca5cf0e4fd699b63d9e4c45082230"
+                                   },
+                                   {
+                                       "name_sha256":  "e82b40c2ede68bccc47cc2034587821401ea1d9f5dd3aa39c733d51c4149da5e",
+                                       "bytes":  14026,
+                                       "sha256":  "0baead35821222de71c45355a115f31aff1503cda347154c3323522cd36fb392"
+                                   },
+                                   {
+                                       "name_sha256":  "2052d9b28b731420ff383bdfc32ee72cf5e0e8728f914a024e70dda343c5b698",
+                                       "bytes":  12980,
+                                       "sha256":  "cab54b5f4c2869f70ee2aa0b3ed73b2f6ed5e6d4934af4b35b2ca0df73e48dcc"
+                                   },
+                                   {
+                                       "name_sha256":  "93dab95196be4889bacbd2b4a122f10270105b722cefea9d2256d25ab5c46f05",
+                                       "bytes":  307200,
+                                       "sha256":  "af8d50496e1cec8da84d92f00989c972f5931f780f22a6cc705c24c1faedd8cb"
+                                   },
+                                   {
+                                       "name_sha256":  "e51bdc928ed856ff3690deacea75f2be3c76ad989f546ebdbe7a55e3c32db379",
+                                       "bytes":  110592,
+                                       "sha256":  "8372a2c85157acaeba5a6a8f170b24462612f65ea1424e2e4ee804e73022e986"
+                                   }
+                               ],
+    "model":  4,
+    "source_data_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33ScaleOut\\20261026_100045_50909ab6",
+    "identity_cache_sha256":  {
+                                  "accounts.dat":  "47e6ee3a6d6c42db19fc053fc7f5f0b31549d0580dce5f0e9d2240dccd435726",
+                                  "servers.dat":  "f693685094f08e03563ff1c3cf38a681c6c0fc59f55f18420c84f1db885eedd5"
+                              },
+    "deposit":  5000,
+    "date_from":  "2020.01.01",
+    "runtime_sha256":  {
+                           "terminal64.exe":  "8b13c3119f29a4de564ef12d633b62dc54d652c538c10c232067ef01b8518d4d",
+                           "metatester64.exe":  "5033d9d45d669cebd735e8a6be20b54d74b75274f885c9a0e48e52d872104efb"
+                       },
+    "real_tick_limitation":  "2020 native tick cache absent; model 4 uses generated ticks, not a real-tick confirmation",
+    "baseline_inputs_sha256":  "7423dfc40a925d92c406fb3e671d7a210c5b77c1720d2b14b8bc90a10df4c74e",
+    "method_sha256":  {
+                          "launch.ps1":  "2307eea7301b84a0e7655201ced05ef45ae0e4addc551648afd054ecdb0f5dc5",
+                          "analyze.py":  "d24f3820cf864eea84bba44cf24dc89fb3aa59891d78dffa6c27ea610d97330e",
+                          "native_audit.py":  "339f314df7e6852f441154ae3ca15f6400460bba0348998da3a345864a0e0034",
+                          "audit_opposite_exit.py":  "0261c918a63d8dcda764404706141a13d026be2046608e571cc98868dc7d49cd",
+                          "PLAN.md":  "93b9283df14485b0928092d7c2e1c2885afce5b6c0a03877bf871a86075ec4a3"
+                      },
+    "terminal_root":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33Prior2020\\20261026_164002_b8936809",
+    "baseline_batch":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\backtest\\runs\\wave33_v185_2020\\20261026_100045_50909ab6",
+    "baseline_positions":  334,
+    "deployment_sha256":  "d538816366cb7c3910ad283ad1a42def1c55c2b28b710d6b9cfb2691bf506f0b",
+    "single_changed_parameter":  "InpSkipPriorLevelRetest",
+    "copied_history":  [
+                           "2019.hcc",
+                           "2020.hcc",
+                           "2021.hcc"
+                       ],
+    "previous_source_data_root":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675",
+    "cache_sha256":  {
+                         "2019.hcc":  "1d6f5e119153efc6385e61303005f7542697721836a90905b2599a1400828b8d",
+                         "2020.hcc":  "8db023c64db46dcdd71d8dd3bd992fcefb32a6c37736d6c75fd3dbf1c73a39df",
+                         "2021.hcc":  "72d736d36c34181209110eab79c20241e99bf6f5545b4ab86ea3e46fa52e2a83"
+                     },
+    "date_to":  "2021.01.01"
+}

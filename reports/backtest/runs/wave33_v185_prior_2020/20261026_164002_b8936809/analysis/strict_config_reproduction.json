@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "method_sha256": "52ae67e16917b7e0c1b45a8eefcb601ae6830c7dd633769877f5a5945517a04e",
+  "observed_parameters": 103,
+  "unchanged_parameter_count": 102,
+  "allowed_metadata_changes": {
+    "resolved_run_tag": [
+      "w33s_20261026_100045_50909ab6_v185_b_scale_off",
+      "w33p_20261026_164002_b8936809_v185_b_prior_off"
+    ]
+  },
+  "unexpected_changes": {},
+  "economic_and_execution_fields": {
+    "symbol": {
+      "reference": "XAUUSD+",
+      "fresh_off": "XAUUSD+",
+      "equal": true
+    },
+    "upper_tf": {
+      "reference": "PERIOD_M5",
+      "fresh_off": "PERIOD_M5",
+      "equal": true
+    },
+    "lower_tf": {
+      "reference": "PERIOD_M1",
+      "fresh_off": "PERIOD_M1",
+      "equal": true
+    },
+    "point": {
+      "reference": "0.01",
+      "fresh_off": "0.01",
+      "equal": true
+    },
+    "tick_size": {
+      "reference": "0.01",
+      "fresh_off": "0.01",
+      "equal": true
+    },
+    "account_currency": {
+      "reference": "USD",
+      "fresh_off": "USD",
+      "equal": true
+    },
+    "symbol_currency_profit": {
+      "reference": "USD",
+      "fresh_off": "USD",
+      "equal": true
+    },
+    "symbol_calc_mode": {
+      "reference": "2",
+      "fresh_off": "2",
+      "equal": true
+    },
+    "volume_min": {
+      "reference": "0.01",
+      "fresh_off": "0.01",
+      "equal": true
+    },
+    "volume_step": {
+      "reference": "0.01",
+      "fresh_off": "0.01",
+      "equal": true
+    },
+    "contract_size": {
+      "reference": "100.0",
+      "fresh_off": "100.0",
+      "equal": true
+    },
+    "stops_level": {
+      "reference": "20",
+      "fresh_off": "20",
+      "equal": true
+    },
+    "freeze_level": {
+      "reference": "0",
+      "fresh_off": "0",
+      "equal": true
+    },
+    "risk_percent": {
+      "reference": "1.0",
+      "fresh_off": "1.0",
+      "equal": true
+    },
+    "reward_r": {
+      "reference": "1.0",
+      "fresh_off": "1.0",
+      "equal": true
+    },
+    "scale_out": {
+      "reference": "false",
+      "fresh_off": "false",
+      "equal": true
+    },
+    "terminal_build": {
+      "reference": "6230",
+      "fresh_off": "6230",
+      "equal": true
+    }
+  },
+  "reference_config_sha256": "2d5c99e92a923b2fb61a81f084131abed824b390c7945dd8371642b20d382cb6",
+  "fresh_config_sha256": "89e8558477e74d685a0334d9d13c7bace9aa373be50fe3f0829032047dd02b1c",
+  "scope": "Every observed config value compared; not limited to the selected economic fields shown. No result-based rule adjustment."
+}

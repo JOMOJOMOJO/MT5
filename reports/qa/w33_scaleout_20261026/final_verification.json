@@ -1,0 +1,123 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "preserved:mql/Include/Wave33Visual/Engine.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/ChopDisplay.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/Types.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/Ledger.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/Wave1Target.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/OppositeExit.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/Chop.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "preserved:mql/Include/Wave33Visual/PriorContext.mqh",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "preserved:mql/Experts/Wave33VisualVerifier.mq5",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "preserved:mql/Experts/Wave33VisualVerifier.ex5",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "native_six_cases_pass",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "native_no_assertion_failure",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "independent_deal_audit_pass",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "independent_audit_same_batch",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "native_uses_current_main",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "native_uses_current_policy",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "native_uses_current_execution_adapter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "changed_risk_label_timing_pass",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "display_uses_current_layout",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "native_uses_current_layout",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "compile_zero_errors_warnings",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "binary_newer_than_sources",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "failed": [],
+  "native_batch": "rb8a43a7",
+  "assertions": 2904,
+  "display_checks": 26,
+  "independent_csv_checks": 102,
+  "ea_source_sha256": "c779a2e8cbc1a1921a26f6103bb8d22c20cda5c6283bdb3f6695683eb4368462",
+  "ea_binary_sha256": "db5482bc91349fc3511bc3e269d2d932c1a77e8ddb74e5979bd933494c024c73",
+  "account_scope": "Native RETAIL_HEDGING; netting API path reviewed, no native netting claim."
+}

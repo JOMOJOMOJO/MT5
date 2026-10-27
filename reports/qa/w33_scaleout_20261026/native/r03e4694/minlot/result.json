@@ -1,0 +1,12 @@
+﻿{
+    "scaleout":  true,
+    "checks":  477,
+    "single_fallback":  true,
+    "failures":  0,
+    "case":  "minlot",
+    "direction":  1,
+    "w1_first":  false,
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\native\\r03e4694\\minlot",
+    "tag":  "so_r03e4694_minlot",
+    "status":  "PASS"
+}

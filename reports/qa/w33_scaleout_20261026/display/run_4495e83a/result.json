@@ -1,0 +1,25 @@
+﻿{
+    "mode":  "NORMAL_CHART_SCALEOUT_ANCHOR_FIXTURE",
+    "checks":  26,
+    "failures":  0,
+    "screenshots":  [
+                        {
+                            "sha256":  "ff07e71404e07451e816a9099f8417688290439188918c1b20af8e4154483741",
+                            "path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\display\\run_4495e83a\\sl_4495e83a_dense_after.png"
+                        },
+                        {
+                            "sha256":  "d85131f7d55a12d78c87b1b24bdbc549eb188495fb400848879c4876504fb0de",
+                            "path":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\display\\run_4495e83a\\sl_4495e83a_dense_before.png"
+                        }
+                    ],
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_scaleout_20261026\\display\\run_4495e83a",
+    "scope":  "Synthetic 2025 custom-symbol bars; draw only, no order functions/account queries; not a tester screenshot or strategy performance test",
+    "tag":  "sl_4495e83a",
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33ScaleOutLabelReplay\\run_4495e83a",
+    "status":  "PASS",
+    "source_hashes":  {
+                          "mql/Experts/tests/Wave33ScaleOutLabelReplay.mq5":  "28d24c2cc670cb4efd504664a13942de8568eb61d43d872b52175bcbaef4fe13",
+                          "mql/Experts/tests/Wave33ScaleOutLabelReplay.ex5":  "31bee4218d40de907cd7125af2f82385e8400d4aef719c5b5a006d020cd3b07a",
+                          "mql/Include/Wave33Visual/LabelLayout.mqh":  "e29ca96b74a2bebaa292aa191c297e57c9482856ebd215f4d52999662b10083d"
+                      }
+}

@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "compared_fields": [
+    "deal",
+    "order",
+    "position_id",
+    "time_msc",
+    "setup_id",
+    "entry",
+    "type",
+    "volume",
+    "price",
+    "profit",
+    "commission",
+    "swap",
+    "fee",
+    "comment",
+    "reason"
+  ],
+  "reference_deals": 668,
+  "fresh_deals": 668,
+  "all_deal_fields_identical": true,
+  "native_summary": {
+    "period": "M1 (2020.01.01 - 2021.01.01)",
+    "quality": "0% リアルティック",
+    "bars": 355233,
+    "ticks": 40971991,
+    "deposit": 5000.0,
+    "net": -1440.92,
+    "pf": 0.83,
+    "gross_profit": 6848.03,
+    "gross_loss": -8288.95,
+    "trades": 334,
+    "deals": 668,
+    "balance_dd": "1 931.55 (35.61%)",
+    "equity_dd": "1 949.10 (35.90%)"
+  },
+  "accepted_bars_identical": {
+    "upper_bars.csv": true,
+    "lower_bars.csv": true
+  },
+  "scope": "Preliminary reproduction check after OFF export; final frozen two-run audit remains pending."
+}

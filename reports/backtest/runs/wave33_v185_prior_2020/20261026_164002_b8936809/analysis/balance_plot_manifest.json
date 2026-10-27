@@ -1,0 +1,23 @@
+{
+  "scope": "AUXILIARY_BOOKED_BALANCE_NOT_EQUITY",
+  "initial_per_run": 5000,
+  "clock": "Nominal MT5 source/broker clock; no timezone conversion",
+  "method_sha256": "31a8c800a8ee0fdd3f33aa91eac6138f4e8735ec2591cff15a87eb56b2d605c6",
+  "image_sha256": "4f9c5fd7bd51e8cea34345c29cdee789c62677dd5000ce5f7e39c1aafc2a5271",
+  "annual_audit_summary_sha256": "90d802061c5f61fa8b8453504d0dcdc844fde84644b3cad190609e860eac5f00",
+  "cashflow_csv_sha256": "b5d006b4e5cae9b4ac78c28287e60b0e64129c0b1aa3d49b2ff739ba3ff7bafe",
+  "runs": {
+    "v185_b_prior_off": {
+      "raw_deals_sha256": "a5e364689292370a78ad453169d6b38a35ee78553f76351f1066389646e903c5",
+      "deals": 668,
+      "final_balance": "3559.0800000000",
+      "native_final_balance": "3559.08"
+    },
+    "v185_b_prior_on": {
+      "raw_deals_sha256": "ec461747377e6f5ba15bf924f5b684d4e40808a439ce28af4abc5ad10238aee3",
+      "deals": 430,
+      "final_balance": "4472.0700000000",
+      "native_final_balance": "4472.07"
+    }
+  }
+}

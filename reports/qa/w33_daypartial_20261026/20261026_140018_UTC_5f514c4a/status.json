@@ -1,0 +1,27 @@
+﻿{
+    "terminal_sha256":  "8b13c3119f29a4de564ef12d633b62dc54d652c538c10c232067ef01b8518d4d",
+    "history_sha256":  {
+                           "2019.hcc":  "1d6f5e119153efc6385e61303005f7542697721836a90905b2599a1400828b8d",
+                           "2020.hcc":  "8db023c64db46dcdd71d8dd3bd992fcefb32a6c37736d6c75fd3dbf1c73a39df"
+                       },
+    "batch":  "20261026_140018_UTC_5f514c4a",
+    "runtime_artifact_sha256":  {
+                                    "MQL5/Experts/Wave33DayTradePartialHarness.ex5":  "ae2a88ca6ed6e634d960d4b13c3377d556cca84bcd7abc4aa153bb57d5263e7d",
+                                    "metatester64.exe":  "5033d9d45d669cebd735e8a6be20b54d74b75274f885c9a0e48e52d872104efb",
+                                    "MQL5/Experts/Wave33DayTradePartialVerifier.ex5":  "abeb1bbe76d03bedab621fc91aadb6b4791e69e4052b76d7a8cdfe76fa91f1b4",
+                                    "MQL5/Profiles/Tester/w33dtpqa_20261026_140018_UTC_5f514c4a.set":  "bfb1caa643d774c5c3a0c1cbc49cf63b5f3e1f012b5cdae04aa5c64b7063c858"
+                                },
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33DayPartial\\20261026_140018_UTC_5f514c4a",
+    "purpose":  "BOUNDED_NATIVE_FIXTURES_NOT_STRATEGY_PERFORMANCE",
+    "tester_sha256":  "5033d9d45d669cebd735e8a6be20b54d74b75274f885c9a0e48e52d872104efb",
+    "status":  "LAUNCHED_AWAIT_USER_RESUME",
+    "auto_analysis":  false,
+    "ini_sha256":  "b4d4293f357c897f8678bba6b167c621e9c162918d306eed0dc4cf8e82276571",
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_daypartial_20261026\\20261026_140018_UTC_5f514c4a",
+    "real_ticks":  "2020 tick cache absent; generated-tick native plumbing QA",
+    "tag":  "w33dtpqa_20261026_140018_UTC_5f514c4a",
+    "ini":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33DayPartial\\20261026_140018_UTC_5f514c4a\\w33dtpqa_20261026_140018_UTC_5f514c4a.ini",
+    "user_resume_required":  true,
+    "process_id":  22932,
+    "launched_at_utc":  "2026-10-26T14:00:59.7792564Z"
+}

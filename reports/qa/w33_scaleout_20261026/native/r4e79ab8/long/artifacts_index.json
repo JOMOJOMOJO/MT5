@@ -1,0 +1,18 @@
+﻿[
+    {
+        "source_relative":  "so_r4e79ab8_long.htm",
+        "saved_relative":  "artifacts/00_so_r4e79ab8_long.htm"
+    },
+    {
+        "source_relative":  "logs\\20261026.log",
+        "saved_relative":  "artifacts/01_20261026.log"
+    },
+    {
+        "source_relative":  "Tester\\Agent-127.0.0.1-39228\\logs\\20261026.log",
+        "saved_relative":  "artifacts/02_20261026.log"
+    },
+    {
+        "source_relative":  "Tester\\logs\\20261026.log",
+        "saved_relative":  "artifacts/03_20261026.log"
+    }
+]

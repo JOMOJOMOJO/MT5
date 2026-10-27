@@ -1,0 +1,318 @@
+{
+  "status": "PASS",
+  "completed_at_local": "2026-10-26T17:07:18",
+  "scope": "FINAL_ARTIFACT_AND_UNCHANGED_SOURCE_CHECKS",
+  "checks": 77,
+  "items": [
+    {
+      "check": "two_runs_completed",
+      "pass": true
+    },
+    {
+      "check": "main_audit_pass",
+      "pass": true
+    },
+    {
+      "check": "separate_raw_audit_pass",
+      "pass": true
+    },
+    {
+      "check": "ea_source_unchanged",
+      "pass": true
+    },
+    {
+      "check": "ea_binary_unchanged",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/BarOrder.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/Chop.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/ChopDisplay.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/ConnectedPair.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/ConnectedWave.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/Display.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/Engine.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/LabelLayout.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/Ledger.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/OppositeExit.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/PriorContext.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/Room.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/ScaleOut.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/ScaleOutExecution.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/TesterRun.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/Types.mqh",
+      "pass": true
+    },
+    {
+      "check": "header_unchanged:Wave33Visual/Wave1Target.mqh",
+      "pass": true
+    },
+    {
+      "check": "deployment_unchanged",
+      "pass": true
+    },
+    {
+      "check": "frozen_method_unchanged:launch.ps1",
+      "pass": true
+    },
+    {
+      "check": "method_snapshot_matches:launch.ps1",
+      "pass": true
+    },
+    {
+      "check": "frozen_method_unchanged:analyze.py",
+      "pass": true
+    },
+    {
+      "check": "method_snapshot_matches:analyze.py",
+      "pass": true
+    },
+    {
+      "check": "frozen_method_unchanged:native_audit.py",
+      "pass": true
+    },
+    {
+      "check": "method_snapshot_matches:native_audit.py",
+      "pass": true
+    },
+    {
+      "check": "frozen_method_unchanged:audit_opposite_exit.py",
+      "pass": true
+    },
+    {
+      "check": "method_snapshot_matches:audit_opposite_exit.py",
+      "pass": true
+    },
+    {
+      "check": "frozen_method_unchanged:PLAN.md",
+      "pass": true
+    },
+    {
+      "check": "method_snapshot_matches:PLAN.md",
+      "pass": true
+    },
+    {
+      "check": "only_flag_and_tag_differ",
+      "pass": true
+    },
+    {
+      "check": "off:complete_45_inputs",
+      "pass": true
+    },
+    {
+      "check": "off:visual_only_draw_and_tag",
+      "pass": true
+    },
+    {
+      "check": "off:scale_off",
+      "pass": true
+    },
+    {
+      "check": "off:intended_prior_flag",
+      "pass": true
+    },
+    {
+      "check": "off:draw_on",
+      "pass": true
+    },
+    {
+      "check": "on:complete_45_inputs",
+      "pass": true
+    },
+    {
+      "check": "on:visual_only_draw_and_tag",
+      "pass": true
+    },
+    {
+      "check": "on:scale_off",
+      "pass": true
+    },
+    {
+      "check": "on:intended_prior_flag",
+      "pass": true
+    },
+    {
+      "check": "on:draw_on",
+      "pass": true
+    },
+    {
+      "check": "reviewed_balance_image_hash",
+      "pass": true
+    },
+    {
+      "check": "balance_summary_hash",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:PLAN.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:../../../../knowledge/experiments/2026-10-26-wave33-next-entry-diagnostic.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:20261026_164002_b8936809/analysis/booked_balance_comparison.png",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:20261026_164002_b8936809/analysis/balance_plot_manifest.json",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:20261026_164002_b8936809/analysis/paired_positions.csv",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:20261026_164002_b8936809/analysis/signal_context.csv",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:20261026_164002_b8936809/analysis/common_execution_geometry.json",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:20261026_164002_b8936809/analysis/groups.csv",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:20261026_164002_b8936809/analysis/summary.json",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:20261026_164002_b8936809/analysis/strict_config_reproduction.json",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:20261026_164002_b8936809/analysis/root_independent_totals.json",
+      "pass": true
+    },
+    {
+      "check": "local_link:reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md:20261026_164002_b8936809/provenance.json",
+      "pass": true
+    },
+    {
+      "check": "local_link:knowledge/backtests/2026-10-26-wave33-prior-filter-comparison.md:../experiments/2026-10-26-wave33-next-entry-diagnostic.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:knowledge/backtests/2026-10-26-wave33-prior-filter-comparison.md:../../reports/backtest/runs/wave33_v185_prior_2020/20261026_164002_b8936809/analysis/summary.json",
+      "pass": true
+    },
+    {
+      "check": "local_link:knowledge/backtests/2026-10-26-wave33-prior-filter-comparison.md:../../reports/backtest/runs/wave33_v185_prior_2020/20261026_164002_b8936809/analysis/root_independent_totals.json",
+      "pass": true
+    },
+    {
+      "check": "local_link:knowledge/backtests/2026-10-26-wave33-prior-filter-comparison.md:../../reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:knowledge/experiments/2026-10-26-wave33-next-entry-diagnostic.md:../../reports/backtest/runs/wave33_v185_prior_2020/20261026_164002_b8936809/",
+      "pass": true
+    },
+    {
+      "check": "local_link:knowledge/experiments/2026-10-26-wave33-next-entry-diagnostic.md:../backtests/2026-10-26-wave33-prior-filter-comparison.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:knowledge/experiments/2026-10-26-wave33-next-entry-diagnostic.md:../../reports/backtest/analysis/wave33_next_step_20261026/summary.json",
+      "pass": true
+    },
+    {
+      "check": "local_link:knowledge/experiments/2026-10-26-wave33-next-entry-diagnostic.md:../../reports/backtest/analysis/wave33_next_step_20261026/asof_prior_context.csv",
+      "pass": true
+    },
+    {
+      "check": "local_link:knowledge/experiments/2026-10-26-wave33-next-entry-diagnostic.md:2026-10-25-wave33-prior-context-plan.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:knowledge/experiments/2026-10-26-wave33-next-entry-diagnostic.md:../backtests/2026-10-24-wave33-chop-diagnostic.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:docs/devlog/2026-10-26-wave33-prior-filter-comparison.md:../../knowledge/experiments/2026-10-26-wave33-next-entry-diagnostic.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:docs/devlog/2026-10-26-wave33-prior-filter-comparison.md:../../reports/backtest/runs/wave33_v185_prior_2020/",
+      "pass": true
+    },
+    {
+      "check": "local_link:docs/devlog/2026-10-26-wave33-prior-filter-comparison.md:../../knowledge/backtests/2026-10-26-wave33-prior-filter-comparison.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:docs/devlog/2026-10-26-wave33-prior-filter-comparison.md:../../reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:docs/devlog/2026-10-26-wave33-prior-filter-comparison.md:../../presets/wave33/Wave33Prior_v185_B_Off_Visual.set",
+      "pass": true
+    },
+    {
+      "check": "local_link:docs/devlog/2026-10-26-wave33-prior-filter-comparison.md:../../presets/wave33/Wave33Prior_v185_B_On_Visual.set",
+      "pass": true
+    },
+    {
+      "check": "local_link:docs/devlog/2026-10-26-wave33-prior-filter-comparison.md:../../content/seeds/2026-10-26-fewer-losses-still-negative.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:content/seeds/2026-10-26-fewer-losses-still-negative.md:../../knowledge/backtests/2026-10-26-wave33-prior-filter-comparison.md",
+      "pass": true
+    },
+    {
+      "check": "local_link:content/seeds/2026-10-26-fewer-losses-still-negative.md:../../reports/backtest/runs/wave33_v185_prior_2020/FINAL_REVIEW.md",
+      "pass": true
+    }
+  ],
+  "promotion": "NO_PROMOTION_NEGATIVE_EXPECTANCY",
+  "next_test_started": false
+}

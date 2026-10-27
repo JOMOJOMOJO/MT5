@@ -1,0 +1,27 @@
+﻿{
+    "terminal_sha256":  "8b13c3119f29a4de564ef12d633b62dc54d652c538c10c232067ef01b8518d4d",
+    "history_sha256":  {
+                           "2019.hcc":  "1d6f5e119153efc6385e61303005f7542697721836a90905b2599a1400828b8d",
+                           "2020.hcc":  "8db023c64db46dcdd71d8dd3bd992fcefb32a6c37736d6c75fd3dbf1c73a39df"
+                       },
+    "batch":  "20261026_131250_UTC_3b9f03e4",
+    "runtime_artifact_sha256":  {
+                                    "MQL5/Profiles/Tester/w33dtqa_20261026_131250_UTC_3b9f03e4.set":  "3dc14fb9510166ddc34d2b52c182d1153f237b622c5cb02a4b7255cee55adc88",
+                                    "MQL5/Experts/Wave33DayTradeHarness.ex5":  "e30a095ce21db698f38794e18c9fc3aa42b603d6086af53666c48a6905e71f7c",
+                                    "metatester64.exe":  "5033d9d45d669cebd735e8a6be20b54d74b75274f885c9a0e48e52d872104efb",
+                                    "MQL5/Experts/Wave33DayTradeVerifier.ex5":  "f4c626e1636aaebcfd67ceed1f9511252f1f6b7d6879af0eeae7c03ad63b2bd0"
+                                },
+    "runtime":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33DayTrade\\20261026_131250_UTC_3b9f03e4",
+    "purpose":  "BOUNDED_NATIVE_FIXTURES_NOT_STRATEGY_PERFORMANCE",
+    "tester_sha256":  "5033d9d45d669cebd735e8a6be20b54d74b75274f885c9a0e48e52d872104efb",
+    "status":  "LAUNCHED_AWAIT_USER_RESUME",
+    "auto_analysis":  false,
+    "ini_sha256":  "42688c16f24b13046e31bfa9e2f580645abb24fee902ef1d6edea9e67fb10b58",
+    "output":  "C:\\Users\\windows\\AppData\\Roaming\\MetaQuotes\\Terminal\\2FA8A7E69CED7DC259B1AD86A247F675\\MQL5\\Experts\\dev\\reports\\qa\\w33_daytrade_20261026\\20261026_131250_UTC_3b9f03e4",
+    "real_ticks":  "2020 tick cache absent; generated-tick native plumbing QA",
+    "tag":  "w33dtqa_20261026_131250_UTC_3b9f03e4",
+    "ini":  "C:\\Users\\windows\\AppData\\Local\\CodexMT5Wave33DayTrade\\20261026_131250_UTC_3b9f03e4\\w33dtqa_20261026_131250_UTC_3b9f03e4.ini",
+    "user_resume_required":  true,
+    "process_id":  19420,
+    "launched_at_utc":  "2026-10-26T13:13:02.4020670Z"
+}

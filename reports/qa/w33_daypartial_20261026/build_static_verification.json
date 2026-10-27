@@ -1,0 +1,260 @@
+{
+  "status": "PASS",
+  "count": 63,
+  "protected_count": 23,
+  "checks": [
+    {
+      "name": "protected:mql/Include/Wave33Visual/BarOrder.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/Chop.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/ChopDisplay.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/ConnectedPair.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/ConnectedWave.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/DayTrade.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/DayTradeExecution.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/DayTradePolicyTests.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/Display.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/Engine.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/LabelLayout.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/Ledger.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/OppositeExit.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/PriorContext.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/Room.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/ScaleOut.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/ScaleOutExecution.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/TesterRun.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/Types.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Include/Wave33Visual/Wave1Target.mqh",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Experts/Wave33VisualVerifier.mq5",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Experts/Wave33ChopDiagnostic.mq5",
+      "pass": true
+    },
+    {
+      "name": "protected:mql/Experts/Wave33DayTradeVerifier.mq5",
+      "pass": true
+    },
+    {
+      "name": "default:InpScaleOut",
+      "pass": true
+    },
+    {
+      "name": "default:InpPartialAtR",
+      "pass": true
+    },
+    {
+      "name": "default:InpStepSL",
+      "pass": true
+    },
+    {
+      "name": "default:InpStepStartR",
+      "pass": true
+    },
+    {
+      "name": "default:InpStepSizeR",
+      "pass": true
+    },
+    {
+      "name": "default:InpStepLagR",
+      "pass": true
+    },
+    {
+      "name": "default:InpMaxHoldHours",
+      "pass": true
+    },
+    {
+      "name": "default:InpEnableTesterOrders",
+      "pass": true
+    },
+    {
+      "name": "A:all_inputs",
+      "pass": true
+    },
+    {
+      "name": "A:no_duplicate",
+      "pass": true
+    },
+    {
+      "name": "A:InpScaleOut",
+      "pass": true
+    },
+    {
+      "name": "A:InpPartialAtR",
+      "pass": true
+    },
+    {
+      "name": "A:InpStepSL",
+      "pass": true
+    },
+    {
+      "name": "A:InpStepStartR",
+      "pass": true
+    },
+    {
+      "name": "A:InpStepSizeR",
+      "pass": true
+    },
+    {
+      "name": "A:InpStepLagR",
+      "pass": true
+    },
+    {
+      "name": "A:InpMaxHoldHours",
+      "pass": true
+    },
+    {
+      "name": "A:InpEnableTesterOrders",
+      "pass": true
+    },
+    {
+      "name": "A:pattern",
+      "pass": true
+    },
+    {
+      "name": "B:all_inputs",
+      "pass": true
+    },
+    {
+      "name": "B:no_duplicate",
+      "pass": true
+    },
+    {
+      "name": "B:InpScaleOut",
+      "pass": true
+    },
+    {
+      "name": "B:InpPartialAtR",
+      "pass": true
+    },
+    {
+      "name": "B:InpStepSL",
+      "pass": true
+    },
+    {
+      "name": "B:InpStepStartR",
+      "pass": true
+    },
+    {
+      "name": "B:InpStepSizeR",
+      "pass": true
+    },
+    {
+      "name": "B:InpStepLagR",
+      "pass": true
+    },
+    {
+      "name": "B:InpMaxHoldHours",
+      "pass": true
+    },
+    {
+      "name": "B:InpEnableTesterOrders",
+      "pass": true
+    },
+    {
+      "name": "B:pattern",
+      "pass": true
+    },
+    {
+      "name": "new_adapter_no_legacy_manage",
+      "pass": true
+    },
+    {
+      "name": "partial_before_step",
+      "pass": true
+    },
+    {
+      "name": "new_ea_no_question_encoding",
+      "pass": true
+    },
+    {
+      "name": "tester_guard",
+      "pass": true
+    },
+    {
+      "name": "compile:Wave33DayTradePartialVerifier",
+      "pass": true
+    },
+    {
+      "name": "binary_newer:Wave33DayTradePartialVerifier",
+      "pass": true
+    },
+    {
+      "name": "compile:Wave33DayTradePartialHarness",
+      "pass": true
+    },
+    {
+      "name": "binary_newer:Wave33DayTradePartialHarness",
+      "pass": true
+    },
+    {
+      "name": "compile:Wave33DayTradePartialPolicyTests",
+      "pass": true
+    },
+    {
+      "name": "binary_newer:Wave33DayTradePartialPolicyTests",
+      "pass": true
+    }
+  ],
+  "native_tests": "NOT_RUN_YET"
+}

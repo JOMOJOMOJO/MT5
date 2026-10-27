@@ -1,0 +1,82 @@
+{
+  "status": "PASS",
+  "checks": 11289,
+  "failures": [],
+  "previous_positions": 334,
+  "previous_cash": -1440.92,
+  "prior_observations": {
+    "signals": 482,
+    "status_counts": {
+      "CLEAR": 273,
+      "BLOCKED": 209
+    },
+    "blocked_signals": 209,
+    "prior_level_skips": 0,
+    "skip_reasons": {
+      "WAVE1_ROOM_TOO_SMALL": 146,
+      "ACTIVE_SETUP_SAME_DIRECTION": 43,
+      "SYMBOL_POSITION_BUSY": 2
+    },
+    "filled_blocked": {
+      "positions": 119,
+      "wins": 51,
+      "losses": 68,
+      "net_cash": -964.17,
+      "sum_r": -22.409581192105517,
+      "mean_r": -0.18831580833702113,
+      "net_pf": 0.6654208915446918,
+      "max_loss_streak": 6
+    },
+    "filled_not_blocked": {
+      "positions": 215,
+      "wins": 93,
+      "losses": 122,
+      "net_cash": -476.75,
+      "sum_r": -10.14334764852004,
+      "mean_r": -0.047178361155907164,
+      "net_pf": 0.9087882759214441,
+      "max_loss_streak": 8
+    }
+  },
+  "matching": {
+    "class_counts": {
+      "MATCHED_SAME_ENTRY_TIME": 334
+    },
+    "off_only_descriptive": {
+      "positions": 0,
+      "wins": 0,
+      "losses": 0,
+      "net_cash": 0.0,
+      "sum_r": 0.0,
+      "mean_r": null,
+      "net_pf": null,
+      "max_loss_streak": 0
+    },
+    "direct_prior_skip_descriptive": {
+      "positions": 0,
+      "wins": 0,
+      "losses": 0,
+      "net_cash": 0.0,
+      "sum_r": 0.0,
+      "mean_r": null,
+      "net_pf": null,
+      "max_loss_streak": 0
+    },
+    "on_only_added": {
+      "positions": 0,
+      "wins": 0,
+      "losses": 0,
+      "net_cash": 0.0,
+      "sum_r": 0.0,
+      "mean_r": null,
+      "net_pf": null,
+      "max_loss_streak": 0
+    },
+    "matched_same_time": 334,
+    "retimed_same_wave": 0,
+    "matched_same_time_delta_r": 0.0,
+    "matched_exit_changed": 0,
+    "caveat": "Removing 119 old fills would leave 215 only as a posthoc deletion. Actual ON may free lanes, add candidates, change exits or compounding lots."
+  },
+  "scope": "Parser compatibility only; prior exports are hard-linked read-only inputs. Native EA has not been rerun."
+}

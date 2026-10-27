@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "batch": "rb8a43a7",
+  "native_assertions": 2904,
+  "independent_csv_checks": 102,
+  "actual_account_mode": "ACCOUNT_MARGIN_MODE_RETAIL_HEDGING",
+  "netting_native_execution": "NOT_TESTED",
+  "generated_ticks": true,
+  "performance_claim": false,
+  "source_hashes_still_match": true,
+  "compile": "0 errors, 0 warnings",
+  "owned_files": [
+    "mql/Experts/tests/Wave33ScaleOutHarness.mq5",
+    "reports/qa/w33_scaleout_20261026/run_native.ps1",
+    "reports/qa/w33_scaleout_20261026/audit_native.py",
+    "reports/qa/w33_scaleout_20261026/NATIVE_QA.md",
+    "mql/Experts/tests/Wave33ScaleOutLabelReplay.mq5",
+    "reports/qa/w33_scaleout_20261026/run_display.ps1"
+  ],
+  "limitations": [
+    "Native partial execution of one close order across multiple fill deals was not forced; cumulative residual sizing was tested by pure fixtures.",
+    "REQUOTE and INVALID_STOPS were controlled request injections; accepted trades and final position state were native.",
+    "The delayed accepted BE and temporary adverse quote were controlled fault injection; no trade was submitted against the injected adverse quote.",
+    "Netting account mode not available in this native sandbox.",
+    "Generated all ticks, not real ticks.",
+    "No profit or annual strategy conclusion from these six execution fixtures."
+  ],
+  "drawing_checks": 26,
+  "drawing_status": "PASS",
+  "drawing_source_hashes_still_match": true
+}

@@ -1,0 +1,525 @@
+{
+  "status": "PASS",
+  "checks": 102,
+  "failures": 0,
+  "batch": "rb8a43a7",
+  "evidence": "Bounded synthetic signal + native MT5 generated ticks, including two injected request failures and delayed BE acceptance. Not a performance/OOS result.",
+  "results": [
+    {
+      "case": "long",
+      "test": "event_and_deal_CSV_width_stable",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "one_final_setup_exit",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "native_deals_unique",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "one_position_identity",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "entry_and_exit_volume_conserve",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "history_time_monotone",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "all_deal_costs_in_final_setup_net",
+      "result": "PASS",
+      "cash": 2.4
+    },
+    {
+      "case": "long",
+      "test": "setup_R_aggregates_partial_cash",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "native_duplicate_replay_asserted",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "account_mode_explicit",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "scaleout_CSV_width_stable",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "actual_plan_first_kind_matches_case",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "one_half_and_one_residual",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "BE_after_confirmed_half",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "BE_request_no_unconfirmed_volume",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "BE_request_no_unconfirmed_volume",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "BE_request_no_unconfirmed_volume",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "initial_risk_stays_after_BE",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "last_close_opposite_rule_retained",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "opposite_request_after_scale_request_settled",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "injected_requote_logged",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "injected_BE_rejection_logged",
+      "result": "PASS"
+    },
+    {
+      "case": "long",
+      "test": "accepted_unobserved_BE_recheck_logged",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "event_and_deal_CSV_width_stable",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "one_final_setup_exit",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "native_deals_unique",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "one_position_identity",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "entry_and_exit_volume_conserve",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "history_time_monotone",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "all_deal_costs_in_final_setup_net",
+      "result": "PASS",
+      "cash": 2.71
+    },
+    {
+      "case": "short",
+      "test": "setup_R_aggregates_partial_cash",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "native_duplicate_replay_asserted",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "account_mode_explicit",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "scaleout_CSV_width_stable",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "actual_plan_first_kind_matches_case",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "one_half_and_one_residual",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "BE_after_confirmed_half",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "BE_request_no_unconfirmed_volume",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "initial_risk_stays_after_BE",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "last_close_opposite_rule_retained",
+      "result": "PASS"
+    },
+    {
+      "case": "short",
+      "test": "opposite_request_after_scale_request_settled",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "event_and_deal_CSV_width_stable",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "one_final_setup_exit",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "native_deals_unique",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "one_position_identity",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "entry_and_exit_volume_conserve",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "history_time_monotone",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "all_deal_costs_in_final_setup_net",
+      "result": "PASS",
+      "cash": 2.8
+    },
+    {
+      "case": "w1long",
+      "test": "setup_R_aggregates_partial_cash",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "native_duplicate_replay_asserted",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "account_mode_explicit",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "scaleout_CSV_width_stable",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "actual_plan_first_kind_matches_case",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "one_half_and_one_residual",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "BE_after_confirmed_half",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "BE_request_no_unconfirmed_volume",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "initial_risk_stays_after_BE",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "last_close_opposite_rule_retained",
+      "result": "PASS"
+    },
+    {
+      "case": "w1long",
+      "test": "opposite_request_after_scale_request_settled",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "event_and_deal_CSV_width_stable",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "one_final_setup_exit",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "native_deals_unique",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "one_position_identity",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "entry_and_exit_volume_conserve",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "history_time_monotone",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "all_deal_costs_in_final_setup_net",
+      "result": "PASS",
+      "cash": 1.8
+    },
+    {
+      "case": "w1short",
+      "test": "setup_R_aggregates_partial_cash",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "native_duplicate_replay_asserted",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "account_mode_explicit",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "scaleout_CSV_width_stable",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "actual_plan_first_kind_matches_case",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "one_half_and_one_residual",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "BE_after_confirmed_half",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "BE_request_no_unconfirmed_volume",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "initial_risk_stays_after_BE",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "last_close_opposite_rule_retained",
+      "result": "PASS"
+    },
+    {
+      "case": "w1short",
+      "test": "opposite_request_after_scale_request_settled",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "event_and_deal_CSV_width_stable",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "one_final_setup_exit",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "native_deals_unique",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "one_position_identity",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "entry_and_exit_volume_conserve",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "history_time_monotone",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "all_deal_costs_in_final_setup_net",
+      "result": "PASS",
+      "cash": 0.25
+    },
+    {
+      "case": "minlot",
+      "test": "setup_R_aggregates_partial_cash",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "native_duplicate_replay_asserted",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "account_mode_explicit",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "scaleout_CSV_width_stable",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "minimum_lot_one_full_close",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "minimum_lot_no_BE_request",
+      "result": "PASS"
+    },
+    {
+      "case": "minlot",
+      "test": "minimum_lot_explicit_fallback",
+      "result": "PASS"
+    },
+    {
+      "case": "off",
+      "test": "event_and_deal_CSV_width_stable",
+      "result": "PASS"
+    },
+    {
+      "case": "off",
+      "test": "one_final_setup_exit",
+      "result": "PASS"
+    },
+    {
+      "case": "off",
+      "test": "native_deals_unique",
+      "result": "PASS"
+    },
+    {
+      "case": "off",
+      "test": "one_position_identity",
+      "result": "PASS"
+    },
+    {
+      "case": "off",
+      "test": "entry_and_exit_volume_conserve",
+      "result": "PASS"
+    },
+    {
+      "case": "off",
+      "test": "history_time_monotone",
+      "result": "PASS"
+    },
+    {
+      "case": "off",
+      "test": "all_deal_costs_in_final_setup_net",
+      "result": "PASS",
+      "cash": 25.47
+    },
+    {
+      "case": "off",
+      "test": "setup_R_aggregates_partial_cash",
+      "result": "PASS"
+    },
+    {
+      "case": "off",
+      "test": "native_duplicate_replay_asserted",
+      "result": "PASS"
+    },
+    {
+      "case": "off",
+      "test": "account_mode_explicit",
+      "result": "PASS"
+    },
+    {
+      "case": "off",
+      "test": "OFF_one_full_close",
+      "result": "PASS"
+    }
+  ]
+}

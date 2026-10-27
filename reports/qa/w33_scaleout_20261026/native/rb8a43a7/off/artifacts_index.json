@@ -1,0 +1,42 @@
+﻿[
+    {
+        "source_relative":  "so_rb8a43a7_long.htm",
+        "saved_relative":  "artifacts/00_so_rb8a43a7_long.htm"
+    },
+    {
+        "source_relative":  "so_rb8a43a7_minlot.htm",
+        "saved_relative":  "artifacts/01_so_rb8a43a7_minlot.htm"
+    },
+    {
+        "source_relative":  "so_rb8a43a7_off.htm",
+        "saved_relative":  "artifacts/02_so_rb8a43a7_off.htm"
+    },
+    {
+        "source_relative":  "so_rb8a43a7_short.htm",
+        "saved_relative":  "artifacts/03_so_rb8a43a7_short.htm"
+    },
+    {
+        "source_relative":  "so_rb8a43a7_w1long.htm",
+        "saved_relative":  "artifacts/04_so_rb8a43a7_w1long.htm"
+    },
+    {
+        "source_relative":  "so_rb8a43a7_w1short.htm",
+        "saved_relative":  "artifacts/05_so_rb8a43a7_w1short.htm"
+    },
+    {
+        "source_relative":  "logs\\20261026.log",
+        "saved_relative":  "artifacts/06_20261026.log"
+    },
+    {
+        "source_relative":  "logs\\metaeditor.log",
+        "saved_relative":  "artifacts/07_metaeditor.log"
+    },
+    {
+        "source_relative":  "Tester\\Agent-127.0.0.1-39228\\logs\\20261026.log",
+        "saved_relative":  "artifacts/08_20261026.log"
+    },
+    {
+        "source_relative":  "Tester\\logs\\20261026.log",
+        "saved_relative":  "artifacts/09_20261026.log"
+    }
+]

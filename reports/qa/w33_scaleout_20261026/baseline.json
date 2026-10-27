@@ -1,0 +1,61 @@
+﻿{
+    "before":  [
+                   {
+                       "path":  "mql/Experts/Wave33ChopDiagnostic.mq5",
+                       "sha256":  "32ace7a650ee3304939376aa278c7da7e76ac6043824c79813c194c268f8d498"
+                   },
+                   {
+                       "path":  "mql/Experts/Wave33ChopDiagnostic.ex5",
+                       "sha256":  "c36eb5fc4ae832dbc2647885b06554a5e4653ad277e5c112f2f9f31263c267de"
+                   },
+                   {
+                       "path":  "mql/Include/Wave33Visual/Engine.mqh",
+                       "sha256":  "3fb6956a2253f071eb455d60ac90ce152dab8f46c35955a5f36e5b22018a0fc8"
+                   },
+                   {
+                       "path":  "mql/Include/Wave33Visual/ChopDisplay.mqh",
+                       "sha256":  "606b66194724557878758f864419e65ea8efb145e0202771496468c9829fe54f"
+                   },
+                   {
+                       "path":  "mql/Include/Wave33Visual/LabelLayout.mqh",
+                       "sha256":  "e00a577f97cacd3f7ebac22ca1625edb6b0e12257b750325cbb47c1090b39d23"
+                   },
+                   {
+                       "path":  "mql/Include/Wave33Visual/Types.mqh",
+                       "sha256":  "bc72c41867b6746a3192467320ee5ee998cf4eef5e6705109b1c06befeab48f4"
+                   },
+                   {
+                       "path":  "mql/Include/Wave33Visual/Ledger.mqh",
+                       "sha256":  "03b97b230bd6124867e135c51f20b65deb16c28960cdad8a73072b700961305a"
+                   },
+                   {
+                       "path":  "mql/Include/Wave33Visual/Wave1Target.mqh",
+                       "sha256":  "2cecd65d839a3328f9dd06fb86a252199121adb3634c141c8b51641e8a71af3f"
+                   },
+                   {
+                       "path":  "mql/Include/Wave33Visual/OppositeExit.mqh",
+                       "sha256":  "e36e4bf55441561498641ac6c556b5ae5042da7ac7b90639be3cda04a2d639da"
+                   },
+                   {
+                       "path":  "mql/Include/Wave33Visual/Chop.mqh",
+                       "sha256":  "f2d72b5c9c99ae21e47d90bdf6077a3aea93b422dd2831748b3695edcb124b49"
+                   },
+                   {
+                       "path":  "mql/Include/Wave33Visual/PriorContext.mqh",
+                       "sha256":  "909f116ab7bedc0695c8ae8fb30c0e247fcc854d6297da9eb87e060a534aa51d"
+                   },
+                   {
+                       "path":  "mql/Experts/Wave33VisualVerifier.mq5",
+                       "sha256":  "a0bf2812b81bfdb52f1c9fc9e5008a1ddb5b003f507861fb570ed820a00b1a88"
+                   },
+                   {
+                       "path":  "mql/Experts/Wave33VisualVerifier.ex5",
+                       "sha256":  "13b6b35d3ead8da0a6771a38276a52eec0e50560f2dfcb87a775edb81c9fbe27"
+                   }
+               ],
+    "intentional_changes":  [
+                                "mql/Experts/Wave33ChopDiagnostic.mq5",
+                                "mql/Experts/Wave33ChopDiagnostic.ex5",
+                                "mql/Include/Wave33Visual/LabelLayout.mqh"
+                            ]
+}
